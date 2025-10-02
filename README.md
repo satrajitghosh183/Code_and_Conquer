@@ -472,20 +472,6 @@ code-and-conquer/
 
 ---
 
-## Known Limitations & Future Enhancements
-
-### Current Limitations
-- WebGL client is minimal (not production-quality UI)
-- Manual problem ingestion (no automated scraping)
-- Limited AI-generated problem variations
-
-### Planned Enhancements (Post-Course)
-- Mobile app (React Native)
-- Team battles (3v3 mode)
-- Problem recommendation engine
-- Advanced analytics dashboard
-
----
 
 **Last Updated:** October 2, 2025  
 **Project Status:** Requirements & Design Phase  
