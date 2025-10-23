@@ -1,8 +1,9 @@
 import { supabase } from './supabaseClient.js'  // adjust path if needed
 
+//test if supabase connection is working
 async function testConnection() {
   const { data, error } = await supabase
-    .from('users')  // change to any table you have
+    .from('users')  
     .select('*')
     .limit(1)
 
