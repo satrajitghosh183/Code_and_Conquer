@@ -1,0 +1,29 @@
+{
+  "name": "code_and_conquer",
+  "version": "1.0.0",
+  "description": "**Conquer code. Boost productivity. Progress your way to mastery.**",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/satrajitghosh183/Code_and_Conquer.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/satrajitghosh183/Code_and_Conquer/issues"
+  },
+  "homepage": "https://github.com/satrajitghosh183/Code_and_Conquer#readme",
+  "dependencies": {
+    "connect-pg-simple": "^10.0.0",
+    "dotenv": "^17.2.3",
+    "express": "^5.1.0",
+    "express-session": "^1.18.2",
+    "passport": "^0.7.0",
+    "passport-google-oauth20": "^2.0.0",
+    "pg": "^8.16.3"
+  }
+}

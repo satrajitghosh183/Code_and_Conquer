@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Google OAuth Demo</title>
+  </head>
+  <body>
+    <% if (user) { %>
+      <h1>Welcome, <%= user.display_name %>!</h1>
+      <p>Email: <%= user.email %></p>
+      <img src="<%= user.photo_url %>" width="100" />
+      <br />
+      <a href="/logout">Logout</a>
+    <% } else { %>
+      <h1>Not logged in</h1>
+      <a href="/auth/google">Login with Google</a>
+    <% } %>
+  </body>
+</html>
