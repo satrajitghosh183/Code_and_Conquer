@@ -1,0 +1,79 @@
+{
+  "id": "2",
+  "title": "Valid Parentheses",
+  "difficulty": "easy",
+  "description": "Given a string `s` containing just the characters `'('`, `')'`, `'{'`, `'}'`, `'['` and `']'`, determine if the input string is valid.\n\nAn input string is valid if:\n1. Open brackets must be closed by the same type of brackets.\n2. Open brackets must be closed in the correct order.\n3. Every close bracket has a corresponding open bracket of the same type.",
+  "examples": [
+    {
+      "input": "s = \"()\"",
+      "output": "true"
+    },
+    {
+      "input": "s = \"()[]{}\"",
+      "output": "true"
+    },
+    {
+      "input": "s = \"(]\"",
+      "output": "false"
+    }
+  ],
+  "constraints": [
+    "1 <= s.length <= 10⁴",
+    "s consists of parentheses only '()[]{}'."
+  ],
+  "starterCode": {
+    "javascript": "function solution(s) {\n    // Your code here\n}",
+    "python": "def solution(s):\n    # Your code here\n    pass",
+    "java": "public boolean solution(String s) {\n    // Your code here\n}",
+    "cpp": "bool solution(string s) {\n    // Your code here\n}",
+    "c": "bool solution(char* s) {\n    // Your code here\n}",
+    "go": "func solution(s string) bool {\n    // Your code here\n}",
+    "rust": "pub fn solution(s: String) -> bool {\n    // Your code here\n}",
+    "ruby": "def solution(s)\n    # Your code here\nend",
+    "php": "function solution($s) {\n    // Your code here\n}",
+    "typescript": "function solution(s: string): boolean {\n    // Your code here\n}"
+  },
+  "testCases": [
+    {
+      "input": ["()"],
+      "expectedOutput": true
+    },
+    {
+      "input": ["()[]{}"],
+      "expectedOutput": true
+    },
+    {
+      "input": ["(]"],
+      "expectedOutput": false
+    }
+  ],
+  "hiddenTestCases": [
+    {
+      "input": ["([)]"],
+      "expectedOutput": false
+    },
+    {
+      "input": ["{[]}"],
+      "expectedOutput": true
+    },
+    {
+      "input": ["(((((((((("],
+      "expectedOutput": false
+    },
+    {
+      "input": ["()()()()"],
+      "expectedOutput": true
+    },
+    {
+      "input": ["{[()]}"],
+      "expectedOutput": true
+    }
+  ],
+  "timeComplexity": "O(n)",
+  "spaceComplexity": "O(n)",
+  "tags": ["String", "Stack"],
+  "hints": [
+    "Use a stack data structure",
+    "Push opening brackets, pop and match with closing brackets"
+  ]
+}

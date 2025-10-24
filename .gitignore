@@ -1,0 +1,88 @@
+# Dependencies
+node_modules/
+*/node_modules/
+**/node_modules/
+
+# Build outputs
+dist/
+build/
+*/dist/
+*/build/
+
+# Environment variables
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+*.env
+
+# Logs
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+# Editor directories and files
+.vscode/*
+!.vscode/extensions.json
+.idea/
+.DS_Store
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+*.swp
+*.swo
+*~
+
+# Testing
+coverage/
+*.lcov
+.nyc_output
+
+# Cache
+.npm
+.eslintcache
+.parcel-cache
+.cache/
+*.tsbuildinfo
+
+# Temporary files
+tmp/
+temp/
+*.tmp
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Judge execution sandbox (contains submitted code)
+backend/judge/sandbox/*
+!backend/judge/sandbox/.gitkeep
+
+# Submission data (optional - remove if you want to track submissions)
+backend/data/submissions/*
+!backend/data/submissions/.gitkeep
+
+# Docker volumes
+.docker/
+
+# IDE
+*.sublime-project
+*.sublime-workspace
+
+# Yarn
+.yarn/cache
+.yarn/unplugged
+.yarn/build-state.yml
+.yarn/install-state.gz
+.pnp.*
+
+# Optional: Problem data (uncomment if you don't want to track problems)
+# backend/data/problems/*
+# !backend/data/problems/.gitkeep

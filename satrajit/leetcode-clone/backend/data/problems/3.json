@@ -1,0 +1,67 @@
+{
+  "id": "3",
+  "title": "Reverse Linked List",
+  "difficulty": "easy",
+  "description": "Given the head of a singly linked list, reverse the list, and return the reversed list.",
+  "examples": [
+    {
+      "input": "head = [1,2,3,4,5]",
+      "output": "[5,4,3,2,1]"
+    },
+    {
+      "input": "head = [1,2]",
+      "output": "[2,1]"
+    },
+    {
+      "input": "head = []",
+      "output": "[]"
+    }
+  ],
+  "constraints": [
+    "The number of nodes in the list is the range [0, 5000].",
+    "-5000 <= Node.val <= 5000"
+  ],
+  "starterCode": {
+    "javascript": "function solution(head) {\n    // head is array representation\n    // Return reversed array\n}",
+    "python": "def solution(head):\n    # head is list\n    # Return reversed list\n    pass",
+    "java": "public int[] solution(int[] head) {\n    // Your code here\n}",
+    "cpp": "vector<int> solution(vector<int> head) {\n    // Your code here\n}",
+    "c": "int* solution(int* head, int size, int* returnSize) {\n    // Your code here\n}",
+    "go": "func solution(head []int) []int {\n    // Your code here\n}",
+    "rust": "pub fn solution(head: Vec<i32>) -> Vec<i32> {\n    // Your code here\n}",
+    "ruby": "def solution(head)\n    # Your code here\nend",
+    "php": "function solution($head) {\n    // Your code here\n}",
+    "typescript": "function solution(head: number[]): number[] {\n    // Your code here\n}"
+  },
+  "testCases": [
+    {
+      "input": [[1, 2, 3, 4, 5]],
+      "expectedOutput": [5, 4, 3, 2, 1]
+    },
+    {
+      "input": [[1, 2]],
+      "expectedOutput": [2, 1]
+    },
+    {
+      "input": [[]],
+      "expectedOutput": []
+    }
+  ],
+  "hiddenTestCases": [
+    {
+      "input": [[1]],
+      "expectedOutput": [1]
+    },
+    {
+      "input": [[1, 2, 3, 4, 5, 6, 7, 8, 9, 10]],
+      "expectedOutput": [10, 9, 8, 7, 6, 5, 4, 3, 2, 1]
+    }
+  ],
+  "timeComplexity": "O(n)",
+  "spaceComplexity": "O(1)",
+  "tags": ["Linked List", "Recursion"],
+  "hints": [
+    "Think about using three pointers: prev, current, and next",
+    "Can you do it recursively?"
+  ]
+}

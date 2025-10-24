@@ -1,0 +1,74 @@
+{
+  "id": "1",
+  "title": "Two Sum",
+  "difficulty": "easy",
+  "description": "Given an array of integers `nums` and an integer `target`, return indices of the two numbers such that they add up to `target`.\n\nYou may assume that each input would have exactly one solution, and you may not use the same element twice.\n\nYou can return the answer in any order.",
+  "examples": [
+    {
+      "input": "nums = [2,7,11,15], target = 9",
+      "output": "[0,1]",
+      "explanation": "Because nums[0] + nums[1] == 9, we return [0, 1]."
+    },
+    {
+      "input": "nums = [3,2,4], target = 6",
+      "output": "[1,2]"
+    }
+  ],
+  "constraints": [
+    "2 <= nums.length <= 10⁴",
+    "-10⁹ <= nums[i] <= 10⁹",
+    "-10⁹ <= target <= 10⁹",
+    "Only one valid answer exists."
+  ],
+  "starterCode": {
+    "javascript": "function solution(nums, target) {\n    // Your code here\n}",
+    "python": "def solution(nums, target):\n    # Your code here\n    pass",
+    "java": "public int[] solution(int[] nums, int target) {\n    // Your code here\n}",
+    "cpp": "vector<int> solution(vector<int>& nums, int target) {\n    // Your code here\n}",
+    "c": "int* solution(int* nums, int numsSize, int target, int* returnSize) {\n    // Your code here\n}",
+    "go": "func solution(nums []int, target int) []int {\n    // Your code here\n}",
+    "rust": "pub fn solution(nums: Vec<i32>, target: i32) -> Vec<i32> {\n    // Your code here\n}",
+    "ruby": "def solution(nums, target)\n    # Your code here\nend",
+    "php": "function solution($nums, $target) {\n    // Your code here\n}",
+    "typescript": "function solution(nums: number[], target: number): number[] {\n    // Your code here\n}"
+  },
+  "testCases": [
+    {
+      "input": [[2, 7, 11, 15], 9],
+      "expectedOutput": [0, 1]
+    },
+    {
+      "input": [[3, 2, 4], 6],
+      "expectedOutput": [1, 2]
+    },
+    {
+      "input": [[3, 3], 6],
+      "expectedOutput": [0, 1]
+    }
+  ],
+  "hiddenTestCases": [
+    {
+      "input": [[1, 5, 3, 7, 9, 2], 10],
+      "expectedOutput": [2, 4]
+    },
+    {
+      "input": [[-1, -2, -3, -4, -5], -8],
+      "expectedOutput": [2, 4]
+    },
+    {
+      "input": [[0, 4, 3, 0], 0],
+      "expectedOutput": [0, 3]
+    },
+    {
+      "input": [[1000000000, -1000000000], 0],
+      "expectedOutput": [0, 1]
+    }
+  ],
+  "timeComplexity": "O(n)",
+  "spaceComplexity": "O(n)",
+  "tags": ["Array", "Hash Table"],
+  "hints": [
+    "Try using a hash map to store numbers you've seen",
+    "For each number, check if target - number exists in the map"
+  ]
+}

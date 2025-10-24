@@ -1,0 +1,13 @@
+{
+  "name": "github-oauth-demo",
+  "version": "1.0.0",
+  "type": "module",
+ "dependencies": {
+    "dotenv": "^17.2.3",
+    "express": "^5.1.0",
+    "express-session": "^1.18.2",
+    "passport": "^0.7.0",
+    "passport-github2": "^0.1.12"
+  },
+  "scripts": { "start": "node server.js" }
+}
