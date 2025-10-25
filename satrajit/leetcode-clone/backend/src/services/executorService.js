@@ -567,119 +567,313 @@ class AdvancedExecutorService {
     });
   }
 
+
   async executeInDocker(code, language, testCase, config) {
-    const executionId = uuidv4();
-    let container = null;
+  const executionId = uuidv4();
+  let container = null;
 
+  try {
+    // Prepare code files
+    const filename = `solution.${config.extension}`;
+    const fullCode = this.prepareCode(code, testCase, language);
+    
+    const files = {
+      [filename]: fullCode
+    };
+
+    const tarArchive = await this.createTarArchive(files);
+
+    // Create container
+    container = await docker.createContainer({
+      Image: config.dockerImage,
+      Cmd: ['/bin/sh', '-c', config.compileCmd ? 
+        `${config.compileCmd} && ${config.runCmd}` : config.runCmd],
+      WorkingDir: '/sandbox',
+      HostConfig: {
+        Memory: config.memoryLimit,
+        MemorySwap: config.memoryLimit,
+        CpuQuota: 50000,
+        CpuPeriod: 100000,
+        NetworkMode: 'none',
+        PidsLimit: 50,
+        ReadonlyRootfs: false,
+        AutoRemove: false, // Changed to false so we can get stats
+      },
+      AttachStdout: true,
+      AttachStderr: true,
+      OpenStdin: false,
+      Tty: false,
+    });
+
+    this.activeContainers.add(container.id);
+
+    // Copy files to container
+    await container.putArchive(tarArchive, { path: '/sandbox' });
+
+    // Attach to get output streams
+    const stream = await container.attach({
+      stream: true,
+      stdout: true,
+      stderr: true
+    });
+
+    // Collect output
+    let stdout = '';
+    let stderr = '';
+    
+    const outputPromise = new Promise((resolve) => {
+      const chunks = [];
+      
+      stream.on('data', (chunk) => {
+        chunks.push(chunk);
+      });
+      
+      stream.on('end', () => {
+        const buffer = Buffer.concat(chunks);
+        const output = this.stripDockerStreamHeaders(buffer);
+        resolve(output);
+      });
+    });
+
+    // Start container
+    const startTime = process.hrtime.bigint();
+    await container.start();
+
+    // Wait for completion or timeout
+    const waitPromise = container.wait();
+    const timeoutPromise = new Promise((_, reject) => 
+      setTimeout(() => reject(new Error('Time Limit Exceeded')), config.timeout)
+    );
+
+    const [result, output] = await Promise.all([
+      Promise.race([waitPromise, timeoutPromise]),
+      outputPromise
+    ]);
+
+    const endTime = process.hrtime.bigint();
+    const executionTime = Number(endTime - startTime) / 1000000;
+
+    // Get stats
+    const stats = await container.stats({ stream: false });
+    const memoryUsed = (stats.memory_stats.usage || 0) / 1024 / 1024;
+
+    // Cleanup
     try {
-      // Prepare code files
-      const filename = `solution.${config.extension}`;
-      const fullCode = this.prepareCode(code, testCase, language);
-      
-      const files = {
-        [filename]: fullCode
-      };
+      await container.remove({ force: true });
+    } catch (e) {
+      console.error('Failed to remove container:', e.message);
+    }
 
-      const tarArchive = await this.createTarArchive(files);
+    this.activeContainers.delete(container.id);
 
-      // Create container
-      container = await docker.createContainer({
-        Image: config.dockerImage,
-        Cmd: ['/bin/sh', '-c', config.compileCmd ? 
-          `${config.compileCmd} && ${config.runCmd}` : config.runCmd],
-        WorkingDir: '/sandbox',
-        HostConfig: {
-          Memory: config.memoryLimit,
-          MemorySwap: config.memoryLimit,
-          CpuQuota: 50000, // 50% CPU
-          CpuPeriod: 100000,
-          NetworkMode: 'none', // No network access
-          PidsLimit: 50, // Limit number of processes
-          ReadonlyRootfs: false,
-          AutoRemove: true,
-        },
-        AttachStdout: true,
-        AttachStderr: true,
-        Tty: false,
-      });
-
-      this.activeContainers.add(container.id);
-
-      // Copy files to container
-      await container.putArchive(tarArchive, { path: '/sandbox' });
-
-      // Start container
-      await container.start();
-
-      const startTime = process.hrtime.bigint();
-
-      // Wait for container with timeout
-      const waitPromise = container.wait();
-      const timeoutPromise = new Promise((_, reject) => 
-        setTimeout(() => reject(new Error('Time Limit Exceeded')), config.timeout)
-      );
-
-      const result = await Promise.race([waitPromise, timeoutPromise]);
-
-      const endTime = process.hrtime.bigint();
-      const executionTime = Number(endTime - startTime) / 1000000; // ms
-
-      // Get logs
-      const logs = await container.logs({
-        stdout: true,
-        stderr: true,
-      });
-
-      const output = logs.toString('utf8');
-
-      // Get stats
-      const stats = await container.stats({ stream: false });
-      const memoryUsed = stats.memory_stats.usage / 1024 / 1024; // MB
-
-      this.activeContainers.delete(container.id);
-
-      if (result.StatusCode !== 0) {
-        return {
-          success: false,
-          output: null,
-          executionTime: Math.round(executionTime * 100) / 100,
-          memory: Math.round(memoryUsed * 100) / 100,
-          error: output || 'Runtime Error'
-        };
-      }
-
-      return {
-        success: true,
-        output: output.trim(),
-        executionTime: Math.round(executionTime * 100) / 100,
-        memory: Math.round(memoryUsed * 100) / 100,
-        error: null
-      };
-
-    } catch (error) {
-      if (container) {
-        this.activeContainers.delete(container.id);
-      }
-      
-      if (error.message.includes('Time Limit Exceeded')) {
-        return {
-          success: false,
-          output: null,
-          executionTime: config.timeout,
-          memory: 0,
-          error: 'Time Limit Exceeded'
-        };
-      }
-
+    if (result.StatusCode !== 0) {
       return {
         success: false,
         output: null,
-        executionTime: 0,
-        memory: 0,
-        error: error.message
+        executionTime: Math.round(executionTime * 100) / 100,
+        memory: Math.round(memoryUsed * 100) / 100,
+        error: output || 'Runtime Error'
       };
     }
+
+    return {
+      success: true,
+      output: output.trim(),
+      executionTime: Math.round(executionTime * 100) / 100,
+      memory: Math.round(memoryUsed * 100) / 100,
+      error: null
+    };
+
+  } catch (error) {
+    if (container) {
+      try {
+        await container.remove({ force: true });
+      } catch (e) {
+        // Ignore cleanup errors
+      }
+      this.activeContainers.delete(container.id);
+    }
+    
+    if (error.message.includes('Time Limit Exceeded')) {
+      return {
+        success: false,
+        output: null,
+        executionTime: config.timeout,
+        memory: 0,
+        error: 'Time Limit Exceeded'
+      };
+    }
+
+    return {
+      success: false,
+      output: null,
+      executionTime: 0,
+      memory: 0,
+      error: error.message
+    };
   }
+}
+
+/**
+ * Strip Docker stream headers from logs
+ * Docker multiplexes stdout/stderr with 8-byte headers
+ * Header format: [stream_type, 0, 0, 0, size1, size2, size3, size4]
+ */
+stripDockerStreamHeaders(buffer) {
+  if (!buffer || buffer.length === 0) return '';
+  
+  const chunks = [];
+  let offset = 0;
+
+  while (offset < buffer.length) {
+    // Need at least 8 bytes for header
+    if (offset + 8 > buffer.length) {
+      // Remaining data without proper header, just add it
+      chunks.push(buffer.slice(offset));
+      break;
+    }
+
+    // Check if this looks like a Docker header
+    const streamType = buffer[offset];
+    if (streamType !== 1 && streamType !== 2) {
+      // Doesn't look like a Docker header, treat as raw output
+      return buffer.toString('utf8');
+    }
+
+    // Read payload size (big-endian)
+    const size = buffer.readUInt32BE(offset + 4);
+    
+    // Skip header (8 bytes)
+    offset += 8;
+    
+    if (offset + size > buffer.length) {
+      // Not enough data for payload, add what we have
+      chunks.push(buffer.slice(offset));
+      break;
+    }
+    
+    const chunk = buffer.slice(offset, offset + size);
+    chunks.push(chunk);
+    
+    offset += size;
+  }
+
+  return Buffer.concat(chunks).toString('utf8');
+}
+
+  // async executeInDocker(code, language, testCase, config) {
+  //   const executionId = uuidv4();
+  //   let container = null;
+
+  //   try {
+  //     // Prepare code files
+  //     const filename = `solution.${config.extension}`;
+  //     const fullCode = this.prepareCode(code, testCase, language);
+      
+  //     const files = {
+  //       [filename]: fullCode
+  //     };
+
+  //     const tarArchive = await this.createTarArchive(files);
+
+  //     // Create container
+  //     container = await docker.createContainer({
+  //       Image: config.dockerImage,
+  //       Cmd: ['/bin/sh', '-c', config.compileCmd ? 
+  //         `${config.compileCmd} && ${config.runCmd}` : config.runCmd],
+  //       WorkingDir: '/sandbox',
+  //       HostConfig: {
+  //         Memory: config.memoryLimit,
+  //         MemorySwap: config.memoryLimit,
+  //         CpuQuota: 50000, // 50% CPU
+  //         CpuPeriod: 100000,
+  //         NetworkMode: 'none', // No network access
+  //         PidsLimit: 50, // Limit number of processes
+  //         ReadonlyRootfs: false,
+  //         AutoRemove: true,
+  //       },
+  //       AttachStdout: true,
+  //       AttachStderr: true,
+  //       Tty: false,
+  //     });
+
+  //     this.activeContainers.add(container.id);
+
+  //     // Copy files to container
+  //     await container.putArchive(tarArchive, { path: '/sandbox' });
+
+  //     // Start container
+  //     await container.start();
+
+  //     const startTime = process.hrtime.bigint();
+
+  //     // Wait for container with timeout
+  //     const waitPromise = container.wait();
+  //     const timeoutPromise = new Promise((_, reject) => 
+  //       setTimeout(() => reject(new Error('Time Limit Exceeded')), config.timeout)
+  //     );
+
+  //     const result = await Promise.race([waitPromise, timeoutPromise]);
+
+  //     const endTime = process.hrtime.bigint();
+  //     const executionTime = Number(endTime - startTime) / 1000000; // ms
+
+  //     // Get logs
+  //     const logs = await container.logs({
+  //       stdout: true,
+  //       stderr: true,
+  //     });
+
+  //     const output = logs.toString('utf8');
+
+  //     // Get stats
+  //     const stats = await container.stats({ stream: false });
+  //     const memoryUsed = stats.memory_stats.usage / 1024 / 1024; // MB
+
+  //     this.activeContainers.delete(container.id);
+
+  //     if (result.StatusCode !== 0) {
+  //       return {
+  //         success: false,
+  //         output: null,
+  //         executionTime: Math.round(executionTime * 100) / 100,
+  //         memory: Math.round(memoryUsed * 100) / 100,
+  //         error: output || 'Runtime Error'
+  //       };
+  //     }
+
+  //     return {
+  //       success: true,
+  //       output: output.trim(),
+  //       executionTime: Math.round(executionTime * 100) / 100,
+  //       memory: Math.round(memoryUsed * 100) / 100,
+  //       error: null
+  //     };
+
+  //   } catch (error) {
+  //     if (container) {
+  //       this.activeContainers.delete(container.id);
+  //     }
+      
+  //     if (error.message.includes('Time Limit Exceeded')) {
+  //       return {
+  //         success: false,
+  //         output: null,
+  //         executionTime: config.timeout,
+  //         memory: 0,
+  //         error: 'Time Limit Exceeded'
+  //       };
+  //     }
+
+  //     return {
+  //       success: false,
+  //       output: null,
+  //       executionTime: 0,
+  //       memory: 0,
+  //       error: error.message
+  //     };
+  //   }
+  // }
 
   async executeCode(code, language, testCase, timeLimit) {
     const config = LANGUAGE_CONFIGS[language];

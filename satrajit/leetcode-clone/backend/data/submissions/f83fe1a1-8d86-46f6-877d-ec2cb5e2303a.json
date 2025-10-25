@@ -1,0 +1,9 @@
+{
+  "id": "f83fe1a1-8d86-46f6-877d-ec2cb5e2303a",
+  "problemId": "1",
+  "language": "javascript",
+  "code": "function solution(nums, target) {\n  const seen = {}; // value → index\n  for (let i = 0; i < nums.length; i++) {\n    const complement = target - nums[i];\n    if (seen.hasOwnProperty(complement)) {\n      return [seen[complement], i];\n    }\n    seen[nums[i]] = i;\n  }\n}\n",
+  "status": "pending",
+  "testResults": [],
+  "timestamp": "2025-10-24T19:15:13.922Z"
+}
