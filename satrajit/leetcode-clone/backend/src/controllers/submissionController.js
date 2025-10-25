@@ -89,15 +89,57 @@ export const getSubmission = async (req, res) => {
 
 export const runCode = async (req, res) => {
   try {
-    const { code, language, testCase } = req.body;
+    const { code, language, problemId } = req.body;
 
-    if (!code || !language || !testCase) {
+    if (!code || !language) {
       return res.status(400).json({ error: 'Missing required fields' });
+    }
+
+    // If problemId provided, run against all visible test cases
+    if (problemId) {
+      const problem = await database.getProblemById(problemId);
+      if (!problem) {
+        return res.status(404).json({ error: 'Problem not found' });
+      }
+
+      // Run against visible test cases only
+      const testResults = await executorService.runTestCases(
+        code,
+        language,
+        problem.testCases || []
+      );
+
+      // Analyze complexity
+      const complexityAnalysis = await executorService.analyzeTimeComplexity(
+        code,
+        language,
+        problem.testCases || []
+      );
+
+      return res.json({
+        status: testResults.allPassed ? 'run_success' : 'run_failed',
+        passedTests: testResults.passedTests,
+        totalTests: testResults.totalTests,
+        executionTime: testResults.totalExecutionTime,
+        memory: testResults.maxMemory,
+        testResults: testResults.results,
+        complexityAnalysis,
+        expectedComplexity: problem.timeComplexity
+      });
+    }
+
+    // Fallback: single test case run (legacy support)
+    const { testCase } = req.body;
+    if (!testCase) {
+      return res.status(400).json({ error: 'Missing test case or problem ID' });
     }
 
     const result = await executorService.executeCode(code, language, testCase);
     
-    res.json(result);
+    res.json({
+      status: result.success ? 'run_success' : 'run_error',
+      ...result
+    });
   } catch (error) {
     res.status(500).json({ error: error.message });
   }

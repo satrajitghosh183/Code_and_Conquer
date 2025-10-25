@@ -1,0 +1,9 @@
+{
+  "id": "6c8b3ebf-7c70-4096-a646-98b9c805a3ed",
+  "problemId": "1",
+  "language": "javascript",
+  "code": "function solution(nums, target) {\n    const map = new Map(); // stores number -> index\n\n    for (let i = 0; i < nums.length; i++) {\n        const complement = target - nums[i];\n\n        if (map.has(complement)) {\n            return [map.get(complement), i];\n        }\n\n        map.set(nums[i], i);\n    }\n\n    return []; // should never reach here since exactly one solution exists\n}\n",
+  "status": "pending",
+  "testResults": [],
+  "timestamp": "2025-10-23T03:16:06.036Z"
+}

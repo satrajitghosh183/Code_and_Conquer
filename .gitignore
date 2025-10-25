@@ -86,3 +86,9 @@ backend/data/submissions/*
 # Optional: Problem data (uncomment if you don't want to track problems)
 # backend/data/problems/*
 # !backend/data/problems/.gitkeep
+
+
+
+.env
+.env.*
+!.env.example
