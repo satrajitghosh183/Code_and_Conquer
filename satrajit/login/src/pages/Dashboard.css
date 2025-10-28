@@ -289,6 +289,182 @@
   box-shadow: 0 5px 15px rgba(102, 126, 234, 0.3);
 }
 
+/* Add these styles to your existing Dashboard.css */
+
+/* Premium CTA Section */
+.premium-cta {
+  background: linear-gradient(135deg, #667eea15 0%, #764ba215 100%);
+  border: 2px solid #667eea;
+  border-radius: 15px;
+  padding: 20px;
+  margin-top: 20px;
+  text-align: center;
+}
+
+.premium-cta p {
+  margin: 0 0 15px 0;
+  font-size: 16px;
+  font-weight: 600;
+  color: #667eea;
+}
+
+.cta-btn {
+  padding: 12px 30px;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  border: none;
+  border-radius: 10px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s;
+  font-family: inherit;
+  font-size: 16px;
+}
+
+.cta-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 25px rgba(102, 126, 234, 0.4);
+}
+
+/* Upgrade Button */
+.upgrade-btn {
+  padding: 10px 20px;
+  background: linear-gradient(135deg, #ffd700 0%, #ffed4e 100%);
+  color: #000;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 700;
+  transition: all 0.3s;
+  font-family: inherit;
+  box-shadow: 0 2px 8px rgba(255, 215, 0, 0.4);
+}
+
+.upgrade-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(255, 215, 0, 0.6);
+}
+
+/* Locked Challenge Card */
+.challenge-card.locked {
+  opacity: 0.7;
+  position: relative;
+}
+
+.challenge-card.locked::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(255, 255, 255, 0.3);
+  border-radius: 15px;
+  pointer-events: none;
+}
+
+.locked-btn {
+  background: #e0e0e0 !important;
+  color: #666 !important;
+  cursor: pointer !important;
+}
+
+.locked-btn:hover {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important;
+  color: white !important;
+}
+
+/* Premium Badge in Username */
+.username {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* XP Multiplier Badge */
+.xp-badge {
+  display: inline-block;
+  padding: 2px 8px;
+  background: linear-gradient(135deg, #ffd700 0%, #ffed4e 100%);
+  color: #000;
+  border-radius: 12px;
+  font-size: 10px;
+  font-weight: 700;
+  margin-left: 5px;
+  vertical-align: middle;
+}
+
+/* Premium Stats Card */
+.stat-card.premium {
+  background: linear-gradient(135deg, #667eea15 0%, #764ba215 100%);
+  border: 2px solid #667eea;
+}
+
+/* Loading State */
+.loading-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+  color: white;
+  font-size: 24px;
+  font-weight: 600;
+}
+
+/* Success/Error Toast */
+.toast {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  padding: 15px 25px;
+  border-radius: 10px;
+  color: white;
+  font-weight: 600;
+  z-index: 10000;
+  animation: slideInRight 0.3s ease-out;
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
+}
+
+.toast.success {
+  background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+}
+
+.toast.error {
+  background: linear-gradient(135deg, #dc3545 0%, #c82333 100%);
+}
+
+@keyframes slideInRight {
+  from {
+    transform: translateX(400px);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+/* Responsive Updates */
+@media (max-width: 768px) {
+  .upgrade-btn {
+    display: none;
+  }
+  
+  .premium-cta {
+    padding: 15px;
+  }
+  
+  .cta-btn {
+    padding: 10px 20px;
+    font-size: 14px;
+  }
+}
 
 
 }

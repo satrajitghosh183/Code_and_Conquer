@@ -32,7 +32,7 @@ export default function AuthForm() {
         }
         const { error } = await signUp(email, password, username)
         if (error) throw error
-        setMessage('✅ Check your email for verification link!')
+        setMessage('Check your email for verification link!')
         setEmail('')
         setPassword('')
         setUsername('')
@@ -144,7 +144,7 @@ export default function AuthForm() {
           {message && <div className="success-message">{message}</div>}
 
           <button type="submit" className="submit-btn" disabled={loading}>
-            {loading ? '⏳ Loading...' : (isLogin ? '🚀 Login' : '✨ Create Account')}
+            {loading ? '⏳ Loading...' : (isLogin ? 'Login' : ' Create Account')}
           </button>
         </form>
 
