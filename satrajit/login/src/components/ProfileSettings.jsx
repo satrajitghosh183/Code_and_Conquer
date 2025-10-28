@@ -24,7 +24,7 @@ export default function ProfileSettings({ onClose }) {
 
       if (error) throw error
 
-      setSuccess('✅ Profile picture updated!')
+      setSuccess('Profile picture updated!')
     } catch (error) {
       setError(error.message)
     } finally {
@@ -45,7 +45,7 @@ export default function ProfileSettings({ onClose }) {
       })
 
       if (error) throw error
-      setSuccess('✅ Profile updated!')
+      setSuccess('Profile updated!')
     } catch (error) {
       setError(error.message)
     }
@@ -57,7 +57,7 @@ export default function ProfileSettings({ onClose }) {
     <div className="modal-overlay" onClick={onClose}>
       <div className="modal-content" onClick={(e) => e.stopPropagation()}>
         <div className="modal-header">
-          <h2>⚙️ Profile Settings</h2>
+          <h2>⚙️Profile Settings</h2>
           <button className="close-btn" onClick={onClose}>✕</button>
         </div>
 
@@ -128,7 +128,7 @@ export default function ProfileSettings({ onClose }) {
             {success && <div className="success-message">{success}</div>}
 
             <button type="submit" className="save-btn">
-              💾 Save Changes
+              Save Changes
             </button>
           </form>
         </div>

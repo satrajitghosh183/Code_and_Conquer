@@ -1,0 +1,195 @@
+/* Add these styles to your existing Dashboard.css */
+
+/* Premium badge in nav */
+.premium-badge-nav {
+  padding: 6px 12px;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+}
+
+/* Upgrade button in nav */
+.upgrade-btn-nav {
+  padding: 10px 20px;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: all 0.3s;
+  font-family: inherit;
+}
+
+.upgrade-btn-nav:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(102, 126, 234, 0.3);
+}
+
+/* Subscription button in nav */
+.subscription-btn {
+  padding: 10px 20px;
+  background: #f5f5f5;
+  color: #667eea;
+  border: 2px solid #667eea;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: all 0.3s;
+  font-family: inherit;
+}
+
+.subscription-btn:hover {
+  background: #667eea;
+  color: white;
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(102, 126, 234, 0.3);
+}
+
+/* Tier status display */
+.tier-status {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 15px;
+  margin-top: 15px;
+  padding: 12px 20px;
+  background: #f8f9fa;
+  border-radius: 25px;
+  display: inline-flex;
+}
+
+.tier-indicator {
+  padding: 6px 14px;
+  border-radius: 20px;
+  font-weight: 700;
+  font-size: 13px;
+  letter-spacing: 0.3px;
+}
+
+.tier-indicator.free {
+  background: #e0e0e0;
+  color: #666;
+}
+
+.tier-indicator.premium {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+}
+
+.tier-limit {
+  font-size: 14px;
+  color: #666;
+  font-weight: 600;
+}
+
+.tier-benefit {
+  font-size: 14px;
+  color: #667eea;
+  font-weight: 600;
+}
+
+/* XP multiplier in stat card */
+.xp-multiplier {
+  display: block;
+  font-size: 12px;
+  color: #667eea;
+  font-weight: 600;
+  margin-top: 5px;
+}
+
+/* Premium badge on challenge cards */
+.challenge-card {
+  position: relative;
+}
+
+.premium-badge-challenge {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  padding: 4px 10px;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  border-radius: 12px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  z-index: 1;
+}
+
+/* Locked challenge styling */
+.challenge-card.locked {
+  opacity: 0.6;
+  position: relative;
+  overflow: hidden;
+}
+
+.challenge-card.locked::after {
+  content: '🔒';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 48px;
+  opacity: 0.3;
+  pointer-events: none;
+}
+
+.challenge-card.locked .start-btn {
+  background: #e0e0e0;
+  color: #999;
+  cursor: not-allowed;
+}
+
+.challenge-card.locked .start-btn:hover {
+  transform: none;
+  box-shadow: none;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .premium-badge-nav,
+  .subscription-btn {
+    display: none;
+  }
+
+  .tier-status {
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .upgrade-btn-nav {
+    padding: 8px 16px;
+    font-size: 14px;
+  }
+}
+
+/* Modal overlay base styles (if not already present) */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  padding: 20px;
+}
+
+/* Premium challenge card hover effect */
+.challenge-card:not(.locked):hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+}
+
+/* Premium user stats enhancement */
+.stat-card.premium-stat {
+  border: 2px solid #667eea;
+  background: linear-gradient(135deg, #667eea05 0%, #764ba205 100%);
+}

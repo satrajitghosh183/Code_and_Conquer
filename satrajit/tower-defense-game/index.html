@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TOWER WARS 1v1 - Battle Arena</title>
+  <link rel="stylesheet" href="/src/styles.css">
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
+</head>
+<body>
+  <div id="game-container"></div>
+  
+  <!-- Game UI Overlay -->
+  <div id="ui-overlay">
+    <!-- Player 1 Stats (Left) -->
+    <div id="player1-hud" class="player-hud left">
+      <div class="player-name">PLAYER 1</div>
+      <div class="stats-grid">
+        <div class="stat-box">
+          <div class="stat-label">BASE HP</div>
+          <div id="p1-health" class="stat-value">1000</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-label">CREDITS</div>
+          <div id="p1-credits" class="stat-value">500</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-label">KILLS</div>
+          <div id="p1-kills" class="stat-value">0</div>
+        </div>
+      </div>
+      
+      <div class="action-buttons">
+        <button id="p1-build-tower" class="action-btn cyan">
+          <span class="btn-icon">🗼</span>
+          <span class="btn-text">BUILD TOWER</span>
+          <span class="btn-cost">100</span>
+        </button>
+        <button id="p1-send-enemy" class="action-btn red">
+          <span class="btn-icon">👾</span>
+          <span class="btn-text">SEND ENEMY</span>
+          <span class="btn-cost">75</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Player 2 Stats (Right) -->
+    <div id="player2-hud" class="player-hud right">
+      <div class="player-name">PLAYER 2</div>
+      <div class="stats-grid">
+        <div class="stat-box">
+          <div class="stat-label">BASE HP</div>
+          <div id="p2-health" class="stat-value">1000</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-label">CREDITS</div>
+          <div id="p2-credits" class="stat-value">500</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-label">KILLS</div>
+          <div id="p2-kills" class="stat-value">0</div>
+        </div>
+      </div>
+      
+      <div class="action-buttons">
+        <button id="p2-build-tower" class="action-btn cyan">
+          <span class="btn-icon">🗼</span>
+          <span class="btn-text">BUILD TOWER</span>
+          <span class="btn-cost">100</span>
+        </button>
+        <button id="p2-send-enemy" class="action-btn red">
+          <span class="btn-icon">👾</span>
+          <span class="btn-text">SEND ENEMY</span>
+          <span class="btn-cost">75</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Center Info -->
+    <div id="center-info">
+      <div id="game-title">⚔️ TOWER WARS ⚔️</div>
+      <div id="game-status">Press SPACE to start battle!</div>
+    </div>
+
+    <!-- Controls Info -->
+    <div id="controls-info">
+      <div class="control-item"><kbd>Q</kbd> Build Tower (P1)</div>
+      <div class="control-item"><kbd>W</kbd> Send Enemy (P1)</div>
+      <div class="control-item"><kbd>O</kbd> Build Tower (P2)</div>
+      <div class="control-item"><kbd>P</kbd> Send Enemy (P2)</div>
+      <div class="control-item"><kbd>SPACE</kbd> Start Game</div>
+      <div class="control-item"><kbd>Mouse</kbd> Rotate Camera</div>
+    </div>
+
+    <!-- Victory Screen -->
+    <div id="victory-screen" class="hidden">
+      <div class="victory-content">
+        <h1 id="victory-title">VICTORY!</h1>
+        <div id="victory-player">PLAYER X WINS</div>
+        <div id="victory-stats"></div>
+        <button id="restart-btn" class="action-btn cyan large">
+          <span class="btn-text">PLAY AGAIN</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <script type="module" src="/src/main.js"></script>
+</body>
+</html>
