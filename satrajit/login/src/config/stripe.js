@@ -7,12 +7,12 @@ export const STRIPE_CONFIG = {
       price: 5.00,
       interval: 'month',
       features: [
-        '✅ Unlimited coding problems',
-        '✅ 2x XP rewards',
-        '✅ All premium towers',
-        '✅ Ad-free experience',
-        '✅ Priority matchmaking',
-        '✅ Exclusive badges'
+        'Unlimited coding problems',
+        '2x XP rewards',
+        'All premium towers',
+        'Ad-free experience',
+        'Priority matchmaking',
+        'Exclusive badges'
       ]
     }
   }

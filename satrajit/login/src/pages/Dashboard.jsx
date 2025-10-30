@@ -159,11 +159,11 @@ export default function Dashboard() {
             </span>
             {!isPremium && (
               <button onClick={() => setShowPricing(true)} className="upgrade-btn">
-                👑 Upgrade
+                Upgrade
               </button>
             )}
             <button onClick={() => setShowSettings(true)} className="settings-btn">
-              ⚙️ Settings
+              Settings
             </button>
             <button onClick={handleSignOut} className="signout-btn">
               Sign Out
@@ -177,7 +177,7 @@ export default function Dashboard() {
             <p>Ready to conquer some code challenges?</p>
             {!isPremium && (
               <div className="premium-cta">
-                <p>🚀 Unlock unlimited challenges and 2x XP with Premium!</p>
+                <p>Unlock unlimited challenges and 2x XP with Premium!</p>
                 <button onClick={() => setShowPricing(true)} className="cta-btn">
                   See Premium Benefits
                 </button>
@@ -187,21 +187,21 @@ export default function Dashboard() {
 
           <div className="stats-grid">
             <div className="stat-card">
-              <div className="stat-icon">🏆</div>
+              <div className="stat-icon"></div>
               <div className="stat-info">
                 <h3>0</h3>
                 <p>Challenges Completed</p>
               </div>
             </div>
             <div className="stat-card">
-              <div className="stat-icon">⚡</div>
+              <div className="stat-icon"></div>
               <div className="stat-info">
                 <h3>0</h3>
                 <p>Current Streak</p>
               </div>
             </div>
             <div className="stat-card">
-              <div className="stat-icon">🎖️</div>
+              <div className="stat-icon"></div>
               <div className="stat-info">
                 <h3>{isPremium ? 'Premium' : 'Beginner'}</h3>
                 <p>Rank</p>
@@ -235,7 +235,7 @@ export default function Dashboard() {
                   <span className="difficulty hard">Hard</span>
                   <span className="points">+{isPremium ? 100 : 50} XP</span>
                 </div>
-                <h4>Merge K Sorted Lists {!isPremium && '🔒'}</h4>
+                <h4>Merge K Sorted Lists {!isPremium && ''}</h4>
                 <p>Merge K sorted linked lists into one sorted list</p>
                 {isPremium ? (
                   <button className="start-btn">Start Challenge</button>
@@ -244,7 +244,7 @@ export default function Dashboard() {
                     className="start-btn locked-btn" 
                     onClick={() => setShowPricing(true)}
                   >
-                    🔒 Unlock with Premium
+                    Unlock with Premium
                   </button>
                 )}
               </div>

@@ -26,17 +26,17 @@ export default function PricingModal({ onClose }) {
           {/* Free Tier */}
           <div className="tier-card free">
             <div className="tier-badge">Current Plan</div>
-            <h3>🆓 Free Warrior</h3>
+            <h3>Free Warrior</h3>
             <div className="price">
               <span className="amount">$0</span>
               <span className="period">/month</span>
             </div>
             <ul className="features">
-              <li>✅ 50 coding problems</li>
-              <li>✅ Standard XP rewards</li>
-              <li>✅ Basic towers</li>
-              <li>❌ Limited matchmaking</li>
-              <li>❌ Contains ads</li>
+              <li>50 coding problems</li>
+              <li>Standard XP rewards</li>
+              <li>Basic towers</li>
+              <li>Limited matchmaking</li>
+              <li>Contains ads</li>
             </ul>
             <button className="tier-btn current" disabled>
               Current Plan
@@ -45,8 +45,8 @@ export default function PricingModal({ onClose }) {
 
           {/* Premium Tier */}
           <div className="tier-card premium">
-            <div className="tier-badge popular">⭐ Most Popular</div>
-            <h3>👑 Premium Champion</h3>
+            <div className="tier-badge popular"> Most Popular</div>
+            <h3>Premium Champion</h3>
             <div className="price">
               <span className="amount">${STRIPE_CONFIG.products.premium.price}</span>
               <span className="period">/month</span>
@@ -61,14 +61,14 @@ export default function PricingModal({ onClose }) {
               onClick={handleUpgrade}
               disabled={loading || isPremium}
             >
-              {loading ? '⏳ Loading...' : isPremium ? '✅ Subscribed' : '🚀 Upgrade Now'}
+              {loading ? 'Loading...' : isPremium ? ' Subscribed' : ' Upgrade Now'}
             </button>
-            <p className="money-back">💰 30-day money-back guarantee</p>
+            <p className="money-back">30-day money-back guarantee</p>
           </div>
         </div>
 
         <div className="pricing-footer">
-          <p>🔒 Secure payment powered by Stripe</p>
+          <p>Secure payment powered by Stripe</p>
           <p>Cancel anytime • No hidden fees</p>
         </div>
       </div>

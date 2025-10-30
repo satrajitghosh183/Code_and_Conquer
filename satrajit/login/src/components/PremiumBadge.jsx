@@ -9,7 +9,7 @@ export default function PremiumBadge() {
   return (
     <div className="premium-badge-container">
       <div className="premium-badge">
-        <span className="premium-icon">👑</span>
+        <span className="premium-icon"></span>
         <span className="premium-text">Premium</span>
       </div>
     </div>

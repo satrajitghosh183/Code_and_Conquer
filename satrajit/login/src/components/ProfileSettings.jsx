@@ -57,7 +57,7 @@ export default function ProfileSettings({ onClose }) {
     <div className="modal-overlay" onClick={onClose}>
       <div className="modal-content" onClick={(e) => e.stopPropagation()}>
         <div className="modal-header">
-          <h2>⚙️Profile Settings</h2>
+          <h2>Profile Settings</h2>
           <button className="close-btn" onClick={onClose}>✕</button>
         </div>
 
@@ -71,7 +71,7 @@ export default function ProfileSettings({ onClose }) {
               )}
             </div>
             <label className="upload-btn">
-              {uploading ? '⏳ Uploading...' : '📷 Change Photo'}
+              {uploading ? 'Uploading...' : 'Change Photo'}
               <input
                 type="file"
                 accept="image/*"
