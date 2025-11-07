@@ -5,13 +5,15 @@
   <title>Random YouTube Ad Demo</title>
   <style>
     #ad-overlay {
-      display: none; position: fixed; z-index: 9999;
+      display: none;
+      position: fixed; z-index: 9999;
       left: 0; top: 0; width: 100vw; height: 100vh;
-      background: rgba(10,10,10,0.92); justify-content: center;
-      align-items: center; flex-direction: column;
+      background: rgba(10,10,10,0.92);
+      justify-content: center; align-items: center; flex-direction: column;
     }
     #ad-overlay iframe {
-      width: 80vw; height: 45vw; max-width: 900px; max-height: 506px; border: none; box-shadow: 0 0 24px #333;
+      width: 80vw; height: 45vw; max-width: 900px; max-height: 506px;
+      border: none; box-shadow: 0 0 24px #333;
     }
     #skip-ad {
       margin-top: 10px; background: #fff; border: 0; font-size:1.2em; cursor:pointer;
@@ -23,31 +25,33 @@
   <!-- Trigger button for demo -->
   <button onclick="showVideoAd()">Show Video Ad</button>
   <div id="ad-overlay">
-     <!-- YouTube video player iframe -->
-    <iframe id="ad-frame" allow="autoplay"></iframe>
-    <!-- Skip button with countdown, disabled initially -->
+    <div id="player"></div>
     <button id="skip-ad" onclick="closeAd()" disabled>Skip Ad (30)</button>
   </div>
+  <!-- Load YouTube IFrame API -->
+  <script src="https://www.youtube.com/iframe_api"></script>
   <script>
     let countdownInterval;
-    // Show the video ad overlay and handle countdown/skip logic
+    let player;
+    let autoCloseTimeout;
+
     function showVideoAd() {
       fetch('/api/video-ad')
         .then(resp => resp.json())
         .then(data => {
-          // Get YouTube video ID from URL
           const videoId = data.youtube_url.split('v=')[1];
-          document.getElementById('ad-frame').src =
-            'https://www.youtube.com/embed/' + videoId +
-            '?autoplay=1&mute=0&controls=0&rel=0&modestbranding=1&showinfo=0';
           document.getElementById('ad-overlay').style.display = 'flex';
 
+          // Remove any previous player
+          document.getElementById('player').innerHTML = "";
+
+          // Reset skip button
           let skipBtn = document.getElementById('skip-ad');
           skipBtn.disabled = true;
           skipBtn.textContent = `Skip Ad (30)`;
           let timeLeft = 30;
           
-          // Wait 0.5 seconds before starting 30s countdown for video to load
+          // Wait 0.5 seconds then start 30-second countdown
           setTimeout(() => {
             countdownInterval = setInterval(() => {
               timeLeft--;
@@ -55,20 +59,46 @@
                 skipBtn.textContent = `Skip Ad (${timeLeft})`;
               } else {
                 skipBtn.textContent = "Skip Ad";
-                skipBtn.disabled = false;
+                skipBtn.disabled = false; // Enable button
                 clearInterval(countdownInterval);
               }
             }, 1000);
           }, 500);
+
+          // Create new YouTube player using IFrame API
+          player = new YT.Player('player', {
+            height: '405',
+            width: '720',
+            videoId: videoId,
+            playerVars: { 'autoplay': 1, 'controls': 0, 'rel': 0, 'modestbranding': 1 },
+            events: {
+              'onStateChange': onPlayerStateChange
+            }
+          });
         });
     }
-    // Closes the overlay and resets state
+
+    // Listen for video end event from YouTube IFrame API
+    function onPlayerStateChange(event) {
+      if (event.data == YT.PlayerState.ENDED) {
+        // When video finishes, wait 10 seconds, then auto-close ad if still open
+        autoCloseTimeout = setTimeout(() => {
+          closeAd();
+        }, 10000); // 10 seconds after video end
+      }
+    }
+
+    // Close ad overlay and reset state
     function closeAd() {
       document.getElementById('ad-overlay').style.display = 'none';
-      document.getElementById('ad-frame').src = '';
+      if (player) {
+        player.destroy();
+        player = null;
+      }
       let skipBtn = document.getElementById('skip-ad');
       skipBtn.disabled = true;
       clearInterval(countdownInterval);
+      clearTimeout(autoCloseTimeout);
     }
   </script>
 </body>
