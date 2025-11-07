@@ -38,20 +38,22 @@
           document.getElementById('ad-overlay').style.display = 'flex';
 
           let skipBtn = document.getElementById('skip-ad');
-          let timeLeft = 30;
           skipBtn.disabled = true;
-          skipBtn.textContent = `Skip Ad (${timeLeft})`;
-          countdownInterval = setInterval(() => {
-            timeLeft--;
-            if (timeLeft > 0) {
-              skipBtn.textContent = `Skip Ad (${timeLeft})`;
-            } else {
-              skipBtn.textContent = "Skip Ad";
-              skipBtn.disabled = false;
-              clearInterval(countdownInterval);
-            }
-          }, 1000);
-          setTimeout(closeAd, 32000); // Optional: auto-close after 32s
+          skipBtn.textContent = `Skip Ad (30)`;
+          let timeLeft = 30;
+
+          setTimeout(() => {
+            countdownInterval = setInterval(() => {
+              timeLeft--;
+              if (timeLeft > 0) {
+                skipBtn.textContent = `Skip Ad (${timeLeft})`;
+              } else {
+                skipBtn.textContent = "Skip Ad";
+                skipBtn.disabled = false;
+                clearInterval(countdownInterval);
+              }
+            }, 1000);
+          }, 500);
         });
     }
     function closeAd() {
