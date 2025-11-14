@@ -1,0 +1,9 @@
+{
+  "id": "7ba642ee-3236-4b56-88a9-f735fa4e15a8",
+  "problemId": "3",
+  "language": "javascript",
+  "code": "function solution(head) {\n    let prev = null;\n    let curr = head;\n    while (curr) {\n        let next = curr.next;\n        curr.next = prev;\n        prev = curr;\n        curr = next;\n    }\n    return prev;\n}\n",
+  "status": "pending",
+  "testResults": [],
+  "timestamp": "2025-10-31T03:05:08.280Z"
+}

@@ -1,0 +1,27 @@
+{
+  "name": "clash-royale-tower-defense",
+  "version": "2.0.0",
+  "description": "Clash Royale style 1v1 tower defense game with coding challenge integration",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "three": "^0.160.0"
+  },
+  "devDependencies": {
+    "vite": "^5.0.0"
+  },
+  "keywords": [
+    "tower-defense",
+    "clash-royale",
+    "webgl",
+    "threejs",
+    "game",
+    "1v1"
+  ],
+  "author": "Your Name",
+  "license": "MIT"
+}

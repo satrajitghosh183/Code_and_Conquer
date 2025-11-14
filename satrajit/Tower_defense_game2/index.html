@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Clash Royale Style Tower Defense - 1v1</title>
+  <link rel="stylesheet" href="styles.css">
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
+</head>
+<body>
+  <!-- Game Canvas Container -->
+  <div id="game-container"></div>
+  
+  <!-- Start Screen -->
+  <div id="start-screen">
+    <div class="start-content">
+      <h1 class="game-logo">⚔️ TOWER WARS ⚔️</h1>
+      <p class="game-subtitle">Clash Royale Style 1v1 Battle</p>
+      <p class="game-description">
+        Deploy units and buildings to destroy your opponent's towers!<br>
+        Earn credits by solving coding challenges to unlock upgrades.
+      </p>
+      <button id="start-btn" class="btn btn-primary" onclick="if(window.game) { window.game.startGame(); } else { console.error('Game not initialized'); }" type="button">START BATTLE</button>
+      
+      <div class="controls-info">
+        <h3>🎮 CONTROLS</h3>
+        <div class="control-grid">
+          <div class="control-item">
+            <kbd>1-4</kbd>
+            <span>Player 1 Cards</span>
+          </div>
+          <div class="control-item">
+            <kbd>7-0</kbd>
+            <span>Player 2 Cards</span>
+          </div>
+          <div class="control-item">
+            <kbd>Click</kbd>
+            <span>Deploy Unit/Building</span>
+          </div>
+          <div class="control-item">
+            <kbd>ESC</kbd>
+            <span>Cancel/Pause</span>
+          </div>
+          <div class="control-item">
+            <kbd>Right Drag</kbd>
+            <span>Rotate Camera</span>
+          </div>
+          <div class="control-item">
+            <kbd>Scroll</kbd>
+            <span>Zoom</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Game HUD -->
+  <div id="game-hud" class="hidden">
+    <!-- Timer & Match Status -->
+    <div id="timer-container">
+      <div id="timer">3:00</div>
+      <div id="match-status"></div>
+    </div>
+    
+    <!-- Player 1 HUD (Left) -->
+    <div id="player1-hud" class="player-hud left">
+      <div class="player-header">
+        <h2 class="player-name">PLAYER 1</h2>
+      </div>
+      
+      <div class="stats-bar">
+        <div class="stat-item">
+          <span class="stat-icon">⚡</span>
+          <div class="stat-content">
+            <div class="stat-label">Elixir</div>
+            <div class="stat-value" id="p1-elixir">5</div>
+          </div>
+        </div>
+        <div class="stat-item">
+          <span class="stat-icon">💰</span>
+          <div class="stat-content">
+            <div class="stat-label">Credits</div>
+            <div class="stat-value" id="p1-credits">1000</div>
+          </div>
+        </div>
+        <div class="stat-item">
+          <span class="stat-icon">💀</span>
+          <div class="stat-content">
+            <div class="stat-label">Kills</div>
+            <div class="stat-value" id="p1-kills">0</div>
+          </div>
+        </div>
+      </div>
+      
+      <div class="elixir-bar-container">
+        <div id="p1-elixir-bar" class="elixir-bar" style="width: 50%"></div>
+      </div>
+      
+      <div id="p1-deck" class="deck-container"></div>
+    </div>
+    
+    <!-- Player 2 HUD (Right) -->
+    <div id="player2-hud" class="player-hud right">
+      <div class="player-header">
+        <h2 class="player-name">PLAYER 2</h2>
+      </div>
+      
+      <div class="stats-bar">
+        <div class="stat-item">
+          <span class="stat-icon">⚡</span>
+          <div class="stat-content">
+            <div class="stat-label">Elixir</div>
+            <div class="stat-value" id="p2-elixir">5</div>
+          </div>
+        </div>
+        <div class="stat-item">
+          <span class="stat-icon">💰</span>
+          <div class="stat-content">
+            <div class="stat-label">Credits</div>
+            <div class="stat-value" id="p2-credits">1000</div>
+          </div>
+        </div>
+        <div class="stat-item">
+          <span class="stat-icon">💀</span>
+          <div class="stat-content">
+            <div class="stat-label">Kills</div>
+            <div class="stat-value" id="p2-kills">0</div>
+          </div>
+        </div>
+      </div>
+      
+      <div class="elixir-bar-container">
+        <div id="p2-elixir-bar" class="elixir-bar" style="width: 50%"></div>
+      </div>
+      
+      <div id="p2-deck" class="deck-container"></div>
+    </div>
+    
+    <!-- Message Container -->
+    <div id="message-container"></div>
+  </div>
+  
+  <!-- Victory Screen -->
+  <div id="victory-screen" class="hidden">
+    <div class="victory-content">
+      <h1 id="victory-title">VICTORY!</h1>
+      <div id="victory-stats"></div>
+      <button id="restart-btn" class="btn btn-primary">PLAY AGAIN</button>
+    </div>
+  </div>
+  
+  <!-- Pause Screen -->
+  <div id="pause-screen" class="hidden">
+    <div class="pause-content">
+      <h1>PAUSED</h1>
+      <button id="resume-btn" class="btn btn-primary">RESUME</button>
+    </div>
+  </div>
+
+  <script type="module" src="main.js"></script>
+</body>
+</html>
