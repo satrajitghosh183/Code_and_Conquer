@@ -1,7 +1,5 @@
 ## Code & Conquer – Ad System Overview
 
-This project is a full‑stack web app (React + Node/Express). The changes below describe the **ad system** that was added to help understand and modify it.
-
 ### What the Ad System Does
 
 - **Shows an ad periodically** while a user is on the site (interval is configurable).
