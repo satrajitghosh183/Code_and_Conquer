@@ -36,4 +36,5 @@ judge/sandbox/
 
 # Data (if using local storage)
 data/submissions/
+/data
 
