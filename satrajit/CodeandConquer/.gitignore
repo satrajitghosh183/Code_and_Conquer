@@ -38,3 +38,4 @@ judge/sandbox/
 data/submissions/
 /data
 
+*.glb
