@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from 'react';
 import { getRandomAd } from '../services/api';
 
-const AD_INTERVAL_MS = 1 * 60 * 1000; // 30 minutes in milliseconds
+const AD_INTERVAL_MS = 30 * 60 * 1000; // 30 minutes in milliseconds
 
 /**
  * Custom hook to track time on site and trigger ads every 30 minutes
