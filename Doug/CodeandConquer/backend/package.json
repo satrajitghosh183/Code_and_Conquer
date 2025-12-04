@@ -1,0 +1,36 @@
+{
+  "name": "code-and-conquer-backend",
+  "version": "1.0.0",
+  "description": "Code and Conquer Backend - Combined LeetCode Clone + Tower Defense Game",
+  "main": "src/index.js",
+  "type": "module",
+  "scripts": {
+    "start": "node src/index.js",
+    "dev": "nodemon src/index.js",
+    "sync-tags": "node src/scripts/syncProblemTags.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "@supabase/supabase-js": "^2.39.3",
+    "bull": "^4.16.5",
+    "cors": "^2.8.5",
+    "dockerode": "^4.0.9",
+    "dotenv": "^16.6.1",
+    "express": "^4.21.2",
+    "fs-extra": "^11.3.2",
+    "ioredis": "^5.8.2",
+    "mathjs": "^15.0.0",
+    "multer": "^2.0.2",
+    "regression": "^2.0.1",
+    "socket.io": "^4.8.1",
+    "stripe": "^19.3.1",
+    "tar-stream": "^3.1.7",
+    "uuid": "^9.0.1"
+  },
+  "devDependencies": {
+    "@types/node": "^24.9.1",
+    "nodemon": "^3.1.10"
+  }
+}

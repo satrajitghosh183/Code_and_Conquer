@@ -1,0 +1,125 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  /* Sunset Glassmorphism Color Palette */
+  --primary: #f093fb;
+  --secondary: #f5576c;
+  --accent: #ec4899;
+  --background: #f093fb;
+  --surface: rgba(255, 255, 255, 0.15);
+  --surface-hover: rgba(255, 255, 255, 0.25);
+  --text: #000000;
+  --textSecondary: #000000;
+  --border: rgba(255, 255, 255, 0.2);
+  --border-hover: rgba(255, 255, 255, 0.4);
+  
+  /* Legacy support */
+  --bg-primary: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+  --bg-secondary: rgba(255, 255, 255, 0.15);
+  --bg-tertiary: rgba(255, 255, 255, 0.1);
+  --text-primary: #000000;
+  --text-secondary: #000000;
+  --accent-cyan: #f093fb;
+  --accent-purple: #f5576c;
+  --accent-pink: #ec4899;
+  --accent-yellow: #fbbf24;
+  --easy: #10b981;
+  --medium: #f59e0b;
+  --hard: #ef4444;
+  
+  /* Glassmorphism blur */
+  --blur: blur(20px);
+  --blur-strong: blur(30px);
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Inter', 'SF Pro Display', 'SF Pro Text', 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background: linear-gradient(135deg, #0a0a0f 0%, #1a0a1f 25%, #0a0a1f 50%, #1a0a0f 75%, #0a0a0f 100%);
+  background-attachment: fixed;
+  color: #ffffff;
+  overflow-x: hidden;
+  min-height: 100vh;
+  position: relative;
+}
+
+body::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: 
+    radial-gradient(circle at 20% 50%, rgba(0, 170, 255, 0.15) 0%, transparent 50%),
+    radial-gradient(circle at 80% 80%, rgba(138, 43, 226, 0.15) 0%, transparent 50%),
+    radial-gradient(circle at 40% 20%, rgba(0, 212, 255, 0.1) 0%, transparent 50%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+code {
+  font-family: 'Fira Code', 'Courier New', monospace;
+}
+
+#root {
+  min-height: 100vh;
+}
+
+/* Scrollbar styling */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.3);
+  border-radius: 4px;
+  backdrop-filter: var(--blur);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.5);
+}
+
+/* Animations */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.fade-in {
+  animation: fadeIn 0.3s ease-out;
+}
+
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}
+
+.pulse {
+  animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+

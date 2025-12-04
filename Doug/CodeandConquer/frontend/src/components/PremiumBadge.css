@@ -1,0 +1,28 @@
+.premium-badge-container {
+  display: inline-block;
+}
+
+.premium-badge {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: linear-gradient(135deg, #ffd700 0%, #ffed4e 100%);
+  color: #000;
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+  box-shadow: 0 2px 8px rgba(255, 215, 0, 0.4);
+  animation: shine 2s infinite;
+}
+
+.premium-icon {
+  font-size: 14px;
+}
+
+@keyframes shine {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.8; }
+}
+
