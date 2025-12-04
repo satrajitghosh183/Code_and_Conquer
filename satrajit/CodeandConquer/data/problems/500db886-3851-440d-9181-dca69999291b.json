@@ -1,0 +1,88 @@
+{
+  "id": "500db886-3851-440d-9181-dca69999291b",
+  "title": "Remove Nodes From Linked List",
+  "slug": "remove-nodes-from-linked-list",
+  "description": "You are given the `head` of a linked list.\n\nRemove every node which has a node with a **strictly greater** value anywhere to the right side of it.\n\nReturn _the_ `head` _of the modified linked list._\n\n**Example 1:**\n\n**Input:** head = \\[5,2,13,3,8\\]\n**Output:** \\[13,8\\]\n**Explanation:** The nodes that should be removed are 5, 2 and 3.\n- Node 13 is to the right of node 5.\n- Node 13 is to the right of node 2.\n- Node 8 is to the right of node 3.\n\n**Example 2:**\n\n**Input:** head = \\[1,1,1,1\\]\n**Output:** \\[1,1,1,1\\]\n**Explanation:** Every node has value 1, so no nodes are removed.\n\n**Constraints:**\n\n*   The number of the nodes in the given list is in the range `[1, 105]`.\n*   `1 <= Node.val <= 105`",
+  "difficulty": "Medium",
+  "category": null,
+  "xpReward": 0,
+  "timeLimitMs": 5000,
+  "memoryLimitMb": 256,
+  "starterCode": {},
+  "solutionCode": "",
+  "hints": [],
+  "isPremium": false,
+  "createdBy": null,
+  "testCases": [
+    {
+      "input": [
+        [
+          5,
+          2,
+          13,
+          3,
+          8
+        ]
+      ],
+      "expectedOutput": [
+        13,
+        8
+      ]
+    },
+    {
+      "input": [
+        [
+          1,
+          1,
+          1,
+          1
+        ]
+      ],
+      "expectedOutput": [
+        1,
+        1,
+        1,
+        1
+      ]
+    }
+  ],
+  "hiddenTestCases": [
+    {
+      "input": [
+        [
+          5,
+          2,
+          13,
+          3,
+          8
+        ]
+      ],
+      "expectedOutput": [
+        13,
+        8
+      ]
+    },
+    {
+      "input": [
+        [
+          1,
+          1,
+          1,
+          1
+        ]
+      ],
+      "expectedOutput": [
+        1,
+        1,
+        1,
+        1
+      ]
+    }
+  ],
+  "tags": [],
+  "constraints": [],
+  "examples": [],
+  "problemNumber": null,
+  "createdAt": "2025-11-14T21:26:00.743398+00:00",
+  "updatedAt": "2025-12-04T04:35:29.130Z"
+}

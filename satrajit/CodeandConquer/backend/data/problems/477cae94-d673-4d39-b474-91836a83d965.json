@@ -1,0 +1,57 @@
+{
+  "id": "477cae94-d673-4d39-b474-91836a83d965",
+  "title": "Jump Game VII",
+  "slug": "jump-game-vii",
+  "description": "You are given a **0-indexed** binary string `s` and two integers `minJump` and `maxJump`. In the beginning, you are standing at index `0`, which is equal to `'0'`. You can move from index `i` to index `j` if the following conditions are fulfilled:\n\n*   `i + minJump <= j <= min(i + maxJump, s.length - 1)`, and\n*   `s[j] == '0'`.\n\nReturn `true` _if you can reach index_ `s.length - 1` _in_ `s`_, or_ `false` _otherwise._\n\n**Example 1:**\n\n**Input:** s =  \"011010 \", minJump = 2, maxJump = 3\n**Output:** true\n**Explanation:**\nIn the first step, move from index 0 to index 3. \nIn the second step, move from index 3 to index 5.\n\n**Example 2:**\n\n**Input:** s =  \"01101110 \", minJump = 2, maxJump = 3\n**Output:** false\n\n**Constraints:**\n\n*   `2 <= s.length <= 105`\n*   `s[i]` is either `'0'` or `'1'`.\n*   `s[0] == '0'`\n*   `1 <= minJump <= maxJump < s.length`",
+  "difficulty": "Medium",
+  "category": null,
+  "xpReward": 0,
+  "timeLimitMs": 5000,
+  "memoryLimitMb": 256,
+  "starterCode": [],
+  "solutionCode": "",
+  "hints": [],
+  "isPremium": false,
+  "createdBy": null,
+  "testCases": [
+    {
+      "input": [
+        "011010 ",
+        2,
+        3
+      ],
+      "expectedOutput": true
+    },
+    {
+      "input": [
+        "01101110 ",
+        2,
+        3
+      ],
+      "expectedOutput": "false\n\n**Constraints:**\n\n*   `2 <= s.length <= 105`\n*   `s[i]` is either `'0'` or `'1'`.\n*   `s[0] == '0'`\n*   `1 <= minJump <= maxJump < s.length`"
+    }
+  ],
+  "hiddenTestCases": [
+    {
+      "input": [
+        "011010 ",
+        2,
+        3
+      ],
+      "expectedOutput": true
+    },
+    {
+      "input": [
+        "01101110 ",
+        2,
+        3
+      ],
+      "expectedOutput": "false\n\n**Constraints:**\n\n*   `2 <= s.length <= 105`\n*   `s[i]` is either `'0'` or `'1'`.\n*   `s[0] == '0'`\n*   `1 <= minJump <= maxJump < s.length`"
+    }
+  ],
+  "tags": [],
+  "constraints": [],
+  "examples": [],
+  "createdAt": "2025-11-14T21:23:28.575764+00:00",
+  "updatedAt": "2025-12-04T04:36:38.297Z"
+}

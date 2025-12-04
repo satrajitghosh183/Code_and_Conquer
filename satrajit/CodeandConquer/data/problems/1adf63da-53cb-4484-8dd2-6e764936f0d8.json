@@ -1,0 +1,56 @@
+{
+  "id": "1adf63da-53cb-4484-8dd2-6e764936f0d8",
+  "title": "Determine Color of a Chessboard Square",
+  "slug": "determine-color-of-a-chessboard-square",
+  "description": "You are given `coordinates`, a string that represents the coordinates of a square of the chessboard. Below is a chessboard for your reference.\n\nReturn `true` _if the square is white, and_ `false` _if the square is black_.\n\nThe coordinate will always represent a valid chessboard square. The coordinate will always have the letter first, and the number second.\n\n**Example 1:**\n\n**Input:** coordinates =  \"a1 \"\n**Output:** false\n**Explanation:** From the chessboard above, the square with coordinates  \"a1 \" is black, so return false.\n\n**Example 2:**\n\n**Input:** coordinates =  \"h3 \"\n**Output:** true\n**Explanation:** From the chessboard above, the square with coordinates  \"h3 \" is white, so return true.\n\n**Example 3:**\n\n**Input:** coordinates =  \"c7 \"\n**Output:** false\n\n**Constraints:**\n\n*   `coordinates.length == 2`\n*   `'a' <= coordinates[0] <= 'h'`\n*   `'1' <= coordinates[1] <= '8'`",
+  "difficulty": "Easy",
+  "category": null,
+  "xpReward": 0,
+  "timeLimitMs": 5000,
+  "memoryLimitMb": 256,
+  "starterCode": {},
+  "solutionCode": "",
+  "hints": [],
+  "isPremium": false,
+  "createdBy": null,
+  "testCases": [
+    {
+      "input": [
+        "a1 "
+      ],
+      "expectedOutput": false
+    },
+    {
+      "input": [
+        "h3 "
+      ],
+      "expectedOutput": true
+    },
+    {
+      "input": [
+        "c7 "
+      ],
+      "expectedOutput": "false\n\n**Constraints:**\n\n*   `coordinates.length == 2`\n*   `'a' <= coordinates[0] <= 'h'`\n*   `'1' <= coordinates[1] <= '8'`"
+    }
+  ],
+  "hiddenTestCases": [
+    {
+      "input": [
+        "a1 "
+      ],
+      "expectedOutput": false
+    },
+    {
+      "input": [
+        "h3 "
+      ],
+      "expectedOutput": true
+    }
+  ],
+  "tags": [],
+  "constraints": [],
+  "examples": [],
+  "problemNumber": null,
+  "createdAt": "2025-11-14T21:23:13.091044+00:00",
+  "updatedAt": "2025-12-04T04:36:44.105Z"
+}

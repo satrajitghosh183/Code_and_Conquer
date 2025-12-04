@@ -1,0 +1,56 @@
+{
+  "id": "f831538c-0802-4985-a972-d6eb42d76864",
+  "title": "Minimum Garden Perimeter to Collect Enough Apples",
+  "slug": "minimum-garden-perimeter-to-collect-enough-apples",
+  "description": "In a garden represented as an infinite 2D grid, there is an apple tree planted at **every** integer coordinate. The apple tree planted at an integer coordinate `(i, j)` has `|i| + |j|` apples growing on it.\n\nYou will buy an axis-aligned **square plot** of land that is centered at `(0, 0)`.\n\nGiven an integer `neededApples`, return _the **minimum perimeter** of a plot such that **at least**_ `neededApples` _apples are **inside or on** the perimeter of that plot_.\n\nThe value of `|x|` is defined as:\n\n*   `x` if `x >= 0`\n*   `-x` if `x < 0`\n\n**Example 1:**\n\n**Input:** neededApples = 1\n**Output:** 8\n**Explanation:** A square plot of side length 1 does not contain any apples.\nHowever, a square plot of side length 2 has 12 apples inside (as depicted in the image above).\nThe perimeter is 2 \\* 4 = 8.\n\n**Example 2:**\n\n**Input:** neededApples = 13\n**Output:** 16\n\n**Example 3:**\n\n**Input:** neededApples = 1000000000\n**Output:** 5040\n\n**Constraints:**\n\n*   `1 <= neededApples <= 1015`",
+  "difficulty": "Medium",
+  "category": null,
+  "xpReward": 0,
+  "timeLimitMs": 5000,
+  "memoryLimitMb": 256,
+  "starterCode": {},
+  "solutionCode": "",
+  "hints": [],
+  "isPremium": false,
+  "createdBy": null,
+  "testCases": [
+    {
+      "input": [
+        1
+      ],
+      "expectedOutput": 8
+    },
+    {
+      "input": [
+        13
+      ],
+      "expectedOutput": 16
+    },
+    {
+      "input": [
+        1000000000
+      ],
+      "expectedOutput": "5040\n\n**Constraints:**\n\n*   `1 <= neededApples <= 1015`"
+    }
+  ],
+  "hiddenTestCases": [
+    {
+      "input": [
+        1
+      ],
+      "expectedOutput": 8
+    },
+    {
+      "input": [
+        13
+      ],
+      "expectedOutput": 16
+    }
+  ],
+  "tags": [],
+  "constraints": [],
+  "examples": [],
+  "problemNumber": null,
+  "createdAt": "2025-11-14T21:23:47.193233+00:00",
+  "updatedAt": "2025-12-04T04:36:30.042Z"
+}

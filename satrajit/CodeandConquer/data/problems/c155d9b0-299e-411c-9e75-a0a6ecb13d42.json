@@ -1,0 +1,89 @@
+{
+  "id": "c155d9b0-299e-411c-9e75-a0a6ecb13d42",
+  "title": "Longest Word With All Prefixes",
+  "slug": "longest-word-with-all-prefixes",
+  "description": "Given an array of strings `words`, find the **longest** string in `words` such that **every prefix** of it is also in `words`.\n\n*   For example, let `words = [ \"a \", \"app \", \"ap \"]`. The string `\"app \"` has prefixes `\"ap \"` and `\"a \"`, all of which are in `words`.\n\nReturn _the string described above. If there is more than one string with the same length, return the **lexicographically smallest** one, and if no string exists, return_ `\" \"`.\n\n**Example 1:**\n\n**Input:** words = \\[ \"k \", \"ki \", \"kir \", \"kira \",  \"kiran \"\\]\n**Output:**  \"kiran \"\n**Explanation:**  \"kiran \" has prefixes  \"kira \",  \"kir \",  \"ki \", and  \"k \", and all of them appear in words.\n\n**Example 2:**\n\n**Input:** words = \\[ \"a \",  \"banana \",  \"app \",  \"appl \",  \"ap \",  \"apply \",  \"apple \"\\]\n**Output:**  \"apple \"\n**Explanation:** Both  \"apple \" and  \"apply \" have all their prefixes in words.\nHowever,  \"apple \" is lexicographically smaller, so we return that.\n\n**Example 3:**\n\n**Input:** words = \\[ \"abc \",  \"bc \",  \"ab \",  \"qwe \"\\]\n**Output:**  \" \"\n\n**Constraints:**\n\n*   `1 <= words.length <= 105`\n*   `1 <= words[i].length <= 105`\n*   `1 <= sum(words[i].length) <= 105`",
+  "difficulty": "Medium",
+  "category": null,
+  "xpReward": 0,
+  "timeLimitMs": 5000,
+  "memoryLimitMb": 256,
+  "starterCode": {},
+  "solutionCode": "",
+  "hints": [],
+  "isPremium": false,
+  "createdBy": null,
+  "testCases": [
+    {
+      "input": [
+        [
+          "k ",
+          "ki ",
+          "kir ",
+          "kira ",
+          "kiran "
+        ]
+      ],
+      "expectedOutput": "kiran "
+    },
+    {
+      "input": [
+        [
+          "a ",
+          "banana ",
+          "app ",
+          "appl ",
+          "ap ",
+          "apply ",
+          "apple "
+        ]
+      ],
+      "expectedOutput": "apple "
+    },
+    {
+      "input": [
+        [
+          "abc ",
+          "bc ",
+          "ab ",
+          "qwe "
+        ]
+      ],
+      "expectedOutput": "\" \"\n\n**Constraints:**\n\n*   `1 <= words.length <= 105`\n*   `1 <= words[i].length <= 105`\n*   `1 <= sum(words[i].length) <= 105`"
+    }
+  ],
+  "hiddenTestCases": [
+    {
+      "input": [
+        [
+          "k ",
+          "ki ",
+          "kir ",
+          "kira ",
+          "kiran "
+        ]
+      ],
+      "expectedOutput": "kiran "
+    },
+    {
+      "input": [
+        [
+          "a ",
+          "banana ",
+          "app ",
+          "appl ",
+          "ap ",
+          "apply ",
+          "apple "
+        ]
+      ],
+      "expectedOutput": "apple "
+    }
+  ],
+  "tags": [],
+  "constraints": [],
+  "examples": [],
+  "problemNumber": null,
+  "createdAt": "2025-11-14T21:23:25.319955+00:00",
+  "updatedAt": "2025-12-04T04:36:39.606Z"
+}

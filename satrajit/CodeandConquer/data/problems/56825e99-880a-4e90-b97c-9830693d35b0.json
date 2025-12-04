@@ -1,0 +1,129 @@
+{
+  "id": "56825e99-880a-4e90-b97c-9830693d35b0",
+  "title": "Maximum Non Negative Product in a Matrix",
+  "slug": "maximum-non-negative-product-in-a-matrix",
+  "description": "You are given a `m x n` matrix `grid`. Initially, you are located at the top-left corner `(0, 0)`, and in each step, you can only **move right or down** in the matrix.\n\nAmong all possible paths starting from the top-left corner `(0, 0)` and ending in the bottom-right corner `(m - 1, n - 1)`, find the path with the **maximum non-negative product**. The product of a path is the product of all integers in the grid cells visited along the path.\n\nReturn the _maximum non-negative product **modulo**_ `109 + 7`. _If the maximum product is **negative**, return_ `-1`.\n\nNotice that the modulo is performed after getting the maximum product.\n\n**Example 1:**\n\n**Input:** grid = \\[\\[-1,-2,-3\\],\\[-2,-3,-3\\],\\[-3,-3,-2\\]\\]\n**Output:** -1\n**Explanation:** It is not possible to get non-negative product in the path from (0, 0) to (2, 2), so return -1.\n\n**Example 2:**\n\n**Input:** grid = \\[\\[1,-2,1\\],\\[1,-2,1\\],\\[3,-4,1\\]\\]\n**Output:** 8\n**Explanation:** Maximum non-negative product is shown (1 \\* 1 \\* -2 \\* -4 \\* 1 = 8).\n\n**Example 3:**\n\n**Input:** grid = \\[\\[1,3\\],\\[0,-4\\]\\]\n**Output:** 0\n**Explanation:** Maximum non-negative product is shown (1 \\* 0 \\* -4 = 0).\n\n**Constraints:**\n\n*   `m == grid.length`\n*   `n == grid[i].length`\n*   `1 <= m, n <= 15`\n*   `-4 <= grid[i][j] <= 4`",
+  "difficulty": "Medium",
+  "category": null,
+  "xpReward": 0,
+  "timeLimitMs": 5000,
+  "memoryLimitMb": 256,
+  "starterCode": {},
+  "solutionCode": "",
+  "hints": [],
+  "isPremium": false,
+  "createdBy": null,
+  "testCases": [
+    {
+      "input": [
+        [
+          [
+            -1,
+            -2,
+            -3
+          ],
+          [
+            -2,
+            -3,
+            -3
+          ],
+          [
+            -3,
+            -3,
+            -2
+          ]
+        ]
+      ],
+      "expectedOutput": -1
+    },
+    {
+      "input": [
+        [
+          [
+            1,
+            -2,
+            1
+          ],
+          [
+            1,
+            -2,
+            1
+          ],
+          [
+            3,
+            -4,
+            1
+          ]
+        ]
+      ],
+      "expectedOutput": 8
+    },
+    {
+      "input": [
+        [
+          [
+            1,
+            3
+          ],
+          [
+            0,
+            -4
+          ]
+        ]
+      ],
+      "expectedOutput": 0
+    }
+  ],
+  "hiddenTestCases": [
+    {
+      "input": [
+        [
+          [
+            -1,
+            -2,
+            -3
+          ],
+          [
+            -2,
+            -3,
+            -3
+          ],
+          [
+            -3,
+            -3,
+            -2
+          ]
+        ]
+      ],
+      "expectedOutput": -1
+    },
+    {
+      "input": [
+        [
+          [
+            1,
+            -2,
+            1
+          ],
+          [
+            1,
+            -2,
+            1
+          ],
+          [
+            3,
+            -4,
+            1
+          ]
+        ]
+      ],
+      "expectedOutput": 8
+    }
+  ],
+  "tags": [],
+  "constraints": [],
+  "examples": [],
+  "problemNumber": null,
+  "createdAt": "2025-11-14T21:22:22.542915+00:00",
+  "updatedAt": "2025-12-04T04:37:13.962Z"
+}

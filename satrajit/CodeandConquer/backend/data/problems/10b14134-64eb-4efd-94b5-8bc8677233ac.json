@@ -1,0 +1,60 @@
+{
+  "id": "10b14134-64eb-4efd-94b5-8bc8677233ac",
+  "title": "Sum of Digits of String After Convert",
+  "slug": "sum-of-digits-of-string-after-convert",
+  "description": "You are given a string `s` consisting of lowercase English letters, and an integer `k`.\n\nFirst, **convert** `s` into an integer by replacing each letter with its position in the alphabet (i.e., replace `'a'` with `1`, `'b'` with `2`, ..., `'z'` with `26`). Then, **transform** the integer by replacing it with the **sum of its digits**. Repeat the **transform** operation `k` **times** in total.\n\nFor example, if `s = \"zbax \"` and `k = 2`, then the resulting integer would be `8` by the following operations:\n\n*   **Convert**: `\"zbax \" ➝ \"(26)(2)(1)(24) \" ➝ \"262124 \" ➝ 262124`\n*   **Transform #1**: `262124 ➝ 2 + 6 + 2 + 1 + 2 + 4 ➝ 17`\n*   **Transform #2**: `17 ➝ 1 + 7 ➝ 8`\n\nReturn _the resulting integer after performing the operations described above_.\n\n**Example 1:**\n\n**Input:** s =  \"iiii \", k = 1\n**Output:** 36\n**Explanation:** The operations are as follows:\n- Convert:  \"iiii \" ➝  \"(9)(9)(9)(9) \" ➝  \"9999 \" ➝ 9999\n- Transform #1: 9999 ➝ 9 + 9 + 9 + 9 ➝ 36\nThus the resulting integer is 36.\n\n**Example 2:**\n\n**Input:** s =  \"leetcode \", k = 2\n**Output:** 6\n**Explanation:** The operations are as follows:\n- Convert:  \"leetcode \" ➝  \"(12)(5)(5)(20)(3)(15)(4)(5) \" ➝  \"12552031545 \" ➝ 12552031545\n- Transform #1: 12552031545 ➝ 1 + 2 + 5 + 5 + 2 + 0 + 3 + 1 + 5 + 4 + 5 ➝ 33\n- Transform #2: 33 ➝ 3 + 3 ➝ 6\nThus the resulting integer is 6.\n\n**Example 3:**\n\n**Input:** s =  \"zbax \", k = 2\n**Output:** 8\n\n**Constraints:**\n\n*   `1 <= s.length <= 100`\n*   `1 <= k <= 10`\n*   `s` consists of lowercase English letters.",
+  "difficulty": "Easy",
+  "category": null,
+  "xpReward": 0,
+  "timeLimitMs": 5000,
+  "memoryLimitMb": 256,
+  "starterCode": [],
+  "solutionCode": "",
+  "hints": [],
+  "isPremium": false,
+  "createdBy": null,
+  "testCases": [
+    {
+      "input": [
+        "iiii ",
+        1
+      ],
+      "expectedOutput": 36
+    },
+    {
+      "input": [
+        "leetcode ",
+        2
+      ],
+      "expectedOutput": 6
+    },
+    {
+      "input": [
+        "zbax ",
+        2
+      ],
+      "expectedOutput": "8\n\n**Constraints:**\n\n*   `1 <= s.length <= 100`\n*   `1 <= k <= 10`\n*   `s` consists of lowercase English letters."
+    }
+  ],
+  "hiddenTestCases": [
+    {
+      "input": [
+        "iiii ",
+        1
+      ],
+      "expectedOutput": 36
+    },
+    {
+      "input": [
+        "leetcode ",
+        2
+      ],
+      "expectedOutput": 6
+    }
+  ],
+  "tags": [],
+  "constraints": [],
+  "examples": [],
+  "createdAt": "2025-11-14T21:23:45.610877+00:00",
+  "updatedAt": "2025-12-04T04:36:30.873Z"
+}

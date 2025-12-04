@@ -1,0 +1,152 @@
+{
+  "id": "e9a698c2-6aa5-4a58-8188-76ad7a8ff26b",
+  "title": "Spiral Matrix IV",
+  "slug": "spiral-matrix-iv",
+  "description": "You are given two integers `m` and `n`, which represent the dimensions of a matrix.\n\nYou are also given the `head` of a linked list of integers.\n\nGenerate an `m x n` matrix that contains the integers in the linked list presented in **spiral** order **(clockwise)**, starting from the **top-left** of the matrix. If there are remaining empty spaces, fill them with `-1`.\n\nReturn _the generated matrix_.\n\n**Example 1:**\n\n**Input:** m = 3, n = 5, head = \\[3,0,2,6,8,1,7,9,4,2,5,5,0\\]\n**Output:** \\[\\[3,0,2,6,8\\],\\[5,0,-1,-1,1\\],\\[5,2,4,9,7\\]\\]\n**Explanation:** The diagram above shows how the values are printed in the matrix.\nNote that the remaining spaces in the matrix are filled with -1.\n\n**Example 2:**\n\n**Input:** m = 1, n = 4, head = \\[0,1,2\\]\n**Output:** \\[\\[0,1,2,-1\\]\\]\n**Explanation:** The diagram above shows how the values are printed from left to right in the matrix.\nThe last space in the matrix is set to -1.\n\n**Constraints:**\n\n*   `1 <= m, n <= 105`\n*   `1 <= m * n <= 105`\n*   The number of nodes in the list is in the range `[1, m * n]`.\n*   `0 <= Node.val <= 1000`",
+  "difficulty": "Medium",
+  "category": null,
+  "xpReward": 0,
+  "timeLimitMs": 5000,
+  "memoryLimitMb": 256,
+  "starterCode": {},
+  "solutionCode": "",
+  "hints": [],
+  "isPremium": false,
+  "createdBy": null,
+  "testCases": [
+    {
+      "input": [
+        3,
+        5,
+        [
+          3,
+          0,
+          2,
+          6,
+          8,
+          1,
+          7,
+          9,
+          4,
+          2,
+          5,
+          5,
+          0
+        ]
+      ],
+      "expectedOutput": [
+        [
+          3,
+          0,
+          2,
+          6,
+          8
+        ],
+        [
+          5,
+          0,
+          -1,
+          -1,
+          1
+        ],
+        [
+          5,
+          2,
+          4,
+          9,
+          7
+        ]
+      ]
+    },
+    {
+      "input": [
+        1,
+        4,
+        [
+          0,
+          1,
+          2
+        ]
+      ],
+      "expectedOutput": [
+        [
+          0,
+          1,
+          2,
+          -1
+        ]
+      ]
+    }
+  ],
+  "hiddenTestCases": [
+    {
+      "input": [
+        3,
+        5,
+        [
+          3,
+          0,
+          2,
+          6,
+          8,
+          1,
+          7,
+          9,
+          4,
+          2,
+          5,
+          5,
+          0
+        ]
+      ],
+      "expectedOutput": [
+        [
+          3,
+          0,
+          2,
+          6,
+          8
+        ],
+        [
+          5,
+          0,
+          -1,
+          -1,
+          1
+        ],
+        [
+          5,
+          2,
+          4,
+          9,
+          7
+        ]
+      ]
+    },
+    {
+      "input": [
+        1,
+        4,
+        [
+          0,
+          1,
+          2
+        ]
+      ],
+      "expectedOutput": [
+        [
+          0,
+          1,
+          2,
+          -1
+        ]
+      ]
+    }
+  ],
+  "tags": [],
+  "constraints": [],
+  "examples": [],
+  "problemNumber": null,
+  "createdAt": "2025-11-14T21:25:18.583382+00:00",
+  "updatedAt": "2025-12-04T04:35:50.086Z"
+}

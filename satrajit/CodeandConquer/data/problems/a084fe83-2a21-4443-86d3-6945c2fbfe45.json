@@ -1,0 +1,72 @@
+{
+  "id": "a084fe83-2a21-4443-86d3-6945c2fbfe45",
+  "title": "Max Sum of a Pair With Equal Sum of Digits",
+  "slug": "max-sum-of-a-pair-with-equal-sum-of-digits",
+  "description": "You are given a **0-indexed** array `nums` consisting of **positive** integers. You can choose two indices `i` and `j`, such that `i != j`, and the sum of digits of the number `nums[i]` is equal to that of `nums[j]`.\n\nReturn _the **maximum** value of_ `nums[i] + nums[j]` _that you can obtain over all possible indices_ `i` _and_ `j` _that satisfy the conditions._\n\n**Example 1:**\n\n**Input:** nums = \\[18,43,36,13,7\\]\n**Output:** 54\n**Explanation:** The pairs (i, j) that satisfy the conditions are:\n- (0, 2), both numbers have a sum of digits equal to 9, and their sum is 18 + 36 = 54.\n- (1, 4), both numbers have a sum of digits equal to 7, and their sum is 43 + 7 = 50.\nSo the maximum sum that we can obtain is 54.\n\n**Example 2:**\n\n**Input:** nums = \\[10,12,19,14\\]\n**Output:** -1\n**Explanation:** There are no two numbers that satisfy the conditions, so we return -1.\n\n**Constraints:**\n\n*   `1 <= nums.length <= 105`\n*   `1 <= nums[i] <= 109`",
+  "difficulty": "Medium",
+  "category": null,
+  "xpReward": 0,
+  "timeLimitMs": 5000,
+  "memoryLimitMb": 256,
+  "starterCode": {},
+  "solutionCode": "",
+  "hints": [],
+  "isPremium": false,
+  "createdBy": null,
+  "testCases": [
+    {
+      "input": [
+        [
+          18,
+          43,
+          36,
+          13,
+          7
+        ]
+      ],
+      "expectedOutput": 54
+    },
+    {
+      "input": [
+        [
+          10,
+          12,
+          19,
+          14
+        ]
+      ],
+      "expectedOutput": -1
+    }
+  ],
+  "hiddenTestCases": [
+    {
+      "input": [
+        [
+          18,
+          43,
+          36,
+          13,
+          7
+        ]
+      ],
+      "expectedOutput": 54
+    },
+    {
+      "input": [
+        [
+          10,
+          12,
+          19,
+          14
+        ]
+      ],
+      "expectedOutput": -1
+    }
+  ],
+  "tags": [],
+  "constraints": [],
+  "examples": [],
+  "problemNumber": null,
+  "createdAt": "2025-11-14T21:25:22.292434+00:00",
+  "updatedAt": "2025-12-04T04:35:48.418Z"
+}

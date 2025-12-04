@@ -1,0 +1,56 @@
+{
+  "id": "b2e8ef83-dc52-4122-a927-0b2ac1e56e24",
+  "title": "Maximum Product of the Length of Two Palindromic Subsequences",
+  "slug": "maximum-product-of-the-length-of-two-palindromic-subsequences",
+  "description": "Given a string `s`, find two **disjoint palindromic subsequences** of `s` such that the **product** of their lengths is **maximized**. The two subsequences are **disjoint** if they do not both pick a character at the same index.\n\nReturn _the **maximum** possible **product** of the lengths of the two palindromic subsequences_.\n\nA **subsequence** is a string that can be derived from another string by deleting some or no characters without changing the order of the remaining characters. A string is **palindromic** if it reads the same forward and backward.\n\n**Example 1:**\n\n**Input:** s =  \"leetcodecom \"\n**Output:** 9\n**Explanation**: An optimal solution is to choose  \"ete \" for the 1st subsequence and  \"cdc \" for the 2nd subsequence.\nThe product of their lengths is: 3 \\* 3 = 9.\n\n**Example 2:**\n\n**Input:** s =  \"bb \"\n**Output:** 1\n**Explanation**: An optimal solution is to choose  \"b \" (the first character) for the 1st subsequence and  \"b \" (the second character) for the 2nd subsequence.\nThe product of their lengths is: 1 \\* 1 = 1.\n\n**Example 3:**\n\n**Input:** s =  \"accbcaxxcxx \"\n**Output:** 25\n**Explanation**: An optimal solution is to choose  \"accca \" for the 1st subsequence and  \"xxcxx \" for the 2nd subsequence.\nThe product of their lengths is: 5 \\* 5 = 25.\n\n**Constraints:**\n\n*   `2 <= s.length <= 12`\n*   `s` consists of lowercase English letters only.",
+  "difficulty": "Medium",
+  "category": null,
+  "xpReward": 0,
+  "timeLimitMs": 5000,
+  "memoryLimitMb": 256,
+  "starterCode": {},
+  "solutionCode": "",
+  "hints": [],
+  "isPremium": false,
+  "createdBy": null,
+  "testCases": [
+    {
+      "input": [
+        "leetcodecom "
+      ],
+      "expectedOutput": "9\n**Explanation**: An optimal solution is to choose  \"ete \" for the 1st subsequence and  \"cdc \" for the 2nd subsequence.\nThe product of their lengths is: 3 \\* 3 = 9."
+    },
+    {
+      "input": [
+        "bb "
+      ],
+      "expectedOutput": "1\n**Explanation**: An optimal solution is to choose  \"b \" (the first character) for the 1st subsequence and  \"b \" (the second character) for the 2nd subsequence.\nThe product of their lengths is: 1 \\* 1 = 1."
+    },
+    {
+      "input": [
+        "accbcaxxcxx "
+      ],
+      "expectedOutput": "25\n**Explanation**: An optimal solution is to choose  \"accca \" for the 1st subsequence and  \"xxcxx \" for the 2nd subsequence.\nThe product of their lengths is: 5 \\* 5 = 25.\n\n**Constraints:**\n\n*   `2 <= s.length <= 12`\n*   `s` consists of lowercase English letters only."
+    }
+  ],
+  "hiddenTestCases": [
+    {
+      "input": [
+        "leetcodecom "
+      ],
+      "expectedOutput": "9\n**Explanation**: An optimal solution is to choose  \"ete \" for the 1st subsequence and  \"cdc \" for the 2nd subsequence.\nThe product of their lengths is: 3 \\* 3 = 9."
+    },
+    {
+      "input": [
+        "bb "
+      ],
+      "expectedOutput": "1\n**Explanation**: An optimal solution is to choose  \"b \" (the first character) for the 1st subsequence and  \"b \" (the second character) for the 2nd subsequence.\nThe product of their lengths is: 1 \\* 1 = 1."
+    }
+  ],
+  "tags": [],
+  "constraints": [],
+  "examples": [],
+  "problemNumber": null,
+  "createdAt": "2025-11-14T21:23:56.977434+00:00",
+  "updatedAt": "2025-12-04T04:36:25.199Z"
+}

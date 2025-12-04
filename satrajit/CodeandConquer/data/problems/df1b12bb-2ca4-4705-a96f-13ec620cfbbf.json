@@ -1,0 +1,54 @@
+{
+  "id": "df1b12bb-2ca4-4705-a96f-13ec620cfbbf",
+  "title": "Number of Distinct Binary Strings After Applying Operations",
+  "slug": "number-of-distinct-binary-strings-after-applying-operations",
+  "description": "You are given a **binary** string `s` and a positive integer `k`.\n\nYou can apply the following operation on the string **any** number of times:\n\n*   Choose any substring of size `k` from `s` and **flip** all its characters, that is, turn all `1`'s into `0`'s, and all `0`'s into `1`'s.\n\nReturn _the number of **distinct** strings you can obtain_. Since the answer may be too large, return it **modulo** `109 + 7`.\n\n**Note** that:\n\n*   A binary string is a string that consists **only** of the characters `0` and `1`.\n*   A substring is a contiguous part of a string.\n\n**Example 1:**\n\n**Input:** s =  \"1001 \", k = 3\n**Output:** 4\n**Explanation:** We can obtain the following strings:\n- Applying no operation on the string gives s =  \"1001 \".\n- Applying one operation on the substring starting at index 0 gives s =  \"**011**1 \".\n- Applying one operation on the substring starting at index 1 gives s =  \"1**110** \".\n- Applying one operation on both the substrings starting at indices 0 and 1 gives s =  \"**0000** \".\nIt can be shown that we cannot obtain any other string, so the answer is 4.\n\n**Example 2:**\n\n**Input:** s =  \"10110 \", k = 5\n**Output:** 2\n**Explanation:** We can obtain the following strings:\n- Applying no operation on the string gives s =  \"10110 \".\n- Applying one operation on the whole string gives s =  \"01001 \".\nIt can be shown that we cannot obtain any other string, so the answer is 2.\n\n**Constraints:**\n\n*   `1 <= k <= s.length <= 105`\n*   `s[i]` is either `0` or `1`.",
+  "difficulty": "Medium",
+  "category": null,
+  "xpReward": 0,
+  "timeLimitMs": 5000,
+  "memoryLimitMb": 256,
+  "starterCode": {},
+  "solutionCode": "",
+  "hints": [],
+  "isPremium": false,
+  "createdBy": null,
+  "testCases": [
+    {
+      "input": [
+        "1001 ",
+        3
+      ],
+      "expectedOutput": 4
+    },
+    {
+      "input": [
+        "10110 ",
+        5
+      ],
+      "expectedOutput": 2
+    }
+  ],
+  "hiddenTestCases": [
+    {
+      "input": [
+        "1001 ",
+        3
+      ],
+      "expectedOutput": 4
+    },
+    {
+      "input": [
+        "10110 ",
+        5
+      ],
+      "expectedOutput": 2
+    }
+  ],
+  "tags": [],
+  "constraints": [],
+  "examples": [],
+  "problemNumber": null,
+  "createdAt": "2025-11-14T21:25:51.321441+00:00",
+  "updatedAt": "2025-12-04T04:35:34.719Z"
+}

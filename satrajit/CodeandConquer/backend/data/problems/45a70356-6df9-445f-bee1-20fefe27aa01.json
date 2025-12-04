@@ -1,0 +1,81 @@
+{
+  "id": "45a70356-6df9-445f-bee1-20fefe27aa01",
+  "title": "Minimum Difference Between Largest and Smallest Value in Three Moves",
+  "slug": "minimum-difference-between-largest-and-smallest-value-in-three-moves",
+  "description": "You are given an integer array `nums`.\n\nIn one move, you can choose one element of `nums` and change it to **any value**.\n\nReturn _the minimum difference between the largest and smallest value of `nums` **after performing at most three moves**_.\n\n**Example 1:**\n\n**Input:** nums = \\[5,3,2,4\\]\n**Output:** 0\n**Explanation:** We can make at most 3 moves.\nIn the first move, change 2 to 3. nums becomes \\[5,3,3,4\\].\nIn the second move, change 4 to 3. nums becomes \\[5,3,3,3\\].\nIn the third move, change 5 to 3. nums becomes \\[3,3,3,3\\].\nAfter performing 3 moves, the difference between the minimum and maximum is 3 - 3 = 0.\n\n**Example 2:**\n\n**Input:** nums = \\[1,5,0,10,14\\]\n**Output:** 1\n**Explanation:** We can make at most 3 moves.\nIn the first move, change 5 to 0. nums becomes \\[1,0,0,10,14\\].\nIn the second move, change 10 to 0. nums becomes \\[1,0,0,0,14\\].\nIn the third move, change 14 to 1. nums becomes \\[1,0,0,0,1\\].\nAfter performing 3 moves, the difference between the minimum and maximum is 1 - 0 = 0.\nIt can be shown that there is no way to make the difference 0 in 3 moves.\n\n**Example 3:**\n\n**Input:** nums = \\[3,100,20\\]\n**Output:** 0\n**Explanation:** We can make at most 3 moves.\nIn the first move, change 100 to 7. nums becomes \\[4,7,20\\].\nIn the second move, change 20 to 7. nums becomes \\[4,7,7\\].\nIn the third move, change 4 to 3. nums becomes \\[7,7,7\\].\nAfter performing 3 moves, the difference between the minimum and maximum is 7 - 7 = 0.\n\n**Constraints:**\n\n*   `1 <= nums.length <= 105`\n*   `-109 <= nums[i] <= 109`",
+  "difficulty": "Medium",
+  "category": null,
+  "xpReward": 0,
+  "timeLimitMs": 5000,
+  "memoryLimitMb": 256,
+  "starterCode": [],
+  "solutionCode": "",
+  "hints": [],
+  "isPremium": false,
+  "createdBy": null,
+  "testCases": [
+    {
+      "input": [
+        [
+          5,
+          3,
+          2,
+          4
+        ]
+      ],
+      "expectedOutput": 0
+    },
+    {
+      "input": [
+        [
+          1,
+          5,
+          0,
+          10,
+          14
+        ]
+      ],
+      "expectedOutput": 1
+    },
+    {
+      "input": [
+        [
+          3,
+          100,
+          20
+        ]
+      ],
+      "expectedOutput": 0
+    }
+  ],
+  "hiddenTestCases": [
+    {
+      "input": [
+        [
+          5,
+          3,
+          2,
+          4
+        ]
+      ],
+      "expectedOutput": 0
+    },
+    {
+      "input": [
+        [
+          1,
+          5,
+          0,
+          10,
+          14
+        ]
+      ],
+      "expectedOutput": 1
+    }
+  ],
+  "tags": [],
+  "constraints": [],
+  "examples": [],
+  "createdAt": "2025-11-14T21:21:44.231665+00:00",
+  "updatedAt": "2025-12-04T04:37:21.370Z"
+}

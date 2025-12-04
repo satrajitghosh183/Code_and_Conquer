@@ -1,0 +1,84 @@
+{
+  "id": "8ac8fbee-b6de-4557-b58d-d3c5c762090e",
+  "title": "Smallest Index With Equal Value",
+  "slug": "smallest-index-with-equal-value",
+  "description": "Given a **0-indexed** integer array `nums`, return _the **smallest** index_ `i` _of_ `nums` _such that_ `i mod 10 == nums[i]`_, or_ `-1` _if such index does not exist_.\n\n`x mod y` denotes the **remainder** when `x` is divided by `y`.\n\n**Example 1:**\n\n**Input:** nums = \\[0,1,2\\]\n**Output:** 0\n**Explanation:** \ni=0: 0 mod 10 = 0 == nums\\[0\\].\ni=1: 1 mod 10 = 1 == nums\\[1\\].\ni=2: 2 mod 10 = 2 == nums\\[2\\].\nAll indices have i mod 10 == nums\\[i\\], so we return the smallest index 0.\n\n**Example 2:**\n\n**Input:** nums = \\[4,3,2,1\\]\n**Output:** 2\n**Explanation:** \ni=0: 0 mod 10 = 0 != nums\\[0\\].\ni=1: 1 mod 10 = 1 != nums\\[1\\].\ni=2: 2 mod 10 = 2 == nums\\[2\\].\ni=3: 3 mod 10 = 3 != nums\\[3\\].\n2 is the only index which has i mod 10 == nums\\[i\\].\n\n**Example 3:**\n\n**Input:** nums = \\[1,2,3,4,5,6,7,8,9,0\\]\n**Output:** -1\n**Explanation:** No index satisfies i mod 10 == nums\\[i\\].\n\n**Constraints:**\n\n*   `1 <= nums.length <= 100`\n*   `0 <= nums[i] <= 9`",
+  "difficulty": "Easy",
+  "category": null,
+  "xpReward": 0,
+  "timeLimitMs": 5000,
+  "memoryLimitMb": 256,
+  "starterCode": [],
+  "solutionCode": "",
+  "hints": [],
+  "isPremium": false,
+  "createdBy": null,
+  "testCases": [
+    {
+      "input": [
+        [
+          0,
+          1,
+          2
+        ]
+      ],
+      "expectedOutput": 0
+    },
+    {
+      "input": [
+        [
+          4,
+          3,
+          2,
+          1
+        ]
+      ],
+      "expectedOutput": 2
+    },
+    {
+      "input": [
+        [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          0
+        ]
+      ],
+      "expectedOutput": -1
+    }
+  ],
+  "hiddenTestCases": [
+    {
+      "input": [
+        [
+          0,
+          1,
+          2
+        ]
+      ],
+      "expectedOutput": 0
+    },
+    {
+      "input": [
+        [
+          4,
+          3,
+          2,
+          1
+        ]
+      ],
+      "expectedOutput": 2
+    }
+  ],
+  "tags": [],
+  "constraints": [],
+  "examples": [],
+  "createdAt": "2025-11-14T21:24:11.964565+00:00",
+  "updatedAt": "2025-12-04T04:36:19.574Z"
+}

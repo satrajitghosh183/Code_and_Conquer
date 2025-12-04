@@ -1,0 +1,131 @@
+{
+  "id": "01bdeee2-8b37-4fb4-91ae-86507dd421c0",
+  "title": "Plates Between Candles",
+  "slug": "plates-between-candles",
+  "description": "There is a long table with a line of plates and candles arranged on top of it. You are given a **0-indexed** string `s` consisting of characters `'*'` and `'|'` only, where a `'*'` represents a **plate** and a `'|'` represents a **candle**.\n\nYou are also given a **0-indexed** 2D integer array `queries` where `queries[i] = [lefti, righti]` denotes the **substring** `s[lefti...righti]` (**inclusive**). For each query, you need to find the **number** of plates **between candles** that are **in the substring**. A plate is considered **between candles** if there is at least one candle to its left **and** at least one candle to its right **in the substring**.\n\n*   For example, `s = \"||**||**|* \"`, and a query `[3, 8]` denotes the substring `\"*||******| \"`. The number of plates between candles in this substring is `2`, as each of the two plates has at least one candle **in the substring** to its left **and** right.\n\nReturn _an integer array_ `answer` _where_ `answer[i]` _is the answer to the_ `ith` _query_.\n\n**Example 1:**\n\n**Input:** s =  \"\\*\\*|\\*\\*|\\*\\*\\*| \", queries = \\[\\[2,5\\],\\[5,9\\]\\]\n**Output:** \\[2,3\\]\n**Explanation:**\n- queries\\[0\\] has two plates between candles.\n- queries\\[1\\] has three plates between candles.\n\n**Example 2:**\n\n**Input:** s =  \"\\*\\*\\*|\\*\\*|\\*\\*\\*\\*\\*|\\*\\*||\\*\\*|\\* \", queries = \\[\\[1,17\\],\\[4,5\\],\\[14,17\\],\\[5,11\\],\\[15,16\\]\\]\n**Output:** \\[9,0,0,0,0\\]\n**Explanation:**\n- queries\\[0\\] has nine plates between candles.\n- The other queries have zero plates between candles.\n\n**Constraints:**\n\n*   `3 <= s.length <= 105`\n*   `s` consists of `'*'` and `'|'` characters.\n*   `1 <= queries.length <= 105`\n*   `queries[i].length == 2`\n*   `0 <= lefti <= righti < s.length`",
+  "difficulty": "Medium",
+  "category": null,
+  "xpReward": 0,
+  "timeLimitMs": 5000,
+  "memoryLimitMb": 256,
+  "starterCode": [],
+  "solutionCode": "",
+  "hints": [],
+  "isPremium": false,
+  "createdBy": null,
+  "testCases": [
+    {
+      "input": [
+        "\"\\*\\*|\\*\\*|\\*\\*\\*| \"",
+        [
+          [
+            2,
+            5
+          ],
+          [
+            5,
+            9
+          ]
+        ]
+      ],
+      "expectedOutput": [
+        2,
+        3
+      ]
+    },
+    {
+      "input": [
+        "\"\\*\\*\\*|\\*\\*|\\*\\*\\*\\*\\*|\\*\\*||\\*\\*|\\* \"",
+        [
+          [
+            1,
+            17
+          ],
+          [
+            4,
+            5
+          ],
+          [
+            14,
+            17
+          ],
+          [
+            5,
+            11
+          ],
+          [
+            15,
+            16
+          ]
+        ]
+      ],
+      "expectedOutput": [
+        9,
+        0,
+        0,
+        0,
+        0
+      ]
+    }
+  ],
+  "hiddenTestCases": [
+    {
+      "input": [
+        "\"\\*\\*|\\*\\*|\\*\\*\\*| \"",
+        [
+          [
+            2,
+            5
+          ],
+          [
+            5,
+            9
+          ]
+        ]
+      ],
+      "expectedOutput": [
+        2,
+        3
+      ]
+    },
+    {
+      "input": [
+        "\"\\*\\*\\*|\\*\\*|\\*\\*\\*\\*\\*|\\*\\*||\\*\\*|\\* \"",
+        [
+          [
+            1,
+            17
+          ],
+          [
+            4,
+            5
+          ],
+          [
+            14,
+            17
+          ],
+          [
+            5,
+            11
+          ],
+          [
+            15,
+            16
+          ]
+        ]
+      ],
+      "expectedOutput": [
+        9,
+        0,
+        0,
+        0,
+        0
+      ]
+    }
+  ],
+  "tags": [],
+  "constraints": [],
+  "examples": [],
+  "createdAt": "2025-11-14T21:24:11.508327+00:00",
+  "updatedAt": "2025-12-04T04:36:19.802Z"
+}

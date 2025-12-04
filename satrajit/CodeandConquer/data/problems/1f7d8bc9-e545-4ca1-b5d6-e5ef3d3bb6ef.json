@@ -1,0 +1,70 @@
+{
+  "id": "1f7d8bc9-e545-4ca1-b5d6-e5ef3d3bb6ef",
+  "title": "Make the Prefix Sum Non-negative",
+  "slug": "make-the-prefix-sum-non-negative",
+  "description": "You are given a **0-indexed** integer array `nums`. You can apply the following operation any number of times:\n\n*   Pick any element from `nums` and put it at the end of `nums`.\n\nThe prefix sum array of `nums` is an array `prefix` of the same length as `nums` such that `prefix[i]` is the sum of all the integers `nums[j]` where `j` is in the inclusive range `[0, i]`.\n\nReturn _the minimum number of operations such that the prefix sum array does not contain negative integers_. The test cases are generated such that it is always possible to make the prefix sum array non-negative.\n\n**Example 1:**\n\n**Input:** nums = \\[2,3,-5,4\\]\n**Output:** 0\n**Explanation:** we do not need to do any operations.\nThe array is \\[2,3,-5,4\\]. The prefix sum array is \\[2, 5, 0, 4\\].\n\n**Example 2:**\n\n**Input:** nums = \\[3,-5,-2,6\\]\n**Output:** 1\n**Explanation:** we can do one operation on index 1.\nThe array after the operation is \\[3,-2,6,-5\\]. The prefix sum array is \\[3, 1, 7, 2\\].\n\n**Constraints:**\n\n*   `1 <= nums.length <= 105`\n*   `-109 <= nums[i] <= 109`",
+  "difficulty": "Medium",
+  "category": null,
+  "xpReward": 0,
+  "timeLimitMs": 5000,
+  "memoryLimitMb": 256,
+  "starterCode": {},
+  "solutionCode": "",
+  "hints": [],
+  "isPremium": false,
+  "createdBy": null,
+  "testCases": [
+    {
+      "input": [
+        [
+          2,
+          3,
+          -5,
+          4
+        ]
+      ],
+      "expectedOutput": 0
+    },
+    {
+      "input": [
+        [
+          3,
+          -5,
+          -2,
+          6
+        ]
+      ],
+      "expectedOutput": 1
+    }
+  ],
+  "hiddenTestCases": [
+    {
+      "input": [
+        [
+          2,
+          3,
+          -5,
+          4
+        ]
+      ],
+      "expectedOutput": 0
+    },
+    {
+      "input": [
+        [
+          3,
+          -5,
+          -2,
+          6
+        ]
+      ],
+      "expectedOutput": 1
+    }
+  ],
+  "tags": [],
+  "constraints": [],
+  "examples": [],
+  "problemNumber": null,
+  "createdAt": "2025-11-14T21:26:33.326234+00:00",
+  "updatedAt": "2025-12-04T04:35:15.990Z"
+}

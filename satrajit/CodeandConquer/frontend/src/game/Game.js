@@ -41,8 +41,8 @@ export class Game {
 
   initScene() {
     this.scene = new THREE.Scene()
-    this.scene.background = new THREE.Color(0x000000)
-    this.scene.fog = new THREE.FogExp2(0x000000, 0.008)
+    this.scene.background = new THREE.Color(0x1a0000)
+    this.scene.fog = new THREE.FogExp2(0x1a0000, 0.01)
   }
 
   initCamera() {
@@ -104,12 +104,12 @@ export class Game {
     mainLight.shadow.mapSize.height = 2048
     this.scene.add(mainLight)
 
-    const pointLight1 = new THREE.PointLight(0x00aaff, 3, 60)
+    const pointLight1 = new THREE.PointLight(0xff0000, 3, 60)
     pointLight1.position.set(-25, 15, -25)
     pointLight1.castShadow = true
     this.scene.add(pointLight1)
 
-    const pointLight2 = new THREE.PointLight(0xff00aa, 3, 60)
+    const pointLight2 = new THREE.PointLight(0xaa0000, 3, 60)
     pointLight2.position.set(25, 15, -25)
     pointLight2.castShadow = true
     this.scene.add(pointLight2)
@@ -151,8 +151,8 @@ export class Game {
     // Base (player's base) - more detailed
     const baseGeometry = new THREE.CylinderGeometry(2.5, 3.5, 4, 16)
     const baseMaterial = new THREE.MeshStandardMaterial({
-      color: 0x00aaff,
-      emissive: 0x00aaff,
+      color: 0xff0000,
+      emissive: 0xaa0000,
       emissiveIntensity: 1.2,
       metalness: 0.9,
       roughness: 0.1
@@ -165,8 +165,8 @@ export class Game {
     // Base crystal with glow
     const crystalGeometry = new THREE.OctahedronGeometry(1.5, 0)
     const crystalMaterial = new THREE.MeshStandardMaterial({
-      color: 0x00ffff,
-      emissive: 0x00ffff,
+      color: 0xff0000,
+      emissive: 0xff0000,
       emissiveIntensity: 2.0,
       transparent: true,
       opacity: 0.9,
@@ -286,6 +286,14 @@ export class Game {
       this.crystal.rotation.x += deltaTime * 0.3
       this.crystal.position.y = 5 + Math.sin(Date.now() * 0.002) * 0.5
       this.crystal.scale.setScalar(1 + Math.sin(Date.now() * 0.003) * 0.1)
+    }
+
+    // Animate crystal rings
+    if (this.crystalRings) {
+      this.crystalRings.forEach((ring, i) => {
+        ring.rotation.z += deltaTime * (0.5 + i * 0.3)
+        ring.position.y = 4 + i + Math.sin(Date.now() * 0.001 + i) * 0.3
+      })
     }
 
     // Animate atmosphere particles

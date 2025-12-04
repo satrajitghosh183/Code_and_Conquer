@@ -1,0 +1,33 @@
+:root {
+  /* Base colors */
+  --black: #000000;
+  --dark-red-bg: #1a0000;
+  --dark-red-1: #3e0000;
+  --dark-red-2: #440000;
+  --red-3: #660000;
+  --red-4: #7c0000;
+  --red-5: #880000;
+  --red-6: #ba0000;
+  --bright-red: #f80000;
+  --red-glow: #ff0000;
+  
+  /* Semantic colors */
+  --bg-primary: var(--black);
+  --bg-secondary: var(--dark-red-bg);
+  --border-color: var(--dark-red-2);
+  --accent-color: var(--red-glow);
+  --text-primary: #ffffff;
+  --text-secondary: #cccccc;
+  
+  /* Component colors */
+  --button-bg: linear-gradient(135deg, var(--red-3), var(--dark-red-2));
+  --button-hover: linear-gradient(135deg, var(--red-5), var(--red-3));
+  --card-bg: rgba(26, 0, 0, 0.8);
+  --glow-effect: 0 0 20px rgba(255, 0, 0, 0.3);
+  
+  /* Game specific */
+  --health-color: #ff0000;
+  --gold-color: #ffd700;
+  --xp-color: #ff0000;
+}
+

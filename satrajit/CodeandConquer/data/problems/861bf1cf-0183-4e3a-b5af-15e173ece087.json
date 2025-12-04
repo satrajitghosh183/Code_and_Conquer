@@ -1,0 +1,80 @@
+{
+  "id": "861bf1cf-0183-4e3a-b5af-15e173ece087",
+  "title": "Maximum Alternating Subarray Sum",
+  "slug": "maximum-alternating-subarray-sum",
+  "description": "A **subarray** of a **0-indexed** integer array is a contiguous **non-empty** sequence of elements within an array.\n\nThe **alternating subarray sum** of a subarray that ranges from index `i` to `j` (**inclusive**, `0 <= i <= j < nums.length`) is `nums[i] - nums[i+1] + nums[i+2] - ... +/- nums[j]`.\n\nGiven a **0-indexed** integer array `nums`, return _the **maximum alternating subarray sum** of any subarray of_ `nums`.\n\n**Example 1:**\n\n**Input:** nums = \\[3,-1,1,2\\]\n**Output:** 5\n**Explanation:**\nThe subarray \\[3,-1,1\\] has the largest alternating subarray sum.\nThe alternating subarray sum is 3 - (-1) + 1 = 5.\n\n**Example 2:**\n\n**Input:** nums = \\[2,2,2,2,2\\]\n**Output:** 2\n**Explanation:**\nThe subarrays \\[2\\], \\[2,2,2\\], and \\[2,2,2,2,2\\] have the largest alternating subarray sum.\nThe alternating subarray sum of \\[2\\] is 2.\nThe alternating subarray sum of \\[2,2,2\\] is 2 - 2 + 2 = 2.\nThe alternating subarray sum of \\[2,2,2,2,2\\] is 2 - 2 + 2 - 2 + 2 = 2.\n\n**Example 3:**\n\n**Input:** nums = \\[1\\]\n**Output:** 1\n**Explanation:**\nThere is only one non-empty subarray, which is \\[1\\].\nThe alternating subarray sum is 1.\n\n**Constraints:**\n\n*   `1 <= nums.length <= 105`\n*   `-105 <= nums[i] <= 105`",
+  "difficulty": "Medium",
+  "category": null,
+  "xpReward": 0,
+  "timeLimitMs": 5000,
+  "memoryLimitMb": 256,
+  "starterCode": {},
+  "solutionCode": "",
+  "hints": [],
+  "isPremium": false,
+  "createdBy": null,
+  "testCases": [
+    {
+      "input": [
+        [
+          3,
+          -1,
+          1,
+          2
+        ]
+      ],
+      "expectedOutput": 5
+    },
+    {
+      "input": [
+        [
+          2,
+          2,
+          2,
+          2,
+          2
+        ]
+      ],
+      "expectedOutput": 2
+    },
+    {
+      "input": [
+        [
+          1
+        ]
+      ],
+      "expectedOutput": 1
+    }
+  ],
+  "hiddenTestCases": [
+    {
+      "input": [
+        [
+          3,
+          -1,
+          1,
+          2
+        ]
+      ],
+      "expectedOutput": 5
+    },
+    {
+      "input": [
+        [
+          2,
+          2,
+          2,
+          2,
+          2
+        ]
+      ],
+      "expectedOutput": 2
+    }
+  ],
+  "tags": [],
+  "constraints": [],
+  "examples": [],
+  "problemNumber": null,
+  "createdAt": "2025-11-14T21:24:06.183064+00:00",
+  "updatedAt": "2025-12-04T04:36:21.785Z"
+}

@@ -1,0 +1,49 @@
+{
+  "id": "8952bdc2-1654-4fda-9104-380e0ada3da1",
+  "title": "Number of Good Ways to Split a String",
+  "slug": "number-of-good-ways-to-split-a-string",
+  "description": "You are given a string `s`.\n\nA split is called **good** if you can split `s` into two non-empty strings `sleft` and `sright` where their concatenation is equal to `s` (i.e., `sleft + sright = s`) and the number of distinct letters in `sleft` and `sright` is the same.\n\nReturn _the number of **good splits** you can make in `s`_.\n\n**Example 1:**\n\n**Input:** s =  \"aacaba \"\n**Output:** 2\n**Explanation:** There are 5 ways to split ` \"aacaba \"` and 2 of them are good. \n( \"a \",  \"acaba \") Left string and right string contains 1 and 3 different letters respectively.\n( \"aa \",  \"caba \") Left string and right string contains 1 and 3 different letters respectively.\n( \"aac \",  \"aba \") Left string and right string contains 2 and 2 different letters respectively (good split).\n( \"aaca \",  \"ba \") Left string and right string contains 2 and 2 different letters respectively (good split).\n( \"aacab \",  \"a \") Left string and right string contains 3 and 1 different letters respectively.\n\n**Example 2:**\n\n**Input:** s =  \"abcd \"\n**Output:** 1\n**Explanation:** Split the string as follows ( \"ab \",  \"cd \").\n\n**Constraints:**\n\n*   `1 <= s.length <= 105`\n*   `s` consists of only lowercase English letters.",
+  "difficulty": "Medium",
+  "category": null,
+  "xpReward": 0,
+  "timeLimitMs": 5000,
+  "memoryLimitMb": 256,
+  "starterCode": [],
+  "solutionCode": "",
+  "hints": [],
+  "isPremium": false,
+  "createdBy": null,
+  "testCases": [
+    {
+      "input": [
+        "aacaba "
+      ],
+      "expectedOutput": 2
+    },
+    {
+      "input": [
+        "abcd "
+      ],
+      "expectedOutput": 1
+    }
+  ],
+  "hiddenTestCases": [
+    {
+      "input": [
+        "aacaba "
+      ],
+      "expectedOutput": 2
+    },
+    {
+      "input": [
+        "abcd "
+      ],
+      "expectedOutput": 1
+    }
+  ],
+  "tags": [],
+  "constraints": [],
+  "examples": [],
+  "createdAt": "2025-11-14T21:21:49.009752+00:00",
+  "updatedAt": "2025-12-04T04:37:19.919Z"
+}

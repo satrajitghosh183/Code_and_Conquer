@@ -1,0 +1,86 @@
+{
+  "id": "2510139f-9155-4107-aa6d-bfe2b8d6bb30",
+  "title": "Sort Array by Moving Items to Empty Space",
+  "slug": "sort-array-by-moving-items-to-empty-space",
+  "description": "You are given an integer array `nums` of size `n` containing **each** element from `0` to `n - 1` (**inclusive**). Each of the elements from `1` to `n - 1` represents an item, and the element `0` represents an empty space.\n\nIn one operation, you can move **any** item to the empty space. `nums` is considered to be sorted if the numbers of all the items are in **ascending** order and the empty space is either at the beginning or at the end of the array.\n\nFor example, if `n = 4`, `nums` is sorted if:\n\n*   `nums = [0,1,2,3]` or\n*   `nums = [1,2,3,0]`\n\n...and considered to be unsorted otherwise.\n\nReturn _the **minimum** number of operations needed to sort_ `nums`.\n\n**Example 1:**\n\n**Input:** nums = \\[4,2,0,3,1\\]\n**Output:** 3\n**Explanation:**\n- Move item 2 to the empty space. Now, nums = \\[4,0,2,3,1\\].\n- Move item 1 to the empty space. Now, nums = \\[4,1,2,3,0\\].\n- Move item 4 to the empty space. Now, nums = \\[0,1,2,3,4\\].\nIt can be proven that 3 is the minimum number of operations needed.\n\n**Example 2:**\n\n**Input:** nums = \\[1,2,3,4,0\\]\n**Output:** 0\n**Explanation:** nums is already sorted so return 0.\n\n**Example 3:**\n\n**Input:** nums = \\[1,0,2,4,3\\]\n**Output:** 2\n**Explanation:**\n- Move item 2 to the empty space. Now, nums = \\[1,2,0,4,3\\].\n- Move item 3 to the empty space. Now, nums = \\[1,2,3,4,0\\].\nIt can be proven that 2 is the minimum number of operations needed.\n\n**Constraints:**\n\n*   `n == nums.length`\n*   `2 <= n <= 105`\n*   `0 <= nums[i] < n`\n*   All the values of `nums` are **unique**.",
+  "difficulty": "Hard",
+  "category": null,
+  "xpReward": 0,
+  "timeLimitMs": 5000,
+  "memoryLimitMb": 256,
+  "starterCode": {},
+  "solutionCode": "",
+  "hints": [],
+  "isPremium": false,
+  "createdBy": null,
+  "testCases": [
+    {
+      "input": [
+        [
+          4,
+          2,
+          0,
+          3,
+          1
+        ]
+      ],
+      "expectedOutput": 3
+    },
+    {
+      "input": [
+        [
+          1,
+          2,
+          3,
+          4,
+          0
+        ]
+      ],
+      "expectedOutput": 0
+    },
+    {
+      "input": [
+        [
+          1,
+          0,
+          2,
+          4,
+          3
+        ]
+      ],
+      "expectedOutput": 2
+    }
+  ],
+  "hiddenTestCases": [
+    {
+      "input": [
+        [
+          4,
+          2,
+          0,
+          3,
+          1
+        ]
+      ],
+      "expectedOutput": 3
+    },
+    {
+      "input": [
+        [
+          1,
+          2,
+          3,
+          4,
+          0
+        ]
+      ],
+      "expectedOutput": 0
+    }
+  ],
+  "tags": [],
+  "constraints": [],
+  "examples": [],
+  "problemNumber": null,
+  "createdAt": "2025-11-14T21:25:54.118606+00:00",
+  "updatedAt": "2025-12-04T04:35:33.095Z"
+}

@@ -1,0 +1,55 @@
+{
+  "id": "52a9534f-9f93-4747-ad10-2a93d05d37fb",
+  "title": "Remove Colored Pieces if Both Neighbors are the Same Color",
+  "slug": "remove-colored-pieces-if-both-neighbors-are-the-same-color",
+  "description": "There are `n` pieces arranged in a line, and each piece is colored either by `'A'` or by `'B'`. You are given a string `colors` of length `n` where `colors[i]` is the color of the `ith` piece.\n\nAlice and Bob are playing a game where they take **alternating turns** removing pieces from the line. In this game, Alice moves **first**.\n\n*   Alice is only allowed to remove a piece colored `'A'` if **both its neighbors** are also colored `'A'`. She is **not allowed** to remove pieces that are colored `'B'`.\n*   Bob is only allowed to remove a piece colored `'B'` if **both its neighbors** are also colored `'B'`. He is **not allowed** to remove pieces that are colored `'A'`.\n*   Alice and Bob **cannot** remove pieces from the edge of the line.\n*   If a player cannot make a move on their turn, that player **loses** and the other player **wins**.\n\nAssuming Alice and Bob play optimally, return `true` _if Alice wins, or return_ `false` _if Bob wins_.\n\n**Example 1:**\n\n**Input:** colors =  \"AAABABB \"\n**Output:** true\n**Explanation:**\nAAABABB -> AABABB\nAlice moves first.\nShe removes the second 'A' from the left since that is the only 'A' whose neighbors are both 'A'.\n\nNow it's Bob's turn.\nBob cannot make a move on his turn since there are no 'B's whose neighbors are both 'B'.\nThus, Alice wins, so return true.\n\n**Example 2:**\n\n**Input:** colors =  \"AA \"\n**Output:** false\n**Explanation:**\nAlice has her turn first.\nThere are only two 'A's and both are on the edge of the line, so she cannot move on her turn.\nThus, Bob wins, so return false.\n\n**Example 3:**\n\n**Input:** colors =  \"ABBBBBBBAAA \"\n**Output:** false\n**Explanation:**\nABBBBBBBAAA -> ABBBBBBBAA\nAlice moves first.\nHer only option is to remove the second to last 'A' from the right.\n\nABBBBBBBAA -> ABBBBBBAA\nNext is Bob's turn.\nHe has many options for which 'B' piece to remove. He can pick any.\n\nOn Alice's second turn, she has no more pieces that she can remove.\nThus, Bob wins, so return false.\n\n**Constraints:**\n\n*   `1 <= colors.length <= 105`\n*   `colors` consists of only the letters `'A'` and `'B'`",
+  "difficulty": "Medium",
+  "category": null,
+  "xpReward": 0,
+  "timeLimitMs": 5000,
+  "memoryLimitMb": 256,
+  "starterCode": [],
+  "solutionCode": "",
+  "hints": [],
+  "isPremium": false,
+  "createdBy": null,
+  "testCases": [
+    {
+      "input": [
+        "AAABABB "
+      ],
+      "expectedOutput": true
+    },
+    {
+      "input": [
+        "AA "
+      ],
+      "expectedOutput": false
+    },
+    {
+      "input": [
+        "ABBBBBBBAAA "
+      ],
+      "expectedOutput": false
+    }
+  ],
+  "hiddenTestCases": [
+    {
+      "input": [
+        "AAABABB "
+      ],
+      "expectedOutput": true
+    },
+    {
+      "input": [
+        "AA "
+      ],
+      "expectedOutput": false
+    }
+  ],
+  "tags": [],
+  "constraints": [],
+  "examples": [],
+  "createdAt": "2025-11-14T21:24:06.616963+00:00",
+  "updatedAt": "2025-12-04T04:36:21.615Z"
+}

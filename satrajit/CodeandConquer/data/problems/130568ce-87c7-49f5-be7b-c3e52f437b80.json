@@ -1,0 +1,136 @@
+{
+  "id": "130568ce-87c7-49f5-be7b-c3e52f437b80",
+  "title": "Finding MK Average",
+  "slug": "finding-mk-average",
+  "description": "You are given two integers, `m` and `k`, and a stream of integers. You are tasked to implement a data structure that calculates the **MKAverage** for the stream.\n\nThe **MKAverage** can be calculated using these steps:\n\n1.  If the number of the elements in the stream is less than `m` you should consider the **MKAverage** to be `-1`. Otherwise, copy the last `m` elements of the stream to a separate container.\n2.  Remove the smallest `k` elements and the largest `k` elements from the container.\n3.  Calculate the average value for the rest of the elements **rounded down to the nearest integer**.\n\nImplement the `MKAverage` class:\n\n*   `MKAverage(int m, int k)` Initializes the **MKAverage** object with an empty stream and the two integers `m` and `k`.\n*   `void addElement(int num)` Inserts a new element `num` into the stream.\n*   `int calculateMKAverage()` Calculates and returns the **MKAverage** for the current stream **rounded down to the nearest integer**.\n\n**Example 1:**\n\n**Input**\n\\[ \"MKAverage \",  \"addElement \",  \"addElement \",  \"calculateMKAverage \",  \"addElement \",  \"calculateMKAverage \",  \"addElement \",  \"addElement \",  \"addElement \",  \"calculateMKAverage \"\\]\n\\[\\[3, 1\\], \\[3\\], \\[1\\], \\[\\], \\[10\\], \\[\\], \\[5\\], \\[5\\], \\[5\\], \\[\\]\\]\n**Output**\n\\[null, null, null, -1, null, 3, null, null, null, 5\\]\n\n**Explanation**\n`MKAverage obj = new MKAverage(3, 1);  obj.addElement(3);        // current elements are [3] obj.addElement(1);        // current elements are [3,1] obj.calculateMKAverage(); // return -1, because m = 3 and only 2 elements exist. obj.addElement(10);       // current elements are [3,1,10] obj.calculateMKAverage(); // The last 3 elements are [3,1,10].                           // After removing smallest and largest 1 element the container will be [3].                           // The average of [3] equals 3/1 = 3, return 3 obj.addElement(5);        // current elements are [3,1,10,5] obj.addElement(5);        // current elements are [3,1,10,5,5] obj.addElement(5);        // current elements are [3,1,10,5,5,5] obj.calculateMKAverage(); // The last 3 elements are [5,5,5].                           // After removing smallest and largest 1 element the container will be [5].                           // The average of [5] equals 5/1 = 5, return 5`\n\n**Constraints:**\n\n*   `3 <= m <= 105`\n*   `1 <= k*2 < m`\n*   `1 <= num <= 105`\n*   At most `105` calls will be made to `addElement` and `calculateMKAverage`.",
+  "difficulty": "Hard",
+  "category": null,
+  "xpReward": 0,
+  "timeLimitMs": 5000,
+  "memoryLimitMb": 256,
+  "starterCode": {},
+  "solutionCode": "",
+  "hints": [],
+  "isPremium": false,
+  "createdBy": null,
+  "testCases": [
+    {
+      "input": {
+        "methods": [
+          "MKAverage",
+          "addElement",
+          "addElement",
+          "calculateMKAverage",
+          "addElement",
+          "calculateMKAverage",
+          "addElement",
+          "addElement",
+          "addElement",
+          "calculateMKAverage"
+        ],
+        "args": [
+          [
+            3,
+            1
+          ],
+          [
+            3
+          ],
+          [
+            1
+          ],
+          [],
+          [
+            10
+          ],
+          [],
+          [
+            5
+          ],
+          [
+            5
+          ],
+          [
+            5
+          ],
+          []
+        ]
+      },
+      "expectedOutput": [
+        null,
+        null,
+        null,
+        -1,
+        null,
+        3,
+        null,
+        null,
+        null,
+        5
+      ]
+    }
+  ],
+  "hiddenTestCases": [
+    {
+      "input": {
+        "methods": [
+          "MKAverage",
+          "addElement",
+          "addElement",
+          "calculateMKAverage",
+          "addElement",
+          "calculateMKAverage",
+          "addElement",
+          "addElement",
+          "addElement",
+          "calculateMKAverage"
+        ],
+        "args": [
+          [
+            3,
+            1
+          ],
+          [
+            3
+          ],
+          [
+            1
+          ],
+          [],
+          [
+            10
+          ],
+          [],
+          [
+            5
+          ],
+          [
+            5
+          ],
+          [
+            5
+          ],
+          []
+        ]
+      },
+      "expectedOutput": [
+        null,
+        null,
+        null,
+        -1,
+        null,
+        3,
+        null,
+        null,
+        null,
+        5
+      ]
+    }
+  ],
+  "tags": [],
+  "constraints": [],
+  "examples": [],
+  "problemNumber": null,
+  "createdAt": "2025-11-14T21:23:16.239453+00:00",
+  "updatedAt": "2025-12-04T04:38:01.092Z"
+}

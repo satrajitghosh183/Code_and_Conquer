@@ -1,0 +1,110 @@
+{
+  "id": "b95adaea-9cd9-4332-a53f-94c1befb9061",
+  "title": "Count Positions on Street With Required Brightness",
+  "slug": "count-positions-on-street-with-required-brightness",
+  "description": "You are given an integer `n`. A perfectly straight street is represented by a number line ranging from `0` to `n - 1`. You are given a 2D integer array `lights` representing the street lamp(s) on the street. Each `lights[i] = [positioni, rangei]` indicates that there is a street lamp at position `positioni` that lights up the area from `[max(0, positioni - rangei), min(n - 1, positioni + rangei)]` (**inclusive**).\n\nThe **brightness** of a position `p` is defined as the number of street lamps that light up the position `p`. You are given a **0-indexed** integer array `requirement` of size `n` where `requirement[i]` is the minimum **brightness** of the `ith` position on the street.\n\nReturn _the number of positions_ `i` _on the street between_ `0` _and_ `n - 1` _that have a **brightness**_ _of **at least**_ `requirement[i]`_._\n\n**Example 1:**\n\n**Input:** n = 5, lights = \\[\\[0,1\\],\\[2,1\\],\\[3,2\\]\\], requirement = \\[0,2,1,4,1\\]\n**Output:** 4\n**Explanation:**\n- The first street lamp lights up the area from \\[max(0, 0 - 1), min(n - 1, 0 + 1)\\] = \\[0, 1\\] (inclusive).\n- The second street lamp lights up the area from \\[max(0, 2 - 1), min(n - 1, 2 + 1)\\] = \\[1, 3\\] (inclusive).\n- The third street lamp lights up the area from \\[max(0, 3 - 2), min(n - 1, 3 + 2)\\] = \\[1, 4\\] (inclusive).\n\n- Position 0 is covered by the first street lamp. It is covered by 1 street lamp which is greater than requirement\\[0\\].\n- Position 1 is covered by the first, second, and third street lamps. It is covered by 3 street lamps which is greater than requirement\\[1\\].\n- Position 2 is covered by the second and third street lamps. It is covered by 2 street lamps which is greater than requirement\\[2\\].\n- Position 3 is covered by the second and third street lamps. It is covered by 2 street lamps which is less than requirement\\[3\\].\n- Position 4 is covered by the third street lamp. It is covered by 1 street lamp which is equal to requirement\\[4\\].\n\nPositions 0, 1, 2, and 4 meet the requirement so we return 4.\n\n**Example 2:**\n\n**Input:** n = 1, lights = \\[\\[0,1\\]\\], requirement = \\[2\\]\n**Output:** 0\n**Explanation:**\n- The first street lamp lights up the area from \\[max(0, 0 - 1), min(n - 1, 0 + 1)\\] = \\[0, 0\\] (inclusive).\n- Position 0 is covered by the first street lamp. It is covered by 1 street lamp which is less than requirement\\[0\\].\n- We return 0 because no position meets their brightness requirement.\n\n**Constraints:**\n\n*   `1 <= n <= 105`\n*   `1 <= lights.length <= 105`\n*   `0 <= positioni < n`\n*   `0 <= rangei <= 105`\n*   `requirement.length == n`\n*   `0 <= requirement[i] <= 105`",
+  "difficulty": "Medium",
+  "category": null,
+  "xpReward": 0,
+  "timeLimitMs": 5000,
+  "memoryLimitMb": 256,
+  "starterCode": {},
+  "solutionCode": "",
+  "hints": [],
+  "isPremium": false,
+  "createdBy": null,
+  "testCases": [
+    {
+      "input": [
+        5,
+        [
+          [
+            0,
+            1
+          ],
+          [
+            2,
+            1
+          ],
+          [
+            3,
+            2
+          ]
+        ],
+        [
+          0,
+          2,
+          1,
+          4,
+          1
+        ]
+      ],
+      "expectedOutput": 4
+    },
+    {
+      "input": [
+        1,
+        [
+          [
+            0,
+            1
+          ]
+        ],
+        [
+          2
+        ]
+      ],
+      "expectedOutput": 0
+    }
+  ],
+  "hiddenTestCases": [
+    {
+      "input": [
+        5,
+        [
+          [
+            0,
+            1
+          ],
+          [
+            2,
+            1
+          ],
+          [
+            3,
+            2
+          ]
+        ],
+        [
+          0,
+          2,
+          1,
+          4,
+          1
+        ]
+      ],
+      "expectedOutput": 4
+    },
+    {
+      "input": [
+        1,
+        [
+          [
+            0,
+            1
+          ]
+        ],
+        [
+          2
+        ]
+      ],
+      "expectedOutput": 0
+    }
+  ],
+  "tags": [],
+  "constraints": [],
+  "examples": [],
+  "problemNumber": null,
+  "createdAt": "2025-11-14T21:24:55.187381+00:00",
+  "updatedAt": "2025-12-04T04:36:01.285Z"
+}

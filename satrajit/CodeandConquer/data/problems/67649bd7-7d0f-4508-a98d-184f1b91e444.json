@@ -1,0 +1,56 @@
+{
+  "id": "67649bd7-7d0f-4508-a98d-184f1b91e444",
+  "title": "Splitting a String Into Descending Consecutive Values",
+  "slug": "splitting-a-string-into-descending-consecutive-values",
+  "description": "You are given a string `s` that consists of only digits.\n\nCheck if we can split `s` into **two or more non-empty substrings** such that the **numerical values** of the substrings are in **descending order** and the **difference** between numerical values of every two **adjacent** **substrings** is equal to `1`.\n\n*   For example, the string `s = \"0090089 \"` can be split into `[ \"0090 \", \"089 \"]` with numerical values `[90,89]`. The values are in descending order and adjacent values differ by `1`, so this way is valid.\n*   Another example, the string `s = \"001 \"` can be split into `[ \"0 \", \"01 \"]`, `[ \"00 \", \"1 \"]`, or `[ \"0 \", \"0 \", \"1 \"]`. However all the ways are invalid because they have numerical values `[0,1]`, `[0,1]`, and `[0,0,1]` respectively, all of which are not in descending order.\n\nReturn `true` _if it is possible to split_ `s`​​​​​​ _as described above__, or_ `false` _otherwise._\n\nA **substring** is a contiguous sequence of characters in a string.\n\n**Example 1:**\n\n**Input:** s =  \"1234 \"\n**Output:** false\n**Explanation:** There is no valid way to split s.\n\n**Example 2:**\n\n**Input:** s =  \"050043 \"\n**Output:** true\n**Explanation:** s can be split into \\[ \"05 \",  \"004 \",  \"3 \"\\] with numerical values \\[5,4,3\\].\nThe values are in descending order with adjacent values differing by 1.\n\n**Example 3:**\n\n**Input:** s =  \"9080701 \"\n**Output:** false\n**Explanation:** There is no valid way to split s.\n\n**Constraints:**\n\n*   `1 <= s.length <= 20`\n*   `s` only consists of digits.",
+  "difficulty": "Medium",
+  "category": null,
+  "xpReward": 0,
+  "timeLimitMs": 5000,
+  "memoryLimitMb": 256,
+  "starterCode": {},
+  "solutionCode": "",
+  "hints": [],
+  "isPremium": false,
+  "createdBy": null,
+  "testCases": [
+    {
+      "input": [
+        "1234 "
+      ],
+      "expectedOutput": false
+    },
+    {
+      "input": [
+        "050043 "
+      ],
+      "expectedOutput": true
+    },
+    {
+      "input": [
+        "9080701 "
+      ],
+      "expectedOutput": false
+    }
+  ],
+  "hiddenTestCases": [
+    {
+      "input": [
+        "1234 "
+      ],
+      "expectedOutput": false
+    },
+    {
+      "input": [
+        "050043 "
+      ],
+      "expectedOutput": true
+    }
+  ],
+  "tags": [],
+  "constraints": [],
+  "examples": [],
+  "problemNumber": null,
+  "createdAt": "2025-11-14T21:23:22.856225+00:00",
+  "updatedAt": "2025-12-04T04:36:40.583Z"
+}

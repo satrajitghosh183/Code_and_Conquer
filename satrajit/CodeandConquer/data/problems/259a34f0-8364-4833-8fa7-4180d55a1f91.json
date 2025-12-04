@@ -1,0 +1,50 @@
+{
+  "id": "259a34f0-8364-4833-8fa7-4180d55a1f91",
+  "title": "Longest Palindromic Subsequence II",
+  "slug": "longest-palindromic-subsequence-ii",
+  "description": "A subsequence of a string `s` is considered a **good palindromic subsequence** if:\n\n*   It is a subsequence of `s`.\n*   It is a palindrome (has the same value if reversed).\n*   It has an **even** length.\n*   No two consecutive characters are equal, except the two middle ones.\n\nFor example, if `s = \"abcabcabb \"`, then `\"abba \"` is considered a **good palindromic subsequence**, while `\"bcb \"` (not even length) and `\"bbbb \"` (has equal consecutive characters) are not.\n\nGiven a string `s`, return _the **length** of the **longest good palindromic subsequence** in_ `s`.\n\n**Example 1:**\n\n**Input:** s =  \"bbabab \"\n**Output:** 4\n**Explanation:** The longest good palindromic subsequence of s is  \"baab \".\n\n**Example 2:**\n\n**Input:** s =  \"dcbccacdb \"\n**Output:** 4\n**Explanation:** The longest good palindromic subsequence of s is  \"dccd \".\n\n**Constraints:**\n\n*   `1 <= s.length <= 250`\n*   `s` consists of lowercase English letters.",
+  "difficulty": "Medium",
+  "category": null,
+  "xpReward": 0,
+  "timeLimitMs": 5000,
+  "memoryLimitMb": 256,
+  "starterCode": {},
+  "solutionCode": "",
+  "hints": [],
+  "isPremium": false,
+  "createdBy": null,
+  "testCases": [
+    {
+      "input": [
+        "bbabab "
+      ],
+      "expectedOutput": 4
+    },
+    {
+      "input": [
+        "dcbccacdb "
+      ],
+      "expectedOutput": 4
+    }
+  ],
+  "hiddenTestCases": [
+    {
+      "input": [
+        "bbabab "
+      ],
+      "expectedOutput": 4
+    },
+    {
+      "input": [
+        "dcbccacdb "
+      ],
+      "expectedOutput": 4
+    }
+  ],
+  "tags": [],
+  "constraints": [],
+  "examples": [],
+  "problemNumber": null,
+  "createdAt": "2025-11-14T21:22:41.236014+00:00",
+  "updatedAt": "2025-12-04T04:37:05.974Z"
+}

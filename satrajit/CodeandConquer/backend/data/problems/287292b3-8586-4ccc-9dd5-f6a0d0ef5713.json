@@ -1,0 +1,60 @@
+{
+  "id": "287292b3-8586-4ccc-9dd5-f6a0d0ef5713",
+  "title": "Minimum Cost to Separate Sentence Into Rows",
+  "slug": "minimum-cost-to-separate-sentence-into-rows",
+  "description": "You are given a string `sentence` containing words separated by spaces, and an integer `k`. Your task is to separate `sentence` into **rows** where the number of characters in each row is **at most** `k`. You may assume that `sentence` does not begin or end with a space, and the words in `sentence` are separated by a single space.\n\nYou can split `sentence` into rows by inserting line breaks between words in `sentence`. A word **cannot** be split between two rows. Each word must be used exactly once, and the word order cannot be rearranged. Adjacent words in a row should be separated by a single space, and rows should not begin or end with spaces.\n\nThe **cost** of a row with length `n` is `(k - n)2`, and the **total cost** is the sum of the **costs** for all rows **except** the last one.\n\n*   For example if `sentence = \"i love leetcode \"` and `k = 12`:\n    *   Separating `sentence` into `\"i \"`, `\"love \"`, and `\"leetcode \"` has a cost of `(12 - 1)2 + (12 - 4)2 = 185`.\n    *   Separating `sentence` into `\"i love \"`, and `\"leetcode \"` has a cost of `(12 - 6)2 = 36`.\n    *   Separating `sentence` into `\"i \"`, and `\"love leetcode \"` is not possible because the length of `\"love leetcode \"` is greater than `k`.\n\nReturn _the **minimum** possible total cost of separating_ `sentence` _into rows._\n\n**Example 1:**\n\n**Input:** sentence =  \"i love leetcode \", k = 12\n**Output:** 36\n**Explanation:**\nSeparating sentence into  \"i \",  \"love \", and  \"leetcode \" has a cost of (12 - 1)2 + (12 - 4)2 = 185.\nSeparating sentence into  \"i love \", and  \"leetcode \" has a cost of (12 - 6)2 = 36.\nSeparating sentence into  \"i \",  \"love leetcode \" is not possible because  \"love leetcode \" has length 13.\n36 is the minimum possible total cost so return it.\n\n**Example 2:**\n\n**Input:** sentence =  \"apples and bananas taste great \", k = 7\n**Output:** 21\n**Explanation**\nSeparating sentence into  \"apples \",  \"and \",  \"bananas \",  \"taste \", and  \"great \" has a cost of (7 - 6)2 + (7 - 3)2 + (7 - 7)2 + (7 - 5)2 \\= 21.\n21 is the minimum possible total cost so return it.\n\n**Example 3:**\n\n**Input:** sentence =  \"a \", k = 5\n**Output:** 0\n**Explanation:**\nThe cost of the last row is not included in the total cost, and since there is only one row, return 0.\n\n**Constraints:**\n\n*   `1 <= sentence.length <= 5000`\n*   `1 <= k <= 5000`\n*   The length of each word in `sentence` is at most `k`.\n*   `sentence` consists of only lowercase English letters and spaces.\n*   `sentence` does not begin or end with a space.\n*   Words in `sentence` are separated by a single space.",
+  "difficulty": "Medium",
+  "category": null,
+  "xpReward": 0,
+  "timeLimitMs": 5000,
+  "memoryLimitMb": 256,
+  "starterCode": [],
+  "solutionCode": "",
+  "hints": [],
+  "isPremium": false,
+  "createdBy": null,
+  "testCases": [
+    {
+      "input": [
+        "i love leetcode ",
+        12
+      ],
+      "expectedOutput": 36
+    },
+    {
+      "input": [
+        "apples and bananas taste great ",
+        7
+      ],
+      "expectedOutput": "21\n**Explanation**\nSeparating sentence into  \"apples \",  \"and \",  \"bananas \",  \"taste \", and  \"great \" has a cost of (7 - 6)2 + (7 - 3)2 + (7 - 7)2 + (7 - 5)2 \\= 21.\n21 is the minimum possible total cost so return it."
+    },
+    {
+      "input": [
+        "a ",
+        5
+      ],
+      "expectedOutput": 0
+    }
+  ],
+  "hiddenTestCases": [
+    {
+      "input": [
+        "i love leetcode ",
+        12
+      ],
+      "expectedOutput": 36
+    },
+    {
+      "input": [
+        "apples and bananas taste great ",
+        7
+      ],
+      "expectedOutput": "21\n**Explanation**\nSeparating sentence into  \"apples \",  \"and \",  \"bananas \",  \"taste \", and  \"great \" has a cost of (7 - 6)2 + (7 - 3)2 + (7 - 7)2 + (7 - 5)2 \\= 21.\n21 is the minimum possible total cost so return it."
+    }
+  ],
+  "tags": [],
+  "constraints": [],
+  "examples": [],
+  "createdAt": "2025-11-14T21:24:10.358848+00:00",
+  "updatedAt": "2025-12-04T04:36:20.267Z"
+}

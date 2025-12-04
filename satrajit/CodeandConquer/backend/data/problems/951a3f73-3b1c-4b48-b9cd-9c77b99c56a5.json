@@ -1,0 +1,93 @@
+{
+  "id": "951a3f73-3b1c-4b48-b9cd-9c77b99c56a5",
+  "title": "Maximize Total Tastiness of Purchased Fruits",
+  "slug": "maximize-total-tastiness-of-purchased-fruits",
+  "description": "You are given two non-negative integer arrays `price` and `tastiness`, both arrays have the same length `n`. You are also given two non-negative integers `maxAmount` and `maxCoupons`.\n\nFor every integer `i` in range `[0, n - 1]`:\n\n*   `price[i]` describes the price of `ith` fruit.\n*   `tastiness[i]` describes the tastiness of `ith` fruit.\n\nYou want to purchase some fruits such that total tastiness is maximized and the total price does not exceed `maxAmount`.\n\nAdditionally, you can use a coupon to purchase fruit for **half of its price** (rounded down to the closest integer). You can use at most `maxCoupons` of such coupons.\n\nReturn _the maximum total tastiness that can be purchased_.\n\n**Note that:**\n\n*   You can purchase each fruit at most once.\n*   You can use coupons on some fruit at most once.\n\n**Example 1:**\n\n**Input:** price = \\[10,20,20\\], tastiness = \\[5,8,8\\], maxAmount = 20, maxCoupons = 1\n**Output:** 13\n**Explanation:** It is possible to make total tastiness 13 in following way:\n- Buy first fruit without coupon, so that total price = 0 + 10 and total tastiness = 0 + 5.\n- Buy second fruit with coupon, so that total price = 10 + 10 and total tastiness = 5 + 8.\n- Do not buy third fruit, so that total price = 20 and total tastiness = 13.\nIt can be proven that 13 is the maximum total tastiness that can be obtained.\n\n**Example 2:**\n\n**Input:** price = \\[10,15,7\\], tastiness = \\[5,8,20\\], maxAmount = 10, maxCoupons = 2\n**Output:** 28\n**Explanation:** It is possible to make total tastiness 20 in following way:\n- Do not buy first fruit, so that total price = 0 and total tastiness = 0.\n- Buy second fruit with coupon, so that total price = 0 + 7 and total tastiness = 0 + 8.\n- Buy third fruit with coupon, so that total price = 7 + 3 and total tastiness = 8 + 20.\nIt can be proven that 28 is the maximum total tastiness that can be obtained.\n\n**Constraints:**\n\n*   `n == price.length == tastiness.length`\n*   `1 <= n <= 100`\n*   `0 <= price[i], tastiness[i], maxAmount <= 1000`\n*   `0 <= maxCoupons <= 5`",
+  "difficulty": "Medium",
+  "category": null,
+  "xpReward": 0,
+  "timeLimitMs": 5000,
+  "memoryLimitMb": 256,
+  "starterCode": [],
+  "solutionCode": "",
+  "hints": [],
+  "isPremium": false,
+  "createdBy": null,
+  "testCases": [
+    {
+      "input": [
+        [
+          10,
+          20,
+          20
+        ],
+        [
+          5,
+          8,
+          8
+        ],
+        20,
+        1
+      ],
+      "expectedOutput": 13
+    },
+    {
+      "input": [
+        [
+          10,
+          15,
+          7
+        ],
+        [
+          5,
+          8,
+          20
+        ],
+        10,
+        2
+      ],
+      "expectedOutput": 28
+    }
+  ],
+  "hiddenTestCases": [
+    {
+      "input": [
+        [
+          10,
+          20,
+          20
+        ],
+        [
+          5,
+          8,
+          8
+        ],
+        20,
+        1
+      ],
+      "expectedOutput": 13
+    },
+    {
+      "input": [
+        [
+          10,
+          15,
+          7
+        ],
+        [
+          5,
+          8,
+          20
+        ],
+        10,
+        2
+      ],
+      "expectedOutput": 28
+    }
+  ],
+  "tags": [],
+  "constraints": [],
+  "examples": [],
+  "createdAt": "2025-11-14T21:25:44.893048+00:00",
+  "updatedAt": "2025-12-04T04:35:37.570Z"
+}

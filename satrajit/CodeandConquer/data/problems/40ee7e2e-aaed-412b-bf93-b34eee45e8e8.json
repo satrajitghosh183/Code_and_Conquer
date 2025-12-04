@@ -1,0 +1,134 @@
+{
+  "id": "40ee7e2e-aaed-412b-bf93-b34eee45e8e8",
+  "title": "Change the Root of a Binary Tree",
+  "slug": "change-the-root-of-a-binary-tree",
+  "description": "Given the `root` of a binary tree and a `leaf` node, reroot the tree so that the `leaf` is the new root.\n\nYou can reroot the tree with the following steps for each node `cur` on the path **starting from the** `leaf` up to the `root`​​​ **excluding the root**:\n\n1.  If `cur` has a left child, then that child becomes `cur`'s right child.\n2.  `cur`'s original parent becomes `cur`'s left child. Note that in this process the original parent's pointer to `cur` becomes `null`, making it have at most one child.\n\nReturn _the new root_ _of the rerooted tree._\n\n**Note:** Ensure that your solution sets the `Node.parent` pointers correctly after rerooting or you will receive \"Wrong Answer \".\n\n**Example 1:**\n\n**Input:** root = \\[3,5,1,6,2,0,8,null,null,7,4\\], leaf = 7\n**Output:** \\[7,2,null,5,4,3,6,null,null,null,1,null,null,0,8\\]\n\n**Example 2:**\n\n**Input:** root = \\[3,5,1,6,2,0,8,null,null,7,4\\], leaf = 0\n**Output:** \\[0,1,null,3,8,5,null,null,null,6,2,null,null,7,4\\]\n\n**Constraints:**\n\n*   The number of nodes in the tree is in the range `[2, 100]`.\n*   `-109 <= Node.val <= 109`\n*   All `Node.val` are **unique**.\n*   `leaf` exist in the tree.",
+  "difficulty": "Medium",
+  "category": null,
+  "xpReward": 0,
+  "timeLimitMs": 5000,
+  "memoryLimitMb": 256,
+  "starterCode": {},
+  "solutionCode": "",
+  "hints": [],
+  "isPremium": false,
+  "createdBy": null,
+  "testCases": [
+    {
+      "input": [
+        [
+          3,
+          5,
+          1,
+          6,
+          2,
+          0,
+          8,
+          null,
+          null,
+          7,
+          4
+        ],
+        7
+      ],
+      "expectedOutput": [
+        7,
+        2,
+        null,
+        5,
+        4,
+        3,
+        6,
+        null,
+        null,
+        null,
+        1,
+        null,
+        null,
+        0,
+        8
+      ]
+    },
+    {
+      "input": [
+        [
+          3,
+          5,
+          1,
+          6,
+          2,
+          0,
+          8,
+          null,
+          null,
+          7,
+          4
+        ],
+        0
+      ],
+      "expectedOutput": "[0,1,null,3,8,5,null,null,null,6,2,null,null,7,4]\n\n**Constraints:**\n\n*   The number of nodes in the tree is in the range `[2, 100]`.\n*   `-109 <= Node.val <= 109`\n*   All `Node.val` are **unique**.\n*   `leaf` exist in the tree."
+    }
+  ],
+  "hiddenTestCases": [
+    {
+      "input": [
+        [
+          3,
+          5,
+          1,
+          6,
+          2,
+          0,
+          8,
+          null,
+          null,
+          7,
+          4
+        ],
+        7
+      ],
+      "expectedOutput": [
+        7,
+        2,
+        null,
+        5,
+        4,
+        3,
+        6,
+        null,
+        null,
+        null,
+        1,
+        null,
+        null,
+        0,
+        8
+      ]
+    },
+    {
+      "input": [
+        [
+          3,
+          5,
+          1,
+          6,
+          2,
+          0,
+          8,
+          null,
+          null,
+          7,
+          4
+        ],
+        0
+      ],
+      "expectedOutput": "[0,1,null,3,8,5,null,null,null,6,2,null,null,7,4]\n\n**Constraints:**\n\n*   The number of nodes in the tree is in the range `[2, 100]`.\n*   `-109 <= Node.val <= 109`\n*   All `Node.val` are **unique**.\n*   `leaf` exist in the tree."
+    }
+  ],
+  "tags": [],
+  "constraints": [],
+  "examples": [],
+  "problemNumber": null,
+  "createdAt": "2025-11-14T21:22:37.825501+00:00",
+  "updatedAt": "2025-12-04T04:37:07.848Z"
+}

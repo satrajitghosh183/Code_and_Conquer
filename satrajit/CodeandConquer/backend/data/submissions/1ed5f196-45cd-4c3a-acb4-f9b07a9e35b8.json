@@ -1,0 +1,61 @@
+{
+  "id": "1ed5f196-45cd-4c3a-acb4-f9b07a9e35b8",
+  "problemId": "2e061f29-fb59-4b4b-8634-f2d7e17dc377",
+  "userId": "6205e20b-ccb1-4449-bbf6-3e06e5b82a16",
+  "language": "javascript",
+  "code": "function solution() {\n    // Your code here\n}",
+  "status": "wrong_answer",
+  "testResults": [
+    {
+      "testCase": 1,
+      "input": [
+        "NES "
+      ],
+      "expectedOutput": false,
+      "actualOutput": "undefined",
+      "passed": false,
+      "executionTime": 479.93,
+      "memory": 0,
+      "error": null
+    },
+    {
+      "testCase": 2,
+      "input": [
+        "NESWW "
+      ],
+      "expectedOutput": true,
+      "actualOutput": "undefined",
+      "passed": false,
+      "executionTime": 278.99,
+      "memory": 0,
+      "error": null
+    },
+    {
+      "testCase": 3,
+      "input": [
+        "NES "
+      ],
+      "expectedOutput": false,
+      "actualOutput": "undefined",
+      "passed": false,
+      "executionTime": 319.53,
+      "memory": 0,
+      "error": null
+    },
+    {
+      "testCase": 4,
+      "input": [
+        "NESWW "
+      ],
+      "expectedOutput": true,
+      "actualOutput": "undefined",
+      "passed": false,
+      "executionTime": 249.74,
+      "memory": 0,
+      "error": null
+    }
+  ],
+  "executionTime": 1328.19,
+  "memory": 0,
+  "timestamp": "2025-12-04T05:36:01.292Z"
+}

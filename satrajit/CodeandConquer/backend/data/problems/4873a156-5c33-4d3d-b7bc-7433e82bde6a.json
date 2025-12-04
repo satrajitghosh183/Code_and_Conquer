@@ -1,0 +1,49 @@
+{
+  "id": "4873a156-5c33-4d3d-b7bc-7433e82bde6a",
+  "title": "Minimum Deletions to Make String Balanced",
+  "slug": "minimum-deletions-to-make-string-balanced",
+  "description": "You are given a string `s` consisting only of characters `'a'` and `'b'`​​​​.\n\nYou can delete any number of characters in `s` to make `s` **balanced**. `s` is **balanced** if there is no pair of indices `(i,j)` such that `i < j` and `s[i] = 'b'` and `s[j]= 'a'`.\n\nReturn _the **minimum** number of deletions needed to make_ `s` _**balanced**_.\n\n**Example 1:**\n\n**Input:** s =  \"aababbab \"\n**Output:** 2\n**Explanation:** You can either:\nDelete the characters at 0-indexed positions 2 and 6 ( \"aababbab \" ->  \"aaabbb \"), or\nDelete the characters at 0-indexed positions 3 and 6 ( \"aababbab \" ->  \"aabbbb \").\n\n**Example 2:**\n\n**Input:** s =  \"bbaaaaabb \"\n**Output:** 2\n**Explanation:** The only solution is to delete the first two characters.\n\n**Constraints:**\n\n*   `1 <= s.length <= 105`\n*   `s[i]` is `'a'` or `'b'`​​.",
+  "difficulty": "Medium",
+  "category": null,
+  "xpReward": 0,
+  "timeLimitMs": 5000,
+  "memoryLimitMb": 256,
+  "starterCode": [],
+  "solutionCode": "",
+  "hints": [],
+  "isPremium": false,
+  "createdBy": null,
+  "testCases": [
+    {
+      "input": [
+        "aababbab "
+      ],
+      "expectedOutput": 2
+    },
+    {
+      "input": [
+        "bbaaaaabb "
+      ],
+      "expectedOutput": 2
+    }
+  ],
+  "hiddenTestCases": [
+    {
+      "input": [
+        "aababbab "
+      ],
+      "expectedOutput": 2
+    },
+    {
+      "input": [
+        "bbaaaaabb "
+      ],
+      "expectedOutput": 2
+    }
+  ],
+  "tags": [],
+  "constraints": [],
+  "examples": [],
+  "createdAt": "2025-11-14T21:22:34.712376+00:00",
+  "updatedAt": "2025-12-04T04:37:09.008Z"
+}

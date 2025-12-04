@@ -1,0 +1,70 @@
+{
+  "id": "bde9b582-b5cb-4a33-a584-8b387cee757c",
+  "title": "Maximum Number of Groups Entering a Competition",
+  "slug": "maximum-number-of-groups-entering-a-competition",
+  "description": "You are given a positive integer array `grades` which represents the grades of students in a university. You would like to enter **all** these students into a competition in **ordered** non-empty groups, such that the ordering meets the following conditions:\n\n*   The sum of the grades of students in the `ith` group is **less than** the sum of the grades of students in the `(i + 1)th` group, for all groups (except the last).\n*   The total number of students in the `ith` group is **less than** the total number of students in the `(i + 1)th` group, for all groups (except the last).\n\nReturn _the **maximum** number of groups that can be formed_.\n\n**Example 1:**\n\n**Input:** grades = \\[10,6,12,7,3,5\\]\n**Output:** 3\n**Explanation:** The following is a possible way to form 3 groups of students:\n- 1st group has the students with grades = \\[12\\]. Sum of grades: 12. Student count: 1\n- 2nd group has the students with grades = \\[6,7\\]. Sum of grades: 6 + 7 = 13. Student count: 2\n- 3rd group has the students with grades = \\[10,3,5\\]. Sum of grades: 10 + 3 + 5 = 18. Student count: 3\nIt can be shown that it is not possible to form more than 3 groups.\n\n**Example 2:**\n\n**Input:** grades = \\[8,8\\]\n**Output:** 1\n**Explanation:** We can only form 1 group, since forming 2 groups would lead to an equal number of students in both groups.\n\n**Constraints:**\n\n*   `1 <= grades.length <= 105`\n*   `1 <= grades[i] <= 105`",
+  "difficulty": "Medium",
+  "category": null,
+  "xpReward": 0,
+  "timeLimitMs": 5000,
+  "memoryLimitMb": 256,
+  "starterCode": {},
+  "solutionCode": "",
+  "hints": [],
+  "isPremium": false,
+  "createdBy": null,
+  "testCases": [
+    {
+      "input": [
+        [
+          10,
+          6,
+          12,
+          7,
+          3,
+          5
+        ]
+      ],
+      "expectedOutput": 3
+    },
+    {
+      "input": [
+        [
+          8,
+          8
+        ]
+      ],
+      "expectedOutput": 1
+    }
+  ],
+  "hiddenTestCases": [
+    {
+      "input": [
+        [
+          10,
+          6,
+          12,
+          7,
+          3,
+          5
+        ]
+      ],
+      "expectedOutput": 3
+    },
+    {
+      "input": [
+        [
+          8,
+          8
+        ]
+      ],
+      "expectedOutput": 1
+    }
+  ],
+  "tags": [],
+  "constraints": [],
+  "examples": [],
+  "problemNumber": null,
+  "createdAt": "2025-11-14T21:25:26.076064+00:00",
+  "updatedAt": "2025-12-04T04:35:46.931Z"
+}

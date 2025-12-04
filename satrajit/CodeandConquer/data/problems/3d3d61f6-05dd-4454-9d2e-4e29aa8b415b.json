@@ -1,0 +1,94 @@
+{
+  "id": "3d3d61f6-05dd-4454-9d2e-4e29aa8b415b",
+  "title": "Maximum Bags With Full Capacity of Rocks",
+  "slug": "maximum-bags-with-full-capacity-of-rocks",
+  "description": "You have `n` bags numbered from `0` to `n - 1`. You are given two **0-indexed** integer arrays `capacity` and `rocks`. The `ith` bag can hold a maximum of `capacity[i]` rocks and currently contains `rocks[i]` rocks. You are also given an integer `additionalRocks`, the number of additional rocks you can place in **any** of the bags.\n\nReturn _the **maximum** number of bags that could have full capacity after placing the additional rocks in some bags._\n\n**Example 1:**\n\n**Input:** capacity = \\[2,3,4,5\\], rocks = \\[1,2,4,4\\], additionalRocks = 2\n**Output:** 3\n**Explanation:**\nPlace 1 rock in bag 0 and 1 rock in bag 1.\nThe number of rocks in each bag are now \\[2,3,4,4\\].\nBags 0, 1, and 2 have full capacity.\nThere are 3 bags at full capacity, so we return 3.\nIt can be shown that it is not possible to have more than 3 bags at full capacity.\nNote that there may be other ways of placing the rocks that result in an answer of 3.\n\n**Example 2:**\n\n**Input:** capacity = \\[10,2,2\\], rocks = \\[2,2,0\\], additionalRocks = 100\n**Output:** 3\n**Explanation:**\nPlace 8 rocks in bag 0 and 2 rocks in bag 2.\nThe number of rocks in each bag are now \\[10,2,2\\].\nBags 0, 1, and 2 have full capacity.\nThere are 3 bags at full capacity, so we return 3.\nIt can be shown that it is not possible to have more than 3 bags at full capacity.\nNote that we did not use all of the additional rocks.\n\n**Constraints:**\n\n*   `n == capacity.length == rocks.length`\n*   `1 <= n <= 5 * 104`\n*   `1 <= capacity[i] <= 109`\n*   `0 <= rocks[i] <= capacity[i]`\n*   `1 <= additionalRocks <= 109`",
+  "difficulty": "Medium",
+  "category": null,
+  "xpReward": 0,
+  "timeLimitMs": 5000,
+  "memoryLimitMb": 256,
+  "starterCode": {},
+  "solutionCode": "",
+  "hints": [],
+  "isPremium": false,
+  "createdBy": null,
+  "testCases": [
+    {
+      "input": [
+        [
+          2,
+          3,
+          4,
+          5
+        ],
+        [
+          1,
+          2,
+          4,
+          4
+        ],
+        2
+      ],
+      "expectedOutput": 3
+    },
+    {
+      "input": [
+        [
+          10,
+          2,
+          2
+        ],
+        [
+          2,
+          2,
+          0
+        ],
+        100
+      ],
+      "expectedOutput": 3
+    }
+  ],
+  "hiddenTestCases": [
+    {
+      "input": [
+        [
+          2,
+          3,
+          4,
+          5
+        ],
+        [
+          1,
+          2,
+          4,
+          4
+        ],
+        2
+      ],
+      "expectedOutput": 3
+    },
+    {
+      "input": [
+        [
+          10,
+          2,
+          2
+        ],
+        [
+          2,
+          2,
+          0
+        ],
+        100
+      ],
+      "expectedOutput": 3
+    }
+  ],
+  "tags": [],
+  "constraints": [],
+  "examples": [],
+  "problemNumber": null,
+  "createdAt": "2025-11-14T21:25:06.871105+00:00",
+  "updatedAt": "2025-12-04T04:35:55.511Z"
+}

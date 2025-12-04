@@ -1,0 +1,132 @@
+{
+  "id": "d076f6f1-95d5-404f-bc85-ba34d8919682",
+  "title": "Maximum Cost of Trip With K Highways",
+  "slug": "maximum-cost-of-trip-with-k-highways",
+  "description": "A series of highways connect `n` cities numbered from `0` to `n - 1`. You are given a 2D integer array `highways` where `highways[i] = [city1i, city2i, tolli]` indicates that there is a highway that connects `city1i` and `city2i`, allowing a car to go from `city1i` to `city2i` and **vice versa** for a cost of `tolli`.\n\nYou are also given an integer `k`. You are going on a trip that crosses **exactly** `k` highways. You may start at any city, but you may only visit each city **at most** once during your trip.\n\nReturn _the **maximum** cost of your trip. If there is no trip that meets the requirements, return_ `-1`_._\n\n**Example 1:**\n\n**Input:** n = 5, highways = \\[\\[0,1,4\\],\\[2,1,3\\],\\[1,4,11\\],\\[3,2,3\\],\\[3,4,2\\]\\], k = 3\n**Output:** 17\n**Explanation:**\nOne possible trip is to go from 0 -> 1 -> 4 -> 3. The cost of this trip is 4 + 11 + 2 = 17.\nAnother possible trip is to go from 4 -> 1 -> 2 -> 3. The cost of this trip is 11 + 3 + 3 = 17.\nIt can be proven that 17 is the maximum possible cost of any valid trip.\n\nNote that the trip 4 -> 1 -> 0 -> 1 is not allowed because you visit the city 1 twice.\n\n**Example 2:**\n\n**Input:** n = 4, highways = \\[\\[0,1,3\\],\\[2,3,2\\]\\], k = 2\n**Output:** -1\n**Explanation:** There are no valid trips of length 2, so return -1.\n\n**Constraints:**\n\n*   `2 <= n <= 15`\n*   `1 <= highways.length <= 50`\n*   `highways[i].length == 3`\n*   `0 <= city1i, city2i <= n - 1`\n*   `city1i != city2i`\n*   `0 <= tolli <= 100`\n*   `1 <= k <= 50`\n*   There are no duplicate highways.",
+  "difficulty": "Hard",
+  "category": null,
+  "xpReward": 0,
+  "timeLimitMs": 5000,
+  "memoryLimitMb": 256,
+  "starterCode": {},
+  "solutionCode": "",
+  "hints": [],
+  "isPremium": false,
+  "createdBy": null,
+  "testCases": [
+    {
+      "input": [
+        5,
+        [
+          [
+            0,
+            1,
+            4
+          ],
+          [
+            2,
+            1,
+            3
+          ],
+          [
+            1,
+            4,
+            11
+          ],
+          [
+            3,
+            2,
+            3
+          ],
+          [
+            3,
+            4,
+            2
+          ]
+        ],
+        3
+      ],
+      "expectedOutput": 17
+    },
+    {
+      "input": [
+        4,
+        [
+          [
+            0,
+            1,
+            3
+          ],
+          [
+            2,
+            3,
+            2
+          ]
+        ],
+        2
+      ],
+      "expectedOutput": -1
+    }
+  ],
+  "hiddenTestCases": [
+    {
+      "input": [
+        5,
+        [
+          [
+            0,
+            1,
+            4
+          ],
+          [
+            2,
+            1,
+            3
+          ],
+          [
+            1,
+            4,
+            11
+          ],
+          [
+            3,
+            2,
+            3
+          ],
+          [
+            3,
+            4,
+            2
+          ]
+        ],
+        3
+      ],
+      "expectedOutput": 17
+    },
+    {
+      "input": [
+        4,
+        [
+          [
+            0,
+            1,
+            3
+          ],
+          [
+            2,
+            3,
+            2
+          ]
+        ],
+        2
+      ],
+      "expectedOutput": -1
+    }
+  ],
+  "tags": [],
+  "constraints": [],
+  "examples": [],
+  "problemNumber": null,
+  "createdAt": "2025-11-14T21:24:57.90902+00:00",
+  "updatedAt": "2025-12-04T04:35:59.677Z"
+}

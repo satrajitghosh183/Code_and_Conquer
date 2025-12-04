@@ -1,0 +1,49 @@
+{
+  "id": "bb5dacc4-6ea2-4986-9098-a27d784d49cb",
+  "title": "Minimum Sum of Four Digit Number After Splitting Digits",
+  "slug": "minimum-sum-of-four-digit-number-after-splitting-digits",
+  "description": "You are given a **positive** integer `num` consisting of exactly four digits. Split `num` into two new integers `new1` and `new2` by using the **digits** found in `num`. **Leading zeros** are allowed in `new1` and `new2`, and **all** the digits found in `num` must be used.\n\n*   For example, given `num = 2932`, you have the following digits: two `2`'s, one `9` and one `3`. Some of the possible pairs `[new1, new2]` are `[22, 93]`, `[23, 92]`, `[223, 9]` and `[2, 329]`.\n\nReturn _the **minimum** possible sum of_ `new1` _and_ `new2`.\n\n**Example 1:**\n\n**Input:** num = 2932\n**Output:** 52\n**Explanation:** Some possible pairs \\[new1, new2\\] are \\[29, 23\\], \\[223, 9\\], etc.\nThe minimum sum can be obtained by the pair \\[29, 23\\]: 29 + 23 = 52.\n\n**Example 2:**\n\n**Input:** num = 4009\n**Output:** 13\n**Explanation:** Some possible pairs \\[new1, new2\\] are \\[0, 49\\], \\[490, 0\\], etc. \nThe minimum sum can be obtained by the pair \\[4, 9\\]: 4 + 9 = 13.\n\n**Constraints:**\n\n*   `1000 <= num <= 9999`",
+  "difficulty": "Easy",
+  "category": null,
+  "xpReward": 0,
+  "timeLimitMs": 5000,
+  "memoryLimitMb": 256,
+  "starterCode": [],
+  "solutionCode": "",
+  "hints": [],
+  "isPremium": false,
+  "createdBy": null,
+  "testCases": [
+    {
+      "input": [
+        2932
+      ],
+      "expectedOutput": 52
+    },
+    {
+      "input": [
+        4009
+      ],
+      "expectedOutput": 13
+    }
+  ],
+  "hiddenTestCases": [
+    {
+      "input": [
+        2932
+      ],
+      "expectedOutput": 52
+    },
+    {
+      "input": [
+        4009
+      ],
+      "expectedOutput": 13
+    }
+  ],
+  "tags": [],
+  "constraints": [],
+  "examples": [],
+  "createdAt": "2025-11-14T21:24:37.951419+00:00",
+  "updatedAt": "2025-12-04T04:36:08.751Z"
+}

@@ -1,0 +1,50 @@
+{
+  "id": "d36fc596-46c3-4d7f-84cc-d6231576416d",
+  "title": "Maximize Number of Nice Divisors",
+  "slug": "maximize-number-of-nice-divisors",
+  "description": "You are given a positive integer `primeFactors`. You are asked to construct a positive integer `n` that satisfies the following conditions:\n\n*   The number of prime factors of `n` (not necessarily distinct) is **at most** `primeFactors`.\n*   The number of nice divisors of `n` is maximized. Note that a divisor of `n` is **nice** if it is divisible by every prime factor of `n`. For example, if `n = 12`, then its prime factors are `[2,2,3]`, then `6` and `12` are nice divisors, while `3` and `4` are not.\n\nReturn _the number of nice divisors of_ `n`. Since that number can be too large, return it **modulo** `109 + 7`.\n\nNote that a prime number is a natural number greater than `1` that is not a product of two smaller natural numbers. The prime factors of a number `n` is a list of prime numbers such that their product equals `n`.\n\n**Example 1:**\n\n**Input:** primeFactors = 5\n**Output:** 6\n**Explanation:** 200 is a valid value of n.\nIt has 5 prime factors: \\[2,2,2,5,5\\], and it has 6 nice divisors: \\[10,20,40,50,100,200\\].\nThere is not other value of n that has at most 5 prime factors and more nice divisors.\n\n**Example 2:**\n\n**Input:** primeFactors = 8\n**Output:** 18\n\n**Constraints:**\n\n*   `1 <= primeFactors <= 109`",
+  "difficulty": "Hard",
+  "category": null,
+  "xpReward": 0,
+  "timeLimitMs": 5000,
+  "memoryLimitMb": 256,
+  "starterCode": {},
+  "solutionCode": "",
+  "hints": [],
+  "isPremium": false,
+  "createdBy": null,
+  "testCases": [
+    {
+      "input": [
+        5
+      ],
+      "expectedOutput": 6
+    },
+    {
+      "input": [
+        8
+      ],
+      "expectedOutput": "18\n\n**Constraints:**\n\n*   `1 <= primeFactors <= 109`"
+    }
+  ],
+  "hiddenTestCases": [
+    {
+      "input": [
+        5
+      ],
+      "expectedOutput": 6
+    },
+    {
+      "input": [
+        8
+      ],
+      "expectedOutput": "18\n\n**Constraints:**\n\n*   `1 <= primeFactors <= 109`"
+    }
+  ],
+  "tags": [],
+  "constraints": [],
+  "examples": [],
+  "problemNumber": null,
+  "createdAt": "2025-11-14T21:23:12.515405+00:00",
+  "updatedAt": "2025-12-04T04:36:44.386Z"
+}

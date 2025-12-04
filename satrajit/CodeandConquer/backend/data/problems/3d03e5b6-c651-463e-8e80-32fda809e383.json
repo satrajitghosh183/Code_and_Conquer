@@ -1,0 +1,78 @@
+{
+  "id": "3d03e5b6-c651-463e-8e80-32fda809e383",
+  "title": "Partition Array Into Two Arrays to Minimize Sum Difference",
+  "slug": "partition-array-into-two-arrays-to-minimize-sum-difference",
+  "description": "You are given an integer array `nums` of `2 * n` integers. You need to partition `nums` into **two** arrays of length `n` to **minimize the absolute difference** of the **sums** of the arrays. To partition `nums`, put each element of `nums` into **one** of the two arrays.\n\nReturn _the **minimum** possible absolute difference_.\n\n**Example 1:**\n\n**Input:** nums = \\[3,9,7,3\\]\n**Output:** 2\n**Explanation:** One optimal partition is: \\[3,9\\] and \\[7,3\\].\nThe absolute difference between the sums of the arrays is abs((3 + 9) - (7 + 3)) = 2.\n\n**Example 2:**\n\n**Input:** nums = \\[-36,36\\]\n**Output:** 72\n**Explanation:** One optimal partition is: \\[-36\\] and \\[36\\].\nThe absolute difference between the sums of the arrays is abs((-36) - (36)) = 72.\n\n**Example 3:**\n\n**Input:** nums = \\[2,-1,0,4,-2,-9\\]\n**Output:** 0\n**Explanation:** One optimal partition is: \\[2,4,-9\\] and \\[-1,0,-2\\].\nThe absolute difference between the sums of the arrays is abs((2 + 4 + -9) - (-1 + 0 + -2)) = 0.\n\n**Constraints:**\n\n*   `1 <= n <= 15`\n*   `nums.length == 2 * n`\n*   `-107 <= nums[i] <= 107`",
+  "difficulty": "Hard",
+  "category": null,
+  "xpReward": 0,
+  "timeLimitMs": 5000,
+  "memoryLimitMb": 256,
+  "starterCode": [],
+  "solutionCode": "",
+  "hints": [],
+  "isPremium": false,
+  "createdBy": null,
+  "testCases": [
+    {
+      "input": [
+        [
+          3,
+          9,
+          7,
+          3
+        ]
+      ],
+      "expectedOutput": 2
+    },
+    {
+      "input": [
+        [
+          -36,
+          36
+        ]
+      ],
+      "expectedOutput": 72
+    },
+    {
+      "input": [
+        [
+          2,
+          -1,
+          0,
+          4,
+          -2,
+          -9
+        ]
+      ],
+      "expectedOutput": 0
+    }
+  ],
+  "hiddenTestCases": [
+    {
+      "input": [
+        [
+          3,
+          9,
+          7,
+          3
+        ]
+      ],
+      "expectedOutput": 2
+    },
+    {
+      "input": [
+        [
+          -36,
+          36
+        ]
+      ],
+      "expectedOutput": 72
+    }
+  ],
+  "tags": [],
+  "constraints": [],
+  "examples": [],
+  "createdAt": "2025-11-14T21:24:05.727888+00:00",
+  "updatedAt": "2025-12-04T04:36:21.957Z"
+}

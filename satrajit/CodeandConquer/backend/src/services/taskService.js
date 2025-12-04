@@ -14,6 +14,30 @@ class TaskService {
     this.integrations = new Map() // playerId -> { todoistToken, calendarToken }
   }
 
+  getIntegration(userId, type) {
+    const integrations = this.integrations.get(userId) || {}
+    if (type === 'google_calendar') {
+      const tokenObj = integrations.calendarToken
+      if (!tokenObj) return null
+      // Return the full token object (with refresh_token and expires_at for token refresh)
+      if (typeof tokenObj === 'string') {
+        return { access_token: tokenObj, expires_at: Date.now() + 3600000 }
+      }
+      // Return full object including refresh_token
+      return {
+        access_token: tokenObj.access_token,
+        refresh_token: tokenObj.refresh_token || null,
+        expires_at: tokenObj.expires_at || Date.now() + 3600000
+      }
+    }
+    if (type === 'todoist') {
+      const token = integrations.todoistToken
+      if (!token) return null
+      return typeof token === 'string' ? { access_token: token } : { access_token: token.access_token }
+    }
+    return null
+  }
+
   // Set integration tokens for a player (tokens stored in memory only for security)
   setIntegration(playerId, type, token) {
     if (!this.integrations.has(playerId)) {
@@ -21,9 +45,12 @@ class TaskService {
     }
     const integrations = this.integrations.get(playerId)
     if (type === 'todoist') {
-      integrations.todoistToken = token
+      integrations.todoistToken = typeof token === 'string' ? token : token.access_token
     } else if (type === 'google_calendar') {
-      integrations.calendarToken = token
+      // Store full token object for Google Calendar (includes refresh_token)
+      integrations.calendarToken = typeof token === 'string' 
+        ? { access_token: token, expires_at: Date.now() + 3600000 } 
+        : token
     }
     this.integrations.set(playerId, integrations)
     
@@ -180,14 +207,15 @@ class TaskService {
         console.warn('Failed to fetch Todoist tasks:', error.message)
       }
     }
-    
-    // Fetch from Google Calendar if integrated
+
+    // Fetch from Google Calendar if integrated - pass userId instead of token
     if (integrations.calendarToken) {
       try {
-        const calendarTasks = await calendarService.getEvents(integrations.calendarToken)
-        allTasks.push(...calendarTasks)
+        // Pass userId instead of raw token — CalendarService will handle refresh
+        const calendarTasks = await calendarService.getEvents(playerId);
+        allTasks.push(...calendarTasks);
       } catch (error) {
-        console.warn('Failed to fetch Google Calendar events:', error.message)
+        console.warn('Failed to fetch Google Calendar events:', error.message);
       }
     }
     
@@ -215,6 +243,33 @@ class TaskService {
       created_at: new Date().toISOString(),
       due_at: taskData.dueAt || null,
       completed_at: null
+    }
+
+    // Push to Todoist if user has connected it
+    const integrations = this.integrations.get(playerId) || {}
+    if (integrations.todoistToken) {
+      try {
+        const todoistTask = await todoistService.createTask(integrations.todoistToken, task)
+        if (todoistTask) {
+          task.external_id = todoistTask.id       // Save Todoist task ID
+          task.source = 'todoist'                 // Mark source
+        }
+      } catch (err) {
+        console.warn('Failed to create task in Todoist:', err.message)
+      }
+    }
+    
+    // Push to Google Calendar if user has connected it
+    if (this.getIntegration(playerId, 'google_calendar')) { 
+      try { 
+        const calendarEvent = await calendarService.createEvent(playerId, task); 
+        if (calendarEvent?.id) { 
+          task.external_id = calendarEvent.id; // make sure to match DB field
+          task.source = 'google_calendar'; 
+        } 
+      } catch (err) { 
+        console.warn('Failed to create task in Google Calendar:', err.message); 
+      }
     }
 
     // Save to database if available
@@ -279,100 +334,116 @@ class TaskService {
     }
   }
 
-  // Complete a task in database
+  // Complete a task (supports both database tasks and external tasks from Todoist/Calendar)
   async completeTask(playerId, taskId) {
     await this.initializeTasks(playerId)
+    const integrations = this.integrations.get(playerId) || {}
+    const completedAt = new Date().toISOString()
     
-    // Get task from database
+    // First, try to find the task in database
     if (publicDatabaseService.isAvailable()) {
       try {
         const tasks = await publicDatabaseService.query(PUBLIC_TABLES.TASKS, {
           where: { id: taskId, user_id: playerId }
         })
         
-        if (!tasks || tasks.length === 0) {
-          return null
-        }
-        
-        const task = tasks[0]
-        
-        if (task.status === 'DONE') {
-          // Already completed
-          return {
-            id: task.id,
-            playerId: task.user_id,
-            title: task.title,
-            description: task.description || '',
-            category: task.category || 'MISC',
-            status: task.status,
-            createdAt: task.created_at,
-            dueAt: task.due_at || null,
-            completedAt: task.completed_at || null,
-            source: task.source || 'internal',
-            externalId: task.external_id || null
+        if (tasks && tasks.length > 0) {
+          const task = tasks[0]
+          
+          if (task.status === 'DONE') {
+            // Already completed
+            return {
+              id: task.id,
+              playerId: task.user_id,
+              title: task.title,
+              description: task.description || '',
+              category: task.category || 'MISC',
+              status: task.status,
+              createdAt: task.created_at,
+              dueAt: task.due_at || null,
+              completedAt: task.completed_at || null,
+              source: task.source || 'internal',
+              externalId: task.external_id || null
+            }
           }
-        }
-        
-        // If it's from an external source, complete it there too
-        if (task.source === 'todoist' && task.external_id) {
-          const integrations = this.integrations.get(playerId) || {}
-          if (integrations.todoistToken) {
-            try {
-              await todoistService.completeTask(integrations.todoistToken, task.external_id)
-            } catch (error) {
-              console.warn('Failed to complete Todoist task:', error.message)
+          
+          // If it's from an external source, complete it there too
+          if (task.source === 'todoist' && task.external_id) {
+            if (integrations.todoistToken) {
+              try {
+                await todoistService.completeTask(integrations.todoistToken, task.external_id)
+              } catch (error) {
+                console.warn('Failed to complete Todoist task:', error.message)
+              }
+            }
+          }
+          
+          // Update task in database
+          try {
+            const updatedTask = await publicDatabaseService.update(PUBLIC_TABLES.TASKS, taskId, {
+              status: 'DONE',
+              completed_at: completedAt,
+              updated_at: completedAt
+            })
+            
+            if (updatedTask) {
+              return {
+                id: updatedTask.id,
+                playerId: updatedTask.user_id,
+                title: updatedTask.title,
+                description: updatedTask.description || '',
+                category: updatedTask.category || 'MISC',
+                status: updatedTask.status,
+                createdAt: updatedTask.created_at,
+                dueAt: updatedTask.due_at || null,
+                completedAt: updatedTask.completed_at || null,
+                source: updatedTask.source || 'internal',
+                externalId: updatedTask.external_id || null
+              }
+            }
+          } catch (updateError) {
+            if (!['PGRST205', '42P01', 'PGRST204'].includes(updateError.code)) {
+              console.error('Error updating task:', updateError)
+              throw updateError
             }
           }
         }
-        
-        // Update task in database
-        const completedAt = new Date().toISOString()
-        try {
-          const updatedTask = await publicDatabaseService.update(PUBLIC_TABLES.TASKS, taskId, {
-            status: 'DONE',
-            completed_at: completedAt,
-            updated_at: completedAt
-          })
-          
-          // If update returns null (table doesn't exist), return null
-          if (!updatedTask) {
-            return null
-          }
-          
-          return {
-            id: updatedTask.id,
-            playerId: updatedTask.user_id,
-            title: updatedTask.title,
-            description: updatedTask.description || '',
-            category: updatedTask.category || 'MISC',
-            status: updatedTask.status,
-            createdAt: updatedTask.created_at,
-            dueAt: updatedTask.due_at || null,
-            completedAt: updatedTask.completed_at || null,
-            source: updatedTask.source || 'internal',
-            externalId: updatedTask.external_id || null
-          }
-        } catch (updateError) {
-          // Silently handle missing table errors
-          if (updateError.code === 'PGRST205' || updateError.code === '42P01' || updateError.code === 'PGRST204') {
-            // Table or column doesn't exist - return null silently
-            return null
-          }
-          // Only log unexpected errors
-          console.error('Error updating task:', updateError)
-          throw updateError
-        }
       } catch (error) {
-        // Silently handle missing table errors
-        if (error.code === 'PGRST205' || error.code === '42P01') {
-          // Table doesn't exist - return null
-          return null
+        if (!['PGRST205', '42P01'].includes(error.code)) {
+          console.warn('Error checking database for task:', error.message)
         }
-        // Only log unexpected errors
-        console.error('Error completing task in database:', error)
-        throw error
       }
     }
+    
+    // Task not found in database - check if it's a Todoist task by ID
+    // Todoist task IDs are numeric strings
+    if (integrations.todoistToken && /^\d+$/.test(taskId)) {
+      console.log(`[TaskService] Task ${taskId} not in DB, trying Todoist completion`)
+      try {
+        const success = await todoistService.completeTask(integrations.todoistToken, taskId)
+        if (success) {
+          return {
+            id: taskId,
+            playerId: playerId,
+            title: 'Task',
+            description: '',
+            category: 'MISC',
+            status: 'DONE',
+            createdAt: null,
+            dueAt: null,
+            completedAt: completedAt,
+            source: 'todoist',
+            externalId: taskId
+          }
+        }
+      } catch (error) {
+        console.error('Failed to complete Todoist task directly:', error.message)
+      }
+    }
+    
+    // Check if it's a Google Calendar event ID (typically contains @ or is alphanumeric)
+    // Calendar events can't be "completed" - they're just events
+    // But we can mark them as done locally if the task exists
     
     return null
   }
@@ -425,17 +496,19 @@ class TaskService {
       }
     }
     
-    // Fetch from Google Calendar if integrated
+    // Fetch from Google Calendar if integrated - pass userId
     if (integrations.calendarToken) {
       try {
-        const calendarTasks = await calendarService.getEvents(integrations.calendarToken)
-        const recentCalendarTasks = calendarTasks.filter(task => {
-          if (task.status !== 'DONE' || !task.completedAt) return false
-          return new Date(task.completedAt) >= new Date(sevenDaysAgo)
-        })
-        recentTasks.push(...recentCalendarTasks)
+        // Pass userId instead of token
+        const calendarTasks = await calendarService.getEvents(playerId);
+        const recentCalendarTasks = calendarTasks.filter(task => 
+          task.status === 'DONE' &&
+          task.completedAt &&
+          new Date(task.completedAt) >= new Date(sevenDaysAgo)
+        );
+        recentTasks.push(...recentCalendarTasks);
       } catch (error) {
-        console.warn('Failed to fetch Google Calendar events for buff calculation:', error.message)
+        console.warn('Failed to fetch Google Calendar events for buff calculation:', error.message);
       }
     }
 

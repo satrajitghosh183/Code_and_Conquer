@@ -1,0 +1,140 @@
+{
+  "id": "bfc637aa-2989-48bd-bb96-62c43d75add9",
+  "title": "Most Popular Video Creator",
+  "slug": "most-popular-video-creator",
+  "description": "You are given two string arrays `creators` and `ids`, and an integer array `views`, all of length `n`. The `ith` video on a platform was created by `creator[i]`, has an id of `ids[i]`, and has `views[i]` views.\n\nThe **popularity** of a creator is the **sum** of the number of views on **all** of the creator's videos. Find the creator with the **highest** popularity and the id of their **most** viewed video.\n\n*   If multiple creators have the highest popularity, find all of them.\n*   If multiple videos have the highest view count for a creator, find the lexicographically **smallest** id.\n\nReturn _a 2D array of strings_ `answer` _where_ `answer[i] = [creatori, idi]` _means that_ `creatori` _has the **highest** popularity and_ `idi` _is the id of their most popular video._ The answer can be returned in any order.\n\n**Example 1:**\n\n**Input:** creators = \\[ \"alice \", \"bob \", \"alice \", \"chris \"\\], ids = \\[ \"one \", \"two \", \"three \", \"four \"\\], views = \\[5,10,5,4\\]\n**Output:** \\[\\[ \"alice \", \"one \"\\],\\[ \"bob \", \"two \"\\]\\]\n**Explanation:**\nThe popularity of alice is 5 + 5 = 10.\nThe popularity of bob is 10.\nThe popularity of chris is 4.\nalice and bob are the most popular creators.\nFor bob, the video with the highest view count is  \"two \".\nFor alice, the videos with the highest view count are  \"one \" and  \"three \". Since  \"one \" is lexicographically smaller than  \"three \", it is included in the answer.\n\n**Example 2:**\n\n**Input:** creators = \\[ \"alice \", \"alice \", \"alice \"\\], ids = \\[ \"a \", \"b \", \"c \"\\], views = \\[1,2,2\\]\n**Output:** \\[\\[ \"alice \", \"b \"\\]\\]\n**Explanation:**\nThe videos with id  \"b \" and  \"c \" have the highest view count.\nSince  \"b \" is lexicographically smaller than  \"c \", it is included in the answer.\n\n**Constraints:**\n\n*   `n == creators.length == ids.length == views.length`\n*   `1 <= n <= 105`\n*   `1 <= creators[i].length, ids[i].length <= 5`\n*   `creators[i]` and `ids[i]` consist only of lowercase English letters.\n*   `0 <= views[i] <= 105`",
+  "difficulty": "Medium",
+  "category": null,
+  "xpReward": 0,
+  "timeLimitMs": 5000,
+  "memoryLimitMb": 256,
+  "starterCode": {},
+  "solutionCode": "",
+  "hints": [],
+  "isPremium": false,
+  "createdBy": null,
+  "testCases": [
+    {
+      "input": [
+        [
+          "alice ",
+          "bob ",
+          "alice ",
+          "chris "
+        ],
+        [
+          "one ",
+          "two ",
+          "three ",
+          "four "
+        ],
+        [
+          5,
+          10,
+          5,
+          4
+        ]
+      ],
+      "expectedOutput": [
+        [
+          "alice ",
+          "one "
+        ],
+        [
+          "bob ",
+          "two "
+        ]
+      ]
+    },
+    {
+      "input": [
+        [
+          "alice ",
+          "alice ",
+          "alice "
+        ],
+        [
+          "a ",
+          "b ",
+          "c "
+        ],
+        [
+          1,
+          2,
+          2
+        ]
+      ],
+      "expectedOutput": [
+        [
+          "alice ",
+          "b "
+        ]
+      ]
+    }
+  ],
+  "hiddenTestCases": [
+    {
+      "input": [
+        [
+          "alice ",
+          "bob ",
+          "alice ",
+          "chris "
+        ],
+        [
+          "one ",
+          "two ",
+          "three ",
+          "four "
+        ],
+        [
+          5,
+          10,
+          5,
+          4
+        ]
+      ],
+      "expectedOutput": [
+        [
+          "alice ",
+          "one "
+        ],
+        [
+          "bob ",
+          "two "
+        ]
+      ]
+    },
+    {
+      "input": [
+        [
+          "alice ",
+          "alice ",
+          "alice "
+        ],
+        [
+          "a ",
+          "b ",
+          "c "
+        ],
+        [
+          1,
+          2,
+          2
+        ]
+      ],
+      "expectedOutput": [
+        [
+          "alice ",
+          "b "
+        ]
+      ]
+    }
+  ],
+  "tags": [],
+  "constraints": [],
+  "examples": [],
+  "problemNumber": null,
+  "createdAt": "2025-11-14T21:25:53.361221+00:00",
+  "updatedAt": "2025-12-04T04:35:33.580Z"
+}

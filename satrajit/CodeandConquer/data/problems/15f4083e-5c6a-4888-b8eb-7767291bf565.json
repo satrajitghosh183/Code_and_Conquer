@@ -1,0 +1,70 @@
+{
+  "id": "15f4083e-5c6a-4888-b8eb-7767291bf565",
+  "title": "Count Number of Distinct Integers After Reverse Operations",
+  "slug": "count-number-of-distinct-integers-after-reverse-operations",
+  "description": "You are given an array `nums` consisting of **positive** integers.\n\nYou have to take each integer in the array, **reverse its digits**, and add it to the end of the array. You should apply this operation to the original integers in `nums`.\n\nReturn _the number of **distinct** integers in the final array_.\n\n**Example 1:**\n\n**Input:** nums = \\[1,13,10,12,31\\]\n**Output:** 6\n**Explanation:** After including the reverse of each number, the resulting array is \\[1,13,10,12,31,1,31,1,21,13\\].\nThe reversed integers that were added to the end of the array are underlined. Note that for the integer 10, after reversing it, it becomes 01 which is just 1.\nThe number of distinct integers in this array is 6 (The numbers 1, 10, 12, 13, 21, and 31).\n\n**Example 2:**\n\n**Input:** nums = \\[2,2,2\\]\n**Output:** 1\n**Explanation:** After including the reverse of each number, the resulting array is \\[2,2,2,2,2,2\\].\nThe number of distinct integers in this array is 1 (The number 2).\n\n**Constraints:**\n\n*   `1 <= nums.length <= 105`\n*   `1 <= nums[i] <= 106`",
+  "difficulty": "Medium",
+  "category": null,
+  "xpReward": 0,
+  "timeLimitMs": 5000,
+  "memoryLimitMb": 256,
+  "starterCode": {},
+  "solutionCode": "",
+  "hints": [],
+  "isPremium": false,
+  "createdBy": null,
+  "testCases": [
+    {
+      "input": [
+        [
+          1,
+          13,
+          10,
+          12,
+          31
+        ]
+      ],
+      "expectedOutput": 6
+    },
+    {
+      "input": [
+        [
+          2,
+          2,
+          2
+        ]
+      ],
+      "expectedOutput": 1
+    }
+  ],
+  "hiddenTestCases": [
+    {
+      "input": [
+        [
+          1,
+          13,
+          10,
+          12,
+          31
+        ]
+      ],
+      "expectedOutput": 6
+    },
+    {
+      "input": [
+        [
+          2,
+          2,
+          2
+        ]
+      ],
+      "expectedOutput": 1
+    }
+  ],
+  "tags": [],
+  "constraints": [],
+  "examples": [],
+  "problemNumber": null,
+  "createdAt": "2025-11-14T21:25:47.780779+00:00",
+  "updatedAt": "2025-12-04T04:35:36.159Z"
+}

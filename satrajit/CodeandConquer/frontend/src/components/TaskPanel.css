@@ -77,7 +77,7 @@
   align-items: center;
   gap: 6px;
   padding: 8px 16px;
-  background: #00d4ff;
+  background: #ff0000;
   color: #000000;
   border: none;
   border-radius: 8px;
@@ -88,7 +88,7 @@
 }
 
 .add-btn:hover {
-  background: #00b8e6;
+  background: #aa0000;
 }
 
 .close-btn {
@@ -142,7 +142,7 @@
 .task-textarea:focus,
 .task-select:focus {
   outline: none;
-  border-color: #00d4ff;
+  border-color: #ff0000;
 }
 
 .task-textarea {
@@ -168,12 +168,12 @@
 }
 
 .save-btn {
-  background: #00d4ff;
+  background: #ff0000;
   color: #000000;
 }
 
 .save-btn:hover {
-  background: #00b8e6;
+  background: #aa0000;
 }
 
 .cancel-btn {
@@ -285,7 +285,7 @@
 }
 
 .complete-btn {
-  background: rgba(81, 207, 102, 0.2);
+  background: rgba(81, 207, 102, 0.15);
   border: 1px solid rgba(81, 207, 102, 0.3);
   border-radius: 8px;
   color: #51cf66;
@@ -295,10 +295,31 @@
   align-items: center;
   justify-content: center;
   transition: all 0.2s;
+  flex-shrink: 0;
+  margin-left: 12px;
 }
 
-.complete-btn:hover {
+.complete-btn:hover:not(:disabled) {
   background: rgba(81, 207, 102, 0.3);
+  transform: scale(1.05);
+}
+
+.complete-btn:disabled {
+  cursor: default;
+}
+
+.complete-btn.completed {
+  background: rgba(81, 207, 102, 0.3);
+  color: #51cf66;
+}
+
+.complete-btn .spinning {
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
 }
 
 .loading,
@@ -315,7 +336,7 @@
 .connect-prompt-btn,
 .add-prompt-btn {
   padding: 12px 24px;
-  background: #00d4ff;
+  background: #ff0000;
   color: #000000;
   border: none;
   border-radius: 8px;
@@ -328,7 +349,7 @@
 
 .connect-prompt-btn:hover,
 .add-prompt-btn:hover {
-  background: #00b8e6;
+  background: #aa0000;
   transform: translateY(-1px);
 }
 

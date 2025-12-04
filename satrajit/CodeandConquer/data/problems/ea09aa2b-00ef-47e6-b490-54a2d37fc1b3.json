@@ -1,0 +1,61 @@
+{
+  "id": "ea09aa2b-00ef-47e6-b490-54a2d37fc1b3",
+  "title": "Check If Two Expression Trees are Equivalent",
+  "slug": "check-if-two-expression-trees-are-equivalent",
+  "description": "A **[binary expression tree](https://en.wikipedia.org/wiki/Binary_expression_tree)** is a kind of binary tree used to represent arithmetic expressions. Each node of a binary expression tree has either zero or two children. Leaf nodes (nodes with 0 children) correspond to operands (variables), and internal nodes (nodes with two children) correspond to the operators. In this problem, we only consider the `'+'` operator (i.e. addition).\n\nYou are given the roots of two binary expression trees, `root1` and `root2`. Return `true` _if the two binary expression trees are equivalent_. Otherwise, return `false`.\n\nTwo binary expression trees are equivalent if they **evaluate to the same value** regardless of what the variables are set to.\n\n**Example 1:**\n\n**Input:** root1 = \\[x\\], root2 = \\[x\\]\n**Output:** true\n\n**Example 2:**\n\n**Input:** root1 = \\[+,a,+,null,null,b,c\\], root2 = \\[+,+,a,b,c\\]\n**Output:** true\n**Explaination:** `a + (b + c) == (b + c) + a`\n\n**Example 3:**\n\n**Input:** root1 = \\[+,a,+,null,null,b,c\\], root2 = \\[+,+,a,b,d\\]\n**Output:** false\n**Explaination:** `a + (b + c) != (b + d) + a`\n\n**Constraints:**\n\n*   The number of nodes in both trees are equal, odd and, in the range `[1, 4999]`.\n*   `Node.val` is `'+'` or a lower-case English letter.\n*   It's **guaranteed** that the tree given is a valid binary expression tree.\n\n**Follow up:** What will you change in your solution if the tree also supports the `'-'` operator (i.e. subtraction)?",
+  "difficulty": "Medium",
+  "category": null,
+  "xpReward": 0,
+  "timeLimitMs": 5000,
+  "memoryLimitMb": 256,
+  "starterCode": {},
+  "solutionCode": "",
+  "hints": [],
+  "isPremium": false,
+  "createdBy": null,
+  "testCases": [
+    {
+      "input": [
+        "[x]",
+        "[x]"
+      ],
+      "expectedOutput": true
+    },
+    {
+      "input": [
+        "[+,a,+,null,null,b,c]",
+        "[+,+,a,b,c]"
+      ],
+      "expectedOutput": "true\n**Explaination:** `a + (b + c) == (b + c) + a`"
+    },
+    {
+      "input": [
+        "[+,a,+,null,null,b,c]",
+        "[+,+,a,b,d]"
+      ],
+      "expectedOutput": "false\n**Explaination:** `a + (b + c) != (b + d) + a`\n\n**Constraints:**\n\n*   The number of nodes in both trees are equal, odd and, in the range `[1, 4999]`.\n*   `Node.val` is `'+'` or a lower-case English letter.\n*   It's **guaranteed** that the tree given is a valid binary expression tree.\n\n**Follow up:** What will you change in your solution if the tree also supports the `'-'` operator (i.e. subtraction)?"
+    }
+  ],
+  "hiddenTestCases": [
+    {
+      "input": [
+        "[x]",
+        "[x]"
+      ],
+      "expectedOutput": true
+    },
+    {
+      "input": [
+        "[+,a,+,null,null,b,c]",
+        "[+,+,a,b,c]"
+      ],
+      "expectedOutput": "true\n**Explaination:** `a + (b + c) == (b + c) + a`"
+    }
+  ],
+  "tags": [],
+  "constraints": [],
+  "examples": [],
+  "problemNumber": null,
+  "createdAt": "2025-11-14T21:22:26.271417+00:00",
+  "updatedAt": "2025-12-04T04:37:12.397Z"
+}

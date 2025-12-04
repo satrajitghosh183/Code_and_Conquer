@@ -1,15 +1,17 @@
 .dashboard {
   min-height: 100vh;
-  background: #f8f9fa;
+  background: transparent;
 }
 
 .dashboard-nav {
-  background: white;
+  background: rgba(26, 0, 0, 0.8);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
   padding: 20px 40px;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+  border-bottom: 1px solid rgba(255, 0, 0, 0.2);
   position: sticky;
   top: 0;
   z-index: 100;
@@ -17,11 +19,10 @@
 
 .dashboard-nav h1 {
   margin: 0;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
+  color: var(--text);
   font-size: 24px;
+  font-weight: 600;
+  text-shadow: 0 0 20px rgba(255, 0, 0, 0.3);
 }
 
 .user-info {
@@ -34,7 +35,7 @@
   width: 40px;
   height: 40px;
   border-radius: 50%;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -42,6 +43,14 @@
   font-weight: bold;
   font-size: 18px;
   overflow: hidden;
+  cursor: pointer;
+  transition: transform 0.3s, box-shadow 0.3s;
+  border: 2px solid rgba(255, 0, 0, 0.3);
+}
+
+.user-avatar:hover {
+  transform: scale(1.1);
+  box-shadow: 0 0 20px rgba(255, 0, 0, 0.4);
 }
 
 .user-avatar img {
@@ -52,14 +61,17 @@
 
 .username {
   font-weight: 600;
-  color: #333;
+  color: var(--text);
+  display: flex;
+  align-items: center;
+  gap: 8px;
 }
 
 .signout-btn {
   padding: 10px 20px;
-  background: #667eea;
-  color: white;
-  border: none;
+  background: rgba(255, 0, 0, 0.2);
+  color: var(--text);
+  border: 1px solid rgba(255, 0, 0, 0.4);
   border-radius: 8px;
   cursor: pointer;
   font-weight: 600;
@@ -68,9 +80,10 @@
 }
 
 .signout-btn:hover {
-  background: #764ba2;
+  background: rgba(255, 0, 0, 0.3);
+  border-color: rgba(255, 0, 0, 0.6);
   transform: translateY(-2px);
-  box-shadow: 0 5px 15px rgba(102, 126, 234, 0.3);
+  box-shadow: 0 5px 15px rgba(255, 0, 0, 0.2);
 }
 
 .dashboard-content {
@@ -87,11 +100,12 @@
 .welcome-section h2 {
   font-size: 36px;
   margin-bottom: 10px;
-  color: #333;
+  color: var(--text);
+  text-shadow: 0 0 30px rgba(255, 0, 0, 0.2);
 }
 
 .welcome-section p {
-  color: #666;
+  color: var(--textSecondary);
   font-size: 18px;
 }
 
@@ -103,34 +117,47 @@
 }
 
 .stat-card {
-  background: white;
+  background: rgba(26, 0, 0, 0.7);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
   padding: 30px;
   border-radius: 15px;
   display: flex;
   align-items: center;
   gap: 20px;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
-  transition: transform 0.3s, box-shadow 0.3s;
+  border: 1px solid rgba(255, 0, 0, 0.2);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+  transition: transform 0.3s, box-shadow 0.3s, border-color 0.3s;
 }
 
 .stat-card:hover {
   transform: translateY(-5px);
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 10px 30px rgba(255, 0, 0, 0.15);
+  border-color: rgba(255, 0, 0, 0.4);
 }
 
 .stat-icon {
   font-size: 48px;
+  width: 60px;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255, 0, 0, 0.15);
+  border-radius: 12px;
+  border: 1px solid rgba(255, 0, 0, 0.2);
 }
 
 .stat-info h3 {
   margin: 0;
   font-size: 32px;
-  color: #667eea;
+  color: var(--primary);
+  text-shadow: 0 0 15px rgba(255, 0, 0, 0.3);
 }
 
 .stat-info p {
   margin: 5px 0 0 0;
-  color: #666;
+  color: var(--textSecondary);
   font-size: 14px;
 }
 
@@ -141,7 +168,8 @@
 .challenges-section h3 {
   font-size: 28px;
   margin-bottom: 20px;
-  color: #333;
+  color: var(--text);
+  text-shadow: 0 0 20px rgba(255, 0, 0, 0.2);
 }
 
 .challenge-list {
@@ -151,16 +179,20 @@
 }
 
 .challenge-card {
-  background: white;
+  background: rgba(26, 0, 0, 0.7);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
   padding: 25px;
   border-radius: 15px;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
-  transition: transform 0.3s, box-shadow 0.3s;
+  border: 1px solid rgba(255, 0, 0, 0.2);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+  transition: transform 0.3s, box-shadow 0.3s, border-color 0.3s;
 }
 
 .challenge-card:hover {
   transform: translateY(-5px);
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 10px 30px rgba(255, 0, 0, 0.15);
+  border-color: rgba(255, 0, 0, 0.4);
 }
 
 .challenge-header {
@@ -179,22 +211,25 @@
 }
 
 .difficulty.easy {
-  background: #d4edda;
-  color: #155724;
+  background: rgba(16, 185, 129, 0.2);
+  color: #6ee7b7;
+  border: 1px solid rgba(16, 185, 129, 0.4);
 }
 
 .difficulty.medium {
-  background: #fff3cd;
-  color: #856404;
+  background: rgba(245, 158, 11, 0.2);
+  color: #fcd34d;
+  border: 1px solid rgba(245, 158, 11, 0.4);
 }
 
 .difficulty.hard {
-  background: #f8d7da;
-  color: #721c24;
+  background: rgba(239, 68, 68, 0.2);
+  color: #fca5a5;
+  border: 1px solid rgba(239, 68, 68, 0.4);
 }
 
 .points {
-  color: #667eea;
+  color: var(--primary);
   font-weight: 600;
   font-size: 14px;
 }
@@ -202,12 +237,12 @@
 .challenge-card h4 {
   margin: 0 0 10px 0;
   font-size: 20px;
-  color: #333;
+  color: var(--text);
 }
 
 .challenge-card p {
   margin: 0 0 20px 0;
-  color: #666;
+  color: var(--textSecondary);
   font-size: 14px;
   line-height: 1.5;
 }
@@ -215,21 +250,201 @@
 .start-btn {
   width: 100%;
   padding: 12px;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  color: white;
-  border: none;
+  background: linear-gradient(135deg, rgba(255, 0, 0, 0.3) 0%, rgba(170, 0, 0, 0.4) 100%);
+  color: var(--text);
+  border: 1px solid rgba(255, 0, 0, 0.4);
   border-radius: 8px;
   font-weight: 600;
   cursor: pointer;
-  transition: transform 0.2s, box-shadow 0.2s;
+  transition: all 0.3s;
   font-family: inherit;
 }
 
 .start-btn:hover {
+  background: linear-gradient(135deg, rgba(255, 0, 0, 0.4) 0%, rgba(170, 0, 0, 0.5) 100%);
+  border-color: rgba(255, 0, 0, 0.6);
   transform: translateY(-2px);
-  box-shadow: 0 5px 15px rgba(102, 126, 234, 0.3);
+  box-shadow: 0 5px 15px rgba(255, 0, 0, 0.2);
 }
 
+/* Settings Button */
+.settings-btn {
+  padding: 10px 20px;
+  background: transparent;
+  color: var(--primary);
+  border: 1px solid rgba(255, 0, 0, 0.4);
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: all 0.3s;
+  font-family: inherit;
+}
+
+.settings-btn:hover {
+  background: rgba(255, 0, 0, 0.2);
+  border-color: rgba(255, 0, 0, 0.6);
+  transform: translateY(-2px);
+}
+
+/* Premium CTA Section */
+.premium-cta {
+  background: rgba(255, 0, 0, 0.1);
+  border: 1px solid rgba(255, 0, 0, 0.3);
+  border-radius: 15px;
+  padding: 20px;
+  margin-top: 20px;
+  text-align: center;
+}
+
+.premium-cta p {
+  margin: 0 0 15px 0;
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--text);
+}
+
+.cta-btn {
+  padding: 12px 30px;
+  background: linear-gradient(135deg, rgba(255, 0, 0, 0.3) 0%, rgba(170, 0, 0, 0.4) 100%);
+  color: var(--text);
+  border: 1px solid rgba(255, 0, 0, 0.4);
+  border-radius: 10px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s;
+  font-family: inherit;
+  font-size: 16px;
+}
+
+.cta-btn:hover {
+  background: linear-gradient(135deg, rgba(255, 0, 0, 0.4) 0%, rgba(170, 0, 0, 0.5) 100%);
+  transform: translateY(-2px);
+  box-shadow: 0 10px 25px rgba(255, 0, 0, 0.3);
+}
+
+/* Upgrade Button */
+.upgrade-btn {
+  padding: 10px 20px;
+  background: linear-gradient(135deg, #ffd700 0%, #ffb700 100%);
+  color: #000;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 700;
+  transition: all 0.3s;
+  font-family: inherit;
+  box-shadow: 0 2px 8px rgba(255, 215, 0, 0.4);
+}
+
+.upgrade-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(255, 215, 0, 0.6);
+}
+
+/* Locked Challenge Card */
+.challenge-card.locked {
+  opacity: 0.6;
+  position: relative;
+}
+
+.challenge-card.locked::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.3);
+  border-radius: 15px;
+  pointer-events: none;
+}
+
+.locked-btn {
+  background: rgba(100, 100, 100, 0.3) !important;
+  color: var(--textSecondary) !important;
+  cursor: pointer !important;
+  border-color: rgba(100, 100, 100, 0.3) !important;
+}
+
+.locked-btn:hover {
+  background: linear-gradient(135deg, rgba(255, 0, 0, 0.3) 0%, rgba(170, 0, 0, 0.4) 100%) !important;
+  color: var(--text) !important;
+  border-color: rgba(255, 0, 0, 0.4) !important;
+}
+
+/* XP Multiplier Badge */
+.xp-badge {
+  display: inline-block;
+  padding: 2px 8px;
+  background: linear-gradient(135deg, #ffd700 0%, #ffb700 100%);
+  color: #000;
+  border-radius: 12px;
+  font-size: 10px;
+  font-weight: 700;
+  margin-left: 5px;
+  vertical-align: middle;
+}
+
+/* Premium Stats Card */
+.stat-card.premium {
+  background: rgba(255, 0, 0, 0.1);
+  border: 1px solid rgba(255, 0, 0, 0.4);
+}
+
+/* Loading State */
+.loading-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.8);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+  color: var(--text);
+  font-size: 24px;
+  font-weight: 600;
+}
+
+/* Success/Error Toast */
+.toast {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  padding: 15px 25px;
+  border-radius: 10px;
+  color: white;
+  font-weight: 600;
+  z-index: 10000;
+  animation: slideInRight 0.3s ease-out;
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(10px);
+}
+
+.toast.success {
+  background: rgba(16, 185, 129, 0.9);
+  border: 1px solid rgba(16, 185, 129, 0.5);
+}
+
+.toast.error {
+  background: rgba(239, 68, 68, 0.9);
+  border: 1px solid rgba(239, 68, 68, 0.5);
+}
+
+@keyframes slideInRight {
+  from {
+    transform: translateX(400px);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+/* Responsive */
 @media (max-width: 768px) {
   .dashboard-nav {
     padding: 15px 20px;
@@ -259,199 +474,6 @@
     grid-template-columns: 1fr;
   }
 
-/* Add these to your existing Dashboard.css */
-
-.user-avatar {
-  cursor: pointer;
-  transition: transform 0.3s;
-}
-
-.user-avatar:hover {
-  transform: scale(1.1);
-}
-
-.settings-btn {
-  padding: 10px 20px;
-  background: #f5f5f5;
-  color: #667eea;
-  border: 2px solid #667eea;
-  border-radius: 8px;
-  cursor: pointer;
-  font-weight: 600;
-  transition: all 0.3s;
-  font-family: inherit;
-}
-
-.settings-btn:hover {
-  background: #667eea;
-  color: white;
-  transform: translateY(-2px);
-  box-shadow: 0 5px 15px rgba(102, 126, 234, 0.3);
-}
-
-/* Add these styles to your existing Dashboard.css */
-
-/* Premium CTA Section */
-.premium-cta {
-  background: linear-gradient(135deg, #667eea15 0%, #764ba215 100%);
-  border: 2px solid #667eea;
-  border-radius: 15px;
-  padding: 20px;
-  margin-top: 20px;
-  text-align: center;
-}
-
-.premium-cta p {
-  margin: 0 0 15px 0;
-  font-size: 16px;
-  font-weight: 600;
-  color: #667eea;
-}
-
-.cta-btn {
-  padding: 12px 30px;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  color: white;
-  border: none;
-  border-radius: 10px;
-  font-weight: 600;
-  cursor: pointer;
-  transition: all 0.3s;
-  font-family: inherit;
-  font-size: 16px;
-}
-
-.cta-btn:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 10px 25px rgba(102, 126, 234, 0.4);
-}
-
-/* Upgrade Button */
-.upgrade-btn {
-  padding: 10px 20px;
-  background: linear-gradient(135deg, #ffd700 0%, #ffed4e 100%);
-  color: #000;
-  border: none;
-  border-radius: 8px;
-  cursor: pointer;
-  font-weight: 700;
-  transition: all 0.3s;
-  font-family: inherit;
-  box-shadow: 0 2px 8px rgba(255, 215, 0, 0.4);
-}
-
-.upgrade-btn:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 5px 15px rgba(255, 215, 0, 0.6);
-}
-
-/* Locked Challenge Card */
-.challenge-card.locked {
-  opacity: 0.7;
-  position: relative;
-}
-
-.challenge-card.locked::after {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: rgba(255, 255, 255, 0.3);
-  border-radius: 15px;
-  pointer-events: none;
-}
-
-.locked-btn {
-  background: #e0e0e0 !important;
-  color: #666 !important;
-  cursor: pointer !important;
-}
-
-.locked-btn:hover {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important;
-  color: white !important;
-}
-
-/* Premium Badge in Username */
-.username {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-
-/* XP Multiplier Badge */
-.xp-badge {
-  display: inline-block;
-  padding: 2px 8px;
-  background: linear-gradient(135deg, #ffd700 0%, #ffed4e 100%);
-  color: #000;
-  border-radius: 12px;
-  font-size: 10px;
-  font-weight: 700;
-  margin-left: 5px;
-  vertical-align: middle;
-}
-
-/* Premium Stats Card */
-.stat-card.premium {
-  background: linear-gradient(135deg, #667eea15 0%, #764ba215 100%);
-  border: 2px solid #667eea;
-}
-
-/* Loading State */
-.loading-overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: rgba(0, 0, 0, 0.7);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 9999;
-  color: white;
-  font-size: 24px;
-  font-weight: 600;
-}
-
-/* Success/Error Toast */
-.toast {
-  position: fixed;
-  top: 20px;
-  right: 20px;
-  padding: 15px 25px;
-  border-radius: 10px;
-  color: white;
-  font-weight: 600;
-  z-index: 10000;
-  animation: slideInRight 0.3s ease-out;
-  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
-}
-
-.toast.success {
-  background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
-}
-
-.toast.error {
-  background: linear-gradient(135deg, #dc3545 0%, #c82333 100%);
-}
-
-@keyframes slideInRight {
-  from {
-    transform: translateX(400px);
-    opacity: 0;
-  }
-  to {
-    transform: translateX(0);
-    opacity: 1;
-  }
-}
-
-/* Responsive Updates */
-@media (max-width: 768px) {
   .upgrade-btn {
     display: none;
   }
@@ -464,7 +486,4 @@
     padding: 10px 20px;
     font-size: 14px;
   }
-}
-
-
 }

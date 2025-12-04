@@ -1,0 +1,103 @@
+{
+  "id": "bc04d0ae-269b-4fa4-ba79-5e717ffef018",
+  "title": "Find Target Indices After Sorting Array",
+  "slug": "find-target-indices-after-sorting-array",
+  "description": "You are given a **0-indexed** integer array `nums` and a target element `target`.\n\nA **target index** is an index `i` such that `nums[i] == target`.\n\nReturn _a list of the target indices of_ `nums` after _sorting_ `nums` _in **non-decreasing** order_. If there are no target indices, return _an **empty** list_. The returned list must be sorted in **increasing** order.\n\n**Example 1:**\n\n**Input:** nums = \\[1,2,5,2,3\\], target = 2\n**Output:** \\[1,2\\]\n**Explanation:** After sorting, nums is \\[1,**2**,**2**,3,5\\].\nThe indices where nums\\[i\\] == 2 are 1 and 2.\n\n**Example 2:**\n\n**Input:** nums = \\[1,2,5,2,3\\], target = 3\n**Output:** \\[3\\]\n**Explanation:** After sorting, nums is \\[1,2,2,**3**,5\\].\nThe index where nums\\[i\\] == 3 is 3.\n\n**Example 3:**\n\n**Input:** nums = \\[1,2,5,2,3\\], target = 5\n**Output:** \\[4\\]\n**Explanation:** After sorting, nums is \\[1,2,2,3,**5**\\].\nThe index where nums\\[i\\] == 5 is 4.\n\n**Constraints:**\n\n*   `1 <= nums.length <= 100`\n*   `1 <= nums[i], target <= 100`",
+  "difficulty": "Easy",
+  "category": null,
+  "xpReward": 0,
+  "timeLimitMs": 5000,
+  "memoryLimitMb": 256,
+  "starterCode": {},
+  "solutionCode": "",
+  "hints": [],
+  "isPremium": false,
+  "createdBy": null,
+  "testCases": [
+    {
+      "input": [
+        [
+          1,
+          2,
+          5,
+          2,
+          3
+        ],
+        2
+      ],
+      "expectedOutput": [
+        1,
+        2
+      ]
+    },
+    {
+      "input": [
+        [
+          1,
+          2,
+          5,
+          2,
+          3
+        ],
+        3
+      ],
+      "expectedOutput": [
+        3
+      ]
+    },
+    {
+      "input": [
+        [
+          1,
+          2,
+          5,
+          2,
+          3
+        ],
+        5
+      ],
+      "expectedOutput": [
+        4
+      ]
+    }
+  ],
+  "hiddenTestCases": [
+    {
+      "input": [
+        [
+          1,
+          2,
+          5,
+          2,
+          3
+        ],
+        2
+      ],
+      "expectedOutput": [
+        1,
+        2
+      ]
+    },
+    {
+      "input": [
+        [
+          1,
+          2,
+          5,
+          2,
+          3
+        ],
+        3
+      ],
+      "expectedOutput": [
+        3
+      ]
+    }
+  ],
+  "tags": [],
+  "constraints": [],
+  "examples": [],
+  "problemNumber": null,
+  "createdAt": "2025-11-14T21:24:19.852248+00:00",
+  "updatedAt": "2025-12-04T04:36:16.453Z"
+}

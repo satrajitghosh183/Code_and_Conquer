@@ -1,0 +1,56 @@
+{
+  "id": "147d3124-0cdf-4a59-9579-3fa6e232d20f",
+  "title": "Sum of Number and Its Reverse",
+  "slug": "sum-of-number-and-its-reverse",
+  "description": "Given a **non-negative** integer `num`, return `true` _if_ `num` _can be expressed as the sum of any **non-negative** integer and its reverse, or_ `false` _otherwise._\n\n**Example 1:**\n\n**Input:** num = 443\n**Output:** true\n**Explanation:** 172 + 271 = 443 so we return true.\n\n**Example 2:**\n\n**Input:** num = 63\n**Output:** false\n**Explanation:** 63 cannot be expressed as the sum of a non-negative integer and its reverse so we return false.\n\n**Example 3:**\n\n**Input:** num = 181\n**Output:** true\n**Explanation:** 140 + 041 = 181 so we return true. Note that when a number is reversed, there may be leading zeros.\n\n**Constraints:**\n\n*   `0 <= num <= 105`",
+  "difficulty": "Medium",
+  "category": null,
+  "xpReward": 0,
+  "timeLimitMs": 5000,
+  "memoryLimitMb": 256,
+  "starterCode": {},
+  "solutionCode": "",
+  "hints": [],
+  "isPremium": false,
+  "createdBy": null,
+  "testCases": [
+    {
+      "input": [
+        443
+      ],
+      "expectedOutput": true
+    },
+    {
+      "input": [
+        63
+      ],
+      "expectedOutput": false
+    },
+    {
+      "input": [
+        181
+      ],
+      "expectedOutput": true
+    }
+  ],
+  "hiddenTestCases": [
+    {
+      "input": [
+        443
+      ],
+      "expectedOutput": true
+    },
+    {
+      "input": [
+        63
+      ],
+      "expectedOutput": false
+    }
+  ],
+  "tags": [],
+  "constraints": [],
+  "examples": [],
+  "problemNumber": null,
+  "createdAt": "2025-11-14T21:25:47.988703+00:00",
+  "updatedAt": "2025-12-04T04:35:35.952Z"
+}

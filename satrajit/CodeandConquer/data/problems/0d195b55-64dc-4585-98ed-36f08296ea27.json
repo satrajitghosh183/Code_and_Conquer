@@ -1,0 +1,56 @@
+{
+  "id": "0d195b55-64dc-4585-98ed-36f08296ea27",
+  "title": "Find Longest Awesome Substring",
+  "slug": "find-longest-awesome-substring",
+  "description": "You are given a string `s`. An **awesome** substring is a non-empty substring of `s` such that we can make any number of swaps in order to make it a palindrome.\n\nReturn _the length of the maximum length **awesome substring** of_ `s`.\n\n**Example 1:**\n\n**Input:** s =  \"3242415 \"\n**Output:** 5\n**Explanation:**  \"24241 \" is the longest awesome substring, we can form the palindrome  \"24142 \" with some swaps.\n\n**Example 2:**\n\n**Input:** s =  \"12345678 \"\n**Output:** 1\n\n**Example 3:**\n\n**Input:** s =  \"213123 \"\n**Output:** 6\n**Explanation:**  \"213123 \" is the longest awesome substring, we can form the palindrome  \"231132 \" with some swaps.\n\n**Constraints:**\n\n*   `1 <= s.length <= 105`\n*   `s` consists only of digits.",
+  "difficulty": "Hard",
+  "category": null,
+  "xpReward": 0,
+  "timeLimitMs": 5000,
+  "memoryLimitMb": 256,
+  "starterCode": {},
+  "solutionCode": "",
+  "hints": [],
+  "isPremium": false,
+  "createdBy": null,
+  "testCases": [
+    {
+      "input": [
+        "3242415 "
+      ],
+      "expectedOutput": 5
+    },
+    {
+      "input": [
+        "12345678 "
+      ],
+      "expectedOutput": 1
+    },
+    {
+      "input": [
+        "213123 "
+      ],
+      "expectedOutput": 6
+    }
+  ],
+  "hiddenTestCases": [
+    {
+      "input": [
+        "3242415 "
+      ],
+      "expectedOutput": 5
+    },
+    {
+      "input": [
+        "12345678 "
+      ],
+      "expectedOutput": 1
+    }
+  ],
+  "tags": [],
+  "constraints": [],
+  "examples": [],
+  "problemNumber": null,
+  "createdAt": "2025-11-14T21:21:55.596577+00:00",
+  "updatedAt": "2025-12-04T04:37:18.420Z"
+}

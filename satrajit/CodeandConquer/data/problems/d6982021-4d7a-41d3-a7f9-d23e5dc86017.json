@@ -1,0 +1,108 @@
+{
+  "id": "d6982021-4d7a-41d3-a7f9-d23e5dc86017",
+  "title": "Smallest Number in Infinite Set",
+  "slug": "smallest-number-in-infinite-set",
+  "description": "You have a set which contains all positive integers `[1, 2, 3, 4, 5, ...]`.\n\nImplement the `SmallestInfiniteSet` class:\n\n*   `SmallestInfiniteSet()` Initializes the **SmallestInfiniteSet** object to contain **all** positive integers.\n*   `int popSmallest()` **Removes** and returns the smallest integer contained in the infinite set.\n*   `void addBack(int num)` **Adds** a positive integer `num` back into the infinite set, if it is **not** already in the infinite set.\n\n**Example 1:**\n\n**Input**\n\\[ \"SmallestInfiniteSet \",  \"addBack \",  \"popSmallest \",  \"popSmallest \",  \"popSmallest \",  \"addBack \",  \"popSmallest \",  \"popSmallest \",  \"popSmallest \"\\]\n\\[\\[\\], \\[2\\], \\[\\], \\[\\], \\[\\], \\[1\\], \\[\\], \\[\\], \\[\\]\\]\n**Output**\n\\[null, null, 1, 2, 3, null, 1, 4, 5\\]\n\n**Explanation**\nSmallestInfiniteSet smallestInfiniteSet = new SmallestInfiniteSet();\nsmallestInfiniteSet.addBack(2);    // 2 is already in the set, so no change is made.\nsmallestInfiniteSet.popSmallest(); // return 1, since 1 is the smallest number, and remove it from the set.\nsmallestInfiniteSet.popSmallest(); // return 2, and remove it from the set.\nsmallestInfiniteSet.popSmallest(); // return 3, and remove it from the set.\nsmallestInfiniteSet.addBack(1);    // 1 is added back to the set.\nsmallestInfiniteSet.popSmallest(); // return 1, since 1 was added back to the set and\n                                   // is the smallest number, and remove it from the set.\nsmallestInfiniteSet.popSmallest(); // return 4, and remove it from the set.\nsmallestInfiniteSet.popSmallest(); // return 5, and remove it from the set.\n\n**Constraints:**\n\n*   `1 <= num <= 1000`\n*   At most `1000` calls will be made **in total** to `popSmallest` and `addBack`.",
+  "difficulty": "Medium",
+  "category": null,
+  "xpReward": 0,
+  "timeLimitMs": 5000,
+  "memoryLimitMb": 256,
+  "starterCode": {},
+  "solutionCode": "",
+  "hints": [],
+  "isPremium": false,
+  "createdBy": null,
+  "testCases": [
+    {
+      "input": {
+        "methods": [
+          "SmallestInfiniteSet",
+          "addBack",
+          "popSmallest",
+          "popSmallest",
+          "popSmallest",
+          "addBack",
+          "popSmallest",
+          "popSmallest",
+          "popSmallest"
+        ],
+        "args": [
+          [],
+          [
+            2
+          ],
+          [],
+          [],
+          [],
+          [
+            1
+          ],
+          [],
+          [],
+          []
+        ]
+      },
+      "expectedOutput": [
+        null,
+        null,
+        1,
+        2,
+        3,
+        null,
+        1,
+        4,
+        5
+      ]
+    }
+  ],
+  "hiddenTestCases": [
+    {
+      "input": {
+        "methods": [
+          "SmallestInfiniteSet",
+          "addBack",
+          "popSmallest",
+          "popSmallest",
+          "popSmallest",
+          "addBack",
+          "popSmallest",
+          "popSmallest",
+          "popSmallest"
+        ],
+        "args": [
+          [],
+          [
+            2
+          ],
+          [],
+          [],
+          [],
+          [
+            1
+          ],
+          [],
+          [],
+          []
+        ]
+      },
+      "expectedOutput": [
+        null,
+        null,
+        1,
+        2,
+        3,
+        null,
+        1,
+        4,
+        5
+      ]
+    }
+  ],
+  "tags": [],
+  "constraints": [],
+  "examples": [],
+  "problemNumber": null,
+  "createdAt": "2025-11-14T21:25:21.055147+00:00",
+  "updatedAt": "2025-12-04T04:38:01.067Z"
+}

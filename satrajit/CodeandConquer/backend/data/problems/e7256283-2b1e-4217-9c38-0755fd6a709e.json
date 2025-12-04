@@ -1,0 +1,49 @@
+{
+  "id": "e7256283-2b1e-4217-9c38-0755fd6a709e",
+  "title": "Palindrome Partitioning IV",
+  "slug": "palindrome-partitioning-iv",
+  "description": "Given a string `s`, return `true` _if it is possible to split the string_ `s` _into three **non-empty** palindromic substrings. Otherwise, return_ `false`.​​​​​\n\nA string is said to be palindrome if it the same string when reversed.\n\n**Example 1:**\n\n**Input:** s =  \"abcbdd \"\n**Output:** true\n**Explanation: ** \"abcbdd \" =  \"a \" +  \"bcb \" +  \"dd \", and all three substrings are palindromes.\n\n**Example 2:**\n\n**Input:** s =  \"bcbddxy \"\n**Output:** false\n**Explanation:** s cannot be split into 3 palindromes.\n\n**Constraints:**\n\n*   `3 <= s.length <= 2000`\n*   `s`​​​​​​ consists only of lowercase English letters.",
+  "difficulty": "Hard",
+  "category": null,
+  "xpReward": 0,
+  "timeLimitMs": 5000,
+  "memoryLimitMb": 256,
+  "starterCode": [],
+  "solutionCode": "",
+  "hints": [],
+  "isPremium": false,
+  "createdBy": null,
+  "testCases": [
+    {
+      "input": [
+        "abcbdd "
+      ],
+      "expectedOutput": true
+    },
+    {
+      "input": [
+        "bcbddxy "
+      ],
+      "expectedOutput": false
+    }
+  ],
+  "hiddenTestCases": [
+    {
+      "input": [
+        "abcbdd "
+      ],
+      "expectedOutput": true
+    },
+    {
+      "input": [
+        "bcbddxy "
+      ],
+      "expectedOutput": false
+    }
+  ],
+  "tags": [],
+  "constraints": [],
+  "examples": [],
+  "createdAt": "2025-11-14T21:22:56.314235+00:00",
+  "updatedAt": "2025-12-04T04:36:56.570Z"
+}

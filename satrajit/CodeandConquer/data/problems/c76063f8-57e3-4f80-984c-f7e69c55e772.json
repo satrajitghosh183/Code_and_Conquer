@@ -1,0 +1,76 @@
+{
+  "id": "c76063f8-57e3-4f80-984c-f7e69c55e772",
+  "title": "Kth Missing Positive Number",
+  "slug": "kth-missing-positive-number",
+  "description": "Given an array `arr` of positive integers sorted in a **strictly increasing order**, and an integer `k`.\n\nReturn _the_ `kth` _**positive** integer that is **missing** from this array._\n\n**Example 1:**\n\n**Input:** arr = \\[2,3,4,7,11\\], k = 5\n**Output:** 9\n**Explanation:** The missing positive integers are \\[1,5,6,8,9,10,12,13,...\\]. The 5th missing positive integer is 9.\n\n**Example 2:**\n\n**Input:** arr = \\[1,2,3,4\\], k = 2\n**Output:** 6\n**Explanation:** The missing positive integers are \\[5,6,7,...\\]. The 2nd missing positive integer is 6.\n\n**Constraints:**\n\n*   `1 <= arr.length <= 1000`\n*   `1 <= arr[i] <= 1000`\n*   `1 <= k <= 1000`\n*   `arr[i] < arr[j]` for `1 <= i < j <= arr.length`\n\n**Follow up:**\n\nCould you solve this problem in less than O(n) complexity?",
+  "difficulty": "Easy",
+  "category": null,
+  "xpReward": 0,
+  "timeLimitMs": 5000,
+  "memoryLimitMb": 256,
+  "starterCode": {},
+  "solutionCode": "",
+  "hints": [],
+  "isPremium": false,
+  "createdBy": null,
+  "testCases": [
+    {
+      "input": [
+        [
+          2,
+          3,
+          4,
+          7,
+          11
+        ],
+        5
+      ],
+      "expectedOutput": 9
+    },
+    {
+      "input": [
+        [
+          1,
+          2,
+          3,
+          4
+        ],
+        2
+      ],
+      "expectedOutput": 6
+    }
+  ],
+  "hiddenTestCases": [
+    {
+      "input": [
+        [
+          2,
+          3,
+          4,
+          7,
+          11
+        ],
+        5
+      ],
+      "expectedOutput": 9
+    },
+    {
+      "input": [
+        [
+          1,
+          2,
+          3,
+          4
+        ],
+        2
+      ],
+      "expectedOutput": 6
+    }
+  ],
+  "tags": [],
+  "constraints": [],
+  "examples": [],
+  "problemNumber": null,
+  "createdAt": "2025-11-14T21:21:54.947779+00:00",
+  "updatedAt": "2025-12-04T04:37:18.722Z"
+}

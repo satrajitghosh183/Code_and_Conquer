@@ -1,0 +1,73 @@
+{
+  "id": "1a143198-3bb9-4715-b7fd-c6beaf6bb221",
+  "title": "Find Minimum Time to Finish All Jobs",
+  "slug": "find-minimum-time-to-finish-all-jobs",
+  "description": "You are given an integer array `jobs`, where `jobs[i]` is the amount of time it takes to complete the `ith` job.\n\nThere are `k` workers that you can assign jobs to. Each job should be assigned to **exactly** one worker. The **working time** of a worker is the sum of the time it takes to complete all jobs assigned to them. Your goal is to devise an optimal assignment such that the **maximum working time** of any worker is **minimized**.\n\n_Return the **minimum** possible **maximum working time** of any assignment._\n\n**Example 1:**\n\n**Input:** jobs = \\[3,2,3\\], k = 3\n**Output:** 3\n**Explanation:** By assigning each person one job, the maximum time is 3.\n\n**Example 2:**\n\n**Input:** jobs = \\[1,2,4,7,8\\], k = 2\n**Output:** 11\n**Explanation:** Assign the jobs the following way:\nWorker 1: 1, 2, 8 (working time = 1 + 2 + 8 = 11)\nWorker 2: 4, 7 (working time = 4 + 7 = 11)\nThe maximum working time is 11.\n\n**Constraints:**\n\n*   `1 <= k <= jobs.length <= 12`\n*   `1 <= jobs[i] <= 107`",
+  "difficulty": "Hard",
+  "category": null,
+  "xpReward": 0,
+  "timeLimitMs": 5000,
+  "memoryLimitMb": 256,
+  "starterCode": [],
+  "solutionCode": "",
+  "hints": [],
+  "isPremium": false,
+  "createdBy": null,
+  "testCases": [
+    {
+      "input": [
+        [
+          3,
+          2,
+          3
+        ],
+        3
+      ],
+      "expectedOutput": 3
+    },
+    {
+      "input": [
+        [
+          1,
+          2,
+          4,
+          7,
+          8
+        ],
+        2
+      ],
+      "expectedOutput": 11
+    }
+  ],
+  "hiddenTestCases": [
+    {
+      "input": [
+        [
+          3,
+          2,
+          3
+        ],
+        3
+      ],
+      "expectedOutput": 3
+    },
+    {
+      "input": [
+        [
+          1,
+          2,
+          4,
+          7,
+          8
+        ],
+        2
+      ],
+      "expectedOutput": 11
+    }
+  ],
+  "tags": [],
+  "constraints": [],
+  "examples": [],
+  "createdAt": "2025-11-14T21:22:51.073842+00:00",
+  "updatedAt": "2025-12-04T04:36:59.499Z"
+}

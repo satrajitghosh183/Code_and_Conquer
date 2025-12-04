@@ -1,0 +1,166 @@
+{
+  "id": "297c17d9-4c90-4003-812e-15aacf687856",
+  "title": "Checking Existence of Edge Length Limited Paths II",
+  "slug": "checking-existence-of-edge-length-limited-paths-ii",
+  "description": "An undirected graph of `n` nodes is defined by `edgeList`, where `edgeList[i] = [ui, vi, disi]` denotes an edge between nodes `ui` and `vi` with distance `disi`. Note that there may be **multiple** edges between two nodes, and the graph may not be connected.\n\nImplement the `DistanceLimitedPathsExist` class:\n\n*   `DistanceLimitedPathsExist(int n, int[][] edgeList)` Initializes the class with an undirected graph.\n*   `boolean query(int p, int q, int limit)` Returns `true` if there exists a path from `p` to `q` such that each edge on the path has a distance **strictly less than** `limit`, and otherwise `false`.\n\n**Example 1:**\n\n**Input**\n\\[ \"DistanceLimitedPathsExist \",  \"query \",  \"query \",  \"query \",  \"query \"\\]\n\\[\\[6, \\[\\[0, 2, 4\\], \\[0, 3, 2\\], \\[1, 2, 3\\], \\[2, 3, 1\\], \\[4, 5, 5\\]\\]\\], \\[2, 3, 2\\], \\[1, 3, 3\\], \\[2, 0, 3\\], \\[0, 5, 6\\]\\]\n**Output**\n\\[null, true, false, true, false\\]\n\n**Explanation**\nDistanceLimitedPathsExist distanceLimitedPathsExist = new DistanceLimitedPathsExist(6, \\[\\[0, 2, 4\\], \\[0, 3, 2\\], \\[1, 2, 3\\], \\[2, 3, 1\\], \\[4, 5, 5\\]\\]);\ndistanceLimitedPathsExist.query(2, 3, 2); // return true. There is an edge from 2 to 3 of distance 1, which is less than 2.\ndistanceLimitedPathsExist.query(1, 3, 3); // return false. There is no way to go from 1 to 3 with distances **strictly** less than 3.\ndistanceLimitedPathsExist.query(2, 0, 3); // return true. There is a way to go from 2 to 0 with distance < 3: travel from 2 to 3 to 0.\ndistanceLimitedPathsExist.query(0, 5, 6); // return false. There are no paths from 0 to 5.\n\n`**Constraints:**`\n\n*   `2 <= n <= 104`\n*   `0 <= edgeList.length <= 104`\n*   `edgeList[i].length == 3`\n*   `0 <= ui, vi, p, q <= n-1`\n*   `ui != vi`\n*   `p != q`\n*   `1 <= disi, limit <= 109`\n*   At most `104` calls will be made to `query`.",
+  "difficulty": "Hard",
+  "category": null,
+  "xpReward": 0,
+  "timeLimitMs": 5000,
+  "memoryLimitMb": 256,
+  "starterCode": {},
+  "solutionCode": "",
+  "hints": [],
+  "isPremium": false,
+  "createdBy": null,
+  "testCases": [
+    {
+      "input": {
+        "methods": [
+          "DistanceLimitedPathsExist",
+          "query",
+          "query",
+          "query",
+          "query"
+        ],
+        "args": [
+          [
+            6,
+            [
+              [
+                0,
+                2,
+                4
+              ],
+              [
+                0,
+                3,
+                2
+              ],
+              [
+                1,
+                2,
+                3
+              ],
+              [
+                2,
+                3,
+                1
+              ],
+              [
+                4,
+                5,
+                5
+              ]
+            ]
+          ],
+          [
+            2,
+            3,
+            2
+          ],
+          [
+            1,
+            3,
+            3
+          ],
+          [
+            2,
+            0,
+            3
+          ],
+          [
+            0,
+            5,
+            6
+          ]
+        ]
+      },
+      "expectedOutput": [
+        null,
+        true,
+        false,
+        true,
+        false
+      ]
+    }
+  ],
+  "hiddenTestCases": [
+    {
+      "input": {
+        "methods": [
+          "DistanceLimitedPathsExist",
+          "query",
+          "query",
+          "query",
+          "query"
+        ],
+        "args": [
+          [
+            6,
+            [
+              [
+                0,
+                2,
+                4
+              ],
+              [
+                0,
+                3,
+                2
+              ],
+              [
+                1,
+                2,
+                3
+              ],
+              [
+                2,
+                3,
+                1
+              ],
+              [
+                4,
+                5,
+                5
+              ]
+            ]
+          ],
+          [
+            2,
+            3,
+            2
+          ],
+          [
+            1,
+            3,
+            3
+          ],
+          [
+            2,
+            0,
+            3
+          ],
+          [
+            0,
+            5,
+            6
+          ]
+        ]
+      },
+      "expectedOutput": [
+        null,
+        true,
+        false,
+        true,
+        false
+      ]
+    }
+  ],
+  "tags": [],
+  "constraints": [],
+  "examples": [],
+  "problemNumber": null,
+  "createdAt": "2025-11-14T21:22:51.315694+00:00",
+  "updatedAt": "2025-12-04T04:38:01.096Z"
+}

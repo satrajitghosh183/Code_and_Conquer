@@ -1,0 +1,56 @@
+{
+  "id": "49f2c300-13bd-4c56-ba34-affff3561fde",
+  "title": "Stone Game IV",
+  "slug": "stone-game-iv",
+  "description": "Alice and Bob take turns playing a game, with Alice starting first.\n\nInitially, there are `n` stones in a pile. On each player's turn, that player makes a _move_ consisting of removing **any** non-zero **square number** of stones in the pile.\n\nAlso, if a player cannot make a move, he/she loses the game.\n\nGiven a positive integer `n`, return `true` if and only if Alice wins the game otherwise return `false`, assuming both players play optimally.\n\n**Example 1:**\n\n**Input:** n = 1\n**Output:** true\n**Explanation:** Alice can remove 1 stone winning the game because Bob doesn't have any moves.\n\n**Example 2:**\n\n**Input:** n = 2\n**Output:** false\n**Explanation:** Alice can only remove 1 stone, after that Bob removes the last one winning the game (2 -> 1 -> 0).\n\n**Example 3:**\n\n**Input:** n = 4\n**Output:** true\n**Explanation:** n is already a perfect square, Alice can win with one move, removing 4 stones (4 -> 0).\n\n**Constraints:**\n\n*   `1 <= n <= 105`",
+  "difficulty": "Hard",
+  "category": null,
+  "xpReward": 0,
+  "timeLimitMs": 5000,
+  "memoryLimitMb": 256,
+  "starterCode": {},
+  "solutionCode": "",
+  "hints": [],
+  "isPremium": false,
+  "createdBy": null,
+  "testCases": [
+    {
+      "input": [
+        1
+      ],
+      "expectedOutput": true
+    },
+    {
+      "input": [
+        2
+      ],
+      "expectedOutput": false
+    },
+    {
+      "input": [
+        4
+      ],
+      "expectedOutput": true
+    }
+  ],
+  "hiddenTestCases": [
+    {
+      "input": [
+        1
+      ],
+      "expectedOutput": true
+    },
+    {
+      "input": [
+        2
+      ],
+      "expectedOutput": false
+    }
+  ],
+  "tags": [],
+  "constraints": [],
+  "examples": [],
+  "problemNumber": null,
+  "createdAt": "2025-11-14T21:21:45.205197+00:00",
+  "updatedAt": "2025-12-04T04:37:21.120Z"
+}

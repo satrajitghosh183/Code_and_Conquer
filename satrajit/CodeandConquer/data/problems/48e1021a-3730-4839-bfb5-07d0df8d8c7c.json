@@ -1,0 +1,84 @@
+{
+  "id": "48e1021a-3730-4839-bfb5-07d0df8d8c7c",
+  "title": "Find the Kth Largest Integer in the Array",
+  "slug": "find-the-kth-largest-integer-in-the-array",
+  "description": "You are given an array of strings `nums` and an integer `k`. Each string in `nums` represents an integer without leading zeros.\n\nReturn _the string that represents the_ `kth` _**largest integer** in_ `nums`.\n\n**Note**: Duplicate numbers should be counted distinctly. For example, if `nums` is `[ \"1 \", \"2 \", \"2 \"]`, `\"2 \"` is the first largest integer, `\"2 \"` is the second-largest integer, and `\"1 \"` is the third-largest integer.\n\n**Example 1:**\n\n**Input:** nums = \\[ \"3 \", \"6 \", \"7 \", \"10 \"\\], k = 4\n**Output:**  \"3 \"\n**Explanation:**\nThe numbers in nums sorted in non-decreasing order are \\[ \"3 \", \"6 \", \"7 \", \"10 \"\\].\nThe 4th largest integer in nums is  \"3 \".\n\n**Example 2:**\n\n**Input:** nums = \\[ \"2 \", \"21 \", \"12 \", \"1 \"\\], k = 3\n**Output:**  \"2 \"\n**Explanation:**\nThe numbers in nums sorted in non-decreasing order are \\[ \"1 \", \"2 \", \"12 \", \"21 \"\\].\nThe 3rd largest integer in nums is  \"2 \".\n\n**Example 3:**\n\n**Input:** nums = \\[ \"0 \", \"0 \"\\], k = 2\n**Output:**  \"0 \"\n**Explanation:**\nThe numbers in nums sorted in non-decreasing order are \\[ \"0 \", \"0 \"\\].\nThe 2nd largest integer in nums is  \"0 \".\n\n**Constraints:**\n\n*   `1 <= k <= nums.length <= 104`\n*   `1 <= nums[i].length <= 100`\n*   `nums[i]` consists of only digits.\n*   `nums[i]` will not have any leading zeros.",
+  "difficulty": "Medium",
+  "category": null,
+  "xpReward": 0,
+  "timeLimitMs": 5000,
+  "memoryLimitMb": 256,
+  "starterCode": {},
+  "solutionCode": "",
+  "hints": [],
+  "isPremium": false,
+  "createdBy": null,
+  "testCases": [
+    {
+      "input": [
+        [
+          "3 ",
+          "6 ",
+          "7 ",
+          "10 "
+        ],
+        4
+      ],
+      "expectedOutput": "3 "
+    },
+    {
+      "input": [
+        [
+          "2 ",
+          "21 ",
+          "12 ",
+          "1 "
+        ],
+        3
+      ],
+      "expectedOutput": "2 "
+    },
+    {
+      "input": [
+        [
+          "0 ",
+          "0 "
+        ],
+        2
+      ],
+      "expectedOutput": "0 "
+    }
+  ],
+  "hiddenTestCases": [
+    {
+      "input": [
+        [
+          "3 ",
+          "6 ",
+          "7 ",
+          "10 "
+        ],
+        4
+      ],
+      "expectedOutput": "3 "
+    },
+    {
+      "input": [
+        [
+          "2 ",
+          "21 ",
+          "12 ",
+          "1 "
+        ],
+        3
+      ],
+      "expectedOutput": "2 "
+    }
+  ],
+  "tags": [],
+  "constraints": [],
+  "examples": [],
+  "problemNumber": null,
+  "createdAt": "2025-11-14T21:23:53.675558+00:00",
+  "updatedAt": "2025-12-04T04:36:26.705Z"
+}

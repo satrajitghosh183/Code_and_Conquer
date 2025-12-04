@@ -1,0 +1,99 @@
+{
+  "id": "c8bde29f-4f13-4ecd-a64e-7cfbf72a1084",
+  "title": "Swapping Nodes in a Linked List",
+  "slug": "swapping-nodes-in-a-linked-list",
+  "description": "You are given the `head` of a linked list, and an integer `k`.\n\nReturn _the head of the linked list after **swapping** the values of the_ `kth` _node from the beginning and the_ `kth` _node from the end (the list is **1-indexed**)._\n\n**Example 1:**\n\n**Input:** head = \\[1,2,3,4,5\\], k = 2\n**Output:** \\[1,4,3,2,5\\]\n\n**Example 2:**\n\n**Input:** head = \\[7,9,6,6,7,8,3,0,9,5\\], k = 5\n**Output:** \\[7,9,6,6,8,7,3,0,9,5\\]\n\n**Constraints:**\n\n*   The number of nodes in the list is `n`.\n*   `1 <= k <= n <= 105`\n*   `0 <= Node.val <= 100`",
+  "difficulty": "Medium",
+  "category": null,
+  "xpReward": 0,
+  "timeLimitMs": 5000,
+  "memoryLimitMb": 256,
+  "starterCode": [],
+  "solutionCode": "",
+  "hints": [],
+  "isPremium": false,
+  "createdBy": null,
+  "testCases": [
+    {
+      "input": [
+        [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        2
+      ],
+      "expectedOutput": [
+        1,
+        4,
+        3,
+        2,
+        5
+      ]
+    },
+    {
+      "input": [
+        [
+          7,
+          9,
+          6,
+          6,
+          7,
+          8,
+          3,
+          0,
+          9,
+          5
+        ],
+        5
+      ],
+      "expectedOutput": "[7,9,6,6,8,7,3,0,9,5]\n\n**Constraints:**\n\n*   The number of nodes in the list is `n`.\n*   `1 <= k <= n <= 105`\n*   `0 <= Node.val <= 100`"
+    }
+  ],
+  "hiddenTestCases": [
+    {
+      "input": [
+        [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        2
+      ],
+      "expectedOutput": [
+        1,
+        4,
+        3,
+        2,
+        5
+      ]
+    },
+    {
+      "input": [
+        [
+          7,
+          9,
+          6,
+          6,
+          7,
+          8,
+          3,
+          0,
+          9,
+          5
+        ],
+        5
+      ],
+      "expectedOutput": "[7,9,6,6,8,7,3,0,9,5]\n\n**Constraints:**\n\n*   The number of nodes in the list is `n`.\n*   `1 <= k <= n <= 105`\n*   `0 <= Node.val <= 100`"
+    }
+  ],
+  "tags": [],
+  "constraints": [],
+  "examples": [],
+  "createdAt": "2025-11-14T21:22:50.513977+00:00",
+  "updatedAt": "2025-12-04T04:36:59.757Z"
+}

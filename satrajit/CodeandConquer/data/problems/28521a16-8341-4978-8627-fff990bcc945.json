@@ -1,0 +1,195 @@
+{
+  "id": "28521a16-8341-4978-8627-fff990bcc945",
+  "title": "Closest Node to Path in Tree",
+  "slug": "closest-node-to-path-in-tree",
+  "description": "You are given a positive integer `n` representing the number of nodes in a tree, numbered from `0` to `n - 1` (**inclusive**). You are also given a 2D integer array `edges` of length `n - 1`, where `edges[i] = [node1i, node2i]` denotes that there is a **bidirectional** edge connecting `node1i` and `node2i` in the tree.\n\nYou are given a **0-indexed** integer array `query` of length `m` where `query[i] = [starti, endi, nodei]` means that for the `ith` query, you are tasked with finding the node on the path from `starti` to `endi` that is **closest** to `nodei`.\n\nReturn _an integer array_ `answer` _of length_ `m`_, where_ `answer[i]` _is the answer to the_ `ith` _query_.\n\n**Example 1:**\n\n**Input:** n = 7, edges = \\[\\[0,1\\],\\[0,2\\],\\[0,3\\],\\[1,4\\],\\[2,5\\],\\[2,6\\]\\], query = \\[\\[5,3,4\\],\\[5,3,6\\]\\]\n**Output:** \\[0,2\\]\n**Explanation:**\nThe path from node 5 to node 3 consists of the nodes 5, 2, 0, and 3.\nThe distance between node 4 and node 0 is 2.\nNode 0 is the node on the path closest to node 4, so the answer to the first query is 0.\nThe distance between node 6 and node 2 is 1.\nNode 2 is the node on the path closest to node 6, so the answer to the second query is 2.\n\n**Example 2:**\n\n**Input:** n = 3, edges = \\[\\[0,1\\],\\[1,2\\]\\], query = \\[\\[0,1,2\\]\\]\n**Output:** \\[1\\]\n**Explanation:**\nThe path from node 0 to node 1 consists of the nodes 0, 1.\nThe distance between node 2 and node 1 is 1.\nNode 1 is the node on the path closest to node 2, so the answer to the first query is 1.\n\n**Example 3:**\n\n**Input:** n = 3, edges = \\[\\[0,1\\],\\[1,2\\]\\], query = \\[\\[0,0,0\\]\\]\n**Output:** \\[0\\]\n**Explanation:**\nThe path from node 0 to node 0 consists of the node 0.\nSince 0 is the only node on the path, the answer to the first query is 0.\n\n**Constraints:**\n\n*   `1 <= n <= 1000`\n*   `edges.length == n - 1`\n*   `edges[i].length == 2`\n*   `0 <= node1i, node2i <= n - 1`\n*   `node1i != node2i`\n*   `1 <= query.length <= 1000`\n*   `query[i].length == 3`\n*   `0 <= starti, endi, nodei <= n - 1`\n*   The graph is a tree.",
+  "difficulty": "Hard",
+  "category": null,
+  "xpReward": 0,
+  "timeLimitMs": 5000,
+  "memoryLimitMb": 256,
+  "starterCode": {},
+  "solutionCode": "",
+  "hints": [],
+  "isPremium": false,
+  "createdBy": null,
+  "testCases": [
+    {
+      "input": [
+        7,
+        [
+          [
+            0,
+            1
+          ],
+          [
+            0,
+            2
+          ],
+          [
+            0,
+            3
+          ],
+          [
+            1,
+            4
+          ],
+          [
+            2,
+            5
+          ],
+          [
+            2,
+            6
+          ]
+        ],
+        [
+          [
+            5,
+            3,
+            4
+          ],
+          [
+            5,
+            3,
+            6
+          ]
+        ]
+      ],
+      "expectedOutput": [
+        0,
+        2
+      ]
+    },
+    {
+      "input": [
+        3,
+        [
+          [
+            0,
+            1
+          ],
+          [
+            1,
+            2
+          ]
+        ],
+        [
+          [
+            0,
+            1,
+            2
+          ]
+        ]
+      ],
+      "expectedOutput": [
+        1
+      ]
+    },
+    {
+      "input": [
+        3,
+        [
+          [
+            0,
+            1
+          ],
+          [
+            1,
+            2
+          ]
+        ],
+        [
+          [
+            0,
+            0,
+            0
+          ]
+        ]
+      ],
+      "expectedOutput": [
+        0
+      ]
+    }
+  ],
+  "hiddenTestCases": [
+    {
+      "input": [
+        7,
+        [
+          [
+            0,
+            1
+          ],
+          [
+            0,
+            2
+          ],
+          [
+            0,
+            3
+          ],
+          [
+            1,
+            4
+          ],
+          [
+            2,
+            5
+          ],
+          [
+            2,
+            6
+          ]
+        ],
+        [
+          [
+            5,
+            3,
+            4
+          ],
+          [
+            5,
+            3,
+            6
+          ]
+        ]
+      ],
+      "expectedOutput": [
+        0,
+        2
+      ]
+    },
+    {
+      "input": [
+        3,
+        [
+          [
+            0,
+            1
+          ],
+          [
+            1,
+            2
+          ]
+        ],
+        [
+          [
+            0,
+            1,
+            2
+          ]
+        ]
+      ],
+      "expectedOutput": [
+        1
+      ]
+    }
+  ],
+  "tags": [],
+  "constraints": [],
+  "examples": [],
+  "problemNumber": null,
+  "createdAt": "2025-11-14T21:25:06.276772+00:00",
+  "updatedAt": "2025-12-04T04:35:55.835Z"
+}

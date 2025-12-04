@@ -1,0 +1,125 @@
+{
+  "id": "44289102-5c11-4148-8f9e-2ee0f36ee818",
+  "title": "Find Distance in a Binary Tree",
+  "slug": "find-distance-in-a-binary-tree",
+  "description": "Given the root of a binary tree and two integers `p` and `q`, return _the **distance** between the nodes of value_ `p` _and value_ `q` _in the tree_.\n\nThe **distance** between two nodes is the number of edges on the path from one to the other.\n\n**Example 1:**\n\n**Input:** root = \\[3,5,1,6,2,0,8,null,null,7,4\\], p = 5, q = 0\n**Output:** 3\n**Explanation:** There are 3 edges between 5 and 0: 5-3-1-0.\n\n**Example 2:**\n\n**Input:** root = \\[3,5,1,6,2,0,8,null,null,7,4\\], p = 5, q = 7\n**Output:** 2\n**Explanation:** There are 2 edges between 5 and 7: 5-2-7.\n\n**Example 3:**\n\n**Input:** root = \\[3,5,1,6,2,0,8,null,null,7,4\\], p = 5, q = 5\n**Output:** 0\n**Explanation:** The distance between a node and itself is 0.\n\n**Constraints:**\n\n*   The number of nodes in the tree is in the range `[1, 104]`.\n*   `0 <= Node.val <= 109`\n*   All `Node.val` are **unique**.\n*   `p` and `q` are values in the tree.",
+  "difficulty": "Medium",
+  "category": null,
+  "xpReward": 0,
+  "timeLimitMs": 5000,
+  "memoryLimitMb": 256,
+  "starterCode": [],
+  "solutionCode": "",
+  "hints": [],
+  "isPremium": false,
+  "createdBy": null,
+  "testCases": [
+    {
+      "input": [
+        [
+          3,
+          5,
+          1,
+          6,
+          2,
+          0,
+          8,
+          null,
+          null,
+          7,
+          4
+        ],
+        5,
+        0
+      ],
+      "expectedOutput": 3
+    },
+    {
+      "input": [
+        [
+          3,
+          5,
+          1,
+          6,
+          2,
+          0,
+          8,
+          null,
+          null,
+          7,
+          4
+        ],
+        5,
+        7
+      ],
+      "expectedOutput": 2
+    },
+    {
+      "input": [
+        [
+          3,
+          5,
+          1,
+          6,
+          2,
+          0,
+          8,
+          null,
+          null,
+          7,
+          4
+        ],
+        5,
+        5
+      ],
+      "expectedOutput": 0
+    }
+  ],
+  "hiddenTestCases": [
+    {
+      "input": [
+        [
+          3,
+          5,
+          1,
+          6,
+          2,
+          0,
+          8,
+          null,
+          null,
+          7,
+          4
+        ],
+        5,
+        0
+      ],
+      "expectedOutput": 3
+    },
+    {
+      "input": [
+        [
+          3,
+          5,
+          1,
+          6,
+          2,
+          0,
+          8,
+          null,
+          null,
+          7,
+          4
+        ],
+        5,
+        7
+      ],
+      "expectedOutput": 2
+    }
+  ],
+  "tags": [],
+  "constraints": [],
+  "examples": [],
+  "createdAt": "2025-11-14T21:22:55.274007+00:00",
+  "updatedAt": "2025-12-04T04:36:57.156Z"
+}

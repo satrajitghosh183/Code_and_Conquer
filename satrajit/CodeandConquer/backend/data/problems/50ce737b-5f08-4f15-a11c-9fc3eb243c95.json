@@ -1,0 +1,100 @@
+{
+  "id": "50ce737b-5f08-4f15-a11c-9fc3eb243c95",
+  "title": "Buildings With an Ocean View",
+  "slug": "buildings-with-an-ocean-view",
+  "description": "There are `n` buildings in a line. You are given an integer array `heights` of size `n` that represents the heights of the buildings in the line.\n\nThe ocean is to the right of the buildings. A building has an ocean view if the building can see the ocean without obstructions. Formally, a building has an ocean view if all the buildings to its right have a **smaller** height.\n\nReturn a list of indices **(0-indexed)** of buildings that have an ocean view, sorted in increasing order.\n\n**Example 1:**\n\n**Input:** heights = \\[4,2,3,1\\]\n**Output:** \\[0,2,3\\]\n**Explanation:** Building 1 (0-indexed) does not have an ocean view because building 2 is taller.\n\n**Example 2:**\n\n**Input:** heights = \\[4,3,2,1\\]\n**Output:** \\[0,1,2,3\\]\n**Explanation:** All the buildings have an ocean view.\n\n**Example 3:**\n\n**Input:** heights = \\[1,3,2,4\\]\n**Output:** \\[3\\]\n**Explanation:** Only building 3 has an ocean view.\n\n**Constraints:**\n\n*   `1 <= heights.length <= 105`\n*   `1 <= heights[i] <= 109`",
+  "difficulty": "Medium",
+  "category": null,
+  "xpReward": 0,
+  "timeLimitMs": 5000,
+  "memoryLimitMb": 256,
+  "starterCode": [],
+  "solutionCode": "",
+  "hints": [],
+  "isPremium": false,
+  "createdBy": null,
+  "testCases": [
+    {
+      "input": [
+        [
+          4,
+          2,
+          3,
+          1
+        ]
+      ],
+      "expectedOutput": [
+        0,
+        2,
+        3
+      ]
+    },
+    {
+      "input": [
+        [
+          4,
+          3,
+          2,
+          1
+        ]
+      ],
+      "expectedOutput": [
+        0,
+        1,
+        2,
+        3
+      ]
+    },
+    {
+      "input": [
+        [
+          1,
+          3,
+          2,
+          4
+        ]
+      ],
+      "expectedOutput": [
+        3
+      ]
+    }
+  ],
+  "hiddenTestCases": [
+    {
+      "input": [
+        [
+          4,
+          2,
+          3,
+          1
+        ]
+      ],
+      "expectedOutput": [
+        0,
+        2,
+        3
+      ]
+    },
+    {
+      "input": [
+        [
+          4,
+          3,
+          2,
+          1
+        ]
+      ],
+      "expectedOutput": [
+        0,
+        1,
+        2,
+        3
+      ]
+    }
+  ],
+  "tags": [],
+  "constraints": [],
+  "examples": [],
+  "createdAt": "2025-11-14T21:23:00.461005+00:00",
+  "updatedAt": "2025-12-04T04:36:52.598Z"
+}

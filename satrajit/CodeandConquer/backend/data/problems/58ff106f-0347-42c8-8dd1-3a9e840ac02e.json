@@ -1,0 +1,75 @@
+{
+  "id": "58ff106f-0347-42c8-8dd1-3a9e840ac02e",
+  "title": "Check if an Array Is Consecutive",
+  "slug": "check-if-an-array-is-consecutive",
+  "description": "Given an integer array `nums`, return `true` _if_ `nums` _is **consecutive**, otherwise return_ `false`_._\n\nAn array is **consecutive** if it contains every number in the range `[x, x + n - 1]` (**inclusive**), where `x` is the minimum number in the array and `n` is the length of the array.\n\n**Example 1:**\n\n**Input:** nums = \\[1,3,4,2\\]\n**Output:** true\n**Explanation:**\nThe minimum value is 1 and the length of nums is 4.\nAll of the values in the range \\[x, x + n - 1\\] = \\[1, 1 + 4 - 1\\] = \\[1, 4\\] = (1, 2, 3, 4) occur in nums.\nTherefore, nums is consecutive.\n\n**Example 2:**\n\n**Input:** nums = \\[1,3\\]\n**Output:** false\n**Explanation:**\nThe minimum value is 1 and the length of nums is 2.\nThe value 2 in the range \\[x, x + n - 1\\] = \\[1, 1 + 2 - 1\\], = \\[1, 2\\] = (1, 2) does not occur in nums.\nTherefore, nums is not consecutive.\n\n**Example 3:**\n\n**Input:** nums = \\[3,5,4\\]\n**Output:** true\n**Explanation:**\nThe minimum value is 3 and the length of nums is 3.\nAll of the values in the range \\[x, x + n - 1\\] = \\[3, 3 + 3 - 1\\] = \\[3, 5\\] = (3, 4, 5) occur in nums.\nTherefore, nums is consecutive.\n\n**Constraints:**\n\n*   `1 <= nums.length <= 105`\n*   `0 <= nums[i] <= 105`",
+  "difficulty": "Easy",
+  "category": null,
+  "xpReward": 0,
+  "timeLimitMs": 5000,
+  "memoryLimitMb": 256,
+  "starterCode": [],
+  "solutionCode": "",
+  "hints": [],
+  "isPremium": false,
+  "createdBy": null,
+  "testCases": [
+    {
+      "input": [
+        [
+          1,
+          3,
+          4,
+          2
+        ]
+      ],
+      "expectedOutput": true
+    },
+    {
+      "input": [
+        [
+          1,
+          3
+        ]
+      ],
+      "expectedOutput": false
+    },
+    {
+      "input": [
+        [
+          3,
+          5,
+          4
+        ]
+      ],
+      "expectedOutput": true
+    }
+  ],
+  "hiddenTestCases": [
+    {
+      "input": [
+        [
+          1,
+          3,
+          4,
+          2
+        ]
+      ],
+      "expectedOutput": true
+    },
+    {
+      "input": [
+        [
+          1,
+          3
+        ]
+      ],
+      "expectedOutput": false
+    }
+  ],
+  "tags": [],
+  "constraints": [],
+  "examples": [],
+  "createdAt": "2025-11-14T21:24:53.137042+00:00",
+  "updatedAt": "2025-12-04T04:36:02.116Z"
+}

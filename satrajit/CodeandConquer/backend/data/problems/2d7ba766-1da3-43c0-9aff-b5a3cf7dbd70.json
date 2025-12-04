@@ -1,0 +1,111 @@
+{
+  "id": "2d7ba766-1da3-43c0-9aff-b5a3cf7dbd70",
+  "title": "Find a Peak Element II",
+  "slug": "find-a-peak-element-ii",
+  "description": "A **peak** element in a 2D grid is an element that is **strictly greater** than all of its **adjacent** neighbors to the left, right, top, and bottom.\n\nGiven a **0-indexed** `m x n` matrix `mat` where **no two adjacent cells are equal**, find **any** peak element `mat[i][j]` and return _the length 2 array_ `[i,j]`.\n\nYou may assume that the entire matrix is surrounded by an **outer perimeter** with the value `-1` in each cell.\n\nYou must write an algorithm that runs in `O(m log(n))` or `O(n log(m))` time.\n\n**Example 1:**\n\n**Input:** mat = \\[\\[1,4\\],\\[3,2\\]\\]\n**Output:** \\[0,1\\]\n**Explanation:** Both 3 and 4 are peak elements so \\[1,0\\] and \\[0,1\\] are both acceptable answers.\n\n**Example 2:**\n\n**Input:** mat = \\[\\[10,20,15\\],\\[21,30,14\\],\\[7,16,32\\]\\]\n**Output:** \\[1,1\\]\n**Explanation:** Both 30 and 32 are peak elements so \\[1,1\\] and \\[2,2\\] are both acceptable answers.\n\n**Constraints:**\n\n*   `m == mat.length`\n*   `n == mat[i].length`\n*   `1 <= m, n <= 500`\n*   `1 <= mat[i][j] <= 105`\n*   No two adjacent cells are equal.",
+  "difficulty": "Medium",
+  "category": null,
+  "xpReward": 0,
+  "timeLimitMs": 5000,
+  "memoryLimitMb": 256,
+  "starterCode": [],
+  "solutionCode": "",
+  "hints": [],
+  "isPremium": false,
+  "createdBy": null,
+  "testCases": [
+    {
+      "input": [
+        [
+          [
+            1,
+            4
+          ],
+          [
+            3,
+            2
+          ]
+        ]
+      ],
+      "expectedOutput": [
+        0,
+        1
+      ]
+    },
+    {
+      "input": [
+        [
+          [
+            10,
+            20,
+            15
+          ],
+          [
+            21,
+            30,
+            14
+          ],
+          [
+            7,
+            16,
+            32
+          ]
+        ]
+      ],
+      "expectedOutput": [
+        1,
+        1
+      ]
+    }
+  ],
+  "hiddenTestCases": [
+    {
+      "input": [
+        [
+          [
+            1,
+            4
+          ],
+          [
+            3,
+            2
+          ]
+        ]
+      ],
+      "expectedOutput": [
+        0,
+        1
+      ]
+    },
+    {
+      "input": [
+        [
+          [
+            10,
+            20,
+            15
+          ],
+          [
+            21,
+            30,
+            14
+          ],
+          [
+            7,
+            16,
+            32
+          ]
+        ]
+      ],
+      "expectedOutput": [
+        1,
+        1
+      ]
+    }
+  ],
+  "tags": [],
+  "constraints": [],
+  "examples": [],
+  "createdAt": "2025-11-14T21:23:35.245527+00:00",
+  "updatedAt": "2025-12-04T04:36:35.412Z"
+}

@@ -1,0 +1,88 @@
+{
+  "id": "5f1e48f7-ad3d-45bf-93c0-cbdb6ead0e2f",
+  "title": "Words Within Two Edits of Dictionary",
+  "slug": "words-within-two-edits-of-dictionary",
+  "description": "You are given two string arrays, `queries` and `dictionary`. All words in each array comprise of lowercase English letters and have the same length.\n\nIn one **edit** you can take a word from `queries`, and change any letter in it to any other letter. Find all words from `queries` that, after a **maximum** of two edits, equal some word from `dictionary`.\n\nReturn _a list of all words from_ `queries`_,_ _that match with some word from_ `dictionary` _after a maximum of **two edits**_. Return the words in the **same order** they appear in `queries`.\n\n**Example 1:**\n\n**Input:** queries = \\[ \"word \", \"note \", \"ants \", \"wood \"\\], dictionary = \\[ \"wood \", \"joke \", \"moat \"\\]\n**Output:** \\[ \"word \", \"note \", \"wood \"\\]\n**Explanation:**\n- Changing the 'r' in  \"word \" to 'o' allows it to equal the dictionary word  \"wood \".\n- Changing the 'n' to 'j' and the 't' to 'k' in  \"note \" changes it to  \"joke \".\n- It would take more than 2 edits for  \"ants \" to equal a dictionary word.\n-  \"wood \" can remain unchanged (0 edits) and match the corresponding dictionary word.\nThus, we return \\[ \"word \", \"note \", \"wood \"\\].\n\n**Example 2:**\n\n**Input:** queries = \\[ \"yes \"\\], dictionary = \\[ \"not \"\\]\n**Output:** \\[\\]\n**Explanation:**\nApplying any two edits to  \"yes \" cannot make it equal to  \"not \". Thus, we return an empty array.\n\n**Constraints:**\n\n*   `1 <= queries.length, dictionary.length <= 100`\n*   `n == queries[i].length == dictionary[j].length`\n*   `1 <= n <= 100`\n*   All `queries[i]` and `dictionary[j]` are composed of lowercase English letters.",
+  "difficulty": "Medium",
+  "category": null,
+  "xpReward": 0,
+  "timeLimitMs": 5000,
+  "memoryLimitMb": 256,
+  "starterCode": {},
+  "solutionCode": "",
+  "hints": [],
+  "isPremium": false,
+  "createdBy": null,
+  "testCases": [
+    {
+      "input": [
+        [
+          "word ",
+          "note ",
+          "ants ",
+          "wood "
+        ],
+        [
+          "wood ",
+          "joke ",
+          "moat "
+        ]
+      ],
+      "expectedOutput": [
+        "word ",
+        "note ",
+        "wood "
+      ]
+    },
+    {
+      "input": [
+        [
+          "yes "
+        ],
+        [
+          "not "
+        ]
+      ],
+      "expectedOutput": []
+    }
+  ],
+  "hiddenTestCases": [
+    {
+      "input": [
+        [
+          "word ",
+          "note ",
+          "ants ",
+          "wood "
+        ],
+        [
+          "wood ",
+          "joke ",
+          "moat "
+        ]
+      ],
+      "expectedOutput": [
+        "word ",
+        "note ",
+        "wood "
+      ]
+    },
+    {
+      "input": [
+        [
+          "yes "
+        ],
+        [
+          "not "
+        ]
+      ],
+      "expectedOutput": []
+    }
+  ],
+  "tags": [],
+  "constraints": [],
+  "examples": [],
+  "problemNumber": null,
+  "createdAt": "2025-11-14T21:25:51.752731+00:00",
+  "updatedAt": "2025-12-04T04:35:34.340Z"
+}

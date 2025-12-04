@@ -1,0 +1,60 @@
+{
+  "id": "e7e6354e-f17d-443d-8ec1-2632b26aaaa9",
+  "title": "Check Whether Two Strings are Almost Equivalent",
+  "slug": "check-whether-two-strings-are-almost-equivalent",
+  "description": "Two strings `word1` and `word2` are considered **almost equivalent** if the differences between the frequencies of each letter from `'a'` to `'z'` between `word1` and `word2` is **at most** `3`.\n\nGiven two strings `word1` and `word2`, each of length `n`, return `true` _if_ `word1` _and_ `word2` _are **almost equivalent**, or_ `false` _otherwise_.\n\nThe **frequency** of a letter `x` is the number of times it occurs in the string.\n\n**Example 1:**\n\n**Input:** word1 =  \"aaaa \", word2 =  \"bccb \"\n**Output:** false\n**Explanation:** There are 4 'a's in  \"aaaa \" but 0 'a's in  \"bccb \".\nThe difference is 4, which is more than the allowed 3.\n\n**Example 2:**\n\n**Input:** word1 =  \"abcdeef \", word2 =  \"abaaacc \"\n**Output:** true\n**Explanation:** The differences between the frequencies of each letter in word1 and word2 are at most 3:\n- 'a' appears 1 time in word1 and 4 times in word2. The difference is 3.\n- 'b' appears 1 time in word1 and 1 time in word2. The difference is 0.\n- 'c' appears 1 time in word1 and 2 times in word2. The difference is 1.\n- 'd' appears 1 time in word1 and 0 times in word2. The difference is 1.\n- 'e' appears 2 times in word1 and 0 times in word2. The difference is 2.\n- 'f' appears 1 time in word1 and 0 times in word2. The difference is 1.\n\n**Example 3:**\n\n**Input:** word1 =  \"cccddabba \", word2 =  \"babababab \"\n**Output:** true\n**Explanation:** The differences between the frequencies of each letter in word1 and word2 are at most 3:\n- 'a' appears 2 times in word1 and 4 times in word2. The difference is 2.\n- 'b' appears 2 times in word1 and 5 times in word2. The difference is 3.\n- 'c' appears 3 times in word1 and 0 times in word2. The difference is 3.\n- 'd' appears 2 times in word1 and 0 times in word2. The difference is 2.\n\n**Constraints:**\n\n*   `n == word1.length == word2.length`\n*   `1 <= n <= 100`\n*   `word1` and `word2` consist only of lowercase English letters.",
+  "difficulty": "Easy",
+  "category": null,
+  "xpReward": 0,
+  "timeLimitMs": 5000,
+  "memoryLimitMb": 256,
+  "starterCode": [],
+  "solutionCode": "",
+  "hints": [],
+  "isPremium": false,
+  "createdBy": null,
+  "testCases": [
+    {
+      "input": [
+        "aaaa ",
+        "bccb "
+      ],
+      "expectedOutput": false
+    },
+    {
+      "input": [
+        "abcdeef ",
+        "abaaacc "
+      ],
+      "expectedOutput": true
+    },
+    {
+      "input": [
+        "cccddabba ",
+        "babababab "
+      ],
+      "expectedOutput": true
+    }
+  ],
+  "hiddenTestCases": [
+    {
+      "input": [
+        "aaaa ",
+        "bccb "
+      ],
+      "expectedOutput": false
+    },
+    {
+      "input": [
+        "abcdeef ",
+        "abaaacc "
+      ],
+      "expectedOutput": true
+    }
+  ],
+  "tags": [],
+  "constraints": [],
+  "examples": [],
+  "createdAt": "2025-11-14T21:24:14.81673+00:00",
+  "updatedAt": "2025-12-04T04:36:18.386Z"
+}

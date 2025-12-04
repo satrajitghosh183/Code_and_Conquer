@@ -1,0 +1,23 @@
+{
+  "id": "9832f88b-ad7f-4caf-9c9a-9ecf65d99064",
+  "title": "Count Integers in Intervals",
+  "slug": "count-integers-in-intervals",
+  "description": "Given an **empty** set of intervals, implement a data structure that can:\n\n*   **Add** an interval to the set of intervals.\n*   **Count** the number of integers that are present in **at least one** interval.\n\nImplement the `CountIntervals` class:\n\n*   `CountIntervals()` Initializes the object with an empty set of intervals.\n*   `void add(int left, int right)` Adds the interval `[left, right]` to the set of intervals.\n*   `int count()` Returns the number of integers that are present in **at least one** interval.\n\n**Note** that an interval `[left, right]` denotes all the integers `x` where `left <= x <= right`.\n\n**Example 1:**\n\n**Input**\n\\[ \"CountIntervals \",  \"add \",  \"add \",  \"count \",  \"add \",  \"count \"\\]\n\\[\\[\\], \\[2, 3\\], \\[7, 10\\], \\[\\], \\[5, 8\\], \\[\\]\\]\n**Output**\n\\[null, null, null, 6, null, 8\\]\n\n**Explanation**\nCountIntervals countIntervals = new CountIntervals(); // initialize the object with an empty set of intervals. \ncountIntervals.add(2, 3);  // add \\[2, 3\\] to the set of intervals.\ncountIntervals.add(7, 10); // add \\[7, 10\\] to the set of intervals.\ncountIntervals.count();    // return 6\n                           // the integers 2 and 3 are present in the interval \\[2, 3\\].\n                           // the integers 7, 8, 9, and 10 are present in the interval \\[7, 10\\].\ncountIntervals.add(5, 8);  // add \\[5, 8\\] to the set of intervals.\ncountIntervals.count();    // return 8\n                           // the integers 2 and 3 are present in the interval \\[2, 3\\].\n                           // the integers 5 and 6 are present in the interval \\[5, 8\\].\n                           // the integers 7 and 8 are present in the intervals \\[5, 8\\] and \\[7, 10\\].\n                           // the integers 9 and 10 are present in the interval \\[7, 10\\].\n\n**Constraints:**\n\n*   `1 <= left <= right <= 109`\n*   At most `105` calls **in total** will be made to `add` and `count`.\n*   At least **one** call will be made to `count`.",
+  "difficulty": "Hard",
+  "category": null,
+  "xpReward": 0,
+  "timeLimitMs": 5000,
+  "memoryLimitMb": 256,
+  "starterCode": [],
+  "solutionCode": "",
+  "hints": [],
+  "isPremium": false,
+  "createdBy": null,
+  "testCases": [],
+  "hiddenTestCases": [],
+  "tags": [],
+  "constraints": [],
+  "examples": [],
+  "createdAt": "2025-11-14T21:25:05.985886+00:00",
+  "updatedAt": "2025-12-04T04:31:29.165Z"
+}

@@ -1,0 +1,184 @@
+{
+  "id": "bffdc325-682f-4cf1-8147-5815fd5ae59e",
+  "title": "Where Will the Ball Fall",
+  "slug": "where-will-the-ball-fall",
+  "description": "You have a 2-D `grid` of size `m x n` representing a box, and you have `n` balls. The box is open on the top and bottom sides.\n\nEach cell in the box has a diagonal board spanning two corners of the cell that can redirect a ball to the right or to the left.\n\n*   A board that redirects the ball to the right spans the top-left corner to the bottom-right corner and is represented in the grid as `1`.\n*   A board that redirects the ball to the left spans the top-right corner to the bottom-left corner and is represented in the grid as `-1`.\n\nWe drop one ball at the top of each column of the box. Each ball can get stuck in the box or fall out of the bottom. A ball gets stuck if it hits a \"V \" shaped pattern between two boards or if a board redirects the ball into either wall of the box.\n\nReturn _an array_ `answer` _of size_ `n` _where_ `answer[i]` _is the column that the ball falls out of at the bottom after dropping the ball from the_ `ith` _column at the top, or `-1` _if the ball gets stuck in the box_._\n\n**Example 1:**\n\n**Input:** grid = \\[\\[1,1,1,-1,-1\\],\\[1,1,1,-1,-1\\],\\[-1,-1,-1,1,1\\],\\[1,1,1,1,-1\\],\\[-1,-1,-1,-1,-1\\]\\]\n**Output:** \\[1,-1,-1,-1,-1\\]\n**Explanation:** This example is shown in the photo.\nBall b0 is dropped at column 0 and falls out of the box at column 1.\nBall b1 is dropped at column 1 and will get stuck in the box between column 2 and 3 and row 1.\nBall b2 is dropped at column 2 and will get stuck on the box between column 2 and 3 and row 0.\nBall b3 is dropped at column 3 and will get stuck on the box between column 2 and 3 and row 0.\nBall b4 is dropped at column 4 and will get stuck on the box between column 2 and 3 and row 1.\n\n**Example 2:**\n\n**Input:** grid = \\[\\[-1\\]\\]\n**Output:** \\[-1\\]\n**Explanation:** The ball gets stuck against the left wall.\n\n**Example 3:**\n\n**Input:** grid = \\[\\[1,1,1,1,1,1\\],\\[-1,-1,-1,-1,-1,-1\\],\\[1,1,1,1,1,1\\],\\[-1,-1,-1,-1,-1,-1\\]\\]\n**Output:** \\[0,1,2,3,4,-1\\]\n\n**Constraints:**\n\n*   `m == grid.length`\n*   `n == grid[i].length`\n*   `1 <= m, n <= 100`\n*   `grid[i][j]` is `1` or `-1`.",
+  "difficulty": "Medium",
+  "category": null,
+  "xpReward": 0,
+  "timeLimitMs": 5000,
+  "memoryLimitMb": 256,
+  "starterCode": [],
+  "solutionCode": "",
+  "hints": [],
+  "isPremium": false,
+  "createdBy": null,
+  "testCases": [
+    {
+      "input": [
+        [
+          [
+            1,
+            1,
+            1,
+            -1,
+            -1
+          ],
+          [
+            1,
+            1,
+            1,
+            -1,
+            -1
+          ],
+          [
+            -1,
+            -1,
+            -1,
+            1,
+            1
+          ],
+          [
+            1,
+            1,
+            1,
+            1,
+            -1
+          ],
+          [
+            -1,
+            -1,
+            -1,
+            -1,
+            -1
+          ]
+        ]
+      ],
+      "expectedOutput": [
+        1,
+        -1,
+        -1,
+        -1,
+        -1
+      ]
+    },
+    {
+      "input": [
+        [
+          [
+            -1
+          ]
+        ]
+      ],
+      "expectedOutput": [
+        -1
+      ]
+    },
+    {
+      "input": [
+        [
+          [
+            1,
+            1,
+            1,
+            1,
+            1,
+            1
+          ],
+          [
+            -1,
+            -1,
+            -1,
+            -1,
+            -1,
+            -1
+          ],
+          [
+            1,
+            1,
+            1,
+            1,
+            1,
+            1
+          ],
+          [
+            -1,
+            -1,
+            -1,
+            -1,
+            -1,
+            -1
+          ]
+        ]
+      ],
+      "expectedOutput": "[0,1,2,3,4,-1]\n\n**Constraints:**\n\n*   `m == grid.length`\n*   `n == grid[i].length`\n*   `1 <= m, n <= 100`\n*   `grid[i][j]` is `1` or `-1`."
+    }
+  ],
+  "hiddenTestCases": [
+    {
+      "input": [
+        [
+          [
+            1,
+            1,
+            1,
+            -1,
+            -1
+          ],
+          [
+            1,
+            1,
+            1,
+            -1,
+            -1
+          ],
+          [
+            -1,
+            -1,
+            -1,
+            1,
+            1
+          ],
+          [
+            1,
+            1,
+            1,
+            1,
+            -1
+          ],
+          [
+            -1,
+            -1,
+            -1,
+            -1,
+            -1
+          ]
+        ]
+      ],
+      "expectedOutput": [
+        1,
+        -1,
+        -1,
+        -1,
+        -1
+      ]
+    },
+    {
+      "input": [
+        [
+          [
+            -1
+          ]
+        ]
+      ],
+      "expectedOutput": [
+        -1
+      ]
+    }
+  ],
+  "tags": [],
+  "constraints": [],
+  "examples": [],
+  "createdAt": "2025-11-14T21:22:46.534686+00:00",
+  "updatedAt": "2025-12-04T04:37:02.838Z"
+}

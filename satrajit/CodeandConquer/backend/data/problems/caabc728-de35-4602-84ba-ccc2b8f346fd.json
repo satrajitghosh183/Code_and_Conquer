@@ -1,0 +1,53 @@
+{
+  "id": "caabc728-de35-4602-84ba-ccc2b8f346fd",
+  "title": "Minimum Bit Flips to Convert Number",
+  "slug": "minimum-bit-flips-to-convert-number",
+  "description": "A **bit flip** of a number `x` is choosing a bit in the binary representation of `x` and **flipping** it from either `0` to `1` or `1` to `0`.\n\n*   For example, for `x = 7`, the binary representation is `111` and we may choose any bit (including any leading zeros not shown) and flip it. We can flip the first bit from the right to get `110`, flip the second bit from the right to get `101`, flip the fifth bit from the right (a leading zero) to get `10111`, etc.\n\nGiven two integers `start` and `goal`, return _the **minimum** number of **bit flips** to convert_ `start` _to_ `goal`.\n\n**Example 1:**\n\n**Input:** start = 10, goal = 7\n**Output:** 3\n**Explanation:** The binary representation of 10 and 7 are 1010 and 0111 respectively. We can convert 10 to 7 in 3 steps:\n- Flip the first bit from the right: 1010 -> 1011.\n- Flip the third bit from the right: 1011 -> 1111.\n- Flip the fourth bit from the right: 1111 -> 0111.\nIt can be shown we cannot convert 10 to 7 in less than 3 steps. Hence, we return 3.\n\n**Example 2:**\n\n**Input:** start = 3, goal = 4\n**Output:** 3\n**Explanation:** The binary representation of 3 and 4 are 011 and 100 respectively. We can convert 3 to 4 in 3 steps:\n- Flip the first bit from the right: 011 -> 010.\n- Flip the second bit from the right: 010 -> 000.\n- Flip the third bit from the right: 000 -> 100.\nIt can be shown we cannot convert 3 to 4 in less than 3 steps. Hence, we return 3.\n\n**Constraints:**\n\n*   `0 <= start, goal <= 109`",
+  "difficulty": "Easy",
+  "category": null,
+  "xpReward": 0,
+  "timeLimitMs": 5000,
+  "memoryLimitMb": 256,
+  "starterCode": [],
+  "solutionCode": "",
+  "hints": [],
+  "isPremium": false,
+  "createdBy": null,
+  "testCases": [
+    {
+      "input": [
+        10,
+        7
+      ],
+      "expectedOutput": 3
+    },
+    {
+      "input": [
+        3,
+        4
+      ],
+      "expectedOutput": 3
+    }
+  ],
+  "hiddenTestCases": [
+    {
+      "input": [
+        10,
+        7
+      ],
+      "expectedOutput": 3
+    },
+    {
+      "input": [
+        3,
+        4
+      ],
+      "expectedOutput": 3
+    }
+  ],
+  "tags": [],
+  "constraints": [],
+  "examples": [],
+  "createdAt": "2025-11-14T21:24:51.139935+00:00",
+  "updatedAt": "2025-12-04T04:36:02.899Z"
+}

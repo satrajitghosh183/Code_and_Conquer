@@ -1,0 +1,74 @@
+{
+  "id": "96f4b244-420d-4b83-9e14-075829093fac",
+  "title": "Count Subarrays With More Ones Than Zeros",
+  "slug": "count-subarrays-with-more-ones-than-zeros",
+  "description": "You are given a binary array `nums` containing only the integers `0` and `1`. Return _the number of **subarrays** in nums that have **more**_ `1`'_s than_ `0`_'s. Since the answer may be very large, return it **modulo**_ `109 + 7`.\n\nA **subarray** is a contiguous sequence of elements within an array.\n\n**Example 1:**\n\n**Input:** nums = \\[0,1,1,0,1\\]\n**Output:** 9\n**Explanation:**\nThe subarrays of size 1 that have more ones than zeros are: \\[1\\], \\[1\\], \\[1\\]\nThe subarrays of size 2 that have more ones than zeros are: \\[1,1\\]\nThe subarrays of size 3 that have more ones than zeros are: \\[0,1,1\\], \\[1,1,0\\], \\[1,0,1\\]\nThe subarrays of size 4 that have more ones than zeros are: \\[1,1,0,1\\]\nThe subarrays of size 5 that have more ones than zeros are: \\[0,1,1,0,1\\]\n\n**Example 2:**\n\n**Input:** nums = \\[0\\]\n**Output:** 0\n**Explanation:**\nNo subarrays have more ones than zeros.\n\n**Example 3:**\n\n**Input:** nums = \\[1\\]\n**Output:** 1\n**Explanation:**\nThe subarrays of size 1 that have more ones than zeros are: \\[1\\]\n\n**Constraints:**\n\n*   `1 <= nums.length <= 105`\n*   `0 <= nums[i] <= 1`",
+  "difficulty": "Medium",
+  "category": null,
+  "xpReward": 0,
+  "timeLimitMs": 5000,
+  "memoryLimitMb": 256,
+  "starterCode": {},
+  "solutionCode": "",
+  "hints": [],
+  "isPremium": false,
+  "createdBy": null,
+  "testCases": [
+    {
+      "input": [
+        [
+          0,
+          1,
+          1,
+          0,
+          1
+        ]
+      ],
+      "expectedOutput": 9
+    },
+    {
+      "input": [
+        [
+          0
+        ]
+      ],
+      "expectedOutput": 0
+    },
+    {
+      "input": [
+        [
+          1
+        ]
+      ],
+      "expectedOutput": 1
+    }
+  ],
+  "hiddenTestCases": [
+    {
+      "input": [
+        [
+          0,
+          1,
+          1,
+          0,
+          1
+        ]
+      ],
+      "expectedOutput": 9
+    },
+    {
+      "input": [
+        [
+          0
+        ]
+      ],
+      "expectedOutput": 0
+    }
+  ],
+  "tags": [],
+  "constraints": [],
+  "examples": [],
+  "problemNumber": null,
+  "createdAt": "2025-11-14T21:24:04.792718+00:00",
+  "updatedAt": "2025-12-04T04:36:22.252Z"
+}

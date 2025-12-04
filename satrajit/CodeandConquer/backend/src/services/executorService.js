@@ -5,14 +5,33 @@ import { v4 as uuidv4 } from 'uuid';
 import { fileURLToPath } from 'url';
 import tar from 'tar-stream';
 import regression from 'regression';
+import fallbackExecutor from './fallbackExecutor.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-const docker = new Docker();
+let docker = null;
+let dockerAvailable = false;
+
+// Try to initialize Docker
+try {
+  docker = new Docker();
+  // Test Docker connection
+  await docker.ping();
+  dockerAvailable = true;
+  console.log('✅ Docker is available - using Docker executor');
+} catch (error) {
+  dockerAvailable = false;
+  console.log('⚠️ Docker is not available - using fallback executor (JavaScript/Python only)');
+}
+
 const SANDBOX_DIR = path.join(__dirname, '../../../judge/sandbox');
 
-await fs.ensureDir(SANDBOX_DIR);
+try {
+  await fs.ensureDir(SANDBOX_DIR);
+} catch (e) {
+  // Ignore if we can't create sandbox dir (Docker not available)
+}
 
 const LANGUAGE_CONFIGS = {
   javascript: {
@@ -314,6 +333,21 @@ class AdvancedExecutorService {
   }
 
   async executeCode(code, language, testCase, timeLimit) {
+    // Check if Docker is available
+    if (!dockerAvailable) {
+      // Use fallback executor
+      if (!fallbackExecutor.isSupported(language)) {
+        return {
+          success: false,
+          output: null,
+          executionTime: 0,
+          memory: 0,
+          error: `Docker is not available. Supported languages without Docker: ${fallbackExecutor.getSupportedLanguages().join(', ')}`
+        };
+      }
+      return await fallbackExecutor.executeCode(code, language, testCase, timeLimit);
+    }
+
     const config = LANGUAGE_CONFIGS[language];
     if (!config) {
       const supportedLanguages = Object.keys(LANGUAGE_CONFIGS).join(', ');
@@ -326,7 +360,7 @@ class AdvancedExecutorService {
       throw new Error('Code cannot be empty');
     }
 
-    if (!testCase || !testCase.input || testCase.expectedOutput === undefined) {
+    if (!testCase || testCase.input === undefined || testCase.expectedOutput === undefined) {
       throw new Error('Invalid test case: input and expectedOutput are required');
     }
 
@@ -334,6 +368,19 @@ class AdvancedExecutorService {
       ...config,
       timeout: timeLimit || config.timeout
     });
+  }
+
+  // Check if Docker is available
+  isDockerAvailable() {
+    return dockerAvailable;
+  }
+
+  // Get list of available languages
+  getAvailableLanguages() {
+    if (dockerAvailable) {
+      return Object.keys(LANGUAGE_CONFIGS);
+    }
+    return fallbackExecutor.getSupportedLanguages();
   }
 
   prepareCode(code, testCase, language) {
@@ -484,12 +531,33 @@ echo json_encode($result);
   }
 
   async runTestCases(code, language, testCases) {
+    // Use fallback executor if Docker is not available
+    if (!dockerAvailable) {
+      return await fallbackExecutor.runTestCases(code, language, testCases);
+    }
+
     const results = [];
     let totalTime = 0;
     let maxMemory = 0;
 
     for (let i = 0; i < testCases.length; i++) {
       const testCase = testCases[i];
+      
+      // Validate test case
+      if (!testCase || testCase.input === undefined) {
+        results.push({
+          testCase: i + 1,
+          input: testCase?.input,
+          expectedOutput: testCase?.expectedOutput,
+          actualOutput: null,
+          passed: false,
+          executionTime: 0,
+          memory: 0,
+          error: 'Invalid test case format'
+        });
+        continue;
+      }
+
       const result = await this.executeCode(code, language, testCase);
       
       const passed = result.success && 
@@ -502,7 +570,6 @@ echo json_encode($result);
           try {
             actualOutputParsed = JSON.parse(result.output.trim());
           } catch {
-            // Keep as string if not valid JSON
             actualOutputParsed = result.output.trim();
           }
         }
@@ -521,13 +588,13 @@ echo json_encode($result);
         error: result.error || null
       });
 
-      totalTime += result.executionTime;
-      maxMemory = Math.max(maxMemory, result.memory);
+      totalTime += result.executionTime || 0;
+      maxMemory = Math.max(maxMemory, result.memory || 0);
 
       if (!passed && !result.success) break;
     }
 
-    const allPassed = results.every(r => r.passed);
+    const allPassed = results.length > 0 && results.every(r => r.passed);
     
     return {
       allPassed,
@@ -603,6 +670,11 @@ echo json_encode($result);
   }
 
   async analyzeTimeComplexity(code, language, testCases) {
+    // Use fallback if Docker is not available
+    if (!dockerAvailable) {
+      return await fallbackExecutor.analyzeTimeComplexity(code, language, testCases);
+    }
+
     console.log('🔍 Starting advanced time complexity analysis...');
     
     if (!testCases || testCases.length === 0) {

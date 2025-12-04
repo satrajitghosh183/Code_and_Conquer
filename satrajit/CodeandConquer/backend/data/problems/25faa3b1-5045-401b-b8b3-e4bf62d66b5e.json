@@ -1,0 +1,125 @@
+{
+  "id": "25faa3b1-5045-401b-b8b3-e4bf62d66b5e",
+  "title": "Choose Edges to Maximize Score in a Tree",
+  "slug": "choose-edges-to-maximize-score-in-a-tree",
+  "description": "You are given a **weighted** tree consisting of `n` nodes numbered from `0` to `n - 1`.\n\nThe tree is **rooted** at node `0` and represented with a **2D** array `edges` of size `n` where `edges[i] = [pari, weighti]` indicates that node `pari` is the **parent** of node `i`, and the edge between them has a weight equal to `weighti`. Since the root does **not** have a parent, you have `edges[0] = [-1, -1]`.\n\nChoose some edges from the tree such that no two chosen edges are **adjacent** and the **sum** of the weights of the chosen edges is maximized.\n\nReturn _the **maximum** sum of the chosen edges_.\n\n**Note**:\n\n*   You are allowed to **not** choose any edges in the tree, the sum of weights in this case will be `0`.\n*   Two edges `Edge1` and `Edge2` in the tree are **adjacent** if they have a **common** node.\n    *   In other words, they are adjacent if `Edge1` connects nodes `a` and `b` and `Edge2` connects nodes `b` and `c`.\n\n**Example 1:**\n\n**Input:** edges = \\[\\[-1,-1\\],\\[0,5\\],\\[0,10\\],\\[2,6\\],\\[2,4\\]\\]\n**Output:** 11\n**Explanation:** The above diagram shows the edges that we have to choose colored in red.\nThe total score is 5 + 6 = 11.\nIt can be shown that no better score can be obtained.\n\n**Example 2:**\n\n**Input:** edges = \\[\\[-1,-1\\],\\[0,5\\],\\[0,-6\\],\\[0,7\\]\\]\n**Output:** 7\n**Explanation:** We choose the edge with weight 7.\nNote that we cannot choose more than one edge because all edges are adjacent to each other.\n\n**Constraints:**\n\n*   `n == edges.length`\n*   `1 <= n <= 105`\n*   `edges[i].length == 2`\n*   `par0 == weight0 == -1`\n*   `0 <= pari <= n - 1` for all `i >= 1`.\n*   `pari != i`\n*   `-106 <= weighti <= 106` for all `i >= 1`.\n*   `edges` represents a valid tree.",
+  "difficulty": "Medium",
+  "category": null,
+  "xpReward": 0,
+  "timeLimitMs": 5000,
+  "memoryLimitMb": 256,
+  "starterCode": [],
+  "solutionCode": "",
+  "hints": [],
+  "isPremium": false,
+  "createdBy": null,
+  "testCases": [
+    {
+      "input": [
+        [
+          [
+            -1,
+            -1
+          ],
+          [
+            0,
+            5
+          ],
+          [
+            0,
+            10
+          ],
+          [
+            2,
+            6
+          ],
+          [
+            2,
+            4
+          ]
+        ]
+      ],
+      "expectedOutput": 11
+    },
+    {
+      "input": [
+        [
+          [
+            -1,
+            -1
+          ],
+          [
+            0,
+            5
+          ],
+          [
+            0,
+            -6
+          ],
+          [
+            0,
+            7
+          ]
+        ]
+      ],
+      "expectedOutput": 7
+    }
+  ],
+  "hiddenTestCases": [
+    {
+      "input": [
+        [
+          [
+            -1,
+            -1
+          ],
+          [
+            0,
+            5
+          ],
+          [
+            0,
+            10
+          ],
+          [
+            2,
+            6
+          ],
+          [
+            2,
+            4
+          ]
+        ]
+      ],
+      "expectedOutput": 11
+    },
+    {
+      "input": [
+        [
+          [
+            -1,
+            -1
+          ],
+          [
+            0,
+            5
+          ],
+          [
+            0,
+            -6
+          ],
+          [
+            0,
+            7
+          ]
+        ]
+      ],
+      "expectedOutput": 7
+    }
+  ],
+  "tags": [],
+  "constraints": [],
+  "examples": [],
+  "createdAt": "2025-11-14T21:25:30.969939+00:00",
+  "updatedAt": "2025-12-04T04:35:44.612Z"
+}

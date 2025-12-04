@@ -1,0 +1,97 @@
+{
+  "id": "7295420c-ed1d-4814-808a-5739b961fb0a",
+  "title": "Largest Color Value in a Directed Graph",
+  "slug": "largest-color-value-in-a-directed-graph",
+  "description": "There is a **directed graph** of `n` colored nodes and `m` edges. The nodes are numbered from `0` to `n - 1`.\n\nYou are given a string `colors` where `colors[i]` is a lowercase English letter representing the **color** of the `ith` node in this graph (**0-indexed**). You are also given a 2D array `edges` where `edges[j] = [aj, bj]` indicates that there is a **directed edge** from node `aj` to node `bj`.\n\nA valid **path** in the graph is a sequence of nodes `x1 -> x2 -> x3 -> ... -> xk` such that there is a directed edge from `xi` to `xi+1` for every `1 <= i < k`. The **color value** of the path is the number of nodes that are colored the **most frequently** occurring color along that path.\n\nReturn _the **largest color value** of any valid path in the given graph, or_ `-1` _if the graph contains a cycle_.\n\n**Example 1:**\n\n**Input:** colors =  \"abaca \", edges = \\[\\[0,1\\],\\[0,2\\],\\[2,3\\],\\[3,4\\]\\]\n**Output:** 3\n**Explanation:** The path 0 -> 2 -> 3 -> 4 contains 3 nodes that are colored ` \"a \" (red in the above image)`.\n\n**Example 2:**\n\n**Input:** colors =  \"a \", edges = \\[\\[0,0\\]\\]\n**Output:** -1\n**Explanation:** There is a cycle from 0 to 0.\n\n**Constraints:**\n\n*   `n == colors.length`\n*   `m == edges.length`\n*   `1 <= n <= 105`\n*   `0 <= m <= 105`\n*   `colors` consists of lowercase English letters.\n*   `0 <= aj, bj < n`",
+  "difficulty": "Hard",
+  "category": null,
+  "xpReward": 0,
+  "timeLimitMs": 5000,
+  "memoryLimitMb": 256,
+  "starterCode": [],
+  "solutionCode": "",
+  "hints": [],
+  "isPremium": false,
+  "createdBy": null,
+  "testCases": [
+    {
+      "input": [
+        "abaca ",
+        [
+          [
+            0,
+            1
+          ],
+          [
+            0,
+            2
+          ],
+          [
+            2,
+            3
+          ],
+          [
+            3,
+            4
+          ]
+        ]
+      ],
+      "expectedOutput": 3
+    },
+    {
+      "input": [
+        "a ",
+        [
+          [
+            0,
+            0
+          ]
+        ]
+      ],
+      "expectedOutput": -1
+    }
+  ],
+  "hiddenTestCases": [
+    {
+      "input": [
+        "abaca ",
+        [
+          [
+            0,
+            1
+          ],
+          [
+            0,
+            2
+          ],
+          [
+            2,
+            3
+          ],
+          [
+            3,
+            4
+          ]
+        ]
+      ],
+      "expectedOutput": 3
+    },
+    {
+      "input": [
+        "a ",
+        [
+          [
+            0,
+            0
+          ]
+        ]
+      ],
+      "expectedOutput": -1
+    }
+  ],
+  "tags": [],
+  "constraints": [],
+  "examples": [],
+  "createdAt": "2025-11-14T21:23:24.964293+00:00",
+  "updatedAt": "2025-12-04T04:36:39.779Z"
+}

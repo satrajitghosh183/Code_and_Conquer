@@ -1,0 +1,136 @@
+{
+  "id": "7bc0e959-31a5-44d9-9b35-cab34358212a",
+  "title": "Lowest Common Ancestor of a Binary Tree IV",
+  "slug": "lowest-common-ancestor-of-a-binary-tree-iv",
+  "description": "Given the `root` of a binary tree and an array of `TreeNode` objects `nodes`, return _the lowest common ancestor (LCA) of **all the nodes** in_ `nodes`. All the nodes will exist in the tree, and all values of the tree's nodes are **unique**.\n\nExtending the **[definition of LCA on Wikipedia](https://en.wikipedia.org/wiki/Lowest_common_ancestor)**: \"The lowest common ancestor of `n` nodes `p1`, `p2`, ..., `pn` in a binary tree `T` is the lowest node that has every `pi` as a **descendant** (where we allow **a node to be a descendant of itself**) for every valid `i` \". A **descendant** of a node `x` is a node `y` that is on the path from node `x` to some leaf node.\n\n**Example 1:**\n\n**Input:** root = \\[3,5,1,6,2,0,8,null,null,7,4\\], nodes = \\[4,7\\]\n**Output:** 2\n**Explanation:** The lowest common ancestor of nodes 4 and 7 is node 2.\n\n**Example 2:**\n\n**Input:** root = \\[3,5,1,6,2,0,8,null,null,7,4\\], nodes = \\[1\\]\n**Output:** 1\n**Explanation:** The lowest common ancestor of a single node is the node itself.\n\n**Example 3:**\n\n**Input:** root = \\[3,5,1,6,2,0,8,null,null,7,4\\], nodes = \\[7,6,2,4\\]\n**Output:** 5\n**Explanation:** The lowest common ancestor of the nodes 7, 6, 2, and 4 is node 5.\n\n**Constraints:**\n\n*   The number of nodes in the tree is in the range `[1, 104]`.\n*   `-109 <= Node.val <= 109`\n*   All `Node.val` are **unique**.\n*   All `nodes[i]` will exist in the tree.\n*   All `nodes[i]` are distinct.",
+  "difficulty": "Medium",
+  "category": null,
+  "xpReward": 0,
+  "timeLimitMs": 5000,
+  "memoryLimitMb": 256,
+  "starterCode": {},
+  "solutionCode": "",
+  "hints": [],
+  "isPremium": false,
+  "createdBy": null,
+  "testCases": [
+    {
+      "input": [
+        [
+          3,
+          5,
+          1,
+          6,
+          2,
+          0,
+          8,
+          null,
+          null,
+          7,
+          4
+        ],
+        [
+          4,
+          7
+        ]
+      ],
+      "expectedOutput": 2
+    },
+    {
+      "input": [
+        [
+          3,
+          5,
+          1,
+          6,
+          2,
+          0,
+          8,
+          null,
+          null,
+          7,
+          4
+        ],
+        [
+          1
+        ]
+      ],
+      "expectedOutput": 1
+    },
+    {
+      "input": [
+        [
+          3,
+          5,
+          1,
+          6,
+          2,
+          0,
+          8,
+          null,
+          null,
+          7,
+          4
+        ],
+        [
+          7,
+          6,
+          2,
+          4
+        ]
+      ],
+      "expectedOutput": 5
+    }
+  ],
+  "hiddenTestCases": [
+    {
+      "input": [
+        [
+          3,
+          5,
+          1,
+          6,
+          2,
+          0,
+          8,
+          null,
+          null,
+          7,
+          4
+        ],
+        [
+          4,
+          7
+        ]
+      ],
+      "expectedOutput": 2
+    },
+    {
+      "input": [
+        [
+          3,
+          5,
+          1,
+          6,
+          2,
+          0,
+          8,
+          null,
+          null,
+          7,
+          4
+        ],
+        [
+          1
+        ]
+      ],
+      "expectedOutput": 1
+    }
+  ],
+  "tags": [],
+  "constraints": [],
+  "examples": [],
+  "problemNumber": null,
+  "createdAt": "2025-11-14T21:22:40.276628+00:00",
+  "updatedAt": "2025-12-04T04:37:06.569Z"
+}

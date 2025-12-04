@@ -1,0 +1,56 @@
+{
+  "id": "4c579d8e-e0fa-4a94-aec7-471a2eb3ce24",
+  "title": "Minimum Length of String After Deleting Similar Ends",
+  "slug": "minimum-length-of-string-after-deleting-similar-ends",
+  "description": "Given a string `s` consisting only of characters `'a'`, `'b'`, and `'c'`. You are asked to apply the following algorithm on the string any number of times:\n\n1.  Pick a **non-empty** prefix from the string `s` where all the characters in the prefix are equal.\n2.  Pick a **non-empty** suffix from the string `s` where all the characters in this suffix are equal.\n3.  The prefix and the suffix should not intersect at any index.\n4.  The characters from the prefix and suffix must be the same.\n5.  Delete both the prefix and the suffix.\n\nReturn _the **minimum length** of_ `s` _after performing the above operation any number of times (possibly zero times)_.\n\n**Example 1:**\n\n**Input:** s =  \"ca \"\n**Output:** 2\n**Explanation:** You can't remove any characters, so the string stays as is.\n\n**Example 2:**\n\n**Input:** s =  \"cabaabac \"\n**Output:** 0\n**Explanation:** An optimal sequence of operations is:\n- Take prefix =  \"c \" and suffix =  \"c \" and remove them, s =  \"abaaba \".\n- Take prefix =  \"a \" and suffix =  \"a \" and remove them, s =  \"baab \".\n- Take prefix =  \"b \" and suffix =  \"b \" and remove them, s =  \"aa \".\n- Take prefix =  \"a \" and suffix =  \"a \" and remove them, s =  \" \".\n\n**Example 3:**\n\n**Input:** s =  \"aabccabba \"\n**Output:** 3\n**Explanation:** An optimal sequence of operations is:\n- Take prefix =  \"aa \" and suffix =  \"a \" and remove them, s =  \"bccabb \".\n- Take prefix =  \"b \" and suffix =  \"bb \" and remove them, s =  \"cca \".\n\n**Constraints:**\n\n*   `1 <= s.length <= 105`\n*   `s` only consists of characters `'a'`, `'b'`, and `'c'`.",
+  "difficulty": "Medium",
+  "category": null,
+  "xpReward": 0,
+  "timeLimitMs": 5000,
+  "memoryLimitMb": 256,
+  "starterCode": {},
+  "solutionCode": "",
+  "hints": [],
+  "isPremium": false,
+  "createdBy": null,
+  "testCases": [
+    {
+      "input": [
+        "ca "
+      ],
+      "expectedOutput": 2
+    },
+    {
+      "input": [
+        "cabaabac "
+      ],
+      "expectedOutput": 0
+    },
+    {
+      "input": [
+        "aabccabba "
+      ],
+      "expectedOutput": 3
+    }
+  ],
+  "hiddenTestCases": [
+    {
+      "input": [
+        "ca "
+      ],
+      "expectedOutput": 2
+    },
+    {
+      "input": [
+        "cabaabac "
+      ],
+      "expectedOutput": 0
+    }
+  ],
+  "tags": [],
+  "constraints": [],
+  "examples": [],
+  "problemNumber": null,
+  "createdAt": "2025-11-14T21:22:57.449265+00:00",
+  "updatedAt": "2025-12-04T04:36:54.574Z"
+}

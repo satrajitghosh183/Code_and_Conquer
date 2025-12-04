@@ -1,0 +1,60 @@
+{
+  "id": "51be1b9b-b0cc-4706-9843-83585766be82",
+  "title": "Merge Strings Alternately",
+  "slug": "merge-strings-alternately",
+  "description": "You are given two strings `word1` and `word2`. Merge the strings by adding letters in alternating order, starting with `word1`. If a string is longer than the other, append the additional letters onto the end of the merged string.\n\nReturn _the merged string._\n\n**Example 1:**\n\n**Input:** word1 =  \"abc \", word2 =  \"pqr \"\n**Output:**  \"apbqcr \"\n**Explanation:** The merged string will be merged as so:\nword1:  a   b   c\nword2:    p   q   r\nmerged: a p b q c r\n\n**Example 2:**\n\n**Input:** word1 =  \"ab \", word2 =  \"pqrs \"\n**Output:**  \"apbqrs \"\n**Explanation:** Notice that as word2 is longer,  \"rs \" is appended to the end.\nword1:  a   b \nword2:    p   q   r   s\nmerged: a p b q   r   s\n\n**Example 3:**\n\n**Input:** word1 =  \"abcd \", word2 =  \"pq \"\n**Output:**  \"apbqcd \"\n**Explanation:** Notice that as word1 is longer,  \"cd \" is appended to the end.\nword1:  a   b   c   d\nword2:    p   q \nmerged: a p b q c   d\n\n**Constraints:**\n\n*   `1 <= word1.length, word2.length <= 100`\n*   `word1` and `word2` consist of lowercase English letters.",
+  "difficulty": "Easy",
+  "category": null,
+  "xpReward": 0,
+  "timeLimitMs": 5000,
+  "memoryLimitMb": 256,
+  "starterCode": [],
+  "solutionCode": "",
+  "hints": [],
+  "isPremium": false,
+  "createdBy": null,
+  "testCases": [
+    {
+      "input": [
+        "abc ",
+        "pqr "
+      ],
+      "expectedOutput": "apbqcr "
+    },
+    {
+      "input": [
+        "ab ",
+        "pqrs "
+      ],
+      "expectedOutput": "apbqrs "
+    },
+    {
+      "input": [
+        "abcd ",
+        "pq "
+      ],
+      "expectedOutput": "apbqcd "
+    }
+  ],
+  "hiddenTestCases": [
+    {
+      "input": [
+        "abc ",
+        "pqr "
+      ],
+      "expectedOutput": "apbqcr "
+    },
+    {
+      "input": [
+        "ab ",
+        "pqrs "
+      ],
+      "expectedOutput": "apbqrs "
+    }
+  ],
+  "tags": [],
+  "constraints": [],
+  "examples": [],
+  "createdAt": "2025-11-14T21:23:01.949708+00:00",
+  "updatedAt": "2025-12-04T04:36:51.646Z"
+}

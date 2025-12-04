@@ -1,0 +1,74 @@
+{
+  "id": "f3a2802d-ad2e-4e04-9011-3247080d36a9",
+  "title": "Sum of Floored Pairs",
+  "slug": "sum-of-floored-pairs",
+  "description": "Given an integer array `nums`, return the sum of `floor(nums[i] / nums[j])` for all pairs of indices `0 <= i, j < nums.length` in the array. Since the answer may be too large, return it **modulo** `109 + 7`.\n\nThe `floor()` function returns the integer part of the division.\n\n**Example 1:**\n\n**Input:** nums = \\[2,5,9\\]\n**Output:** 10\n**Explanation:**\nfloor(2 / 5) = floor(2 / 9) = floor(5 / 9) = 0\nfloor(2 / 2) = floor(5 / 5) = floor(9 / 9) = 1\nfloor(5 / 2) = 2\nfloor(9 / 2) = 4\nfloor(9 / 5) = 1\nWe calculate the floor of the division for every pair of indices in the array then sum them up.\n\n**Example 2:**\n\n**Input:** nums = \\[7,7,7,7,7,7,7\\]\n**Output:** 49\n\n**Constraints:**\n\n*   `1 <= nums.length <= 105`\n*   `1 <= nums[i] <= 105`",
+  "difficulty": "Hard",
+  "category": null,
+  "xpReward": 0,
+  "timeLimitMs": 5000,
+  "memoryLimitMb": 256,
+  "starterCode": {},
+  "solutionCode": "",
+  "hints": [],
+  "isPremium": false,
+  "createdBy": null,
+  "testCases": [
+    {
+      "input": [
+        [
+          2,
+          5,
+          9
+        ]
+      ],
+      "expectedOutput": 10
+    },
+    {
+      "input": [
+        [
+          7,
+          7,
+          7,
+          7,
+          7,
+          7,
+          7
+        ]
+      ],
+      "expectedOutput": "49\n\n**Constraints:**\n\n*   `1 <= nums.length <= 105`\n*   `1 <= nums[i] <= 105`"
+    }
+  ],
+  "hiddenTestCases": [
+    {
+      "input": [
+        [
+          2,
+          5,
+          9
+        ]
+      ],
+      "expectedOutput": 10
+    },
+    {
+      "input": [
+        [
+          7,
+          7,
+          7,
+          7,
+          7,
+          7,
+          7
+        ]
+      ],
+      "expectedOutput": "49\n\n**Constraints:**\n\n*   `1 <= nums.length <= 105`\n*   `1 <= nums[i] <= 105`"
+    }
+  ],
+  "tags": [],
+  "constraints": [],
+  "examples": [],
+  "problemNumber": null,
+  "createdAt": "2025-11-14T21:23:26.391091+00:00",
+  "updatedAt": "2025-12-04T04:36:39.047Z"
+}

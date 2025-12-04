@@ -1,0 +1,55 @@
+{
+  "id": "0a16c528-7e22-4e60-8205-888044a274d7",
+  "title": "Number of Ways to Build House of Cards",
+  "slug": "number-of-ways-to-build-house-of-cards",
+  "description": "You are given an integer `n` representing the number of playing cards you have. A **house of cards** meets the following conditions:\n\n*   A **house of cards** consists of one or more rows of **triangles** and horizontal cards.\n*   **Triangles** are created by leaning two cards against each other.\n*   One card must be placed horizontally between **all adjacent** triangles in a row.\n*   Any triangle on a row higher than the first must be placed on a horizontal card from the previous row.\n*   Each triangle is placed in the **leftmost** available spot in the row.\n\nReturn _the number of **distinct** **house of cards** you can build using **all**_ `n` _cards._ Two houses of cards are considered distinct if there exists a row where the two houses contain a different number of cards.\n\n**Example 1:**\n\n**Input:** n = 16\n**Output:** 2\n**Explanation:** The two valid houses of cards are shown.\nThe third house of cards in the diagram is not valid because the rightmost triangle on the top row is not placed on top of a horizontal card.\n\n**Example 2:**\n\n**Input:** n = 2\n**Output:** 1\n**Explanation:** The one valid house of cards is shown.\n\n**Example 3:**\n\n**Input:** n = 4\n**Output:** 0\n**Explanation:** The three houses of cards in the diagram are not valid.\nThe first house of cards needs a horizontal card placed between the two triangles.\nThe second house of cards uses 5 cards.\nThe third house of cards uses 2 cards.\n\n**Constraints:**\n\n*   `1 <= n <= 500`",
+  "difficulty": "Medium",
+  "category": null,
+  "xpReward": 0,
+  "timeLimitMs": 5000,
+  "memoryLimitMb": 256,
+  "starterCode": [],
+  "solutionCode": "",
+  "hints": [],
+  "isPremium": false,
+  "createdBy": null,
+  "testCases": [
+    {
+      "input": [
+        16
+      ],
+      "expectedOutput": 2
+    },
+    {
+      "input": [
+        2
+      ],
+      "expectedOutput": 1
+    },
+    {
+      "input": [
+        4
+      ],
+      "expectedOutput": 0
+    }
+  ],
+  "hiddenTestCases": [
+    {
+      "input": [
+        16
+      ],
+      "expectedOutput": 2
+    },
+    {
+      "input": [
+        2
+      ],
+      "expectedOutput": 1
+    }
+  ],
+  "tags": [],
+  "constraints": [],
+  "examples": [],
+  "createdAt": "2025-11-14T21:24:44.006296+00:00",
+  "updatedAt": "2025-12-04T04:36:05.994Z"
+}

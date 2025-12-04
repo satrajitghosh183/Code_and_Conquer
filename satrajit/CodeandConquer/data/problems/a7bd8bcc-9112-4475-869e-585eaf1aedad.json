@@ -1,0 +1,180 @@
+{
+  "id": "a7bd8bcc-9112-4475-869e-585eaf1aedad",
+  "title": "Minimum Weighted Subgraph With the Required Paths",
+  "slug": "minimum-weighted-subgraph-with-the-required-paths",
+  "description": "You are given an integer `n` denoting the number of nodes of a **weighted directed** graph. The nodes are numbered from `0` to `n - 1`.\n\nYou are also given a 2D integer array `edges` where `edges[i] = [fromi, toi, weighti]` denotes that there exists a **directed** edge from `fromi` to `toi` with weight `weighti`.\n\nLastly, you are given three **distinct** integers `src1`, `src2`, and `dest` denoting three distinct nodes of the graph.\n\nReturn _the **minimum weight** of a subgraph of the graph such that it is **possible** to reach_ `dest` _from both_ `src1` _and_ `src2` _via a set of edges of this subgraph_. In case such a subgraph does not exist, return `-1`.\n\nA **subgraph** is a graph whose vertices and edges are subsets of the original graph. The **weight** of a subgraph is the sum of weights of its constituent edges.\n\n**Example 1:**\n\n**Input:** n = 6, edges = \\[\\[0,2,2\\],\\[0,5,6\\],\\[1,0,3\\],\\[1,4,5\\],\\[2,1,1\\],\\[2,3,3\\],\\[2,3,4\\],\\[3,4,2\\],\\[4,5,1\\]\\], src1 = 0, src2 = 1, dest = 5\n**Output:** 9\n**Explanation:**\nThe above figure represents the input graph.\nThe blue edges represent one of the subgraphs that yield the optimal answer.\nNote that the subgraph \\[\\[1,0,3\\],\\[0,5,6\\]\\] also yields the optimal answer. It is not possible to get a subgraph with less weight satisfying all the constraints.\n\n**Example 2:**\n\n**Input:** n = 3, edges = \\[\\[0,1,1\\],\\[2,1,1\\]\\], src1 = 0, src2 = 1, dest = 2\n**Output:** -1\n**Explanation:**\nThe above figure represents the input graph.\nIt can be seen that there does not exist any path from node 1 to node 2, hence there are no subgraphs satisfying all the constraints.\n\n**Constraints:**\n\n*   `3 <= n <= 105`\n*   `0 <= edges.length <= 105`\n*   `edges[i].length == 3`\n*   `0 <= fromi, toi, src1, src2, dest <= n - 1`\n*   `fromi != toi`\n*   `src1`, `src2`, and `dest` are pairwise distinct.\n*   `1 <= weight[i] <= 105`",
+  "difficulty": "Hard",
+  "category": null,
+  "xpReward": 0,
+  "timeLimitMs": 5000,
+  "memoryLimitMb": 256,
+  "starterCode": {},
+  "solutionCode": "",
+  "hints": [],
+  "isPremium": false,
+  "createdBy": null,
+  "testCases": [
+    {
+      "input": [
+        6,
+        [
+          [
+            0,
+            2,
+            2
+          ],
+          [
+            0,
+            5,
+            6
+          ],
+          [
+            1,
+            0,
+            3
+          ],
+          [
+            1,
+            4,
+            5
+          ],
+          [
+            2,
+            1,
+            1
+          ],
+          [
+            2,
+            3,
+            3
+          ],
+          [
+            2,
+            3,
+            4
+          ],
+          [
+            3,
+            4,
+            2
+          ],
+          [
+            4,
+            5,
+            1
+          ]
+        ],
+        0,
+        1,
+        5
+      ],
+      "expectedOutput": 9
+    },
+    {
+      "input": [
+        3,
+        [
+          [
+            0,
+            1,
+            1
+          ],
+          [
+            2,
+            1,
+            1
+          ]
+        ],
+        0,
+        1,
+        2
+      ],
+      "expectedOutput": -1
+    }
+  ],
+  "hiddenTestCases": [
+    {
+      "input": [
+        6,
+        [
+          [
+            0,
+            2,
+            2
+          ],
+          [
+            0,
+            5,
+            6
+          ],
+          [
+            1,
+            0,
+            3
+          ],
+          [
+            1,
+            4,
+            5
+          ],
+          [
+            2,
+            1,
+            1
+          ],
+          [
+            2,
+            3,
+            3
+          ],
+          [
+            2,
+            3,
+            4
+          ],
+          [
+            3,
+            4,
+            2
+          ],
+          [
+            4,
+            5,
+            1
+          ]
+        ],
+        0,
+        1,
+        5
+      ],
+      "expectedOutput": 9
+    },
+    {
+      "input": [
+        3,
+        [
+          [
+            0,
+            1,
+            1
+          ],
+          [
+            2,
+            1,
+            1
+          ]
+        ],
+        0,
+        1,
+        2
+      ],
+      "expectedOutput": -1
+    }
+  ],
+  "tags": [],
+  "constraints": [],
+  "examples": [],
+  "problemNumber": null,
+  "createdAt": "2025-11-14T21:24:47.474734+00:00",
+  "updatedAt": "2025-12-04T04:36:04.439Z"
+}

@@ -1,0 +1,71 @@
+{
+  "id": "6babf281-2d52-4f5e-8296-356d44307327",
+  "title": "Find Unique Binary String",
+  "slug": "find-unique-binary-string",
+  "description": "Given an array of strings `nums` containing `n` **unique** binary strings each of length `n`, return _a binary string of length_ `n` _that **does not appear** in_ `nums`_. If there are multiple answers, you may return **any** of them_.\n\n**Example 1:**\n\n**Input:** nums = \\[ \"01 \", \"10 \"\\]\n**Output:**  \"11 \"\n**Explanation:**  \"11 \" does not appear in nums.  \"00 \" would also be correct.\n\n**Example 2:**\n\n**Input:** nums = \\[ \"00 \", \"01 \"\\]\n**Output:**  \"11 \"\n**Explanation:**  \"11 \" does not appear in nums.  \"10 \" would also be correct.\n\n**Example 3:**\n\n**Input:** nums = \\[ \"111 \", \"011 \", \"001 \"\\]\n**Output:**  \"101 \"\n**Explanation:**  \"101 \" does not appear in nums.  \"000 \",  \"010 \",  \"100 \", and  \"110 \" would also be correct.\n\n**Constraints:**\n\n*   `n == nums.length`\n*   `1 <= n <= 16`\n*   `nums[i].length == n`\n*   `nums[i]` is either `'0'` or `'1'`.\n*   All the strings of `nums` are **unique**.",
+  "difficulty": "Medium",
+  "category": null,
+  "xpReward": 0,
+  "timeLimitMs": 5000,
+  "memoryLimitMb": 256,
+  "starterCode": [],
+  "solutionCode": "",
+  "hints": [],
+  "isPremium": false,
+  "createdBy": null,
+  "testCases": [
+    {
+      "input": [
+        [
+          "01 ",
+          "10 "
+        ]
+      ],
+      "expectedOutput": "11 "
+    },
+    {
+      "input": [
+        [
+          "00 ",
+          "01 "
+        ]
+      ],
+      "expectedOutput": "11 "
+    },
+    {
+      "input": [
+        [
+          "111 ",
+          "011 ",
+          "001 "
+        ]
+      ],
+      "expectedOutput": "101 "
+    }
+  ],
+  "hiddenTestCases": [
+    {
+      "input": [
+        [
+          "01 ",
+          "10 "
+        ]
+      ],
+      "expectedOutput": "11 "
+    },
+    {
+      "input": [
+        [
+          "00 ",
+          "01 "
+        ]
+      ],
+      "expectedOutput": "11 "
+    }
+  ],
+  "tags": [],
+  "constraints": [],
+  "examples": [],
+  "createdAt": "2025-11-14T21:23:52.53677+00:00",
+  "updatedAt": "2025-12-04T04:36:27.401Z"
+}

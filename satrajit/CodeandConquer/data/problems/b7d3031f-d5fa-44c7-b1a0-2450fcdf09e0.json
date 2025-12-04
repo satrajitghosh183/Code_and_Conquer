@@ -1,0 +1,162 @@
+{
+  "id": "b7d3031f-d5fa-44c7-b1a0-2450fcdf09e0",
+  "title": "Fancy Sequence",
+  "slug": "fancy-sequence",
+  "description": "Write an API that generates fancy sequences using the `append`, `addAll`, and `multAll` operations.\n\nImplement the `Fancy` class:\n\n*   `Fancy()` Initializes the object with an empty sequence.\n*   `void append(val)` Appends an integer `val` to the end of the sequence.\n*   `void addAll(inc)` Increments all existing values in the sequence by an integer `inc`.\n*   `void multAll(m)` Multiplies all existing values in the sequence by an integer `m`.\n*   `int getIndex(idx)` Gets the current value at index `idx` (0-indexed) of the sequence **modulo** `109 + 7`. If the index is greater or equal than the length of the sequence, return `-1`.\n\n**Example 1:**\n\n**Input**\n\\[ \"Fancy \",  \"append \",  \"addAll \",  \"append \",  \"multAll \",  \"getIndex \",  \"addAll \",  \"append \",  \"multAll \",  \"getIndex \",  \"getIndex \",  \"getIndex \"\\]\n\\[\\[\\], \\[2\\], \\[3\\], \\[7\\], \\[2\\], \\[0\\], \\[3\\], \\[10\\], \\[2\\], \\[0\\], \\[1\\], \\[2\\]\\]\n**Output**\n\\[null, null, null, null, null, 10, null, null, null, 26, 34, 20\\]\n\n**Explanation**\nFancy fancy = new Fancy();\nfancy.append(2);   // fancy sequence: \\[2\\]\nfancy.addAll(3);   // fancy sequence: \\[2+3\\] -> \\[5\\]\nfancy.append(7);   // fancy sequence: \\[5, 7\\]\nfancy.multAll(2);  // fancy sequence: \\[5\\*2, 7\\*2\\] -> \\[10, 14\\]\nfancy.getIndex(0); // return 10\nfancy.addAll(3);   // fancy sequence: \\[10+3, 14+3\\] -> \\[13, 17\\]\nfancy.append(10);  // fancy sequence: \\[13, 17, 10\\]\nfancy.multAll(2);  // fancy sequence: \\[13\\*2, 17\\*2, 10\\*2\\] -> \\[26, 34, 20\\]\nfancy.getIndex(0); // return 26\nfancy.getIndex(1); // return 34\nfancy.getIndex(2); // return 20\n\n**Constraints:**\n\n*   `1 <= val, inc, m <= 100`\n*   `0 <= idx <= 105`\n*   At most `105` calls total will be made to `append`, `addAll`, `multAll`, and `getIndex`.",
+  "difficulty": "Hard",
+  "category": null,
+  "xpReward": 0,
+  "timeLimitMs": 5000,
+  "memoryLimitMb": 256,
+  "starterCode": {},
+  "solutionCode": "",
+  "hints": [],
+  "isPremium": false,
+  "createdBy": null,
+  "testCases": [
+    {
+      "input": {
+        "methods": [
+          "Fancy",
+          "append",
+          "addAll",
+          "append",
+          "multAll",
+          "getIndex",
+          "addAll",
+          "append",
+          "multAll",
+          "getIndex",
+          "getIndex",
+          "getIndex"
+        ],
+        "args": [
+          [],
+          [
+            2
+          ],
+          [
+            3
+          ],
+          [
+            7
+          ],
+          [
+            2
+          ],
+          [
+            0
+          ],
+          [
+            3
+          ],
+          [
+            10
+          ],
+          [
+            2
+          ],
+          [
+            0
+          ],
+          [
+            1
+          ],
+          [
+            2
+          ]
+        ]
+      },
+      "expectedOutput": [
+        null,
+        null,
+        null,
+        null,
+        null,
+        10,
+        null,
+        null,
+        null,
+        26,
+        34,
+        20
+      ]
+    }
+  ],
+  "hiddenTestCases": [
+    {
+      "input": {
+        "methods": [
+          "Fancy",
+          "append",
+          "addAll",
+          "append",
+          "multAll",
+          "getIndex",
+          "addAll",
+          "append",
+          "multAll",
+          "getIndex",
+          "getIndex",
+          "getIndex"
+        ],
+        "args": [
+          [],
+          [
+            2
+          ],
+          [
+            3
+          ],
+          [
+            7
+          ],
+          [
+            2
+          ],
+          [
+            0
+          ],
+          [
+            3
+          ],
+          [
+            10
+          ],
+          [
+            2
+          ],
+          [
+            0
+          ],
+          [
+            1
+          ],
+          [
+            2
+          ]
+        ]
+      },
+      "expectedOutput": [
+        null,
+        null,
+        null,
+        null,
+        null,
+        10,
+        null,
+        null,
+        null,
+        26,
+        34,
+        20
+      ]
+    }
+  ],
+  "tags": [],
+  "constraints": [],
+  "examples": [],
+  "problemNumber": null,
+  "createdAt": "2025-11-14T21:22:28.4411+00:00",
+  "updatedAt": "2025-12-04T04:38:01.100Z"
+}

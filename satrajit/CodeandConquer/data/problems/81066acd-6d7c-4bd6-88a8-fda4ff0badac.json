@@ -1,0 +1,142 @@
+{
+  "id": "81066acd-6d7c-4bd6-88a8-fda4ff0badac",
+  "title": "Query Kth Smallest Trimmed Number",
+  "slug": "query-kth-smallest-trimmed-number",
+  "description": "You are given a **0-indexed** array of strings `nums`, where each string is of **equal length** and consists of only digits.\n\nYou are also given a **0-indexed** 2D integer array `queries` where `queries[i] = [ki, trimi]`. For each `queries[i]`, you need to:\n\n*   **Trim** each number in `nums` to its **rightmost** `trimi` digits.\n*   Determine the **index** of the `kith` smallest trimmed number in `nums`. If two trimmed numbers are equal, the number with the **lower** index is considered to be smaller.\n*   Reset each number in `nums` to its original length.\n\nReturn _an array_ `answer` _of the same length as_ `queries`, _where_ `answer[i]` _is the answer to the_ `ith` _query._\n\n**Note**:\n\n*   To trim to the rightmost `x` digits means to keep removing the leftmost digit, until only `x` digits remain.\n*   Strings in `nums` may contain leading zeros.\n\n**Example 1:**\n\n**Input:** nums = \\[ \"102 \", \"473 \", \"251 \", \"814 \"\\], queries = \\[\\[1,1\\],\\[2,3\\],\\[4,2\\],\\[1,2\\]\\]\n**Output:** \\[2,2,1,0\\]\n**Explanation:**\n1. After trimming to the last digit, nums = \\[ \"2 \", \"3 \", \"1 \", \"4 \"\\]. The smallest number is 1 at index 2.\n2. Trimmed to the last 3 digits, nums is unchanged. The 2nd smallest number is 251 at index 2.\n3. Trimmed to the last 2 digits, nums = \\[ \"02 \", \"73 \", \"51 \", \"14 \"\\]. The 4th smallest number is 73.\n4. Trimmed to the last 2 digits, the smallest number is 2 at index 0.\n   Note that the trimmed number  \"02 \" is evaluated as 2.\n\n**Example 2:**\n\n**Input:** nums = \\[ \"24 \", \"37 \", \"96 \", \"04 \"\\], queries = \\[\\[2,1\\],\\[2,2\\]\\]\n**Output:** \\[3,0\\]\n**Explanation:**\n1. Trimmed to the last digit, nums = \\[ \"4 \", \"7 \", \"6 \", \"4 \"\\]. The 2nd smallest number is 4 at index 3.\n   There are two occurrences of 4, but the one at index 0 is considered smaller than the one at index 3.\n2. Trimmed to the last 2 digits, nums is unchanged. The 2nd smallest number is 24.\n\n**Constraints:**\n\n*   `1 <= nums.length <= 100`\n*   `1 <= nums[i].length <= 100`\n*   `nums[i]` consists of only digits.\n*   All `nums[i].length` are **equal**.\n*   `1 <= queries.length <= 100`\n*   `queries[i].length == 2`\n*   `1 <= ki <= nums.length`\n*   `1 <= trimi <= nums[i].length`\n\n**Follow up:** Could you use the **Radix Sort Algorithm** to solve this problem? What will be the complexity of that solution?",
+  "difficulty": "Medium",
+  "category": null,
+  "xpReward": 0,
+  "timeLimitMs": 5000,
+  "memoryLimitMb": 256,
+  "starterCode": {},
+  "solutionCode": "",
+  "hints": [],
+  "isPremium": false,
+  "createdBy": null,
+  "testCases": [
+    {
+      "input": [
+        [
+          "102 ",
+          "473 ",
+          "251 ",
+          "814 "
+        ],
+        [
+          [
+            1,
+            1
+          ],
+          [
+            2,
+            3
+          ],
+          [
+            4,
+            2
+          ],
+          [
+            1,
+            2
+          ]
+        ]
+      ],
+      "expectedOutput": [
+        2,
+        2,
+        1,
+        0
+      ]
+    },
+    {
+      "input": [
+        [
+          "24 ",
+          "37 ",
+          "96 ",
+          "04 "
+        ],
+        [
+          [
+            2,
+            1
+          ],
+          [
+            2,
+            2
+          ]
+        ]
+      ],
+      "expectedOutput": [
+        3,
+        0
+      ]
+    }
+  ],
+  "hiddenTestCases": [
+    {
+      "input": [
+        [
+          "102 ",
+          "473 ",
+          "251 ",
+          "814 "
+        ],
+        [
+          [
+            1,
+            1
+          ],
+          [
+            2,
+            3
+          ],
+          [
+            4,
+            2
+          ],
+          [
+            1,
+            2
+          ]
+        ]
+      ],
+      "expectedOutput": [
+        2,
+        2,
+        1,
+        0
+      ]
+    },
+    {
+      "input": [
+        [
+          "24 ",
+          "37 ",
+          "96 ",
+          "04 "
+        ],
+        [
+          [
+            2,
+            1
+          ],
+          [
+            2,
+            2
+          ]
+        ]
+      ],
+      "expectedOutput": [
+        3,
+        0
+      ]
+    }
+  ],
+  "tags": [],
+  "constraints": [],
+  "examples": [],
+  "problemNumber": null,
+  "createdAt": "2025-11-14T21:25:22.598213+00:00",
+  "updatedAt": "2025-12-04T04:35:48.314Z"
+}

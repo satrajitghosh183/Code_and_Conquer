@@ -1,0 +1,49 @@
+{
+  "id": "037a238f-4fda-43d8-8758-f28c4022d7ea",
+  "title": "Smallest Even Multiple",
+  "slug": "smallest-even-multiple",
+  "description": "Given a **positive** integer `n`, return _the smallest positive integer that is a multiple of **both**_ `2` _and_ `n`.\n\n**Example 1:**\n\n**Input:** n = 5\n**Output:** 10\n**Explanation:** The smallest multiple of both 5 and 2 is 10.\n\n**Example 2:**\n\n**Input:** n = 6\n**Output:** 6\n**Explanation:** The smallest multiple of both 6 and 2 is 6. Note that a number is a multiple of itself.\n\n**Constraints:**\n\n*   `1 <= n <= 150`",
+  "difficulty": "Easy",
+  "category": null,
+  "xpReward": 0,
+  "timeLimitMs": 5000,
+  "memoryLimitMb": 256,
+  "starterCode": [],
+  "solutionCode": "",
+  "hints": [],
+  "isPremium": false,
+  "createdBy": null,
+  "testCases": [
+    {
+      "input": [
+        5
+      ],
+      "expectedOutput": 10
+    },
+    {
+      "input": [
+        6
+      ],
+      "expectedOutput": 6
+    }
+  ],
+  "hiddenTestCases": [
+    {
+      "input": [
+        5
+      ],
+      "expectedOutput": 10
+    },
+    {
+      "input": [
+        6
+      ],
+      "expectedOutput": 6
+    }
+  ],
+  "tags": [],
+  "constraints": [],
+  "examples": [],
+  "createdAt": "2025-11-14T21:25:40.307222+00:00",
+  "updatedAt": "2025-12-04T04:35:40.091Z"
+}

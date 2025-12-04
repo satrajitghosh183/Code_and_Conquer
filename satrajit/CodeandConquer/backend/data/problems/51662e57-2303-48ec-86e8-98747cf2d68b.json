@@ -1,0 +1,133 @@
+{
+  "id": "51662e57-2303-48ec-86e8-98747cf2d68b",
+  "title": "Sum Of Special Evenly-Spaced Elements In Array",
+  "slug": "sum-of-special-evenly-spaced-elements-in-array",
+  "description": "You are given a **0-indexed** integer array `nums` consisting of `n` non-negative integers.\n\nYou are also given an array `queries`, where `queries[i] = [xi, yi]`. The answer to the `ith` query is the sum of all `nums[j]` where `xi <= j < n` and `(j - xi)` is divisible by `yi`.\n\nReturn _an array_ `answer` _where_ `answer.length == queries.length` _and_ `answer[i]` _is the answer to the_ `ith` _query **modulo**_ `109 + 7`.\n\n**Example 1:**\n\n**Input:** nums = \\[0,1,2,3,4,5,6,7\\], queries = \\[\\[0,3\\],\\[5,1\\],\\[4,2\\]\\]\n**Output:** \\[9,18,10\\]\n**Explanation:** The answers of the queries are as follows:\n1) The j indices that satisfy this query are 0, 3, and 6. nums\\[0\\] + nums\\[3\\] + nums\\[6\\] = 9\n2) The j indices that satisfy this query are 5, 6, and 7. nums\\[5\\] + nums\\[6\\] + nums\\[7\\] = 18\n3) The j indices that satisfy this query are 4 and 6. nums\\[4\\] + nums\\[6\\] = 10\n\n**Example 2:**\n\n**Input:** nums = \\[100,200,101,201,102,202,103,203\\], queries = \\[\\[0,7\\]\\]\n**Output:** \\[303\\]\n\n**Constraints:**\n\n*   `n == nums.length`\n*   `1 <= n <= 5 * 104`\n*   `0 <= nums[i] <= 109`\n*   `1 <= queries.length <= 1.5 * 105`\n*   `0 <= xi < n`\n*   `1 <= yi <= 5 * 104`",
+  "difficulty": "Hard",
+  "category": null,
+  "xpReward": 0,
+  "timeLimitMs": 5000,
+  "memoryLimitMb": 256,
+  "starterCode": [],
+  "solutionCode": "",
+  "hints": [],
+  "isPremium": false,
+  "createdBy": null,
+  "testCases": [
+    {
+      "input": [
+        [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7
+        ],
+        [
+          [
+            0,
+            3
+          ],
+          [
+            5,
+            1
+          ],
+          [
+            4,
+            2
+          ]
+        ]
+      ],
+      "expectedOutput": [
+        9,
+        18,
+        10
+      ]
+    },
+    {
+      "input": [
+        [
+          100,
+          200,
+          101,
+          201,
+          102,
+          202,
+          103,
+          203
+        ],
+        [
+          [
+            0,
+            7
+          ]
+        ]
+      ],
+      "expectedOutput": "[303]\n\n**Constraints:**\n\n*   `n == nums.length`\n*   `1 <= n <= 5 * 104`\n*   `0 <= nums[i] <= 109`\n*   `1 <= queries.length <= 1.5 * 105`\n*   `0 <= xi < n`\n*   `1 <= yi <= 5 * 104`"
+    }
+  ],
+  "hiddenTestCases": [
+    {
+      "input": [
+        [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7
+        ],
+        [
+          [
+            0,
+            3
+          ],
+          [
+            5,
+            1
+          ],
+          [
+            4,
+            2
+          ]
+        ]
+      ],
+      "expectedOutput": [
+        9,
+        18,
+        10
+      ]
+    },
+    {
+      "input": [
+        [
+          100,
+          200,
+          101,
+          201,
+          102,
+          202,
+          103,
+          203
+        ],
+        [
+          [
+            0,
+            7
+          ]
+        ]
+      ],
+      "expectedOutput": "[303]\n\n**Constraints:**\n\n*   `n == nums.length`\n*   `1 <= n <= 5 * 104`\n*   `0 <= nums[i] <= 109`\n*   `1 <= queries.length <= 1.5 * 105`\n*   `0 <= xi < n`\n*   `1 <= yi <= 5 * 104`"
+    }
+  ],
+  "tags": [],
+  "constraints": [],
+  "examples": [],
+  "createdAt": "2025-11-14T21:22:48.593844+00:00",
+  "updatedAt": "2025-12-04T04:37:01.032Z"
+}

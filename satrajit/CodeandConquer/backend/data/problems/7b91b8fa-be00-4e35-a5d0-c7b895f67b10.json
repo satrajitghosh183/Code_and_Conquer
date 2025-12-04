@@ -1,0 +1,82 @@
+{
+  "id": "7b91b8fa-be00-4e35-a5d0-c7b895f67b10",
+  "title": "Maximum Alternating Subsequence Sum",
+  "slug": "maximum-alternating-subsequence-sum",
+  "description": "The **alternating sum** of a **0-indexed** array is defined as the **sum** of the elements at **even** indices **minus** the **sum** of the elements at **odd** indices.\n\n*   For example, the alternating sum of `[4,2,5,3]` is `(4 + 5) - (2 + 3) = 4`.\n\nGiven an array `nums`, return _the **maximum alternating sum** of any subsequence of_ `nums` _(after **reindexing** the elements of the subsequence)_.\n\nA **subsequence** of an array is a new array generated from the original array by deleting some elements (possibly none) without changing the remaining elements' relative order. For example, `[2,7,4]` is a subsequence of `[4,2,3,7,2,1,4]` (the underlined elements), while `[2,4,2]` is not.\n\n**Example 1:**\n\n**Input:** nums = \\[4,2,5,3\\]\n**Output:** 7\n**Explanation:** It is optimal to choose the subsequence \\[4,2,5\\] with alternating sum (4 + 5) - 2 = 7.\n\n**Example 2:**\n\n**Input:** nums = \\[5,6,7,8\\]\n**Output:** 8\n**Explanation:** It is optimal to choose the subsequence \\[8\\] with alternating sum 8.\n\n**Example 3:**\n\n**Input:** nums = \\[6,2,1,2,4,5\\]\n**Output:** 10\n**Explanation:** It is optimal to choose the subsequence \\[6,1,5\\] with alternating sum (6 + 5) - 1 = 10.\n\n**Constraints:**\n\n*   `1 <= nums.length <= 105`\n*   `1 <= nums[i] <= 105`",
+  "difficulty": "Medium",
+  "category": null,
+  "xpReward": 0,
+  "timeLimitMs": 5000,
+  "memoryLimitMb": 256,
+  "starterCode": [],
+  "solutionCode": "",
+  "hints": [],
+  "isPremium": false,
+  "createdBy": null,
+  "testCases": [
+    {
+      "input": [
+        [
+          4,
+          2,
+          5,
+          3
+        ]
+      ],
+      "expectedOutput": 7
+    },
+    {
+      "input": [
+        [
+          5,
+          6,
+          7,
+          8
+        ]
+      ],
+      "expectedOutput": 8
+    },
+    {
+      "input": [
+        [
+          6,
+          2,
+          1,
+          2,
+          4,
+          5
+        ]
+      ],
+      "expectedOutput": 10
+    }
+  ],
+  "hiddenTestCases": [
+    {
+      "input": [
+        [
+          4,
+          2,
+          5,
+          3
+        ]
+      ],
+      "expectedOutput": 7
+    },
+    {
+      "input": [
+        [
+          5,
+          6,
+          7,
+          8
+        ]
+      ],
+      "expectedOutput": 8
+    }
+  ],
+  "tags": [],
+  "constraints": [],
+  "examples": [],
+  "createdAt": "2025-11-14T21:23:38.675419+00:00",
+  "updatedAt": "2025-12-04T04:36:34.342Z"
+}

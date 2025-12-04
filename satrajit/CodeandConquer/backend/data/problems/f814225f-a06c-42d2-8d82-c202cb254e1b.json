@@ -1,0 +1,69 @@
+{
+  "id": "f814225f-a06c-42d2-8d82-c202cb254e1b",
+  "title": "Evaluate Boolean Binary Tree",
+  "slug": "evaluate-boolean-binary-tree",
+  "description": "You are given the `root` of a **full binary tree** with the following properties:\n\n*   **Leaf nodes** have either the value `0` or `1`, where `0` represents `False` and `1` represents `True`.\n*   **Non-leaf nodes** have either the value `2` or `3`, where `2` represents the boolean `OR` and `3` represents the boolean `AND`.\n\nThe **evaluation** of a node is as follows:\n\n*   If the node is a leaf node, the evaluation is the **value** of the node, i.e. `True` or `False`.\n*   Otherwise, **evaluate** the node's two children and **apply** the boolean operation of its value with the children's evaluations.\n\nReturn _the boolean result of **evaluating** the_ `root` _node._\n\nA **full binary tree** is a binary tree where each node has either `0` or `2` children.\n\nA **leaf node** is a node that has zero children.\n\n**Example 1:**\n\n**Input:** root = \\[2,1,3,null,null,0,1\\]\n**Output:** true\n**Explanation:** The above diagram illustrates the evaluation process.\nThe AND node evaluates to False AND True = False.\nThe OR node evaluates to True OR False = True.\nThe root node evaluates to True, so we return true.\n\n**Example 2:**\n\n**Input:** root = \\[0\\]\n**Output:** false\n**Explanation:** The root node is a leaf node and it evaluates to false, so we return false.\n\n**Constraints:**\n\n*   The number of nodes in the tree is in the range `[1, 1000]`.\n*   `0 <= Node.val <= 3`\n*   Every node has either `0` or `2` children.\n*   Leaf nodes have a value of `0` or `1`.\n*   Non-leaf nodes have a value of `2` or `3`.",
+  "difficulty": "Easy",
+  "category": null,
+  "xpReward": 0,
+  "timeLimitMs": 5000,
+  "memoryLimitMb": 256,
+  "starterCode": [],
+  "solutionCode": "",
+  "hints": [],
+  "isPremium": false,
+  "createdBy": null,
+  "testCases": [
+    {
+      "input": [
+        [
+          2,
+          1,
+          3,
+          null,
+          null,
+          0,
+          1
+        ]
+      ],
+      "expectedOutput": true
+    },
+    {
+      "input": [
+        [
+          0
+        ]
+      ],
+      "expectedOutput": false
+    }
+  ],
+  "hiddenTestCases": [
+    {
+      "input": [
+        [
+          2,
+          1,
+          3,
+          null,
+          null,
+          0,
+          1
+        ]
+      ],
+      "expectedOutput": true
+    },
+    {
+      "input": [
+        [
+          0
+        ]
+      ],
+      "expectedOutput": false
+    }
+  ],
+  "tags": [],
+  "constraints": [],
+  "examples": [],
+  "createdAt": "2025-11-14T21:25:19.665603+00:00",
+  "updatedAt": "2025-12-04T04:35:49.642Z"
+}

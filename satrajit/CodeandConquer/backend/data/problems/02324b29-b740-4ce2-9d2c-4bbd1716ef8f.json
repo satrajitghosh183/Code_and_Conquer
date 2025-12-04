@@ -1,0 +1,91 @@
+{
+  "id": "02324b29-b740-4ce2-9d2c-4bbd1716ef8f",
+  "title": "Find Resultant Array After Removing Anagrams",
+  "slug": "find-resultant-array-after-removing-anagrams",
+  "description": "You are given a **0-indexed** string array `words`, where `words[i]` consists of lowercase English letters.\n\nIn one operation, select any index `i` such that `0 < i < words.length` and `words[i - 1]` and `words[i]` are **anagrams**, and **delete** `words[i]` from `words`. Keep performing this operation as long as you can select an index that satisfies the conditions.\n\nReturn `words` _after performing all operations_. It can be shown that selecting the indices for each operation in **any** arbitrary order will lead to the same result.\n\nAn **Anagram** is a word or phrase formed by rearranging the letters of a different word or phrase using all the original letters exactly once. For example, `\"dacb \"` is an anagram of `\"abdc \"`.\n\n**Example 1:**\n\n**Input:** words = \\[ \"abba \", \"baba \", \"bbaa \", \"cd \", \"cd \"\\]\n**Output:** \\[ \"abba \", \"cd \"\\]\n**Explanation:**\nOne of the ways we can obtain the resultant array is by using the following operations:\n- Since words\\[2\\] =  \"bbaa \" and words\\[1\\] =  \"baba \" are anagrams, we choose index 2 and delete words\\[2\\].\n  Now words = \\[ \"abba \", \"baba \", \"cd \", \"cd \"\\].\n- Since words\\[1\\] =  \"baba \" and words\\[0\\] =  \"abba \" are anagrams, we choose index 1 and delete words\\[1\\].\n  Now words = \\[ \"abba \", \"cd \", \"cd \"\\].\n- Since words\\[2\\] =  \"cd \" and words\\[1\\] =  \"cd \" are anagrams, we choose index 2 and delete words\\[2\\].\n  Now words = \\[ \"abba \", \"cd \"\\].\nWe can no longer perform any operations, so \\[ \"abba \", \"cd \"\\] is the final answer.\n\n**Example 2:**\n\n**Input:** words = \\[ \"a \", \"b \", \"c \", \"d \", \"e \"\\]\n**Output:** \\[ \"a \", \"b \", \"c \", \"d \", \"e \"\\]\n**Explanation:**\nNo two adjacent strings in words are anagrams of each other, so no operations are performed.\n\n**Constraints:**\n\n*   `1 <= words.length <= 100`\n*   `1 <= words[i].length <= 10`\n*   `words[i]` consists of lowercase English letters.",
+  "difficulty": "Easy",
+  "category": null,
+  "xpReward": 0,
+  "timeLimitMs": 5000,
+  "memoryLimitMb": 256,
+  "starterCode": [],
+  "solutionCode": "",
+  "hints": [],
+  "isPremium": false,
+  "createdBy": null,
+  "testCases": [
+    {
+      "input": [
+        [
+          "abba ",
+          "baba ",
+          "bbaa ",
+          "cd ",
+          "cd "
+        ]
+      ],
+      "expectedOutput": [
+        "abba ",
+        "cd "
+      ]
+    },
+    {
+      "input": [
+        [
+          "a ",
+          "b ",
+          "c ",
+          "d ",
+          "e "
+        ]
+      ],
+      "expectedOutput": [
+        "a ",
+        "b ",
+        "c ",
+        "d ",
+        "e "
+      ]
+    }
+  ],
+  "hiddenTestCases": [
+    {
+      "input": [
+        [
+          "abba ",
+          "baba ",
+          "bbaa ",
+          "cd ",
+          "cd "
+        ]
+      ],
+      "expectedOutput": [
+        "abba ",
+        "cd "
+      ]
+    },
+    {
+      "input": [
+        [
+          "a ",
+          "b ",
+          "c ",
+          "d ",
+          "e "
+        ]
+      ],
+      "expectedOutput": [
+        "a ",
+        "b ",
+        "c ",
+        "d ",
+        "e "
+      ]
+    }
+  ],
+  "tags": [],
+  "constraints": [],
+  "examples": [],
+  "createdAt": "2025-11-14T21:25:05.134489+00:00",
+  "updatedAt": "2025-12-04T04:35:56.376Z"
+}

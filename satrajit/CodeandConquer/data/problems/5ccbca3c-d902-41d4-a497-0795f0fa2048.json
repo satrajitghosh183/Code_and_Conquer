@@ -1,0 +1,56 @@
+{
+  "id": "5ccbca3c-d902-41d4-a497-0795f0fa2048",
+  "title": "Minimum Time to Type Word Using Special Typewriter",
+  "slug": "minimum-time-to-type-word-using-special-typewriter",
+  "description": "There is a special typewriter with lowercase English letters `'a'` to `'z'` arranged in a **circle** with a **pointer**. A character can **only** be typed if the pointer is pointing to that character. The pointer is **initially** pointing to the character `'a'`.\n\nEach second, you may perform one of the following operations:\n\n*   Move the pointer one character **counterclockwise** or **clockwise**.\n*   Type the character the pointer is **currently** on.\n\nGiven a string `word`, return the **minimum** number of seconds to type out the characters in `word`.\n\n**Example 1:**\n\n**Input:** word =  \"abc \"\n**Output:** 5\n**Explanation:** \nThe characters are printed as follows:\n- Type the character 'a' in 1 second since the pointer is initially on 'a'.\n- Move the pointer clockwise to 'b' in 1 second.\n- Type the character 'b' in 1 second.\n- Move the pointer clockwise to 'c' in 1 second.\n- Type the character 'c' in 1 second.\n\n**Example 2:**\n\n**Input:** word =  \"bza \"\n**Output:** 7\n**Explanation:**\nThe characters are printed as follows:\n- Move the pointer clockwise to 'b' in 1 second.\n- Type the character 'b' in 1 second.\n- Move the pointer counterclockwise to 'z' in 2 seconds.\n- Type the character 'z' in 1 second.\n- Move the pointer clockwise to 'a' in 1 second.\n- Type the character 'a' in 1 second.\n\n**Example 3:**\n\n**Input:** word =  \"zjpc \"\n**Output:** 34\n**Explanation:**\nThe characters are printed as follows:\n- Move the pointer counterclockwise to 'z' in 1 second.\n- Type the character 'z' in 1 second.\n- Move the pointer clockwise to 'j' in 10 seconds.\n- Type the character 'j' in 1 second.\n- Move the pointer clockwise to 'p' in 6 seconds.\n- Type the character 'p' in 1 second.\n- Move the pointer counterclockwise to 'c' in 13 seconds.\n- Type the character 'c' in 1 second.\n\n**Constraints:**\n\n*   `1 <= word.length <= 100`\n*   `word` consists of lowercase English letters.",
+  "difficulty": "Easy",
+  "category": null,
+  "xpReward": 0,
+  "timeLimitMs": 5000,
+  "memoryLimitMb": 256,
+  "starterCode": {},
+  "solutionCode": "",
+  "hints": [],
+  "isPremium": false,
+  "createdBy": null,
+  "testCases": [
+    {
+      "input": [
+        "abc "
+      ],
+      "expectedOutput": 5
+    },
+    {
+      "input": [
+        "bza "
+      ],
+      "expectedOutput": 7
+    },
+    {
+      "input": [
+        "zjpc "
+      ],
+      "expectedOutput": 34
+    }
+  ],
+  "hiddenTestCases": [
+    {
+      "input": [
+        "abc "
+      ],
+      "expectedOutput": 5
+    },
+    {
+      "input": [
+        "bza "
+      ],
+      "expectedOutput": 7
+    }
+  ],
+  "tags": [],
+  "constraints": [],
+  "examples": [],
+  "problemNumber": null,
+  "createdAt": "2025-11-14T21:23:51.454306+00:00",
+  "updatedAt": "2025-12-04T04:36:27.935Z"
+}

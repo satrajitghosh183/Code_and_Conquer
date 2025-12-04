@@ -1,0 +1,77 @@
+{
+  "id": "15b05f9f-c53d-49e7-8859-eb953f755573",
+  "title": "Split the Array to Make Coprime Products",
+  "slug": "split-the-array-to-make-coprime-products",
+  "description": "You are given a **0-indexed** integer array `nums` of length `n`.\n\nA **split** at an index `i` where `0 <= i <= n - 2` is called **valid** if the product of the first `i + 1` elements and the product of the remaining elements are coprime.\n\n*   For example, if `nums = [2, 3, 3]`, then a split at the index `i = 0` is valid because `2` and `9` are coprime, while a split at the index `i = 1` is not valid because `6` and `3` are not coprime. A split at the index `i = 2` is not valid because `i == n - 1`.\n\nReturn _the smallest index_ `i` _at which the array can be split validly or_ `-1` _if there is no such split_.\n\nTwo values `val1` and `val2` are coprime if `gcd(val1, val2) == 1` where `gcd(val1, val2)` is the greatest common divisor of `val1` and `val2`.\n\n**Example 1:**\n\n**Input:** nums = \\[4,7,8,15,3,5\\]\n**Output:** 2\n**Explanation:** The table above shows the values of the product of the first i + 1 elements, the remaining elements, and their gcd at each index i.\nThe only valid split is at index 2.\n\n**Example 2:**\n\n**Input:** nums = \\[4,7,15,8,3,5\\]\n**Output:** -1\n**Explanation:** The table above shows the values of the product of the first i + 1 elements, the remaining elements, and their gcd at each index i.\nThere is no valid split.\n\n**Constraints:**\n\n*   `n == nums.length`\n*   `1 <= n <= 104`\n*   `1 <= nums[i] <= 106`",
+  "difficulty": "Hard",
+  "category": null,
+  "xpReward": 0,
+  "timeLimitMs": 5000,
+  "memoryLimitMb": 256,
+  "starterCode": [],
+  "solutionCode": "",
+  "hints": [],
+  "isPremium": false,
+  "createdBy": null,
+  "testCases": [
+    {
+      "input": [
+        [
+          4,
+          7,
+          8,
+          15,
+          3,
+          5
+        ]
+      ],
+      "expectedOutput": 2
+    },
+    {
+      "input": [
+        [
+          4,
+          7,
+          15,
+          8,
+          3,
+          5
+        ]
+      ],
+      "expectedOutput": -1
+    }
+  ],
+  "hiddenTestCases": [
+    {
+      "input": [
+        [
+          4,
+          7,
+          8,
+          15,
+          3,
+          5
+        ]
+      ],
+      "expectedOutput": 2
+    },
+    {
+      "input": [
+        [
+          4,
+          7,
+          15,
+          8,
+          3,
+          5
+        ]
+      ],
+      "expectedOutput": -1
+    }
+  ],
+  "tags": [],
+  "constraints": [],
+  "examples": [],
+  "createdAt": "2025-11-14T21:26:28.665743+00:00",
+  "updatedAt": "2025-12-04T04:35:17.532Z"
+}

@@ -1,0 +1,104 @@
+{
+  "id": "46912f25-7ee9-4651-b70d-12a53370784f",
+  "title": "Count Common Words With One Occurrence",
+  "slug": "count-common-words-with-one-occurrence",
+  "description": "Given two string arrays `words1` and `words2`, return _the number of strings that appear **exactly once** in **each** of the two arrays._\n\n**Example 1:**\n\n**Input:** words1 = \\[ \"leetcode \", \"is \", \"amazing \", \"as \", \"is \"\\], words2 = \\[ \"amazing \", \"leetcode \", \"is \"\\]\n**Output:** 2\n**Explanation:**\n-  \"leetcode \" appears exactly once in each of the two arrays. We count this string.\n-  \"amazing \" appears exactly once in each of the two arrays. We count this string.\n-  \"is \" appears in each of the two arrays, but there are 2 occurrences of it in words1. We do not count this string.\n-  \"as \" appears once in words1, but does not appear in words2. We do not count this string.\nThus, there are 2 strings that appear exactly once in each of the two arrays.\n\n**Example 2:**\n\n**Input:** words1 = \\[ \"b \", \"bb \", \"bbb \"\\], words2 = \\[ \"a \", \"aa \", \"aaa \"\\]\n**Output:** 0\n**Explanation:** There are no strings that appear in each of the two arrays.\n\n**Example 3:**\n\n**Input:** words1 = \\[ \"a \", \"ab \"\\], words2 = \\[ \"a \", \"a \", \"a \", \"ab \"\\]\n**Output:** 1\n**Explanation:** The only string that appears exactly once in each of the two arrays is  \"ab \".\n\n**Constraints:**\n\n*   `1 <= words1.length, words2.length <= 1000`\n*   `1 <= words1[i].length, words2[j].length <= 30`\n*   `words1[i]` and `words2[j]` consists only of lowercase English letters.",
+  "difficulty": "Easy",
+  "category": null,
+  "xpReward": 0,
+  "timeLimitMs": 5000,
+  "memoryLimitMb": 256,
+  "starterCode": [],
+  "solutionCode": "",
+  "hints": [],
+  "isPremium": false,
+  "createdBy": null,
+  "testCases": [
+    {
+      "input": [
+        [
+          "leetcode ",
+          "is ",
+          "amazing ",
+          "as ",
+          "is "
+        ],
+        [
+          "amazing ",
+          "leetcode ",
+          "is "
+        ]
+      ],
+      "expectedOutput": 2
+    },
+    {
+      "input": [
+        [
+          "b ",
+          "bb ",
+          "bbb "
+        ],
+        [
+          "a ",
+          "aa ",
+          "aaa "
+        ]
+      ],
+      "expectedOutput": 0
+    },
+    {
+      "input": [
+        [
+          "a ",
+          "ab "
+        ],
+        [
+          "a ",
+          "a ",
+          "a ",
+          "ab "
+        ]
+      ],
+      "expectedOutput": 1
+    }
+  ],
+  "hiddenTestCases": [
+    {
+      "input": [
+        [
+          "leetcode ",
+          "is ",
+          "amazing ",
+          "as ",
+          "is "
+        ],
+        [
+          "amazing ",
+          "leetcode ",
+          "is "
+        ]
+      ],
+      "expectedOutput": 2
+    },
+    {
+      "input": [
+        [
+          "b ",
+          "bb ",
+          "bbb "
+        ],
+        [
+          "a ",
+          "aa ",
+          "aaa "
+        ]
+      ],
+      "expectedOutput": 0
+    }
+  ],
+  "tags": [],
+  "constraints": [],
+  "examples": [],
+  "createdAt": "2025-11-14T21:24:18.963724+00:00",
+  "updatedAt": "2025-12-04T04:36:16.951Z"
+}

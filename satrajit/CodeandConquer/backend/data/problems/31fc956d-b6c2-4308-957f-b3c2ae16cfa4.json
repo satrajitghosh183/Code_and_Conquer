@@ -1,0 +1,71 @@
+{
+  "id": "31fc956d-b6c2-4308-957f-b3c2ae16cfa4",
+  "title": "Tuple with Same Product",
+  "slug": "tuple-with-same-product",
+  "description": "Given an array `nums` of **distinct** positive integers, return _the number of tuples_ `(a, b, c, d)` _such that_ `a * b = c * d` _where_ `a`_,_ `b`_,_ `c`_, and_ `d` _are elements of_ `nums`_, and_ `a != b != c != d`_._\n\n**Example 1:**\n\n**Input:** nums = \\[2,3,4,6\\]\n**Output:** 8\n**Explanation:** There are 8 valid tuples:\n(2,6,3,4) , (2,6,4,3) , (6,2,3,4) , (6,2,4,3)\n(3,4,2,6) , (4,3,2,6) , (3,4,6,2) , (4,3,6,2)\n\n**Example 2:**\n\n**Input:** nums = \\[1,2,4,5,10\\]\n**Output:** 16\n**Explanation:** There are 16 valid tuples:\n(1,10,2,5) , (1,10,5,2) , (10,1,2,5) , (10,1,5,2)\n(2,5,1,10) , (2,5,10,1) , (5,2,1,10) , (5,2,10,1)\n(2,10,4,5) , (2,10,5,4) , (10,2,4,5) , (10,2,5,4)\n(4,5,2,10) , (4,5,10,2) , (5,4,2,10) , (5,4,10,2)\n\n**Constraints:**\n\n*   `1 <= nums.length <= 1000`\n*   `1 <= nums[i] <= 104`\n*   All elements in `nums` are **distinct**.",
+  "difficulty": "Medium",
+  "category": null,
+  "xpReward": 0,
+  "timeLimitMs": 5000,
+  "memoryLimitMb": 256,
+  "starterCode": [],
+  "solutionCode": "",
+  "hints": [],
+  "isPremium": false,
+  "createdBy": null,
+  "testCases": [
+    {
+      "input": [
+        [
+          2,
+          3,
+          4,
+          6
+        ]
+      ],
+      "expectedOutput": 8
+    },
+    {
+      "input": [
+        [
+          1,
+          2,
+          4,
+          5,
+          10
+        ]
+      ],
+      "expectedOutput": 16
+    }
+  ],
+  "hiddenTestCases": [
+    {
+      "input": [
+        [
+          2,
+          3,
+          4,
+          6
+        ]
+      ],
+      "expectedOutput": 8
+    },
+    {
+      "input": [
+        [
+          1,
+          2,
+          4,
+          5,
+          10
+        ]
+      ],
+      "expectedOutput": 16
+    }
+  ],
+  "tags": [],
+  "constraints": [],
+  "examples": [],
+  "createdAt": "2025-11-14T21:22:51.828774+00:00",
+  "updatedAt": "2025-12-04T04:36:59.218Z"
+}

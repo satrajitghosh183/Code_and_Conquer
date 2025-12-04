@@ -1,0 +1,70 @@
+{
+  "id": "e3ae3195-55d1-4622-8651-529935a8c836",
+  "title": "Number of Nodes With Value One",
+  "slug": "number-of-nodes-with-value-one",
+  "description": "There is an **undirected** connected tree with `n` nodes labeled from `1` to `n` and `n - 1` edges. You are given the integer `n`. The parent node of a node with a label `v` is the node with the label `floor (v / 2)`. The root of the tree is the node with the label `1`.\n\n*   For example, if `n = 7`, then the node with the label `3` has the node with the label `floor(3 / 2) = 1` as its parent, and the node with the label `7` has the node with the label `floor(7 / 2) = 3` as its parent.\n\nYou are also given an integer array `queries`. Initially, every node has a value `0` on it. For each query `queries[i]`, you should flip all values in the subtree of the node with the label `queries[i]`.\n\nReturn _the total number of nodes with the value_ `1` _**after processing all the queries**_.\n\n**Note** that:\n\n*   Flipping the value of a node means that the node with the value `0` becomes `1` and vice versa.\n*   `floor(x)` is equivalent to rounding `x` down to the nearest integer.\n\n**Example 1:**\n\n**Input:** n = 5 , queries = \\[1,2,5\\]\n**Output:** 3\n**Explanation:** The diagram above shows the tree structure and its status after performing the queries. The blue node represents the value 0, and the red node represents the value 1.\nAfter processing the queries, there are three red nodes (nodes with value 1): 1, 3, and 5.\n\n**Example 2:**\n\n**Input:** n = 3, queries = \\[2,3,3\\]\n**Output:** 1\n**Explanation:** The diagram above shows the tree structure and its status after performing the queries. The blue node represents the value 0, and the red node represents the value 1.\nAfter processing the queries, there are one red node (node with value 1): 2.\n\n**Constraints:**\n\n*   `1 <= n <= 105`\n*   `1 <= queries.length <= 105`\n*   `1 <= queries[i] <= n`",
+  "difficulty": "Medium",
+  "category": null,
+  "xpReward": 0,
+  "timeLimitMs": 5000,
+  "memoryLimitMb": 256,
+  "starterCode": {},
+  "solutionCode": "",
+  "hints": [],
+  "isPremium": false,
+  "createdBy": null,
+  "testCases": [
+    {
+      "input": [
+        5,
+        [
+          1,
+          2,
+          5
+        ]
+      ],
+      "expectedOutput": 3
+    },
+    {
+      "input": [
+        3,
+        [
+          2,
+          3,
+          3
+        ]
+      ],
+      "expectedOutput": 1
+    }
+  ],
+  "hiddenTestCases": [
+    {
+      "input": [
+        5,
+        [
+          1,
+          2,
+          5
+        ]
+      ],
+      "expectedOutput": 3
+    },
+    {
+      "input": [
+        3,
+        [
+          2,
+          3,
+          3
+        ]
+      ],
+      "expectedOutput": 1
+    }
+  ],
+  "tags": [],
+  "constraints": [],
+  "examples": [],
+  "problemNumber": null,
+  "createdAt": "2025-11-14T21:25:48.452259+00:00",
+  "updatedAt": "2025-12-04T04:35:35.674Z"
+}

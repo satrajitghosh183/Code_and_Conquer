@@ -7,12 +7,13 @@ import {
   Code2, 
   Gamepad2, 
   Trophy, 
-  ShoppingBag, 
   LineChart,
   Crown,
   MoreVertical,
   Settings,
-  LogOut
+  LogOut,
+  Menu,
+  X
 } from 'lucide-react'
 import PricingModal from './PricingModal'
 import ProfileSettings from './ProfileSettings'
@@ -27,6 +28,7 @@ export default function Layout({ children }) {
   const [showPricing, setShowPricing] = useState(false)
   const [showSettings, setShowSettings] = useState(false)
   const [showProfileMenu, setShowProfileMenu] = useState(false)
+  const [sidebarOpen, setSidebarOpen] = useState(false)
 
   const handleSignOut = async () => {
     const { error } = await authSignOut()
@@ -35,6 +37,11 @@ export default function Layout({ children }) {
     }
   }
 
+  // Close sidebar when route changes
+  useEffect(() => {
+    setSidebarOpen(false)
+  }, [location.pathname])
+
   const avatarUrl = profile?.avatar_url || user?.user_metadata?.avatar_url || null
   const displayName = profile?.username || user?.user_metadata?.username || user?.email?.split('@')[0] || 'User'
   const currentPath = location.pathname
@@ -42,9 +49,8 @@ export default function Layout({ children }) {
   const navItems = [
     { path: '/dashboard', label: 'Dashboard', icon: LineChart },
     { path: '/problems', label: 'Problems', icon: Code2 },
-    { path: '/game', label: 'Tower Defense', icon: Gamepad2 },
+    { path: '/play', label: 'Play Game', icon: Gamepad2 },
     { path: '/leaderboard', label: 'Leaderboard', icon: Trophy },
-    { path: '/shop', label: 'Shop', icon: ShoppingBag },
   ]
 
   // Close dropdown when clicking outside
@@ -60,8 +66,23 @@ export default function Layout({ children }) {
 
   return (
     <div className="layout-container">
+      {/* Mobile menu toggle */}
+      <button 
+        className="mobile-menu-toggle"
+        onClick={() => setSidebarOpen(!sidebarOpen)}
+        aria-label="Toggle menu"
+      >
+        {sidebarOpen ? <X size={20} /> : <Menu size={20} />}
+      </button>
+
+      {/* Sidebar overlay for mobile */}
+      <div 
+        className={`sidebar-overlay ${sidebarOpen ? 'active' : ''}`}
+        onClick={() => setSidebarOpen(false)}
+      />
+
       {/* Sidebar */}
-      <aside className="sidebar">
+      <aside className={`sidebar ${sidebarOpen ? 'open' : ''}`}>
         <div className="sidebar-header">
           <Code2 size={24} className="logo-icon" />
         </div>
@@ -73,7 +94,10 @@ export default function Layout({ children }) {
             return (
               <button
                 key={item.path}
-                onClick={() => navigate(item.path)}
+                onClick={() => {
+                  navigate(item.path)
+                  setSidebarOpen(false)
+                }}
                 className={`nav-item ${isActive ? 'active' : ''}`}
               >
                 <Icon size={20} />

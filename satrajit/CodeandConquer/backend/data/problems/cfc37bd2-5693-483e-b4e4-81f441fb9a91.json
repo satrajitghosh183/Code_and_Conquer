@@ -1,0 +1,80 @@
+{
+  "id": "cfc37bd2-5693-483e-b4e4-81f441fb9a91",
+  "title": "Minimum Total Space Wasted With K Resizing Operations",
+  "slug": "minimum-total-space-wasted-with-k-resizing-operations",
+  "description": "You are currently designing a dynamic array. You are given a **0-indexed** integer array `nums`, where `nums[i]` is the number of elements that will be in the array at time `i`. In addition, you are given an integer `k`, the **maximum** number of times you can **resize** the array (to **any** size).\n\nThe size of the array at time `t`, `sizet`, must be at least `nums[t]` because there needs to be enough space in the array to hold all the elements. The **space wasted** at time `t` is defined as `sizet - nums[t]`, and the **total** space wasted is the **sum** of the space wasted across every time `t` where `0 <= t < nums.length`.\n\nReturn _the **minimum** **total space wasted** if you can resize the array at most_ `k` _times_.\n\n**Note:** The array can have **any size** at the start and does **not** count towards the number of resizing operations.\n\n**Example 1:**\n\n**Input:** nums = \\[10,20\\], k = 0\n**Output:** 10\n**Explanation:** size = \\[20,20\\].\nWe can set the initial size to be 20.\nThe total wasted space is (20 - 10) + (20 - 20) = 10.\n\n**Example 2:**\n\n**Input:** nums = \\[10,20,30\\], k = 1\n**Output:** 10\n**Explanation:** size = \\[20,20,30\\].\nWe can set the initial size to be 20 and resize to 30 at time 2. \nThe total wasted space is (20 - 10) + (20 - 20) + (30 - 30) = 10.\n\n**Example 3:**\n\n**Input:** nums = \\[10,20,15,30,20\\], k = 2\n**Output:** 15\n**Explanation:** size = \\[10,20,20,30,30\\].\nWe can set the initial size to 10, resize to 20 at time 1, and resize to 30 at time 3.\nThe total wasted space is (10 - 10) + (20 - 20) + (20 - 15) + (30 - 30) + (30 - 20) = 15.\n\n**Constraints:**\n\n*   `1 <= nums.length <= 200`\n*   `1 <= nums[i] <= 106`\n*   `0 <= k <= nums.length - 1`",
+  "difficulty": "Medium",
+  "category": null,
+  "xpReward": 0,
+  "timeLimitMs": 5000,
+  "memoryLimitMb": 256,
+  "starterCode": [],
+  "solutionCode": "",
+  "hints": [],
+  "isPremium": false,
+  "createdBy": null,
+  "testCases": [
+    {
+      "input": [
+        [
+          10,
+          20
+        ],
+        0
+      ],
+      "expectedOutput": 10
+    },
+    {
+      "input": [
+        [
+          10,
+          20,
+          30
+        ],
+        1
+      ],
+      "expectedOutput": 10
+    },
+    {
+      "input": [
+        [
+          10,
+          20,
+          15,
+          30,
+          20
+        ],
+        2
+      ],
+      "expectedOutput": 15
+    }
+  ],
+  "hiddenTestCases": [
+    {
+      "input": [
+        [
+          10,
+          20
+        ],
+        0
+      ],
+      "expectedOutput": 10
+    },
+    {
+      "input": [
+        [
+          10,
+          20,
+          30
+        ],
+        1
+      ],
+      "expectedOutput": 10
+    }
+  ],
+  "tags": [],
+  "constraints": [],
+  "examples": [],
+  "createdAt": "2025-11-14T21:23:48.557509+00:00",
+  "updatedAt": "2025-12-04T04:36:29.476Z"
+}

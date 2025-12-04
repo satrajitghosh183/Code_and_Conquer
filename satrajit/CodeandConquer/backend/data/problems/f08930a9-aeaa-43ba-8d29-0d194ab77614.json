@@ -1,0 +1,79 @@
+{
+  "id": "f08930a9-aeaa-43ba-8d29-0d194ab77614",
+  "title": "Count Pairs Of Similar Strings",
+  "slug": "count-pairs-of-similar-strings",
+  "description": "You are given a **0-indexed** string array `words`.\n\nTwo strings are **similar** if they consist of the same characters.\n\n*   For example, `\"abca \"` and `\"cba \"` are similar since both consist of characters `'a'`, `'b'`, and `'c'`.\n*   However, `\"abacba \"` and `\"bcfd \"` are not similar since they do not consist of the same characters.\n\nReturn _the number of pairs_ `(i, j)` _such that_ `0 <= i < j <= word.length - 1` _and the two strings_ `words[i]` _and_ `words[j]` _are similar_.\n\n**Example 1:**\n\n**Input:** words = \\[ \"aba \", \"aabb \", \"abcd \", \"bac \", \"aabc \"\\]\n**Output:** 2\n**Explanation:** There are 2 pairs that satisfy the conditions:\n- i = 0 and j = 1 : both words\\[0\\] and words\\[1\\] only consist of characters 'a' and 'b'. \n- i = 3 and j = 4 : both words\\[3\\] and words\\[4\\] only consist of characters 'a', 'b', and 'c'. \n\n**Example 2:**\n\n**Input:** words = \\[ \"aabb \", \"ab \", \"ba \"\\]\n**Output:** 3\n**Explanation:** There are 3 pairs that satisfy the conditions:\n- i = 0 and j = 1 : both words\\[0\\] and words\\[1\\] only consist of characters 'a' and 'b'. \n- i = 0 and j = 2 : both words\\[0\\] and words\\[2\\] only consist of characters 'a' and 'b'.\n- i = 1 and j = 2 : both words\\[1\\] and words\\[2\\] only consist of characters 'a' and 'b'.\n\n**Example 3:**\n\n**Input:** words = \\[ \"nba \", \"cba \", \"dba \"\\]\n**Output:** 0\n**Explanation:** Since there does not exist any pair that satisfies the conditions, we return 0.\n\n**Constraints:**\n\n*   `1 <= words.length <= 100`\n*   `1 <= words[i].length <= 100`\n*   `words[i]` consist of only lowercase English letters.",
+  "difficulty": "Easy",
+  "category": null,
+  "xpReward": 0,
+  "timeLimitMs": 5000,
+  "memoryLimitMb": 256,
+  "starterCode": [],
+  "solutionCode": "",
+  "hints": [],
+  "isPremium": false,
+  "createdBy": null,
+  "testCases": [
+    {
+      "input": [
+        [
+          "aba ",
+          "aabb ",
+          "abcd ",
+          "bac ",
+          "aabc "
+        ]
+      ],
+      "expectedOutput": 2
+    },
+    {
+      "input": [
+        [
+          "aabb ",
+          "ab ",
+          "ba "
+        ]
+      ],
+      "expectedOutput": 3
+    },
+    {
+      "input": [
+        [
+          "nba ",
+          "cba ",
+          "dba "
+        ]
+      ],
+      "expectedOutput": 0
+    }
+  ],
+  "hiddenTestCases": [
+    {
+      "input": [
+        [
+          "aba ",
+          "aabb ",
+          "abcd ",
+          "bac ",
+          "aabc "
+        ]
+      ],
+      "expectedOutput": 2
+    },
+    {
+      "input": [
+        [
+          "aabb ",
+          "ab ",
+          "ba "
+        ]
+      ],
+      "expectedOutput": 3
+    }
+  ],
+  "tags": [],
+  "constraints": [],
+  "examples": [],
+  "createdAt": "2025-11-14T21:26:05.519022+00:00",
+  "updatedAt": "2025-12-04T04:35:25.895Z"
+}

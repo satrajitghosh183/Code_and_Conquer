@@ -1,0 +1,61 @@
+{
+  "id": "dfa002fa-ed04-4408-b920-019946ea6a52",
+  "title": "Count Ways To Build Good Strings",
+  "slug": "count-ways-to-build-good-strings",
+  "description": "Given the integers `zero`, `one`, `low`, and `high`, we can construct a string by starting with an empty string, and then at each step perform either of the following:\n\n*   Append the character `'0'` `zero` times.\n*   Append the character `'1'` `one` times.\n\nThis can be performed any number of times.\n\nA **good** string is a string constructed by the above process having a **length** between `low` and `high` (**inclusive**).\n\nReturn _the number of **different** good strings that can be constructed satisfying these properties._ Since the answer can be large, return it **modulo** `109 + 7`.\n\n**Example 1:**\n\n**Input:** low = 3, high = 3, zero = 1, one = 1\n**Output:** 8\n**Explanation:** \nOne possible valid good string is  \"011 \". \nIt can be constructed as follows:  \" \" ->  \"0 \" ->  \"01 \" ->  \"011 \". \nAll binary strings from  \"000 \" to  \"111 \" are good strings in this example.\n\n**Example 2:**\n\n**Input:** low = 2, high = 3, zero = 1, one = 2\n**Output:** 5\n**Explanation:** The good strings are  \"00 \",  \"11 \",  \"000 \",  \"110 \", and  \"011 \".\n\n**Constraints:**\n\n*   `1 <= low <= high <= 105`\n*   `1 <= zero, one <= low`",
+  "difficulty": "Medium",
+  "category": null,
+  "xpReward": 0,
+  "timeLimitMs": 5000,
+  "memoryLimitMb": 256,
+  "starterCode": [],
+  "solutionCode": "",
+  "hints": [],
+  "isPremium": false,
+  "createdBy": null,
+  "testCases": [
+    {
+      "input": [
+        3,
+        3,
+        1,
+        1
+      ],
+      "expectedOutput": 8
+    },
+    {
+      "input": [
+        2,
+        3,
+        1,
+        2
+      ],
+      "expectedOutput": 5
+    }
+  ],
+  "hiddenTestCases": [
+    {
+      "input": [
+        3,
+        3,
+        1,
+        1
+      ],
+      "expectedOutput": 8
+    },
+    {
+      "input": [
+        2,
+        3,
+        1,
+        2
+      ],
+      "expectedOutput": 5
+    }
+  ],
+  "tags": [],
+  "constraints": [],
+  "examples": [],
+  "createdAt": "2025-11-14T21:25:55.944031+00:00",
+  "updatedAt": "2025-12-04T04:35:32.229Z"
+}

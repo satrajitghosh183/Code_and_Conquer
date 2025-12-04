@@ -1,0 +1,56 @@
+{
+  "id": "c092aff3-6e19-42d9-8eac-0b0638b268ca",
+  "title": "Minimum Deletions to Make Character Frequencies Unique",
+  "slug": "minimum-deletions-to-make-character-frequencies-unique",
+  "description": "A string `s` is called **good** if there are no two different characters in `s` that have the same **frequency**.\n\nGiven a string `s`, return _the **minimum** number of characters you need to delete to make_ `s` _**good**._\n\nThe **frequency** of a character in a string is the number of times it appears in the string. For example, in the string `\"aab \"`, the **frequency** of `'a'` is `2`, while the **frequency** of `'b'` is `1`.\n\n**Example 1:**\n\n**Input:** s =  \"aab \"\n**Output:** 0\n**Explanation:** `s` is already good.\n\n**Example 2:**\n\n**Input:** s =  \"aaabbbcc \"\n**Output:** 2\n**Explanation:** You can delete two 'b's resulting in the good string  \"aaabcc \".\nAnother way it to delete one 'b' and one 'c' resulting in the good string  \"aaabbc \".\n\n**Example 3:**\n\n**Input:** s =  \"ceabaacb \"\n**Output:** 2\n**Explanation:** You can delete both 'c's resulting in the good string  \"eabaab \".\nNote that we only care about characters that are still in the string at the end (i.e. frequency of 0 is ignored).\n\n**Constraints:**\n\n*   `1 <= s.length <= 105`\n*   `s` contains only lowercase English letters.",
+  "difficulty": "Medium",
+  "category": null,
+  "xpReward": 0,
+  "timeLimitMs": 5000,
+  "memoryLimitMb": 256,
+  "starterCode": {},
+  "solutionCode": "",
+  "hints": [],
+  "isPremium": false,
+  "createdBy": null,
+  "testCases": [
+    {
+      "input": [
+        "aab "
+      ],
+      "expectedOutput": 0
+    },
+    {
+      "input": [
+        "aaabbbcc "
+      ],
+      "expectedOutput": 2
+    },
+    {
+      "input": [
+        "ceabaacb "
+      ],
+      "expectedOutput": 2
+    }
+  ],
+  "hiddenTestCases": [
+    {
+      "input": [
+        "aab "
+      ],
+      "expectedOutput": 0
+    },
+    {
+      "input": [
+        "aaabbbcc "
+      ],
+      "expectedOutput": 2
+    }
+  ],
+  "tags": [],
+  "constraints": [],
+  "examples": [],
+  "problemNumber": null,
+  "createdAt": "2025-11-14T21:22:33.508331+00:00",
+  "updatedAt": "2025-12-04T04:37:09.458Z"
+}

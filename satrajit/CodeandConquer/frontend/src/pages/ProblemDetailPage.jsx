@@ -2,57 +2,25 @@ import { useState, useEffect } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
 import Editor from '@monaco-editor/react'
 import { CheckCircle, XCircle, Clock, Database, Zap, AlertCircle, Lightbulb } from 'lucide-react'
-import { getProblem, submitCode, runCode } from '../services/api'
+import { getProblem, submitCode, runCode, getAvailableLanguages } from '../services/api'
 import { useAuth } from '../contexts/AuthContext'
 import { useGame } from '../contexts/GameContext'
+import { Icon } from '../components/Icons'
+import { formatMarkdown } from '../utils/markdown'
 import './ProblemDetailPage.css'
 
-// Format markdown-like text to HTML
-const formatMarkdown = (text) => {
-  if (!text) return ''
-  
-  // Escape HTML first (but preserve existing tags if any)
-  let formatted = String(text)
-    .replace(/&/g, '&amp;')
-    .replace(/</g, '&lt;')
-    .replace(/>/g, '&gt;')
-  
-  // Convert **bold** to <strong>bold</strong> (handle nested cases)
-  formatted = formatted.replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>')
-  
-  // Convert `code` to <code>code</code> (handle backticks inside code blocks)
-  formatted = formatted.replace(/`([^`\n]+)`/g, '<code class="inline-code">$1</code>')
-  
-  // Convert line breaks to <br>
-  formatted = formatted.replace(/\n/g, '<br/>')
-  
-  // Convert multiple consecutive <br/> to paragraphs
-  formatted = formatted.replace(/(<br\/>){3,}/g, '</p><p>')
-  formatted = formatted.replace(/(<br\/>){2}/g, '</p><p>')
-  
-  // Wrap in paragraph if not already wrapped
-  if (!formatted.startsWith('<p>')) {
-    formatted = '<p>' + formatted + '</p>'
-  }
-  
-  // Clean up empty paragraphs
-  formatted = formatted.replace(/<p><\/p>/g, '')
-  formatted = formatted.replace(/<p>(<br\/>)+<\/p>/g, '')
-  
-  return formatted
-}
-
-const LANGUAGES = [
-  { value: 'javascript', label: 'JavaScript', icon: '🟨' },
-  { value: 'typescript', label: 'TypeScript', icon: '🔷' },
-  { value: 'python', label: 'Python', icon: '🐍' },
-  { value: 'java', label: 'Java', icon: '☕' },
-  { value: 'cpp', label: 'C++', icon: '⚡' },
-  { value: 'c', label: 'C', icon: '🔧' },
-  { value: 'go', label: 'Go', icon: '🐹' },
-  { value: 'rust', label: 'Rust', icon: '🦀' },
-  { value: 'ruby', label: 'Ruby', icon: '💎' },
-  { value: 'php', label: 'PHP', icon: '🐘' }
+// Default language list - will be updated from API
+const DEFAULT_LANGUAGES = [
+  { value: 'javascript', label: 'JavaScript', iconName: 'javascript', available: true },
+  { value: 'typescript', label: 'TypeScript', iconName: 'javascript', available: true },
+  { value: 'python', label: 'Python', iconName: 'python', available: true },
+  { value: 'java', label: 'Java', iconName: 'java', available: true },
+  { value: 'cpp', label: 'C++', iconName: 'cpp', available: true },
+  { value: 'c', label: 'C', iconName: 'settings', available: true },
+  { value: 'go', label: 'Go', iconName: 'go', available: true },
+  { value: 'rust', label: 'Rust', iconName: 'bolt', available: true },
+  { value: 'ruby', label: 'Ruby', iconName: 'ruby', available: true },
+  { value: 'php', label: 'PHP', iconName: 'code', available: true }
 ]
 
 export default function ProblemDetailPage() {
@@ -64,15 +32,41 @@ export default function ProblemDetailPage() {
   const [loading, setLoading] = useState(true)
   const [language, setLanguage] = useState('javascript')
   const [code, setCode] = useState('')
-  const [codeByLanguage, setCodeByLanguage] = useState({}) // Store code for each language
+  const [codeByLanguage, setCodeByLanguage] = useState({})
   const [submitting, setSubmitting] = useState(false)
   const [result, setResult] = useState(null)
   const [activeTab, setActiveTab] = useState('description')
   const [isInitialLoad, setIsInitialLoad] = useState(true)
+  const [availableLanguages, setAvailableLanguages] = useState(DEFAULT_LANGUAGES)
+  const [dockerAvailable, setDockerAvailable] = useState(true)
 
   useEffect(() => {
     loadProblem()
+    loadLanguages()
   }, [id])
+
+  const loadLanguages = async () => {
+    try {
+      const response = await getAvailableLanguages()
+      if (response.data?.languages) {
+        const langList = response.data.languages.map(lang => ({
+          ...DEFAULT_LANGUAGES.find(l => l.value === lang.value) || { value: lang.value, label: lang.label, iconName: 'code' },
+          available: lang.available
+        }))
+        setAvailableLanguages(langList)
+        setDockerAvailable(response.data.dockerAvailable)
+        
+        // If current language is not available, switch to JavaScript
+        const currentLang = langList.find(l => l.value === language)
+        if (currentLang && !currentLang.available) {
+          setLanguage('javascript')
+        }
+      }
+    } catch (error) {
+      console.warn('Failed to load available languages, using defaults')
+      // Keep default languages on error
+    }
+  }
 
   // Handle language change - switch code but preserve user edits
   useEffect(() => {
@@ -119,6 +113,17 @@ export default function ProblemDetailPage() {
       setIsInitialLoad(true)
       const response = await getProblem(id)
       const problemData = response.data
+      
+      // Debug: Log test cases to help diagnose Run button issues
+      if (process.env.NODE_ENV === 'development') {
+        console.log('Loaded problem test cases:', {
+          hasTestCases: !!problemData.testCases,
+          isArray: Array.isArray(problemData.testCases),
+          length: problemData.testCases?.length || 0,
+          testCases: problemData.testCases
+        });
+      }
+      
       setProblem(problemData)
       
       // Initialize code for all languages from starter code
@@ -191,8 +196,16 @@ export default function ProblemDetailPage() {
       return
     }
 
-    if (!problem?.testCases || problem.testCases.length === 0) {
-      alert('No test cases available for this problem')
+    if (!problem?.testCases || !Array.isArray(problem.testCases) || problem.testCases.length === 0) {
+      // Show error in result tab instead of alert
+      setActiveTab('result')
+      setResult({
+        status: 'error',
+        error: 'No test cases available for this problem. Please submit your solution instead.',
+        passedTests: 0,
+        totalTests: 0,
+        testResults: []
+      })
       return
     }
 
@@ -219,6 +232,22 @@ export default function ProblemDetailPage() {
       setSubmitting(false)
     }
   }
+  
+  // Check if problem has test cases
+  const hasTestCases = problem?.testCases && Array.isArray(problem.testCases) && problem.testCases.length > 0
+  
+  // Debug: Log why Run button might be disabled
+  useEffect(() => {
+    if (problem && !hasTestCases && process.env.NODE_ENV === 'development') {
+      console.warn('Run button disabled - Problem test cases check:', {
+        hasProblem: !!problem,
+        hasTestCasesField: !!problem.testCases,
+        isArray: Array.isArray(problem.testCases),
+        length: problem.testCases?.length || 0,
+        testCases: problem.testCases
+      });
+    }
+  }, [problem, hasTestCases])
 
   if (loading) {
     return (
@@ -504,6 +533,11 @@ export default function ProblemDetailPage() {
             value={language} 
             onChange={(e) => {
               const newLanguage = e.target.value
+              const selectedLang = availableLanguages.find(l => l.value === newLanguage)
+              if (selectedLang && !selectedLang.available) {
+                alert(`${selectedLang.label} is not available. Docker is required for this language.`)
+                return
+              }
               // Save current code before switching
               setCodeByLanguage(prev => ({ ...prev, [language]: code }))
               // Switch language (useEffect will load the code for new language)
@@ -511,18 +545,29 @@ export default function ProblemDetailPage() {
             }}
             className="language-select"
           >
-            {LANGUAGES.map(lang => (
-              <option key={lang.value} value={lang.value}>
-                {lang.icon} {lang.label}
+            {availableLanguages.map(lang => (
+              <option 
+                key={lang.value} 
+                value={lang.value}
+                disabled={!lang.available}
+                style={{ opacity: lang.available ? 1 : 0.5 }}
+              >
+                {lang.label}{!lang.available ? ' (Docker required)' : ''}
               </option>
             ))}
           </select>
+          {!dockerAvailable && (
+            <span className="docker-warning" title="Docker is not available. Only JavaScript and Python are supported.">
+              ⚠️
+            </span>
+          )}
           
           <div className="editor-actions">
             <button 
               onClick={handleRun} 
-              disabled={submitting}
+              disabled={submitting || !hasTestCases}
               className="btn-run"
+              title={!hasTestCases ? 'No test cases available for this problem. Please submit your solution instead.' : ''}
             >
               {submitting ? 'Running...' : '▶ Run'}
             </button>

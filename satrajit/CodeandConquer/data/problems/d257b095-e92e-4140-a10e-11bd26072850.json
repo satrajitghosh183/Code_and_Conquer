@@ -1,0 +1,61 @@
+{
+  "id": "d257b095-e92e-4140-a10e-11bd26072850",
+  "title": "Longest Subsequence Repeated k Times",
+  "slug": "longest-subsequence-repeated-k-times",
+  "description": "You are given a string `s` of length `n`, and an integer `k`. You are tasked to find the **longest subsequence repeated** `k` times in string `s`.\n\nA **subsequence** is a string that can be derived from another string by deleting some or no characters without changing the order of the remaining characters.\n\nA subsequence `seq` is **repeated** `k` times in the string `s` if `seq * k` is a subsequence of `s`, where `seq * k` represents a string constructed by concatenating `seq` `k` times.\n\n*   For example, `\"bba \"` is repeated `2` times in the string `\"bababcba \"`, because the string `\"bbabba \"`, constructed by concatenating `\"bba \"` `2` times, is a subsequence of the string `\"**b**a**bab**c**ba** \"`.\n\nReturn _the **longest subsequence repeated**_ `k` _times in string_ `s`_. If multiple such subsequences are found, return the **lexicographically largest** one. If there is no such subsequence, return an **empty** string_.\n\n**Example 1:**\n\n**Input:** s =  \"letsleetcode \", k = 2\n**Output:**  \"let \"\n**Explanation:** There are two longest subsequences repeated 2 times:  \"let \" and  \"ete \".\n \"let \" is the lexicographically largest one.\n\n**Example 2:**\n\n**Input:** s =  \"bb \", k = 2\n**Output:**  \"b \"\n**Explanation:** The longest subsequence repeated 2 times is  \"b \".\n\n**Example 3:**\n\n**Input:** s =  \"ab \", k = 2\n**Output:**  \" \"\n**Explanation:** There is no subsequence repeated 2 times. Empty string is returned.\n\n**Constraints:**\n\n*   `n == s.length`\n*   `2 <= n, k <= 2000`\n*   `2 <= n < k * 8`\n*   `s` consists of lowercase English letters.",
+  "difficulty": "Hard",
+  "category": null,
+  "xpReward": 0,
+  "timeLimitMs": 5000,
+  "memoryLimitMb": 256,
+  "starterCode": {},
+  "solutionCode": "",
+  "hints": [],
+  "isPremium": false,
+  "createdBy": null,
+  "testCases": [
+    {
+      "input": [
+        "letsleetcode ",
+        2
+      ],
+      "expectedOutput": "let "
+    },
+    {
+      "input": [
+        "bb ",
+        2
+      ],
+      "expectedOutput": "b "
+    },
+    {
+      "input": [
+        "ab ",
+        2
+      ],
+      "expectedOutput": " "
+    }
+  ],
+  "hiddenTestCases": [
+    {
+      "input": [
+        "letsleetcode ",
+        2
+      ],
+      "expectedOutput": "let "
+    },
+    {
+      "input": [
+        "bb ",
+        2
+      ],
+      "expectedOutput": "b "
+    }
+  ],
+  "tags": [],
+  "constraints": [],
+  "examples": [],
+  "problemNumber": null,
+  "createdAt": "2025-11-14T21:24:00.460605+00:00",
+  "updatedAt": "2025-12-04T04:36:24.078Z"
+}

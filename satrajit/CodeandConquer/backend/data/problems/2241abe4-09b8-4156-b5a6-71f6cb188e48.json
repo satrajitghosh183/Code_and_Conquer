@@ -1,0 +1,49 @@
+{
+  "id": "2241abe4-09b8-4156-b5a6-71f6cb188e48",
+  "title": "Check if Binary String Has at Most One Segment of Ones",
+  "slug": "check-if-binary-string-has-at-most-one-segment-of-ones",
+  "description": "Given a binary string `s` **​​​​​without leading zeros**, return `true`​​​ _if_ `s` _contains **at most one contiguous segment of ones**_. Otherwise, return `false`.\n\n**Example 1:**\n\n**Input:** s =  \"1001 \"\n**Output:** false\n**Explanation:** The ones do not form a contiguous segment.\n\n**Example 2:**\n\n**Input:** s =  \"110 \"\n**Output:** true\n\n**Constraints:**\n\n*   `1 <= s.length <= 100`\n*   `s[i]`​​​​ is either `'0'` or `'1'`.\n*   `s[0]` is `'1'`.",
+  "difficulty": "Easy",
+  "category": null,
+  "xpReward": 0,
+  "timeLimitMs": 5000,
+  "memoryLimitMb": 256,
+  "starterCode": [],
+  "solutionCode": "",
+  "hints": [],
+  "isPremium": false,
+  "createdBy": null,
+  "testCases": [
+    {
+      "input": [
+        "1001 "
+      ],
+      "expectedOutput": false
+    },
+    {
+      "input": [
+        "110 "
+      ],
+      "expectedOutput": "true\n\n**Constraints:**\n\n*   `1 <= s.length <= 100`\n*   `s[i]`​​​​ is either `'0'` or `'1'`.\n*   `s[0]` is `'1'`."
+    }
+  ],
+  "hiddenTestCases": [
+    {
+      "input": [
+        "1001 "
+      ],
+      "expectedOutput": false
+    },
+    {
+      "input": [
+        "110 "
+      ],
+      "expectedOutput": "true\n\n**Constraints:**\n\n*   `1 <= s.length <= 100`\n*   `s[i]`​​​​ is either `'0'` or `'1'`.\n*   `s[0]` is `'1'`."
+    }
+  ],
+  "tags": [],
+  "constraints": [],
+  "examples": [],
+  "createdAt": "2025-11-14T21:23:06.546752+00:00",
+  "updatedAt": "2025-12-04T04:36:49.605Z"
+}

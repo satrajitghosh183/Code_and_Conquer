@@ -1,0 +1,105 @@
+{
+  "id": "6fe918db-09d8-436c-b292-f447fa7188a9",
+  "title": "Maximum Number of Eaten Apples",
+  "slug": "maximum-number-of-eaten-apples",
+  "description": "There is a special kind of apple tree that grows apples every day for `n` days. On the `ith` day, the tree grows `apples[i]` apples that will rot after `days[i]` days, that is on day `i + days[i]` the apples will be rotten and cannot be eaten. On some days, the apple tree does not grow any apples, which are denoted by `apples[i] == 0` and `days[i] == 0`.\n\nYou decided to eat **at most** one apple a day (to keep the doctors away). Note that you can keep eating after the first `n` days.\n\nGiven two integer arrays `days` and `apples` of length `n`, return _the maximum number of apples you can eat._\n\n**Example 1:**\n\n**Input:** apples = \\[1,2,3,5,2\\], days = \\[3,2,1,4,2\\]\n**Output:** 7\n**Explanation:** You can eat 7 apples:\n- On the first day, you eat an apple that grew on the first day.\n- On the second day, you eat an apple that grew on the second day.\n- On the third day, you eat an apple that grew on the second day. After this day, the apples that grew on the third day rot.\n- On the fourth to the seventh days, you eat apples that grew on the fourth day.\n\n**Example 2:**\n\n**Input:** apples = \\[3,0,0,0,0,2\\], days = \\[3,0,0,0,0,2\\]\n**Output:** 5\n**Explanation:** You can eat 5 apples:\n- On the first to the third day you eat apples that grew on the first day.\n- Do nothing on the fouth and fifth days.\n- On the sixth and seventh days you eat apples that grew on the sixth day.\n\n**Constraints:**\n\n*   `n == apples.length == days.length`\n*   `1 <= n <= 2 * 104`\n*   `0 <= apples[i], days[i] <= 2 * 104`\n*   `days[i] = 0` if and only if `apples[i] = 0`.",
+  "difficulty": "Medium",
+  "category": null,
+  "xpReward": 0,
+  "timeLimitMs": 5000,
+  "memoryLimitMb": 256,
+  "starterCode": [],
+  "solutionCode": "",
+  "hints": [],
+  "isPremium": false,
+  "createdBy": null,
+  "testCases": [
+    {
+      "input": [
+        [
+          1,
+          2,
+          3,
+          5,
+          2
+        ],
+        [
+          3,
+          2,
+          1,
+          4,
+          2
+        ]
+      ],
+      "expectedOutput": 7
+    },
+    {
+      "input": [
+        [
+          3,
+          0,
+          0,
+          0,
+          0,
+          2
+        ],
+        [
+          3,
+          0,
+          0,
+          0,
+          0,
+          2
+        ]
+      ],
+      "expectedOutput": 5
+    }
+  ],
+  "hiddenTestCases": [
+    {
+      "input": [
+        [
+          1,
+          2,
+          3,
+          5,
+          2
+        ],
+        [
+          3,
+          2,
+          1,
+          4,
+          2
+        ]
+      ],
+      "expectedOutput": 7
+    },
+    {
+      "input": [
+        [
+          3,
+          0,
+          0,
+          0,
+          0,
+          2
+        ],
+        [
+          3,
+          0,
+          0,
+          0,
+          0,
+          2
+        ]
+      ],
+      "expectedOutput": 5
+    }
+  ],
+  "tags": [],
+  "constraints": [],
+  "examples": [],
+  "createdAt": "2025-11-14T21:22:46.223015+00:00",
+  "updatedAt": "2025-12-04T04:37:02.979Z"
+}

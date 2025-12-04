@@ -1,0 +1,121 @@
+{
+  "id": "442ef105-f965-431e-bcae-d2a8af6d5881",
+  "title": "Best Poker Hand",
+  "slug": "best-poker-hand",
+  "description": "You are given an integer array `ranks` and a character array `suits`. You have `5` cards where the `ith` card has a rank of `ranks[i]` and a suit of `suits[i]`.\n\nThe following are the types of **poker hands** you can make from best to worst:\n\n1.  `\"Flush \"`: Five cards of the same suit.\n2.  `\"Three of a Kind \"`: Three cards of the same rank.\n3.  `\"Pair \"`: Two cards of the same rank.\n4.  `\"High Card \"`: Any single card.\n\nReturn _a string representing the **best** type of **poker hand** you can make with the given cards._\n\n**Note** that the return values are **case-sensitive**.\n\n**Example 1:**\n\n**Input:** ranks = \\[13,2,3,1,9\\], suits = \\[ \"a \", \"a \", \"a \", \"a \", \"a \"\\]\n**Output:**  \"Flush \"\n**Explanation:** The hand with all the cards consists of 5 cards with the same suit, so we have a  \"Flush \".\n\n**Example 2:**\n\n**Input:** ranks = \\[4,4,2,4,4\\], suits = \\[ \"d \", \"a \", \"a \", \"b \", \"c \"\\]\n**Output:**  \"Three of a Kind \"\n**Explanation:** The hand with the first, second, and fourth card consists of 3 cards with the same rank, so we have a  \"Three of a Kind \".\nNote that we could also make a  \"Pair \" hand but  \"Three of a Kind \" is a better hand.\nAlso note that other cards could be used to make the  \"Three of a Kind \" hand.\n\n**Example 3:**\n\n**Input:** ranks = \\[10,10,2,12,9\\], suits = \\[ \"a \", \"b \", \"c \", \"a \", \"d \"\\]\n**Output:**  \"Pair \"\n**Explanation:** The hand with the first and second card consists of 2 cards with the same rank, so we have a  \"Pair \".\nNote that we cannot make a  \"Flush \" or a  \"Three of a Kind \".\n\n**Constraints:**\n\n*   `ranks.length == suits.length == 5`\n*   `1 <= ranks[i] <= 13`\n*   `'a' <= suits[i] <= 'd'`\n*   No two cards have the same rank and suit.",
+  "difficulty": "Easy",
+  "category": null,
+  "xpReward": 0,
+  "timeLimitMs": 5000,
+  "memoryLimitMb": 256,
+  "starterCode": {},
+  "solutionCode": "",
+  "hints": [],
+  "isPremium": false,
+  "createdBy": null,
+  "testCases": [
+    {
+      "input": [
+        [
+          13,
+          2,
+          3,
+          1,
+          9
+        ],
+        [
+          "a ",
+          "a ",
+          "a ",
+          "a ",
+          "a "
+        ]
+      ],
+      "expectedOutput": "Flush "
+    },
+    {
+      "input": [
+        [
+          4,
+          4,
+          2,
+          4,
+          4
+        ],
+        [
+          "d ",
+          "a ",
+          "a ",
+          "b ",
+          "c "
+        ]
+      ],
+      "expectedOutput": "Three of a Kind "
+    },
+    {
+      "input": [
+        [
+          10,
+          10,
+          2,
+          12,
+          9
+        ],
+        [
+          "a ",
+          "b ",
+          "c ",
+          "a ",
+          "d "
+        ]
+      ],
+      "expectedOutput": "Pair "
+    }
+  ],
+  "hiddenTestCases": [
+    {
+      "input": [
+        [
+          13,
+          2,
+          3,
+          1,
+          9
+        ],
+        [
+          "a ",
+          "a ",
+          "a ",
+          "a ",
+          "a "
+        ]
+      ],
+      "expectedOutput": "Flush "
+    },
+    {
+      "input": [
+        [
+          4,
+          4,
+          2,
+          4,
+          4
+        ],
+        [
+          "d ",
+          "a ",
+          "a ",
+          "b ",
+          "c "
+        ]
+      ],
+      "expectedOutput": "Three of a Kind "
+    }
+  ],
+  "tags": [],
+  "constraints": [],
+  "examples": [],
+  "problemNumber": null,
+  "createdAt": "2025-11-14T21:25:23.528972+00:00",
+  "updatedAt": "2025-12-04T04:35:47.980Z"
+}

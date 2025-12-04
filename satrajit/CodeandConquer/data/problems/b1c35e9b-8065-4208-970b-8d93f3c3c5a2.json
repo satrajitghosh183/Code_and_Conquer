@@ -1,0 +1,56 @@
+{
+  "id": "b1c35e9b-8065-4208-970b-8d93f3c3c5a2",
+  "title": "Largest Substring Between Two Equal Characters",
+  "slug": "largest-substring-between-two-equal-characters",
+  "description": "Given a string `s`, return _the length of the longest substring between two equal characters, excluding the two characters._ If there is no such substring return `-1`.\n\nA **substring** is a contiguous sequence of characters within a string.\n\n**Example 1:**\n\n**Input:** s =  \"aa \"\n**Output:** 0\n**Explanation:** The optimal substring here is an empty substring between the two `'a's`.\n\n**Example 2:**\n\n**Input:** s =  \"abca \"\n**Output:** 2\n**Explanation:** The optimal substring here is  \"bc \".\n\n**Example 3:**\n\n**Input:** s =  \"cbzxy \"\n**Output:** -1\n**Explanation:** There are no characters that appear twice in s.\n\n**Constraints:**\n\n*   `1 <= s.length <= 300`\n*   `s` contains only lowercase English letters.",
+  "difficulty": "Easy",
+  "category": null,
+  "xpReward": 0,
+  "timeLimitMs": 5000,
+  "memoryLimitMb": 256,
+  "starterCode": {},
+  "solutionCode": "",
+  "hints": [],
+  "isPremium": false,
+  "createdBy": null,
+  "testCases": [
+    {
+      "input": [
+        "aa "
+      ],
+      "expectedOutput": 0
+    },
+    {
+      "input": [
+        "abca "
+      ],
+      "expectedOutput": 2
+    },
+    {
+      "input": [
+        "cbzxy "
+      ],
+      "expectedOutput": -1
+    }
+  ],
+  "hiddenTestCases": [
+    {
+      "input": [
+        "aa "
+      ],
+      "expectedOutput": 0
+    },
+    {
+      "input": [
+        "abca "
+      ],
+      "expectedOutput": 2
+    }
+  ],
+  "tags": [],
+  "constraints": [],
+  "examples": [],
+  "problemNumber": null,
+  "createdAt": "2025-11-14T21:22:28.661235+00:00",
+  "updatedAt": "2025-12-04T04:37:11.424Z"
+}

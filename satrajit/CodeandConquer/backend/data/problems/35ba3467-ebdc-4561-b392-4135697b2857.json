@@ -1,0 +1,69 @@
+{
+  "id": "35ba3467-ebdc-4561-b392-4135697b2857",
+  "title": "Count Elements With Strictly Smaller and Greater Elements ",
+  "slug": "count-elements-with-strictly-smaller-and-greater-elements",
+  "description": "Given an integer array `nums`, return _the number of elements that have **both** a strictly smaller and a strictly greater element appear in_ `nums`.\n\n**Example 1:**\n\n**Input:** nums = \\[11,7,2,15\\]\n**Output:** 2\n**Explanation:** The element 7 has the element 2 strictly smaller than it and the element 11 strictly greater than it.\nElement 11 has element 7 strictly smaller than it and element 15 strictly greater than it.\nIn total there are 2 elements having both a strictly smaller and a strictly greater element appear in `nums`.\n\n**Example 2:**\n\n**Input:** nums = \\[-3,3,3,90\\]\n**Output:** 2\n**Explanation:** The element 3 has the element -3 strictly smaller than it and the element 90 strictly greater than it.\nSince there are two elements with the value 3, in total there are 2 elements having both a strictly smaller and a strictly greater element appear in `nums`.\n\n**Constraints:**\n\n*   `1 <= nums.length <= 100`\n*   `-105 <= nums[i] <= 105`",
+  "difficulty": "Easy",
+  "category": null,
+  "xpReward": 0,
+  "timeLimitMs": 5000,
+  "memoryLimitMb": 256,
+  "starterCode": [],
+  "solutionCode": "",
+  "hints": [],
+  "isPremium": false,
+  "createdBy": null,
+  "testCases": [
+    {
+      "input": [
+        [
+          11,
+          7,
+          2,
+          15
+        ]
+      ],
+      "expectedOutput": 2
+    },
+    {
+      "input": [
+        [
+          -3,
+          3,
+          3,
+          90
+        ]
+      ],
+      "expectedOutput": 2
+    }
+  ],
+  "hiddenTestCases": [
+    {
+      "input": [
+        [
+          11,
+          7,
+          2,
+          15
+        ]
+      ],
+      "expectedOutput": 2
+    },
+    {
+      "input": [
+        [
+          -3,
+          3,
+          3,
+          90
+        ]
+      ],
+      "expectedOutput": 2
+    }
+  ],
+  "tags": [],
+  "constraints": [],
+  "examples": [],
+  "createdAt": "2025-11-14T21:24:35.490994+00:00",
+  "updatedAt": "2025-12-04T04:36:09.892Z"
+}

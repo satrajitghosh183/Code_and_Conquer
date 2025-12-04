@@ -1,0 +1,60 @@
+{
+  "id": "51a345c8-d50a-4955-9533-4101e5b4bf8b",
+  "title": "Abbreviating the Product of a Range",
+  "slug": "abbreviating-the-product-of-a-range",
+  "description": "You are given two positive integers `left` and `right` with `left <= right`. Calculate the **product** of all integers in the **inclusive** range `[left, right]`.\n\nSince the product may be very large, you will **abbreviate** it following these steps:\n\n1.  Count all **trailing** zeros in the product and **remove** them. Let us denote this count as `C`.\n    *   For example, there are `3` trailing zeros in `1000`, and there are `0` trailing zeros in `546`.\n2.  Denote the remaining number of digits in the product as `d`. If `d > 10`, then express the product as\n    \n        ...\n    \n3.  Finally, represent the product as a **string** `\"`\n    \n        ...eC \"\n    \n\nReturn _a string denoting the **abbreviated product** of all integers in the **inclusive** range_ `[left, right]`.\n\n**Example 1:**\n\n**Input:** left = 1, right = 4\n**Output:**  \"24e0 \"\n**Explanation:** The product is 1 \\* 2 \\* 3 \\* 4 = 24.\nThere are no trailing zeros, so 24 remains the same. The abbreviation will end with  \"e0 \".\nSince the number of digits is 2, which is less than 10, we do not have to abbreviate it further.\nThus, the final representation is  \"24e0 \".\n\n**Example 2:**\n\n**Input:** left = 2, right = 11\n**Output:**  \"399168e2 \"\n**Explanation:** The product is 39916800.\nThere are 2 trailing zeros, which we remove to get 399168. The abbreviation will end with  \"e2 \".\nThe number of digits after removing the trailing zeros is 6, so we do not abbreviate it further.\nHence, the abbreviated product is  \"399168e2 \".\n\n**Example 3:**\n\n**Input:** left = 371, right = 375\n**Output:**  \"7219856259e3 \"\n**Explanation:** The product is 7219856259000.\n\n**Constraints:**\n\n*   `1 <= left <= right <= 104`",
+  "difficulty": "Hard",
+  "category": null,
+  "xpReward": 0,
+  "timeLimitMs": 5000,
+  "memoryLimitMb": 256,
+  "starterCode": [],
+  "solutionCode": "",
+  "hints": [],
+  "isPremium": false,
+  "createdBy": null,
+  "testCases": [
+    {
+      "input": [
+        1,
+        4
+      ],
+      "expectedOutput": "24e0 "
+    },
+    {
+      "input": [
+        2,
+        11
+      ],
+      "expectedOutput": "399168e2 "
+    },
+    {
+      "input": [
+        371,
+        375
+      ],
+      "expectedOutput": "7219856259e3 "
+    }
+  ],
+  "hiddenTestCases": [
+    {
+      "input": [
+        1,
+        4
+      ],
+      "expectedOutput": "24e0 "
+    },
+    {
+      "input": [
+        2,
+        11
+      ],
+      "expectedOutput": "399168e2 "
+    }
+  ],
+  "tags": [],
+  "constraints": [],
+  "examples": [],
+  "createdAt": "2025-11-14T21:24:28.313223+00:00",
+  "updatedAt": "2025-12-04T04:36:13.281Z"
+}

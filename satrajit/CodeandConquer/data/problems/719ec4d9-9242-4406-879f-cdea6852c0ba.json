@@ -1,0 +1,154 @@
+{
+  "id": "719ec4d9-9242-4406-879f-cdea6852c0ba",
+  "title": "Count Artifacts That Can Be Extracted",
+  "slug": "count-artifacts-that-can-be-extracted",
+  "description": "There is an `n x n` **0-indexed** grid with some artifacts buried in it. You are given the integer `n` and a **0-indexed** 2D integer array `artifacts` describing the positions of the rectangular artifacts where `artifacts[i] = [r1i, c1i, r2i, c2i]` denotes that the `ith` artifact is buried in the subgrid where:\n\n*   `(r1i, c1i)` is the coordinate of the **top-left** cell of the `ith` artifact and\n*   `(r2i, c2i)` is the coordinate of the **bottom-right** cell of the `ith` artifact.\n\nYou will excavate some cells of the grid and remove all the mud from them. If the cell has a part of an artifact buried underneath, it will be uncovered. If all the parts of an artifact are uncovered, you can extract it.\n\nGiven a **0-indexed** 2D integer array `dig` where `dig[i] = [ri, ci]` indicates that you will excavate the cell `(ri, ci)`, return _the number of artifacts that you can extract_.\n\nThe test cases are generated such that:\n\n*   No two artifacts overlap.\n*   Each artifact only covers at most `4` cells.\n*   The entries of `dig` are unique.\n\n**Example 1:**\n\n**Input:** n = 2, artifacts = \\[\\[0,0,0,0\\],\\[0,1,1,1\\]\\], dig = \\[\\[0,0\\],\\[0,1\\]\\]\n**Output:** 1\n**Explanation:** \nThe different colors represent different artifacts. Excavated cells are labeled with a 'D' in the grid.\nThere is 1 artifact that can be extracted, namely the red artifact.\nThe blue artifact has one part in cell (1,1) which remains uncovered, so we cannot extract it.\nThus, we return 1.\n\n**Example 2:**\n\n**Input:** n = 2, artifacts = \\[\\[0,0,0,0\\],\\[0,1,1,1\\]\\], dig = \\[\\[0,0\\],\\[0,1\\],\\[1,1\\]\\]\n**Output:** 2\n**Explanation:** Both the red and blue artifacts have all parts uncovered (labeled with a 'D') and can be extracted, so we return 2. \n\n**Constraints:**\n\n*   `1 <= n <= 1000`\n*   `1 <= artifacts.length, dig.length <= min(n2, 105)`\n*   `artifacts[i].length == 4`\n*   `dig[i].length == 2`\n*   `0 <= r1i, c1i, r2i, c2i, ri, ci <= n - 1`\n*   `r1i <= r2i`\n*   `c1i <= c2i`\n*   No two artifacts will overlap.\n*   The number of cells covered by an artifact is **at most** `4`.\n*   The entries of `dig` are unique.",
+  "difficulty": "Medium",
+  "category": null,
+  "xpReward": 0,
+  "timeLimitMs": 5000,
+  "memoryLimitMb": 256,
+  "starterCode": {},
+  "solutionCode": "",
+  "hints": [],
+  "isPremium": false,
+  "createdBy": null,
+  "testCases": [
+    {
+      "input": [
+        2,
+        [
+          [
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            1,
+            1,
+            1
+          ]
+        ],
+        [
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            1
+          ]
+        ]
+      ],
+      "expectedOutput": 1
+    },
+    {
+      "input": [
+        2,
+        [
+          [
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            1,
+            1,
+            1
+          ]
+        ],
+        [
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            1
+          ],
+          [
+            1,
+            1
+          ]
+        ]
+      ],
+      "expectedOutput": 2
+    }
+  ],
+  "hiddenTestCases": [
+    {
+      "input": [
+        2,
+        [
+          [
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            1,
+            1,
+            1
+          ]
+        ],
+        [
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            1
+          ]
+        ]
+      ],
+      "expectedOutput": 1
+    },
+    {
+      "input": [
+        2,
+        [
+          [
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            1,
+            1,
+            1
+          ]
+        ],
+        [
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            1
+          ],
+          [
+            1,
+            1
+          ]
+        ]
+      ],
+      "expectedOutput": 2
+    }
+  ],
+  "tags": [],
+  "constraints": [],
+  "examples": [],
+  "problemNumber": null,
+  "createdAt": "2025-11-14T21:24:47.00868+00:00",
+  "updatedAt": "2025-12-04T04:36:04.660Z"
+}

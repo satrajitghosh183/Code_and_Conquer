@@ -1,0 +1,84 @@
+{
+  "id": "61c8a913-bab7-4317-9623-31f53d42544a",
+  "title": "Count Lattice Points Inside a Circle",
+  "slug": "count-lattice-points-inside-a-circle",
+  "description": "Given a 2D integer array `circles` where `circles[i] = [xi, yi, ri]` represents the center `(xi, yi)` and radius `ri` of the `ith` circle drawn on a grid, return _the **number of lattice points**_ _that are present inside **at least one** circle_.\n\n**Note:**\n\n*   A **lattice point** is a point with integer coordinates.\n*   Points that lie **on the circumference of a circle** are also considered to be inside it.\n\n**Example 1:**\n\n**Input:** circles = \\[\\[2,2,1\\]\\]\n**Output:** 5\n**Explanation:**\nThe figure above shows the given circle.\nThe lattice points present inside the circle are (1, 2), (2, 1), (2, 2), (2, 3), and (3, 2) and are shown in green.\nOther points such as (1, 1) and (1, 3), which are shown in red, are not considered inside the circle.\nHence, the number of lattice points present inside at least one circle is 5.\n\n**Example 2:**\n\n**Input:** circles = \\[\\[2,2,2\\],\\[3,4,1\\]\\]\n**Output:** 16\n**Explanation:**\nThe figure above shows the given circles.\nThere are exactly 16 lattice points which are present inside at least one circle. \nSome of them are (0, 2), (2, 0), (2, 4), (3, 2), and (4, 4).\n\n**Constraints:**\n\n*   `1 <= circles.length <= 200`\n*   `circles[i].length == 3`\n*   `1 <= xi, yi <= 100`\n*   `1 <= ri <= min(xi, yi)`",
+  "difficulty": "Medium",
+  "category": null,
+  "xpReward": 0,
+  "timeLimitMs": 5000,
+  "memoryLimitMb": 256,
+  "starterCode": {},
+  "solutionCode": "",
+  "hints": [],
+  "isPremium": false,
+  "createdBy": null,
+  "testCases": [
+    {
+      "input": [
+        [
+          [
+            2,
+            2,
+            1
+          ]
+        ]
+      ],
+      "expectedOutput": 5
+    },
+    {
+      "input": [
+        [
+          [
+            2,
+            2,
+            2
+          ],
+          [
+            3,
+            4,
+            1
+          ]
+        ]
+      ],
+      "expectedOutput": 16
+    }
+  ],
+  "hiddenTestCases": [
+    {
+      "input": [
+        [
+          [
+            2,
+            2,
+            1
+          ]
+        ]
+      ],
+      "expectedOutput": 5
+    },
+    {
+      "input": [
+        [
+          [
+            2,
+            2,
+            2
+          ],
+          [
+            3,
+            4,
+            1
+          ]
+        ]
+      ],
+      "expectedOutput": 16
+    }
+  ],
+  "tags": [],
+  "constraints": [],
+  "examples": [],
+  "problemNumber": null,
+  "createdAt": "2025-11-14T21:24:58.501006+00:00",
+  "updatedAt": "2025-12-04T04:35:59.392Z"
+}

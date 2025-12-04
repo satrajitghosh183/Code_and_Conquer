@@ -1,0 +1,82 @@
+{
+  "id": "d275228d-a46b-4f3a-8e50-5a41f67ce4d6",
+  "title": "Pour Water Between Buckets to Make Water Levels Equal",
+  "slug": "pour-water-between-buckets-to-make-water-levels-equal",
+  "description": "You have `n` buckets each containing some gallons of water in it, represented by a **0-indexed** integer array `buckets`, where the `ith` bucket contains `buckets[i]` gallons of water. You are also given an integer `loss`.\n\nYou want to make the amount of water in each bucket equal. You can pour any amount of water from one bucket to another bucket (not necessarily an integer). However, every time you pour `k` gallons of water, you spill `loss` **percent** of `k`.\n\nReturn _the **maximum** amount of water in each bucket after making the amount of water equal._ Answers within `10-5` of the actual answer will be accepted.\n\n**Example 1:**\n\n**Input:** buckets = \\[1,2,7\\], loss = 80\n**Output:** 2.00000\n**Explanation:** Pour 5 gallons of water from buckets\\[2\\] to buckets\\[0\\].\n5 \\* 80% = 4 gallons are spilled and buckets\\[0\\] only receives 5 - 4 = 1 gallon of water.\nAll buckets have 2 gallons of water in them so return 2.\n\n**Example 2:**\n\n**Input:** buckets = \\[2,4,6\\], loss = 50\n**Output:** 3.50000\n**Explanation:** Pour 0.5 gallons of water from buckets\\[1\\] to buckets\\[0\\].\n0.5 \\* 50% = 0.25 gallons are spilled and buckets\\[0\\] only receives 0.5 - 0.25 = 0.25 gallons of water.\nNow, buckets = \\[2.25, 3.5, 6\\].\nPour 2.5 gallons of water from buckets\\[2\\] to buckets\\[0\\].\n2.5 \\* 50% = 1.25 gallons are spilled and buckets\\[0\\] only receives 2.5 - 1.25 = 1.25 gallons of water.\nAll buckets have 3.5 gallons of water in them so return 3.5.\n\n**Example 3:**\n\n**Input:** buckets = \\[3,3,3,3\\], loss = 40\n**Output:** 3.00000\n**Explanation:** All buckets already have the same amount of water in them.\n\n**Constraints:**\n\n*   `1 <= buckets.length <= 105`\n*   `0 <= buckets[i] <= 105`\n*   `0 <= loss <= 99`",
+  "difficulty": "Medium",
+  "category": null,
+  "xpReward": 0,
+  "timeLimitMs": 5000,
+  "memoryLimitMb": 256,
+  "starterCode": {},
+  "solutionCode": "",
+  "hints": [],
+  "isPremium": false,
+  "createdBy": null,
+  "testCases": [
+    {
+      "input": [
+        [
+          1,
+          2,
+          7
+        ],
+        80
+      ],
+      "expectedOutput": 2
+    },
+    {
+      "input": [
+        [
+          2,
+          4,
+          6
+        ],
+        50
+      ],
+      "expectedOutput": 3.5
+    },
+    {
+      "input": [
+        [
+          3,
+          3,
+          3,
+          3
+        ],
+        40
+      ],
+      "expectedOutput": 3
+    }
+  ],
+  "hiddenTestCases": [
+    {
+      "input": [
+        [
+          1,
+          2,
+          7
+        ],
+        80
+      ],
+      "expectedOutput": 2
+    },
+    {
+      "input": [
+        [
+          2,
+          4,
+          6
+        ],
+        50
+      ],
+      "expectedOutput": 3.5
+    }
+  ],
+  "tags": [],
+  "constraints": [],
+  "examples": [],
+  "problemNumber": null,
+  "createdAt": "2025-11-14T21:24:33.010521+00:00",
+  "updatedAt": "2025-12-04T04:36:11.013Z"
+}

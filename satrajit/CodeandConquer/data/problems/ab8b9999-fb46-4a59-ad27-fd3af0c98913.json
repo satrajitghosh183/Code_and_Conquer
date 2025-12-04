@@ -1,0 +1,98 @@
+{
+  "id": "ab8b9999-fb46-4a59-ad27-fd3af0c98913",
+  "title": "Find Consecutive Integers from a Data Stream",
+  "slug": "find-consecutive-integers-from-a-data-stream",
+  "description": "For a stream of integers, implement a data structure that checks if the last `k` integers parsed in the stream are **equal** to `value`.\n\nImplement the **DataStream** class:\n\n*   `DataStream(int value, int k)` Initializes the object with an empty integer stream and the two integers `value` and `k`.\n*   `boolean consec(int num)` Adds `num` to the stream of integers. Returns `true` if the last `k` integers are equal to `value`, and `false` otherwise. If there are less than `k` integers, the condition does not hold true, so returns `false`.\n\n**Example 1:**\n\n**Input**\n\\[ \"DataStream \",  \"consec \",  \"consec \",  \"consec \",  \"consec \"\\]\n\\[\\[4, 3\\], \\[4\\], \\[4\\], \\[4\\], \\[3\\]\\]\n**Output**\n\\[null, false, false, true, false\\]\n\n**Explanation**\nDataStream dataStream = new DataStream(4, 3); //value = 4, k = 3 \ndataStream.consec(4); // Only 1 integer is parsed, so returns False. \ndataStream.consec(4); // Only 2 integers are parsed.\n                      // Since 2 is less than k, returns False. \ndataStream.consec(4); // The 3 integers parsed are all equal to value, so returns True. \ndataStream.consec(3); // The last k integers parsed in the stream are \\[4,4,3\\].\n                      // Since 3 is not equal to value, it returns False.\n\n**Constraints:**\n\n*   `1 <= value, num <= 109`\n*   `1 <= k <= 105`\n*   At most `105` calls will be made to `consec`.",
+  "difficulty": "Medium",
+  "category": null,
+  "xpReward": 0,
+  "timeLimitMs": 5000,
+  "memoryLimitMb": 256,
+  "starterCode": {},
+  "solutionCode": "",
+  "hints": [],
+  "isPremium": false,
+  "createdBy": null,
+  "testCases": [
+    {
+      "input": {
+        "methods": [
+          "DataStream",
+          "consec",
+          "consec",
+          "consec",
+          "consec"
+        ],
+        "args": [
+          [
+            4,
+            3
+          ],
+          [
+            4
+          ],
+          [
+            4
+          ],
+          [
+            4
+          ],
+          [
+            3
+          ]
+        ]
+      },
+      "expectedOutput": [
+        null,
+        false,
+        false,
+        true,
+        false
+      ]
+    }
+  ],
+  "hiddenTestCases": [
+    {
+      "input": {
+        "methods": [
+          "DataStream",
+          "consec",
+          "consec",
+          "consec",
+          "consec"
+        ],
+        "args": [
+          [
+            4,
+            3
+          ],
+          [
+            4
+          ],
+          [
+            4
+          ],
+          [
+            4
+          ],
+          [
+            3
+          ]
+        ]
+      },
+      "expectedOutput": [
+        null,
+        false,
+        false,
+        true,
+        false
+      ]
+    }
+  ],
+  "tags": [],
+  "constraints": [],
+  "examples": [],
+  "problemNumber": null,
+  "createdAt": "2025-11-14T21:26:10.664686+00:00",
+  "updatedAt": "2025-12-04T04:38:01.058Z"
+}

@@ -1,0 +1,77 @@
+{
+  "id": "dd10c5cd-c201-4d9f-9f44-9d6c003d1bfd",
+  "title": "Minimum Flips in Binary Tree to Get Result",
+  "slug": "minimum-flips-in-binary-tree-to-get-result",
+  "description": "You are given the `root` of a **binary tree** with the following properties:\n\n*   **Leaf nodes** have either the value `0` or `1`, representing `false` and `true` respectively.\n*   **Non-leaf nodes** have either the value `2`, `3`, `4`, or `5`, representing the boolean operations `OR`, `AND`, `XOR`, and `NOT`, respectively.\n\nYou are also given a boolean `result`, which is the desired result of the **evaluation** of the `root` node.\n\nThe evaluation of a node is as follows:\n\n*   If the node is a leaf node, the evaluation is the **value** of the node, i.e. `true` or `false`.\n*   Otherwise, **evaluate** the node's children and **apply** the boolean operation of its value with the children's evaluations.\n\nIn one operation, you can **flip** a leaf node, which causes a `false` node to become `true`, and a `true` node to become `false`.\n\nReturn _the minimum number of operations that need to be performed such that the evaluation of_ `root` _yields_ `result`. It can be shown that there is always a way to achieve `result`.\n\nA **leaf node** is a node that has zero children.\n\nNote: `NOT` nodes have either a left child or a right child, but other non-leaf nodes have both a left child and a right child.\n\n**Example 1:**\n\n**Input:** root = \\[3,5,4,2,null,1,1,1,0\\], result = true\n**Output:** 2\n**Explanation:**\nIt can be shown that a minimum of 2 nodes have to be flipped to make the root of the tree\nevaluate to true. One way to achieve this is shown in the diagram above.\n\n**Example 2:**\n\n**Input:** root = \\[0\\], result = false\n**Output:** 0\n**Explanation:**\nThe root of the tree already evaluates to false, so 0 nodes have to be flipped.\n\n**Constraints:**\n\n*   The number of nodes in the tree is in the range `[1, 105]`.\n*   `0 <= Node.val <= 5`\n*   `OR`, `AND`, and `XOR` nodes have `2` children.\n*   `NOT` nodes have `1` child.\n*   Leaf nodes have a value of `0` or `1`.\n*   Non-leaf nodes have a value of `2`, `3`, `4`, or `5`.",
+  "difficulty": "Hard",
+  "category": null,
+  "xpReward": 0,
+  "timeLimitMs": 5000,
+  "memoryLimitMb": 256,
+  "starterCode": [],
+  "solutionCode": "",
+  "hints": [],
+  "isPremium": false,
+  "createdBy": null,
+  "testCases": [
+    {
+      "input": [
+        [
+          3,
+          5,
+          4,
+          2,
+          null,
+          1,
+          1,
+          1,
+          0
+        ],
+        true
+      ],
+      "expectedOutput": 2
+    },
+    {
+      "input": [
+        [
+          0
+        ],
+        false
+      ],
+      "expectedOutput": 0
+    }
+  ],
+  "hiddenTestCases": [
+    {
+      "input": [
+        [
+          3,
+          5,
+          4,
+          2,
+          null,
+          1,
+          1,
+          1,
+          0
+        ],
+        true
+      ],
+      "expectedOutput": 2
+    },
+    {
+      "input": [
+        [
+          0
+        ],
+        false
+      ],
+      "expectedOutput": 0
+    }
+  ],
+  "tags": [],
+  "constraints": [],
+  "examples": [],
+  "createdAt": "2025-11-14T21:25:15.618763+00:00",
+  "updatedAt": "2025-12-04T04:35:51.595Z"
+}

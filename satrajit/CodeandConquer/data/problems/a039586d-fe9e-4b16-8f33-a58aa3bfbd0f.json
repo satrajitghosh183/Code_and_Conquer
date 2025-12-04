@@ -1,0 +1,78 @@
+{
+  "id": "a039586d-fe9e-4b16-8f33-a58aa3bfbd0f",
+  "title": "Find the Highest Altitude",
+  "slug": "find-the-highest-altitude",
+  "description": "There is a biker going on a road trip. The road trip consists of `n + 1` points at different altitudes. The biker starts his trip on point `0` with altitude equal `0`.\n\nYou are given an integer array `gain` of length `n` where `gain[i]` is the **net gain in altitude** between points `i`​​​​​​ and `i + 1` for all (`0 <= i < n)`. Return _the **highest altitude** of a point._\n\n**Example 1:**\n\n**Input:** gain = \\[-5,1,5,0,-7\\]\n**Output:** 1\n**Explanation:** The altitudes are \\[0,-5,-4,1,1,-6\\]. The highest is 1.\n\n**Example 2:**\n\n**Input:** gain = \\[-4,-3,-2,-1,4,3,2\\]\n**Output:** 0\n**Explanation:** The altitudes are \\[0,-4,-7,-9,-10,-6,-3,-1\\]. The highest is 0.\n\n**Constraints:**\n\n*   `n == gain.length`\n*   `1 <= n <= 100`\n*   `-100 <= gain[i] <= 100`",
+  "difficulty": "Easy",
+  "category": null,
+  "xpReward": 0,
+  "timeLimitMs": 5000,
+  "memoryLimitMb": 256,
+  "starterCode": {},
+  "solutionCode": "",
+  "hints": [],
+  "isPremium": false,
+  "createdBy": null,
+  "testCases": [
+    {
+      "input": [
+        [
+          -5,
+          1,
+          5,
+          0,
+          -7
+        ]
+      ],
+      "expectedOutput": 1
+    },
+    {
+      "input": [
+        [
+          -4,
+          -3,
+          -2,
+          -1,
+          4,
+          3,
+          2
+        ]
+      ],
+      "expectedOutput": 0
+    }
+  ],
+  "hiddenTestCases": [
+    {
+      "input": [
+        [
+          -5,
+          1,
+          5,
+          0,
+          -7
+        ]
+      ],
+      "expectedOutput": 1
+    },
+    {
+      "input": [
+        [
+          -4,
+          -3,
+          -2,
+          -1,
+          4,
+          3,
+          2
+        ]
+      ],
+      "expectedOutput": 0
+    }
+  ],
+  "tags": [],
+  "constraints": [],
+  "examples": [],
+  "problemNumber": null,
+  "createdAt": "2025-11-14T21:22:52.856548+00:00",
+  "updatedAt": "2025-12-04T04:36:58.595Z"
+}

@@ -1,0 +1,62 @@
+{
+  "id": "82cd553e-bfa7-48e8-a538-2e7aef5b878e",
+  "title": "Number of Even and Odd Bits",
+  "slug": "number-of-even-and-odd-bits",
+  "description": "You are given a **positive** integer `n`.\n\nLet `even` denote the number of even indices in the binary representation of `n` (**0-indexed**) with value `1`.\n\nLet `odd` denote the number of odd indices in the binary representation of `n` (**0-indexed**) with value `1`.\n\nReturn _an integer array_ `answer` _where_ `answer = [even, odd]`.\n\n**Example 1:**\n\n**Input:** n = 17\n**Output:** \\[2,0\\]\n**Explanation:** The binary representation of 17 is 10001. \nIt contains 1 on the 0th and 4th indices. \nThere are 2 even and 0 odd indices.\n\n**Example 2:**\n\n**Input:** n = 2\n**Output:** \\[0,1\\]\n**Explanation:** The binary representation of 2 is 10.\nIt contains 1 on the 1st index. \nThere are 0 even and 1 odd indices.\n\n**Constraints:**\n\n*   `1 <= n <= 1000`",
+  "difficulty": "Easy",
+  "category": null,
+  "xpReward": 0,
+  "timeLimitMs": 5000,
+  "memoryLimitMb": 256,
+  "starterCode": {},
+  "solutionCode": "",
+  "hints": [],
+  "isPremium": false,
+  "createdBy": null,
+  "testCases": [
+    {
+      "input": [
+        17
+      ],
+      "expectedOutput": [
+        2,
+        0
+      ]
+    },
+    {
+      "input": [
+        2
+      ],
+      "expectedOutput": [
+        0,
+        1
+      ]
+    }
+  ],
+  "hiddenTestCases": [
+    {
+      "input": [
+        17
+      ],
+      "expectedOutput": [
+        2,
+        0
+      ]
+    },
+    {
+      "input": [
+        2
+      ],
+      "expectedOutput": [
+        0,
+        1
+      ]
+    }
+  ],
+  "tags": [],
+  "constraints": [],
+  "examples": [],
+  "problemNumber": null,
+  "createdAt": "2025-11-14T21:26:31.753635+00:00",
+  "updatedAt": "2025-12-04T04:35:16.376Z"
+}

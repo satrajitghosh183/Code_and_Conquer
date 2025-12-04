@@ -1,0 +1,55 @@
+{
+  "id": "6f39c09c-c193-4f74-add7-1e87a3fd56fb",
+  "title": "Two Furthest Houses With Different Colors",
+  "slug": "two-furthest-houses-with-different-colors",
+  "description": "There are `n` houses evenly lined up on the street, and each house is beautifully painted. You are given a **0-indexed** integer array `colors` of length `n`, where `colors[i]` represents the color of the `ith` house.\n\nReturn _the **maximum** distance between **two** houses with **different** colors_.\n\nThe distance between the `ith` and `jth` houses is `abs(i - j)`, where `abs(x)` is the **absolute value** of `x`.\n\n**Example 1:**\n\n**Input:** colors = \\[**1**,1,1,**6**,1,1,1\\]\n**Output:** 3\n**Explanation:** In the above image, color 1 is blue, and color 6 is red.\nThe furthest two houses with different colors are house 0 and house 3.\nHouse 0 has color 1, and house 3 has color 6. The distance between them is abs(0 - 3) = 3.\nNote that houses 3 and 6 can also produce the optimal answer.\n\n**Example 2:**\n\n**Input:** colors = \\[**1**,8,3,8,**3**\\]\n**Output:** 4\n**Explanation:** In the above image, color 1 is blue, color 8 is yellow, and color 3 is green.\nThe furthest two houses with different colors are house 0 and house 4.\nHouse 0 has color 1, and house 4 has color 3. The distance between them is abs(0 - 4) = 4.\n\n**Example 3:**\n\n**Input:** colors = \\[**0**,**1**\\]\n**Output:** 1\n**Explanation:** The furthest two houses with different colors are house 0 and house 1.\nHouse 0 has color 0, and house 1 has color 1. The distance between them is abs(0 - 1) = 1.\n\n**Constraints:**\n\n*   `n == colors.length`\n*   `2 <= n <= 100`\n*   `0 <= colors[i] <= 100`\n*   Test data are generated such that **at least** two houses have different colors.",
+  "difficulty": "Easy",
+  "category": null,
+  "xpReward": 0,
+  "timeLimitMs": 5000,
+  "memoryLimitMb": 256,
+  "starterCode": [],
+  "solutionCode": "",
+  "hints": [],
+  "isPremium": false,
+  "createdBy": null,
+  "testCases": [
+    {
+      "input": [
+        "[**1**,1,1,**6**,1,1,1]"
+      ],
+      "expectedOutput": 3
+    },
+    {
+      "input": [
+        "[**1**,8,3,8,**3**]"
+      ],
+      "expectedOutput": 4
+    },
+    {
+      "input": [
+        "[**0**,**1**]"
+      ],
+      "expectedOutput": 1
+    }
+  ],
+  "hiddenTestCases": [
+    {
+      "input": [
+        "[**1**,1,1,**6**,1,1,1]"
+      ],
+      "expectedOutput": 3
+    },
+    {
+      "input": [
+        "[**1**,8,3,8,**3**]"
+      ],
+      "expectedOutput": 4
+    }
+  ],
+  "tags": [],
+  "constraints": [],
+  "examples": [],
+  "createdAt": "2025-11-14T21:24:17.783202+00:00",
+  "updatedAt": "2025-12-04T04:36:17.434Z"
+}

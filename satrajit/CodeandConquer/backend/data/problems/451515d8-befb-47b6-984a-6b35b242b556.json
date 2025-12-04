@@ -1,0 +1,110 @@
+{
+  "id": "451515d8-befb-47b6-984a-6b35b242b556",
+  "title": "Defuse the Bomb",
+  "slug": "defuse-the-bomb",
+  "description": "You have a bomb to defuse, and your time is running out! Your informer will provide you with a **circular** array `code` of length of `n` and a key `k`.\n\nTo decrypt the code, you must replace every number. All the numbers are replaced **simultaneously**.\n\n*   If `k > 0`, replace the `ith` number with the sum of the **next** `k` numbers.\n*   If `k < 0`, replace the `ith` number with the sum of the **previous** `k` numbers.\n*   If `k == 0`, replace the `ith` number with `0`.\n\nAs `code` is circular, the next element of `code[n-1]` is `code[0]`, and the previous element of `code[0]` is `code[n-1]`.\n\nGiven the **circular** array `code` and an integer key `k`, return _the decrypted code to defuse the bomb_!\n\n**Example 1:**\n\n**Input:** code = \\[5,7,1,4\\], k = 3\n**Output:** \\[12,10,16,13\\]\n**Explanation:** Each number is replaced by the sum of the next 3 numbers. The decrypted code is \\[7+1+4, 1+4+5, 4+5+7, 5+7+1\\]. Notice that the numbers wrap around.\n\n**Example 2:**\n\n**Input:** code = \\[1,2,3,4\\], k = 0\n**Output:** \\[0,0,0,0\\]\n**Explanation:** When k is zero, the numbers are replaced by 0. \n\n**Example 3:**\n\n**Input:** code = \\[2,4,9,3\\], k = -2\n**Output:** \\[12,5,6,13\\]\n**Explanation:** The decrypted code is \\[3+9, 2+3, 4+2, 9+4\\]. Notice that the numbers wrap around again. If k is negative, the sum is of the **previous** numbers.\n\n**Constraints:**\n\n*   `n == code.length`\n*   `1 <= n <= 100`\n*   `1 <= code[i] <= 100`\n*   `-(n - 1) <= k <= n - 1`",
+  "difficulty": "Easy",
+  "category": null,
+  "xpReward": 0,
+  "timeLimitMs": 5000,
+  "memoryLimitMb": 256,
+  "starterCode": [],
+  "solutionCode": "",
+  "hints": [],
+  "isPremium": false,
+  "createdBy": null,
+  "testCases": [
+    {
+      "input": [
+        [
+          5,
+          7,
+          1,
+          4
+        ],
+        3
+      ],
+      "expectedOutput": [
+        12,
+        10,
+        16,
+        13
+      ]
+    },
+    {
+      "input": [
+        [
+          1,
+          2,
+          3,
+          4
+        ],
+        0
+      ],
+      "expectedOutput": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "input": [
+        [
+          2,
+          4,
+          9,
+          3
+        ],
+        -2
+      ],
+      "expectedOutput": [
+        12,
+        5,
+        6,
+        13
+      ]
+    }
+  ],
+  "hiddenTestCases": [
+    {
+      "input": [
+        [
+          5,
+          7,
+          1,
+          4
+        ],
+        3
+      ],
+      "expectedOutput": [
+        12,
+        10,
+        16,
+        13
+      ]
+    },
+    {
+      "input": [
+        [
+          1,
+          2,
+          3,
+          4
+        ],
+        0
+      ],
+      "expectedOutput": [
+        0,
+        0,
+        0,
+        0
+      ]
+    }
+  ],
+  "tags": [],
+  "constraints": [],
+  "examples": [],
+  "createdAt": "2025-11-14T21:22:34.472732+00:00",
+  "updatedAt": "2025-12-04T04:37:09.094Z"
+}

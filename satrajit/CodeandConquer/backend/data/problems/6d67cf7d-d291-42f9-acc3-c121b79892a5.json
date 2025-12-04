@@ -1,0 +1,79 @@
+{
+  "id": "6d67cf7d-d291-42f9-acc3-c121b79892a5",
+  "title": "Make Array Non-decreasing or Non-increasing",
+  "slug": "make-array-non-decreasing-or-non-increasing",
+  "description": "You are given a **0-indexed** integer array `nums`. In one operation, you can:\n\n*   Choose an index `i` in the range `0 <= i < nums.length`\n*   Set `nums[i]` to `nums[i] + 1` **or** `nums[i] - 1`\n\nReturn _the **minimum** number of operations to make_ `nums` _**non-decreasing** or **non-increasing**._\n\n**Example 1:**\n\n**Input:** nums = \\[3,2,4,5,0\\]\n**Output:** 4\n**Explanation:**\nOne possible way to turn nums into non-increasing order is to:\n- Add 1 to nums\\[1\\] once so that it becomes 3.\n- Subtract 1 from nums\\[2\\] once so it becomes 3.\n- Subtract 1 from nums\\[3\\] twice so it becomes 3.\nAfter doing the 4 operations, nums becomes \\[3,3,3,3,0\\] which is in non-increasing order.\nNote that it is also possible to turn nums into \\[4,4,4,4,0\\] in 4 operations.\nIt can be proven that 4 is the minimum number of operations needed.\n\n**Example 2:**\n\n**Input:** nums = \\[2,2,3,4\\]\n**Output:** 0\n**Explanation:** nums is already in non-decreasing order, so no operations are needed and we return 0.\n\n**Example 3:**\n\n**Input:** nums = \\[0\\]\n**Output:** 0\n**Explanation:** nums is already in non-decreasing order, so no operations are needed and we return 0.\n\n**Constraints:**\n\n*   `1 <= nums.length <= 1000`\n*   `0 <= nums[i] <= 1000`\n\n**Follow up:** Can you solve it in `O(n*log(n))` time complexity?",
+  "difficulty": "Hard",
+  "category": null,
+  "xpReward": 0,
+  "timeLimitMs": 5000,
+  "memoryLimitMb": 256,
+  "starterCode": [],
+  "solutionCode": "",
+  "hints": [],
+  "isPremium": false,
+  "createdBy": null,
+  "testCases": [
+    {
+      "input": [
+        [
+          3,
+          2,
+          4,
+          5,
+          0
+        ]
+      ],
+      "expectedOutput": 4
+    },
+    {
+      "input": [
+        [
+          2,
+          2,
+          3,
+          4
+        ]
+      ],
+      "expectedOutput": 0
+    },
+    {
+      "input": [
+        [
+          0
+        ]
+      ],
+      "expectedOutput": 0
+    }
+  ],
+  "hiddenTestCases": [
+    {
+      "input": [
+        [
+          3,
+          2,
+          4,
+          5,
+          0
+        ]
+      ],
+      "expectedOutput": 4
+    },
+    {
+      "input": [
+        [
+          2,
+          2,
+          3,
+          4
+        ]
+      ],
+      "expectedOutput": 0
+    }
+  ],
+  "tags": [],
+  "constraints": [],
+  "examples": [],
+  "createdAt": "2025-11-14T21:25:02.096309+00:00",
+  "updatedAt": "2025-12-04T04:35:57.686Z"
+}

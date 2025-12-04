@@ -1,0 +1,56 @@
+{
+  "id": "b206fcb6-025f-4acc-8a0c-746e3ea40f23",
+  "title": "Check if Number is a Sum of Powers of Three",
+  "slug": "check-if-number-is-a-sum-of-powers-of-three",
+  "description": "Given an integer `n`, return `true` _if it is possible to represent_ `n` _as the sum of distinct powers of three._ Otherwise, return `false`.\n\nAn integer `y` is a power of three if there exists an integer `x` such that `y == 3x`.\n\n**Example 1:**\n\n**Input:** n = 12\n**Output:** true\n**Explanation:** 12 = 31 + 32\n\n**Example 2:**\n\n**Input:** n = 91\n**Output:** true\n**Explanation:** 91 = 30 + 32 + 34\n\n**Example 3:**\n\n**Input:** n = 21\n**Output:** false\n\n**Constraints:**\n\n*   `1 <= n <= 107`",
+  "difficulty": "Medium",
+  "category": null,
+  "xpReward": 0,
+  "timeLimitMs": 5000,
+  "memoryLimitMb": 256,
+  "starterCode": {},
+  "solutionCode": "",
+  "hints": [],
+  "isPremium": false,
+  "createdBy": null,
+  "testCases": [
+    {
+      "input": [
+        12
+      ],
+      "expectedOutput": true
+    },
+    {
+      "input": [
+        91
+      ],
+      "expectedOutput": true
+    },
+    {
+      "input": [
+        21
+      ],
+      "expectedOutput": "false\n\n**Constraints:**\n\n*   `1 <= n <= 107`"
+    }
+  ],
+  "hiddenTestCases": [
+    {
+      "input": [
+        12
+      ],
+      "expectedOutput": true
+    },
+    {
+      "input": [
+        91
+      ],
+      "expectedOutput": true
+    }
+  ],
+  "tags": [],
+  "constraints": [],
+  "examples": [],
+  "problemNumber": null,
+  "createdAt": "2025-11-14T21:23:05.735535+00:00",
+  "updatedAt": "2025-12-04T04:36:50.003Z"
+}

@@ -22,8 +22,8 @@ router.get('/:userId/stats', async (req, res) => {
         coins: 0,
         xp: 0,
         level: 1,
-        problemsSolved: 0,
-        gamesPlayed: 0,
+        problems_solved: 0,
+        games_played: 0,
         wins: 0
       });
     }
@@ -35,18 +35,27 @@ router.get('/:userId/stats', async (req, res) => {
       .single();
 
     if (error && error.code !== 'PGRST116') {
+      // PGRST116 = row not found, which is OK for new users
+      console.error('Error fetching user stats:', error);
       throw error;
     }
 
-    res.json(data || {
-      coins: 0,
-      xp: 0,
-      level: 1,
-      problemsSolved: 0,
-      gamesPlayed: 0,
-      wins: 0
+    // Return stats with both snake_case and camelCase for compatibility
+    const stats = data || {};
+    res.json({
+      // Original snake_case from database
+      coins: stats.coins || 0,
+      xp: stats.xp || 0,
+      level: stats.level || Math.floor((stats.xp || 0) / 100) + 1,
+      problems_solved: stats.problems_solved || 0,
+      games_played: stats.games_played || 0,
+      wins: stats.wins || 0,
+      // Also include camelCase for frontend compatibility
+      problemsSolved: stats.problems_solved || 0,
+      gamesPlayed: stats.games_played || 0
     });
   } catch (error) {
+    console.error('Error in GET user stats:', error);
     res.status(500).json({ error: error.message });
   }
 });
@@ -54,52 +63,89 @@ router.get('/:userId/stats', async (req, res) => {
 // Update user stats (add coins, XP, etc.)
 router.post('/:userId/stats/update', async (req, res) => {
   try {
-    const { coins, xp, problemsSolved, gamesPlayed, wins } = req.body;
+    // Support both snake_case and camelCase field names
+    const { 
+      coins, 
+      xp, 
+      problemsSolved, problems_solved,
+      gamesPlayed, games_played,
+      wins 
+    } = req.body;
+
+    // Normalize to snake_case for database
+    const problemsSolvedDelta = problemsSolved || problems_solved || 0;
+    const gamesPlayedDelta = gamesPlayed || games_played || 0;
 
     if (!supabase) {
       return res.json({ success: true, message: 'Stats update skipped (no database)' });
     }
 
-    const { data: existing } = await supabase
+    const { data: existing, error: fetchError } = await supabase
       .from('user_stats')
       .select('*')
       .eq('user_id', req.params.userId)
       .single();
 
+    // Ignore "row not found" errors - that just means new user
+    if (fetchError && fetchError.code !== 'PGRST116') {
+      console.error('Error fetching existing stats:', fetchError);
+    }
+
     const updates = {
       user_id: req.params.userId,
-      coins: (existing?.coins || 0) + (coins || 0),
-      xp: (existing?.xp || 0) + (xp || 0),
-      problems_solved: (existing?.problems_solved || 0) + (problemsSolved || 0),
-      games_played: (existing?.games_played || 0) + (gamesPlayed || 0),
-      wins: (existing?.wins || 0) + (wins || 0),
+      coins: Math.max(0, (existing?.coins || 0) + (coins || 0)),
+      xp: Math.max(0, (existing?.xp || 0) + (xp || 0)),
+      problems_solved: Math.max(0, (existing?.problems_solved || 0) + problemsSolvedDelta),
+      games_played: Math.max(0, (existing?.games_played || 0) + gamesPlayedDelta),
+      wins: Math.max(0, (existing?.wins || 0) + (wins || 0)),
       updated_at: new Date().toISOString()
     };
 
     // Calculate level from XP (100 XP per level)
     updates.level = Math.floor(updates.xp / 100) + 1;
 
+    let result;
     if (existing) {
-      const { error } = await supabase
+      const { data, error } = await supabase
         .from('user_stats')
         .update(updates)
-        .eq('user_id', req.params.userId);
+        .eq('user_id', req.params.userId)
+        .select()
+        .single();
       
-      if (error) throw error;
+      if (error) {
+        console.error('Error updating user stats:', error);
+        throw error;
+      }
+      result = data;
     } else {
       updates.created_at = new Date().toISOString();
-      const { error } = await supabase
+      const { data, error } = await supabase
         .from('user_stats')
-        .insert(updates);
+        .insert(updates)
+        .select()
+        .single();
       
-      if (error) throw error;
+      if (error) {
+        console.error('Error inserting user stats:', error);
+        throw error;
+      }
+      result = data;
     }
 
-    res.json({ success: true, stats: updates });
+    res.json({ 
+      success: true, 
+      stats: {
+        ...result,
+        // Also include camelCase for frontend compatibility
+        problemsSolved: result?.problems_solved || 0,
+        gamesPlayed: result?.games_played || 0
+      }
+    });
   } catch (error) {
+    console.error('Error in POST user stats update:', error);
     res.status(500).json({ error: error.message });
   }
 });
 
 export default router;
-

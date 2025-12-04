@@ -1,0 +1,102 @@
+{
+  "id": "de185c73-5a48-456d-b4e7-bcf43c2c0a5a",
+  "title": "Number of Good Leaf Nodes Pairs",
+  "slug": "number-of-good-leaf-nodes-pairs",
+  "description": "You are given the `root` of a binary tree and an integer `distance`. A pair of two different **leaf** nodes of a binary tree is said to be good if the length of **the shortest path** between them is less than or equal to `distance`.\n\nReturn _the number of good leaf node pairs_ in the tree.\n\n**Example 1:**\n\n**Input:** root = \\[1,2,3,null,4\\], distance = 3\n**Output:** 1\n**Explanation:** The leaf nodes of the tree are 3 and 4 and the length of the shortest path between them is 3. This is the only good pair.\n\n**Example 2:**\n\n**Input:** root = \\[1,2,3,4,5,6,7\\], distance = 3\n**Output:** 2\n**Explanation:** The good pairs are \\[4,5\\] and \\[6,7\\] with shortest path = 2. The pair \\[4,6\\] is not good because the length of ther shortest path between them is 4.\n\n**Example 3:**\n\n**Input:** root = \\[7,1,4,6,null,5,3,null,null,null,null,null,2\\], distance = 3\n**Output:** 1\n**Explanation:** The only good pair is \\[2,5\\].\n\n**Constraints:**\n\n*   The number of nodes in the `tree` is in the range `[1, 210].`\n*   `1 <= Node.val <= 100`\n*   `1 <= distance <= 10`",
+  "difficulty": "Medium",
+  "category": null,
+  "xpReward": 0,
+  "timeLimitMs": 5000,
+  "memoryLimitMb": 256,
+  "starterCode": [],
+  "solutionCode": "",
+  "hints": [],
+  "isPremium": false,
+  "createdBy": null,
+  "testCases": [
+    {
+      "input": [
+        [
+          1,
+          2,
+          3,
+          null,
+          4
+        ],
+        3
+      ],
+      "expectedOutput": 1
+    },
+    {
+      "input": [
+        [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7
+        ],
+        3
+      ],
+      "expectedOutput": 2
+    },
+    {
+      "input": [
+        [
+          7,
+          1,
+          4,
+          6,
+          null,
+          5,
+          3,
+          null,
+          null,
+          null,
+          null,
+          null,
+          2
+        ],
+        3
+      ],
+      "expectedOutput": 1
+    }
+  ],
+  "hiddenTestCases": [
+    {
+      "input": [
+        [
+          1,
+          2,
+          3,
+          null,
+          4
+        ],
+        3
+      ],
+      "expectedOutput": 1
+    },
+    {
+      "input": [
+        [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7
+        ],
+        3
+      ],
+      "expectedOutput": 2
+    }
+  ],
+  "tags": [],
+  "constraints": [],
+  "examples": [],
+  "createdAt": "2025-11-14T21:21:50.148476+00:00",
+  "updatedAt": "2025-12-04T04:37:19.542Z"
+}

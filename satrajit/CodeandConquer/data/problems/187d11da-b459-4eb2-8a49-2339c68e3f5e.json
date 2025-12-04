@@ -1,0 +1,90 @@
+{
+  "id": "187d11da-b459-4eb2-8a49-2339c68e3f5e",
+  "title": "Shortest Subarray to be Removed to Make Array Sorted",
+  "slug": "shortest-subarray-to-be-removed-to-make-array-sorted",
+  "description": "Given an integer array `arr`, remove a subarray (can be empty) from `arr` such that the remaining elements in `arr` are **non-decreasing**.\n\nReturn _the length of the shortest subarray to remove_.\n\nA **subarray** is a contiguous subsequence of the array.\n\n**Example 1:**\n\n**Input:** arr = \\[1,2,3,10,4,2,3,5\\]\n**Output:** 3\n**Explanation:** The shortest subarray we can remove is \\[10,4,2\\] of length 3. The remaining elements after that will be \\[1,2,3,3,5\\] which are sorted.\nAnother correct solution is to remove the subarray \\[3,10,4\\].\n\n**Example 2:**\n\n**Input:** arr = \\[5,4,3,2,1\\]\n**Output:** 4\n**Explanation:** Since the array is strictly decreasing, we can only keep a single element. Therefore we need to remove a subarray of length 4, either \\[5,4,3,2\\] or \\[4,3,2,1\\].\n\n**Example 3:**\n\n**Input:** arr = \\[1,2,3\\]\n**Output:** 0\n**Explanation:** The array is already non-decreasing. We do not need to remove any elements.\n\n**Constraints:**\n\n*   `1 <= arr.length <= 105`\n*   `0 <= arr[i] <= 109`",
+  "difficulty": "Medium",
+  "category": null,
+  "xpReward": 0,
+  "timeLimitMs": 5000,
+  "memoryLimitMb": 256,
+  "starterCode": {},
+  "solutionCode": "",
+  "hints": [],
+  "isPremium": false,
+  "createdBy": null,
+  "testCases": [
+    {
+      "input": [
+        [
+          1,
+          2,
+          3,
+          10,
+          4,
+          2,
+          3,
+          5
+        ]
+      ],
+      "expectedOutput": 3
+    },
+    {
+      "input": [
+        [
+          5,
+          4,
+          3,
+          2,
+          1
+        ]
+      ],
+      "expectedOutput": 4
+    },
+    {
+      "input": [
+        [
+          1,
+          2,
+          3
+        ]
+      ],
+      "expectedOutput": 0
+    }
+  ],
+  "hiddenTestCases": [
+    {
+      "input": [
+        [
+          1,
+          2,
+          3,
+          10,
+          4,
+          2,
+          3,
+          5
+        ]
+      ],
+      "expectedOutput": 3
+    },
+    {
+      "input": [
+        [
+          5,
+          4,
+          3,
+          2,
+          1
+        ]
+      ],
+      "expectedOutput": 4
+    }
+  ],
+  "tags": [],
+  "constraints": [],
+  "examples": [],
+  "problemNumber": null,
+  "createdAt": "2025-11-14T21:22:12.877806+00:00",
+  "updatedAt": "2025-12-04T04:37:15.834Z"
+}

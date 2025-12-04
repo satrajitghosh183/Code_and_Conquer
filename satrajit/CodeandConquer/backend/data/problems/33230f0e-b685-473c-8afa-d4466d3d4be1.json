@@ -1,0 +1,77 @@
+{
+  "id": "33230f0e-b685-473c-8afa-d4466d3d4be1",
+  "title": "Sum of All Odd Length Subarrays",
+  "slug": "sum-of-all-odd-length-subarrays",
+  "description": "Given an array of positive integers `arr`, return _the sum of all possible **odd-length subarrays** of_ `arr`.\n\nA **subarray** is a contiguous subsequence of the array.\n\n**Example 1:**\n\n**Input:** arr = \\[1,4,2,5,3\\]\n**Output:** 58\n**Explanation:** The odd-length subarrays of arr and their sums are:\n\\[1\\] = 1\n\\[4\\] = 4\n\\[2\\] = 2\n\\[5\\] = 5\n\\[3\\] = 3\n\\[1,4,2\\] = 7\n\\[4,2,5\\] = 11\n\\[2,5,3\\] = 10\n\\[1,4,2,5,3\\] = 15\nIf we add all these together we get 1 + 4 + 2 + 5 + 3 + 7 + 11 + 10 + 15 = 58\n\n**Example 2:**\n\n**Input:** arr = \\[1,2\\]\n**Output:** 3\n**Explanation:** There are only 2 subarrays of odd length, \\[1\\] and \\[2\\]. Their sum is 3.\n\n**Example 3:**\n\n**Input:** arr = \\[10,11,12\\]\n**Output:** 66\n\n**Constraints:**\n\n*   `1 <= arr.length <= 100`\n*   `1 <= arr[i] <= 1000`\n\n**Follow up:**\n\nCould you solve this problem in O(n) time complexity?",
+  "difficulty": "Easy",
+  "category": null,
+  "xpReward": 0,
+  "timeLimitMs": 5000,
+  "memoryLimitMb": 256,
+  "starterCode": [],
+  "solutionCode": "",
+  "hints": [],
+  "isPremium": false,
+  "createdBy": null,
+  "testCases": [
+    {
+      "input": [
+        [
+          1,
+          4,
+          2,
+          5,
+          3
+        ]
+      ],
+      "expectedOutput": 58
+    },
+    {
+      "input": [
+        [
+          1,
+          2
+        ]
+      ],
+      "expectedOutput": 3
+    },
+    {
+      "input": [
+        [
+          10,
+          11,
+          12
+        ]
+      ],
+      "expectedOutput": "66\n\n**Constraints:**\n\n*   `1 <= arr.length <= 100`\n*   `1 <= arr[i] <= 1000`\n\n**Follow up:**\n\nCould you solve this problem in O(n) time complexity?"
+    }
+  ],
+  "hiddenTestCases": [
+    {
+      "input": [
+        [
+          1,
+          4,
+          2,
+          5,
+          3
+        ]
+      ],
+      "expectedOutput": 58
+    },
+    {
+      "input": [
+        [
+          1,
+          2
+        ]
+      ],
+      "expectedOutput": 3
+    }
+  ],
+  "tags": [],
+  "constraints": [],
+  "examples": [],
+  "createdAt": "2025-11-14T21:22:20.050385+00:00",
+  "updatedAt": "2025-12-04T04:37:14.695Z"
+}

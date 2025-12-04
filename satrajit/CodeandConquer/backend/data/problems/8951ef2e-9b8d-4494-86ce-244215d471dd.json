@@ -1,0 +1,49 @@
+{
+  "id": "8951ef2e-9b8d-4494-86ce-244215d471dd",
+  "title": "Time Needed to Rearrange a Binary String",
+  "slug": "time-needed-to-rearrange-a-binary-string",
+  "description": "You are given a binary string `s`. In one second, **all** occurrences of `\"01 \"` are **simultaneously** replaced with `\"10 \"`. This process **repeats** until no occurrences of `\"01 \"` exist.\n\nReturn _the number of seconds needed to complete this process._\n\n**Example 1:**\n\n**Input:** s =  \"0110101 \"\n**Output:** 4\n**Explanation:** \nAfter one second, s becomes  \"1011010 \".\nAfter another second, s becomes  \"1101100 \".\nAfter the third second, s becomes  \"1110100 \".\nAfter the fourth second, s becomes  \"1111000 \".\nNo occurrence of  \"01 \" exists any longer, and the process needed 4 seconds to complete,\nso we return 4.\n\n**Example 2:**\n\n**Input:** s =  \"11100 \"\n**Output:** 0\n**Explanation:**\nNo occurrence of  \"01 \" exists in s, and the processes needed 0 seconds to complete,\nso we return 0.\n\n**Constraints:**\n\n*   `1 <= s.length <= 1000`\n*   `s[i]` is either `'0'` or `'1'`.\n\n**Follow up:**\n\nCan you solve this problem in O(n) time complexity?",
+  "difficulty": "Medium",
+  "category": null,
+  "xpReward": 0,
+  "timeLimitMs": 5000,
+  "memoryLimitMb": 256,
+  "starterCode": [],
+  "solutionCode": "",
+  "hints": [],
+  "isPremium": false,
+  "createdBy": null,
+  "testCases": [
+    {
+      "input": [
+        "0110101 "
+      ],
+      "expectedOutput": 4
+    },
+    {
+      "input": [
+        "11100 "
+      ],
+      "expectedOutput": 0
+    }
+  ],
+  "hiddenTestCases": [
+    {
+      "input": [
+        "0110101 "
+      ],
+      "expectedOutput": 4
+    },
+    {
+      "input": [
+        "11100 "
+      ],
+      "expectedOutput": 0
+    }
+  ],
+  "tags": [],
+  "constraints": [],
+  "examples": [],
+  "createdAt": "2025-11-14T21:25:31.481529+00:00",
+  "updatedAt": "2025-12-04T04:35:44.275Z"
+}

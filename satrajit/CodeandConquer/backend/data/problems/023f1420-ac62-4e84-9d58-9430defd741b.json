@@ -1,0 +1,126 @@
+{
+  "id": "023f1420-ac62-4e84-9d58-9430defd741b",
+  "title": "Substring XOR Queries",
+  "slug": "substring-xor-queries",
+  "description": "You are given a **binary string** `s`, and a **2D** integer array `queries` where `queries[i] = [firsti, secondi]`.\n\nFor the `ith` query, find the **shortest substring** of `s` whose **decimal value**, `val`, yields `secondi` when **bitwise XORed** with `firsti`. In other words, `val ^ firsti == secondi`.\n\nThe answer to the `ith` query is the endpoints (**0-indexed**) of the substring `[lefti, righti]` or `[-1, -1]` if no such substring exists. If there are multiple answers, choose the one with the **minimum** `lefti`.\n\n_Return an array_ `ans` _where_ `ans[i] = [lefti, righti]` _is the answer to the_ `ith` _query._\n\nA **substring** is a contiguous non-empty sequence of characters within a string.\n\n**Example 1:**\n\n**Input:** s =  \"101101 \", queries = \\[\\[0,5\\],\\[1,2\\]\\]\n**Output:** \\[\\[0,2\\],\\[2,3\\]\\]\n**Explanation:** For the first query the substring in range `[0,2]` is ** \"101 \"** which has a decimal value of **`5`**, and **`5 ^ 0 = 5`**, hence the answer to the first query is `[0,2]`. In the second query, the substring in range `[2,3]` is ** \"11 \",** and has a decimal value of **3**, and **3 `^ 1 = 2`**. So, `[2,3]` is returned for the second query. \n\n**Example 2:**\n\n**Input:** s =  \"0101 \", queries = \\[\\[12,8\\]\\]\n**Output:** \\[\\[-1,-1\\]\\]\n**Explanation:** In this example there is no substring that answers the query, hence `[-1,-1] is returned`.\n\n**Example 3:**\n\n**Input:** s =  \"1 \", queries = \\[\\[4,5\\]\\]\n**Output:** \\[\\[0,0\\]\\]\n**Explanation:** For this example, the substring in range `[0,0]` has a decimal value of **`1`**, and **`1 ^ 4 = 5`**. So, the answer is `[0,0]`.\n\n**Constraints:**\n\n*   `1 <= s.length <= 104`\n*   `s[i]` is either `'0'` or `'1'`.\n*   `1 <= queries.length <= 105`\n*   `0 <= firsti, secondi <= 109`",
+  "difficulty": "Medium",
+  "category": null,
+  "xpReward": 0,
+  "timeLimitMs": 5000,
+  "memoryLimitMb": 256,
+  "starterCode": [],
+  "solutionCode": "",
+  "hints": [],
+  "isPremium": false,
+  "createdBy": null,
+  "testCases": [
+    {
+      "input": [
+        "101101 ",
+        [
+          [
+            0,
+            5
+          ],
+          [
+            1,
+            2
+          ]
+        ]
+      ],
+      "expectedOutput": [
+        [
+          0,
+          2
+        ],
+        [
+          2,
+          3
+        ]
+      ]
+    },
+    {
+      "input": [
+        "0101 ",
+        [
+          [
+            12,
+            8
+          ]
+        ]
+      ],
+      "expectedOutput": [
+        [
+          -1,
+          -1
+        ]
+      ]
+    },
+    {
+      "input": [
+        "1 ",
+        [
+          [
+            4,
+            5
+          ]
+        ]
+      ],
+      "expectedOutput": [
+        [
+          0,
+          0
+        ]
+      ]
+    }
+  ],
+  "hiddenTestCases": [
+    {
+      "input": [
+        "101101 ",
+        [
+          [
+            0,
+            5
+          ],
+          [
+            1,
+            2
+          ]
+        ]
+      ],
+      "expectedOutput": [
+        [
+          0,
+          2
+        ],
+        [
+          2,
+          3
+        ]
+      ]
+    },
+    {
+      "input": [
+        "0101 ",
+        [
+          [
+            12,
+            8
+          ]
+        ]
+      ],
+      "expectedOutput": [
+        [
+          -1,
+          -1
+        ]
+      ]
+    }
+  ],
+  "tags": [],
+  "constraints": [],
+  "examples": [],
+  "createdAt": "2025-11-14T21:26:23.101338+00:00",
+  "updatedAt": "2025-12-04T04:35:19.674Z"
+}

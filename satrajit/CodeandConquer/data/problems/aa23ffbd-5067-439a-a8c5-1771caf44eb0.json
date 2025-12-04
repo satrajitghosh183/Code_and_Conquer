@@ -1,0 +1,70 @@
+{
+  "id": "aa23ffbd-5067-439a-a8c5-1771caf44eb0",
+  "title": "Difference Between Element Sum and Digit Sum of an Array",
+  "slug": "difference-between-element-sum-and-digit-sum-of-an-array",
+  "description": "You are given a positive integer array `nums`.\n\n*   The **element sum** is the sum of all the elements in `nums`.\n*   The **digit sum** is the sum of all the digits (not necessarily distinct) that appear in `nums`.\n\nReturn _the **absolute** difference between the **element sum** and **digit sum** of_ `nums`.\n\n**Note** that the absolute difference between two integers `x` and `y` is defined as `|x - y|`.\n\n**Example 1:**\n\n**Input:** nums = \\[1,15,6,3\\]\n**Output:** 9\n**Explanation:** \nThe element sum of nums is 1 + 15 + 6 + 3 = 25.\nThe digit sum of nums is 1 + 1 + 5 + 6 + 3 = 16.\nThe absolute difference between the element sum and digit sum is |25 - 16| = 9.\n\n**Example 2:**\n\n**Input:** nums = \\[1,2,3,4\\]\n**Output:** 0\n**Explanation:**\nThe element sum of nums is 1 + 2 + 3 + 4 = 10.\nThe digit sum of nums is 1 + 2 + 3 + 4 = 10.\nThe absolute difference between the element sum and digit sum is |10 - 10| = 0.\n\n**Constraints:**\n\n*   `1 <= nums.length <= 2000`\n*   `1 <= nums[i] <= 2000`",
+  "difficulty": "Easy",
+  "category": null,
+  "xpReward": 0,
+  "timeLimitMs": 5000,
+  "memoryLimitMb": 256,
+  "starterCode": {},
+  "solutionCode": "",
+  "hints": [],
+  "isPremium": false,
+  "createdBy": null,
+  "testCases": [
+    {
+      "input": [
+        [
+          1,
+          15,
+          6,
+          3
+        ]
+      ],
+      "expectedOutput": 9
+    },
+    {
+      "input": [
+        [
+          1,
+          2,
+          3,
+          4
+        ]
+      ],
+      "expectedOutput": 0
+    }
+  ],
+  "hiddenTestCases": [
+    {
+      "input": [
+        [
+          1,
+          15,
+          6,
+          3
+        ]
+      ],
+      "expectedOutput": 9
+    },
+    {
+      "input": [
+        [
+          1,
+          2,
+          3,
+          4
+        ]
+      ],
+      "expectedOutput": 0
+    }
+  ],
+  "tags": [],
+  "constraints": [],
+  "examples": [],
+  "problemNumber": null,
+  "createdAt": "2025-11-14T21:26:13.190618+00:00",
+  "updatedAt": "2025-12-04T04:35:22.858Z"
+}

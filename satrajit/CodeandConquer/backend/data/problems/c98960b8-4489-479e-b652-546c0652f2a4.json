@@ -1,0 +1,119 @@
+{
+  "id": "c98960b8-4489-479e-b652-546c0652f2a4",
+  "title": "Finding 3-Digit Even Numbers",
+  "slug": "finding-3-digit-even-numbers",
+  "description": "You are given an integer array `digits`, where each element is a digit. The array may contain duplicates.\n\nYou need to find **all** the **unique** integers that follow the given requirements:\n\n*   The integer consists of the **concatenation** of **three** elements from `digits` in **any** arbitrary order.\n*   The integer does not have **leading zeros**.\n*   The integer is **even**.\n\nFor example, if the given `digits` were `[1, 2, 3]`, integers `132` and `312` follow the requirements.\n\nReturn _a **sorted** array of the unique integers._\n\n**Example 1:**\n\n**Input:** digits = \\[2,1,3,0\\]\n**Output:** \\[102,120,130,132,210,230,302,310,312,320\\]\n**Explanation:** All the possible integers that follow the requirements are in the output array. \nNotice that there are no **odd** integers or integers with **leading zeros**.\n\n**Example 2:**\n\n**Input:** digits = \\[2,2,8,8,2\\]\n**Output:** \\[222,228,282,288,822,828,882\\]\n**Explanation:** The same digit can be used as many times as it appears in digits. \nIn this example, the digit 8 is used twice each time in 288, 828, and 882. \n\n**Example 3:**\n\n**Input:** digits = \\[3,7,5\\]\n**Output:** \\[\\]\n**Explanation:** No **even** integers can be formed using the given digits.\n\n**Constraints:**\n\n*   `3 <= digits.length <= 100`\n*   `0 <= digits[i] <= 9`",
+  "difficulty": "Easy",
+  "category": null,
+  "xpReward": 0,
+  "timeLimitMs": 5000,
+  "memoryLimitMb": 256,
+  "starterCode": [],
+  "solutionCode": "",
+  "hints": [],
+  "isPremium": false,
+  "createdBy": null,
+  "testCases": [
+    {
+      "input": [
+        [
+          2,
+          1,
+          3,
+          0
+        ]
+      ],
+      "expectedOutput": [
+        102,
+        120,
+        130,
+        132,
+        210,
+        230,
+        302,
+        310,
+        312,
+        320
+      ]
+    },
+    {
+      "input": [
+        [
+          2,
+          2,
+          8,
+          8,
+          2
+        ]
+      ],
+      "expectedOutput": [
+        222,
+        228,
+        282,
+        288,
+        822,
+        828,
+        882
+      ]
+    },
+    {
+      "input": [
+        [
+          3,
+          7,
+          5
+        ]
+      ],
+      "expectedOutput": []
+    }
+  ],
+  "hiddenTestCases": [
+    {
+      "input": [
+        [
+          2,
+          1,
+          3,
+          0
+        ]
+      ],
+      "expectedOutput": [
+        102,
+        120,
+        130,
+        132,
+        210,
+        230,
+        302,
+        310,
+        312,
+        320
+      ]
+    },
+    {
+      "input": [
+        [
+          2,
+          2,
+          8,
+          8,
+          2
+        ]
+      ],
+      "expectedOutput": [
+        222,
+        228,
+        282,
+        288,
+        822,
+        828,
+        882
+      ]
+    }
+  ],
+  "tags": [],
+  "constraints": [],
+  "examples": [],
+  "createdAt": "2025-11-14T21:24:22.872366+00:00",
+  "updatedAt": "2025-12-04T04:36:15.953Z"
+}

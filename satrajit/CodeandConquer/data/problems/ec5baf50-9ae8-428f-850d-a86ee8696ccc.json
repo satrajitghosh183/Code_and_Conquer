@@ -1,0 +1,90 @@
+{
+  "id": "ec5baf50-9ae8-428f-850d-a86ee8696ccc",
+  "title": "Find Minimum Time to Finish All Jobs II",
+  "slug": "find-minimum-time-to-finish-all-jobs-ii",
+  "description": "You are given two **0-indexed** integer arrays `jobs` and `workers` of **equal** length, where `jobs[i]` is the amount of time needed to complete the `ith` job, and `workers[j]` is the amount of time the `jth` worker can work each day.\n\nEach job should be assigned to **exactly** one worker, such that each worker completes **exactly** one job.\n\nReturn _the **minimum** number of days needed to complete all the jobs after assignment._\n\n**Example 1:**\n\n**Input:** jobs = \\[5,2,4\\], workers = \\[1,7,5\\]\n**Output:** 2\n**Explanation:**\n- Assign the 2nd worker to the 0th job. It takes them 1 day to finish the job.\n- Assign the 0th worker to the 1st job. It takes them 2 days to finish the job.\n- Assign the 1st worker to the 2nd job. It takes them 1 day to finish the job.\nIt takes 2 days for all the jobs to be completed, so return 2.\nIt can be proven that 2 days is the minimum number of days needed.\n\n**Example 2:**\n\n**Input:** jobs = \\[3,18,15,9\\], workers = \\[6,5,1,3\\]\n**Output:** 3\n**Explanation:**\n- Assign the 2nd worker to the 0th job. It takes them 3 days to finish the job.\n- Assign the 0th worker to the 1st job. It takes them 3 days to finish the job.\n- Assign the 1st worker to the 2nd job. It takes them 3 days to finish the job.\n- Assign the 3rd worker to the 3rd job. It takes them 3 days to finish the job.\nIt takes 3 days for all the jobs to be completed, so return 3.\nIt can be proven that 3 days is the minimum number of days needed.\n\n**Constraints:**\n\n*   `n == jobs.length == workers.length`\n*   `1 <= n <= 105`\n*   `1 <= jobs[i], workers[i] <= 105`",
+  "difficulty": "Medium",
+  "category": null,
+  "xpReward": 0,
+  "timeLimitMs": 5000,
+  "memoryLimitMb": 256,
+  "starterCode": {},
+  "solutionCode": "",
+  "hints": [],
+  "isPremium": false,
+  "createdBy": null,
+  "testCases": [
+    {
+      "input": [
+        [
+          5,
+          2,
+          4
+        ],
+        [
+          1,
+          7,
+          5
+        ]
+      ],
+      "expectedOutput": 2
+    },
+    {
+      "input": [
+        [
+          3,
+          18,
+          15,
+          9
+        ],
+        [
+          6,
+          5,
+          1,
+          3
+        ]
+      ],
+      "expectedOutput": 3
+    }
+  ],
+  "hiddenTestCases": [
+    {
+      "input": [
+        [
+          5,
+          2,
+          4
+        ],
+        [
+          1,
+          7,
+          5
+        ]
+      ],
+      "expectedOutput": 2
+    },
+    {
+      "input": [
+        [
+          3,
+          18,
+          15,
+          9
+        ],
+        [
+          6,
+          5,
+          1,
+          3
+        ]
+      ],
+      "expectedOutput": 3
+    }
+  ],
+  "tags": [],
+  "constraints": [],
+  "examples": [],
+  "problemNumber": null,
+  "createdAt": "2025-11-14T21:25:18.079617+00:00",
+  "updatedAt": "2025-12-04T04:35:50.347Z"
+}

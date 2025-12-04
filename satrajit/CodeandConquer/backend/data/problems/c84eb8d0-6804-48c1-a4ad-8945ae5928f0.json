@@ -1,0 +1,109 @@
+{
+  "id": "c84eb8d0-6804-48c1-a4ad-8945ae5928f0",
+  "title": "Maximum Rows Covered by Columns",
+  "slug": "maximum-rows-covered-by-columns",
+  "description": "You are given a **0-indexed** `m x n` binary matrix `matrix` and an integer `numSelect`, which denotes the number of **distinct** columns you must select from `matrix`.\n\nLet us consider `s = {c1, c2, ...., cnumSelect}` as the set of columns selected by you. A row `row` is **covered** by `s` if:\n\n*   For each cell `matrix[row][col]` (`0 <= col <= n - 1`) where `matrix[row][col] == 1`, `col` is present in `s` or,\n*   **No cell** in `row` has a value of `1`.\n\nYou need to choose `numSelect` columns such that the number of rows that are covered is **maximized**.\n\nReturn _the **maximum** number of rows that can be **covered** by a set of_ `numSelect` _columns._\n\n**Example 1:**\n\n**Input:** matrix = \\[\\[0,0,0\\],\\[1,0,1\\],\\[0,1,1\\],\\[0,0,1\\]\\], numSelect = 2\n**Output:** 3\n**Explanation:** One possible way to cover 3 rows is shown in the diagram above.\nWe choose s = {0, 2}.\n- Row 0 is covered because it has no occurrences of 1.\n- Row 1 is covered because the columns with value 1, i.e. 0 and 2 are present in s.\n- Row 2 is not covered because matrix\\[2\\]\\[1\\] == 1 but 1 is not present in s.\n- Row 3 is covered because matrix\\[2\\]\\[2\\] == 1 and 2 is present in s.\nThus, we can cover three rows.\nNote that s = {1, 2} will also cover 3 rows, but it can be shown that no more than three rows can be covered.\n\n**Example 2:**\n\n**Input:** matrix = \\[\\[1\\],\\[0\\]\\], numSelect = 1\n**Output:** 2\n**Explanation:** Selecting the only column will result in both rows being covered since the entire matrix is selected.\nTherefore, we return 2.\n\n**Constraints:**\n\n*   `m == matrix.length`\n*   `n == matrix[i].length`\n*   `1 <= m, n <= 12`\n*   `matrix[i][j]` is either `0` or `1`.\n*   `1 <= numSelect <= n`",
+  "difficulty": "Medium",
+  "category": null,
+  "xpReward": 0,
+  "timeLimitMs": 5000,
+  "memoryLimitMb": 256,
+  "starterCode": [],
+  "solutionCode": "",
+  "hints": [],
+  "isPremium": false,
+  "createdBy": null,
+  "testCases": [
+    {
+      "input": [
+        [
+          [
+            0,
+            0,
+            0
+          ],
+          [
+            1,
+            0,
+            1
+          ],
+          [
+            0,
+            1,
+            1
+          ],
+          [
+            0,
+            0,
+            1
+          ]
+        ],
+        2
+      ],
+      "expectedOutput": 3
+    },
+    {
+      "input": [
+        [
+          [
+            1
+          ],
+          [
+            0
+          ]
+        ],
+        1
+      ],
+      "expectedOutput": 2
+    }
+  ],
+  "hiddenTestCases": [
+    {
+      "input": [
+        [
+          [
+            0,
+            0,
+            0
+          ],
+          [
+            1,
+            0,
+            1
+          ],
+          [
+            0,
+            1,
+            1
+          ],
+          [
+            0,
+            0,
+            1
+          ]
+        ],
+        2
+      ],
+      "expectedOutput": 3
+    },
+    {
+      "input": [
+        [
+          [
+            1
+          ],
+          [
+            0
+          ]
+        ],
+        1
+      ],
+      "expectedOutput": 2
+    }
+  ],
+  "tags": [],
+  "constraints": [],
+  "examples": [],
+  "createdAt": "2025-11-14T21:25:35.461738+00:00",
+  "updatedAt": "2025-12-04T04:35:42.047Z"
+}

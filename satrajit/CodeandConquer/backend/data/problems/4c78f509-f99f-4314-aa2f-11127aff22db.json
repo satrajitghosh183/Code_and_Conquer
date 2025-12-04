@@ -1,0 +1,97 @@
+{
+  "id": "4c78f509-f99f-4314-aa2f-11127aff22db",
+  "title": "Minimum Operations to Make Array Equal II",
+  "slug": "minimum-operations-to-make-array-equal-ii",
+  "description": "You are given two integer arrays `nums1` and `nums2` of equal length `n` and an integer `k`. You can perform the following operation on `nums1`:\n\n*   Choose two indexes `i` and `j` and increment `nums1[i]` by `k` and decrement `nums1[j]` by `k`. In other words, `nums1[i] = nums1[i] + k` and `nums1[j] = nums1[j] - k`.\n\n`nums1` is said to be **equal** to `nums2` if for all indices `i` such that `0 <= i < n`, `nums1[i] == nums2[i]`.\n\nReturn _the **minimum** number of operations required to make_ `nums1` _equal to_ `nums2`. If it is impossible to make them equal, return `-1`.\n\n**Example 1:**\n\n**Input:** nums1 = \\[4,3,1,4\\], nums2 = \\[1,3,7,1\\], k = 3\n**Output:** 2\n**Explanation:** In 2 operations, we can transform nums1 to nums2.\n1st operation: i = 2, j = 0. After applying the operation, nums1 = \\[1,3,4,4\\].\n2nd operation: i = 2, j = 3. After applying the operation, nums1 = \\[1,3,7,1\\].\nOne can prove that it is impossible to make arrays equal in fewer operations.\n\n**Example 2:**\n\n**Input:** nums1 = \\[3,8,5,2\\], nums2 = \\[2,4,1,6\\], k = 1\n**Output:** -1\n**Explanation:** It can be proved that it is impossible to make the two arrays equal.\n\n**Constraints:**\n\n*   `n == nums1.length == nums2.length`\n*   `2 <= n <= 105`\n*   `0 <= nums1[i], nums2[j] <= 109`\n*   `0 <= k <= 105`",
+  "difficulty": "Medium",
+  "category": null,
+  "xpReward": 0,
+  "timeLimitMs": 5000,
+  "memoryLimitMb": 256,
+  "starterCode": [],
+  "solutionCode": "",
+  "hints": [],
+  "isPremium": false,
+  "createdBy": null,
+  "testCases": [
+    {
+      "input": [
+        [
+          4,
+          3,
+          1,
+          4
+        ],
+        [
+          1,
+          3,
+          7,
+          1
+        ],
+        3
+      ],
+      "expectedOutput": 2
+    },
+    {
+      "input": [
+        [
+          3,
+          8,
+          5,
+          2
+        ],
+        [
+          2,
+          4,
+          1,
+          6
+        ],
+        1
+      ],
+      "expectedOutput": -1
+    }
+  ],
+  "hiddenTestCases": [
+    {
+      "input": [
+        [
+          4,
+          3,
+          1,
+          4
+        ],
+        [
+          1,
+          3,
+          7,
+          1
+        ],
+        3
+      ],
+      "expectedOutput": 2
+    },
+    {
+      "input": [
+        [
+          3,
+          8,
+          5,
+          2
+        ],
+        [
+          2,
+          4,
+          1,
+          6
+        ],
+        1
+      ],
+      "expectedOutput": -1
+    }
+  ],
+  "tags": [],
+  "constraints": [],
+  "examples": [],
+  "createdAt": "2025-11-14T21:26:14.769349+00:00",
+  "updatedAt": "2025-12-04T04:35:22.216Z"
+}

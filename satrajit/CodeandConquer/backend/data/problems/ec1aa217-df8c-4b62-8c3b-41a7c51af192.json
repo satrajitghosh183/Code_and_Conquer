@@ -1,0 +1,101 @@
+{
+  "id": "ec1aa217-df8c-4b62-8c3b-41a7c51af192",
+  "title": "Number of Pairs of Interchangeable Rectangles",
+  "slug": "number-of-pairs-of-interchangeable-rectangles",
+  "description": "You are given `n` rectangles represented by a **0-indexed** 2D integer array `rectangles`, where `rectangles[i] = [widthi, heighti]` denotes the width and height of the `ith` rectangle.\n\nTwo rectangles `i` and `j` (`i < j`) are considered **interchangeable** if they have the **same** width-to-height ratio. More formally, two rectangles are **interchangeable** if `widthi/heighti == widthj/heightj` (using decimal division, not integer division).\n\nReturn _the **number** of pairs of **interchangeable** rectangles in_ `rectangles`.\n\n**Example 1:**\n\n**Input:** rectangles = \\[\\[4,8\\],\\[3,6\\],\\[10,20\\],\\[15,30\\]\\]\n**Output:** 6\n**Explanation:** The following are the interchangeable pairs of rectangles by index (0-indexed):\n- Rectangle 0 with rectangle 1: 4/8 == 3/6.\n- Rectangle 0 with rectangle 2: 4/8 == 10/20.\n- Rectangle 0 with rectangle 3: 4/8 == 15/30.\n- Rectangle 1 with rectangle 2: 3/6 == 10/20.\n- Rectangle 1 with rectangle 3: 3/6 == 15/30.\n- Rectangle 2 with rectangle 3: 10/20 == 15/30.\n\n**Example 2:**\n\n**Input:** rectangles = \\[\\[4,5\\],\\[7,8\\]\\]\n**Output:** 0\n**Explanation:** There are no interchangeable pairs of rectangles.\n\n**Constraints:**\n\n*   `n == rectangles.length`\n*   `1 <= n <= 105`\n*   `rectangles[i].length == 2`\n*   `1 <= widthi, heighti <= 105`",
+  "difficulty": "Medium",
+  "category": null,
+  "xpReward": 0,
+  "timeLimitMs": 5000,
+  "memoryLimitMb": 256,
+  "starterCode": [],
+  "solutionCode": "",
+  "hints": [],
+  "isPremium": false,
+  "createdBy": null,
+  "testCases": [
+    {
+      "input": [
+        [
+          [
+            4,
+            8
+          ],
+          [
+            3,
+            6
+          ],
+          [
+            10,
+            20
+          ],
+          [
+            15,
+            30
+          ]
+        ]
+      ],
+      "expectedOutput": 6
+    },
+    {
+      "input": [
+        [
+          [
+            4,
+            5
+          ],
+          [
+            7,
+            8
+          ]
+        ]
+      ],
+      "expectedOutput": 0
+    }
+  ],
+  "hiddenTestCases": [
+    {
+      "input": [
+        [
+          [
+            4,
+            8
+          ],
+          [
+            3,
+            6
+          ],
+          [
+            10,
+            20
+          ],
+          [
+            15,
+            30
+          ]
+        ]
+      ],
+      "expectedOutput": 6
+    },
+    {
+      "input": [
+        [
+          [
+            4,
+            5
+          ],
+          [
+            7,
+            8
+          ]
+        ]
+      ],
+      "expectedOutput": 0
+    }
+  ],
+  "tags": [],
+  "constraints": [],
+  "examples": [],
+  "createdAt": "2025-11-14T21:23:56.685198+00:00",
+  "updatedAt": "2025-12-04T04:36:25.377Z"
+}

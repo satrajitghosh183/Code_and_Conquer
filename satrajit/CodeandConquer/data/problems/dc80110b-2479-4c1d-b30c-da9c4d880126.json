@@ -1,0 +1,54 @@
+{
+  "id": "dc80110b-2479-4c1d-b30c-da9c4d880126",
+  "title": "Percentage of Letter in String",
+  "slug": "percentage-of-letter-in-string",
+  "description": "Given a string `s` and a character `letter`, return _the **percentage** of characters in_ `s` _that equal_ `letter` _**rounded down** to the nearest whole percent._\n\n**Example 1:**\n\n**Input:** s =  \"foobar \", letter =  \"o \"\n**Output:** 33\n**Explanation:**\nThe percentage of characters in s that equal the letter 'o' is 2 / 6 \\* 100% = 33% when rounded down, so we return 33.\n\n**Example 2:**\n\n**Input:** s =  \"jjjj \", letter =  \"k \"\n**Output:** 0\n**Explanation:**\nThe percentage of characters in s that equal the letter 'k' is 0%, so we return 0.\n\n**Constraints:**\n\n*   `1 <= s.length <= 100`\n*   `s` consists of lowercase English letters.\n*   `letter` is a lowercase English letter.",
+  "difficulty": "Easy",
+  "category": null,
+  "xpReward": 0,
+  "timeLimitMs": 5000,
+  "memoryLimitMb": 256,
+  "starterCode": {},
+  "solutionCode": "",
+  "hints": [],
+  "isPremium": false,
+  "createdBy": null,
+  "testCases": [
+    {
+      "input": [
+        "foobar ",
+        "o "
+      ],
+      "expectedOutput": 33
+    },
+    {
+      "input": [
+        "jjjj ",
+        "k "
+      ],
+      "expectedOutput": 0
+    }
+  ],
+  "hiddenTestCases": [
+    {
+      "input": [
+        "foobar ",
+        "o "
+      ],
+      "expectedOutput": 33
+    },
+    {
+      "input": [
+        "jjjj ",
+        "k "
+      ],
+      "expectedOutput": 0
+    }
+  ],
+  "tags": [],
+  "constraints": [],
+  "examples": [],
+  "problemNumber": null,
+  "createdAt": "2025-11-14T21:25:06.577172+00:00",
+  "updatedAt": "2025-12-04T04:35:55.643Z"
+}

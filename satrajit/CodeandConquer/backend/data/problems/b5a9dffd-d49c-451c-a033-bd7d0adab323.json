@@ -1,0 +1,101 @@
+{
+  "id": "b5a9dffd-d49c-451c-a033-bd7d0adab323",
+  "title": "Range Product Queries of Powers",
+  "slug": "range-product-queries-of-powers",
+  "description": "Given a positive integer `n`, there exists a **0-indexed** array called `powers`, composed of the **minimum** number of powers of `2` that sum to `n`. The array is sorted in **non-decreasing** order, and there is **only one** way to form the array.\n\nYou are also given a **0-indexed** 2D integer array `queries`, where `queries[i] = [lefti, righti]`. Each `queries[i]` represents a query where you have to find the product of all `powers[j]` with `lefti <= j <= righti`.\n\nReturn _an array_ `answers`_, equal in length to_ `queries`_, where_ `answers[i]` _is the answer to the_ `ith` _query_. Since the answer to the `ith` query may be too large, each `answers[i]` should be returned **modulo** `109 + 7`.\n\n**Example 1:**\n\n**Input:** n = 15, queries = \\[\\[0,1\\],\\[2,2\\],\\[0,3\\]\\]\n**Output:** \\[2,4,64\\]\n**Explanation:**\nFor n = 15, powers = \\[1,2,4,8\\]. It can be shown that powers cannot be a smaller size.\nAnswer to 1st query: powers\\[0\\] \\* powers\\[1\\] = 1 \\* 2 = 2.\nAnswer to 2nd query: powers\\[2\\] = 4.\nAnswer to 3rd query: powers\\[0\\] \\* powers\\[1\\] \\* powers\\[2\\] \\* powers\\[3\\] = 1 \\* 2 \\* 4 \\* 8 = 64.\nEach answer modulo 109 + 7 yields the same answer, so \\[2,4,64\\] is returned.\n\n**Example 2:**\n\n**Input:** n = 2, queries = \\[\\[0,0\\]\\]\n**Output:** \\[2\\]\n**Explanation:**\nFor n = 2, powers = \\[2\\].\nThe answer to the only query is powers\\[0\\] = 2. The answer modulo 109 + 7 is the same, so \\[2\\] is returned.\n\n**Constraints:**\n\n*   `1 <= n <= 109`\n*   `1 <= queries.length <= 105`\n*   `0 <= starti <= endi < powers.length`",
+  "difficulty": "Medium",
+  "category": null,
+  "xpReward": 0,
+  "timeLimitMs": 5000,
+  "memoryLimitMb": 256,
+  "starterCode": [],
+  "solutionCode": "",
+  "hints": [],
+  "isPremium": false,
+  "createdBy": null,
+  "testCases": [
+    {
+      "input": [
+        15,
+        [
+          [
+            0,
+            1
+          ],
+          [
+            2,
+            2
+          ],
+          [
+            0,
+            3
+          ]
+        ]
+      ],
+      "expectedOutput": [
+        2,
+        4,
+        64
+      ]
+    },
+    {
+      "input": [
+        2,
+        [
+          [
+            0,
+            0
+          ]
+        ]
+      ],
+      "expectedOutput": [
+        2
+      ]
+    }
+  ],
+  "hiddenTestCases": [
+    {
+      "input": [
+        15,
+        [
+          [
+            0,
+            1
+          ],
+          [
+            2,
+            2
+          ],
+          [
+            0,
+            3
+          ]
+        ]
+      ],
+      "expectedOutput": [
+        2,
+        4,
+        64
+      ]
+    },
+    {
+      "input": [
+        2,
+        [
+          [
+            0,
+            0
+          ]
+        ]
+      ],
+      "expectedOutput": [
+        2
+      ]
+    }
+  ],
+  "tags": [],
+  "constraints": [],
+  "examples": [],
+  "createdAt": "2025-11-14T21:25:46.586654+00:00",
+  "updatedAt": "2025-12-04T04:35:36.637Z"
+}

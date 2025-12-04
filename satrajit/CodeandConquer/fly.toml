@@ -1,0 +1,55 @@
+# ===========================================
+# Code and Conquer Backend - Fly.io Configuration
+# ===========================================
+# Deploy with: fly deploy
+
+app = "code-and-conquer-backend"
+primary_region = "iad"
+
+[build]
+  dockerfile = "backend/Dockerfile"
+
+[env]
+  NODE_ENV = "production"
+  PORT = "5000"
+  HOST = "0.0.0.0"
+  LOG_LEVEL = "info"
+  RATE_LIMIT_WINDOW_MS = "60000"
+  RATE_LIMIT_MAX_REQUESTS = "100"
+  EXECUTION_TIMEOUT = "10000"
+
+[http_service]
+  internal_port = 5000
+  force_https = true
+  auto_stop_machines = "stop"
+  auto_start_machines = true
+  min_machines_running = 1
+  processes = ["app"]
+
+  [http_service.concurrency]
+    type = "connections"
+    hard_limit = 250
+    soft_limit = 200
+
+  [[http_service.checks]]
+    grace_period = "30s"
+    interval = "30s"
+    method = "GET"
+    timeout = "10s"
+    path = "/api/health"
+
+[processes]
+  app = "node src/index.js"
+
+[[vm]]
+  memory = "512mb"
+  cpu_kind = "shared"
+  cpus = 1
+
+[[statics]]
+  guest_path = "/app/public"
+  url_prefix = "/public"
+
+[metrics]
+  port = 9091
+  path = "/metrics"

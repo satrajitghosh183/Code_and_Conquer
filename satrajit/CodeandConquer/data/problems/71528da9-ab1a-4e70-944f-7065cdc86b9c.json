@@ -1,0 +1,66 @@
+{
+  "id": "71528da9-ab1a-4e70-944f-7065cdc86b9c",
+  "title": "Find Triangular Sum of an Array",
+  "slug": "find-triangular-sum-of-an-array",
+  "description": "You are given a **0-indexed** integer array `nums`, where `nums[i]` is a digit between `0` and `9` (**inclusive**).\n\nThe **triangular sum** of `nums` is the value of the only element present in `nums` after the following process terminates:\n\n1.  Let `nums` comprise of `n` elements. If `n == 1`, **end** the process. Otherwise, **create** a new **0-indexed** integer array `newNums` of length `n - 1`.\n2.  For each index `i`, where `0 <= i < n - 1`, **assign** the value of `newNums[i]` as `(nums[i] + nums[i+1]) % 10`, where `%` denotes modulo operator.\n3.  **Replace** the array `nums` with `newNums`.\n4.  **Repeat** the entire process starting from step 1.\n\nReturn _the triangular sum of_ `nums`.\n\n**Example 1:**\n\n**Input:** nums = \\[1,2,3,4,5\\]\n**Output:** 8\n**Explanation:**\nThe above diagram depicts the process from which we obtain the triangular sum of the array.\n\n**Example 2:**\n\n**Input:** nums = \\[5\\]\n**Output:** 5\n**Explanation:**\nSince there is only one element in nums, the triangular sum is the value of that element itself.\n\n**Constraints:**\n\n*   `1 <= nums.length <= 1000`\n*   `0 <= nums[i] <= 9`",
+  "difficulty": "Medium",
+  "category": null,
+  "xpReward": 0,
+  "timeLimitMs": 5000,
+  "memoryLimitMb": 256,
+  "starterCode": {},
+  "solutionCode": "",
+  "hints": [],
+  "isPremium": false,
+  "createdBy": null,
+  "testCases": [
+    {
+      "input": [
+        [
+          1,
+          2,
+          3,
+          4,
+          5
+        ]
+      ],
+      "expectedOutput": 8
+    },
+    {
+      "input": [
+        [
+          5
+        ]
+      ],
+      "expectedOutput": 5
+    }
+  ],
+  "hiddenTestCases": [
+    {
+      "input": [
+        [
+          1,
+          2,
+          3,
+          4,
+          5
+        ]
+      ],
+      "expectedOutput": 8
+    },
+    {
+      "input": [
+        [
+          5
+        ]
+      ],
+      "expectedOutput": 5
+    }
+  ],
+  "tags": [],
+  "constraints": [],
+  "examples": [],
+  "problemNumber": null,
+  "createdAt": "2025-11-14T21:24:51.365056+00:00",
+  "updatedAt": "2025-12-04T04:36:02.741Z"
+}

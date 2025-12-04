@@ -1,0 +1,56 @@
+{
+  "id": "58ccf109-0e3e-4074-a98e-a5b12b6e3e14",
+  "title": "Strong Password Checker II",
+  "slug": "strong-password-checker-ii",
+  "description": "A password is said to be **strong** if it satisfies all the following criteria:\n\n*   It has at least `8` characters.\n*   It contains at least **one lowercase** letter.\n*   It contains at least **one uppercase** letter.\n*   It contains at least **one digit**.\n*   It contains at least **one special character**. The special characters are the characters in the following string: `\"!@#$%^&*()-+ \"`.\n*   It does **not** contain `2` of the same character in adjacent positions (i.e., `\"aab \"` violates this condition, but `\"aba \"` does not).\n\nGiven a string `password`, return `true` _if it is a **strong** password_. Otherwise, return `false`.\n\n**Example 1:**\n\n**Input:** password =  \"IloveLe3tcode! \"\n**Output:** true\n**Explanation:** The password meets all the requirements. Therefore, we return true.\n\n**Example 2:**\n\n**Input:** password =  \"Me+You--IsMyDream \"\n**Output:** false\n**Explanation:** The password does not contain a digit and also contains 2 of the same character in adjacent positions. Therefore, we return false.\n\n**Example 3:**\n\n**Input:** password =  \"1aB! \"\n**Output:** false\n**Explanation:** The password does not meet the length requirement. Therefore, we return false.\n\n**Constraints:**\n\n*   `1 <= password.length <= 100`\n*   `password` consists of letters, digits, and special characters: `\"!@#$%^&*()-+ \"`.",
+  "difficulty": "Easy",
+  "category": null,
+  "xpReward": 0,
+  "timeLimitMs": 5000,
+  "memoryLimitMb": 256,
+  "starterCode": {},
+  "solutionCode": "",
+  "hints": [],
+  "isPremium": false,
+  "createdBy": null,
+  "testCases": [
+    {
+      "input": [
+        "IloveLe3tcode! "
+      ],
+      "expectedOutput": true
+    },
+    {
+      "input": [
+        "Me+You--IsMyDream "
+      ],
+      "expectedOutput": false
+    },
+    {
+      "input": [
+        "1aB! "
+      ],
+      "expectedOutput": false
+    }
+  ],
+  "hiddenTestCases": [
+    {
+      "input": [
+        "IloveLe3tcode! "
+      ],
+      "expectedOutput": true
+    },
+    {
+      "input": [
+        "Me+You--IsMyDream "
+      ],
+      "expectedOutput": false
+    }
+  ],
+  "tags": [],
+  "constraints": [],
+  "examples": [],
+  "problemNumber": null,
+  "createdAt": "2025-11-14T21:25:11.894945+00:00",
+  "updatedAt": "2025-12-04T04:35:53.330Z"
+}

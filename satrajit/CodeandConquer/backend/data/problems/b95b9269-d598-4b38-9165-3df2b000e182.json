@@ -1,0 +1,55 @@
+{
+  "id": "b95b9269-d598-4b38-9165-3df2b000e182",
+  "title": "Valid Palindrome IV",
+  "slug": "valid-palindrome-iv",
+  "description": "You are given a **0-indexed** string `s` consisting of only lowercase English letters. In one operation, you can change **any** character of `s` to any **other** character.\n\nReturn `true` _if you can make_ `s` _a palindrome after performing **exactly** one or two operations, or return_ `false` _otherwise._\n\n**Example 1:**\n\n**Input:** s =  \"abcdba \"\n**Output:** true\n**Explanation:** One way to make s a palindrome using 1 operation is:\n- Change s\\[2\\] to 'd'. Now, s =  \"abddba \".\nOne operation could be performed to make s a palindrome so return true.\n\n**Example 2:**\n\n**Input:** s =  \"aa \"\n**Output:** true\n**Explanation:** One way to make s a palindrome using 2 operations is:\n- Change s\\[0\\] to 'b'. Now, s =  \"ba \".\n- Change s\\[1\\] to 'b'. Now, s =  \"bb \".\nTwo operations could be performed to make s a palindrome so return true.\n\n**Example 3:**\n\n**Input:** s =  \"abcdef \"\n**Output:** false\n**Explanation:** It is not possible to make s a palindrome using one or two operations so return false.\n\n**Constraints:**\n\n*   `1 <= s.length <= 105`\n*   `s` consists only of lowercase English letters.",
+  "difficulty": "Medium",
+  "category": null,
+  "xpReward": 0,
+  "timeLimitMs": 5000,
+  "memoryLimitMb": 256,
+  "starterCode": [],
+  "solutionCode": "",
+  "hints": [],
+  "isPremium": false,
+  "createdBy": null,
+  "testCases": [
+    {
+      "input": [
+        "abcdba "
+      ],
+      "expectedOutput": true
+    },
+    {
+      "input": [
+        "aa "
+      ],
+      "expectedOutput": true
+    },
+    {
+      "input": [
+        "abcdef "
+      ],
+      "expectedOutput": false
+    }
+  ],
+  "hiddenTestCases": [
+    {
+      "input": [
+        "abcdba "
+      ],
+      "expectedOutput": true
+    },
+    {
+      "input": [
+        "aa "
+      ],
+      "expectedOutput": true
+    }
+  ],
+  "tags": [],
+  "constraints": [],
+  "examples": [],
+  "createdAt": "2025-11-14T21:25:19.425183+00:00",
+  "updatedAt": "2025-12-04T04:35:49.785Z"
+}

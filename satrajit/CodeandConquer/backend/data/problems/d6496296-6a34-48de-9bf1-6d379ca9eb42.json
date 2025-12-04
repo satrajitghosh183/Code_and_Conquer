@@ -1,0 +1,86 @@
+{
+  "id": "d6496296-6a34-48de-9bf1-6d379ca9eb42",
+  "title": "Stone Game VIII",
+  "slug": "stone-game-viii",
+  "description": "Alice and Bob take turns playing a game, with **Alice starting first**.\n\nThere are `n` stones arranged in a row. On each player's turn, while the number of stones is **more than one**, they will do the following:\n\n1.  Choose an integer `x > 1`, and **remove** the leftmost `x` stones from the row.\n2.  Add the **sum** of the **removed** stones' values to the player's score.\n3.  Place a **new stone**, whose value is equal to that sum, on the left side of the row.\n\nThe game stops when **only** **one** stone is left in the row.\n\nThe **score difference** between Alice and Bob is `(Alice's score - Bob's score)`. Alice's goal is to **maximize** the score difference, and Bob's goal is the **minimize** the score difference.\n\nGiven an integer array `stones` of length `n` where `stones[i]` represents the value of the `ith` stone **from the left**, return _the **score difference** between Alice and Bob if they both play **optimally**._\n\n**Example 1:**\n\n**Input:** stones = \\[-1,2,-3,4,-5\\]\n**Output:** 5\n**Explanation:**\n- Alice removes the first 4 stones, adds (-1) + 2 + (-3) + 4 = 2 to her score, and places a stone of\n  value 2 on the left. stones = \\[2,-5\\].\n- Bob removes the first 2 stones, adds 2 + (-5) = -3 to his score, and places a stone of value -3 on\n  the left. stones = \\[-3\\].\nThe difference between their scores is 2 - (-3) = 5.\n\n**Example 2:**\n\n**Input:** stones = \\[7,-6,5,10,5,-2,-6\\]\n**Output:** 13\n**Explanation:**\n- Alice removes all stones, adds 7 + (-6) + 5 + 10 + 5 + (-2) + (-6) = 13 to her score, and places a\n  stone of value 13 on the left. stones = \\[13\\].\nThe difference between their scores is 13 - 0 = 13.\n\n**Example 3:**\n\n**Input:** stones = \\[-10,-12\\]\n**Output:** -22\n**Explanation:**\n- Alice can only make one move, which is to remove both stones. She adds (-10) + (-12) = -22 to her\n  score and places a stone of value -22 on the left. stones = \\[-22\\].\nThe difference between their scores is (-22) - 0 = -22.\n\n**Constraints:**\n\n*   `n == stones.length`\n*   `2 <= n <= 105`\n*   `-104 <= stones[i] <= 104`",
+  "difficulty": "Hard",
+  "category": null,
+  "xpReward": 0,
+  "timeLimitMs": 5000,
+  "memoryLimitMb": 256,
+  "starterCode": [],
+  "solutionCode": "",
+  "hints": [],
+  "isPremium": false,
+  "createdBy": null,
+  "testCases": [
+    {
+      "input": [
+        [
+          -1,
+          2,
+          -3,
+          4,
+          -5
+        ]
+      ],
+      "expectedOutput": 5
+    },
+    {
+      "input": [
+        [
+          7,
+          -6,
+          5,
+          10,
+          5,
+          -2,
+          -6
+        ]
+      ],
+      "expectedOutput": 13
+    },
+    {
+      "input": [
+        [
+          -10,
+          -12
+        ]
+      ],
+      "expectedOutput": -22
+    }
+  ],
+  "hiddenTestCases": [
+    {
+      "input": [
+        [
+          -1,
+          2,
+          -3,
+          4,
+          -5
+        ]
+      ],
+      "expectedOutput": 5
+    },
+    {
+      "input": [
+        [
+          7,
+          -6,
+          5,
+          10,
+          5,
+          -2,
+          -6
+        ]
+      ],
+      "expectedOutput": 13
+    }
+  ],
+  "tags": [],
+  "constraints": [],
+  "examples": [],
+  "createdAt": "2025-11-14T21:23:28.823112+00:00",
+  "updatedAt": "2025-12-04T04:36:38.190Z"
+}

@@ -1,0 +1,92 @@
+{
+  "id": "36b74abb-737f-4e16-a4b0-a12376a9f503",
+  "title": "Stone Game VI",
+  "slug": "stone-game-vi",
+  "description": "Alice and Bob take turns playing a game, with Alice starting first.\n\nThere are `n` stones in a pile. On each player's turn, they can **remove** a stone from the pile and receive points based on the stone's value. Alice and Bob may **value the stones differently**.\n\nYou are given two integer arrays of length `n`, `aliceValues` and `bobValues`. Each `aliceValues[i]` and `bobValues[i]` represents how Alice and Bob, respectively, value the `ith` stone.\n\nThe winner is the person with the most points after all the stones are chosen. If both players have the same amount of points, the game results in a draw. Both players will play **optimally**. Both players know the other's values.\n\nDetermine the result of the game, and:\n\n*   If Alice wins, return `1`.\n*   If Bob wins, return `-1`.\n*   If the game results in a draw, return `0`.\n\n**Example 1:**\n\n**Input:** aliceValues = \\[1,3\\], bobValues = \\[2,1\\]\n**Output:** 1\n**Explanation:**\nIf Alice takes stone 1 (0-indexed) first, Alice will receive 3 points.\nBob can only choose stone 0, and will only receive 2 points.\nAlice wins.\n\n**Example 2:**\n\n**Input:** aliceValues = \\[1,2\\], bobValues = \\[3,1\\]\n**Output:** 0\n**Explanation:**\nIf Alice takes stone 0, and Bob takes stone 1, they will both have 1 point.\nDraw.\n\n**Example 3:**\n\n**Input:** aliceValues = \\[2,4,3\\], bobValues = \\[1,6,7\\]\n**Output:** -1\n**Explanation:**\nRegardless of how Alice plays, Bob will be able to have more points than Alice.\nFor example, if Alice takes stone 1, Bob can take stone 2, and Alice takes stone 0, Alice will have 6 points to Bob's 7.\nBob wins.\n\n**Constraints:**\n\n*   `n == aliceValues.length == bobValues.length`\n*   `1 <= n <= 105`\n*   `1 <= aliceValues[i], bobValues[i] <= 100`",
+  "difficulty": "Medium",
+  "category": null,
+  "xpReward": 0,
+  "timeLimitMs": 5000,
+  "memoryLimitMb": 256,
+  "starterCode": [],
+  "solutionCode": "",
+  "hints": [],
+  "isPremium": false,
+  "createdBy": null,
+  "testCases": [
+    {
+      "input": [
+        [
+          1,
+          3
+        ],
+        [
+          2,
+          1
+        ]
+      ],
+      "expectedOutput": 1
+    },
+    {
+      "input": [
+        [
+          1,
+          2
+        ],
+        [
+          3,
+          1
+        ]
+      ],
+      "expectedOutput": 0
+    },
+    {
+      "input": [
+        [
+          2,
+          4,
+          3
+        ],
+        [
+          1,
+          6,
+          7
+        ]
+      ],
+      "expectedOutput": -1
+    }
+  ],
+  "hiddenTestCases": [
+    {
+      "input": [
+        [
+          1,
+          3
+        ],
+        [
+          2,
+          1
+        ]
+      ],
+      "expectedOutput": 1
+    },
+    {
+      "input": [
+        [
+          1,
+          2
+        ],
+        [
+          3,
+          1
+        ]
+      ],
+      "expectedOutput": 0
+    }
+  ],
+  "tags": [],
+  "constraints": [],
+  "examples": [],
+  "createdAt": "2025-11-14T21:22:42.020777+00:00",
+  "updatedAt": "2025-12-04T04:37:05.597Z"
+}

@@ -1,0 +1,216 @@
+{
+  "id": "d7781e6b-0d5f-4e50-ac9a-cee0841bc6c1",
+  "title": "Describe the Painting",
+  "slug": "describe-the-painting",
+  "description": "There is a long and thin painting that can be represented by a number line. The painting was painted with multiple overlapping segments where each segment was painted with a **unique** color. You are given a 2D integer array `segments`, where `segments[i] = [starti, endi, colori]` represents the **half-closed segment** `[starti, endi)` with `colori` as the color.\n\nThe colors in the overlapping segments of the painting were **mixed** when it was painted. When two or more colors mix, they form a new color that can be represented as a **set** of mixed colors.\n\n*   For example, if colors `2`, `4`, and `6` are mixed, then the resulting mixed color is `{2,4,6}`.\n\nFor the sake of simplicity, you should only output the **sum** of the elements in the set rather than the full set.\n\nYou want to **describe** the painting with the **minimum** number of non-overlapping **half-closed segments** of these mixed colors. These segments can be represented by the 2D array `painting` where `painting[j] = [leftj, rightj, mixj]` describes a **half-closed segment** `[leftj, rightj)` with the mixed color **sum** of `mixj`.\n\n*   For example, the painting created with `segments = [[1,4,5],[1,7,7]]` can be described by `painting = [[1,4,12],[4,7,7]]` because:\n    *   `[1,4)` is colored `{5,7}` (with a sum of `12`) from both the first and second segments.\n    *   `[4,7)` is colored `{7}` from only the second segment.\n\nReturn _the 2D array_ `painting` _describing the finished painting (excluding any parts that are **not** painted). You may return the segments in **any order**_.\n\nA **half-closed segment** `[a, b)` is the section of the number line between points `a` and `b` **including** point `a` and **not including** point `b`.\n\n**Example 1:**\n\n**Input:** segments = \\[\\[1,4,5\\],\\[4,7,7\\],\\[1,7,9\\]\\]\n**Output:** \\[\\[1,4,14\\],\\[4,7,16\\]\\]\n**Explanation:** The painting can be described as follows:\n- \\[1,4) is colored {5,9} (with a sum of 14) from the first and third segments.\n- \\[4,7) is colored {7,9} (with a sum of 16) from the second and third segments.\n\n**Example 2:**\n\n**Input:** segments = \\[\\[1,7,9\\],\\[6,8,15\\],\\[8,10,7\\]\\]\n**Output:** \\[\\[1,6,9\\],\\[6,7,24\\],\\[7,8,15\\],\\[8,10,7\\]\\]\n**Explanation:** The painting can be described as follows:\n- \\[1,6) is colored 9 from the first segment.\n- \\[6,7) is colored {9,15} (with a sum of 24) from the first and second segments.\n- \\[7,8) is colored 15 from the second segment.\n- \\[8,10) is colored 7 from the third segment.\n\n**Example 3:**\n\n**Input:** segments = \\[\\[1,4,5\\],\\[1,4,7\\],\\[4,7,1\\],\\[4,7,11\\]\\]\n**Output:** \\[\\[1,4,12\\],\\[4,7,12\\]\\]\n**Explanation:** The painting can be described as follows:\n- \\[1,4) is colored {5,7} (with a sum of 12) from the first and second segments.\n- \\[4,7) is colored {1,11} (with a sum of 12) from the third and fourth segments.\nNote that returning a single segment \\[1,7) is incorrect because the mixed color sets are different.\n\n**Constraints:**\n\n*   `1 <= segments.length <= 2 * 104`\n*   `segments[i].length == 3`\n*   `1 <= starti < endi <= 105`\n*   `1 <= colori <= 109`\n*   Each `colori` is distinct.",
+  "difficulty": "Medium",
+  "category": null,
+  "xpReward": 0,
+  "timeLimitMs": 5000,
+  "memoryLimitMb": 256,
+  "starterCode": {},
+  "solutionCode": "",
+  "hints": [],
+  "isPremium": false,
+  "createdBy": null,
+  "testCases": [
+    {
+      "input": [
+        [
+          [
+            1,
+            4,
+            5
+          ],
+          [
+            4,
+            7,
+            7
+          ],
+          [
+            1,
+            7,
+            9
+          ]
+        ]
+      ],
+      "expectedOutput": [
+        [
+          1,
+          4,
+          14
+        ],
+        [
+          4,
+          7,
+          16
+        ]
+      ]
+    },
+    {
+      "input": [
+        [
+          [
+            1,
+            7,
+            9
+          ],
+          [
+            6,
+            8,
+            15
+          ],
+          [
+            8,
+            10,
+            7
+          ]
+        ]
+      ],
+      "expectedOutput": [
+        [
+          1,
+          6,
+          9
+        ],
+        [
+          6,
+          7,
+          24
+        ],
+        [
+          7,
+          8,
+          15
+        ],
+        [
+          8,
+          10,
+          7
+        ]
+      ]
+    },
+    {
+      "input": [
+        [
+          [
+            1,
+            4,
+            5
+          ],
+          [
+            1,
+            4,
+            7
+          ],
+          [
+            4,
+            7,
+            1
+          ],
+          [
+            4,
+            7,
+            11
+          ]
+        ]
+      ],
+      "expectedOutput": [
+        [
+          1,
+          4,
+          12
+        ],
+        [
+          4,
+          7,
+          12
+        ]
+      ]
+    }
+  ],
+  "hiddenTestCases": [
+    {
+      "input": [
+        [
+          [
+            1,
+            4,
+            5
+          ],
+          [
+            4,
+            7,
+            7
+          ],
+          [
+            1,
+            7,
+            9
+          ]
+        ]
+      ],
+      "expectedOutput": [
+        [
+          1,
+          4,
+          14
+        ],
+        [
+          4,
+          7,
+          16
+        ]
+      ]
+    },
+    {
+      "input": [
+        [
+          [
+            1,
+            7,
+            9
+          ],
+          [
+            6,
+            8,
+            15
+          ],
+          [
+            8,
+            10,
+            7
+          ]
+        ]
+      ],
+      "expectedOutput": [
+        [
+          1,
+          6,
+          9
+        ],
+        [
+          6,
+          7,
+          24
+        ],
+        [
+          7,
+          8,
+          15
+        ],
+        [
+          8,
+          10,
+          7
+        ]
+      ]
+    }
+  ],
+  "tags": [],
+  "constraints": [],
+  "examples": [],
+  "problemNumber": null,
+  "createdAt": "2025-11-14T21:23:45.055159+00:00",
+  "updatedAt": "2025-12-04T04:36:31.070Z"
+}

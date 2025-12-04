@@ -1,0 +1,157 @@
+{
+  "id": "3b0a49ad-ea88-48d8-b84a-13ca0c38f322",
+  "title": "Form Array by Concatenating Subarrays of Another Array",
+  "slug": "form-array-by-concatenating-subarrays-of-another-array",
+  "description": "You are given a 2D integer array `groups` of length `n`. You are also given an integer array `nums`.\n\nYou are asked if you can choose `n` **disjoint** subarrays from the array `nums` such that the `ith` subarray is equal to `groups[i]` (**0-indexed**), and if `i > 0`, the `(i-1)th` subarray appears **before** the `ith` subarray in `nums` (i.e. the subarrays must be in the same order as `groups`).\n\nReturn `true` _if you can do this task, and_ `false` _otherwise_.\n\nNote that the subarrays are **disjoint** if and only if there is no index `k` such that `nums[k]` belongs to more than one subarray. A subarray is a contiguous sequence of elements within an array.\n\n**Example 1:**\n\n**Input:** groups = \\[\\[1,-1,-1\\],\\[3,-2,0\\]\\], nums = \\[1,-1,0,1,-1,-1,3,-2,0\\]\n**Output:** true\n**Explanation:** You can choose the 0th subarray as \\[1,-1,0,**1,-1,-1**,3,-2,0\\] and the 1st one as \\[1,-1,0,1,-1,-1,**3,-2,0**\\].\nThese subarrays are disjoint as they share no common nums\\[k\\] element.\n\n**Example 2:**\n\n**Input:** groups = \\[\\[10,-2\\],\\[1,2,3,4\\]\\], nums = \\[1,2,3,4,10,-2\\]\n**Output:** false\n**Explanation:** Note that choosing the subarrays \\[**1,2,3,4**,10,-2\\] and \\[1,2,3,4,**10,-2**\\] is incorrect because they are not in the same order as in groups.\n\\[10,-2\\] must come before \\[1,2,3,4\\].\n\n**Example 3:**\n\n**Input:** groups = \\[\\[1,2,3\\],\\[3,4\\]\\], nums = \\[7,7,1,2,3,4,7,7\\]\n**Output:** false\n**Explanation:** Note that choosing the subarrays \\[7,7,**1,2,3**,4,7,7\\] and \\[7,7,1,2,**3,4**,7,7\\] is invalid because they are not disjoint.\nThey share a common elements nums\\[4\\] (0-indexed).\n\n**Constraints:**\n\n*   `groups.length == n`\n*   `1 <= n <= 103`\n*   `1 <= groups[i].length, sum(groups[i].length) <= 103`\n*   `1 <= nums.length <= 103`\n*   `-107 <= groups[i][j], nums[k] <= 107`",
+  "difficulty": "Medium",
+  "category": null,
+  "xpReward": 0,
+  "timeLimitMs": 5000,
+  "memoryLimitMb": 256,
+  "starterCode": [],
+  "solutionCode": "",
+  "hints": [],
+  "isPremium": false,
+  "createdBy": null,
+  "testCases": [
+    {
+      "input": [
+        [
+          [
+            1,
+            -1,
+            -1
+          ],
+          [
+            3,
+            -2,
+            0
+          ]
+        ],
+        [
+          1,
+          -1,
+          0,
+          1,
+          -1,
+          -1,
+          3,
+          -2,
+          0
+        ]
+      ],
+      "expectedOutput": true
+    },
+    {
+      "input": [
+        [
+          [
+            10,
+            -2
+          ],
+          [
+            1,
+            2,
+            3,
+            4
+          ]
+        ],
+        [
+          1,
+          2,
+          3,
+          4,
+          10,
+          -2
+        ]
+      ],
+      "expectedOutput": false
+    },
+    {
+      "input": [
+        [
+          [
+            1,
+            2,
+            3
+          ],
+          [
+            3,
+            4
+          ]
+        ],
+        [
+          7,
+          7,
+          1,
+          2,
+          3,
+          4,
+          7,
+          7
+        ]
+      ],
+      "expectedOutput": false
+    }
+  ],
+  "hiddenTestCases": [
+    {
+      "input": [
+        [
+          [
+            1,
+            -1,
+            -1
+          ],
+          [
+            3,
+            -2,
+            0
+          ]
+        ],
+        [
+          1,
+          -1,
+          0,
+          1,
+          -1,
+          -1,
+          3,
+          -2,
+          0
+        ]
+      ],
+      "expectedOutput": true
+    },
+    {
+      "input": [
+        [
+          [
+            10,
+            -2
+          ],
+          [
+            1,
+            2,
+            3,
+            4
+          ]
+        ],
+        [
+          1,
+          2,
+          3,
+          4,
+          10,
+          -2
+        ]
+      ],
+      "expectedOutput": false
+    }
+  ],
+  "tags": [],
+  "constraints": [],
+  "examples": [],
+  "createdAt": "2025-11-14T21:23:00.957283+00:00",
+  "updatedAt": "2025-12-04T04:36:52.210Z"
+}

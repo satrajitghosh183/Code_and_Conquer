@@ -1,0 +1,97 @@
+{
+  "id": "5f379b08-3ae3-43b9-b079-a0615cb8a670",
+  "title": "Minimum Number of Days to Disconnect Island",
+  "slug": "minimum-number-of-days-to-disconnect-island",
+  "description": "You are given an `m x n` binary grid `grid` where `1` represents land and `0` represents water. An **island** is a maximal **4-directionally** (horizontal or vertical) connected group of `1`'s.\n\nThe grid is said to be **connected** if we have **exactly one island**, otherwise is said **disconnected**.\n\nIn one day, we are allowed to change **any** single land cell `(1)` into a water cell `(0)`.\n\nReturn _the minimum number of days to disconnect the grid_.\n\n**Example 1:**\n\n**Input:** grid = \\[\\[0,1,1,0\\],\\[0,1,1,0\\],\\[0,0,0,0\\]\\]\n\n**Output:** 2\n**Explanation:** We need at least 2 days to get a disconnected grid.\nChange land grid\\[1\\]\\[1\\] and grid\\[0\\]\\[2\\] to water and get 2 disconnected island.\n\n**Example 2:**\n\n**Input:** grid = \\[\\[1,1\\]\\]\n**Output:** 2\n**Explanation:** Grid of full water is also disconnected (\\[\\[1,1\\]\\] -> \\[\\[0,0\\]\\]), 0 islands.\n\n**Constraints:**\n\n*   `m == grid.length`\n*   `n == grid[i].length`\n*   `1 <= m, n <= 30`\n*   `grid[i][j]` is either `0` or `1`.",
+  "difficulty": "Hard",
+  "category": null,
+  "xpReward": 0,
+  "timeLimitMs": 5000,
+  "memoryLimitMb": 256,
+  "starterCode": [],
+  "solutionCode": "",
+  "hints": [],
+  "isPremium": false,
+  "createdBy": null,
+  "testCases": [
+    {
+      "input": [
+        [
+          [
+            0,
+            1,
+            1,
+            0
+          ],
+          [
+            0,
+            1,
+            1,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0
+          ]
+        ]
+      ],
+      "expectedOutput": 2
+    },
+    {
+      "input": [
+        [
+          [
+            1,
+            1
+          ]
+        ]
+      ],
+      "expectedOutput": 2
+    }
+  ],
+  "hiddenTestCases": [
+    {
+      "input": [
+        [
+          [
+            0,
+            1,
+            1,
+            0
+          ],
+          [
+            0,
+            1,
+            1,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0
+          ]
+        ]
+      ],
+      "expectedOutput": 2
+    },
+    {
+      "input": [
+        [
+          [
+            1,
+            1
+          ]
+        ]
+      ],
+      "expectedOutput": 2
+    }
+  ],
+  "tags": [],
+  "constraints": [],
+  "examples": [],
+  "createdAt": "2025-11-14T21:22:08.604079+00:00",
+  "updatedAt": "2025-12-04T04:37:16.356Z"
+}

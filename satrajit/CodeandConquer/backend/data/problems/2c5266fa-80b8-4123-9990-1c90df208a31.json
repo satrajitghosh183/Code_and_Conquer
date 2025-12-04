@@ -1,0 +1,198 @@
+{
+  "id": "2c5266fa-80b8-4123-9990-1c90df208a31",
+  "title": "Move Sub-Tree of N-Ary Tree",
+  "slug": "move-sub-tree-of-n-ary-tree",
+  "description": "Given the `root` of an N-ary tree of unique values, and two nodes of the tree `p` and `q`.\n\nYou should move the subtree of the node `p` to become a direct child of node `q`. If `p` is already a direct child of `q`, do not change anything. Node `p` **must be** the last child in the children list of node `q`.\n\nReturn _the root of the tree_ after adjusting it.\n\nThere are 3 cases for nodes `p` and `q`:\n\n1.  Node `q` is in the sub-tree of node `p`.\n2.  Node `p` is in the sub-tree of node `q`.\n3.  Neither node `p` is in the sub-tree of node `q` nor node `q` is in the sub-tree of node `p`.\n\nIn cases 2 and 3, you just need to move `p` (with its sub-tree) to be a child of `q`, but in case 1 the tree may be disconnected, thus you need to reconnect the tree again. **Please read the examples carefully before solving this problem.**\n\n_Nary-Tree input serialization is represented in their level order traversal, each group of children is separated by the null value (See examples)._\n\nFor example, the above tree is serialized as `[1,null,2,3,4,5,null,null,6,7,null,8,null,9,10,null,null,11,null,12,null,13,null,null,14]`.\n\n**Example 1:**\n\n**Input:** root = \\[1,null,2,3,null,4,5,null,6,null,7,8\\], p = 4, q = 1\n**Output:** \\[1,null,2,3,4,null,5,null,6,null,7,8\\]\n**Explanation:** This example follows the second case as node p is in the sub-tree of node q. We move node p with its sub-tree to be a direct child of node q.\nNotice that node 4 is the last child of node 1.\n\n**Example 2:**\n\n**Input:** root = \\[1,null,2,3,null,4,5,null,6,null,7,8\\], p = 7, q = 4\n**Output:** \\[1,null,2,3,null,4,5,null,6,null,7,8\\]\n**Explanation:** Node 7 is already a direct child of node 4. We don't change anything.\n\n**Example 3:**\n\n**Input:** root = \\[1,null,2,3,null,4,5,null,6,null,7,8\\], p = 3, q = 8\n**Output:** \\[1,null,2,null,4,5,null,7,8,null,null,null,3,null,6\\]\n**Explanation:** This example follows case 3 because node p is not in the sub-tree of node q and vice-versa. We can move node 3 with its sub-tree and make it as node 8's child.\n\n**Constraints:**\n\n*   The total number of nodes is between `[2, 1000]`.\n*   Each node has a **unique** value.\n*   `p != null`\n*   `q != null`\n*   `p` and `q` are two different nodes (i.e. `p != q`).",
+  "difficulty": "Hard",
+  "category": null,
+  "xpReward": 0,
+  "timeLimitMs": 5000,
+  "memoryLimitMb": 256,
+  "starterCode": [],
+  "solutionCode": "",
+  "hints": [],
+  "isPremium": false,
+  "createdBy": null,
+  "testCases": [
+    {
+      "input": [
+        [
+          1,
+          null,
+          2,
+          3,
+          null,
+          4,
+          5,
+          null,
+          6,
+          null,
+          7,
+          8
+        ],
+        4,
+        1
+      ],
+      "expectedOutput": [
+        1,
+        null,
+        2,
+        3,
+        4,
+        null,
+        5,
+        null,
+        6,
+        null,
+        7,
+        8
+      ]
+    },
+    {
+      "input": [
+        [
+          1,
+          null,
+          2,
+          3,
+          null,
+          4,
+          5,
+          null,
+          6,
+          null,
+          7,
+          8
+        ],
+        7,
+        4
+      ],
+      "expectedOutput": [
+        1,
+        null,
+        2,
+        3,
+        null,
+        4,
+        5,
+        null,
+        6,
+        null,
+        7,
+        8
+      ]
+    },
+    {
+      "input": [
+        [
+          1,
+          null,
+          2,
+          3,
+          null,
+          4,
+          5,
+          null,
+          6,
+          null,
+          7,
+          8
+        ],
+        3,
+        8
+      ],
+      "expectedOutput": [
+        1,
+        null,
+        2,
+        null,
+        4,
+        5,
+        null,
+        7,
+        8,
+        null,
+        null,
+        null,
+        3,
+        null,
+        6
+      ]
+    }
+  ],
+  "hiddenTestCases": [
+    {
+      "input": [
+        [
+          1,
+          null,
+          2,
+          3,
+          null,
+          4,
+          5,
+          null,
+          6,
+          null,
+          7,
+          8
+        ],
+        4,
+        1
+      ],
+      "expectedOutput": [
+        1,
+        null,
+        2,
+        3,
+        4,
+        null,
+        5,
+        null,
+        6,
+        null,
+        7,
+        8
+      ]
+    },
+    {
+      "input": [
+        [
+          1,
+          null,
+          2,
+          3,
+          null,
+          4,
+          5,
+          null,
+          6,
+          null,
+          7,
+          8
+        ],
+        7,
+        4
+      ],
+      "expectedOutput": [
+        1,
+        null,
+        2,
+        3,
+        null,
+        4,
+        5,
+        null,
+        6,
+        null,
+        7,
+        8
+      ]
+    }
+  ],
+  "tags": [],
+  "constraints": [],
+  "examples": [],
+  "createdAt": "2025-11-14T21:21:47.023027+00:00",
+  "updatedAt": "2025-12-04T04:37:20.679Z"
+}

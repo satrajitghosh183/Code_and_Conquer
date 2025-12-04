@@ -1,0 +1,180 @@
+{
+  "id": "fc738cc9-090d-446a-b445-5fa358959eff",
+  "title": "Minimum Cost to Reach City With Discounts",
+  "slug": "minimum-cost-to-reach-city-with-discounts",
+  "description": "A series of highways connect `n` cities numbered from `0` to `n - 1`. You are given a 2D integer array `highways` where `highways[i] = [city1i, city2i, tolli]` indicates that there is a highway that connects `city1i` and `city2i`, allowing a car to go from `city1i` to `city2i` **and vice versa** for a cost of `tolli`.\n\nYou are also given an integer `discounts` which represents the number of discounts you have. You can use a discount to travel across the `ith` highway for a cost of `tolli / 2` (**integer** **division**). Each discount may only be used **once**, and you can only use at most **one** discount per highway.\n\nReturn _the **minimum total cost** to go from city_ `0` _to city_ `n - 1`_, or_ `-1` _if it is not possible to go from city_ `0` _to city_ `n - 1`_._\n\n**Example 1:**  \n\n**Input:** n = 5, highways = \\[\\[0,1,4\\],\\[2,1,3\\],\\[1,4,11\\],\\[3,2,3\\],\\[3,4,2\\]\\], discounts = 1\n**Output:** 9\n**Explanation:**\nGo from 0 to 1 for a cost of 4.\nGo from 1 to 4 and use a discount for a cost of 11 / 2 = 5.\nThe minimum cost to go from 0 to 4 is 4 + 5 = 9.\n\n**Example 2:**  \n\n**Input:** n = 4, highways = \\[\\[1,3,17\\],\\[1,2,7\\],\\[3,2,5\\],\\[0,1,6\\],\\[3,0,20\\]\\], discounts = 20\n**Output:** 8\n**Explanation:**\nGo from 0 to 1 and use a discount for a cost of 6 / 2 = 3.\nGo from 1 to 2 and use a discount for a cost of 7 / 2 = 3.\nGo from 2 to 3 and use a discount for a cost of 5 / 2 = 2.\nThe minimum cost to go from 0 to 3 is 3 + 3 + 2 = 8.\n\n**Example 3:**  \n\n**Input:** n = 4, highways = \\[\\[0,1,3\\],\\[2,3,2\\]\\], discounts = 0\n**Output:** -1\n**Explanation:**\nIt is impossible to go from 0 to 3 so return -1.\n\n**Constraints:**\n\n*   `2 <= n <= 1000`\n*   `1 <= highways.length <= 1000`\n*   `highways[i].length == 3`\n*   `0 <= city1i, city2i <= n - 1`\n*   `city1i != city2i`\n*   `0 <= tolli <= 105`\n*   `0 <= discounts <= 500`\n*   There are no duplicate highways.",
+  "difficulty": "Medium",
+  "category": null,
+  "xpReward": 0,
+  "timeLimitMs": 5000,
+  "memoryLimitMb": 256,
+  "starterCode": [],
+  "solutionCode": "",
+  "hints": [],
+  "isPremium": false,
+  "createdBy": null,
+  "testCases": [
+    {
+      "input": [
+        5,
+        [
+          [
+            0,
+            1,
+            4
+          ],
+          [
+            2,
+            1,
+            3
+          ],
+          [
+            1,
+            4,
+            11
+          ],
+          [
+            3,
+            2,
+            3
+          ],
+          [
+            3,
+            4,
+            2
+          ]
+        ],
+        1
+      ],
+      "expectedOutput": 9
+    },
+    {
+      "input": [
+        4,
+        [
+          [
+            1,
+            3,
+            17
+          ],
+          [
+            1,
+            2,
+            7
+          ],
+          [
+            3,
+            2,
+            5
+          ],
+          [
+            0,
+            1,
+            6
+          ],
+          [
+            3,
+            0,
+            20
+          ]
+        ],
+        20
+      ],
+      "expectedOutput": 8
+    },
+    {
+      "input": [
+        4,
+        [
+          [
+            0,
+            1,
+            3
+          ],
+          [
+            2,
+            3,
+            2
+          ]
+        ],
+        0
+      ],
+      "expectedOutput": -1
+    }
+  ],
+  "hiddenTestCases": [
+    {
+      "input": [
+        5,
+        [
+          [
+            0,
+            1,
+            4
+          ],
+          [
+            2,
+            1,
+            3
+          ],
+          [
+            1,
+            4,
+            11
+          ],
+          [
+            3,
+            2,
+            3
+          ],
+          [
+            3,
+            4,
+            2
+          ]
+        ],
+        1
+      ],
+      "expectedOutput": 9
+    },
+    {
+      "input": [
+        4,
+        [
+          [
+            1,
+            3,
+            17
+          ],
+          [
+            1,
+            2,
+            7
+          ],
+          [
+            3,
+            2,
+            5
+          ],
+          [
+            0,
+            1,
+            6
+          ],
+          [
+            3,
+            0,
+            20
+          ]
+        ],
+        20
+      ],
+      "expectedOutput": 8
+    }
+  ],
+  "tags": [],
+  "constraints": [],
+  "examples": [],
+  "createdAt": "2025-11-14T21:24:22.298122+00:00",
+  "updatedAt": "2025-12-04T04:36:16.082Z"
+}

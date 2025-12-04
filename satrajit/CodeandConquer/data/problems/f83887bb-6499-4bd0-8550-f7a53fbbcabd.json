@@ -1,0 +1,114 @@
+{
+  "id": "f83887bb-6499-4bd0-8550-f7a53fbbcabd",
+  "title": "Check if Every Row and Column Contains All Numbers",
+  "slug": "check-if-every-row-and-column-contains-all-numbers",
+  "description": "An `n x n` matrix is **valid** if every row and every column contains **all** the integers from `1` to `n` (**inclusive**).\n\nGiven an `n x n` integer matrix `matrix`, return `true` _if the matrix is **valid**._ Otherwise, return `false`.\n\n**Example 1:**\n\n**Input:** matrix = \\[\\[1,2,3\\],\\[3,1,2\\],\\[2,3,1\\]\\]\n**Output:** true\n**Explanation:** In this case, n = 3, and every row and column contains the numbers 1, 2, and 3.\nHence, we return true.\n\n**Example 2:**\n\n**Input:** matrix = \\[\\[1,1,1\\],\\[1,2,3\\],\\[1,2,3\\]\\]\n**Output:** false\n**Explanation:** In this case, n = 3, but the first row and the first column do not contain the numbers 2 or 3.\nHence, we return false.\n\n**Constraints:**\n\n*   `n == matrix.length == matrix[i].length`\n*   `1 <= n <= 100`\n*   `1 <= matrix[i][j] <= n`",
+  "difficulty": "Easy",
+  "category": null,
+  "xpReward": 0,
+  "timeLimitMs": 5000,
+  "memoryLimitMb": 256,
+  "starterCode": {},
+  "solutionCode": "",
+  "hints": [],
+  "isPremium": false,
+  "createdBy": null,
+  "testCases": [
+    {
+      "input": [
+        [
+          [
+            1,
+            2,
+            3
+          ],
+          [
+            3,
+            1,
+            2
+          ],
+          [
+            2,
+            3,
+            1
+          ]
+        ]
+      ],
+      "expectedOutput": true
+    },
+    {
+      "input": [
+        [
+          [
+            1,
+            1,
+            1
+          ],
+          [
+            1,
+            2,
+            3
+          ],
+          [
+            1,
+            2,
+            3
+          ]
+        ]
+      ],
+      "expectedOutput": false
+    }
+  ],
+  "hiddenTestCases": [
+    {
+      "input": [
+        [
+          [
+            1,
+            2,
+            3
+          ],
+          [
+            3,
+            1,
+            2
+          ],
+          [
+            2,
+            3,
+            1
+          ]
+        ]
+      ],
+      "expectedOutput": true
+    },
+    {
+      "input": [
+        [
+          [
+            1,
+            1,
+            1
+          ],
+          [
+            1,
+            2,
+            3
+          ],
+          [
+            1,
+            2,
+            3
+          ]
+        ]
+      ],
+      "expectedOutput": false
+    }
+  ],
+  "tags": [],
+  "constraints": [],
+  "examples": [],
+  "problemNumber": null,
+  "createdAt": "2025-11-14T21:24:32.077773+00:00",
+  "updatedAt": "2025-12-04T04:36:11.478Z"
+}

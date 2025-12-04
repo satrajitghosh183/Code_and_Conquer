@@ -1,0 +1,68 @@
+{
+  "id": "5661a67c-6bbb-4880-95fc-c311c5b54baa",
+  "title": "Number of Ways to Form a Target String Given a Dictionary",
+  "slug": "number-of-ways-to-form-a-target-string-given-a-dictionary",
+  "description": "You are given a list of strings of the **same length** `words` and a string `target`.\n\nYour task is to form `target` using the given `words` under the following rules:\n\n*   `target` should be formed from left to right.\n*   To form the `ith` character (**0-indexed**) of `target`, you can choose the `kth` character of the `jth` string in `words` if `target[i] = words[j][k]`.\n*   Once you use the `kth` character of the `jth` string of `words`, you **can no longer** use the `xth` character of any string in `words` where `x <= k`. In other words, all characters to the left of or at index `k` become unusuable for every string.\n*   Repeat the process until you form the string `target`.\n\n**Notice** that you can use **multiple characters** from the **same string** in `words` provided the conditions above are met.\n\nReturn _the number of ways to form `target` from `words`_. Since the answer may be too large, return it **modulo** `109 + 7`.\n\n**Example 1:**\n\n**Input:** words = \\[ \"acca \", \"bbbb \", \"caca \"\\], target =  \"aba \"\n**Output:** 6\n**Explanation:** There are 6 ways to form target.\n \"aba \" -> index 0 ( \"acca \"), index 1 ( \"bbbb \"), index 3 ( \"caca \")\n \"aba \" -> index 0 ( \"acca \"), index 2 ( \"bbbb \"), index 3 ( \"caca \")\n \"aba \" -> index 0 ( \"acca \"), index 1 ( \"bbbb \"), index 3 ( \"acca \")\n \"aba \" -> index 0 ( \"acca \"), index 2 ( \"bbbb \"), index 3 ( \"acca \")\n \"aba \" -> index 1 ( \"caca \"), index 2 ( \"bbbb \"), index 3 ( \"acca \")\n \"aba \" -> index 1 ( \"caca \"), index 2 ( \"bbbb \"), index 3 ( \"caca \")\n\n**Example 2:**\n\n**Input:** words = \\[ \"abba \", \"baab \"\\], target =  \"bab \"\n**Output:** 4\n**Explanation:** There are 4 ways to form target.\n \"bab \" -> index 0 ( \"baab \"), index 1 ( \"baab \"), index 2 ( \"abba \")\n \"bab \" -> index 0 ( \"baab \"), index 1 ( \"baab \"), index 3 ( \"baab \")\n \"bab \" -> index 0 ( \"baab \"), index 2 ( \"baab \"), index 3 ( \"baab \")\n \"bab \" -> index 1 ( \"abba \"), index 2 ( \"baab \"), index 3 ( \"baab \")\n\n**Constraints:**\n\n*   `1 <= words.length <= 1000`\n*   `1 <= words[i].length <= 1000`\n*   All strings in `words` have the same length.\n*   `1 <= target.length <= 1000`\n*   `words[i]` and `target` contain only lowercase English letters.",
+  "difficulty": "Hard",
+  "category": null,
+  "xpReward": 0,
+  "timeLimitMs": 5000,
+  "memoryLimitMb": 256,
+  "starterCode": {},
+  "solutionCode": "",
+  "hints": [],
+  "isPremium": false,
+  "createdBy": null,
+  "testCases": [
+    {
+      "input": [
+        [
+          "acca ",
+          "bbbb ",
+          "caca "
+        ],
+        "aba "
+      ],
+      "expectedOutput": 6
+    },
+    {
+      "input": [
+        [
+          "abba ",
+          "baab "
+        ],
+        "bab "
+      ],
+      "expectedOutput": 4
+    }
+  ],
+  "hiddenTestCases": [
+    {
+      "input": [
+        [
+          "acca ",
+          "bbbb ",
+          "caca "
+        ],
+        "aba "
+      ],
+      "expectedOutput": 6
+    },
+    {
+      "input": [
+        [
+          "abba ",
+          "baab "
+        ],
+        "bab "
+      ],
+      "expectedOutput": 4
+    }
+  ],
+  "tags": [],
+  "constraints": [],
+  "examples": [],
+  "problemNumber": null,
+  "createdAt": "2025-11-14T21:22:31.54045+00:00",
+  "updatedAt": "2025-12-04T04:37:10.154Z"
+}

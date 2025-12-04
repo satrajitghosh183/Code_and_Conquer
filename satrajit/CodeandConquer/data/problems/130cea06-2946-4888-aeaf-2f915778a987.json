@@ -1,0 +1,66 @@
+{
+  "id": "130cea06-2946-4888-aeaf-2f915778a987",
+  "title": "Maximum Number of Non-Overlapping Substrings",
+  "slug": "maximum-number-of-non-overlapping-substrings",
+  "description": "Given a string `s` of lowercase letters, you need to find the maximum number of **non-empty** substrings of `s` that meet the following conditions:\n\n1.  The substrings do not overlap, that is for any two substrings `s[i..j]` and `s[x..y]`, either `j < x` or `i > y` is true.\n2.  A substring that contains a certain character `c` must also contain all occurrences of `c`.\n\nFind _the maximum number of substrings that meet the above conditions_. If there are multiple solutions with the same number of substrings, _return the one with minimum total length._ It can be shown that there exists a unique solution of minimum total length.\n\nNotice that you can return the substrings in **any** order.\n\n**Example 1:**\n\n**Input:** s =  \"adefaddaccc \"\n**Output:** \\[ \"e \", \"f \", \"ccc \"\\]\n**Explanation:** The following are all the possible substrings that meet the conditions:\n\\[\n   \"adefaddaccc \"\n   \"adefadda \",\n   \"ef \",\n   \"e \",\n   \"f \",\n   \"ccc \",\n\\]\nIf we choose the first string, we cannot choose anything else and we'd get only 1. If we choose  \"adefadda \", we are left with  \"ccc \" which is the only one that doesn't overlap, thus obtaining 2 substrings. Notice also, that it's not optimal to choose  \"ef \" since it can be split into two. Therefore, the optimal way is to choose \\[ \"e \", \"f \", \"ccc \"\\] which gives us 3 substrings. No other solution of the same number of substrings exist.\n\n**Example 2:**\n\n**Input:** s =  \"abbaccd \"\n**Output:** \\[ \"d \", \"bb \", \"cc \"\\]\n**Explanation:** Notice that while the set of substrings \\[ \"d \", \"abba \", \"cc \"\\] also has length 3, it's considered incorrect since it has larger total length.\n\n**Constraints:**\n\n*   `1 <= s.length <= 105`\n*   `s` contains only lowercase English letters.",
+  "difficulty": "Hard",
+  "category": null,
+  "xpReward": 0,
+  "timeLimitMs": 5000,
+  "memoryLimitMb": 256,
+  "starterCode": {},
+  "solutionCode": "",
+  "hints": [],
+  "isPremium": false,
+  "createdBy": null,
+  "testCases": [
+    {
+      "input": [
+        "adefaddaccc "
+      ],
+      "expectedOutput": [
+        "e ",
+        "f ",
+        "ccc "
+      ]
+    },
+    {
+      "input": [
+        "abbaccd "
+      ],
+      "expectedOutput": [
+        "d ",
+        "bb ",
+        "cc "
+      ]
+    }
+  ],
+  "hiddenTestCases": [
+    {
+      "input": [
+        "adefaddaccc "
+      ],
+      "expectedOutput": [
+        "e ",
+        "f ",
+        "ccc "
+      ]
+    },
+    {
+      "input": [
+        "abbaccd "
+      ],
+      "expectedOutput": [
+        "d ",
+        "bb ",
+        "cc "
+      ]
+    }
+  ],
+  "tags": [],
+  "constraints": [],
+  "examples": [],
+  "problemNumber": null,
+  "createdAt": "2025-11-14T21:21:47.742636+00:00",
+  "updatedAt": "2025-12-04T04:37:20.353Z"
+}

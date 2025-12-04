@@ -1,0 +1,54 @@
+{
+  "id": "9dd7149f-13ab-417e-824b-840d63a8845d",
+  "title": "Minimum Number of Operations to Convert Time",
+  "slug": "minimum-number-of-operations-to-convert-time",
+  "description": "You are given two strings `current` and `correct` representing two **24-hour times**.\n\n24-hour times are formatted as `\"HH:MM \"`, where `HH` is between `00` and `23`, and `MM` is between `00` and `59`. The earliest 24-hour time is `00:00`, and the latest is `23:59`.\n\nIn one operation you can increase the time `current` by `1`, `5`, `15`, or `60` minutes. You can perform this operation **any** number of times.\n\nReturn _the **minimum number of operations** needed to convert_ `current` _to_ `correct`.\n\n**Example 1:**\n\n**Input:** current =  \"02:30 \", correct =  \"04:35 \"\n**Output:** 3\n**Explanation:**\nWe can convert current to correct in 3 operations as follows:\n- Add 60 minutes to current. current becomes  \"03:30 \".\n- Add 60 minutes to current. current becomes  \"04:30 \".\n- Add 5 minutes to current. current becomes  \"04:35 \".\nIt can be proven that it is not possible to convert current to correct in fewer than 3 operations.\n\n**Example 2:**\n\n**Input:** current =  \"11:00 \", correct =  \"11:01 \"\n**Output:** 1\n**Explanation:** We only have to add one minute to current, so the minimum number of operations needed is 1.\n\n**Constraints:**\n\n*   `current` and `correct` are in the format `\"HH:MM \"`\n*   `current <= correct`",
+  "difficulty": "Easy",
+  "category": null,
+  "xpReward": 0,
+  "timeLimitMs": 5000,
+  "memoryLimitMb": 256,
+  "starterCode": {},
+  "solutionCode": "",
+  "hints": [],
+  "isPremium": false,
+  "createdBy": null,
+  "testCases": [
+    {
+      "input": [
+        "02:30 ",
+        "04:35 "
+      ],
+      "expectedOutput": 3
+    },
+    {
+      "input": [
+        "11:00 ",
+        "11:01 "
+      ],
+      "expectedOutput": 1
+    }
+  ],
+  "hiddenTestCases": [
+    {
+      "input": [
+        "02:30 ",
+        "04:35 "
+      ],
+      "expectedOutput": 3
+    },
+    {
+      "input": [
+        "11:00 ",
+        "11:01 "
+      ],
+      "expectedOutput": 1
+    }
+  ],
+  "tags": [],
+  "constraints": [],
+  "examples": [],
+  "problemNumber": null,
+  "createdAt": "2025-11-14T21:24:52.123439+00:00",
+  "updatedAt": "2025-12-04T04:36:02.401Z"
+}

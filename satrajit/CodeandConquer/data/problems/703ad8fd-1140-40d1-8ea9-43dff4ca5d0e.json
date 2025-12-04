@@ -1,0 +1,78 @@
+{
+  "id": "703ad8fd-1140-40d1-8ea9-43dff4ca5d0e",
+  "title": "Longest Path With Different Adjacent Characters",
+  "slug": "longest-path-with-different-adjacent-characters",
+  "description": "You are given a **tree** (i.e. a connected, undirected graph that has no cycles) **rooted** at node `0` consisting of `n` nodes numbered from `0` to `n - 1`. The tree is represented by a **0-indexed** array `parent` of size `n`, where `parent[i]` is the parent of node `i`. Since node `0` is the root, `parent[0] == -1`.\n\nYou are also given a string `s` of length `n`, where `s[i]` is the character assigned to node `i`.\n\nReturn _the length of the **longest path** in the tree such that no pair of **adjacent** nodes on the path have the same character assigned to them._\n\n**Example 1:**\n\n**Input:** parent = \\[-1,0,0,1,1,2\\], s =  \"abacbe \"\n**Output:** 3\n**Explanation:** The longest path where each two adjacent nodes have different characters in the tree is the path: 0 -> 1 -> 3. The length of this path is 3, so 3 is returned.\nIt can be proven that there is no longer path that satisfies the conditions. \n\n**Example 2:**\n\n**Input:** parent = \\[-1,0,0,0\\], s =  \"aabc \"\n**Output:** 3\n**Explanation:** The longest path where each two adjacent nodes have different characters is the path: 2 -> 0 -> 3. The length of this path is 3, so 3 is returned.\n\n**Constraints:**\n\n*   `n == parent.length == s.length`\n*   `1 <= n <= 105`\n*   `0 <= parent[i] <= n - 1` for all `i >= 1`\n*   `parent[0] == -1`\n*   `parent` represents a valid tree.\n*   `s` consists of only lowercase English letters.",
+  "difficulty": "Hard",
+  "category": null,
+  "xpReward": 0,
+  "timeLimitMs": 5000,
+  "memoryLimitMb": 256,
+  "starterCode": {},
+  "solutionCode": "",
+  "hints": [],
+  "isPremium": false,
+  "createdBy": null,
+  "testCases": [
+    {
+      "input": [
+        [
+          -1,
+          0,
+          0,
+          1,
+          1,
+          2
+        ],
+        "abacbe "
+      ],
+      "expectedOutput": 3
+    },
+    {
+      "input": [
+        [
+          -1,
+          0,
+          0,
+          0
+        ],
+        "aabc "
+      ],
+      "expectedOutput": 3
+    }
+  ],
+  "hiddenTestCases": [
+    {
+      "input": [
+        [
+          -1,
+          0,
+          0,
+          1,
+          1,
+          2
+        ],
+        "abacbe "
+      ],
+      "expectedOutput": 3
+    },
+    {
+      "input": [
+        [
+          -1,
+          0,
+          0,
+          0
+        ],
+        "aabc "
+      ],
+      "expectedOutput": 3
+    }
+  ],
+  "tags": [],
+  "constraints": [],
+  "examples": [],
+  "problemNumber": null,
+  "createdAt": "2025-11-14T21:24:57.630073+00:00",
+  "updatedAt": "2025-12-04T04:35:59.928Z"
+}

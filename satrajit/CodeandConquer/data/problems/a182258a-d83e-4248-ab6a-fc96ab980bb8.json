@@ -1,0 +1,172 @@
+{
+  "id": "a182258a-d83e-4248-ab6a-fc96ab980bb8",
+  "title": "Reachable Nodes With Restrictions",
+  "slug": "reachable-nodes-with-restrictions",
+  "description": "There is an undirected tree with `n` nodes labeled from `0` to `n - 1` and `n - 1` edges.\n\nYou are given a 2D integer array `edges` of length `n - 1` where `edges[i] = [ai, bi]` indicates that there is an edge between nodes `ai` and `bi` in the tree. You are also given an integer array `restricted` which represents **restricted** nodes.\n\nReturn _the **maximum** number of nodes you can reach from node_ `0` _without visiting a restricted node._\n\nNote that node `0` will **not** be a restricted node.\n\n**Example 1:**\n\n**Input:** n = 7, edges = \\[\\[0,1\\],\\[1,2\\],\\[3,1\\],\\[4,0\\],\\[0,5\\],\\[5,6\\]\\], restricted = \\[4,5\\]\n**Output:** 4\n**Explanation:** The diagram above shows the tree.\nWe have that \\[0,1,2,3\\] are the only nodes that can be reached from node 0 without visiting a restricted node.\n\n**Example 2:**\n\n**Input:** n = 7, edges = \\[\\[0,1\\],\\[0,2\\],\\[0,5\\],\\[0,4\\],\\[3,2\\],\\[6,5\\]\\], restricted = \\[4,2,1\\]\n**Output:** 3\n**Explanation:** The diagram above shows the tree.\nWe have that \\[0,5,6\\] are the only nodes that can be reached from node 0 without visiting a restricted node.\n\n**Constraints:**\n\n*   `2 <= n <= 105`\n*   `edges.length == n - 1`\n*   `edges[i].length == 2`\n*   `0 <= ai, bi < n`\n*   `ai != bi`\n*   `edges` represents a valid tree.\n*   `1 <= restricted.length < n`\n*   `1 <= restricted[i] < n`\n*   All the values of `restricted` are **unique**.",
+  "difficulty": "Medium",
+  "category": null,
+  "xpReward": 0,
+  "timeLimitMs": 5000,
+  "memoryLimitMb": 256,
+  "starterCode": {},
+  "solutionCode": "",
+  "hints": [],
+  "isPremium": false,
+  "createdBy": null,
+  "testCases": [
+    {
+      "input": [
+        7,
+        [
+          [
+            0,
+            1
+          ],
+          [
+            1,
+            2
+          ],
+          [
+            3,
+            1
+          ],
+          [
+            4,
+            0
+          ],
+          [
+            0,
+            5
+          ],
+          [
+            5,
+            6
+          ]
+        ],
+        [
+          4,
+          5
+        ]
+      ],
+      "expectedOutput": 4
+    },
+    {
+      "input": [
+        7,
+        [
+          [
+            0,
+            1
+          ],
+          [
+            0,
+            2
+          ],
+          [
+            0,
+            5
+          ],
+          [
+            0,
+            4
+          ],
+          [
+            3,
+            2
+          ],
+          [
+            6,
+            5
+          ]
+        ],
+        [
+          4,
+          2,
+          1
+        ]
+      ],
+      "expectedOutput": 3
+    }
+  ],
+  "hiddenTestCases": [
+    {
+      "input": [
+        7,
+        [
+          [
+            0,
+            1
+          ],
+          [
+            1,
+            2
+          ],
+          [
+            3,
+            1
+          ],
+          [
+            4,
+            0
+          ],
+          [
+            0,
+            5
+          ],
+          [
+            5,
+            6
+          ]
+        ],
+        [
+          4,
+          5
+        ]
+      ],
+      "expectedOutput": 4
+    },
+    {
+      "input": [
+        7,
+        [
+          [
+            0,
+            1
+          ],
+          [
+            0,
+            2
+          ],
+          [
+            0,
+            5
+          ],
+          [
+            0,
+            4
+          ],
+          [
+            3,
+            2
+          ],
+          [
+            6,
+            5
+          ]
+        ],
+        [
+          4,
+          2,
+          1
+        ]
+      ],
+      "expectedOutput": 3
+    }
+  ],
+  "tags": [],
+  "constraints": [],
+  "examples": [],
+  "problemNumber": null,
+  "createdAt": "2025-11-14T21:25:28.875956+00:00",
+  "updatedAt": "2025-12-04T04:35:45.618Z"
+}

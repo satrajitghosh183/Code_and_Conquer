@@ -1,0 +1,72 @@
+{
+  "id": "0295e6ce-778d-40e2-a60a-aeb5c1a0fc0f",
+  "title": "Maximize the Topmost Element After K Moves",
+  "slug": "maximize-the-topmost-element-after-k-moves",
+  "description": "You are given a **0-indexed** integer array `nums` representing the contents of a **pile**, where `nums[0]` is the topmost element of the pile.\n\nIn one move, you can perform **either** of the following:\n\n*   If the pile is not empty, **remove** the topmost element of the pile.\n*   If there are one or more removed elements, **add** any one of them back onto the pile. This element becomes the new topmost element.\n\nYou are also given an integer `k`, which denotes the total number of moves to be made.\n\nReturn _the **maximum value** of the topmost element of the pile possible after **exactly**_ `k` _moves_. In case it is not possible to obtain a non-empty pile after `k` moves, return `-1`.\n\n**Example 1:**\n\n**Input:** nums = \\[5,2,2,4,0,6\\], k = 4\n**Output:** 5\n**Explanation:**\nOne of the ways we can end with 5 at the top of the pile after 4 moves is as follows:\n- Step 1: Remove the topmost element = 5. The pile becomes \\[2,2,4,0,6\\].\n- Step 2: Remove the topmost element = 2. The pile becomes \\[2,4,0,6\\].\n- Step 3: Remove the topmost element = 2. The pile becomes \\[4,0,6\\].\n- Step 4: Add 5 back onto the pile. The pile becomes \\[5,4,0,6\\].\nNote that this is not the only way to end with 5 at the top of the pile. It can be shown that 5 is the largest answer possible after 4 moves.\n\n**Example 2:**\n\n**Input:** nums = \\[2\\], k = 1\n**Output:** -1\n**Explanation:** \nIn the first move, our only option is to pop the topmost element of the pile.\nSince it is not possible to obtain a non-empty pile after one move, we return -1.\n\n**Constraints:**\n\n*   `1 <= nums.length <= 105`\n*   `0 <= nums[i], k <= 109`",
+  "difficulty": "Medium",
+  "category": null,
+  "xpReward": 0,
+  "timeLimitMs": 5000,
+  "memoryLimitMb": 256,
+  "starterCode": {},
+  "solutionCode": "",
+  "hints": [],
+  "isPremium": false,
+  "createdBy": null,
+  "testCases": [
+    {
+      "input": [
+        [
+          5,
+          2,
+          2,
+          4,
+          0,
+          6
+        ],
+        4
+      ],
+      "expectedOutput": 5
+    },
+    {
+      "input": [
+        [
+          2
+        ],
+        1
+      ],
+      "expectedOutput": -1
+    }
+  ],
+  "hiddenTestCases": [
+    {
+      "input": [
+        [
+          5,
+          2,
+          2,
+          4,
+          0,
+          6
+        ],
+        4
+      ],
+      "expectedOutput": 5
+    },
+    {
+      "input": [
+        [
+          2
+        ],
+        1
+      ],
+      "expectedOutput": -1
+    }
+  ],
+  "tags": [],
+  "constraints": [],
+  "examples": [],
+  "problemNumber": null,
+  "createdAt": "2025-11-14T21:24:47.239297+00:00",
+  "updatedAt": "2025-12-04T04:36:04.544Z"
+}

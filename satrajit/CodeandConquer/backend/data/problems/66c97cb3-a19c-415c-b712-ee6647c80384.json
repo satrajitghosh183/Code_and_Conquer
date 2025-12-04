@@ -1,0 +1,67 @@
+{
+  "id": "66c97cb3-a19c-415c-b712-ee6647c80384",
+  "title": "K Divisible Elements Subarrays",
+  "slug": "k-divisible-elements-subarrays",
+  "description": "Given an integer array `nums` and two integers `k` and `p`, return _the number of **distinct subarrays** which have **at most**_ `k` _elements divisible by_ `p`.\n\nTwo arrays `nums1` and `nums2` are said to be **distinct** if:\n\n*   They are of **different** lengths, or\n*   There exists **at least** one index `i` where `nums1[i] != nums2[i]`.\n\nA **subarray** is defined as a **non-empty** contiguous sequence of elements in an array.\n\n**Example 1:**\n\n**Input:** nums = \\[**2**,3,3,**2**,**2**\\], k = 2, p = 2\n**Output:** 11\n**Explanation:**\nThe elements at indices 0, 3, and 4 are divisible by p = 2.\nThe 11 distinct subarrays which have at most k = 2 elements divisible by 2 are:\n\\[2\\], \\[2,3\\], \\[2,3,3\\], \\[2,3,3,2\\], \\[3\\], \\[3,3\\], \\[3,3,2\\], \\[3,3,2,2\\], \\[3,2\\], \\[3,2,2\\], and \\[2,2\\].\nNote that the subarrays \\[2\\] and \\[3\\] occur more than once in nums, but they should each be counted only once.\nThe subarray \\[2,3,3,2,2\\] should not be counted because it has 3 elements that are divisible by 2.\n\n**Example 2:**\n\n**Input:** nums = \\[1,2,3,4\\], k = 4, p = 1\n**Output:** 10\n**Explanation:**\nAll element of nums are divisible by p = 1.\nAlso, every subarray of nums will have at most 4 elements that are divisible by 1.\nSince all subarrays are distinct, the total number of subarrays satisfying all the constraints is 10.\n\n**Constraints:**\n\n*   `1 <= nums.length <= 200`\n*   `1 <= nums[i], p <= 200`\n*   `1 <= k <= nums.length`\n\n**Follow up:**\n\nCan you solve this problem in O(n2) time complexity?",
+  "difficulty": "Medium",
+  "category": null,
+  "xpReward": 0,
+  "timeLimitMs": 5000,
+  "memoryLimitMb": 256,
+  "starterCode": [],
+  "solutionCode": "",
+  "hints": [],
+  "isPremium": false,
+  "createdBy": null,
+  "testCases": [
+    {
+      "input": [
+        "[**2**,3,3,**2**,**2**]",
+        2,
+        2
+      ],
+      "expectedOutput": 11
+    },
+    {
+      "input": [
+        [
+          1,
+          2,
+          3,
+          4
+        ],
+        4,
+        1
+      ],
+      "expectedOutput": 10
+    }
+  ],
+  "hiddenTestCases": [
+    {
+      "input": [
+        "[**2**,3,3,**2**,**2**]",
+        2,
+        2
+      ],
+      "expectedOutput": 11
+    },
+    {
+      "input": [
+        [
+          1,
+          2,
+          3,
+          4
+        ],
+        4,
+        1
+      ],
+      "expectedOutput": 10
+    }
+  ],
+  "tags": [],
+  "constraints": [],
+  "examples": [],
+  "createdAt": "2025-11-14T21:25:01.523166+00:00",
+  "updatedAt": "2025-12-04T04:35:57.931Z"
+}

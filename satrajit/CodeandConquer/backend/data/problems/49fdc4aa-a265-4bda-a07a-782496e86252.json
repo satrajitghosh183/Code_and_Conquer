@@ -1,0 +1,53 @@
+{
+  "id": "49fdc4aa-a265-4bda-a07a-782496e86252",
+  "title": "Distribute Money to Maximum Children",
+  "slug": "distribute-money-to-maximum-children",
+  "description": "You are given an integer `money` denoting the amount of money (in dollars) that you have and another integer `children` denoting the number of children that you must distribute the money to.\n\nYou have to distribute the money according to the following rules:\n\n*   All money must be distributed.\n*   Everyone must receive at least `1` dollar.\n*   Nobody receives `4` dollars.\n\nReturn _the **maximum** number of children who may receive **exactly**_ `8` _dollars if you distribute the money according to the aforementioned rules_. If there is no way to distribute the money, return `-1`.\n\n**Example 1:**\n\n**Input:** money = 20, children = 3\n**Output:** 1\n**Explanation:** \nThe maximum number of children with 8 dollars will be 1. One of the ways to distribute the money is:\n- 8 dollars to the first child.\n- 9 dollars to the second child. \n- 3 dollars to the third child.\nIt can be proven that no distribution exists such that number of children getting 8 dollars is greater than 1.\n\n**Example 2:**\n\n**Input:** money = 16, children = 2\n**Output:** 2\n**Explanation:** Each child can be given 8 dollars.\n\n**Constraints:**\n\n*   `1 <= money <= 200`\n*   `2 <= children <= 30`",
+  "difficulty": "Easy",
+  "category": null,
+  "xpReward": 0,
+  "timeLimitMs": 5000,
+  "memoryLimitMb": 256,
+  "starterCode": [],
+  "solutionCode": "",
+  "hints": [],
+  "isPremium": false,
+  "createdBy": null,
+  "testCases": [
+    {
+      "input": [
+        20,
+        3
+      ],
+      "expectedOutput": 1
+    },
+    {
+      "input": [
+        16,
+        2
+      ],
+      "expectedOutput": 2
+    }
+  ],
+  "hiddenTestCases": [
+    {
+      "input": [
+        20,
+        3
+      ],
+      "expectedOutput": 1
+    },
+    {
+      "input": [
+        16,
+        2
+      ],
+      "expectedOutput": 2
+    }
+  ],
+  "tags": [],
+  "constraints": [],
+  "examples": [],
+  "createdAt": "2025-11-14T21:26:30.717346+00:00",
+  "updatedAt": "2025-12-04T04:35:16.889Z"
+}

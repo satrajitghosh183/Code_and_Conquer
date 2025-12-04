@@ -1,0 +1,70 @@
+{
+  "id": "beddad04-fff4-4da5-94da-9450b5afae80",
+  "title": "Minimize the Maximum of Two Arrays",
+  "slug": "minimize-the-maximum-of-two-arrays",
+  "description": "We have two arrays `arr1` and `arr2` which are initially empty. You need to add positive integers to them such that they satisfy all the following conditions:\n\n*   `arr1` contains `uniqueCnt1` **distinct** positive integers, each of which is **not divisible** by `divisor1`.\n*   `arr2` contains `uniqueCnt2` **distinct** positive integers, each of which is **not divisible** by `divisor2`.\n*   **No** integer is present in both `arr1` and `arr2`.\n\nGiven `divisor1`, `divisor2`, `uniqueCnt1`, and `uniqueCnt2`, return _the **minimum possible maximum** integer that can be present in either array_.\n\n**Example 1:**\n\n**Input:** divisor1 = 2, divisor2 = 7, uniqueCnt1 = 1, uniqueCnt2 = 3\n**Output:** 4\n**Explanation:** \nWe can distribute the first 4 natural numbers into arr1 and arr2.\narr1 = \\[1\\] and arr2 = \\[2,3,4\\].\nWe can see that both arrays satisfy all the conditions.\nSince the maximum value is 4, we return it.\n\n**Example 2:**\n\n**Input:** divisor1 = 3, divisor2 = 5, uniqueCnt1 = 2, uniqueCnt2 = 1\n**Output:** 3\n**Explanation:** \nHere arr1 = \\[1,2\\], and arr2 = \\[3\\] satisfy all conditions.\nSince the maximum value is 3, we return it.\n\n**Example 3:**\n\n**Input:** divisor1 = 2, divisor2 = 4, uniqueCnt1 = 8, uniqueCnt2 = 2\n**Output:** 15\n**Explanation:** \nHere, the final possible arrays can be arr1 = \\[1,3,5,7,9,11,13,15\\], and arr2 = \\[2,6\\].\nIt can be shown that it is not possible to obtain a lower maximum satisfying all conditions. \n\n**Constraints:**\n\n*   `2 <= divisor1, divisor2 <= 105`\n*   `1 <= uniqueCnt1, uniqueCnt2 < 109`\n*   `2 <= uniqueCnt1 + uniqueCnt2 <= 109`",
+  "difficulty": "Medium",
+  "category": null,
+  "xpReward": 0,
+  "timeLimitMs": 5000,
+  "memoryLimitMb": 256,
+  "starterCode": [],
+  "solutionCode": "",
+  "hints": [],
+  "isPremium": false,
+  "createdBy": null,
+  "testCases": [
+    {
+      "input": [
+        2,
+        7,
+        1,
+        3
+      ],
+      "expectedOutput": 4
+    },
+    {
+      "input": [
+        3,
+        5,
+        2,
+        1
+      ],
+      "expectedOutput": 3
+    },
+    {
+      "input": [
+        2,
+        4,
+        8,
+        2
+      ],
+      "expectedOutput": 15
+    }
+  ],
+  "hiddenTestCases": [
+    {
+      "input": [
+        2,
+        7,
+        1,
+        3
+      ],
+      "expectedOutput": 4
+    },
+    {
+      "input": [
+        3,
+        5,
+        2,
+        1
+      ],
+      "expectedOutput": 3
+    }
+  ],
+  "tags": [],
+  "constraints": [],
+  "examples": [],
+  "createdAt": "2025-11-14T21:26:07.441089+00:00",
+  "updatedAt": "2025-12-04T04:35:25.124Z"
+}

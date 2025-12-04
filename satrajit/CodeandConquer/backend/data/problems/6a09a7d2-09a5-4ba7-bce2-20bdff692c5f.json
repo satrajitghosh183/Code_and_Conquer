@@ -1,0 +1,55 @@
+{
+  "id": "6a09a7d2-09a5-4ba7-bce2-20bdff692c5f",
+  "title": "Count Sorted Vowel Strings",
+  "slug": "count-sorted-vowel-strings",
+  "description": "Given an integer `n`, return _the number of strings of length_ `n` _that consist only of vowels (_`a`_,_ `e`_,_ `i`_,_ `o`_,_ `u`_) and are **lexicographically sorted**._\n\nA string `s` is **lexicographically sorted** if for all valid `i`, `s[i]` is the same as or comes before `s[i+1]` in the alphabet.\n\n**Example 1:**\n\n**Input:** n = 1\n**Output:** 5\n**Explanation:** The 5 sorted strings that consist of vowels only are `[ \"a \", \"e \", \"i \", \"o \", \"u \"].`\n\n**Example 2:**\n\n**Input:** n = 2\n**Output:** 15\n**Explanation:** The 15 sorted strings that consist of vowels only are\n\\[ \"aa \", \"ae \", \"ai \", \"ao \", \"au \", \"ee \", \"ei \", \"eo \", \"eu \", \"ii \", \"io \", \"iu \", \"oo \", \"ou \", \"uu \"\\].\nNote that  \"ea \" is not a valid string since 'e' comes after 'a' in the alphabet.\n\n**Example 3:**\n\n**Input:** n = 33\n**Output:** 66045\n\n**Constraints:**\n\n*   `1 <= n <= 50`",
+  "difficulty": "Medium",
+  "category": null,
+  "xpReward": 0,
+  "timeLimitMs": 5000,
+  "memoryLimitMb": 256,
+  "starterCode": [],
+  "solutionCode": "",
+  "hints": [],
+  "isPremium": false,
+  "createdBy": null,
+  "testCases": [
+    {
+      "input": [
+        1
+      ],
+      "expectedOutput": 5
+    },
+    {
+      "input": [
+        2
+      ],
+      "expectedOutput": 15
+    },
+    {
+      "input": [
+        33
+      ],
+      "expectedOutput": "66045\n\n**Constraints:**\n\n*   `1 <= n <= 50`"
+    }
+  ],
+  "hiddenTestCases": [
+    {
+      "input": [
+        1
+      ],
+      "expectedOutput": 5
+    },
+    {
+      "input": [
+        2
+      ],
+      "expectedOutput": 15
+    }
+  ],
+  "tags": [],
+  "constraints": [],
+  "examples": [],
+  "createdAt": "2025-11-14T21:22:31.996663+00:00",
+  "updatedAt": "2025-12-04T04:37:10.007Z"
+}

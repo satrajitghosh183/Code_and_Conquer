@@ -1,0 +1,49 @@
+{
+  "id": "b1466357-88c8-4426-9970-434cfc463eaa",
+  "title": "Determine if String Halves Are Alike",
+  "slug": "determine-if-string-halves-are-alike",
+  "description": "You are given a string `s` of even length. Split this string into two halves of equal lengths, and let `a` be the first half and `b` be the second half.\n\nTwo strings are **alike** if they have the same number of vowels (`'a'`, `'e'`, `'i'`, `'o'`, `'u'`, `'A'`, `'E'`, `'I'`, `'O'`, `'U'`). Notice that `s` contains uppercase and lowercase letters.\n\nReturn `true` _if_ `a` _and_ `b` _are **alike**_. Otherwise, return `false`.\n\n**Example 1:**\n\n**Input:** s =  \"book \"\n**Output:** true\n**Explanation:** a =  \"bo \" and b =  \"ok \". a has 1 vowel and b has 1 vowel. Therefore, they are alike.\n\n**Example 2:**\n\n**Input:** s =  \"textbook \"\n**Output:** false\n**Explanation:** a =  \"text \" and b =  \"book \". a has 1 vowel whereas b has 2. Therefore, they are not alike.\nNotice that the vowel o is counted twice.\n\n**Constraints:**\n\n*   `2 <= s.length <= 1000`\n*   `s.length` is even.\n*   `s` consists of **uppercase and lowercase** letters.",
+  "difficulty": "Easy",
+  "category": null,
+  "xpReward": 0,
+  "timeLimitMs": 5000,
+  "memoryLimitMb": 256,
+  "starterCode": [],
+  "solutionCode": "",
+  "hints": [],
+  "isPremium": false,
+  "createdBy": null,
+  "testCases": [
+    {
+      "input": [
+        "book "
+      ],
+      "expectedOutput": true
+    },
+    {
+      "input": [
+        "textbook "
+      ],
+      "expectedOutput": false
+    }
+  ],
+  "hiddenTestCases": [
+    {
+      "input": [
+        "book "
+      ],
+      "expectedOutput": true
+    },
+    {
+      "input": [
+        "textbook "
+      ],
+      "expectedOutput": false
+    }
+  ],
+  "tags": [],
+  "constraints": [],
+  "examples": [],
+  "createdAt": "2025-11-14T21:22:45.945461+00:00",
+  "updatedAt": "2025-12-04T04:37:03.111Z"
+}

@@ -1,0 +1,154 @@
+{
+  "id": "a56ce5fd-868f-4f80-8f35-a52278e95d75",
+  "title": "Count Number of Rectangles Containing Each Point",
+  "slug": "count-number-of-rectangles-containing-each-point",
+  "description": "You are given a 2D integer array `rectangles` where `rectangles[i] = [li, hi]` indicates that `ith` rectangle has a length of `li` and a height of `hi`. You are also given a 2D integer array `points` where `points[j] = [xj, yj]` is a point with coordinates `(xj, yj)`.\n\nThe `ith` rectangle has its **bottom-left corner** point at the coordinates `(0, 0)` and its **top-right corner** point at `(li, hi)`.\n\nReturn _an integer array_ `count` _of length_ `points.length` _where_ `count[j]` _is the number of rectangles that **contain** the_ `jth` _point._\n\nThe `ith` rectangle **contains** the `jth` point if `0 <= xj <= li` and `0 <= yj <= hi`. Note that points that lie on the **edges** of a rectangle are also considered to be contained by that rectangle.\n\n**Example 1:**\n\n**Input:** rectangles = \\[\\[1,2\\],\\[2,3\\],\\[2,5\\]\\], points = \\[\\[2,1\\],\\[1,4\\]\\]\n**Output:** \\[2,1\\]\n**Explanation:** \nThe first rectangle contains no points.\nThe second rectangle contains only the point (2, 1).\nThe third rectangle contains the points (2, 1) and (1, 4).\nThe number of rectangles that contain the point (2, 1) is 2.\nThe number of rectangles that contain the point (1, 4) is 1.\nTherefore, we return \\[2, 1\\].\n\n**Example 2:**\n\n**Input:** rectangles = \\[\\[1,1\\],\\[2,2\\],\\[3,3\\]\\], points = \\[\\[1,3\\],\\[1,1\\]\\]\n**Output:** \\[1,3\\]\n**Explanation:**\nThe first rectangle contains only the point (1, 1).\nThe second rectangle contains only the point (1, 1).\nThe third rectangle contains the points (1, 3) and (1, 1).\nThe number of rectangles that contain the point (1, 3) is 1.\nThe number of rectangles that contain the point (1, 1) is 3.\nTherefore, we return \\[1, 3\\].\n\n**Constraints:**\n\n*   `1 <= rectangles.length, points.length <= 5 * 104`\n*   `rectangles[i].length == points[j].length == 2`\n*   `1 <= li, xj <= 109`\n*   `1 <= hi, yj <= 100`\n*   All the `rectangles` are **unique**.\n*   All the `points` are **unique**.",
+  "difficulty": "Medium",
+  "category": null,
+  "xpReward": 0,
+  "timeLimitMs": 5000,
+  "memoryLimitMb": 256,
+  "starterCode": {},
+  "solutionCode": "",
+  "hints": [],
+  "isPremium": false,
+  "createdBy": null,
+  "testCases": [
+    {
+      "input": [
+        [
+          [
+            1,
+            2
+          ],
+          [
+            2,
+            3
+          ],
+          [
+            2,
+            5
+          ]
+        ],
+        [
+          [
+            2,
+            1
+          ],
+          [
+            1,
+            4
+          ]
+        ]
+      ],
+      "expectedOutput": [
+        2,
+        1
+      ]
+    },
+    {
+      "input": [
+        [
+          [
+            1,
+            1
+          ],
+          [
+            2,
+            2
+          ],
+          [
+            3,
+            3
+          ]
+        ],
+        [
+          [
+            1,
+            3
+          ],
+          [
+            1,
+            1
+          ]
+        ]
+      ],
+      "expectedOutput": [
+        1,
+        3
+      ]
+    }
+  ],
+  "hiddenTestCases": [
+    {
+      "input": [
+        [
+          [
+            1,
+            2
+          ],
+          [
+            2,
+            3
+          ],
+          [
+            2,
+            5
+          ]
+        ],
+        [
+          [
+            2,
+            1
+          ],
+          [
+            1,
+            4
+          ]
+        ]
+      ],
+      "expectedOutput": [
+        2,
+        1
+      ]
+    },
+    {
+      "input": [
+        [
+          [
+            1,
+            1
+          ],
+          [
+            2,
+            2
+          ],
+          [
+            3,
+            3
+          ]
+        ],
+        [
+          [
+            1,
+            3
+          ],
+          [
+            1,
+            1
+          ]
+        ]
+      ],
+      "expectedOutput": [
+        1,
+        3
+      ]
+    }
+  ],
+  "tags": [],
+  "constraints": [],
+  "examples": [],
+  "problemNumber": null,
+  "createdAt": "2025-11-14T21:24:58.796633+00:00",
+  "updatedAt": "2025-12-04T04:35:59.000Z"
+}

@@ -1,0 +1,55 @@
+{
+  "id": "7c2d0949-58cc-4026-8a33-75eb52d0f9b7",
+  "title": "Maximum Deletions on a String",
+  "slug": "maximum-deletions-on-a-string",
+  "description": "You are given a string `s` consisting of only lowercase English letters. In one operation, you can:\n\n*   Delete **the entire string** `s`, or\n*   Delete the **first** `i` letters of `s` if the first `i` letters of `s` are **equal** to the following `i` letters in `s`, for any `i` in the range `1 <= i <= s.length / 2`.\n\nFor example, if `s = \"ababc \"`, then in one operation, you could delete the first two letters of `s` to get `\"abc \"`, since the first two letters of `s` and the following two letters of `s` are both equal to `\"ab \"`.\n\nReturn _the **maximum** number of operations needed to delete all of_ `s`.\n\n**Example 1:**\n\n**Input:** s =  \"abcabcdabc \"\n**Output:** 2\n**Explanation:**\n- Delete the first 3 letters ( \"abc \") since the next 3 letters are equal. Now, s =  \"abcdabc \".\n- Delete all the letters.\nWe used 2 operations so return 2. It can be proven that 2 is the maximum number of operations needed.\nNote that in the second operation we cannot delete  \"abc \" again because the next occurrence of  \"abc \" does not happen in the next 3 letters.\n\n**Example 2:**\n\n**Input:** s =  \"aaabaab \"\n**Output:** 4\n**Explanation:**\n- Delete the first letter ( \"a \") since the next letter is equal. Now, s =  \"aabaab \".\n- Delete the first 3 letters ( \"aab \") since the next 3 letters are equal. Now, s =  \"aab \".\n- Delete the first letter ( \"a \") since the next letter is equal. Now, s =  \"ab \".\n- Delete all the letters.\nWe used 4 operations so return 4. It can be proven that 4 is the maximum number of operations needed.\n\n**Example 3:**\n\n**Input:** s =  \"aaaaa \"\n**Output:** 5\n**Explanation:** In each operation, we can delete the first letter of s.\n\n**Constraints:**\n\n*   `1 <= s.length <= 4000`\n*   `s` consists only of lowercase English letters.",
+  "difficulty": "Hard",
+  "category": null,
+  "xpReward": 0,
+  "timeLimitMs": 5000,
+  "memoryLimitMb": 256,
+  "starterCode": [],
+  "solutionCode": "",
+  "hints": [],
+  "isPremium": false,
+  "createdBy": null,
+  "testCases": [
+    {
+      "input": [
+        "abcabcdabc "
+      ],
+      "expectedOutput": 2
+    },
+    {
+      "input": [
+        "aaabaab "
+      ],
+      "expectedOutput": 4
+    },
+    {
+      "input": [
+        "aaaaa "
+      ],
+      "expectedOutput": 5
+    }
+  ],
+  "hiddenTestCases": [
+    {
+      "input": [
+        "abcabcdabc "
+      ],
+      "expectedOutput": 2
+    },
+    {
+      "input": [
+        "aaabaab "
+      ],
+      "expectedOutput": 4
+    }
+  ],
+  "tags": [],
+  "constraints": [],
+  "examples": [],
+  "createdAt": "2025-11-14T21:25:44.647029+00:00",
+  "updatedAt": "2025-12-04T04:35:37.689Z"
+}

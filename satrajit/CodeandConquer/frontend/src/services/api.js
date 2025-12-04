@@ -24,10 +24,16 @@ export const runCode = (code, language, problemId) =>
 
 export const getSubmission = (id) => api.get(`/submissions/${id}`);
 
+export const getAvailableLanguages = () => api.get('/submissions/languages');
+
 // User Stats API
 export const getUserStats = (userId) => api.get(`/users/${userId}/stats`);
 export const updateUserStats = (userId, updates) => 
   api.post(`/users/${userId}/stats/update`, updates);
+
+// Dashboard API
+export const getDashboardStats = (userId) => api.get(`/dashboard/stats/${userId}`);
+export const getDailyChallenge = () => api.get('/dashboard/daily-challenge');
 
 export default api;
 

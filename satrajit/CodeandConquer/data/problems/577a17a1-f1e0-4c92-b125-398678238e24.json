@@ -1,0 +1,56 @@
+{
+  "id": "577a17a1-f1e0-4c92-b125-398678238e24",
+  "title": "Minimum Moves to Convert String",
+  "slug": "minimum-moves-to-convert-string",
+  "description": "You are given a string `s` consisting of `n` characters which are either `'X'` or `'O'`.\n\nA **move** is defined as selecting **three** **consecutive characters** of `s` and converting them to `'O'`. Note that if a move is applied to the character `'O'`, it will stay the **same**.\n\nReturn _the **minimum** number of moves required so that all the characters of_ `s` _are converted to_ `'O'`.\n\n**Example 1:**\n\n**Input:** s =  \"XXX \"\n**Output:** 1\n**Explanation:** XXX -> OOO\nWe select all the 3 characters and convert them in one move.\n\n**Example 2:**\n\n**Input:** s =  \"XXOX \"\n**Output:** 2\n**Explanation:** XXOX -> OOOX -> OOOO\nWe select the first 3 characters in the first move, and convert them to `'O'`.\nThen we select the last 3 characters and convert them so that the final string contains all `'O'`s.\n\n**Example 3:**\n\n**Input:** s =  \"OOOO \"\n**Output:** 0\n**Explanation:** There are no `'X's` in `s` to convert.\n\n**Constraints:**\n\n*   `3 <= s.length <= 1000`\n*   `s[i]` is either `'X'` or `'O'`.",
+  "difficulty": "Easy",
+  "category": null,
+  "xpReward": 0,
+  "timeLimitMs": 5000,
+  "memoryLimitMb": 256,
+  "starterCode": {},
+  "solutionCode": "",
+  "hints": [],
+  "isPremium": false,
+  "createdBy": null,
+  "testCases": [
+    {
+      "input": [
+        "XXX "
+      ],
+      "expectedOutput": 1
+    },
+    {
+      "input": [
+        "XXOX "
+      ],
+      "expectedOutput": 2
+    },
+    {
+      "input": [
+        "OOOO "
+      ],
+      "expectedOutput": 0
+    }
+  ],
+  "hiddenTestCases": [
+    {
+      "input": [
+        "XXX "
+      ],
+      "expectedOutput": 1
+    },
+    {
+      "input": [
+        "XXOX "
+      ],
+      "expectedOutput": 2
+    }
+  ],
+  "tags": [],
+  "constraints": [],
+  "examples": [],
+  "problemNumber": null,
+  "createdAt": "2025-11-14T21:24:03.763385+00:00",
+  "updatedAt": "2025-12-04T04:36:22.736Z"
+}

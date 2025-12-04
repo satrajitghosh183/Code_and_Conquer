@@ -1,0 +1,75 @@
+{
+  "id": "ccad1f56-c1c7-4d21-b9b5-def00644cf24",
+  "title": "Find the Index of the Large Integer",
+  "slug": "find-the-index-of-the-large-integer",
+  "description": "We have an integer array `arr`, where all the integers in `arr` are equal except for one integer which is **larger** than the rest of the integers. You will not be given direct access to the array, instead, you will have an **API** `ArrayReader` which have the following functions:\n\n*   `int compareSub(int l, int r, int x, int y)`: where `0 <= l, r, x, y < ArrayReader.length()`, `l <= r and` `x <= y`. The function compares the sum of sub-array `arr[l..r]` with the sum of the sub-array `arr[x..y]` and returns:\n    *   **1** if `arr[l]+arr[l+1]+...+arr[r] > arr[x]+arr[x+1]+...+arr[y]`.\n    *   **0** if `arr[l]+arr[l+1]+...+arr[r] == arr[x]+arr[x+1]+...+arr[y]`.\n    *   **\\-1** if `arr[l]+arr[l+1]+...+arr[r] < arr[x]+arr[x+1]+...+arr[y]`.\n*   `int length()`: Returns the size of the array.\n\nYou are allowed to call `compareSub()` **20 times** at most. You can assume both functions work in `O(1)` time.\n\nReturn _the index of the array `arr` which has the largest integer_.\n\n**Example 1:**\n\n**Input:** arr = \\[7,7,7,7,10,7,7,7\\]\n**Output:** 4\n**Explanation:** The following calls to the API\nreader.compareSub(0, 0, 1, 1) // returns 0 this is a query comparing the sub-array (0, 0) with the sub array (1, 1), (i.e. compares arr\\[0\\] with arr\\[1\\]).\nThus we know that arr\\[0\\] and arr\\[1\\] doesn't contain the largest element.\nreader.compareSub(2, 2, 3, 3) // returns 0, we can exclude arr\\[2\\] and arr\\[3\\].\nreader.compareSub(4, 4, 5, 5) // returns 1, thus for sure arr\\[4\\] is the largest element in the array.\nNotice that we made only 3 calls, so the answer is valid.\n\n**Example 2:**\n\n**Input:** nums = \\[6,6,12\\]\n**Output:** 2\n\n**Constraints:**\n\n*   `2 <= arr.length <= 5 * 105`\n*   `1 <= arr[i] <= 100`\n*   All elements of `arr` are equal except for one element which is larger than all other elements.\n\n**Follow up:**\n\n*   What if there are two numbers in `arr` that are bigger than all other numbers?\n*   What if there is one number that is bigger than other numbers and one number that is smaller than other numbers?",
+  "difficulty": "Medium",
+  "category": null,
+  "xpReward": 0,
+  "timeLimitMs": 5000,
+  "memoryLimitMb": 256,
+  "starterCode": [],
+  "solutionCode": "",
+  "hints": [],
+  "isPremium": false,
+  "createdBy": null,
+  "testCases": [
+    {
+      "input": [
+        [
+          7,
+          7,
+          7,
+          7,
+          10,
+          7,
+          7,
+          7
+        ]
+      ],
+      "expectedOutput": 4
+    },
+    {
+      "input": [
+        [
+          6,
+          6,
+          12
+        ]
+      ],
+      "expectedOutput": "2\n\n**Constraints:**\n\n*   `2 <= arr.length <= 5 * 105`\n*   `1 <= arr[i] <= 100`\n*   All elements of `arr` are equal except for one element which is larger than all other elements.\n\n**Follow up:**\n\n*   What if there are two numbers in `arr` that are bigger than all other numbers?\n*   What if there is one number that is bigger than other numbers and one number that is smaller than other numbers?"
+    }
+  ],
+  "hiddenTestCases": [
+    {
+      "input": [
+        [
+          7,
+          7,
+          7,
+          7,
+          10,
+          7,
+          7,
+          7
+        ]
+      ],
+      "expectedOutput": 4
+    },
+    {
+      "input": [
+        [
+          6,
+          6,
+          12
+        ]
+      ],
+      "expectedOutput": "2\n\n**Constraints:**\n\n*   `2 <= arr.length <= 5 * 105`\n*   `1 <= arr[i] <= 100`\n*   All elements of `arr` are equal except for one element which is larger than all other elements.\n\n**Follow up:**\n\n*   What if there are two numbers in `arr` that are bigger than all other numbers?\n*   What if there is one number that is bigger than other numbers and one number that is smaller than other numbers?"
+    }
+  ],
+  "tags": [],
+  "constraints": [],
+  "examples": [],
+  "createdAt": "2025-11-14T21:21:51.118956+00:00",
+  "updatedAt": "2025-12-04T04:37:19.337Z"
+}

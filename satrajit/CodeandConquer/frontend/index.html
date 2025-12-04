@@ -1,17 +1,121 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0" />
+    
+    <!-- Primary Meta Tags -->
+    <title>Code & Conquer - Competitive Coding Meets Tower Defense</title>
+    <meta name="title" content="Code & Conquer - Competitive Coding Meets Tower Defense" />
+    <meta name="description" content="Master algorithms while defending your base! Solve coding challenges, earn resources, and battle opponents in this unique blend of LeetCode-style problems and tower defense strategy." />
+    <meta name="keywords" content="coding challenges, leetcode, tower defense, competitive programming, algorithms, data structures, programming practice" />
+    <meta name="author" content="Code and Conquer Team" />
+    
+    <!-- Favicon -->
     <link rel="icon" type="image/svg+xml" href="/vite.svg" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <title>Code & Conquer - Solve Problems, Build Your Base</title>
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://codeandconquer.app/" />
+    <meta property="og:title" content="Code & Conquer - Competitive Coding Meets Tower Defense" />
+    <meta property="og:description" content="Master algorithms while defending your base! A unique blend of coding challenges and strategy gaming." />
+    <meta property="og:image" content="/og-image.png" />
+    
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image" />
+    <meta property="twitter:url" content="https://codeandconquer.app/" />
+    <meta property="twitter:title" content="Code & Conquer" />
+    <meta property="twitter:description" content="Master algorithms while defending your base! A unique blend of coding challenges and strategy gaming." />
+    <meta property="twitter:image" content="/og-image.png" />
+    
+    <!-- Theme Color -->
+    <meta name="theme-color" content="#0f0f1a" />
+    <meta name="msapplication-TileColor" content="#0f0f1a" />
+    
+    <!-- Preconnect to external resources -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+    
+    <!-- Prevent FOUC -->
+    <style>
+      html {
+        background-color: #0f0f1a;
+      }
+      body {
+        margin: 0;
+        padding: 0;
+        min-height: 100vh;
+        background-color: #0f0f1a;
+        color: #ffffff;
+      }
+      #root {
+        min-height: 100vh;
+      }
+      /* Initial loading state */
+      .initial-loader {
+        position: fixed;
+        inset: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background-color: #0f0f1a;
+        z-index: 9999;
+      }
+      .initial-loader.hidden {
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity 0.3s ease;
+      }
+      .loader-spinner {
+        width: 48px;
+        height: 48px;
+        border: 4px solid #2a2a4a;
+        border-top-color: #ff4757;
+        border-radius: 50%;
+        animation: spin 0.8s linear infinite;
+      }
+      @keyframes spin {
+        to { transform: rotate(360deg); }
+      }
+    </style>
   </head>
   <body>
+    <!-- Initial loading indicator (hidden once React mounts) -->
+    <div id="initial-loader" class="initial-loader">
+      <div class="loader-spinner"></div>
+    </div>
+    
     <div id="root"></div>
+    
     <script type="module" src="/src/main.jsx"></script>
+    
+    <!-- Hide initial loader when React mounts -->
+    <script>
+      window.addEventListener('load', function() {
+        const loader = document.getElementById('initial-loader');
+        if (loader) {
+          setTimeout(function() {
+            loader.classList.add('hidden');
+            setTimeout(function() {
+              loader.remove();
+            }, 300);
+          }, 100);
+        }
+      });
+    </script>
+    
+    <!-- Noscript fallback -->
+    <noscript>
+      <div style="display:flex;align-items:center;justify-content:center;min-height:100vh;padding:20px;text-align:center;background:#0f0f1a;color:#fff;">
+        <div>
+          <h1>JavaScript Required</h1>
+          <p>Code & Conquer requires JavaScript to run. Please enable JavaScript in your browser settings.</p>
+        </div>
+      </div>
+    </noscript>
   </body>
 </html>
-

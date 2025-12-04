@@ -1,0 +1,142 @@
+{
+  "id": "54196557-787e-42c2-8250-1b3e61fbbe47",
+  "title": "Number of Flowers in Full Bloom",
+  "slug": "number-of-flowers-in-full-bloom",
+  "description": "You are given a **0-indexed** 2D integer array `flowers`, where `flowers[i] = [starti, endi]` means the `ith` flower will be in **full bloom** from `starti` to `endi` (**inclusive**). You are also given a **0-indexed** integer array `people` of size `n`, where `poeple[i]` is the time that the `ith` person will arrive to see the flowers.\n\nReturn _an integer array_ `answer` _of size_ `n`_, where_ `answer[i]` _is the **number** of flowers that are in full bloom when the_ `ith` _person arrives._\n\n**Example 1:**\n\n**Input:** flowers = \\[\\[1,6\\],\\[3,7\\],\\[9,12\\],\\[4,13\\]\\], poeple = \\[2,3,7,11\\]\n**Output:** \\[1,2,2,2\\]\n**Explanation:** The figure above shows the times when the flowers are in full bloom and when the people arrive.\nFor each person, we return the number of flowers in full bloom during their arrival.\n\n**Example 2:**\n\n**Input:** flowers = \\[\\[1,10\\],\\[3,3\\]\\], poeple = \\[3,3,2\\]\n**Output:** \\[2,2,1\\]\n**Explanation:** The figure above shows the times when the flowers are in full bloom and when the people arrive.\nFor each person, we return the number of flowers in full bloom during their arrival.\n\n**Constraints:**\n\n*   `1 <= flowers.length <= 5 * 104`\n*   `flowers[i].length == 2`\n*   `1 <= starti <= endi <= 109`\n*   `1 <= people.length <= 5 * 104`\n*   `1 <= people[i] <= 109`",
+  "difficulty": "Hard",
+  "category": null,
+  "xpReward": 0,
+  "timeLimitMs": 5000,
+  "memoryLimitMb": 256,
+  "starterCode": {},
+  "solutionCode": "",
+  "hints": [],
+  "isPremium": false,
+  "createdBy": null,
+  "testCases": [
+    {
+      "input": [
+        [
+          [
+            1,
+            6
+          ],
+          [
+            3,
+            7
+          ],
+          [
+            9,
+            12
+          ],
+          [
+            4,
+            13
+          ]
+        ],
+        [
+          2,
+          3,
+          7,
+          11
+        ]
+      ],
+      "expectedOutput": [
+        1,
+        2,
+        2,
+        2
+      ]
+    },
+    {
+      "input": [
+        [
+          [
+            1,
+            10
+          ],
+          [
+            3,
+            3
+          ]
+        ],
+        [
+          3,
+          3,
+          2
+        ]
+      ],
+      "expectedOutput": [
+        2,
+        2,
+        1
+      ]
+    }
+  ],
+  "hiddenTestCases": [
+    {
+      "input": [
+        [
+          [
+            1,
+            6
+          ],
+          [
+            3,
+            7
+          ],
+          [
+            9,
+            12
+          ],
+          [
+            4,
+            13
+          ]
+        ],
+        [
+          2,
+          3,
+          7,
+          11
+        ]
+      ],
+      "expectedOutput": [
+        1,
+        2,
+        2,
+        2
+      ]
+    },
+    {
+      "input": [
+        [
+          [
+            1,
+            10
+          ],
+          [
+            3,
+            3
+          ]
+        ],
+        [
+          3,
+          3,
+          2
+        ]
+      ],
+      "expectedOutput": [
+        2,
+        2,
+        1
+      ]
+    }
+  ],
+  "tags": [],
+  "constraints": [],
+  "examples": [],
+  "problemNumber": null,
+  "createdAt": "2025-11-14T21:24:59.123114+00:00",
+  "updatedAt": "2025-12-04T04:35:58.861Z"
+}

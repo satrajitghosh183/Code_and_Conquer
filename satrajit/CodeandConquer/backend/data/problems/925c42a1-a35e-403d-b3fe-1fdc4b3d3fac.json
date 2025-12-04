@@ -1,0 +1,125 @@
+{
+  "id": "925c42a1-a35e-403d-b3fe-1fdc4b3d3fac",
+  "title": "Correct a Binary Tree",
+  "slug": "correct-a-binary-tree",
+  "description": "You have a binary tree with a small defect. There is **exactly one** invalid node where its right child incorrectly points to another node at the **same depth** but to the **invalid node's right**.\n\nGiven the root of the binary tree with this defect, `root`, return _the root of the binary tree after **removing** this invalid node **and every node underneath it** (minus the node it incorrectly points to)._\n\n**Custom testing:**\n\nThe test input is read as 3 lines:\n\n*   `TreeNode root`\n*   `int fromNode` (**not available to** `correctBinaryTree`)\n*   `int toNode` (**not available to** `correctBinaryTree`)\n\nAfter the binary tree rooted at `root` is parsed, the `TreeNode` with value of `fromNode` will have its right child pointer pointing to the `TreeNode` with a value of `toNode`. Then, `root` is passed to `correctBinaryTree`.\n\n**Example 1:**\n\n**Input:** root = \\[1,2,3\\], fromNode = 2, toNode = 3\n**Output:** \\[1,null,3\\]\n**Explanation:** The node with value 2 is invalid, so remove it.\n\n**Example 2:**\n\n**Input:** root = \\[8,3,1,7,null,9,4,2,null,null,null,5,6\\], fromNode = 7, toNode = 4\n**Output:** \\[8,3,1,null,null,9,4,null,null,5,6\\]\n**Explanation:** The node with value 7 is invalid, so remove it and the node underneath it, node 2.\n\n**Constraints:**\n\n*   The number of nodes in the tree is in the range `[3, 104]`.\n*   `-109 <= Node.val <= 109`\n*   All `Node.val` are **unique**.\n*   `fromNode != toNode`\n*   `fromNode` and `toNode` will exist in the tree and will be on the same depth.\n*   `toNode` is to the **right** of `fromNode`.\n*   `fromNode.right` is `null` in the initial tree from the test data.",
+  "difficulty": "Medium",
+  "category": null,
+  "xpReward": 0,
+  "timeLimitMs": 5000,
+  "memoryLimitMb": 256,
+  "starterCode": [],
+  "solutionCode": "",
+  "hints": [],
+  "isPremium": false,
+  "createdBy": null,
+  "testCases": [
+    {
+      "input": [
+        [
+          1,
+          2,
+          3
+        ],
+        2,
+        3
+      ],
+      "expectedOutput": [
+        1,
+        null,
+        3
+      ]
+    },
+    {
+      "input": [
+        [
+          8,
+          3,
+          1,
+          7,
+          null,
+          9,
+          4,
+          2,
+          null,
+          null,
+          null,
+          5,
+          6
+        ],
+        7,
+        4
+      ],
+      "expectedOutput": [
+        8,
+        3,
+        1,
+        null,
+        null,
+        9,
+        4,
+        null,
+        null,
+        5,
+        6
+      ]
+    }
+  ],
+  "hiddenTestCases": [
+    {
+      "input": [
+        [
+          1,
+          2,
+          3
+        ],
+        2,
+        3
+      ],
+      "expectedOutput": [
+        1,
+        null,
+        3
+      ]
+    },
+    {
+      "input": [
+        [
+          8,
+          3,
+          1,
+          7,
+          null,
+          9,
+          4,
+          2,
+          null,
+          null,
+          null,
+          5,
+          6
+        ],
+        7,
+        4
+      ],
+      "expectedOutput": [
+        8,
+        3,
+        1,
+        null,
+        null,
+        9,
+        4,
+        null,
+        null,
+        5,
+        6
+      ]
+    }
+  ],
+  "tags": [],
+  "constraints": [],
+  "examples": [],
+  "createdAt": "2025-11-14T21:22:36.408318+00:00",
+  "updatedAt": "2025-12-04T04:37:08.383Z"
+}

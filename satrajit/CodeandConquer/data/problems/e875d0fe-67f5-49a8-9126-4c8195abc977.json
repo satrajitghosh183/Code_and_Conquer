@@ -1,0 +1,90 @@
+{
+  "id": "e875d0fe-67f5-49a8-9126-4c8195abc977",
+  "title": "Apply Operations to an Array",
+  "slug": "apply-operations-to-an-array",
+  "description": "You are given a **0-indexed** array `nums` of size `n` consisting of **non-negative** integers.\n\nYou need to apply `n - 1` operations to this array where, in the `ith` operation (**0-indexed**), you will apply the following on the `ith` element of `nums`:\n\n*   If `nums[i] == nums[i + 1]`, then multiply `nums[i]` by `2` and set `nums[i + 1]` to `0`. Otherwise, you skip this operation.\n\nAfter performing **all** the operations, **shift** all the `0`'s to the **end** of the array.\n\n*   For example, the array `[1,0,2,0,0,1]` after shifting all its `0`'s to the end, is `[1,2,1,0,0,0]`.\n\nReturn _the resulting array_.\n\n**Note** that the operations are applied **sequentially**, not all at once.\n\n**Example 1:**\n\n**Input:** nums = \\[1,2,2,1,1,0\\]\n**Output:** \\[1,4,2,0,0,0\\]\n**Explanation:** We do the following operations:\n- i = 0: nums\\[0\\] and nums\\[1\\] are not equal, so we skip this operation.\n- i = 1: nums\\[1\\] and nums\\[2\\] are equal, we multiply nums\\[1\\] by 2 and change nums\\[2\\] to 0. The array becomes \\[1,**4**,**0**,1,1,0\\].\n- i = 2: nums\\[2\\] and nums\\[3\\] are not equal, so we skip this operation.\n- i = 3: nums\\[3\\] and nums\\[4\\] are equal, we multiply nums\\[3\\] by 2 and change nums\\[4\\] to 0. The array becomes \\[1,4,0,**2**,**0**,0\\].\n- i = 4: nums\\[4\\] and nums\\[5\\] are equal, we multiply nums\\[4\\] by 2 and change nums\\[5\\] to 0. The array becomes \\[1,4,0,2,**0**,**0**\\].\nAfter that, we shift the 0's to the end, which gives the array \\[1,4,2,0,0,0\\].\n\n**Example 2:**\n\n**Input:** nums = \\[0,1\\]\n**Output:** \\[1,0\\]\n**Explanation:** No operation can be applied, we just shift the 0 to the end.\n\n**Constraints:**\n\n*   `2 <= nums.length <= 2000`\n*   `0 <= nums[i] <= 1000`",
+  "difficulty": "Easy",
+  "category": null,
+  "xpReward": 0,
+  "timeLimitMs": 5000,
+  "memoryLimitMb": 256,
+  "starterCode": {},
+  "solutionCode": "",
+  "hints": [],
+  "isPremium": false,
+  "createdBy": null,
+  "testCases": [
+    {
+      "input": [
+        [
+          1,
+          2,
+          2,
+          1,
+          1,
+          0
+        ]
+      ],
+      "expectedOutput": [
+        1,
+        4,
+        2,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "input": [
+        [
+          0,
+          1
+        ]
+      ],
+      "expectedOutput": [
+        1,
+        0
+      ]
+    }
+  ],
+  "hiddenTestCases": [
+    {
+      "input": [
+        [
+          1,
+          2,
+          2,
+          1,
+          1,
+          0
+        ]
+      ],
+      "expectedOutput": [
+        1,
+        4,
+        2,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "input": [
+        [
+          0,
+          1
+        ]
+      ],
+      "expectedOutput": [
+        1,
+        0
+      ]
+    }
+  ],
+  "tags": [],
+  "constraints": [],
+  "examples": [],
+  "problemNumber": null,
+  "createdAt": "2025-11-14T21:25:54.395089+00:00",
+  "updatedAt": "2025-12-04T04:35:32.965Z"
+}

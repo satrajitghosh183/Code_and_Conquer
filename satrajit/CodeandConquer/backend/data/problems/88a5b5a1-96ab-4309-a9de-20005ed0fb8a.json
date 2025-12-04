@@ -1,0 +1,57 @@
+{
+  "id": "88a5b5a1-96ab-4309-a9de-20005ed0fb8a",
+  "title": "Number of Ways to Reach a Position After Exactly k Steps",
+  "slug": "number-of-ways-to-reach-a-position-after-exactly-k-steps",
+  "description": "You are given two **positive** integers `startPos` and `endPos`. Initially, you are standing at position `startPos` on an **infinite** number line. With one step, you can move either one position to the left, or one position to the right.\n\nGiven a positive integer `k`, return _the number of **different** ways to reach the position_ `endPos` _starting from_ `startPos`_, such that you perform **exactly**_ `k` _steps_. Since the answer may be very large, return it **modulo** `109 + 7`.\n\nTwo ways are considered different if the order of the steps made is not exactly the same.\n\n**Note** that the number line includes negative integers.\n\n**Example 1:**\n\n**Input:** startPos = 1, endPos = 2, k = 3\n**Output:** 3\n**Explanation:** We can reach position 2 from 1 in exactly 3 steps in three ways:\n- 1 -> 2 -> 3 -> 2.\n- 1 -> 2 -> 1 -> 2.\n- 1 -> 0 -> 1 -> 2.\nIt can be proven that no other way is possible, so we return 3.\n\n**Example 2:**\n\n**Input:** startPos = 2, endPos = 5, k = 10\n**Output:** 0\n**Explanation:** It is impossible to reach position 5 from position 2 in exactly 10 steps.\n\n**Constraints:**\n\n*   `1 <= startPos, endPos, k <= 1000`",
+  "difficulty": "Medium",
+  "category": null,
+  "xpReward": 0,
+  "timeLimitMs": 5000,
+  "memoryLimitMb": 256,
+  "starterCode": [],
+  "solutionCode": "",
+  "hints": [],
+  "isPremium": false,
+  "createdBy": null,
+  "testCases": [
+    {
+      "input": [
+        1,
+        2,
+        3
+      ],
+      "expectedOutput": 3
+    },
+    {
+      "input": [
+        2,
+        5,
+        10
+      ],
+      "expectedOutput": 0
+    }
+  ],
+  "hiddenTestCases": [
+    {
+      "input": [
+        1,
+        2,
+        3
+      ],
+      "expectedOutput": 3
+    },
+    {
+      "input": [
+        2,
+        5,
+        10
+      ],
+      "expectedOutput": 0
+    }
+  ],
+  "tags": [],
+  "constraints": [],
+  "examples": [],
+  "createdAt": "2025-11-14T21:25:36.211326+00:00",
+  "updatedAt": "2025-12-04T04:35:41.701Z"
+}

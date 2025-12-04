@@ -1,0 +1,55 @@
+{
+  "id": "6ef03c5f-1d50-4cd8-9c1e-e17293f77a79",
+  "title": "A Number After a Double Reversal",
+  "slug": "a-number-after-a-double-reversal",
+  "description": "**Reversing** an integer means to reverse all its digits.\n\n*   For example, reversing `2021` gives `1202`. Reversing `12300` gives `321` as the **leading zeros are not retained**.\n\nGiven an integer `num`, **reverse** `num` to get `reversed1`, **then reverse** `reversed1` to get `reversed2`. Return `true` _if_ `reversed2` _equals_ `num`. Otherwise return `false`.\n\n**Example 1:**\n\n**Input:** num = 526\n**Output:** true\n**Explanation:** Reverse num to get 625, then reverse 625 to get 526, which equals num.\n\n**Example 2:**\n\n**Input:** num = 1800\n**Output:** false\n**Explanation:** Reverse num to get 81, then reverse 81 to get 18, which does not equal num.\n\n**Example 3:**\n\n**Input:** num = 0\n**Output:** true\n**Explanation:** Reverse num to get 0, then reverse 0 to get 0, which equals num.\n\n**Constraints:**\n\n*   `0 <= num <= 106`",
+  "difficulty": "Easy",
+  "category": null,
+  "xpReward": 0,
+  "timeLimitMs": 5000,
+  "memoryLimitMb": 256,
+  "starterCode": [],
+  "solutionCode": "",
+  "hints": [],
+  "isPremium": false,
+  "createdBy": null,
+  "testCases": [
+    {
+      "input": [
+        526
+      ],
+      "expectedOutput": true
+    },
+    {
+      "input": [
+        1800
+      ],
+      "expectedOutput": false
+    },
+    {
+      "input": [
+        0
+      ],
+      "expectedOutput": true
+    }
+  ],
+  "hiddenTestCases": [
+    {
+      "input": [
+        526
+      ],
+      "expectedOutput": true
+    },
+    {
+      "input": [
+        1800
+      ],
+      "expectedOutput": false
+    }
+  ],
+  "tags": [],
+  "constraints": [],
+  "examples": [],
+  "createdAt": "2025-11-14T21:24:28.520608+00:00",
+  "updatedAt": "2025-12-04T04:36:13.156Z"
+}

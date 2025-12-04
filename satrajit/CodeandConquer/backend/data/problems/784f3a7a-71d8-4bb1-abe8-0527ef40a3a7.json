@@ -1,0 +1,55 @@
+{
+  "id": "784f3a7a-71d8-4bb1-abe8-0527ef40a3a7",
+  "title": "Count Vowel Substrings of a String",
+  "slug": "count-vowel-substrings-of-a-string",
+  "description": "A **substring** is a contiguous (non-empty) sequence of characters within a string.\n\nA **vowel substring** is a substring that **only** consists of vowels (`'a'`, `'e'`, `'i'`, `'o'`, and `'u'`) and has **all five** vowels present in it.\n\nGiven a string `word`, return _the number of **vowel substrings** in_ `word`.\n\n**Example 1:**\n\n**Input:** word =  \"aeiouu \"\n**Output:** 2\n**Explanation:** The vowel substrings of word are as follows (underlined):\n-  \"**aeiou**u \"\n-  \"**aeiouu** \"\n\n**Example 2:**\n\n**Input:** word =  \"unicornarihan \"\n**Output:** 0\n**Explanation:** Not all 5 vowels are present, so there are no vowel substrings.\n\n**Example 3:**\n\n**Input:** word =  \"cuaieuouac \"\n**Output:** 7\n**Explanation:** The vowel substrings of word are as follows (underlined):\n-  \"c**uaieuo**uac \"\n-  \"c**uaieuou**ac \"\n-  \"c**uaieuoua**c \"\n-  \"cu**aieuo**uac \"\n-  \"cu**aieuou**ac \"\n-  \"cu**aieuoua**c \"\n-  \"cua**ieuoua**c \"\n\n**Constraints:**\n\n*   `1 <= word.length <= 100`\n*   `word` consists of lowercase English letters only.",
+  "difficulty": "Easy",
+  "category": null,
+  "xpReward": 0,
+  "timeLimitMs": 5000,
+  "memoryLimitMb": 256,
+  "starterCode": [],
+  "solutionCode": "",
+  "hints": [],
+  "isPremium": false,
+  "createdBy": null,
+  "testCases": [
+    {
+      "input": [
+        "aeiouu "
+      ],
+      "expectedOutput": 2
+    },
+    {
+      "input": [
+        "unicornarihan "
+      ],
+      "expectedOutput": 0
+    },
+    {
+      "input": [
+        "cuaieuouac "
+      ],
+      "expectedOutput": 7
+    }
+  ],
+  "hiddenTestCases": [
+    {
+      "input": [
+        "aeiouu "
+      ],
+      "expectedOutput": 2
+    },
+    {
+      "input": [
+        "unicornarihan "
+      ],
+      "expectedOutput": 0
+    }
+  ],
+  "tags": [],
+  "constraints": [],
+  "examples": [],
+  "createdAt": "2025-11-14T21:24:13.386633+00:00",
+  "updatedAt": "2025-12-04T04:36:18.949Z"
+}

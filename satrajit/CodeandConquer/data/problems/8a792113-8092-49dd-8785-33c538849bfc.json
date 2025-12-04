@@ -1,0 +1,95 @@
+{
+  "id": "8a792113-8092-49dd-8785-33c538849bfc",
+  "title": "Most Frequent Even Element",
+  "slug": "most-frequent-even-element",
+  "description": "Given an integer array `nums`, return _the most frequent even element_.\n\nIf there is a tie, return the **smallest** one. If there is no such element, return `-1`.\n\n**Example 1:**\n\n**Input:** nums = \\[0,1,2,2,4,4,1\\]\n**Output:** 2\n**Explanation:**\nThe even elements are 0, 2, and 4. Of these, 2 and 4 appear the most.\nWe return the smallest one, which is 2.\n\n**Example 2:**\n\n**Input:** nums = \\[4,4,4,9,2,4\\]\n**Output:** 4\n**Explanation:** 4 is the even element appears the most.\n\n**Example 3:**\n\n**Input:** nums = \\[29,47,21,41,13,37,25,7\\]\n**Output:** -1\n**Explanation:** There is no even element.\n\n**Constraints:**\n\n*   `1 <= nums.length <= 2000`\n*   `0 <= nums[i] <= 105`",
+  "difficulty": "Easy",
+  "category": null,
+  "xpReward": 0,
+  "timeLimitMs": 5000,
+  "memoryLimitMb": 256,
+  "starterCode": {},
+  "solutionCode": "",
+  "hints": [],
+  "isPremium": false,
+  "createdBy": null,
+  "testCases": [
+    {
+      "input": [
+        [
+          0,
+          1,
+          2,
+          2,
+          4,
+          4,
+          1
+        ]
+      ],
+      "expectedOutput": 2
+    },
+    {
+      "input": [
+        [
+          4,
+          4,
+          4,
+          9,
+          2,
+          4
+        ]
+      ],
+      "expectedOutput": 4
+    },
+    {
+      "input": [
+        [
+          29,
+          47,
+          21,
+          41,
+          13,
+          37,
+          25,
+          7
+        ]
+      ],
+      "expectedOutput": -1
+    }
+  ],
+  "hiddenTestCases": [
+    {
+      "input": [
+        [
+          0,
+          1,
+          2,
+          2,
+          4,
+          4,
+          1
+        ]
+      ],
+      "expectedOutput": 2
+    },
+    {
+      "input": [
+        [
+          4,
+          4,
+          4,
+          9,
+          2,
+          4
+        ]
+      ],
+      "expectedOutput": 4
+    }
+  ],
+  "tags": [],
+  "constraints": [],
+  "examples": [],
+  "problemNumber": null,
+  "createdAt": "2025-11-14T21:25:37.878008+00:00",
+  "updatedAt": "2025-12-04T04:35:41.077Z"
+}

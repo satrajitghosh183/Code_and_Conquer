@@ -1,0 +1,68 @@
+{
+  "id": "1849847d-94f1-4052-9bf4-709c9815e57a",
+  "title": "Number of Laser Beams in a Bank",
+  "slug": "number-of-laser-beams-in-a-bank",
+  "description": "Anti-theft security devices are activated inside a bank. You are given a **0-indexed** binary string array `bank` representing the floor plan of the bank, which is an `m x n` 2D matrix. `bank[i]` represents the `ith` row, consisting of `'0'`s and `'1'`s. `'0'` means the cell is empty, while`'1'` means the cell has a security device.\n\nThere is **one** laser beam between any **two** security devices **if both** conditions are met:\n\n*   The two devices are located on two **different rows**: `r1` and `r2`, where `r1 < r2`.\n*   For **each** row `i` where `r1 < i < r2`, there are **no security devices** in the `ith` row.\n\nLaser beams are independent, i.e., one beam does not interfere nor join with another.\n\nReturn _the total number of laser beams in the bank_.\n\n**Example 1:**\n\n**Input:** bank = \\[ \"011001 \", \"000000 \", \"010100 \", \"001000 \"\\]\n**Output:** 8\n**Explanation:** Between each of the following device pairs, there is one beam. In total, there are 8 beams:\n \\* bank\\[0\\]\\[1\\] -- bank\\[2\\]\\[1\\]\n \\* bank\\[0\\]\\[1\\] -- bank\\[2\\]\\[3\\]\n \\* bank\\[0\\]\\[2\\] -- bank\\[2\\]\\[1\\]\n \\* bank\\[0\\]\\[2\\] -- bank\\[2\\]\\[3\\]\n \\* bank\\[0\\]\\[5\\] -- bank\\[2\\]\\[1\\]\n \\* bank\\[0\\]\\[5\\] -- bank\\[2\\]\\[3\\]\n \\* bank\\[2\\]\\[1\\] -- bank\\[3\\]\\[2\\]\n \\* bank\\[2\\]\\[3\\] -- bank\\[3\\]\\[2\\]\nNote that there is no beam between any device on the 0th row with any on the 3rd row.\nThis is because the 2nd row contains security devices, which breaks the second condition.\n\n**Example 2:**\n\n**Input:** bank = \\[ \"000 \", \"111 \", \"000 \"\\]\n**Output:** 0\n**Explanation:** There does not exist two devices located on two different rows.\n\n**Constraints:**\n\n*   `m == bank.length`\n*   `n == bank[i].length`\n*   `1 <= m, n <= 500`\n*   `bank[i][j]` is either `'0'` or `'1'`.",
+  "difficulty": "Medium",
+  "category": null,
+  "xpReward": 0,
+  "timeLimitMs": 5000,
+  "memoryLimitMb": 256,
+  "starterCode": {},
+  "solutionCode": "",
+  "hints": [],
+  "isPremium": false,
+  "createdBy": null,
+  "testCases": [
+    {
+      "input": [
+        [
+          "011001 ",
+          "000000 ",
+          "010100 ",
+          "001000 "
+        ]
+      ],
+      "expectedOutput": 8
+    },
+    {
+      "input": [
+        [
+          "000 ",
+          "111 ",
+          "000 "
+        ]
+      ],
+      "expectedOutput": 0
+    }
+  ],
+  "hiddenTestCases": [
+    {
+      "input": [
+        [
+          "011001 ",
+          "000000 ",
+          "010100 ",
+          "001000 "
+        ]
+      ],
+      "expectedOutput": 8
+    },
+    {
+      "input": [
+        [
+          "000 ",
+          "111 ",
+          "000 "
+        ]
+      ],
+      "expectedOutput": 0
+    }
+  ],
+  "tags": [],
+  "constraints": [],
+  "examples": [],
+  "problemNumber": null,
+  "createdAt": "2025-11-14T21:24:29.691446+00:00",
+  "updatedAt": "2025-12-04T04:36:12.417Z"
+}

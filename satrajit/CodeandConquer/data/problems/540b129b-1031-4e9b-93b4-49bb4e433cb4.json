@@ -1,0 +1,70 @@
+{
+  "id": "540b129b-1031-4e9b-93b4-49bb4e433cb4",
+  "title": "Number of Ways to Split Array",
+  "slug": "number-of-ways-to-split-array",
+  "description": "You are given a **0-indexed** integer array `nums` of length `n`.\n\n`nums` contains a **valid split** at index `i` if the following are true:\n\n*   The sum of the first `i + 1` elements is **greater than or equal to** the sum of the last `n - i - 1` elements.\n*   There is **at least one** element to the right of `i`. That is, `0 <= i < n - 1`.\n\nReturn _the number of **valid splits** in_ `nums`.\n\n**Example 1:**\n\n**Input:** nums = \\[10,4,-8,7\\]\n**Output:** 2\n**Explanation:** \nThere are three ways of splitting nums into two non-empty parts:\n- Split nums at index 0. Then, the first part is \\[10\\], and its sum is 10. The second part is \\[4,-8,7\\], and its sum is 3. Since 10 >= 3, i = 0 is a valid split.\n- Split nums at index 1. Then, the first part is \\[10,4\\], and its sum is 14. The second part is \\[-8,7\\], and its sum is -1. Since 14 >= -1, i = 1 is a valid split.\n- Split nums at index 2. Then, the first part is \\[10,4,-8\\], and its sum is 6. The second part is \\[7\\], and its sum is 7. Since 6 < 7, i = 2 is not a valid split.\nThus, the number of valid splits in nums is 2.\n\n**Example 2:**\n\n**Input:** nums = \\[2,3,1,0\\]\n**Output:** 2\n**Explanation:** \nThere are two valid splits in nums:\n- Split nums at index 1. Then, the first part is \\[2,3\\], and its sum is 5. The second part is \\[1,0\\], and its sum is 1. Since 5 >= 1, i = 1 is a valid split. \n- Split nums at index 2. Then, the first part is \\[2,3,1\\], and its sum is 6. The second part is \\[0\\], and its sum is 0. Since 6 >= 0, i = 2 is a valid split.\n\n**Constraints:**\n\n*   `2 <= nums.length <= 105`\n*   `-105 <= nums[i] <= 105`",
+  "difficulty": "Medium",
+  "category": null,
+  "xpReward": 0,
+  "timeLimitMs": 5000,
+  "memoryLimitMb": 256,
+  "starterCode": {},
+  "solutionCode": "",
+  "hints": [],
+  "isPremium": false,
+  "createdBy": null,
+  "testCases": [
+    {
+      "input": [
+        [
+          10,
+          4,
+          -8,
+          7
+        ]
+      ],
+      "expectedOutput": 2
+    },
+    {
+      "input": [
+        [
+          2,
+          3,
+          1,
+          0
+        ]
+      ],
+      "expectedOutput": 2
+    }
+  ],
+  "hiddenTestCases": [
+    {
+      "input": [
+        [
+          10,
+          4,
+          -8,
+          7
+        ]
+      ],
+      "expectedOutput": 2
+    },
+    {
+      "input": [
+        [
+          2,
+          3,
+          1,
+          0
+        ]
+      ],
+      "expectedOutput": 2
+    }
+  ],
+  "tags": [],
+  "constraints": [],
+  "examples": [],
+  "problemNumber": null,
+  "createdAt": "2025-11-14T21:25:04.250393+00:00",
+  "updatedAt": "2025-12-04T04:35:56.691Z"
+}

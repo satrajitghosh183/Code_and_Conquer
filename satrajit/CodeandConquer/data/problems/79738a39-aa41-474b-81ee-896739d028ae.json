@@ -1,0 +1,82 @@
+{
+  "id": "79738a39-aa41-474b-81ee-896739d028ae",
+  "title": "Find The Original Array of Prefix Xor",
+  "slug": "find-the-original-array-of-prefix-xor",
+  "description": "You are given an **integer** array `pref` of size `n`. Find and return _the array_ `arr` _of size_ `n` _that satisfies_:\n\n*   `pref[i] = arr[0] ^ arr[1] ^ ... ^ arr[i]`.\n\nNote that `^` denotes the **bitwise-xor** operation.\n\nIt can be proven that the answer is **unique**.\n\n**Example 1:**\n\n**Input:** pref = \\[5,2,0,3,1\\]\n**Output:** \\[5,7,2,3,2\\]\n**Explanation:** From the array \\[5,7,2,3,2\\] we have the following:\n- pref\\[0\\] = 5.\n- pref\\[1\\] = 5 ^ 7 = 2.\n- pref\\[2\\] = 5 ^ 7 ^ 2 = 0.\n- pref\\[3\\] = 5 ^ 7 ^ 2 ^ 3 = 3.\n- pref\\[4\\] = 5 ^ 7 ^ 2 ^ 3 ^ 2 = 1.\n\n**Example 2:**\n\n**Input:** pref = \\[13\\]\n**Output:** \\[13\\]\n**Explanation:** We have pref\\[0\\] = arr\\[0\\] = 13.\n\n**Constraints:**\n\n*   `1 <= pref.length <= 105`\n*   `0 <= pref[i] <= 106`",
+  "difficulty": "Medium",
+  "category": null,
+  "xpReward": 0,
+  "timeLimitMs": 5000,
+  "memoryLimitMb": 256,
+  "starterCode": {},
+  "solutionCode": "",
+  "hints": [],
+  "isPremium": false,
+  "createdBy": null,
+  "testCases": [
+    {
+      "input": [
+        [
+          5,
+          2,
+          0,
+          3,
+          1
+        ]
+      ],
+      "expectedOutput": [
+        5,
+        7,
+        2,
+        3,
+        2
+      ]
+    },
+    {
+      "input": [
+        [
+          13
+        ]
+      ],
+      "expectedOutput": [
+        13
+      ]
+    }
+  ],
+  "hiddenTestCases": [
+    {
+      "input": [
+        [
+          5,
+          2,
+          0,
+          3,
+          1
+        ]
+      ],
+      "expectedOutput": [
+        5,
+        7,
+        2,
+        3,
+        2
+      ]
+    },
+    {
+      "input": [
+        [
+          13
+        ]
+      ],
+      "expectedOutput": [
+        13
+      ]
+    }
+  ],
+  "tags": [],
+  "constraints": [],
+  "examples": [],
+  "problemNumber": null,
+  "createdAt": "2025-11-14T21:25:45.396472+00:00",
+  "updatedAt": "2025-12-04T04:35:37.246Z"
+}

@@ -1,0 +1,88 @@
+{
+  "id": "bf0d97dc-5666-4f97-b1e3-07f304bc8825",
+  "title": "Rotating the Box",
+  "slug": "rotating-the-box",
+  "description": "You are given an `m x n` matrix of characters `box` representing a side-view of a box. Each cell of the box is one of the following:\n\n*   A stone `'#'`\n*   A stationary obstacle `'*'`\n*   Empty `'.'`\n\nThe box is rotated **90 degrees clockwise**, causing some of the stones to fall due to gravity. Each stone falls down until it lands on an obstacle, another stone, or the bottom of the box. Gravity **does not** affect the obstacles' positions, and the inertia from the box's rotation **does not** affect the stones' horizontal positions.\n\nIt is **guaranteed** that each stone in `box` rests on an obstacle, another stone, or the bottom of the box.\n\nReturn _an_ `n x m` _matrix representing the box after the rotation described above_.\n\n**Example 1:**\n\n**Input:** box = \\[\\[ \"# \", \". \", \"# \"\\]\\]\n**Output:** \\[\\[ \". \"\\],\n         \\[ \"# \"\\],\n         \\[ \"# \"\\]\\]\n\n**Example 2:**\n\n**Input:** box = \\[\\[ \"# \", \". \", \"\\* \", \". \"\\],\n              \\[ \"# \", \"# \", \"\\* \", \". \"\\]\\]\n**Output:** \\[\\[ \"# \", \". \"\\],\n         \\[ \"# \", \"# \"\\],\n         \\[ \"\\* \", \"\\* \"\\],\n         \\[ \". \", \". \"\\]\\]\n\n**Example 3:**\n\n**Input:** box = \\[\\[ \"# \", \"# \", \"\\* \", \". \", \"\\* \", \". \"\\],\n              \\[ \"# \", \"# \", \"# \", \"\\* \", \". \", \". \"\\],\n              \\[ \"# \", \"# \", \"# \", \". \", \"# \", \". \"\\]\\]\n**Output:** \\[\\[ \". \", \"# \", \"# \"\\],\n         \\[ \". \", \"# \", \"# \"\\],\n         \\[ \"# \", \"# \", \"\\* \"\\],\n         \\[ \"# \", \"\\* \", \". \"\\],\n         \\[ \"# \", \". \", \"\\* \"\\],\n         \\[ \"# \", \". \", \". \"\\]\\]\n\n**Constraints:**\n\n*   `m == box.length`\n*   `n == box[i].length`\n*   `1 <= m, n <= 500`\n*   `box[i][j]` is either `'#'`, `'*'`, or `'.'`.",
+  "difficulty": "Medium",
+  "category": null,
+  "xpReward": 0,
+  "timeLimitMs": 5000,
+  "memoryLimitMb": 256,
+  "starterCode": {},
+  "solutionCode": "",
+  "hints": [],
+  "isPremium": false,
+  "createdBy": null,
+  "testCases": [
+    {
+      "input": [
+        [
+          [
+            "# ",
+            ". ",
+            "# "
+          ]
+        ]
+      ],
+      "expectedOutput": [
+        [
+          ". "
+        ],
+        [
+          "# "
+        ],
+        [
+          "# "
+        ]
+      ]
+    },
+    {
+      "input": [
+        "[[ \"# \", \". \", \"\\* \", \". \"],\n              [ \"# \", \"# \", \"\\* \", \". \"]]"
+      ],
+      "expectedOutput": "[[ \"# \", \". \"],\n         [ \"# \", \"# \"],\n         [ \"\\* \", \"\\* \"],\n         [ \". \", \". \"]]"
+    },
+    {
+      "input": [
+        "[[ \"# \", \"# \", \"\\* \", \". \", \"\\* \", \". \"],\n              [ \"# \", \"# \", \"# \", \"\\* \", \". \", \". \"],\n              [ \"# \", \"# \", \"# \", \". \", \"# \", \". \"]]"
+      ],
+      "expectedOutput": "[[ \". \", \"# \", \"# \"],\n         [ \". \", \"# \", \"# \"],\n         [ \"# \", \"# \", \"\\* \"],\n         [ \"# \", \"\\* \", \". \"],\n         [ \"# \", \". \", \"\\* \"],\n         [ \"# \", \". \", \". \"]]\n\n**Constraints:**\n\n*   `m == box.length`\n*   `n == box[i].length`\n*   `1 <= m, n <= 500`\n*   `box[i][j]` is either `'#'`, `'*'`, or `'.'`."
+    }
+  ],
+  "hiddenTestCases": [
+    {
+      "input": [
+        [
+          [
+            "# ",
+            ". ",
+            "# "
+          ]
+        ]
+      ],
+      "expectedOutput": [
+        [
+          ". "
+        ],
+        [
+          "# "
+        ],
+        [
+          "# "
+        ]
+      ]
+    },
+    {
+      "input": [
+        "[[ \"# \", \". \", \"\\* \", \". \"],\n              [ \"# \", \"# \", \"\\* \", \". \"]]"
+      ],
+      "expectedOutput": "[[ \"# \", \". \"],\n         [ \"# \", \"# \"],\n         [ \"\\* \", \"\\* \"],\n         [ \". \", \". \"]]"
+    }
+  ],
+  "tags": [],
+  "constraints": [],
+  "examples": [],
+  "problemNumber": null,
+  "createdAt": "2025-11-14T21:23:26.125133+00:00",
+  "updatedAt": "2025-12-04T04:36:39.204Z"
+}

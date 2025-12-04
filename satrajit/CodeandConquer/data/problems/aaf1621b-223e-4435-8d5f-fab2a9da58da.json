@@ -1,0 +1,90 @@
+{
+  "id": "aaf1621b-223e-4435-8d5f-fab2a9da58da",
+  "title": "Maximum Ascending Subarray Sum",
+  "slug": "maximum-ascending-subarray-sum",
+  "description": "Given an array of positive integers `nums`, return the _maximum possible sum of an **ascending** subarray in_ `nums`.\n\nA subarray is defined as a contiguous sequence of numbers in an array.\n\nA subarray `[numsl, numsl+1, ..., numsr-1, numsr]` is **ascending** if for all `i` where `l <= i < r`, `numsi < numsi+1`. Note that a subarray of size `1` is **ascending**.\n\n**Example 1:**\n\n**Input:** nums = \\[10,20,30,5,10,50\\]\n**Output:** 65\n**Explanation:** \\[5,10,50\\] is the ascending subarray with the maximum sum of 65.\n\n**Example 2:**\n\n**Input:** nums = \\[10,20,30,40,50\\]\n**Output:** 150\n**Explanation:** \\[10,20,30,40,50\\] is the ascending subarray with the maximum sum of 150.\n\n**Example 3:**\n\n**Input:** nums = \\[12,17,15,13,10,11,12\\]\n**Output:** 33\n**Explanation:** \\[10,11,12\\] is the ascending subarray with the maximum sum of 33.\n\n**Constraints:**\n\n*   `1 <= nums.length <= 100`\n*   `1 <= nums[i] <= 100`",
+  "difficulty": "Easy",
+  "category": null,
+  "xpReward": 0,
+  "timeLimitMs": 5000,
+  "memoryLimitMb": 256,
+  "starterCode": {},
+  "solutionCode": "",
+  "hints": [],
+  "isPremium": false,
+  "createdBy": null,
+  "testCases": [
+    {
+      "input": [
+        [
+          10,
+          20,
+          30,
+          5,
+          10,
+          50
+        ]
+      ],
+      "expectedOutput": 65
+    },
+    {
+      "input": [
+        [
+          10,
+          20,
+          30,
+          40,
+          50
+        ]
+      ],
+      "expectedOutput": 150
+    },
+    {
+      "input": [
+        [
+          12,
+          17,
+          15,
+          13,
+          10,
+          11,
+          12
+        ]
+      ],
+      "expectedOutput": 33
+    }
+  ],
+  "hiddenTestCases": [
+    {
+      "input": [
+        [
+          10,
+          20,
+          30,
+          5,
+          10,
+          50
+        ]
+      ],
+      "expectedOutput": 65
+    },
+    {
+      "input": [
+        [
+          10,
+          20,
+          30,
+          40,
+          50
+        ]
+      ],
+      "expectedOutput": 150
+    }
+  ],
+  "tags": [],
+  "constraints": [],
+  "examples": [],
+  "problemNumber": null,
+  "createdAt": "2025-11-14T21:23:10.269003+00:00",
+  "updatedAt": "2025-12-04T04:36:46.534Z"
+}

@@ -1,0 +1,81 @@
+{
+  "id": "76a80b8d-4180-4616-a716-d5ed17fab36f",
+  "title": "Maximum Element After Decreasing and Rearranging",
+  "slug": "maximum-element-after-decreasing-and-rearranging",
+  "description": "You are given an array of positive integers `arr`. Perform some operations (possibly none) on `arr` so that it satisfies these conditions:\n\n*   The value of the **first** element in `arr` must be `1`.\n*   The absolute difference between any 2 adjacent elements must be **less than or equal to** `1`. In other words, `abs(arr[i] - arr[i - 1]) <= 1` for each `i` where `1 <= i < arr.length` (**0-indexed**). `abs(x)` is the absolute value of `x`.\n\nThere are 2 types of operations that you can perform any number of times:\n\n*   **Decrease** the value of any element of `arr` to a **smaller positive integer**.\n*   **Rearrange** the elements of `arr` to be in any order.\n\nReturn _the **maximum** possible value of an element in_ `arr` _after performing the operations to satisfy the conditions_.\n\n**Example 1:**\n\n**Input:** arr = \\[2,2,1,2,1\\]\n**Output:** 2\n**Explanation:** \nWe can satisfy the conditions by rearranging `arr` so it becomes `[1,2,2,2,1]`.\nThe largest element in `arr` is 2.\n\n**Example 2:**\n\n**Input:** arr = \\[100,1,1000\\]\n**Output:** 3\n**Explanation:** \nOne possible way to satisfy the conditions is by doing the following:\n1. Rearrange `arr` so it becomes `[1,100,1000]`.\n2. Decrease the value of the second element to 2.\n3. Decrease the value of the third element to 3.\nNow `arr = [1,2,3], which` satisfies the conditions.\nThe largest element in `arr is 3.`\n\n**Example 3:**\n\n**Input:** arr = \\[1,2,3,4,5\\]\n**Output:** 5\n**Explanation:** The array already satisfies the conditions, and the largest element is 5.\n\n**Constraints:**\n\n*   `1 <= arr.length <= 105`\n*   `1 <= arr[i] <= 109`",
+  "difficulty": "Medium",
+  "category": null,
+  "xpReward": 0,
+  "timeLimitMs": 5000,
+  "memoryLimitMb": 256,
+  "starterCode": [],
+  "solutionCode": "",
+  "hints": [],
+  "isPremium": false,
+  "createdBy": null,
+  "testCases": [
+    {
+      "input": [
+        [
+          2,
+          2,
+          1,
+          2,
+          1
+        ]
+      ],
+      "expectedOutput": 2
+    },
+    {
+      "input": [
+        [
+          100,
+          1,
+          1000
+        ]
+      ],
+      "expectedOutput": 3
+    },
+    {
+      "input": [
+        [
+          1,
+          2,
+          3,
+          4,
+          5
+        ]
+      ],
+      "expectedOutput": 5
+    }
+  ],
+  "hiddenTestCases": [
+    {
+      "input": [
+        [
+          2,
+          2,
+          1,
+          2,
+          1
+        ]
+      ],
+      "expectedOutput": 2
+    },
+    {
+      "input": [
+        [
+          100,
+          1,
+          1000
+        ]
+      ],
+      "expectedOutput": 3
+    }
+  ],
+  "tags": [],
+  "constraints": [],
+  "examples": [],
+  "createdAt": "2025-11-14T21:23:22.060091+00:00",
+  "updatedAt": "2025-12-04T04:36:40.986Z"
+}

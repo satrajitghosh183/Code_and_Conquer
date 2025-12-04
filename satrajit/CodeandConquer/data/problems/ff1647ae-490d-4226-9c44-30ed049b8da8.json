@@ -1,0 +1,114 @@
+{
+  "id": "ff1647ae-490d-4226-9c44-30ed049b8da8",
+  "title": "The Time When the Network Becomes Idle",
+  "slug": "the-time-when-the-network-becomes-idle",
+  "description": "There is a network of `n` servers, labeled from `0` to `n - 1`. You are given a 2D integer array `edges`, where `edges[i] = [ui, vi]` indicates there is a message channel between servers `ui` and `vi`, and they can pass **any** number of messages to **each other** directly in **one** second. You are also given a **0-indexed** integer array `patience` of length `n`.\n\nAll servers are **connected**, i.e., a message can be passed from one server to any other server(s) directly or indirectly through the message channels.\n\nThe server labeled `0` is the **master** server. The rest are **data** servers. Each data server needs to send its message to the master server for processing and wait for a reply. Messages move between servers **optimally**, so every message takes the **least amount of time** to arrive at the master server. The master server will process all newly arrived messages **instantly** and send a reply to the originating server via the **reversed path** the message had gone through.\n\nAt the beginning of second `0`, each data server sends its message to be processed. Starting from second `1`, at the **beginning** of **every** second, each data server will check if it has received a reply to the message it sent (including any newly arrived replies) from the master server:\n\n*   If it has not, it will **resend** the message periodically. The data server `i` will resend the message every `patience[i]` second(s), i.e., the data server `i` will resend the message if `patience[i]` second(s) have **elapsed** since the **last** time the message was sent from this server.\n*   Otherwise, **no more resending** will occur from this server.\n\nThe network becomes **idle** when there are **no** messages passing between servers or arriving at servers.\n\nReturn _the **earliest second** starting from which the network becomes **idle**_.\n\n**Example 1:**\n\n**Input:** edges = \\[\\[0,1\\],\\[1,2\\]\\], patience = \\[0,2,1\\]\n**Output:** 8\n**Explanation:**\nAt (the beginning of) second 0,\n- Data server 1 sends its message (denoted 1A) to the master server.\n- Data server 2 sends its message (denoted 2A) to the master server.\n\nAt second 1,\n- Message 1A arrives at the master server. Master server processes message 1A instantly and sends a reply 1A back.\n- Server 1 has not received any reply. 1 second (1 < patience\\[1\\] = 2) elapsed since this server has sent the message, therefore it does not resend the message.\n- Server 2 has not received any reply. 1 second (1 == patience\\[2\\] = 1) elapsed since this server has sent the message, therefore it resends the message (denoted 2B).\n\nAt second 2,\n- The reply 1A arrives at server 1. No more resending will occur from server 1.\n- Message 2A arrives at the master server. Master server processes message 2A instantly and sends a reply 2A back.\n- Server 2 resends the message (denoted 2C).\n...\nAt second 4,\n- The reply 2A arrives at server 2. No more resending will occur from server 2.\n...\nAt second 7, reply 2D arrives at server 2.\n\nStarting from the beginning of the second 8, there are no messages passing between servers or arriving at servers.\nThis is the time when the network becomes idle.\n\n**Example 2:**\n\n**Input:** edges = \\[\\[0,1\\],\\[0,2\\],\\[1,2\\]\\], patience = \\[0,10,10\\]\n**Output:** 3\n**Explanation:** Data servers 1 and 2 receive a reply back at the beginning of second 2.\nFrom the beginning of the second 3, the network becomes idle.\n\n**Constraints:**\n\n*   `n == patience.length`\n*   `2 <= n <= 105`\n*   `patience[0] == 0`\n*   `1 <= patience[i] <= 105` for `1 <= i < n`\n*   `1 <= edges.length <= min(105, n * (n - 1) / 2)`\n*   `edges[i].length == 2`\n*   `0 <= ui, vi < n`\n*   `ui != vi`\n*   There are no duplicate edges.\n*   Each server can directly or indirectly reach another server.",
+  "difficulty": "Medium",
+  "category": null,
+  "xpReward": 0,
+  "timeLimitMs": 5000,
+  "memoryLimitMb": 256,
+  "starterCode": {},
+  "solutionCode": "",
+  "hints": [],
+  "isPremium": false,
+  "createdBy": null,
+  "testCases": [
+    {
+      "input": [
+        [
+          [
+            0,
+            1
+          ],
+          [
+            1,
+            2
+          ]
+        ],
+        [
+          0,
+          2,
+          1
+        ]
+      ],
+      "expectedOutput": 8
+    },
+    {
+      "input": [
+        [
+          [
+            0,
+            1
+          ],
+          [
+            0,
+            2
+          ],
+          [
+            1,
+            2
+          ]
+        ],
+        [
+          0,
+          10,
+          10
+        ]
+      ],
+      "expectedOutput": 3
+    }
+  ],
+  "hiddenTestCases": [
+    {
+      "input": [
+        [
+          [
+            0,
+            1
+          ],
+          [
+            1,
+            2
+          ]
+        ],
+        [
+          0,
+          2,
+          1
+        ]
+      ],
+      "expectedOutput": 8
+    },
+    {
+      "input": [
+        [
+          [
+            0,
+            1
+          ],
+          [
+            0,
+            2
+          ],
+          [
+            1,
+            2
+          ]
+        ],
+        [
+          0,
+          10,
+          10
+        ]
+      ],
+      "expectedOutput": 3
+    }
+  ],
+  "tags": [],
+  "constraints": [],
+  "examples": [],
+  "problemNumber": null,
+  "createdAt": "2025-11-14T21:24:06.819939+00:00",
+  "updatedAt": "2025-12-04T04:36:21.450Z"
+}

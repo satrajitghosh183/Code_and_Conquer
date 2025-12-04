@@ -1,0 +1,58 @@
+{
+  "id": "97bc29cf-3278-4e99-8d79-1b954e843ef9",
+  "title": "Maximum Score From Removing Substrings",
+  "slug": "maximum-score-from-removing-substrings",
+  "description": "You are given a string `s` and two integers `x` and `y`. You can perform two types of operations any number of times.\n\n*   Remove substring `\"ab \"` and gain `x` points.\n    *   For example, when removing `\"ab \"` from `\"cabxbae \"` it becomes `\"cxbae \"`.\n*   Remove substring `\"ba \"` and gain `y` points.\n    *   For example, when removing `\"ba \"` from `\"cabxbae \"` it becomes `\"cabxe \"`.\n\nReturn _the maximum points you can gain after applying the above operations on_ `s`.\n\n**Example 1:**\n\n**Input:** s =  \"cdbcbbaaabab \", x = 4, y = 5\n**Output:** 19\n**Explanation:**\n- Remove the  \"ba \" underlined in  \"cdbcbbaaabab \". Now, s =  \"cdbcbbaaab \" and 5 points are added to the score.\n- Remove the  \"ab \" underlined in  \"cdbcbbaaab \". Now, s =  \"cdbcbbaa \" and 4 points are added to the score.\n- Remove the  \"ba \" underlined in  \"cdbcbbaa \". Now, s =  \"cdbcba \" and 5 points are added to the score.\n- Remove the  \"ba \" underlined in  \"cdbcba \". Now, s =  \"cdbc \" and 5 points are added to the score.\nTotal score = 5 + 4 + 5 + 5 = 19.\n\n**Example 2:**\n\n**Input:** s =  \"aabbaaxybbaabb \", x = 5, y = 4\n**Output:** 20\n\n**Constraints:**\n\n*   `1 <= s.length <= 105`\n*   `1 <= x, y <= 104`\n*   `s` consists of lowercase English letters.",
+  "difficulty": "Medium",
+  "category": null,
+  "xpReward": 0,
+  "timeLimitMs": 5000,
+  "memoryLimitMb": 256,
+  "starterCode": {},
+  "solutionCode": "",
+  "hints": [],
+  "isPremium": false,
+  "createdBy": null,
+  "testCases": [
+    {
+      "input": [
+        "cdbcbbaaabab ",
+        4,
+        5
+      ],
+      "expectedOutput": 19
+    },
+    {
+      "input": [
+        "aabbaaxybbaabb ",
+        5,
+        4
+      ],
+      "expectedOutput": "20\n\n**Constraints:**\n\n*   `1 <= s.length <= 105`\n*   `1 <= x, y <= 104`\n*   `s` consists of lowercase English letters."
+    }
+  ],
+  "hiddenTestCases": [
+    {
+      "input": [
+        "cdbcbbaaabab ",
+        4,
+        5
+      ],
+      "expectedOutput": 19
+    },
+    {
+      "input": [
+        "aabbaaxybbaabb ",
+        5,
+        4
+      ],
+      "expectedOutput": "20\n\n**Constraints:**\n\n*   `1 <= s.length <= 105`\n*   `1 <= x, y <= 104`\n*   `s` consists of lowercase English letters."
+    }
+  ],
+  "tags": [],
+  "constraints": [],
+  "examples": [],
+  "problemNumber": null,
+  "createdAt": "2025-11-14T21:22:49.25702+00:00",
+  "updatedAt": "2025-12-04T04:37:00.437Z"
+}

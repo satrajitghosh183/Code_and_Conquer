@@ -1,0 +1,117 @@
+{
+  "id": "3af35d7b-64b6-4704-b873-a63f4ee3518f",
+  "title": "Calculate Amount Paid in Taxes",
+  "slug": "calculate-amount-paid-in-taxes",
+  "description": "You are given a **0-indexed** 2D integer array `brackets` where `brackets[i] = [upperi, percenti]` means that the `ith` tax bracket has an upper bound of `upperi` and is taxed at a rate of `percenti`. The brackets are **sorted** by upper bound (i.e. `upperi-1 < upperi` for `0 < i < brackets.length`).\n\nTax is calculated as follows:\n\n*   The first `upper0` dollars earned are taxed at a rate of `percent0`.\n*   The next `upper1 - upper0` dollars earned are taxed at a rate of `percent1`.\n*   The next `upper2 - upper1` dollars earned are taxed at a rate of `percent2`.\n*   And so on.\n\nYou are given an integer `income` representing the amount of money you earned. Return _the amount of money that you have to pay in taxes._ Answers within `10-5` of the actual answer will be accepted.\n\n**Example 1:**\n\n**Input:** brackets = \\[\\[3,50\\],\\[7,10\\],\\[12,25\\]\\], income = 10\n**Output:** 2.65000\n**Explanation:**\nBased on your income, you have 3 dollars in the 1st tax bracket, 4 dollars in the 2nd tax bracket, and 3 dollars in the 3rd tax bracket.\nThe tax rate for the three tax brackets is 50%, 10%, and 25%, respectively.\nIn total, you pay $3 \\* 50% + $4 \\* 10% + $3 \\* 25% = $2.65 in taxes.\n\n**Example 2:**\n\n**Input:** brackets = \\[\\[1,0\\],\\[4,25\\],\\[5,50\\]\\], income = 2\n**Output:** 0.25000\n**Explanation:**\nBased on your income, you have 1 dollar in the 1st tax bracket and 1 dollar in the 2nd tax bracket.\nThe tax rate for the two tax brackets is 0% and 25%, respectively.\nIn total, you pay $1 \\* 0% + $1 \\* 25% = $0.25 in taxes.\n\n**Example 3:**\n\n**Input:** brackets = \\[\\[2,50\\]\\], income = 0\n**Output:** 0.00000\n**Explanation:**\nYou have no income to tax, so you have to pay a total of $0 in taxes.\n\n**Constraints:**\n\n*   `1 <= brackets.length <= 100`\n*   `1 <= upperi <= 1000`\n*   `0 <= percenti <= 100`\n*   `0 <= income <= 1000`\n*   `upperi` is sorted in ascending order.\n*   All the values of `upperi` are **unique**.\n*   The upper bound of the last tax bracket is greater than or equal to `income`.",
+  "difficulty": "Easy",
+  "category": null,
+  "xpReward": 0,
+  "timeLimitMs": 5000,
+  "memoryLimitMb": 256,
+  "starterCode": [],
+  "solutionCode": "",
+  "hints": [],
+  "isPremium": false,
+  "createdBy": null,
+  "testCases": [
+    {
+      "input": [
+        [
+          [
+            3,
+            50
+          ],
+          [
+            7,
+            10
+          ],
+          [
+            12,
+            25
+          ]
+        ],
+        10
+      ],
+      "expectedOutput": 2.65
+    },
+    {
+      "input": [
+        [
+          [
+            1,
+            0
+          ],
+          [
+            4,
+            25
+          ],
+          [
+            5,
+            50
+          ]
+        ],
+        2
+      ],
+      "expectedOutput": 0.25
+    },
+    {
+      "input": [
+        [
+          [
+            2,
+            50
+          ]
+        ],
+        0
+      ],
+      "expectedOutput": 0
+    }
+  ],
+  "hiddenTestCases": [
+    {
+      "input": [
+        [
+          [
+            3,
+            50
+          ],
+          [
+            7,
+            10
+          ],
+          [
+            12,
+            25
+          ]
+        ],
+        10
+      ],
+      "expectedOutput": 2.65
+    },
+    {
+      "input": [
+        [
+          [
+            1,
+            0
+          ],
+          [
+            4,
+            25
+          ],
+          [
+            5,
+            50
+          ]
+        ],
+        2
+      ],
+      "expectedOutput": 0.25
+    }
+  ],
+  "tags": [],
+  "constraints": [],
+  "examples": [],
+  "createdAt": "2025-11-14T21:25:13.093477+00:00",
+  "updatedAt": "2025-12-04T04:35:52.896Z"
+}

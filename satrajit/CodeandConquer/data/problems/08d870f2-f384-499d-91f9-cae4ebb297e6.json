@@ -1,0 +1,150 @@
+{
+  "id": "08d870f2-f384-499d-91f9-cae4ebb297e6",
+  "title": "Maximum Number of Visible Points",
+  "slug": "maximum-number-of-visible-points",
+  "description": "You are given an array `points`, an integer `angle`, and your `location`, where `location = [posx, posy]` and `points[i] = [xi, yi]` both denote **integral coordinates** on the X-Y plane.\n\nInitially, you are facing directly east from your position. You **cannot move** from your position, but you can **rotate**. In other words, `posx` and `posy` cannot be changed. Your field of view in **degrees** is represented by `angle`, determining how wide you can see from any given view direction. Let `d` be the amount in degrees that you rotate counterclockwise. Then, your field of view is the **inclusive** range of angles `[d - angle/2, d + angle/2]`.\n\nYour browser does not support the video tag or this video format.\n\nYou can **see** some set of points if, for each point, the **angle** formed by the point, your position, and the immediate east direction from your position is **in your field of view**.\n\nThere can be multiple points at one coordinate. There may be points at your location, and you can always see these points regardless of your rotation. Points do not obstruct your vision to other points.\n\nReturn _the maximum number of points you can see_.\n\n**Example 1:**\n\n**Input:** points = \\[\\[2,1\\],\\[2,2\\],\\[3,3\\]\\], angle = 90, location = \\[1,1\\]\n**Output:** 3\n**Explanation:** The shaded region represents your field of view. All points can be made visible in your field of view, including \\[3,3\\] even though \\[2,2\\] is in front and in the same line of sight.\n\n**Example 2:**\n\n**Input:** points = \\[\\[2,1\\],\\[2,2\\],\\[3,4\\],\\[1,1\\]\\], angle = 90, location = \\[1,1\\]\n**Output:** 4\n**Explanation:** All points can be made visible in your field of view, including the one at your location.\n\n**Example 3:**\n\n**Input:** points = \\[\\[1,0\\],\\[2,1\\]\\], angle = 13, location = \\[1,1\\]\n**Output:** 1\n**Explanation:** You can only see one of the two points, as shown above.\n\n**Constraints:**\n\n*   `1 <= points.length <= 105`\n*   `points[i].length == 2`\n*   `location.length == 2`\n*   `0 <= angle < 360`\n*   `0 <= posx, posy, xi, yi <= 100`",
+  "difficulty": "Hard",
+  "category": null,
+  "xpReward": 0,
+  "timeLimitMs": 5000,
+  "memoryLimitMb": 256,
+  "starterCode": {},
+  "solutionCode": "",
+  "hints": [],
+  "isPremium": false,
+  "createdBy": null,
+  "testCases": [
+    {
+      "input": [
+        [
+          [
+            2,
+            1
+          ],
+          [
+            2,
+            2
+          ],
+          [
+            3,
+            3
+          ]
+        ],
+        90,
+        [
+          1,
+          1
+        ]
+      ],
+      "expectedOutput": 3
+    },
+    {
+      "input": [
+        [
+          [
+            2,
+            1
+          ],
+          [
+            2,
+            2
+          ],
+          [
+            3,
+            4
+          ],
+          [
+            1,
+            1
+          ]
+        ],
+        90,
+        [
+          1,
+          1
+        ]
+      ],
+      "expectedOutput": 4
+    },
+    {
+      "input": [
+        [
+          [
+            1,
+            0
+          ],
+          [
+            2,
+            1
+          ]
+        ],
+        13,
+        [
+          1,
+          1
+        ]
+      ],
+      "expectedOutput": 1
+    }
+  ],
+  "hiddenTestCases": [
+    {
+      "input": [
+        [
+          [
+            2,
+            1
+          ],
+          [
+            2,
+            2
+          ],
+          [
+            3,
+            3
+          ]
+        ],
+        90,
+        [
+          1,
+          1
+        ]
+      ],
+      "expectedOutput": 3
+    },
+    {
+      "input": [
+        [
+          [
+            2,
+            1
+          ],
+          [
+            2,
+            2
+          ],
+          [
+            3,
+            4
+          ],
+          [
+            1,
+            1
+          ]
+        ],
+        90,
+        [
+          1,
+          1
+        ]
+      ],
+      "expectedOutput": 4
+    }
+  ],
+  "tags": [],
+  "constraints": [],
+  "examples": [],
+  "problemNumber": null,
+  "createdAt": "2025-11-14T21:22:25.795137+00:00",
+  "updatedAt": "2025-12-04T04:37:12.631Z"
+}

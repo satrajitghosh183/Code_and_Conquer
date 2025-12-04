@@ -1,0 +1,111 @@
+{
+  "id": "709d24db-4c1a-4a0f-b32b-4f224d939a6e",
+  "title": "Maximum Distance Between a Pair of Values",
+  "slug": "maximum-distance-between-a-pair-of-values",
+  "description": "You are given two **non-increasing 0-indexed** integer arrays `nums1`​​​​​​ and `nums2`​​​​​​.\n\nA pair of indices `(i, j)`, where `0 <= i < nums1.length` and `0 <= j < nums2.length`, is **valid** if both `i <= j` and `nums1[i] <= nums2[j]`. The **distance** of the pair is `j - i`​​​​.\n\nReturn _the **maximum distance** of any **valid** pair_ `(i, j)`_. If there are no valid pairs, return_ `0`.\n\nAn array `arr` is **non-increasing** if `arr[i-1] >= arr[i]` for every `1 <= i < arr.length`.\n\n**Example 1:**\n\n**Input:** nums1 = \\[55,30,5,4,2\\], nums2 = \\[100,20,10,10,5\\]\n**Output:** 2\n**Explanation:** The valid pairs are (0,0), (2,2), (2,3), (2,4), (3,3), (3,4), and (4,4).\nThe maximum distance is 2 with pair (2,4).\n\n**Example 2:**\n\n**Input:** nums1 = \\[2,2,2\\], nums2 = \\[10,10,1\\]\n**Output:** 1\n**Explanation:** The valid pairs are (0,0), (0,1), and (1,1).\nThe maximum distance is 1 with pair (0,1).\n\n**Example 3:**\n\n**Input:** nums1 = \\[30,29,19,5\\], nums2 = \\[25,25,25,25,25\\]\n**Output:** 2\n**Explanation:** The valid pairs are (2,2), (2,3), (2,4), (3,3), and (3,4).\nThe maximum distance is 2 with pair (2,4).\n\n**Constraints:**\n\n*   `1 <= nums1.length, nums2.length <= 105`\n*   `1 <= nums1[i], nums2[j] <= 105`\n*   Both `nums1` and `nums2` are **non-increasing**.",
+  "difficulty": "Medium",
+  "category": null,
+  "xpReward": 0,
+  "timeLimitMs": 5000,
+  "memoryLimitMb": 256,
+  "starterCode": [],
+  "solutionCode": "",
+  "hints": [],
+  "isPremium": false,
+  "createdBy": null,
+  "testCases": [
+    {
+      "input": [
+        [
+          55,
+          30,
+          5,
+          4,
+          2
+        ],
+        [
+          100,
+          20,
+          10,
+          10,
+          5
+        ]
+      ],
+      "expectedOutput": 2
+    },
+    {
+      "input": [
+        [
+          2,
+          2,
+          2
+        ],
+        [
+          10,
+          10,
+          1
+        ]
+      ],
+      "expectedOutput": 1
+    },
+    {
+      "input": [
+        [
+          30,
+          29,
+          19,
+          5
+        ],
+        [
+          25,
+          25,
+          25,
+          25,
+          25
+        ]
+      ],
+      "expectedOutput": 2
+    }
+  ],
+  "hiddenTestCases": [
+    {
+      "input": [
+        [
+          55,
+          30,
+          5,
+          4,
+          2
+        ],
+        [
+          100,
+          20,
+          10,
+          10,
+          5
+        ]
+      ],
+      "expectedOutput": 2
+    },
+    {
+      "input": [
+        [
+          2,
+          2,
+          2
+        ],
+        [
+          10,
+          10,
+          1
+        ]
+      ],
+      "expectedOutput": 1
+    }
+  ],
+  "tags": [],
+  "constraints": [],
+  "examples": [],
+  "createdAt": "2025-11-14T21:23:24.043476+00:00",
+  "updatedAt": "2025-12-04T04:36:40.015Z"
+}

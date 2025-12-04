@@ -1,0 +1,55 @@
+{
+  "id": "e1981b8e-f765-4c16-8679-fa381b2a207f",
+  "title": "Find Nearest Right Node in Binary Tree",
+  "slug": "find-nearest-right-node-in-binary-tree",
+  "description": "Given the `root` of a binary tree and a node `u` in the tree, return _the **nearest** node on the **same level** that is to the **right** of_ `u`_, or return_ `null` _if_ `u` _is the rightmost node in its level_.\n\n**Example 1:**\n\n**Input:** root = \\[1,2,3,null,4,5,6\\], u = 4\n**Output:** 5\n**Explanation:** The nearest node on the same level to the right of node 4 is node 5.\n\n**Example 2:**\n\n**Input:** root = \\[3,null,4,2\\], u = 2\n**Output:** null\n**Explanation:** There are no nodes to the right of 2.\n\n**Constraints:**\n\n*   The number of nodes in the tree is in the range `[1, 105]`.\n*   `1 <= Node.val <= 105`\n*   All values in the tree are **distinct**.\n*   `u` is a node in the binary tree rooted at `root`.",
+  "difficulty": "Medium",
+  "category": null,
+  "xpReward": 0,
+  "timeLimitMs": 5000,
+  "memoryLimitMb": 256,
+  "starterCode": [],
+  "solutionCode": "",
+  "hints": [],
+  "isPremium": false,
+  "createdBy": null,
+  "testCases": [
+    {
+      "input": [
+        [
+          1,
+          2,
+          3,
+          null,
+          4,
+          5,
+          6
+        ],
+        4
+      ],
+      "expectedOutput": 5
+    }
+  ],
+  "hiddenTestCases": [
+    {
+      "input": [
+        [
+          1,
+          2,
+          3,
+          null,
+          4,
+          5,
+          6
+        ],
+        4
+      ],
+      "expectedOutput": 5
+    }
+  ],
+  "tags": [],
+  "constraints": [],
+  "examples": [],
+  "createdAt": "2025-11-14T21:22:24.167359+00:00",
+  "updatedAt": "2025-12-04T04:37:13.341Z"
+}

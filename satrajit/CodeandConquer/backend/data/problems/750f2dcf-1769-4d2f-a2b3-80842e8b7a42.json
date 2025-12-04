@@ -1,0 +1,60 @@
+{
+  "id": "750f2dcf-1769-4d2f-a2b3-80842e8b7a42",
+  "title": "Rearrange Characters to Make Target String",
+  "slug": "rearrange-characters-to-make-target-string",
+  "description": "You are given two **0-indexed** strings `s` and `target`. You can take some letters from `s` and rearrange them to form new strings.\n\nReturn _the **maximum** number of copies of_ `target` _that can be formed by taking letters from_ `s` _and rearranging them._\n\n**Example 1:**\n\n**Input:** s =  \"ilovecodingonleetcode \", target =  \"code \"\n**Output:** 2\n**Explanation:**\nFor the first copy of  \"code \", take the letters at indices 4, 5, 6, and 7.\nFor the second copy of  \"code \", take the letters at indices 17, 18, 19, and 20.\nThe strings that are formed are  \"ecod \" and  \"code \" which can both be rearranged into  \"code \".\nWe can make at most two copies of  \"code \", so we return 2.\n\n**Example 2:**\n\n**Input:** s =  \"abcba \", target =  \"abc \"\n**Output:** 1\n**Explanation:**\nWe can make one copy of  \"abc \" by taking the letters at indices 0, 1, and 2.\nWe can make at most one copy of  \"abc \", so we return 1.\nNote that while there is an extra 'a' and 'b' at indices 3 and 4, we cannot reuse the letter 'c' at index 2, so we cannot make a second copy of  \"abc \".\n\n**Example 3:**\n\n**Input:** s =  \"abbaccaddaeea \", target =  \"aaaaa \"\n**Output:** 1\n**Explanation:**\nWe can make one copy of  \"aaaaa \" by taking the letters at indices 0, 3, 6, 9, and 12.\nWe can make at most one copy of  \"aaaaa \", so we return 1.\n\n**Constraints:**\n\n*   `1 <= s.length <= 100`\n*   `1 <= target.length <= 10`\n*   `s` and `target` consist of lowercase English letters.",
+  "difficulty": "Easy",
+  "category": null,
+  "xpReward": 0,
+  "timeLimitMs": 5000,
+  "memoryLimitMb": 256,
+  "starterCode": [],
+  "solutionCode": "",
+  "hints": [],
+  "isPremium": false,
+  "createdBy": null,
+  "testCases": [
+    {
+      "input": [
+        "ilovecodingonleetcode ",
+        "code "
+      ],
+      "expectedOutput": 2
+    },
+    {
+      "input": [
+        "abcba ",
+        "abc "
+      ],
+      "expectedOutput": 1
+    },
+    {
+      "input": [
+        "abbaccaddaeea ",
+        "aaaaa "
+      ],
+      "expectedOutput": 1
+    }
+  ],
+  "hiddenTestCases": [
+    {
+      "input": [
+        "ilovecodingonleetcode ",
+        "code "
+      ],
+      "expectedOutput": 2
+    },
+    {
+      "input": [
+        "abcba ",
+        "abc "
+      ],
+      "expectedOutput": 1
+    }
+  ],
+  "tags": [],
+  "constraints": [],
+  "examples": [],
+  "createdAt": "2025-11-14T21:25:09.088363+00:00",
+  "updatedAt": "2025-12-04T04:35:54.671Z"
+}

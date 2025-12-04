@@ -1,0 +1,76 @@
+{
+  "id": "ddd23f38-cb0d-44a5-9421-305df7a64d8c",
+  "title": "Kth Smallest Instructions",
+  "slug": "kth-smallest-instructions",
+  "description": "Bob is standing at cell `(0, 0)`, and he wants to reach `destination`: `(row, column)`. He can only travel **right** and **down**. You are going to help Bob by providing **instructions** for him to reach `destination`.\n\nThe **instructions** are represented as a string, where each character is either:\n\n*   `'H'`, meaning move horizontally (go **right**), or\n*   `'V'`, meaning move vertically (go **down**).\n\nMultiple **instructions** will lead Bob to `destination`. For example, if `destination` is `(2, 3)`, both `\"HHHVV \"` and `\"HVHVH \"` are valid **instructions**.\n\nHowever, Bob is very picky. Bob has a lucky number `k`, and he wants the `kth` **lexicographically smallest instructions** that will lead him to `destination`. `k` is **1-indexed**.\n\nGiven an integer array `destination` and an integer `k`, return _the_ `kth` _**lexicographically smallest instructions** that will take Bob to_ `destination`.\n\n**Example 1:**\n\n**Input:** destination = \\[2,3\\], k = 1\n**Output:**  \"HHHVV \"\n**Explanation:** All the instructions that reach (2, 3) in lexicographic order are as follows:\n\\[ \"HHHVV \",  \"HHVHV \",  \"HHVVH \",  \"HVHHV \",  \"HVHVH \",  \"HVVHH \",  \"VHHHV \",  \"VHHVH \",  \"VHVHH \",  \"VVHHH \"\\].\n\n**Example 2:**\n\n**Input:** destination = \\[2,3\\], k = 2\n**Output:**  \"HHVHV \"\n\n**Example 3:**\n\n**Input:** destination = \\[2,3\\], k = 3\n**Output:**  \"HHVVH \"\n\n**Constraints:**\n\n*   `destination.length == 2`\n*   `1 <= row, column <= 15`\n*   `1 <= k <= nCr(row + column, row)`, where `nCr(a, b)` denotes `a` choose `b`​​​​​.",
+  "difficulty": "Hard",
+  "category": null,
+  "xpReward": 0,
+  "timeLimitMs": 5000,
+  "memoryLimitMb": 256,
+  "starterCode": {},
+  "solutionCode": "",
+  "hints": [],
+  "isPremium": false,
+  "createdBy": null,
+  "testCases": [
+    {
+      "input": [
+        [
+          2,
+          3
+        ],
+        1
+      ],
+      "expectedOutput": "HHHVV "
+    },
+    {
+      "input": [
+        [
+          2,
+          3
+        ],
+        2
+      ],
+      "expectedOutput": "HHVHV "
+    },
+    {
+      "input": [
+        [
+          2,
+          3
+        ],
+        3
+      ],
+      "expectedOutput": "\"HHVVH \"\n\n**Constraints:**\n\n*   `destination.length == 2`\n*   `1 <= row, column <= 15`\n*   `1 <= k <= nCr(row + column, row)`, where `nCr(a, b)` denotes `a` choose `b`​​​​​."
+    }
+  ],
+  "hiddenTestCases": [
+    {
+      "input": [
+        [
+          2,
+          3
+        ],
+        1
+      ],
+      "expectedOutput": "HHHVV "
+    },
+    {
+      "input": [
+        [
+          2,
+          3
+        ],
+        2
+      ],
+      "expectedOutput": "HHVHV "
+    }
+  ],
+  "tags": [],
+  "constraints": [],
+  "examples": [],
+  "problemNumber": null,
+  "createdAt": "2025-11-14T21:22:32.817927+00:00",
+  "updatedAt": "2025-12-04T04:37:09.757Z"
+}

@@ -1,0 +1,79 @@
+{
+  "id": "9098af4d-1d44-4576-b8b7-f09b2b9c9764",
+  "title": "Three Consecutive Odds",
+  "slug": "three-consecutive-odds",
+  "description": "Given an integer array `arr`, return `true` if there are three consecutive odd numbers in the array. Otherwise, return `false`.\n\n**Example 1:**\n\n**Input:** arr = \\[2,6,4,1\\]\n**Output:** false\n**Explanation:** There are no three consecutive odds.\n\n**Example 2:**\n\n**Input:** arr = \\[1,2,34,3,4,5,7,23,12\\]\n**Output:** true\n**Explanation:** \\[5,7,23\\] are three consecutive odds.\n\n**Constraints:**\n\n*   `1 <= arr.length <= 1000`\n*   `1 <= arr[i] <= 1000`",
+  "difficulty": "Easy",
+  "category": null,
+  "xpReward": 0,
+  "timeLimitMs": 5000,
+  "memoryLimitMb": 256,
+  "starterCode": [],
+  "solutionCode": "",
+  "hints": [],
+  "isPremium": false,
+  "createdBy": null,
+  "testCases": [
+    {
+      "input": [
+        [
+          2,
+          6,
+          4,
+          1
+        ]
+      ],
+      "expectedOutput": false
+    },
+    {
+      "input": [
+        [
+          1,
+          2,
+          34,
+          3,
+          4,
+          5,
+          7,
+          23,
+          12
+        ]
+      ],
+      "expectedOutput": true
+    }
+  ],
+  "hiddenTestCases": [
+    {
+      "input": [
+        [
+          2,
+          6,
+          4,
+          1
+        ]
+      ],
+      "expectedOutput": false
+    },
+    {
+      "input": [
+        [
+          1,
+          2,
+          34,
+          3,
+          4,
+          5,
+          7,
+          23,
+          12
+        ]
+      ],
+      "expectedOutput": true
+    }
+  ],
+  "tags": [],
+  "constraints": [],
+  "examples": [],
+  "createdAt": "2025-11-14T21:21:58.340188+00:00",
+  "updatedAt": "2025-12-04T04:37:17.888Z"
+}

@@ -1,0 +1,77 @@
+{
+  "id": "4ccbc9b1-46cf-4901-93d6-abdc23b6bec3",
+  "title": "Strings Differ by One Character",
+  "slug": "strings-differ-by-one-character",
+  "description": "Given a list of strings `dict` where all the strings are of the same length.\n\nReturn `true` if there are 2 strings that only differ by 1 character in the same index, otherwise return `false`.\n\n**Example 1:**\n\n**Input:** dict = \\[ \"abcd \", \"acbd \",  \"aacd \"\\]\n**Output:** true\n**Explanation:** Strings  \"a**b**cd \" and  \"a**a**cd \" differ only by one character in the index 1.\n\n**Example 2:**\n\n**Input:** dict = \\[ \"ab \", \"cd \", \"yz \"\\]\n**Output:** false\n\n**Example 3:**\n\n**Input:** dict = \\[ \"abcd \", \"cccc \", \"abyd \", \"abab \"\\]\n**Output:** true\n\n**Constraints:**\n\n*   The number of characters in `dict <= 105`\n*   `dict[i].length == dict[j].length`\n*   `dict[i]` should be unique.\n*   `dict[i]` contains only lowercase English letters.\n\n**Follow up:** Could you solve this problem in `O(n * m)` where n is the length of `dict` and `m` is the length of each string.",
+  "difficulty": "Medium",
+  "category": null,
+  "xpReward": 0,
+  "timeLimitMs": 5000,
+  "memoryLimitMb": 256,
+  "starterCode": {},
+  "solutionCode": "",
+  "hints": [],
+  "isPremium": false,
+  "createdBy": null,
+  "testCases": [
+    {
+      "input": [
+        [
+          "abcd ",
+          "acbd ",
+          "aacd "
+        ]
+      ],
+      "expectedOutput": true
+    },
+    {
+      "input": [
+        [
+          "ab ",
+          "cd ",
+          "yz "
+        ]
+      ],
+      "expectedOutput": false
+    },
+    {
+      "input": [
+        [
+          "abcd ",
+          "cccc ",
+          "abyd ",
+          "abab "
+        ]
+      ],
+      "expectedOutput": "true\n\n**Constraints:**\n\n*   The number of characters in `dict <= 105`\n*   `dict[i].length == dict[j].length`\n*   `dict[i]` should be unique.\n*   `dict[i]` contains only lowercase English letters.\n\n**Follow up:** Could you solve this problem in `O(n * m)` where n is the length of `dict` and `m` is the length of each string."
+    }
+  ],
+  "hiddenTestCases": [
+    {
+      "input": [
+        [
+          "abcd ",
+          "acbd ",
+          "aacd "
+        ]
+      ],
+      "expectedOutput": true
+    },
+    {
+      "input": [
+        [
+          "ab ",
+          "cd ",
+          "yz "
+        ]
+      ],
+      "expectedOutput": false
+    }
+  ],
+  "tags": [],
+  "constraints": [],
+  "examples": [],
+  "problemNumber": null,
+  "createdAt": "2025-11-14T21:22:01.508862+00:00",
+  "updatedAt": "2025-12-04T04:37:17.474Z"
+}

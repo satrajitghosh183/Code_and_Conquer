@@ -1,0 +1,74 @@
+{
+  "id": "aff7d96a-cacb-489e-adb1-287e098b762c",
+  "title": "Counting Words With a Given Prefix",
+  "slug": "counting-words-with-a-given-prefix",
+  "description": "You are given an array of strings `words` and a string `pref`.\n\nReturn _the number of strings in_ `words` _that contain_ `pref` _as a **prefix**_.\n\nA **prefix** of a string `s` is any leading contiguous substring of `s`.\n\n**Example 1:**\n\n**Input:** words = \\[ \"pay \", \"**at**tention \", \"practice \", \"**at**tend \"\\], `pref` \\=  \"at \"\n**Output:** 2\n**Explanation:** The 2 strings that contain  \"at \" as a prefix are:  \"**at**tention \" and  \"**at**tend \".\n\n**Example 2:**\n\n**Input:** words = \\[ \"leetcode \", \"win \", \"loops \", \"success \"\\], `pref` \\=  \"code \"\n**Output:** 0\n**Explanation:** There are no strings that contain  \"code \" as a prefix.\n\n**Constraints:**\n\n*   `1 <= words.length <= 100`\n*   `1 <= words[i].length, pref.length <= 100`\n*   `words[i]` and `pref` consist of lowercase English letters.",
+  "difficulty": "Easy",
+  "category": null,
+  "xpReward": 0,
+  "timeLimitMs": 5000,
+  "memoryLimitMb": 256,
+  "starterCode": {},
+  "solutionCode": "",
+  "hints": [],
+  "isPremium": false,
+  "createdBy": null,
+  "testCases": [
+    {
+      "input": [
+        [
+          "pay ",
+          "**at**tention ",
+          "practice ",
+          "**at**tend "
+        ],
+        "at "
+      ],
+      "expectedOutput": 2
+    },
+    {
+      "input": [
+        [
+          "leetcode ",
+          "win ",
+          "loops ",
+          "success "
+        ],
+        "code "
+      ],
+      "expectedOutput": 0
+    }
+  ],
+  "hiddenTestCases": [
+    {
+      "input": [
+        [
+          "pay ",
+          "**at**tention ",
+          "practice ",
+          "**at**tend "
+        ],
+        "at "
+      ],
+      "expectedOutput": 2
+    },
+    {
+      "input": [
+        [
+          "leetcode ",
+          "win ",
+          "loops ",
+          "success "
+        ],
+        "code "
+      ],
+      "expectedOutput": 0
+    }
+  ],
+  "tags": [],
+  "constraints": [],
+  "examples": [],
+  "problemNumber": null,
+  "createdAt": "2025-11-14T21:24:43.051622+00:00",
+  "updatedAt": "2025-12-04T04:36:06.433Z"
+}

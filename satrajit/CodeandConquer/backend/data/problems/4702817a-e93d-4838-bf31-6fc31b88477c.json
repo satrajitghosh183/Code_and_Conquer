@@ -1,0 +1,49 @@
+{
+  "id": "4702817a-e93d-4838-bf31-6fc31b88477c",
+  "title": "Largest Palindromic Number",
+  "slug": "largest-palindromic-number",
+  "description": "You are given a string `num` consisting of digits only.\n\nReturn _the **largest palindromic** integer (in the form of a string) that can be formed using digits taken from_ `num`. It should not contain **leading zeroes**.\n\n**Notes:**\n\n*   You do **not** need to use all the digits of `num`, but you must use **at least** one digit.\n*   The digits can be reordered.\n\n**Example 1:**\n\n**Input:** num =  \"444947137 \"\n**Output:**  \"7449447 \"\n**Explanation:** \nUse the digits  \"4449477 \" from  \"**44494****7**13**7** \" to form the palindromic integer  \"7449447 \".\nIt can be shown that  \"7449447 \" is the largest palindromic integer that can be formed.\n\n**Example 2:**\n\n**Input:** num =  \"00009 \"\n**Output:**  \"9 \"\n**Explanation:** \nIt can be shown that  \"9 \" is the largest palindromic integer that can be formed.\nNote that the integer returned should not contain leading zeroes.\n\n**Constraints:**\n\n*   `1 <= num.length <= 105`\n*   `num` consists of digits.",
+  "difficulty": "Medium",
+  "category": null,
+  "xpReward": 0,
+  "timeLimitMs": 5000,
+  "memoryLimitMb": 256,
+  "starterCode": [],
+  "solutionCode": "",
+  "hints": [],
+  "isPremium": false,
+  "createdBy": null,
+  "testCases": [
+    {
+      "input": [
+        "444947137 "
+      ],
+      "expectedOutput": "7449447 "
+    },
+    {
+      "input": [
+        "00009 "
+      ],
+      "expectedOutput": "9 "
+    }
+  ],
+  "hiddenTestCases": [
+    {
+      "input": [
+        "444947137 "
+      ],
+      "expectedOutput": "7449447 "
+    },
+    {
+      "input": [
+        "00009 "
+      ],
+      "expectedOutput": "9 "
+    }
+  ],
+  "tags": [],
+  "constraints": [],
+  "examples": [],
+  "createdAt": "2025-11-14T21:25:32.47907+00:00",
+  "updatedAt": "2025-12-04T04:35:43.633Z"
+}

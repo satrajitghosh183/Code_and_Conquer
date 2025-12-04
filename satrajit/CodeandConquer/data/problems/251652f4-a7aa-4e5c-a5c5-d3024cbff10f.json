@@ -1,0 +1,50 @@
+{
+  "id": "251652f4-a7aa-4e5c-a5c5-d3024cbff10f",
+  "title": "Design Most Recently Used Queue",
+  "slug": "design-most-recently-used-queue",
+  "description": "Design a queue-like data structure that moves the most recently used element to the end of the queue.\n\nImplement the `MRUQueue` class:\n\n*   `MRUQueue(int n)` constructs the `MRUQueue` with `n` elements: `[1,2,3,...,n]`.\n*   `int fetch(int k)` moves the `kth` element **(1-indexed)** to the end of the queue and returns it.\n\n**Example 1:**\n\n**Input:**\n\\[ \"MRUQueue \",  \"fetch \",  \"fetch \",  \"fetch \",  \"fetch \"\\]\n\\[\\[8\\], \\[3\\], \\[5\\], \\[2\\], \\[8\\]\\]\n**Output:**\n\\[null, 3, 6, 2, 2\\]\n\n**Explanation:**\nMRUQueue mRUQueue = new MRUQueue(8); // Initializes the queue to \\[1,2,3,4,5,6,7,8\\].\nmRUQueue.fetch(3); // Moves the 3rd element (3) to the end of the queue to become \\[1,2,4,5,6,7,8,3\\] and returns it.\nmRUQueue.fetch(5); // Moves the 5th element (6) to the end of the queue to become \\[1,2,4,5,7,8,3,6\\] and returns it.\nmRUQueue.fetch(2); // Moves the 2nd element (2) to the end of the queue to become \\[1,4,5,7,8,3,6,2\\] and returns it.\nmRUQueue.fetch(8); // The 8th element (2) is already at the end of the queue so just return it.\n\n**Constraints:**\n\n*   `1 <= n <= 2000`\n*   `1 <= k <= n`\n*   At most `2000` calls will be made to `fetch`.\n\n**Follow up:** Finding an `O(n)` algorithm per `fetch` is a bit easy. Can you find an algorithm with a better complexity for each `fetch` call?",
+  "difficulty": "Medium",
+  "category": null,
+  "xpReward": 0,
+  "timeLimitMs": 5000,
+  "memoryLimitMb": 256,
+  "starterCode": {},
+  "solutionCode": "",
+  "hints": [],
+  "isPremium": false,
+  "createdBy": null,
+  "testCases": [
+    {
+      "input": [
+        "[ \"MRUQueue \",  \"fetch \",  \"fetch \",  \"fetch \",  \"fetch \"]\n[[8], [3], [5], [2], [8]]"
+      ],
+      "expectedOutput": [
+        null,
+        3,
+        6,
+        2,
+        2
+      ]
+    }
+  ],
+  "hiddenTestCases": [
+    {
+      "input": [
+        "[ \"MRUQueue \",  \"fetch \",  \"fetch \",  \"fetch \",  \"fetch \"]\n[[8], [3], [5], [2], [8]]"
+      ],
+      "expectedOutput": [
+        null,
+        3,
+        6,
+        2,
+        2
+      ]
+    }
+  ],
+  "tags": [],
+  "constraints": [],
+  "examples": [],
+  "problemNumber": null,
+  "createdAt": "2025-11-14T21:22:59.142591+00:00",
+  "updatedAt": "2025-12-04T04:36:53.451Z"
+}

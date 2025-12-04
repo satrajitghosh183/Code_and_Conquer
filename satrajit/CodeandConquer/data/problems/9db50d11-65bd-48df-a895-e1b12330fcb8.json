@@ -1,0 +1,72 @@
+{
+  "id": "9db50d11-65bd-48df-a895-e1b12330fcb8",
+  "title": "Maximum XOR After Operations ",
+  "slug": "maximum-xor-after-operations",
+  "description": "You are given a **0-indexed** integer array `nums`. In one operation, select **any** non-negative integer `x` and an index `i`, then **update** `nums[i]` to be equal to `nums[i] AND (nums[i] XOR x)`.\n\nNote that `AND` is the bitwise AND operation and `XOR` is the bitwise XOR operation.\n\nReturn _the **maximum** possible bitwise XOR of all elements of_ `nums` _after applying the operation **any number** of times_.\n\n**Example 1:**\n\n**Input:** nums = \\[3,2,4,6\\]\n**Output:** 7\n**Explanation:** Apply the operation with x = 4 and i = 3, num\\[3\\] = 6 AND (6 XOR 4) = 6 AND 2 = 2.\nNow, nums = \\[3, 2, 4, 2\\] and the bitwise XOR of all the elements = 3 XOR 2 XOR 4 XOR 2 = 7.\nIt can be shown that 7 is the maximum possible bitwise XOR.\nNote that other operations may be used to achieve a bitwise XOR of 7.\n\n**Example 2:**\n\n**Input:** nums = \\[1,2,3,9,2\\]\n**Output:** 11\n**Explanation:** Apply the operation zero times.\nThe bitwise XOR of all the elements = 1 XOR 2 XOR 3 XOR 9 XOR 2 = 11.\nIt can be shown that 11 is the maximum possible bitwise XOR.\n\n**Constraints:**\n\n*   `1 <= nums.length <= 105`\n*   `0 <= nums[i] <= 108`",
+  "difficulty": "Medium",
+  "category": null,
+  "xpReward": 0,
+  "timeLimitMs": 5000,
+  "memoryLimitMb": 256,
+  "starterCode": {},
+  "solutionCode": "",
+  "hints": [],
+  "isPremium": false,
+  "createdBy": null,
+  "testCases": [
+    {
+      "input": [
+        [
+          3,
+          2,
+          4,
+          6
+        ]
+      ],
+      "expectedOutput": 7
+    },
+    {
+      "input": [
+        [
+          1,
+          2,
+          3,
+          9,
+          2
+        ]
+      ],
+      "expectedOutput": 11
+    }
+  ],
+  "hiddenTestCases": [
+    {
+      "input": [
+        [
+          3,
+          2,
+          4,
+          6
+        ]
+      ],
+      "expectedOutput": 7
+    },
+    {
+      "input": [
+        [
+          1,
+          2,
+          3,
+          9,
+          2
+        ]
+      ],
+      "expectedOutput": 11
+    }
+  ],
+  "tags": [],
+  "constraints": [],
+  "examples": [],
+  "problemNumber": null,
+  "createdAt": "2025-11-14T21:25:16.404159+00:00",
+  "updatedAt": "2025-12-04T04:35:51.091Z"
+}

@@ -1,0 +1,114 @@
+{
+  "id": "ccb0e591-3f66-4b2f-ba62-cd21cfca6999",
+  "title": "Time Taken to Cross the Door",
+  "slug": "time-taken-to-cross-the-door",
+  "description": "There are `n` persons numbered from `0` to `n - 1` and a door. Each person can enter or exit through the door once, taking one second.\n\nYou are given a **non-decreasing** integer array `arrival` of size `n`, where `arrival[i]` is the arrival time of the `ith` person at the door. You are also given an array `state` of size `n`, where `state[i]` is `0` if person `i` wants to enter through the door or `1` if they want to exit through the door.\n\nIf two or more persons want to use the door at the **same** time, they follow the following rules:\n\n*   If the door was **not** used in the previous second, then the person who wants to **exit** goes first.\n*   If the door was used in the previous second for **entering**, the person who wants to enter goes first.\n*   If the door was used in the previous second for **exiting**, the person who wants to **exit** goes first.\n*   If multiple persons want to go in the same direction, the person with the **smallest** index goes first.\n\nReturn _an array_ `answer` _of size_ `n` _where_ `answer[i]` _is the second at which the_ `ith` _person crosses the door_.\n\n**Note** that:\n\n*   Only one person can cross the door at each second.\n*   A person may arrive at the door and wait without entering or exiting to follow the mentioned rules.\n\n**Example 1:**\n\n**Input:** arrival = \\[0,1,1,2,4\\], state = \\[0,1,0,0,1\\]\n**Output:** \\[0,3,1,2,4\\]\n**Explanation:** At each second we have the following:\n- At t = 0: Person 0 is the only one who wants to enter, so they just enter through the door.\n- At t = 1: Person 1 wants to exit, and person 2 wants to enter. Since the door was used the previous second for entering, person 2 enters.\n- At t = 2: Person 1 still wants to exit, and person 3 wants to enter. Since the door was used the previous second for entering, person 3 enters.\n- At t = 3: Person 1 is the only one who wants to exit, so they just exit through the door.\n- At t = 4: Person 4 is the only one who wants to exit, so they just exit through the door.\n\n**Example 2:**\n\n**Input:** arrival = \\[0,0,0\\], state = \\[1,0,1\\]\n**Output:** \\[0,2,1\\]\n**Explanation:** At each second we have the following:\n- At t = 0: Person 1 wants to enter while persons 0 and 2 want to exit. Since the door was not used in the previous second, the persons who want to exit get to go first. Since person 0 has a smaller index, they exit first.\n- At t = 1: Person 1 wants to enter, and person 2 wants to exit. Since the door was used in the previous second for exiting, person 2 exits.\n- At t = 2: Person 1 is the only one who wants to enter, so they just enter through the door.\n\n**Constraints:**\n\n*   `n == arrival.length == state.length`\n*   `1 <= n <= 105`\n*   `0 <= arrival[i] <= n`\n*   `arrival` is sorted in **non-decreasing** order.\n*   `state[i]` is either `0` or `1`.",
+  "difficulty": "Hard",
+  "category": null,
+  "xpReward": 0,
+  "timeLimitMs": 5000,
+  "memoryLimitMb": 256,
+  "starterCode": {},
+  "solutionCode": "",
+  "hints": [],
+  "isPremium": false,
+  "createdBy": null,
+  "testCases": [
+    {
+      "input": [
+        [
+          0,
+          1,
+          1,
+          2,
+          4
+        ],
+        [
+          0,
+          1,
+          0,
+          0,
+          1
+        ]
+      ],
+      "expectedOutput": [
+        0,
+        3,
+        1,
+        2,
+        4
+      ]
+    },
+    {
+      "input": [
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          1,
+          0,
+          1
+        ]
+      ],
+      "expectedOutput": [
+        0,
+        2,
+        1
+      ]
+    }
+  ],
+  "hiddenTestCases": [
+    {
+      "input": [
+        [
+          0,
+          1,
+          1,
+          2,
+          4
+        ],
+        [
+          0,
+          1,
+          0,
+          0,
+          1
+        ]
+      ],
+      "expectedOutput": [
+        0,
+        3,
+        1,
+        2,
+        4
+      ]
+    },
+    {
+      "input": [
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          1,
+          0,
+          1
+        ]
+      ],
+      "expectedOutput": [
+        0,
+        2,
+        1
+      ]
+    }
+  ],
+  "tags": [],
+  "constraints": [],
+  "examples": [],
+  "problemNumber": null,
+  "createdAt": "2025-11-14T21:26:12.946309+00:00",
+  "updatedAt": "2025-12-04T04:35:22.960Z"
+}

@@ -1,0 +1,71 @@
+{
+  "id": "a8a32381-642b-4a19-9022-fbe6abf0a3b4",
+  "title": "Minimum Numbers of Function Calls to Make Target Array",
+  "slug": "minimum-numbers-of-function-calls-to-make-target-array",
+  "description": "You are given an integer array `nums`. You have an integer array `arr` of the same length with all values set to `0` initially. You also have the following `modify` function:\n\nYou want to use the modify function to covert `arr` to `nums` using the minimum number of calls.\n\nReturn _the minimum number of function calls to make_ `nums` _from_ `arr`.\n\nThe test cases are generated so that the answer fits in a **32-bit** signed integer.\n\n**Example 1:**\n\n**Input:** nums = \\[1,5\\]\n**Output:** 5\n**Explanation:** Increment by 1 (second element): \\[0, 0\\] to get \\[0, 1\\] (1 operation).\nDouble all the elements: \\[0, 1\\] -> \\[0, 2\\] -> \\[0, 4\\] (2 operations).\nIncrement by 1 (both elements)  \\[0, 4\\] -> \\[1, 4\\] -> **\\[1, 5\\]** (2 operations).\nTotal of operations: 1 + 2 + 2 = 5.\n\n**Example 2:**\n\n**Input:** nums = \\[2,2\\]\n**Output:** 3\n**Explanation:** Increment by 1 (both elements) \\[0, 0\\] -> \\[0, 1\\] -> \\[1, 1\\] (2 operations).\nDouble all the elements: \\[1, 1\\] -> **\\[2, 2\\]** (1 operation).\nTotal of operations: 2 + 1 = 3.\n\n**Example 3:**\n\n**Input:** nums = \\[4,2,5\\]\n**Output:** 6\n**Explanation:** (initial)\\[0,0,0\\] -> \\[1,0,0\\] -> \\[1,0,1\\] -> \\[2,0,2\\] -> \\[2,1,2\\] -> \\[4,2,4\\] -> **\\[4,2,5\\]**(nums).\n\n**Constraints:**\n\n*   `1 <= nums.length <= 105`\n*   `0 <= nums[i] <= 109`",
+  "difficulty": "Medium",
+  "category": null,
+  "xpReward": 0,
+  "timeLimitMs": 5000,
+  "memoryLimitMb": 256,
+  "starterCode": [],
+  "solutionCode": "",
+  "hints": [],
+  "isPremium": false,
+  "createdBy": null,
+  "testCases": [
+    {
+      "input": [
+        [
+          1,
+          5
+        ]
+      ],
+      "expectedOutput": 5
+    },
+    {
+      "input": [
+        [
+          2,
+          2
+        ]
+      ],
+      "expectedOutput": 3
+    },
+    {
+      "input": [
+        [
+          4,
+          2,
+          5
+        ]
+      ],
+      "expectedOutput": 6
+    }
+  ],
+  "hiddenTestCases": [
+    {
+      "input": [
+        [
+          1,
+          5
+        ]
+      ],
+      "expectedOutput": 5
+    },
+    {
+      "input": [
+        [
+          2,
+          2
+        ]
+      ],
+      "expectedOutput": 3
+    }
+  ],
+  "tags": [],
+  "constraints": [],
+  "examples": [],
+  "createdAt": "2025-11-14T21:22:02.715157+00:00",
+  "updatedAt": "2025-12-04T04:37:17.245Z"
+}

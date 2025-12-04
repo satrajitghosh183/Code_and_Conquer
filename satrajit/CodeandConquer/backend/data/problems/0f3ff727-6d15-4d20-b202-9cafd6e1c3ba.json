@@ -1,0 +1,79 @@
+{
+  "id": "0f3ff727-6d15-4d20-b202-9cafd6e1c3ba",
+  "title": "Delete Greatest Value in Each Row",
+  "slug": "delete-greatest-value-in-each-row",
+  "description": "You are given an `m x n` matrix `grid` consisting of positive integers.\n\nPerform the following operation until `grid` becomes empty:\n\n*   Delete the element with the greatest value from each row. If multiple such elements exist, delete any of them.\n*   Add the maximum of deleted elements to the answer.\n\n**Note** that the number of columns decreases by one after each operation.\n\nReturn _the answer after performing the operations described above_.\n\n**Example 1:**\n\n**Input:** grid = \\[\\[1,2,4\\],\\[3,3,1\\]\\]\n**Output:** 8\n**Explanation:** The diagram above shows the removed values in each step.\n- In the first operation, we remove 4 from the first row and 3 from the second row (notice that, there are two cells with value 3 and we can remove any of them). We add 4 to the answer.\n- In the second operation, we remove 2 from the first row and 3 from the second row. We add 3 to the answer.\n- In the third operation, we remove 1 from the first row and 1 from the second row. We add 1 to the answer.\nThe final answer = 4 + 3 + 1 = 8.\n\n**Example 2:**\n\n**Input:** grid = \\[\\[10\\]\\]\n**Output:** 10\n**Explanation:** The diagram above shows the removed values in each step.\n- In the first operation, we remove 10 from the first row. We add 10 to the answer.\nThe final answer = 10.\n\n**Constraints:**\n\n*   `m == grid.length`\n*   `n == grid[i].length`\n*   `1 <= m, n <= 50`\n*   `1 <= grid[i][j] <= 100`",
+  "difficulty": "Easy",
+  "category": null,
+  "xpReward": 0,
+  "timeLimitMs": 5000,
+  "memoryLimitMb": 256,
+  "starterCode": [],
+  "solutionCode": "",
+  "hints": [],
+  "isPremium": false,
+  "createdBy": null,
+  "testCases": [
+    {
+      "input": [
+        [
+          [
+            1,
+            2,
+            4
+          ],
+          [
+            3,
+            3,
+            1
+          ]
+        ]
+      ],
+      "expectedOutput": 8
+    },
+    {
+      "input": [
+        [
+          [
+            10
+          ]
+        ]
+      ],
+      "expectedOutput": 10
+    }
+  ],
+  "hiddenTestCases": [
+    {
+      "input": [
+        [
+          [
+            1,
+            2,
+            4
+          ],
+          [
+            3,
+            3,
+            1
+          ]
+        ]
+      ],
+      "expectedOutput": 8
+    },
+    {
+      "input": [
+        [
+          [
+            10
+          ]
+        ]
+      ],
+      "expectedOutput": 10
+    }
+  ],
+  "tags": [],
+  "constraints": [],
+  "examples": [],
+  "createdAt": "2025-11-14T21:26:04.256985+00:00",
+  "updatedAt": "2025-12-04T04:35:26.335Z"
+}

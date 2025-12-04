@@ -1,0 +1,55 @@
+{
+  "id": "e2661215-09c0-4d01-93ae-c9376dcdab1b",
+  "title": "Goal Parser Interpretation",
+  "slug": "goal-parser-interpretation",
+  "description": "You own a **Goal Parser** that can interpret a string `command`. The `command` consists of an alphabet of `\"G \"`, `\"() \"` and/or `\"(al) \"` in some order. The Goal Parser will interpret `\"G \"` as the string `\"G \"`, `\"() \"` as the string `\"o \"`, and `\"(al) \"` as the string `\"al \"`. The interpreted strings are then concatenated in the original order.\n\nGiven the string `command`, return _the **Goal Parser**'s interpretation of_ `command`.\n\n**Example 1:**\n\n**Input:** command =  \"G()(al) \"\n**Output:**  \"Goal \"\n**Explanation:** The Goal Parser interprets the command as follows:\nG -> G\n() -> o\n(al) -> al\nThe final concatenated result is  \"Goal \".\n\n**Example 2:**\n\n**Input:** command =  \"G()()()()(al) \"\n**Output:**  \"Gooooal \"\n\n**Example 3:**\n\n**Input:** command =  \"(al)G(al)()()G \"\n**Output:**  \"alGalooG \"\n\n**Constraints:**\n\n*   `1 <= command.length <= 100`\n*   `command` consists of `\"G \"`, `\"() \"`, and/or `\"(al) \"` in some order.",
+  "difficulty": "Easy",
+  "category": null,
+  "xpReward": 0,
+  "timeLimitMs": 5000,
+  "memoryLimitMb": 256,
+  "starterCode": [],
+  "solutionCode": "",
+  "hints": [],
+  "isPremium": false,
+  "createdBy": null,
+  "testCases": [
+    {
+      "input": [
+        "G()(al) "
+      ],
+      "expectedOutput": "Goal "
+    },
+    {
+      "input": [
+        "G()()()()(al) "
+      ],
+      "expectedOutput": "Gooooal "
+    },
+    {
+      "input": [
+        "(al)G(al)()()G "
+      ],
+      "expectedOutput": "\"alGalooG \"\n\n**Constraints:**\n\n*   `1 <= command.length <= 100`\n*   `command` consists of `\"G \"`, `\"() \"`, and/or `\"(al) \"` in some order."
+    }
+  ],
+  "hiddenTestCases": [
+    {
+      "input": [
+        "G()(al) "
+      ],
+      "expectedOutput": "Goal "
+    },
+    {
+      "input": [
+        "G()()()()(al) "
+      ],
+      "expectedOutput": "Gooooal "
+    }
+  ],
+  "tags": [],
+  "constraints": [],
+  "examples": [],
+  "createdAt": "2025-11-14T21:22:40.510663+00:00",
+  "updatedAt": "2025-12-04T04:37:06.478Z"
+}

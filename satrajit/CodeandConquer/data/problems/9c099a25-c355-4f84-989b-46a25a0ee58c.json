@@ -1,0 +1,124 @@
+{
+  "id": "9c099a25-c355-4f84-989b-46a25a0ee58c",
+  "title": "Stock Price Fluctuation ",
+  "slug": "stock-price-fluctuation",
+  "description": "You are given a stream of **records** about a particular stock. Each record contains a **timestamp** and the corresponding **price** of the stock at that timestamp.\n\nUnfortunately due to the volatile nature of the stock market, the records do not come in order. Even worse, some records may be incorrect. Another record with the same timestamp may appear later in the stream **correcting** the price of the previous wrong record.\n\nDesign an algorithm that:\n\n*   **Updates** the price of the stock at a particular timestamp, **correcting** the price from any previous records at the timestamp.\n*   Finds the **latest price** of the stock based on the current records. The **latest price** is the price at the latest timestamp recorded.\n*   Finds the **maximum price** the stock has been based on the current records.\n*   Finds the **minimum price** the stock has been based on the current records.\n\nImplement the `StockPrice` class:\n\n*   `StockPrice()` Initializes the object with no price records.\n*   `void update(int timestamp, int price)` Updates the `price` of the stock at the given `timestamp`.\n*   `int current()` Returns the **latest price** of the stock.\n*   `int maximum()` Returns the **maximum price** of the stock.\n*   `int minimum()` Returns the **minimum price** of the stock.\n\n**Example 1:**\n\n**Input**\n\\[ \"StockPrice \",  \"update \",  \"update \",  \"current \",  \"maximum \",  \"update \",  \"maximum \",  \"update \",  \"minimum \"\\]\n\\[\\[\\], \\[1, 10\\], \\[2, 5\\], \\[\\], \\[\\], \\[1, 3\\], \\[\\], \\[4, 2\\], \\[\\]\\]\n**Output**\n\\[null, null, null, 5, 10, null, 5, null, 2\\]\n\n**Explanation**\nStockPrice stockPrice = new StockPrice();\nstockPrice.update(1, 10); // Timestamps are \\[1\\] with corresponding prices \\[10\\].\nstockPrice.update(2, 5);  // Timestamps are \\[1,2\\] with corresponding prices \\[10,5\\].\nstockPrice.current();     // return 5, the latest timestamp is 2 with the price being 5.\nstockPrice.maximum();     // return 10, the maximum price is 10 at timestamp 1.\nstockPrice.update(1, 3);  // The previous timestamp 1 had the wrong price, so it is updated to 3.\n                          // Timestamps are \\[1,2\\] with corresponding prices \\[3,5\\].\nstockPrice.maximum();     // return 5, the maximum price is 5 after the correction.\nstockPrice.update(4, 2);  // Timestamps are \\[1,2,4\\] with corresponding prices \\[3,5,2\\].\nstockPrice.minimum();     // return 2, the minimum price is 2 at timestamp 4.\n\n**Constraints:**\n\n*   `1 <= timestamp, price <= 109`\n*   At most `105` calls will be made **in total** to `update`, `current`, `maximum`, and `minimum`.\n*   `current`, `maximum`, and `minimum` will be called **only after** `update` has been called **at least once**.",
+  "difficulty": "Medium",
+  "category": null,
+  "xpReward": 0,
+  "timeLimitMs": 5000,
+  "memoryLimitMb": 256,
+  "starterCode": {},
+  "solutionCode": "",
+  "hints": [],
+  "isPremium": false,
+  "createdBy": null,
+  "testCases": [
+    {
+      "input": {
+        "methods": [
+          "StockPrice",
+          "update",
+          "update",
+          "current",
+          "maximum",
+          "update",
+          "maximum",
+          "update",
+          "minimum"
+        ],
+        "args": [
+          [],
+          [
+            1,
+            10
+          ],
+          [
+            2,
+            5
+          ],
+          [],
+          [],
+          [
+            1,
+            3
+          ],
+          [],
+          [
+            4,
+            2
+          ],
+          []
+        ]
+      },
+      "expectedOutput": [
+        null,
+        null,
+        null,
+        5,
+        10,
+        null,
+        5,
+        null,
+        2
+      ]
+    }
+  ],
+  "hiddenTestCases": [
+    {
+      "input": {
+        "methods": [
+          "StockPrice",
+          "update",
+          "update",
+          "current",
+          "maximum",
+          "update",
+          "maximum",
+          "update",
+          "minimum"
+        ],
+        "args": [
+          [],
+          [
+            1,
+            10
+          ],
+          [
+            2,
+            5
+          ],
+          [],
+          [],
+          [
+            1,
+            3
+          ],
+          [],
+          [
+            4,
+            2
+          ],
+          []
+        ]
+      },
+      "expectedOutput": [
+        null,
+        null,
+        null,
+        5,
+        10,
+        null,
+        5,
+        null,
+        2
+      ]
+    }
+  ],
+  "tags": [],
+  "constraints": [],
+  "examples": [],
+  "problemNumber": null,
+  "createdAt": "2025-11-14T21:24:05.519304+00:00",
+  "updatedAt": "2025-12-04T04:38:01.084Z"
+}

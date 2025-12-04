@@ -1,0 +1,55 @@
+{
+  "id": "6c0ac4d0-9304-4312-afc7-be7005499460",
+  "title": "Longest Nice Substring",
+  "slug": "longest-nice-substring",
+  "description": "A string `s` is **nice** if, for every letter of the alphabet that `s` contains, it appears **both** in uppercase and lowercase. For example, `\"abABB \"` is nice because `'A'` and `'a'` appear, and `'B'` and `'b'` appear. However, `\"abA \"` is not because `'b'` appears, but `'B'` does not.\n\nGiven a string `s`, return _the longest **substring** of `s` that is **nice**. If there are multiple, return the substring of the **earliest** occurrence. If there are none, return an empty string_.\n\n**Example 1:**\n\n**Input:** s =  \"YazaAay \"\n**Output:**  \"aAa \"\n**Explanation: ** \"aAa \" is a nice string because 'A/a' is the only letter of the alphabet in s, and both 'A' and 'a' appear.\n \"aAa \" is the longest nice substring.\n\n**Example 2:**\n\n**Input:** s =  \"Bb \"\n**Output:**  \"Bb \"\n**Explanation:**  \"Bb \" is a nice string because both 'B' and 'b' appear. The whole string is a substring.\n\n**Example 3:**\n\n**Input:** s =  \"c \"\n**Output:**  \" \"\n**Explanation:** There are no nice substrings.\n\n**Constraints:**\n\n*   `1 <= s.length <= 100`\n*   `s` consists of uppercase and lowercase English letters.",
+  "difficulty": "Easy",
+  "category": null,
+  "xpReward": 0,
+  "timeLimitMs": 5000,
+  "memoryLimitMb": 256,
+  "starterCode": [],
+  "solutionCode": "",
+  "hints": [],
+  "isPremium": false,
+  "createdBy": null,
+  "testCases": [
+    {
+      "input": [
+        "YazaAay "
+      ],
+      "expectedOutput": "aAa "
+    },
+    {
+      "input": [
+        "Bb "
+      ],
+      "expectedOutput": "Bb "
+    },
+    {
+      "input": [
+        "c "
+      ],
+      "expectedOutput": " "
+    }
+  ],
+  "hiddenTestCases": [
+    {
+      "input": [
+        "YazaAay "
+      ],
+      "expectedOutput": "aAa "
+    },
+    {
+      "input": [
+        "Bb "
+      ],
+      "expectedOutput": "Bb "
+    }
+  ],
+  "tags": [],
+  "constraints": [],
+  "examples": [],
+  "createdAt": "2025-11-14T21:23:00.680106+00:00",
+  "updatedAt": "2025-12-04T04:36:52.450Z"
+}

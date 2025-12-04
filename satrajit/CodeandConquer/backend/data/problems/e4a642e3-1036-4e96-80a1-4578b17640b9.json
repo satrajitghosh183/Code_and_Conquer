@@ -1,0 +1,55 @@
+{
+  "id": "e4a642e3-1036-4e96-80a1-4578b17640b9",
+  "title": "Unique Length-3 Palindromic Subsequences",
+  "slug": "unique-length-3-palindromic-subsequences",
+  "description": "Given a string `s`, return _the number of **unique palindromes of length three** that are a **subsequence** of_ `s`.\n\nNote that even if there are multiple ways to obtain the same subsequence, it is still only counted **once**.\n\nA **palindrome** is a string that reads the same forwards and backwards.\n\nA **subsequence** of a string is a new string generated from the original string with some characters (can be none) deleted without changing the relative order of the remaining characters.\n\n*   For example, `\"ace \"` is a subsequence of `\"abcde \"`.\n\n**Example 1:**\n\n**Input:** s =  \"aabca \"\n**Output:** 3\n**Explanation:** The 3 palindromic subsequences of length 3 are:\n-  \"aba \" (subsequence of  \"aabca \")\n-  \"aaa \" (subsequence of  \"aabca \")\n-  \"aca \" (subsequence of  \"aabca \")\n\n**Example 2:**\n\n**Input:** s =  \"adc \"\n**Output:** 0\n**Explanation:** There are no palindromic subsequences of length 3 in  \"adc \".\n\n**Example 3:**\n\n**Input:** s =  \"bbcbaba \"\n**Output:** 4\n**Explanation:** The 4 palindromic subsequences of length 3 are:\n-  \"bbb \" (subsequence of  \"bbcbaba \")\n-  \"bcb \" (subsequence of  \"bbcbaba \")\n-  \"bab \" (subsequence of  \"bbcbaba \")\n-  \"aba \" (subsequence of  \"bbcbaba \")\n\n**Constraints:**\n\n*   `3 <= s.length <= 105`\n*   `s` consists of only lowercase English letters.",
+  "difficulty": "Medium",
+  "category": null,
+  "xpReward": 0,
+  "timeLimitMs": 5000,
+  "memoryLimitMb": 256,
+  "starterCode": [],
+  "solutionCode": "",
+  "hints": [],
+  "isPremium": false,
+  "createdBy": null,
+  "testCases": [
+    {
+      "input": [
+        "aabca "
+      ],
+      "expectedOutput": 3
+    },
+    {
+      "input": [
+        "adc "
+      ],
+      "expectedOutput": 0
+    },
+    {
+      "input": [
+        "bbcbaba "
+      ],
+      "expectedOutput": 4
+    }
+  ],
+  "hiddenTestCases": [
+    {
+      "input": [
+        "aabca "
+      ],
+      "expectedOutput": 3
+    },
+    {
+      "input": [
+        "adc "
+      ],
+      "expectedOutput": 0
+    }
+  ],
+  "tags": [],
+  "constraints": [],
+  "examples": [],
+  "createdAt": "2025-11-14T21:23:42.766713+00:00",
+  "updatedAt": "2025-12-04T04:36:32.460Z"
+}

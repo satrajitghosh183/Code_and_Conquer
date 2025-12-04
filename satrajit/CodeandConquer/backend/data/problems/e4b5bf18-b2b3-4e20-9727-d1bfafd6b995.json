@@ -1,0 +1,49 @@
+{
+  "id": "e4b5bf18-b2b3-4e20-9727-d1bfafd6b995",
+  "title": "Thousand Separator",
+  "slug": "thousand-separator",
+  "description": "Given an integer `n`, add a dot ( \". \") as the thousands separator and return it in string format.\n\n**Example 1:**\n\n**Input:** n = 987\n**Output:**  \"987 \"\n\n**Example 2:**\n\n**Input:** n = 1234\n**Output:**  \"1.234 \"\n\n**Constraints:**\n\n*   `0 <= n <= 231 - 1`",
+  "difficulty": "Easy",
+  "category": null,
+  "xpReward": 0,
+  "timeLimitMs": 5000,
+  "memoryLimitMb": 256,
+  "starterCode": [],
+  "solutionCode": "",
+  "hints": [],
+  "isPremium": false,
+  "createdBy": null,
+  "testCases": [
+    {
+      "input": [
+        987
+      ],
+      "expectedOutput": "987 "
+    },
+    {
+      "input": [
+        1234
+      ],
+      "expectedOutput": "\"1.234 \"\n\n**Constraints:**\n\n*   `0 <= n <= 231 - 1`"
+    }
+  ],
+  "hiddenTestCases": [
+    {
+      "input": [
+        987
+      ],
+      "expectedOutput": "987 "
+    },
+    {
+      "input": [
+        1234
+      ],
+      "expectedOutput": "\"1.234 \"\n\n**Constraints:**\n\n*   `0 <= n <= 231 - 1`"
+    }
+  ],
+  "tags": [],
+  "constraints": [],
+  "examples": [],
+  "createdAt": "2025-11-14T21:22:02.231615+00:00",
+  "updatedAt": "2025-12-04T04:37:17.429Z"
+}

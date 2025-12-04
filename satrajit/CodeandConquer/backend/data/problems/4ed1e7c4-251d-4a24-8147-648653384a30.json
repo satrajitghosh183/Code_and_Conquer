@@ -1,0 +1,141 @@
+{
+  "id": "4ed1e7c4-251d-4a24-8147-648653384a30",
+  "title": "Count Vowel Strings in Ranges",
+  "slug": "count-vowel-strings-in-ranges",
+  "description": "You are given a **0-indexed** array of strings `words` and a 2D array of integers `queries`.\n\nEach query `queries[i] = [li, ri]` asks us to find the number of strings present in the range `li` to `ri` (both **inclusive**) of `words` that start and end with a vowel.\n\nReturn _an array_ `ans` _of size_ `queries.length`_, where_ `ans[i]` _is the answer to the_ `i`th _query_.\n\n**Note** that the vowel letters are `'a'`, `'e'`, `'i'`, `'o'`, and `'u'`.\n\n**Example 1:**\n\n**Input:** words = \\[ \"aba \", \"bcb \", \"ece \", \"aa \", \"e \"\\], queries = \\[\\[0,2\\],\\[1,4\\],\\[1,1\\]\\]\n**Output:** \\[2,3,0\\]\n**Explanation:** The strings starting and ending with a vowel are  \"aba \",  \"ece \",  \"aa \" and  \"e \".\nThe answer to the query \\[0,2\\] is 2 (strings  \"aba \" and  \"ece \").\nto query \\[1,4\\] is 3 (strings  \"ece \",  \"aa \",  \"e \").\nto query \\[1,1\\] is 0.\nWe return \\[2,3,0\\].\n\n**Example 2:**\n\n**Input:** words = \\[ \"a \", \"e \", \"i \"\\], queries = \\[\\[0,2\\],\\[0,1\\],\\[2,2\\]\\]\n**Output:** \\[3,2,1\\]\n**Explanation:** Every string satisfies the conditions, so we return \\[3,2,1\\].\n\n**Constraints:**\n\n*   `1 <= words.length <= 105`\n*   `1 <= words[i].length <= 40`\n*   `words[i]` consists only of lowercase English letters.\n*   `sum(words[i].length) <= 3 * 105`\n*   `1 <= queries.length <= 105`\n*   `0 <= li <= ri < words.length`",
+  "difficulty": "Medium",
+  "category": null,
+  "xpReward": 0,
+  "timeLimitMs": 5000,
+  "memoryLimitMb": 256,
+  "starterCode": [],
+  "solutionCode": "",
+  "hints": [],
+  "isPremium": false,
+  "createdBy": null,
+  "testCases": [
+    {
+      "input": [
+        [
+          "aba ",
+          "bcb ",
+          "ece ",
+          "aa ",
+          "e "
+        ],
+        [
+          [
+            0,
+            2
+          ],
+          [
+            1,
+            4
+          ],
+          [
+            1,
+            1
+          ]
+        ]
+      ],
+      "expectedOutput": [
+        2,
+        3,
+        0
+      ]
+    },
+    {
+      "input": [
+        [
+          "a ",
+          "e ",
+          "i "
+        ],
+        [
+          [
+            0,
+            2
+          ],
+          [
+            0,
+            1
+          ],
+          [
+            2,
+            2
+          ]
+        ]
+      ],
+      "expectedOutput": [
+        3,
+        2,
+        1
+      ]
+    }
+  ],
+  "hiddenTestCases": [
+    {
+      "input": [
+        [
+          "aba ",
+          "bcb ",
+          "ece ",
+          "aa ",
+          "e "
+        ],
+        [
+          [
+            0,
+            2
+          ],
+          [
+            1,
+            4
+          ],
+          [
+            1,
+            1
+          ]
+        ]
+      ],
+      "expectedOutput": [
+        2,
+        3,
+        0
+      ]
+    },
+    {
+      "input": [
+        [
+          "a ",
+          "e ",
+          "i "
+        ],
+        [
+          [
+            0,
+            2
+          ],
+          [
+            0,
+            1
+          ],
+          [
+            2,
+            2
+          ]
+        ]
+      ],
+      "expectedOutput": [
+        3,
+        2,
+        1
+      ]
+    }
+  ],
+  "tags": [],
+  "constraints": [],
+  "examples": [],
+  "createdAt": "2025-11-14T21:26:21.724964+00:00",
+  "updatedAt": "2025-12-04T04:35:20.243Z"
+}

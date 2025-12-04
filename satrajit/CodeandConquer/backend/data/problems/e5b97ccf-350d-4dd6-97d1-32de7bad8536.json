@@ -1,0 +1,60 @@
+{
+  "id": "e5b97ccf-350d-4dd6-97d1-32de7bad8536",
+  "title": "Move Pieces to Obtain a String",
+  "slug": "move-pieces-to-obtain-a-string",
+  "description": "You are given two strings `start` and `target`, both of length `n`. Each string consists **only** of the characters `'L'`, `'R'`, and `'_'` where:\n\n*   The characters `'L'` and `'R'` represent pieces, where a piece `'L'` can move to the **left** only if there is a **blank** space directly to its left, and a piece `'R'` can move to the **right** only if there is a **blank** space directly to its right.\n*   The character `'_'` represents a blank space that can be occupied by **any** of the `'L'` or `'R'` pieces.\n\nReturn `true` _if it is possible to obtain the string_ `target` _by moving the pieces of the string_ `start` _**any** number of times_. Otherwise, return `false`.\n\n**Example 1:**\n\n**Input:** start =  \"\\_L\\_\\_R\\_\\_R\\_ \", target =  \"L\\_\\_\\_\\_\\_\\_RR \"\n**Output:** true\n**Explanation:** We can obtain the string target from start by doing the following moves:\n- Move the first piece one step to the left, start becomes equal to  \"**L**\\_\\_\\_R\\_\\_R\\_ \".\n- Move the last piece one step to the right, start becomes equal to  \"L\\_\\_\\_R\\_\\_\\_**R** \".\n- Move the second piece three steps to the right, start becomes equal to  \"L\\_\\_\\_\\_\\_\\_**R**R \".\nSince it is possible to get the string target from start, we return true.\n\n**Example 2:**\n\n**Input:** start =  \"R\\_L\\_ \", target =  \"\\_\\_LR \"\n**Output:** false\n**Explanation:** The 'R' piece in the string start can move one step to the right to obtain  \"\\_**R**L\\_ \".\nAfter that, no pieces can move anymore, so it is impossible to obtain the string target from start.\n\n**Example 3:**\n\n**Input:** start =  \"\\_R \", target =  \"R\\_ \"\n**Output:** false\n**Explanation:** The piece in the string start can move only to the right, so it is impossible to obtain the string target from start.\n\n**Constraints:**\n\n*   `n == start.length == target.length`\n*   `1 <= n <= 105`\n*   `start` and `target` consist of the characters `'L'`, `'R'`, and `'_'`.",
+  "difficulty": "Medium",
+  "category": null,
+  "xpReward": 0,
+  "timeLimitMs": 5000,
+  "memoryLimitMb": 256,
+  "starterCode": [],
+  "solutionCode": "",
+  "hints": [],
+  "isPremium": false,
+  "createdBy": null,
+  "testCases": [
+    {
+      "input": [
+        "\"\\_L\\_\\_R\\_\\_R\\_ \"",
+        "\"L\\_\\_\\_\\_\\_\\_RR \""
+      ],
+      "expectedOutput": true
+    },
+    {
+      "input": [
+        "\"R\\_L\\_ \"",
+        "\"\\_\\_LR \""
+      ],
+      "expectedOutput": false
+    },
+    {
+      "input": [
+        "\"\\_R \"",
+        "\"R\\_ \""
+      ],
+      "expectedOutput": false
+    }
+  ],
+  "hiddenTestCases": [
+    {
+      "input": [
+        "\"\\_L\\_\\_R\\_\\_R\\_ \"",
+        "\"L\\_\\_\\_\\_\\_\\_RR \""
+      ],
+      "expectedOutput": true
+    },
+    {
+      "input": [
+        "\"R\\_L\\_ \"",
+        "\"\\_\\_LR \""
+      ],
+      "expectedOutput": false
+    }
+  ],
+  "tags": [],
+  "constraints": [],
+  "examples": [],
+  "createdAt": "2025-11-14T21:25:21.294541+00:00",
+  "updatedAt": "2025-12-04T04:35:49.007Z"
+}

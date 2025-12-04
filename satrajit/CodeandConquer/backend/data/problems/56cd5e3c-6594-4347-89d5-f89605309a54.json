@@ -1,0 +1,79 @@
+{
+  "id": "56cd5e3c-6594-4347-89d5-f89605309a54",
+  "title": "GCD Sort of an Array",
+  "slug": "gcd-sort-of-an-array",
+  "description": "You are given an integer array `nums`, and you can perform the following operation **any** number of times on `nums`:\n\n*   Swap the positions of two elements `nums[i]` and `nums[j]` if `gcd(nums[i], nums[j]) > 1` where `gcd(nums[i], nums[j])` is the **greatest common divisor** of `nums[i]` and `nums[j]`.\n\nReturn `true` _if it is possible to sort_ `nums` _in **non-decreasing** order using the above swap method, or_ `false` _otherwise._\n\n**Example 1:**\n\n**Input:** nums = \\[7,21,3\\]\n**Output:** true\n**Explanation:** We can sort \\[7,21,3\\] by performing the following operations:\n- Swap 7 and 21 because gcd(7,21) = 7. nums = \\[**21**,**7**,3\\]\n- Swap 21 and 3 because gcd(21,3) = 3. nums = \\[**3**,7,**21**\\]\n\n**Example 2:**\n\n**Input:** nums = \\[5,2,6,2\\]\n**Output:** false\n**Explanation:** It is impossible to sort the array because 5 cannot be swapped with any other element.\n\n**Example 3:**\n\n**Input:** nums = \\[10,5,9,3,15\\]\n**Output:** true\nWe can sort \\[10,5,9,3,15\\] by performing the following operations:\n- Swap 10 and 15 because gcd(10,15) = 5. nums = \\[**15**,5,9,3,**10**\\]\n- Swap 15 and 3 because gcd(15,3) = 3. nums = \\[**3**,5,9,**15**,10\\]\n- Swap 10 and 15 because gcd(10,15) = 5. nums = \\[3,5,9,**10**,**15**\\]\n\n**Constraints:**\n\n*   `1 <= nums.length <= 3 * 104`\n*   `2 <= nums[i] <= 105`",
+  "difficulty": "Hard",
+  "category": null,
+  "xpReward": 0,
+  "timeLimitMs": 5000,
+  "memoryLimitMb": 256,
+  "starterCode": [],
+  "solutionCode": "",
+  "hints": [],
+  "isPremium": false,
+  "createdBy": null,
+  "testCases": [
+    {
+      "input": [
+        [
+          7,
+          21,
+          3
+        ]
+      ],
+      "expectedOutput": true
+    },
+    {
+      "input": [
+        [
+          5,
+          2,
+          6,
+          2
+        ]
+      ],
+      "expectedOutput": false
+    },
+    {
+      "input": [
+        [
+          10,
+          5,
+          9,
+          3,
+          15
+        ]
+      ],
+      "expectedOutput": "true\nWe can sort [10,5,9,3,15] by performing the following operations:\n- Swap 10 and 15 because gcd(10,15) = 5. nums = [**15**,5,9,3,**10**]\n- Swap 15 and 3 because gcd(15,3) = 3. nums = [**3**,5,9,**15**,10]\n- Swap 10 and 15 because gcd(10,15) = 5. nums = [3,5,9,**10**,**15**]\n\n**Constraints:**\n\n*   `1 <= nums.length <= 3 * 104`\n*   `2 <= nums[i] <= 105`"
+    }
+  ],
+  "hiddenTestCases": [
+    {
+      "input": [
+        [
+          7,
+          21,
+          3
+        ]
+      ],
+      "expectedOutput": true
+    },
+    {
+      "input": [
+        [
+          5,
+          2,
+          6,
+          2
+        ]
+      ],
+      "expectedOutput": false
+    }
+  ],
+  "tags": [],
+  "constraints": [],
+  "examples": [],
+  "createdAt": "2025-11-14T21:23:55.931027+00:00",
+  "updatedAt": "2025-12-04T04:36:25.727Z"
+}

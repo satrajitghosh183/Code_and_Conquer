@@ -1,3 +1,5 @@
+@import '../styles/theme.css';
+
 .matchmaking-overlay {
   position: fixed;
   top: 0;
@@ -14,14 +16,15 @@
 }
 
 .matchmaking-modal {
-  background: rgba(255, 255, 255, 0.95);
+  background: linear-gradient(135deg, var(--dark-red-bg) 0%, var(--dark-red-1) 100%);
   backdrop-filter: blur(20px);
+  border: 2px solid var(--red-4);
   border-radius: 20px;
   max-width: 500px;
   width: 100%;
   padding: 40px;
   position: relative;
-  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 20px 60px rgba(255, 0, 0, 0.4);
 }
 
 .close-btn {
@@ -31,10 +34,10 @@
   background: transparent;
   border: none;
   font-size: 32px;
-  color: #000000;
+  color: var(--text-primary);
   cursor: pointer;
-  opacity: 0.5;
-  transition: opacity 0.2s;
+  opacity: 0.7;
+  transition: all 0.2s;
   width: 32px;
   height: 32px;
   display: flex;
@@ -45,6 +48,8 @@
 
 .close-btn:hover {
   opacity: 1;
+  color: var(--red-glow);
+  transform: scale(1.1);
 }
 
 .matchmaking-start,
@@ -58,7 +63,7 @@
 .matchmaking-found h2 {
   font-size: 24px;
   font-weight: 500;
-  color: #000000;
+  color: var(--text-primary);
   margin-bottom: 12px;
   letter-spacing: -0.3px;
 }
@@ -66,8 +71,7 @@
 .matchmaking-start p,
 .matchmaking-search p {
   font-size: 15px;
-  color: #000000;
-  opacity: 0.6;
+  color: var(--text-secondary);
   margin-bottom: 32px;
 }
 
@@ -75,27 +79,30 @@
 .start-game-btn {
   width: 100%;
   padding: 14px;
-  background: #000000;
+  background: var(--button-bg);
   color: #ffffff;
-  border: none;
+  border: 2px solid var(--red-5);
   border-radius: 12px;
   font-size: 16px;
   font-weight: 500;
   cursor: pointer;
   transition: all 0.2s;
+  box-shadow: var(--glow-effect);
 }
 
 .start-search-btn:hover,
 .start-game-btn:hover {
-  background: #1a1a1a;
-  transform: translateY(-1px);
+  background: var(--button-hover);
+  border-color: var(--red-glow);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 30px rgba(255, 0, 0, 0.5);
 }
 
 .searching-spinner {
   width: 48px;
   height: 48px;
-  border: 3px solid rgba(0, 0, 0, 0.1);
-  border-top-color: #000000;
+  border: 3px solid rgba(255, 0, 0, 0.2);
+  border-top-color: var(--red-glow);
   border-radius: 50%;
   animation: spin 1s linear infinite;
   margin: 0 auto 24px;
@@ -134,20 +141,19 @@
 .player-name {
   font-size: 16px;
   font-weight: 500;
-  color: #000000;
+  color: var(--text-primary);
   margin-bottom: 4px;
 }
 
 .player-level {
   font-size: 13px;
-  color: #000000;
-  opacity: 0.5;
+  color: var(--text-secondary);
 }
 
 .vs-divider {
   font-size: 18px;
   font-weight: 600;
-  color: #000000;
-  opacity: 0.3;
+  color: var(--red-glow);
+  text-shadow: 0 0 10px rgba(255, 0, 0, 0.5);
 }
 

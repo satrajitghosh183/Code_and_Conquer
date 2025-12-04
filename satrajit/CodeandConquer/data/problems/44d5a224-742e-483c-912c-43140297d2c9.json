@@ -1,0 +1,190 @@
+{
+  "id": "44d5a224-742e-483c-912c-43140297d2c9",
+  "title": "Count Pairs Of Nodes",
+  "slug": "count-pairs-of-nodes",
+  "description": "You are given an undirected graph defined by an integer `n`, the number of nodes, and a 2D integer array `edges`, the edges in the graph, where `edges[i] = [ui, vi]` indicates that there is an **undirected** edge between `ui` and `vi`. You are also given an integer array `queries`.\n\nLet `incident(a, b)` be defined as the **number of edges** that are connected to **either** node `a` or `b`.\n\nThe answer to the `jth` query is the **number of pairs** of nodes `(a, b)` that satisfy **both** of the following conditions:\n\n*   `a < b`\n*   `incident(a, b) > queries[j]`\n\nReturn _an array_ `answers` _such that_ `answers.length == queries.length` _and_ `answers[j]` _is the answer of the_ `jth` _query_.\n\nNote that there can be **multiple edges** between the same two nodes.\n\n**Example 1:**\n\n**Input:** n = 4, edges = \\[\\[1,2\\],\\[2,4\\],\\[1,3\\],\\[2,3\\],\\[2,1\\]\\], queries = \\[2,3\\]\n**Output:** \\[6,5\\]\n**Explanation:** The calculations for incident(a, b) are shown in the table above.\nThe answers for each of the queries are as follows:\n- answers\\[0\\] = 6. All the pairs have an incident(a, b) value greater than 2.\n- answers\\[1\\] = 5. All the pairs except (3, 4) have an incident(a, b) value greater than 3.\n\n**Example 2:**\n\n**Input:** n = 5, edges = \\[\\[1,5\\],\\[1,5\\],\\[3,4\\],\\[2,5\\],\\[1,3\\],\\[5,1\\],\\[2,3\\],\\[2,5\\]\\], queries = \\[1,2,3,4,5\\]\n**Output:** \\[10,10,9,8,6\\]\n\n**Constraints:**\n\n*   `2 <= n <= 2 * 104`\n*   `1 <= edges.length <= 105`\n*   `1 <= ui, vi <= n`\n*   `ui != vi`\n*   `1 <= queries.length <= 20`\n*   `0 <= queries[j] < edges.length`",
+  "difficulty": "Hard",
+  "category": null,
+  "xpReward": 0,
+  "timeLimitMs": 5000,
+  "memoryLimitMb": 256,
+  "starterCode": {},
+  "solutionCode": "",
+  "hints": [],
+  "isPremium": false,
+  "createdBy": null,
+  "testCases": [
+    {
+      "input": [
+        4,
+        [
+          [
+            1,
+            2
+          ],
+          [
+            2,
+            4
+          ],
+          [
+            1,
+            3
+          ],
+          [
+            2,
+            3
+          ],
+          [
+            2,
+            1
+          ]
+        ],
+        [
+          2,
+          3
+        ]
+      ],
+      "expectedOutput": [
+        6,
+        5
+      ]
+    },
+    {
+      "input": [
+        5,
+        [
+          [
+            1,
+            5
+          ],
+          [
+            1,
+            5
+          ],
+          [
+            3,
+            4
+          ],
+          [
+            2,
+            5
+          ],
+          [
+            1,
+            3
+          ],
+          [
+            5,
+            1
+          ],
+          [
+            2,
+            3
+          ],
+          [
+            2,
+            5
+          ]
+        ],
+        [
+          1,
+          2,
+          3,
+          4,
+          5
+        ]
+      ],
+      "expectedOutput": "[10,10,9,8,6]\n\n**Constraints:**\n\n*   `2 <= n <= 2 * 104`\n*   `1 <= edges.length <= 105`\n*   `1 <= ui, vi <= n`\n*   `ui != vi`\n*   `1 <= queries.length <= 20`\n*   `0 <= queries[j] < edges.length`"
+    }
+  ],
+  "hiddenTestCases": [
+    {
+      "input": [
+        4,
+        [
+          [
+            1,
+            2
+          ],
+          [
+            2,
+            4
+          ],
+          [
+            1,
+            3
+          ],
+          [
+            2,
+            3
+          ],
+          [
+            2,
+            1
+          ]
+        ],
+        [
+          2,
+          3
+        ]
+      ],
+      "expectedOutput": [
+        6,
+        5
+      ]
+    },
+    {
+      "input": [
+        5,
+        [
+          [
+            1,
+            5
+          ],
+          [
+            1,
+            5
+          ],
+          [
+            3,
+            4
+          ],
+          [
+            2,
+            5
+          ],
+          [
+            1,
+            3
+          ],
+          [
+            5,
+            1
+          ],
+          [
+            2,
+            3
+          ],
+          [
+            2,
+            5
+          ]
+        ],
+        [
+          1,
+          2,
+          3,
+          4,
+          5
+        ]
+      ],
+      "expectedOutput": "[10,10,9,8,6]\n\n**Constraints:**\n\n*   `2 <= n <= 2 * 104`\n*   `1 <= edges.length <= 105`\n*   `1 <= ui, vi <= n`\n*   `ui != vi`\n*   `1 <= queries.length <= 20`\n*   `0 <= queries[j] < edges.length`"
+    }
+  ],
+  "tags": [],
+  "constraints": [],
+  "examples": [],
+  "problemNumber": null,
+  "createdAt": "2025-11-14T21:23:06.245914+00:00",
+  "updatedAt": "2025-12-04T04:36:49.710Z"
+}

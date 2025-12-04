@@ -1,0 +1,78 @@
+{
+  "id": "89ae3d62-ce3b-47a9-a39b-e77eb0330c4a",
+  "title": "Find Latest Group of Size M",
+  "slug": "find-latest-group-of-size-m",
+  "description": "Given an array `arr` that represents a permutation of numbers from `1` to `n`.\n\nYou have a binary string of size `n` that initially has all its bits set to zero. At each step `i` (assuming both the binary string and `arr` are 1-indexed) from `1` to `n`, the bit at position `arr[i]` is set to `1`.\n\nYou are also given an integer `m`. Find the latest step at which there exists a group of ones of length `m`. A group of ones is a contiguous substring of `1`'s such that it cannot be extended in either direction.\n\nReturn _the latest step at which there exists a group of ones of length **exactly**_ `m`. _If no such group exists, return_ `-1`.\n\n**Example 1:**\n\n**Input:** arr = \\[3,5,1,2,4\\], m = 1\n**Output:** 4\n**Explanation:** \nStep 1:  \"00100 \", groups: \\[ \"1 \"\\]\nStep 2:  \"00101 \", groups: \\[ \"1 \",  \"1 \"\\]\nStep 3:  \"10101 \", groups: \\[ \"1 \",  \"1 \",  \"1 \"\\]\nStep 4:  \"11101 \", groups: \\[ \"111 \",  \"1 \"\\]\nStep 5:  \"11111 \", groups: \\[ \"11111 \"\\]\nThe latest step at which there exists a group of size 1 is step 4.\n\n**Example 2:**\n\n**Input:** arr = \\[3,1,5,4,2\\], m = 2\n**Output:** -1\n**Explanation:** \nStep 1:  \"00100 \", groups: \\[ \"1 \"\\]\nStep 2:  \"10100 \", groups: \\[ \"1 \",  \"1 \"\\]\nStep 3:  \"10101 \", groups: \\[ \"1 \",  \"1 \",  \"1 \"\\]\nStep 4:  \"10111 \", groups: \\[ \"1 \",  \"111 \"\\]\nStep 5:  \"11111 \", groups: \\[ \"11111 \"\\]\nNo group of size 2 exists during any step.\n\n**Constraints:**\n\n*   `n == arr.length`\n*   `1 <= m <= n <= 105`\n*   `1 <= arr[i] <= n`\n*   All integers in `arr` are **distinct**.",
+  "difficulty": "Medium",
+  "category": null,
+  "xpReward": 0,
+  "timeLimitMs": 5000,
+  "memoryLimitMb": 256,
+  "starterCode": {},
+  "solutionCode": "",
+  "hints": [],
+  "isPremium": false,
+  "createdBy": null,
+  "testCases": [
+    {
+      "input": [
+        [
+          3,
+          5,
+          1,
+          2,
+          4
+        ],
+        1
+      ],
+      "expectedOutput": 4
+    },
+    {
+      "input": [
+        [
+          3,
+          1,
+          5,
+          4,
+          2
+        ],
+        2
+      ],
+      "expectedOutput": -1
+    }
+  ],
+  "hiddenTestCases": [
+    {
+      "input": [
+        [
+          3,
+          5,
+          1,
+          2,
+          4
+        ],
+        1
+      ],
+      "expectedOutput": 4
+    },
+    {
+      "input": [
+        [
+          3,
+          1,
+          5,
+          4,
+          2
+        ],
+        2
+      ],
+      "expectedOutput": -1
+    }
+  ],
+  "tags": [],
+  "constraints": [],
+  "examples": [],
+  "problemNumber": null,
+  "createdAt": "2025-11-14T21:22:05.478435+00:00",
+  "updatedAt": "2025-12-04T04:37:16.811Z"
+}

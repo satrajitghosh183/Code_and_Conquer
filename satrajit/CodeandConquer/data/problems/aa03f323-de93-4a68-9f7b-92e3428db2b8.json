@@ -1,0 +1,78 @@
+{
+  "id": "aa03f323-de93-4a68-9f7b-92e3428db2b8",
+  "title": "Intersection of Multiple Arrays",
+  "slug": "intersection-of-multiple-arrays",
+  "description": "Given a 2D integer array `nums` where `nums[i]` is a non-empty array of **distinct** positive integers, return _the list of integers that are present in **each array** of_ `nums` _sorted in **ascending order**_.\n\n**Example 1:**\n\n**Input:** nums = \\[\\[**3**,1,2,**4**,5\\],\\[1,2,**3**,**4**\\],\\[**3**,**4**,5,6\\]\\]\n**Output:** \\[3,4\\]\n**Explanation:** \nThe only integers present in each of nums\\[0\\] = \\[**3**,1,2,**4**,5\\], nums\\[1\\] = \\[1,2,**3**,**4**\\], and nums\\[2\\] = \\[**3**,**4**,5,6\\] are 3 and 4, so we return \\[3,4\\].\n\n**Example 2:**\n\n**Input:** nums = \\[\\[1,2,3\\],\\[4,5,6\\]\\]\n**Output:** \\[\\]\n**Explanation:** \nThere does not exist any integer present both in nums\\[0\\] and nums\\[1\\], so we return an empty list \\[\\].\n\n**Constraints:**\n\n*   `1 <= nums.length <= 1000`\n*   `1 <= sum(nums[i].length) <= 1000`\n*   `1 <= nums[i][j] <= 1000`\n*   All the values of `nums[i]` are **unique**.",
+  "difficulty": "Easy",
+  "category": null,
+  "xpReward": 0,
+  "timeLimitMs": 5000,
+  "memoryLimitMb": 256,
+  "starterCode": {},
+  "solutionCode": "",
+  "hints": [],
+  "isPremium": false,
+  "createdBy": null,
+  "testCases": [
+    {
+      "input": [
+        "[[**3**,1,2,**4**,5],[1,2,**3**,**4**],[**3**,**4**,5,6]]"
+      ],
+      "expectedOutput": [
+        3,
+        4
+      ]
+    },
+    {
+      "input": [
+        [
+          [
+            1,
+            2,
+            3
+          ],
+          [
+            4,
+            5,
+            6
+          ]
+        ]
+      ],
+      "expectedOutput": []
+    }
+  ],
+  "hiddenTestCases": [
+    {
+      "input": [
+        "[[**3**,1,2,**4**,5],[1,2,**3**,**4**],[**3**,**4**,5,6]]"
+      ],
+      "expectedOutput": [
+        3,
+        4
+      ]
+    },
+    {
+      "input": [
+        [
+          [
+            1,
+            2,
+            3
+          ],
+          [
+            4,
+            5,
+            6
+          ]
+        ]
+      ],
+      "expectedOutput": []
+    }
+  ],
+  "tags": [],
+  "constraints": [],
+  "examples": [],
+  "problemNumber": null,
+  "createdAt": "2025-11-14T21:24:58.210713+00:00",
+  "updatedAt": "2025-12-04T04:35:59.561Z"
+}

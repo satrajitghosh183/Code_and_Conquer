@@ -1,0 +1,49 @@
+{
+  "id": "e3a18169-f1a5-4678-ba34-055d77ece751",
+  "title": "Smallest Value of the Rearranged Number",
+  "slug": "smallest-value-of-the-rearranged-number",
+  "description": "You are given an integer `num.` **Rearrange** the digits of `num` such that its value is **minimized** and it does not contain **any** leading zeros.\n\nReturn _the rearranged number with minimal value_.\n\nNote that the sign of the number does not change after rearranging the digits.\n\n**Example 1:**\n\n**Input:** num = 310\n**Output:** 103\n**Explanation:** The possible arrangements for the digits of 310 are 013, 031, 103, 130, 301, 310. \nThe arrangement with the smallest value that does not contain any leading zeros is 103.\n\n**Example 2:**\n\n**Input:** num = -7605\n**Output:** -7650\n**Explanation:** Some possible arrangements for the digits of -7605 are -7650, -6705, -5076, -0567.\nThe arrangement with the smallest value that does not contain any leading zeros is -7650.\n\n**Constraints:**\n\n*   `-1015 <= num <= 1015`",
+  "difficulty": "Medium",
+  "category": null,
+  "xpReward": 0,
+  "timeLimitMs": 5000,
+  "memoryLimitMb": 256,
+  "starterCode": [],
+  "solutionCode": "",
+  "hints": [],
+  "isPremium": false,
+  "createdBy": null,
+  "testCases": [
+    {
+      "input": [
+        310
+      ],
+      "expectedOutput": 103
+    },
+    {
+      "input": [
+        -7605
+      ],
+      "expectedOutput": -7650
+    }
+  ],
+  "hiddenTestCases": [
+    {
+      "input": [
+        310
+      ],
+      "expectedOutput": 103
+    },
+    {
+      "input": [
+        -7605
+      ],
+      "expectedOutput": -7650
+    }
+  ],
+  "tags": [],
+  "constraints": [],
+  "examples": [],
+  "createdAt": "2025-11-14T21:24:38.916549+00:00",
+  "updatedAt": "2025-12-04T04:36:08.281Z"
+}

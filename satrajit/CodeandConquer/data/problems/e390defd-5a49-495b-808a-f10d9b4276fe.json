@@ -1,0 +1,91 @@
+{
+  "id": "e390defd-5a49-495b-808a-f10d9b4276fe",
+  "title": "Maximum Number of Books You Can Take",
+  "slug": "maximum-number-of-books-you-can-take",
+  "description": "You are given a **0-indexed** integer array `books` of length `n` where `books[i]` denotes the number of books on the `ith` shelf of a bookshelf.\n\nYou are going to take books from a **contiguous** section of the bookshelf spanning from `l` to `r` where `0 <= l <= r < n`. For each index `i` in the range `l <= i < r`, you must take **strictly fewer** books from shelf `i` than shelf `i + 1`.\n\nReturn _the **maximum** number of books you can take from the bookshelf._\n\n**Example 1:**\n\n**Input:** books = \\[8,5,2,7,9\\]\n**Output:** 19\n**Explanation:**\n- Take 1 book from shelf 1.\n- Take 2 books from shelf 2.\n- Take 7 books from shelf 3.\n- Take 9 books from shelf 4.\nYou have taken 19 books, so return 19.\nIt can be proven that 19 is the maximum number of books you can take.\n\n**Example 2:**\n\n**Input:** books = \\[7,0,3,4,5\\]\n**Output:** 12\n**Explanation:**\n- Take 3 books from shelf 2.\n- Take 4 books from shelf 3.\n- Take 5 books from shelf 4.\nYou have taken 12 books so return 12.\nIt can be proven that 12 is the maximum number of books you can take.\n\n**Example 3:**\n\n**Input:** books = \\[8,2,3,7,3,4,0,1,4,3\\]\n**Output:** 13\n**Explanation:**\n- Take 1 book from shelf 0.\n- Take 2 books from shelf 1.\n- Take 3 books from shelf 2.\n- Take 7 books from shelf 3.\nYou have taken 13 books so return 13.\nIt can be proven that 13 is the maximum number of books you can take.\n\n**Constraints:**\n\n*   `1 <= books.length <= 105`\n*   `0 <= books[i] <= 105`",
+  "difficulty": "Hard",
+  "category": null,
+  "xpReward": 0,
+  "timeLimitMs": 5000,
+  "memoryLimitMb": 256,
+  "starterCode": {},
+  "solutionCode": "",
+  "hints": [],
+  "isPremium": false,
+  "createdBy": null,
+  "testCases": [
+    {
+      "input": [
+        [
+          8,
+          5,
+          2,
+          7,
+          9
+        ]
+      ],
+      "expectedOutput": 19
+    },
+    {
+      "input": [
+        [
+          7,
+          0,
+          3,
+          4,
+          5
+        ]
+      ],
+      "expectedOutput": 12
+    },
+    {
+      "input": [
+        [
+          8,
+          2,
+          3,
+          7,
+          3,
+          4,
+          0,
+          1,
+          4,
+          3
+        ]
+      ],
+      "expectedOutput": 13
+    }
+  ],
+  "hiddenTestCases": [
+    {
+      "input": [
+        [
+          8,
+          5,
+          2,
+          7,
+          9
+        ]
+      ],
+      "expectedOutput": 19
+    },
+    {
+      "input": [
+        [
+          7,
+          0,
+          3,
+          4,
+          5
+        ]
+      ],
+      "expectedOutput": 12
+    }
+  ],
+  "tags": [],
+  "constraints": [],
+  "examples": [],
+  "problemNumber": null,
+  "createdAt": "2025-11-14T21:25:25.586184+00:00",
+  "updatedAt": "2025-12-04T04:35:47.154Z"
+}

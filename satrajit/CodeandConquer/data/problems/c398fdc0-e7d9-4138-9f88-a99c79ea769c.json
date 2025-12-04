@@ -1,0 +1,132 @@
+{
+  "id": "c398fdc0-e7d9-4138-9f88-a99c79ea769c",
+  "title": "Equal Row and Column Pairs",
+  "slug": "equal-row-and-column-pairs",
+  "description": "Given a **0-indexed** `n x n` integer matrix `grid`, _return the number of pairs_ `(ri, cj)` _such that row_ `ri` _and column_ `cj` _are equal_.\n\nA row and column pair is considered equal if they contain the same elements in the same order (i.e., an equal array).\n\n**Example 1:**\n\n**Input:** grid = \\[\\[3,2,1\\],\\[1,7,6\\],\\[2,7,7\\]\\]\n**Output:** 1\n**Explanation:** There is 1 equal row and column pair:\n- (Row 2, Column 1): \\[2,7,7\\]\n\n**Example 2:**\n\n**Input:** grid = \\[\\[3,1,2,2\\],\\[1,4,4,5\\],\\[2,4,2,2\\],\\[2,4,2,2\\]\\]\n**Output:** 3\n**Explanation:** There are 3 equal row and column pairs:\n- (Row 0, Column 0): \\[3,1,2,2\\]\n- (Row 2, Column 2): \\[2,4,2,2\\]\n- (Row 3, Column 2): \\[2,4,2,2\\]\n\n**Constraints:**\n\n*   `n == grid.length == grid[i].length`\n*   `1 <= n <= 200`\n*   `1 <= grid[i][j] <= 105`",
+  "difficulty": "Medium",
+  "category": null,
+  "xpReward": 0,
+  "timeLimitMs": 5000,
+  "memoryLimitMb": 256,
+  "starterCode": {},
+  "solutionCode": "",
+  "hints": [],
+  "isPremium": false,
+  "createdBy": null,
+  "testCases": [
+    {
+      "input": [
+        [
+          [
+            3,
+            2,
+            1
+          ],
+          [
+            1,
+            7,
+            6
+          ],
+          [
+            2,
+            7,
+            7
+          ]
+        ]
+      ],
+      "expectedOutput": 1
+    },
+    {
+      "input": [
+        [
+          [
+            3,
+            1,
+            2,
+            2
+          ],
+          [
+            1,
+            4,
+            4,
+            5
+          ],
+          [
+            2,
+            4,
+            2,
+            2
+          ],
+          [
+            2,
+            4,
+            2,
+            2
+          ]
+        ]
+      ],
+      "expectedOutput": 3
+    }
+  ],
+  "hiddenTestCases": [
+    {
+      "input": [
+        [
+          [
+            3,
+            2,
+            1
+          ],
+          [
+            1,
+            7,
+            6
+          ],
+          [
+            2,
+            7,
+            7
+          ]
+        ]
+      ],
+      "expectedOutput": 1
+    },
+    {
+      "input": [
+        [
+          [
+            3,
+            1,
+            2,
+            2
+          ],
+          [
+            1,
+            4,
+            4,
+            5
+          ],
+          [
+            2,
+            4,
+            2,
+            2
+          ],
+          [
+            2,
+            4,
+            2,
+            2
+          ]
+        ]
+      ],
+      "expectedOutput": 3
+    }
+  ],
+  "tags": [],
+  "constraints": [],
+  "examples": [],
+  "problemNumber": null,
+  "createdAt": "2025-11-14T21:25:24.80469+00:00",
+  "updatedAt": "2025-12-04T04:35:47.411Z"
+}

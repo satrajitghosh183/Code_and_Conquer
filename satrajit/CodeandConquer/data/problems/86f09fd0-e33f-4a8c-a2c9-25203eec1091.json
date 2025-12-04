@@ -1,0 +1,181 @@
+{
+  "id": "86f09fd0-e33f-4a8c-a2c9-25203eec1091",
+  "title": "Graph Connectivity With Threshold",
+  "slug": "graph-connectivity-with-threshold",
+  "description": "We have `n` cities labeled from `1` to `n`. Two different cities with labels `x` and `y` are directly connected by a bidirectional road if and only if `x` and `y` share a common divisor **strictly greater** than some `threshold`. More formally, cities with labels `x` and `y` have a road between them if there exists an integer `z` such that all of the following are true:\n\n*   `x % z == 0`,\n*   `y % z == 0`, and\n*   `z > threshold`.\n\nGiven the two integers, `n` and `threshold`, and an array of `queries`, you must determine for each `queries[i] = [ai, bi]` if cities `ai` and `bi` are connected directly or indirectly. (i.e. there is some path between them).\n\nReturn _an array_ `answer`_, where_ `answer.length == queries.length` _and_ `answer[i]` _is_ `true` _if for the_ `ith` _query, there is a path between_ `ai` _and_ `bi`_, or_ `answer[i]` _is_ `false` _if there is no path._\n\n**Example 1:**\n\n**Input:** n = 6, threshold = 2, queries = \\[\\[1,4\\],\\[2,5\\],\\[3,6\\]\\]\n**Output:** \\[false,false,true\\]\n**Explanation:** The divisors for each number:\n1:   1\n2:   1, 2\n3:   1, 3\n4:   1, 2, 4\n5:   1, 5\n6:   1, 2, 3, 6\nUsing the underlined divisors above the threshold, only cities 3 and 6 share a common divisor, so they are the\nonly ones directly connected. The result of each query:\n\\[1,4\\]   1 is not connected to 4\n\\[2,5\\]   2 is not connected to 5\n\\[3,6\\]   3 is connected to 6 through path 3--6\n\n**Example 2:**\n\n**Input:** n = 6, threshold = 0, queries = \\[\\[4,5\\],\\[3,4\\],\\[3,2\\],\\[2,6\\],\\[1,3\\]\\]\n**Output:** \\[true,true,true,true,true\\]\n**Explanation:** The divisors for each number are the same as the previous example. However, since the threshold is 0,\nall divisors can be used. Since all numbers share 1 as a divisor, all cities are connected.\n\n**Example 3:**\n\n**Input:** n = 5, threshold = 1, queries = \\[\\[4,5\\],\\[4,5\\],\\[3,2\\],\\[2,3\\],\\[3,4\\]\\]\n**Output:** \\[false,false,false,false,false\\]\n**Explanation:** Only cities 2 and 4 share a common divisor 2 which is strictly greater than the threshold 1, so they are the only ones directly connected.\nPlease notice that there can be multiple queries for the same pair of nodes \\[x, y\\], and that the query \\[x, y\\] is equivalent to the query \\[y, x\\].\n\n**Constraints:**\n\n*   `2 <= n <= 104`\n*   `0 <= threshold <= n`\n*   `1 <= queries.length <= 105`\n*   `queries[i].length == 2`\n*   `1 <= ai, bi <= cities`\n*   `ai != bi`",
+  "difficulty": "Hard",
+  "category": null,
+  "xpReward": 0,
+  "timeLimitMs": 5000,
+  "memoryLimitMb": 256,
+  "starterCode": {},
+  "solutionCode": "",
+  "hints": [],
+  "isPremium": false,
+  "createdBy": null,
+  "testCases": [
+    {
+      "input": [
+        6,
+        2,
+        [
+          [
+            1,
+            4
+          ],
+          [
+            2,
+            5
+          ],
+          [
+            3,
+            6
+          ]
+        ]
+      ],
+      "expectedOutput": [
+        false,
+        false,
+        true
+      ]
+    },
+    {
+      "input": [
+        6,
+        0,
+        [
+          [
+            4,
+            5
+          ],
+          [
+            3,
+            4
+          ],
+          [
+            3,
+            2
+          ],
+          [
+            2,
+            6
+          ],
+          [
+            1,
+            3
+          ]
+        ]
+      ],
+      "expectedOutput": [
+        true,
+        true,
+        true,
+        true,
+        true
+      ]
+    },
+    {
+      "input": [
+        5,
+        1,
+        [
+          [
+            4,
+            5
+          ],
+          [
+            4,
+            5
+          ],
+          [
+            3,
+            2
+          ],
+          [
+            2,
+            3
+          ],
+          [
+            3,
+            4
+          ]
+        ]
+      ],
+      "expectedOutput": [
+        false,
+        false,
+        false,
+        false,
+        false
+      ]
+    }
+  ],
+  "hiddenTestCases": [
+    {
+      "input": [
+        6,
+        2,
+        [
+          [
+            1,
+            4
+          ],
+          [
+            2,
+            5
+          ],
+          [
+            3,
+            6
+          ]
+        ]
+      ],
+      "expectedOutput": [
+        false,
+        false,
+        true
+      ]
+    },
+    {
+      "input": [
+        6,
+        0,
+        [
+          [
+            4,
+            5
+          ],
+          [
+            3,
+            4
+          ],
+          [
+            3,
+            2
+          ],
+          [
+            2,
+            6
+          ],
+          [
+            1,
+            3
+          ]
+        ]
+      ],
+      "expectedOutput": [
+        true,
+        true,
+        true,
+        true,
+        true
+      ]
+    }
+  ],
+  "tags": [],
+  "constraints": [],
+  "examples": [],
+  "problemNumber": null,
+  "createdAt": "2025-11-14T21:22:29.294715+00:00",
+  "updatedAt": "2025-12-04T04:37:11.142Z"
+}

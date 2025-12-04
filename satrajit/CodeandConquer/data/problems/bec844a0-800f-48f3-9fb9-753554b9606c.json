@@ -1,0 +1,50 @@
+{
+  "id": "bec844a0-800f-48f3-9fb9-753554b9606c",
+  "title": "Check if the Sentence Is Pangram",
+  "slug": "check-if-the-sentence-is-pangram",
+  "description": "A **pangram** is a sentence where every letter of the English alphabet appears at least once.\n\nGiven a string `sentence` containing only lowercase English letters, return `true` _if_ `sentence` _is a **pangram**, or_ `false` _otherwise._\n\n**Example 1:**\n\n**Input:** sentence =  \"thequickbrownfoxjumpsoverthelazydog \"\n**Output:** true\n**Explanation:** sentence contains at least one of every letter of the English alphabet.\n\n**Example 2:**\n\n**Input:** sentence =  \"leetcode \"\n**Output:** false\n\n**Constraints:**\n\n*   `1 <= sentence.length <= 1000`\n*   `sentence` consists of lowercase English letters.",
+  "difficulty": "Easy",
+  "category": null,
+  "xpReward": 0,
+  "timeLimitMs": 5000,
+  "memoryLimitMb": 256,
+  "starterCode": {},
+  "solutionCode": "",
+  "hints": [],
+  "isPremium": false,
+  "createdBy": null,
+  "testCases": [
+    {
+      "input": [
+        "thequickbrownfoxjumpsoverthelazydog "
+      ],
+      "expectedOutput": true
+    },
+    {
+      "input": [
+        "leetcode "
+      ],
+      "expectedOutput": "false\n\n**Constraints:**\n\n*   `1 <= sentence.length <= 1000`\n*   `sentence` consists of lowercase English letters."
+    }
+  ],
+  "hiddenTestCases": [
+    {
+      "input": [
+        "thequickbrownfoxjumpsoverthelazydog "
+      ],
+      "expectedOutput": true
+    },
+    {
+      "input": [
+        "leetcode "
+      ],
+      "expectedOutput": "false\n\n**Constraints:**\n\n*   `1 <= sentence.length <= 1000`\n*   `sentence` consists of lowercase English letters."
+    }
+  ],
+  "tags": [],
+  "constraints": [],
+  "examples": [],
+  "problemNumber": null,
+  "createdAt": "2025-11-14T21:23:17.692711+00:00",
+  "updatedAt": "2025-12-04T04:36:42.204Z"
+}

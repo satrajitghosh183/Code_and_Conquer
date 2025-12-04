@@ -1,0 +1,60 @@
+{
+  "id": "5cbd36ed-e1aa-4d15-a19d-19fea998efca",
+  "title": "Determine if Two Strings Are Close",
+  "slug": "determine-if-two-strings-are-close",
+  "description": "Two strings are considered **close** if you can attain one from the other using the following operations:\n\n*   Operation 1: Swap any two **existing** characters.\n    *   For example, `abcde -> aecdb`\n*   Operation 2: Transform **every** occurrence of one **existing** character into another **existing** character, and do the same with the other character.\n    *   For example, `aacabb -> bbcbaa` (all `a`'s turn into `b`'s, and all `b`'s turn into `a`'s)\n\nYou can use the operations on either string as many times as necessary.\n\nGiven two strings, `word1` and `word2`, return `true` _if_ `word1` _and_ `word2` _are **close**, and_ `false` _otherwise._\n\n**Example 1:**\n\n**Input:** word1 =  \"abc \", word2 =  \"bca \"\n**Output:** true\n**Explanation:** You can attain word2 from word1 in 2 operations.\nApply Operation 1:  \"abc \" ->  \"acb \"\nApply Operation 1:  \"acb \" ->  \"bca \"\n\n**Example 2:**\n\n**Input:** word1 =  \"a \", word2 =  \"aa \"\n**Output:** false\n**Explanation:** It is impossible to attain word2 from word1, or vice versa, in any number of operations.\n\n**Example 3:**\n\n**Input:** word1 =  \"cabbba \", word2 =  \"abbccc \"\n**Output:** true\n**Explanation:** You can attain word2 from word1 in 3 operations.\nApply Operation 1:  \"cabbba \" ->  \"caabbb \"\n`Apply Operation 2:  \"`caabbb \" ->  \"baaccc \"\nApply Operation 2:  \"baaccc \" ->  \"abbccc \"\n\n**Constraints:**\n\n*   `1 <= word1.length, word2.length <= 105`\n*   `word1` and `word2` contain only lowercase English letters.",
+  "difficulty": "Medium",
+  "category": null,
+  "xpReward": 0,
+  "timeLimitMs": 5000,
+  "memoryLimitMb": 256,
+  "starterCode": [],
+  "solutionCode": "",
+  "hints": [],
+  "isPremium": false,
+  "createdBy": null,
+  "testCases": [
+    {
+      "input": [
+        "abc ",
+        "bca "
+      ],
+      "expectedOutput": true
+    },
+    {
+      "input": [
+        "a ",
+        "aa "
+      ],
+      "expectedOutput": false
+    },
+    {
+      "input": [
+        "cabbba ",
+        "abbccc "
+      ],
+      "expectedOutput": true
+    }
+  ],
+  "hiddenTestCases": [
+    {
+      "input": [
+        "abc ",
+        "bca "
+      ],
+      "expectedOutput": true
+    },
+    {
+      "input": [
+        "a ",
+        "aa "
+      ],
+      "expectedOutput": false
+    }
+  ],
+  "tags": [],
+  "constraints": [],
+  "examples": [],
+  "createdAt": "2025-11-14T21:22:35.639925+00:00",
+  "updatedAt": "2025-12-04T04:37:08.686Z"
+}

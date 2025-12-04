@@ -1,0 +1,54 @@
+{
+  "id": "60233b0a-a3d9-4aea-a5f1-9a481943f487",
+  "title": "The Number of Full Rounds You Have Played",
+  "slug": "the-number-of-full-rounds-you-have-played",
+  "description": "You are participating in an online chess tournament. There is a chess round that starts every `15` minutes. The first round of the day starts at `00:00`, and after every `15` minutes, a new round starts.\n\n*   For example, the second round starts at `00:15`, the fourth round starts at `00:45`, and the seventh round starts at `01:30`.\n\nYou are given two strings `loginTime` and `logoutTime` where:\n\n*   `loginTime` is the time you will login to the game, and\n*   `logoutTime` is the time you will logout from the game.\n\nIf `logoutTime` is **earlier** than `loginTime`, this means you have played from `loginTime` to midnight and from midnight to `logoutTime`.\n\nReturn _the number of full chess rounds you have played in the tournament_.\n\n**Note:** All the given times follow the 24-hour clock. That means the first round of the day starts at `00:00` and the last round of the day starts at `23:45`.\n\n**Example 1:**\n\n**Input:** loginTime =  \"09:31 \", logoutTime =  \"10:14 \"\n**Output:** 1\n**Explanation:** You played one full round from 09:45 to 10:00.\nYou did not play the full round from 09:30 to 09:45 because you logged in at 09:31 after it began.\nYou did not play the full round from 10:00 to 10:15 because you logged out at 10:14 before it ended.\n\n**Example 2:**\n\n**Input:** loginTime =  \"21:30 \", logoutTime =  \"03:00 \"\n**Output:** 22\n**Explanation:** You played 10 full rounds from 21:30 to 00:00 and 12 full rounds from 00:00 to 03:00.\n10 + 12 = 22.\n\n**Constraints:**\n\n*   `loginTime` and `logoutTime` are in the format `hh:mm`.\n*   `00 <= hh <= 23`\n*   `00 <= mm <= 59`\n*   `loginTime` and `logoutTime` are not equal.",
+  "difficulty": "Medium",
+  "category": null,
+  "xpReward": 0,
+  "timeLimitMs": 5000,
+  "memoryLimitMb": 256,
+  "starterCode": {},
+  "solutionCode": "",
+  "hints": [],
+  "isPremium": false,
+  "createdBy": null,
+  "testCases": [
+    {
+      "input": [
+        "09:31 ",
+        "10:14 "
+      ],
+      "expectedOutput": 1
+    },
+    {
+      "input": [
+        "21:30 ",
+        "03:00 "
+      ],
+      "expectedOutput": 22
+    }
+  ],
+  "hiddenTestCases": [
+    {
+      "input": [
+        "09:31 ",
+        "10:14 "
+      ],
+      "expectedOutput": 1
+    },
+    {
+      "input": [
+        "21:30 ",
+        "03:00 "
+      ],
+      "expectedOutput": 22
+    }
+  ],
+  "tags": [],
+  "constraints": [],
+  "examples": [],
+  "problemNumber": null,
+  "createdAt": "2025-11-14T21:23:36.919373+00:00",
+  "updatedAt": "2025-12-04T04:36:35.009Z"
+}

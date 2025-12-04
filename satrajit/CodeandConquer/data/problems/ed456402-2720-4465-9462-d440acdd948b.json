@@ -1,0 +1,182 @@
+{
+  "id": "ed456402-2720-4465-9462-d440acdd948b",
+  "title": "Minimum Cost to Buy Apples",
+  "slug": "minimum-cost-to-buy-apples",
+  "description": "You are given a positive integer `n` representing `n` cities numbered from `1` to `n`. You are also given a **2D** array `roads`, where `roads[i] = [ai, bi, costi]` indicates that there is a **bidirectional** road between cities `ai` and `bi` with a cost of traveling equal to `costi`.\n\nYou can buy apples in **any** city you want, but some cities have different costs to buy apples. You are given the array `appleCost` where `appleCost[i]` is the cost of buying one apple from city `i`.\n\nYou start at some city, traverse through various roads, and eventually buy **exactly** one apple from **any** city. After you buy that apple, you have to return back to the city you **started** at, but now the cost of all the roads will be **multiplied** by a given factor `k`.\n\nGiven the integer `k`, return _an array_ `answer` _of size_ `n` _where_ `answer[i]` _is the **minimum** total cost to buy an apple if you start at city_ `i`.\n\n**Example 1:**\n\n**Input:** n = 4, roads = \\[\\[1,2,4\\],\\[2,3,2\\],\\[2,4,5\\],\\[3,4,1\\],\\[1,3,4\\]\\], appleCost = \\[56,42,102,301\\], k = 2\n**Output:** \\[54,42,48,51\\]\n**Explanation:** The minimum cost for each starting city is the following:\n- Starting at city 1: You take the path 1 -> 2, buy an apple at city 2, and finally take the path 2 -> 1. The total cost is 4 + 42 + 4 \\* 2 = 54.\n- Starting at city 2: You directly buy an apple at city 2. The total cost is 42.\n- Starting at city 3: You take the path 3 -> 2, buy an apple at city 2, and finally take the path 2 -> 3. The total cost is 2 + 42 + 2 \\* 2 = 48.\n- Starting at city 4: You take the path 4 -> 3 -> 2 then you buy at city 2, and finally take the path 2 -> 3 -> 4. The total cost is 1 + 2 + 42 + 1 \\* 2 + 2 \\* 2 = 51.\n\n**Example 2:**\n\n**Input:** n = 3, roads = \\[\\[1,2,5\\],\\[2,3,1\\],\\[3,1,2\\]\\], appleCost = \\[2,3,1\\], k = 3\n**Output:** \\[2,3,1\\]\n**Explanation:** It is always optimal to buy the apple in the starting city.\n\n**Constraints:**\n\n*   `2 <= n <= 1000`\n*   `1 <= roads.length <= 1000`\n*   `1 <= ai, bi <= n`\n*   `ai != bi`\n*   `1 <= costi <= 105`\n*   `appleCost.length == n`\n*   `1 <= appleCost[i] <= 105`\n*   `1 <= k <= 100`\n*   There are no repeated edges.",
+  "difficulty": "Medium",
+  "category": null,
+  "xpReward": 0,
+  "timeLimitMs": 5000,
+  "memoryLimitMb": 256,
+  "starterCode": {},
+  "solutionCode": "",
+  "hints": [],
+  "isPremium": false,
+  "createdBy": null,
+  "testCases": [
+    {
+      "input": [
+        4,
+        [
+          [
+            1,
+            2,
+            4
+          ],
+          [
+            2,
+            3,
+            2
+          ],
+          [
+            2,
+            4,
+            5
+          ],
+          [
+            3,
+            4,
+            1
+          ],
+          [
+            1,
+            3,
+            4
+          ]
+        ],
+        [
+          56,
+          42,
+          102,
+          301
+        ],
+        2
+      ],
+      "expectedOutput": [
+        54,
+        42,
+        48,
+        51
+      ]
+    },
+    {
+      "input": [
+        3,
+        [
+          [
+            1,
+            2,
+            5
+          ],
+          [
+            2,
+            3,
+            1
+          ],
+          [
+            3,
+            1,
+            2
+          ]
+        ],
+        [
+          2,
+          3,
+          1
+        ],
+        3
+      ],
+      "expectedOutput": [
+        2,
+        3,
+        1
+      ]
+    }
+  ],
+  "hiddenTestCases": [
+    {
+      "input": [
+        4,
+        [
+          [
+            1,
+            2,
+            4
+          ],
+          [
+            2,
+            3,
+            2
+          ],
+          [
+            2,
+            4,
+            5
+          ],
+          [
+            3,
+            4,
+            1
+          ],
+          [
+            1,
+            3,
+            4
+          ]
+        ],
+        [
+          56,
+          42,
+          102,
+          301
+        ],
+        2
+      ],
+      "expectedOutput": [
+        54,
+        42,
+        48,
+        51
+      ]
+    },
+    {
+      "input": [
+        3,
+        [
+          [
+            1,
+            2,
+            5
+          ],
+          [
+            2,
+            3,
+            1
+          ],
+          [
+            3,
+            1,
+            2
+          ]
+        ],
+        [
+          2,
+          3,
+          1
+        ],
+        3
+      ],
+      "expectedOutput": [
+        2,
+        3,
+        1
+      ]
+    }
+  ],
+  "tags": [],
+  "constraints": [],
+  "examples": [],
+  "problemNumber": null,
+  "createdAt": "2025-11-14T21:25:57.727817+00:00",
+  "updatedAt": "2025-12-04T04:35:31.079Z"
+}

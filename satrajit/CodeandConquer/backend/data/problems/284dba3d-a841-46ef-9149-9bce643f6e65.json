@@ -1,0 +1,131 @@
+{
+  "id": "284dba3d-a841-46ef-9149-9bce643f6e65",
+  "title": "Maximum Number of Accepted Invitations",
+  "slug": "maximum-number-of-accepted-invitations",
+  "description": "There are `m` boys and `n` girls in a class attending an upcoming party.\n\nYou are given an `m x n` integer matrix `grid`, where `grid[i][j]` equals `0` or `1`. If `grid[i][j] == 1`, then that means the `ith` boy can invite the `jth` girl to the party. A boy can invite at most **one girl**, and a girl can accept at most **one invitation** from a boy.\n\nReturn _the **maximum** possible number of accepted invitations._\n\n**Example 1:**\n\n**Input:** grid = \\[\\[1,1,1\\],\n               \\[1,0,1\\],\n               \\[0,0,1\\]\\]\n**Output:** 3\n**Explanation:** The invitations are sent as follows:\n- The 1st boy invites the 2nd girl.\n- The 2nd boy invites the 1st girl.\n- The 3rd boy invites the 3rd girl.\n\n**Example 2:**\n\n**Input:** grid = \\[\\[1,0,1,0\\],\n               \\[1,0,0,0\\],\n               \\[0,0,1,0\\],\n               \\[1,1,1,0\\]\\]\n**Output:** 3\n**Explanation:** The invitations are sent as follows:\n-The 1st boy invites the 3rd girl.\n-The 2nd boy invites the 1st girl.\n-The 3rd boy invites no one.\n-The 4th boy invites the 2nd girl.\n\n**Constraints:**\n\n*   `grid.length == m`\n*   `grid[i].length == n`\n*   `1 <= m, n <= 200`\n*   `grid[i][j]` is either `0` or `1`.",
+  "difficulty": "Medium",
+  "category": null,
+  "xpReward": 0,
+  "timeLimitMs": 5000,
+  "memoryLimitMb": 256,
+  "starterCode": [],
+  "solutionCode": "",
+  "hints": [],
+  "isPremium": false,
+  "createdBy": null,
+  "testCases": [
+    {
+      "input": [
+        [
+          [
+            1,
+            1,
+            1
+          ],
+          [
+            1,
+            0,
+            1
+          ],
+          [
+            0,
+            0,
+            1
+          ]
+        ]
+      ],
+      "expectedOutput": 3
+    },
+    {
+      "input": [
+        [
+          [
+            1,
+            0,
+            1,
+            0
+          ],
+          [
+            1,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            1,
+            0
+          ],
+          [
+            1,
+            1,
+            1,
+            0
+          ]
+        ]
+      ],
+      "expectedOutput": 3
+    }
+  ],
+  "hiddenTestCases": [
+    {
+      "input": [
+        [
+          [
+            1,
+            1,
+            1
+          ],
+          [
+            1,
+            0,
+            1
+          ],
+          [
+            0,
+            0,
+            1
+          ]
+        ]
+      ],
+      "expectedOutput": 3
+    },
+    {
+      "input": [
+        [
+          [
+            1,
+            0,
+            1,
+            0
+          ],
+          [
+            1,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            1,
+            0
+          ],
+          [
+            1,
+            1,
+            1,
+            0
+          ]
+        ]
+      ],
+      "expectedOutput": 3
+    }
+  ],
+  "tags": [],
+  "constraints": [],
+  "examples": [],
+  "createdAt": "2025-11-14T21:23:15.243897+00:00",
+  "updatedAt": "2025-12-04T04:36:43.307Z"
+}

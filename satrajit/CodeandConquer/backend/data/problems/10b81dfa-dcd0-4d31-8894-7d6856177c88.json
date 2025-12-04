@@ -1,0 +1,60 @@
+{
+  "id": "10b81dfa-dcd0-4d31-8894-7d6856177c88",
+  "title": "Append Characters to String to Make Subsequence",
+  "slug": "append-characters-to-string-to-make-subsequence",
+  "description": "You are given two strings `s` and `t` consisting of only lowercase English letters.\n\nReturn _the minimum number of characters that need to be appended to the end of_ `s` _so that_ `t` _becomes a **subsequence** of_ `s`.\n\nA **subsequence** is a string that can be derived from another string by deleting some or no characters without changing the order of the remaining characters.\n\n**Example 1:**\n\n**Input:** s =  \"coaching \", t =  \"coding \"\n**Output:** 4\n**Explanation:** Append the characters  \"ding \" to the end of s so that s =  \"coachingding \".\nNow, t is a subsequence of s ( \"**co**aching**ding** \").\nIt can be shown that appending any 3 characters to the end of s will never make t a subsequence.\n\n**Example 2:**\n\n**Input:** s =  \"abcde \", t =  \"a \"\n**Output:** 0\n**Explanation:** t is already a subsequence of s ( \"**a**bcde \").\n\n**Example 3:**\n\n**Input:** s =  \"z \", t =  \"abcde \"\n**Output:** 5\n**Explanation:** Append the characters  \"abcde \" to the end of s so that s =  \"zabcde \".\nNow, t is a subsequence of s ( \"z**abcde** \").\nIt can be shown that appending any 4 characters to the end of s will never make t a subsequence.\n\n**Constraints:**\n\n*   `1 <= s.length, t.length <= 105`\n*   `s` and `t` consist only of lowercase English letters.",
+  "difficulty": "Medium",
+  "category": null,
+  "xpReward": 0,
+  "timeLimitMs": 5000,
+  "memoryLimitMb": 256,
+  "starterCode": [],
+  "solutionCode": "",
+  "hints": [],
+  "isPremium": false,
+  "createdBy": null,
+  "testCases": [
+    {
+      "input": [
+        "coaching ",
+        "coding "
+      ],
+      "expectedOutput": 4
+    },
+    {
+      "input": [
+        "abcde ",
+        "a "
+      ],
+      "expectedOutput": 0
+    },
+    {
+      "input": [
+        "z ",
+        "abcde "
+      ],
+      "expectedOutput": 5
+    }
+  ],
+  "hiddenTestCases": [
+    {
+      "input": [
+        "coaching ",
+        "coding "
+      ],
+      "expectedOutput": 4
+    },
+    {
+      "input": [
+        "abcde ",
+        "a "
+      ],
+      "expectedOutput": 0
+    }
+  ],
+  "tags": [],
+  "constraints": [],
+  "examples": [],
+  "createdAt": "2025-11-14T21:26:00.52501+00:00",
+  "updatedAt": "2025-12-04T04:35:29.374Z"
+}

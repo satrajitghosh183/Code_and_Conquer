@@ -1,0 +1,123 @@
+{
+  "id": "3817531a-6237-4943-aeed-4e0a362478fb",
+  "title": "Remove All Ones With Row and Column Flips",
+  "slug": "remove-all-ones-with-row-and-column-flips",
+  "description": "You are given an `m x n` binary matrix `grid`.\n\nIn one operation, you can choose **any** row or column and flip each value in that row or column (i.e., changing all `0`'s to `1`'s, and all `1`'s to `0`'s).\n\nReturn `true` _if it is possible to remove all_ `1`_'s from_ `grid` using **any** number of operations or `false` otherwise.\n\n**Example 1:**\n\n**Input:** grid = \\[\\[0,1,0\\],\\[1,0,1\\],\\[0,1,0\\]\\]\n**Output:** true\n**Explanation:** One possible way to remove all 1's from grid is to:\n- Flip the middle row\n- Flip the middle column\n\n**Example 2:**\n\n**Input:** grid = \\[\\[1,1,0\\],\\[0,0,0\\],\\[0,0,0\\]\\]\n**Output:** false\n**Explanation:** It is impossible to remove all 1's from grid.\n\n**Example 3:**\n\n**Input:** grid = \\[\\[0\\]\\]\n**Output:** true\n**Explanation:** There are no 1's in grid.\n\n**Constraints:**\n\n*   `m == grid.length`\n*   `n == grid[i].length`\n*   `1 <= m, n <= 300`\n*   `grid[i][j]` is either `0` or `1`.",
+  "difficulty": "Medium",
+  "category": null,
+  "xpReward": 0,
+  "timeLimitMs": 5000,
+  "memoryLimitMb": 256,
+  "starterCode": [],
+  "solutionCode": "",
+  "hints": [],
+  "isPremium": false,
+  "createdBy": null,
+  "testCases": [
+    {
+      "input": [
+        [
+          [
+            0,
+            1,
+            0
+          ],
+          [
+            1,
+            0,
+            1
+          ],
+          [
+            0,
+            1,
+            0
+          ]
+        ]
+      ],
+      "expectedOutput": true
+    },
+    {
+      "input": [
+        [
+          [
+            1,
+            1,
+            0
+          ],
+          [
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0
+          ]
+        ]
+      ],
+      "expectedOutput": false
+    },
+    {
+      "input": [
+        [
+          [
+            0
+          ]
+        ]
+      ],
+      "expectedOutput": true
+    }
+  ],
+  "hiddenTestCases": [
+    {
+      "input": [
+        [
+          [
+            0,
+            1,
+            0
+          ],
+          [
+            1,
+            0,
+            1
+          ],
+          [
+            0,
+            1,
+            0
+          ]
+        ]
+      ],
+      "expectedOutput": true
+    },
+    {
+      "input": [
+        [
+          [
+            1,
+            1,
+            0
+          ],
+          [
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0
+          ]
+        ]
+      ],
+      "expectedOutput": false
+    }
+  ],
+  "tags": [],
+  "constraints": [],
+  "examples": [],
+  "createdAt": "2025-11-14T21:24:30.427977+00:00",
+  "updatedAt": "2025-12-04T04:36:12.113Z"
+}

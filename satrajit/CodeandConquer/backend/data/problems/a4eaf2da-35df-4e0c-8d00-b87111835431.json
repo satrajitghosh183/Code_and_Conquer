@@ -1,0 +1,67 @@
+{
+  "id": "a4eaf2da-35df-4e0c-8d00-b87111835431",
+  "title": "Bitwise OR of All Subsequence Sums",
+  "slug": "bitwise-or-of-all-subsequence-sums",
+  "description": "Given an integer array `nums`, return _the value of the bitwise_ **OR** _of the sum of all possible **subsequences** in the array_.\n\nA **subsequence** is a sequence that can be derived from another sequence by removing zero or more elements without changing the order of the remaining elements.\n\n**Example 1:**\n\n**Input:** nums = \\[2,1,0,3\\]\n**Output:** 7\n**Explanation:** All possible subsequence sums that we can have are: 0, 1, 2, 3, 4, 5, 6.\nAnd we have 0 OR 1 OR 2 OR 3 OR 4 OR 5 OR 6 = 7, so we return 7.\n\n**Example 2:**\n\n**Input:** nums = \\[0,0,0\\]\n**Output:** 0\n**Explanation:** 0 is the only possible subsequence sum we can have, so we return 0.\n\n**Constraints:**\n\n*   `1 <= nums.length <= 105`\n*   `0 <= nums[i] <= 109`",
+  "difficulty": "Medium",
+  "category": null,
+  "xpReward": 0,
+  "timeLimitMs": 5000,
+  "memoryLimitMb": 256,
+  "starterCode": [],
+  "solutionCode": "",
+  "hints": [],
+  "isPremium": false,
+  "createdBy": null,
+  "testCases": [
+    {
+      "input": [
+        [
+          2,
+          1,
+          0,
+          3
+        ]
+      ],
+      "expectedOutput": 7
+    },
+    {
+      "input": [
+        [
+          0,
+          0,
+          0
+        ]
+      ],
+      "expectedOutput": 0
+    }
+  ],
+  "hiddenTestCases": [
+    {
+      "input": [
+        [
+          2,
+          1,
+          0,
+          3
+        ]
+      ],
+      "expectedOutput": 7
+    },
+    {
+      "input": [
+        [
+          0,
+          0,
+          0
+        ]
+      ],
+      "expectedOutput": 0
+    }
+  ],
+  "tags": [],
+  "constraints": [],
+  "examples": [],
+  "createdAt": "2025-11-14T21:26:05.261316+00:00",
+  "updatedAt": "2025-12-04T04:35:26.003Z"
+}

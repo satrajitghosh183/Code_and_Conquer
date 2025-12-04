@@ -1,0 +1,179 @@
+{
+  "id": "8fd4e945-d933-428a-bbbf-01925a8011f2",
+  "title": "Add Two Polynomials Represented as Linked Lists",
+  "slug": "add-two-polynomials-represented-as-linked-lists",
+  "description": "A polynomial linked list is a special type of linked list where every node represents a term in a polynomial expression.\n\nEach node has three attributes:\n\n*   `coefficient`: an integer representing the number multiplier of the term. The coefficient of the term `**9**x4` is `9`.\n*   `power`: an integer representing the exponent. The power of the term `9x**4**` is `4`.\n*   `next`: a pointer to the next node in the list, or `null` if it is the last node of the list.\n\nFor example, the polynomial `5x3 + 4x - 7` is represented by the polynomial linked list illustrated below:\n\nThe polynomial linked list must be in its standard form: the polynomial must be in **strictly** descending order by its `power` value. Also, terms with a `coefficient` of `0` are omitted.\n\nGiven two polynomial linked list heads, `poly1` and `poly2`, add the polynomials together and return _the head of the sum of the polynomials_.\n\n**`PolyNode` format:**\n\nThe input/output format is as a list of `n` nodes, where each node is represented as its `[coefficient, power]`. For example, the polynomial `5x3 + 4x - 7` would be represented as: `[[5,3],[4,1],[-7,0]]`.\n\n**Example 1:**\n\n**Input:** poly1 = \\[\\[1,1\\]\\], poly2 = \\[\\[1,0\\]\\]\n**Output:** \\[\\[1,1\\],\\[1,0\\]\\]\n**Explanation:** poly1 = x. poly2 = 1. The sum is x + 1.\n\n**Example 2:**\n\n**Input:** poly1 = \\[\\[2,2\\],\\[4,1\\],\\[3,0\\]\\], poly2 = \\[\\[3,2\\],\\[-4,1\\],\\[-1,0\\]\\]\n**Output:** \\[\\[5,2\\],\\[2,0\\]\\]\n**Explanation:** poly1 = 2x2 + 4x + 3. poly2 = 3x2 - 4x - 1. The sum is 5x2 + 2. Notice that we omit the  \"0x \" term.\n\n**Example 3:**\n\n**Input:** poly1 = \\[\\[1,2\\]\\], poly2 = \\[\\[-1,2\\]\\]\n**Output:** \\[\\]\n**Explanation:** The sum is 0. We return an empty list.\n\n**Constraints:**\n\n*   `0 <= n <= 104`\n*   `-109 <= PolyNode.coefficient <= 109`\n*   `PolyNode.coefficient != 0`\n*   `0 <= PolyNode.power <= 109`\n*   `PolyNode.power > PolyNode.next.power`",
+  "difficulty": "Medium",
+  "category": null,
+  "xpReward": 0,
+  "timeLimitMs": 5000,
+  "memoryLimitMb": 256,
+  "starterCode": {},
+  "solutionCode": "",
+  "hints": [],
+  "isPremium": false,
+  "createdBy": null,
+  "testCases": [
+    {
+      "input": [
+        [
+          [
+            1,
+            1
+          ]
+        ],
+        [
+          [
+            1,
+            0
+          ]
+        ]
+      ],
+      "expectedOutput": [
+        [
+          1,
+          1
+        ],
+        [
+          1,
+          0
+        ]
+      ]
+    },
+    {
+      "input": [
+        [
+          [
+            2,
+            2
+          ],
+          [
+            4,
+            1
+          ],
+          [
+            3,
+            0
+          ]
+        ],
+        [
+          [
+            3,
+            2
+          ],
+          [
+            -4,
+            1
+          ],
+          [
+            -1,
+            0
+          ]
+        ]
+      ],
+      "expectedOutput": [
+        [
+          5,
+          2
+        ],
+        [
+          2,
+          0
+        ]
+      ]
+    },
+    {
+      "input": [
+        [
+          [
+            1,
+            2
+          ]
+        ],
+        [
+          [
+            -1,
+            2
+          ]
+        ]
+      ],
+      "expectedOutput": []
+    }
+  ],
+  "hiddenTestCases": [
+    {
+      "input": [
+        [
+          [
+            1,
+            1
+          ]
+        ],
+        [
+          [
+            1,
+            0
+          ]
+        ]
+      ],
+      "expectedOutput": [
+        [
+          1,
+          1
+        ],
+        [
+          1,
+          0
+        ]
+      ]
+    },
+    {
+      "input": [
+        [
+          [
+            2,
+            2
+          ],
+          [
+            4,
+            1
+          ],
+          [
+            3,
+            0
+          ]
+        ],
+        [
+          [
+            3,
+            2
+          ],
+          [
+            -4,
+            1
+          ],
+          [
+            -1,
+            0
+          ]
+        ]
+      ],
+      "expectedOutput": [
+        [
+          5,
+          2
+        ],
+        [
+          2,
+          0
+        ]
+      ]
+    }
+  ],
+  "tags": [],
+  "constraints": [],
+  "examples": [],
+  "problemNumber": null,
+  "createdAt": "2025-11-14T21:22:30.661389+00:00",
+  "updatedAt": "2025-12-04T04:37:10.523Z"
+}

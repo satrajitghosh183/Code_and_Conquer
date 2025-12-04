@@ -1,0 +1,72 @@
+{
+  "id": "41e663d8-893e-423f-9957-c2a25161cdb1",
+  "title": "Minimum Difference in Sums After Removal of Elements",
+  "slug": "minimum-difference-in-sums-after-removal-of-elements",
+  "description": "You are given a **0-indexed** integer array `nums` consisting of `3 * n` elements.\n\nYou are allowed to remove any **subsequence** of elements of size **exactly** `n` from `nums`. The remaining `2 * n` elements will be divided into two **equal** parts:\n\n*   The first `n` elements belonging to the first part and their sum is `sumfirst`.\n*   The next `n` elements belonging to the second part and their sum is `sumsecond`.\n\nThe **difference in sums** of the two parts is denoted as `sumfirst - sumsecond`.\n\n*   For example, if `sumfirst = 3` and `sumsecond = 2`, their difference is `1`.\n*   Similarly, if `sumfirst = 2` and `sumsecond = 3`, their difference is `-1`.\n\nReturn _the **minimum difference** possible between the sums of the two parts after the removal of_ `n` _elements_.\n\n**Example 1:**\n\n**Input:** nums = \\[3,1,2\\]\n**Output:** -1\n**Explanation:** Here, nums has 3 elements, so n = 1. \nThus we have to remove 1 element from nums and divide the array into two equal parts.\n- If we remove nums\\[0\\] = 3, the array will be \\[1,2\\]. The difference in sums of the two parts will be 1 - 2 = -1.\n- If we remove nums\\[1\\] = 1, the array will be \\[3,2\\]. The difference in sums of the two parts will be 3 - 2 = 1.\n- If we remove nums\\[2\\] = 2, the array will be \\[3,1\\]. The difference in sums of the two parts will be 3 - 1 = 2.\nThe minimum difference between sums of the two parts is min(-1,1,2) = -1. \n\n**Example 2:**\n\n**Input:** nums = \\[7,9,5,8,1,3\\]\n**Output:** 1\n**Explanation:** Here n = 2. So we must remove 2 elements and divide the remaining array into two parts containing two elements each.\nIf we remove nums\\[2\\] = 5 and nums\\[3\\] = 8, the resultant array will be \\[7,9,1,3\\]. The difference in sums will be (7+9) - (1+3) = 12.\nTo obtain the minimum difference, we should remove nums\\[1\\] = 9 and nums\\[4\\] = 1. The resultant array becomes \\[7,5,8,3\\]. The difference in sums of the two parts is (7+5) - (8+3) = 1.\nIt can be shown that it is not possible to obtain a difference smaller than 1.\n\n**Constraints:**\n\n*   `nums.length == 3 * n`\n*   `1 <= n <= 105`\n*   `1 <= nums[i] <= 105`",
+  "difficulty": "Hard",
+  "category": null,
+  "xpReward": 0,
+  "timeLimitMs": 5000,
+  "memoryLimitMb": 256,
+  "starterCode": {},
+  "solutionCode": "",
+  "hints": [],
+  "isPremium": false,
+  "createdBy": null,
+  "testCases": [
+    {
+      "input": [
+        [
+          3,
+          1,
+          2
+        ]
+      ],
+      "expectedOutput": -1
+    },
+    {
+      "input": [
+        [
+          7,
+          9,
+          5,
+          8,
+          1,
+          3
+        ]
+      ],
+      "expectedOutput": 1
+    }
+  ],
+  "hiddenTestCases": [
+    {
+      "input": [
+        [
+          3,
+          1,
+          2
+        ]
+      ],
+      "expectedOutput": -1
+    },
+    {
+      "input": [
+        [
+          7,
+          9,
+          5,
+          8,
+          1,
+          3
+        ]
+      ],
+      "expectedOutput": 1
+    }
+  ],
+  "tags": [],
+  "constraints": [],
+  "examples": [],
+  "problemNumber": null,
+  "createdAt": "2025-11-14T21:24:38.395364+00:00",
+  "updatedAt": "2025-12-04T04:36:08.457Z"
+}

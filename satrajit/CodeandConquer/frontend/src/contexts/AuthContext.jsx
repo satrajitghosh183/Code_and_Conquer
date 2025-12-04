@@ -15,29 +15,76 @@ export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null)
   const [profile, setProfile] = useState(null)
   const [loading, setLoading] = useState(true)
+  const [initialized, setInitialized] = useState(false)
 
   useEffect(() => {
-    // Check active session
-    supabase.auth.getSession().then(({ data: { session } }) => {
-      setUser(session?.user ?? null)
-      if (session?.user) {
-        loadProfile(session.user.id)
+    let mounted = true
+    
+    const initAuth = async () => {
+      try {
+        console.log('AuthProvider: Initializing...')
+        
+        // First check if there are OAuth tokens in the URL hash
+        const hash = window.location.hash
+        if (hash && hash.includes('access_token')) {
+          console.log('AuthProvider: Found tokens in URL hash, will be processed by callback handler')
+          // Don't process here - let the callback handler do it
+          // Just mark as not loading so routing can happen
+          if (mounted) {
+            setLoading(false)
+            setInitialized(true)
+          }
+          return
+        }
+        
+        // Check active session
+        const { data: { session }, error } = await supabase.auth.getSession()
+        
+        if (error) {
+          console.error('AuthProvider: Error getting session:', error)
+        }
+        
+        console.log('AuthProvider: Session check complete, user:', session?.user?.email || 'none')
+        
+        if (mounted) {
+          setUser(session?.user ?? null)
+          if (session?.user) {
+            loadProfile(session.user.id)
+          }
+          setLoading(false)
+          setInitialized(true)
+        }
+      } catch (e) {
+        console.error('AuthProvider: Init error:', e)
+        if (mounted) {
+          setLoading(false)
+          setInitialized(true)
+        }
       }
-      setLoading(false)
-    })
+    }
+    
+    initAuth()
 
     // Listen for auth changes (including OAuth callbacks)
     const { data: { subscription } } = supabase.auth.onAuthStateChange((event, session) => {
-      setUser(session?.user ?? null)
-      if (session?.user) {
-        loadProfile(session.user.id)
-      } else {
-        setProfile(null)
+      console.log('AuthProvider: Auth state changed:', event, session?.user?.email || 'no user')
+      
+      if (mounted) {
+        setUser(session?.user ?? null)
+        if (session?.user) {
+          loadProfile(session.user.id)
+        } else {
+          setProfile(null)
+        }
+        setLoading(false)
+        setInitialized(true)
       }
-      setLoading(false)
     })
 
-    return () => subscription.unsubscribe()
+    return () => {
+      mounted = false
+      subscription.unsubscribe()
+    }
   }, [])
 
   const loadProfile = async (userId) => {
@@ -294,7 +341,8 @@ export const AuthProvider = ({ children }) => {
     signInWithDiscord,
     uploadAvatar,
     updateProfile,
-    loading
+    loading,
+    initialized
   }
 
   return (

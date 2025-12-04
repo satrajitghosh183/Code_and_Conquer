@@ -1,0 +1,50 @@
+{
+  "id": "7bff7529-e60e-4acb-ad9b-ee7dec94071a",
+  "title": "Maximum Difference by Remapping a Digit",
+  "slug": "maximum-difference-by-remapping-a-digit",
+  "description": "You are given an integer `num`. You know that Danny Mittal will sneakily **remap** one of the `10` possible digits (`0` to `9`) to another digit.\n\nReturn _the difference between the maximum and minimum_ _values Danny can make by remapping **exactly** **one** digit_ _in_ `num`.\n\n**Notes:**\n\n*   When Danny remaps a digit d1 to another digit d2, Danny replaces all occurrences of `d1` in `num` with `d2`.\n*   Danny can remap a digit to itself, in which case `num` does not change.\n*   Danny can remap different digits for obtaining minimum and maximum values respectively.\n*   The resulting number after remapping can contain leading zeroes.\n*   We mentioned \"Danny Mittal \" to congratulate him on being in the top 10 in Weekly Contest 326.\n\n**Example 1:**\n\n**Input:** num = 11891\n**Output:** 99009\n**Explanation:** \nTo achieve the maximum value, Danny can remap the digit 1 to the digit 9 to yield 99899.\nTo achieve the minimum value, Danny can remap the digit 1 to the digit 0, yielding 890.\nThe difference between these two numbers is 99009.\n\n**Example 2:**\n\n**Input:** num = 90\n**Output:** 99\n**Explanation:**\nThe maximum value that can be returned by the function is 99 (if 0 is replaced by 9) and the minimum value that can be returned by the function is 0 (if 9 is replaced by 0).\nThus, we return 99.\n\n**Constraints:**\n\n*   `1 <= num <= 108`",
+  "difficulty": "Easy",
+  "category": null,
+  "xpReward": 0,
+  "timeLimitMs": 5000,
+  "memoryLimitMb": 256,
+  "starterCode": {},
+  "solutionCode": "",
+  "hints": [],
+  "isPremium": false,
+  "createdBy": null,
+  "testCases": [
+    {
+      "input": [
+        11891
+      ],
+      "expectedOutput": 99009
+    },
+    {
+      "input": [
+        90
+      ],
+      "expectedOutput": 99
+    }
+  ],
+  "hiddenTestCases": [
+    {
+      "input": [
+        11891
+      ],
+      "expectedOutput": 99009
+    },
+    {
+      "input": [
+        90
+      ],
+      "expectedOutput": 99
+    }
+  ],
+  "tags": [],
+  "constraints": [],
+  "examples": [],
+  "problemNumber": null,
+  "createdAt": "2025-11-14T21:26:23.614464+00:00",
+  "updatedAt": "2025-12-04T04:35:19.390Z"
+}

@@ -1,0 +1,49 @@
+{
+  "id": "9a7424de-a005-4da8-974d-a513e0be9ac9",
+  "title": "Sum of Beauty of All Substrings",
+  "slug": "sum-of-beauty-of-all-substrings",
+  "description": "The **beauty** of a string is the difference in frequencies between the most frequent and least frequent characters.\n\n*   For example, the beauty of `\"abaacc \"` is `3 - 1 = 2`.\n\nGiven a string `s`, return _the sum of **beauty** of all of its substrings._\n\n**Example 1:**\n\n**Input:** s =  \"aabcb \"\n**Output:** 5\n**Explanation:** The substrings with non-zero beauty are \\[ \"aab \", \"aabc \", \"aabcb \", \"abcb \", \"bcb \"\\], each with beauty equal to 1.\n\n**Example 2:**\n\n**Input:** s =  \"aabcbaa \"\n**Output:** 17\n\n**Constraints:**\n\n*   `1 <= s.length <= 500`\n*   `s` consists of only lowercase English letters.",
+  "difficulty": "Medium",
+  "category": null,
+  "xpReward": 0,
+  "timeLimitMs": 5000,
+  "memoryLimitMb": 256,
+  "starterCode": [],
+  "solutionCode": "",
+  "hints": [],
+  "isPremium": false,
+  "createdBy": null,
+  "testCases": [
+    {
+      "input": [
+        "aabcb "
+      ],
+      "expectedOutput": 5
+    },
+    {
+      "input": [
+        "aabcbaa "
+      ],
+      "expectedOutput": "17\n\n**Constraints:**\n\n*   `1 <= s.length <= 500`\n*   `s` consists of only lowercase English letters."
+    }
+  ],
+  "hiddenTestCases": [
+    {
+      "input": [
+        "aabcb "
+      ],
+      "expectedOutput": 5
+    },
+    {
+      "input": [
+        "aabcbaa "
+      ],
+      "expectedOutput": "17\n\n**Constraints:**\n\n*   `1 <= s.length <= 500`\n*   `s` consists of only lowercase English letters."
+    }
+  ],
+  "tags": [],
+  "constraints": [],
+  "examples": [],
+  "createdAt": "2025-11-14T21:23:05.981452+00:00",
+  "updatedAt": "2025-12-04T04:36:49.945Z"
+}

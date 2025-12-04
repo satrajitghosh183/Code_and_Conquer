@@ -1,0 +1,53 @@
+{
+  "id": "bd15c109-5c61-4453-93fd-47bbf9236348",
+  "title": "Minimize XOR",
+  "slug": "minimize-xor",
+  "description": "Given two positive integers `num1` and `num2`, find the positive integer `x` such that:\n\n*   `x` has the same number of set bits as `num2`, and\n*   The value `x XOR num1` is **minimal**.\n\nNote that `XOR` is the bitwise XOR operation.\n\nReturn _the integer_ `x`. The test cases are generated such that `x` is **uniquely determined**.\n\nThe number of **set bits** of an integer is the number of `1`'s in its binary representation.\n\n**Example 1:**\n\n**Input:** num1 = 3, num2 = 5\n**Output:** 3\n**Explanation:**\nThe binary representations of num1 and num2 are 0011 and 0101, respectively.\nThe integer **3** has the same number of set bits as num2, and the value `3 XOR 3 = 0` is minimal.\n\n**Example 2:**\n\n**Input:** num1 = 1, num2 = 12\n**Output:** 3\n**Explanation:**\nThe binary representations of num1 and num2 are 0001 and 1100, respectively.\nThe integer **3** has the same number of set bits as num2, and the value `3 XOR 1 = 2` is minimal.\n\n**Constraints:**\n\n*   `1 <= num1, num2 <= 109`",
+  "difficulty": "Medium",
+  "category": null,
+  "xpReward": 0,
+  "timeLimitMs": 5000,
+  "memoryLimitMb": 256,
+  "starterCode": [],
+  "solutionCode": "",
+  "hints": [],
+  "isPremium": false,
+  "createdBy": null,
+  "testCases": [
+    {
+      "input": [
+        3,
+        5
+      ],
+      "expectedOutput": 3
+    },
+    {
+      "input": [
+        1,
+        12
+      ],
+      "expectedOutput": 3
+    }
+  ],
+  "hiddenTestCases": [
+    {
+      "input": [
+        3,
+        5
+      ],
+      "expectedOutput": 3
+    },
+    {
+      "input": [
+        1,
+        12
+      ],
+      "expectedOutput": 3
+    }
+  ],
+  "tags": [],
+  "constraints": [],
+  "examples": [],
+  "createdAt": "2025-11-14T21:25:44.428917+00:00",
+  "updatedAt": "2025-12-04T04:35:37.849Z"
+}

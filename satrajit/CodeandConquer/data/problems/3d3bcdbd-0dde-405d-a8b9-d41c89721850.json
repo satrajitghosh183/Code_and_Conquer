@@ -1,0 +1,54 @@
+{
+  "id": "3d3bcdbd-0dde-405d-a8b9-d41c89721850",
+  "title": "Sum of Digits in Base K",
+  "slug": "sum-of-digits-in-base-k",
+  "description": "Given an integer `n` (in base `10`) and a base `k`, return _the **sum** of the digits of_ `n` _**after** converting_ `n` _from base_ `10` _to base_ `k`.\n\nAfter converting, each digit should be interpreted as a base `10` number, and the sum should be returned in base `10`.\n\n**Example 1:**\n\n**Input:** n = 34, k = 6\n**Output:** 9\n**Explanation:** 34 (base 10) expressed in base 6 is 54. 5 + 4 = 9.\n\n**Example 2:**\n\n**Input:** n = 10, k = 10\n**Output:** 1\n**Explanation:** n is already in base 10. 1 + 0 = 1.\n\n**Constraints:**\n\n*   `1 <= n <= 100`\n*   `2 <= k <= 10`",
+  "difficulty": "Easy",
+  "category": null,
+  "xpReward": 0,
+  "timeLimitMs": 5000,
+  "memoryLimitMb": 256,
+  "starterCode": {},
+  "solutionCode": "",
+  "hints": [],
+  "isPremium": false,
+  "createdBy": null,
+  "testCases": [
+    {
+      "input": [
+        34,
+        6
+      ],
+      "expectedOutput": 9
+    },
+    {
+      "input": [
+        10,
+        10
+      ],
+      "expectedOutput": 1
+    }
+  ],
+  "hiddenTestCases": [
+    {
+      "input": [
+        34,
+        6
+      ],
+      "expectedOutput": 9
+    },
+    {
+      "input": [
+        10,
+        10
+      ],
+      "expectedOutput": 1
+    }
+  ],
+  "tags": [],
+  "constraints": [],
+  "examples": [],
+  "problemNumber": null,
+  "createdAt": "2025-11-14T21:23:20.255752+00:00",
+  "updatedAt": "2025-12-04T04:36:41.606Z"
+}

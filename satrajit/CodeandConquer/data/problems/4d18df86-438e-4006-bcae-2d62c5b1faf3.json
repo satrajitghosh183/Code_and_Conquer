@@ -1,0 +1,76 @@
+{
+  "id": "4d18df86-438e-4006-bcae-2d62c5b1faf3",
+  "title": "Maximum Subarray Sum After One Operation",
+  "slug": "maximum-subarray-sum-after-one-operation",
+  "description": "You are given an integer array `nums`. You must perform **exactly one** operation where you can **replace** one element `nums[i]` with `nums[i] * nums[i]`.\n\nReturn _the **maximum** possible subarray sum after **exactly one** operation_. The subarray must be non-empty.\n\n**Example 1:**\n\n**Input:** nums = \\[2,-1,-4,-3\\]\n**Output:** 17\n**Explanation:** You can perform the operation on index 2 (0-indexed) to make nums = \\[2,-1,**16**,-3\\]. Now, the maximum subarray sum is 2 + -1 + 16 = 17.\n\n**Example 2:**\n\n**Input:** nums = \\[1,-1,1,1,-1,-1,1\\]\n**Output:** 4\n**Explanation:** You can perform the operation on index 1 (0-indexed) to make nums = \\[1,**1**,1,1,-1,-1,1\\]. Now, the maximum subarray sum is 1 + 1 + 1 + 1 = 4.\n\n**Constraints:**\n\n*   `1 <= nums.length <= 105`\n*   `-104 <= nums[i] <= 104`",
+  "difficulty": "Medium",
+  "category": null,
+  "xpReward": 0,
+  "timeLimitMs": 5000,
+  "memoryLimitMb": 256,
+  "starterCode": {},
+  "solutionCode": "",
+  "hints": [],
+  "isPremium": false,
+  "createdBy": null,
+  "testCases": [
+    {
+      "input": [
+        [
+          2,
+          -1,
+          -4,
+          -3
+        ]
+      ],
+      "expectedOutput": 17
+    },
+    {
+      "input": [
+        [
+          1,
+          -1,
+          1,
+          1,
+          -1,
+          -1,
+          1
+        ]
+      ],
+      "expectedOutput": 4
+    }
+  ],
+  "hiddenTestCases": [
+    {
+      "input": [
+        [
+          2,
+          -1,
+          -4,
+          -3
+        ]
+      ],
+      "expectedOutput": 17
+    },
+    {
+      "input": [
+        [
+          1,
+          -1,
+          1,
+          1,
+          -1,
+          -1,
+          1
+        ]
+      ],
+      "expectedOutput": 4
+    }
+  ],
+  "tags": [],
+  "constraints": [],
+  "examples": [],
+  "problemNumber": null,
+  "createdAt": "2025-11-14T21:22:56.65285+00:00",
+  "updatedAt": "2025-12-04T04:36:55.883Z"
+}

@@ -1,0 +1,180 @@
+{
+  "id": "15e90df3-ce05-4461-8afb-4909e8271853",
+  "title": "Count Unhappy Friends",
+  "slug": "count-unhappy-friends",
+  "description": "You are given a list of `preferences` for `n` friends, where `n` is always **even**.\n\nFor each person `i`, `preferences[i]` contains a list of friends **sorted** in the **order of preference**. In other words, a friend earlier in the list is more preferred than a friend later in the list. Friends in each list are denoted by integers from `0` to `n-1`.\n\nAll the friends are divided into pairs. The pairings are given in a list `pairs`, where `pairs[i] = [xi, yi]` denotes `xi` is paired with `yi` and `yi` is paired with `xi`.\n\nHowever, this pairing may cause some of the friends to be unhappy. A friend `x` is unhappy if `x` is paired with `y` and there exists a friend `u` who is paired with `v` but:\n\n*   `x` prefers `u` over `y`, and\n*   `u` prefers `x` over `v`.\n\nReturn _the number of unhappy friends_.\n\n**Example 1:**\n\n**Input:** n = 4, preferences = \\[\\[1, 2, 3\\], \\[3, 2, 0\\], \\[3, 1, 0\\], \\[1, 2, 0\\]\\], pairs = \\[\\[0, 1\\], \\[2, 3\\]\\]\n**Output:** 2\n**Explanation:**\nFriend 1 is unhappy because:\n- 1 is paired with 0 but prefers 3 over 0, and\n- 3 prefers 1 over 2.\nFriend 3 is unhappy because:\n- 3 is paired with 2 but prefers 1 over 2, and\n- 1 prefers 3 over 0.\nFriends 0 and 2 are happy.\n\n**Example 2:**\n\n**Input:** n = 2, preferences = \\[\\[1\\], \\[0\\]\\], pairs = \\[\\[1, 0\\]\\]\n**Output:** 0\n**Explanation:** Both friends 0 and 1 are happy.\n\n**Example 3:**\n\n**Input:** n = 4, preferences = \\[\\[1, 3, 2\\], \\[2, 3, 0\\], \\[1, 3, 0\\], \\[0, 2, 1\\]\\], pairs = \\[\\[1, 3\\], \\[0, 2\\]\\]\n**Output:** 4\n\n**Constraints:**\n\n*   `2 <= n <= 500`\n*   `n` is even.\n*   `preferences.length == n`\n*   `preferences[i].length == n - 1`\n*   `0 <= preferences[i][j] <= n - 1`\n*   `preferences[i]` does not contain `i`.\n*   All values in `preferences[i]` are unique.\n*   `pairs.length == n/2`\n*   `pairs[i].length == 2`\n*   `xi != yi`\n*   `0 <= xi, yi <= n - 1`\n*   Each person is contained in **exactly one** pair.",
+  "difficulty": "Medium",
+  "category": null,
+  "xpReward": 0,
+  "timeLimitMs": 5000,
+  "memoryLimitMb": 256,
+  "starterCode": {},
+  "solutionCode": "",
+  "hints": [],
+  "isPremium": false,
+  "createdBy": null,
+  "testCases": [
+    {
+      "input": [
+        4,
+        [
+          [
+            1,
+            2,
+            3
+          ],
+          [
+            3,
+            2,
+            0
+          ],
+          [
+            3,
+            1,
+            0
+          ],
+          [
+            1,
+            2,
+            0
+          ]
+        ],
+        [
+          [
+            0,
+            1
+          ],
+          [
+            2,
+            3
+          ]
+        ]
+      ],
+      "expectedOutput": 2
+    },
+    {
+      "input": [
+        2,
+        [
+          [
+            1
+          ],
+          [
+            0
+          ]
+        ],
+        [
+          [
+            1,
+            0
+          ]
+        ]
+      ],
+      "expectedOutput": 0
+    },
+    {
+      "input": [
+        4,
+        [
+          [
+            1,
+            3,
+            2
+          ],
+          [
+            2,
+            3,
+            0
+          ],
+          [
+            1,
+            3,
+            0
+          ],
+          [
+            0,
+            2,
+            1
+          ]
+        ],
+        [
+          [
+            1,
+            3
+          ],
+          [
+            0,
+            2
+          ]
+        ]
+      ],
+      "expectedOutput": "4\n\n**Constraints:**\n\n*   `2 <= n <= 500`\n*   `n` is even.\n*   `preferences.length == n`\n*   `preferences[i].length == n - 1`\n*   `0 <= preferences[i][j] <= n - 1`\n*   `preferences[i]` does not contain `i`.\n*   All values in `preferences[i]` are unique.\n*   `pairs.length == n/2`\n*   `pairs[i].length == 2`\n*   `xi != yi`\n*   `0 <= xi, yi <= n - 1`\n*   Each person is contained in **exactly one** pair."
+    }
+  ],
+  "hiddenTestCases": [
+    {
+      "input": [
+        4,
+        [
+          [
+            1,
+            2,
+            3
+          ],
+          [
+            3,
+            2,
+            0
+          ],
+          [
+            3,
+            1,
+            0
+          ],
+          [
+            1,
+            2,
+            0
+          ]
+        ],
+        [
+          [
+            0,
+            1
+          ],
+          [
+            2,
+            3
+          ]
+        ]
+      ],
+      "expectedOutput": 2
+    },
+    {
+      "input": [
+        2,
+        [
+          [
+            1
+          ],
+          [
+            0
+          ]
+        ],
+        [
+          [
+            1,
+            0
+          ]
+        ]
+      ],
+      "expectedOutput": 0
+    }
+  ],
+  "tags": [],
+  "constraints": [],
+  "examples": [],
+  "problemNumber": null,
+  "createdAt": "2025-11-14T21:22:18.654681+00:00",
+  "updatedAt": "2025-12-04T04:37:14.996Z"
+}

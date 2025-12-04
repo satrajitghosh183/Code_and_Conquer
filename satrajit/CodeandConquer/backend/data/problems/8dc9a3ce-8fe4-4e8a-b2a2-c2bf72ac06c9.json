@@ -1,0 +1,155 @@
+{
+  "id": "8dc9a3ce-8fe4-4e8a-b2a2-c2bf72ac06c9",
+  "title": "Find All Possible Recipes from Given Supplies",
+  "slug": "find-all-possible-recipes-from-given-supplies",
+  "description": "You have information about `n` different recipes. You are given a string array `recipes` and a 2D string array `ingredients`. The `ith` recipe has the name `recipes[i]`, and you can **create** it if you have **all** the needed ingredients from `ingredients[i]`. Ingredients to a recipe may need to be created from **other** recipes, i.e., `ingredients[i]` may contain a string that is in `recipes`.\n\nYou are also given a string array `supplies` containing all the ingredients that you initially have, and you have an infinite supply of all of them.\n\nReturn _a list of all the recipes that you can create._ You may return the answer in **any order**.\n\nNote that two recipes may contain each other in their ingredients.\n\n**Example 1:**\n\n**Input:** recipes = \\[ \"bread \"\\], ingredients = \\[\\[ \"yeast \", \"flour \"\\]\\], supplies = \\[ \"yeast \", \"flour \", \"corn \"\\]\n**Output:** \\[ \"bread \"\\]\n**Explanation:**\nWe can create  \"bread \" since we have the ingredients  \"yeast \" and  \"flour \".\n\n**Example 2:**\n\n**Input:** recipes = \\[ \"bread \", \"sandwich \"\\], ingredients = \\[\\[ \"yeast \", \"flour \"\\],\\[ \"bread \", \"meat \"\\]\\], supplies = \\[ \"yeast \", \"flour \", \"meat \"\\]\n**Output:** \\[ \"bread \", \"sandwich \"\\]\n**Explanation:**\nWe can create  \"bread \" since we have the ingredients  \"yeast \" and  \"flour \".\nWe can create  \"sandwich \" since we have the ingredient  \"meat \" and can create the ingredient  \"bread \".\n\n**Example 3:**\n\n**Input:** recipes = \\[ \"bread \", \"sandwich \", \"burger \"\\], ingredients = \\[\\[ \"yeast \", \"flour \"\\],\\[ \"bread \", \"meat \"\\],\\[ \"sandwich \", \"meat \", \"bread \"\\]\\], supplies = \\[ \"yeast \", \"flour \", \"meat \"\\]\n**Output:** \\[ \"bread \", \"sandwich \", \"burger \"\\]\n**Explanation:**\nWe can create  \"bread \" since we have the ingredients  \"yeast \" and  \"flour \".\nWe can create  \"sandwich \" since we have the ingredient  \"meat \" and can create the ingredient  \"bread \".\nWe can create  \"burger \" since we have the ingredient  \"meat \" and can create the ingredients  \"bread \" and  \"sandwich \".\n\n**Constraints:**\n\n*   `n == recipes.length == ingredients.length`\n*   `1 <= n <= 100`\n*   `1 <= ingredients[i].length, supplies.length <= 100`\n*   `1 <= recipes[i].length, ingredients[i][j].length, supplies[k].length <= 10`\n*   `recipes[i], ingredients[i][j]`, and `supplies[k]` consist only of lowercase English letters.\n*   All the values of `recipes` and `supplies` combined are unique.\n*   Each `ingredients[i]` does not contain any duplicate values.",
+  "difficulty": "Medium",
+  "category": null,
+  "xpReward": 0,
+  "timeLimitMs": 5000,
+  "memoryLimitMb": 256,
+  "starterCode": [],
+  "solutionCode": "",
+  "hints": [],
+  "isPremium": false,
+  "createdBy": null,
+  "testCases": [
+    {
+      "input": [
+        [
+          "bread "
+        ],
+        [
+          [
+            "yeast ",
+            "flour "
+          ]
+        ],
+        [
+          "yeast ",
+          "flour ",
+          "corn "
+        ]
+      ],
+      "expectedOutput": [
+        "bread "
+      ]
+    },
+    {
+      "input": [
+        [
+          "bread ",
+          "sandwich "
+        ],
+        [
+          [
+            "yeast ",
+            "flour "
+          ],
+          [
+            "bread ",
+            "meat "
+          ]
+        ],
+        [
+          "yeast ",
+          "flour ",
+          "meat "
+        ]
+      ],
+      "expectedOutput": [
+        "bread ",
+        "sandwich "
+      ]
+    },
+    {
+      "input": [
+        [
+          "bread ",
+          "sandwich ",
+          "burger "
+        ],
+        [
+          [
+            "yeast ",
+            "flour "
+          ],
+          [
+            "bread ",
+            "meat "
+          ],
+          [
+            "sandwich ",
+            "meat ",
+            "bread "
+          ]
+        ],
+        [
+          "yeast ",
+          "flour ",
+          "meat "
+        ]
+      ],
+      "expectedOutput": [
+        "bread ",
+        "sandwich ",
+        "burger "
+      ]
+    }
+  ],
+  "hiddenTestCases": [
+    {
+      "input": [
+        [
+          "bread "
+        ],
+        [
+          [
+            "yeast ",
+            "flour "
+          ]
+        ],
+        [
+          "yeast ",
+          "flour ",
+          "corn "
+        ]
+      ],
+      "expectedOutput": [
+        "bread "
+      ]
+    },
+    {
+      "input": [
+        [
+          "bread ",
+          "sandwich "
+        ],
+        [
+          [
+            "yeast ",
+            "flour "
+          ],
+          [
+            "bread ",
+            "meat "
+          ]
+        ],
+        [
+          "yeast ",
+          "flour ",
+          "meat "
+        ]
+      ],
+      "expectedOutput": [
+        "bread ",
+        "sandwich "
+      ]
+    }
+  ],
+  "tags": [],
+  "constraints": [],
+  "examples": [],
+  "createdAt": "2025-11-14T21:24:27.892128+00:00",
+  "updatedAt": "2025-12-04T04:36:13.506Z"
+}

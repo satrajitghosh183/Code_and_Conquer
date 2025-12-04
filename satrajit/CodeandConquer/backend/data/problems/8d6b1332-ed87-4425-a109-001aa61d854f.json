@@ -1,0 +1,75 @@
+{
+  "id": "8d6b1332-ed87-4425-a109-001aa61d854f",
+  "title": "Minimum Amount of Time to Fill Cups",
+  "slug": "minimum-amount-of-time-to-fill-cups",
+  "description": "You have a water dispenser that can dispense cold, warm, and hot water. Every second, you can either fill up `2` cups with **different** types of water, or `1` cup of any type of water.\n\nYou are given a **0-indexed** integer array `amount` of length `3` where `amount[0]`, `amount[1]`, and `amount[2]` denote the number of cold, warm, and hot water cups you need to fill respectively. Return _the **minimum** number of seconds needed to fill up all the cups_.\n\n**Example 1:**\n\n**Input:** amount = \\[1,4,2\\]\n**Output:** 4\n**Explanation:** One way to fill up the cups is:\nSecond 1: Fill up a cold cup and a warm cup.\nSecond 2: Fill up a warm cup and a hot cup.\nSecond 3: Fill up a warm cup and a hot cup.\nSecond 4: Fill up a warm cup.\nIt can be proven that 4 is the minimum number of seconds needed.\n\n**Example 2:**\n\n**Input:** amount = \\[5,4,4\\]\n**Output:** 7\n**Explanation:** One way to fill up the cups is:\nSecond 1: Fill up a cold cup, and a hot cup.\nSecond 2: Fill up a cold cup, and a warm cup.\nSecond 3: Fill up a cold cup, and a warm cup.\nSecond 4: Fill up a warm cup, and a hot cup.\nSecond 5: Fill up a cold cup, and a hot cup.\nSecond 6: Fill up a cold cup, and a warm cup.\nSecond 7: Fill up a hot cup.\n\n**Example 3:**\n\n**Input:** amount = \\[5,0,0\\]\n**Output:** 5\n**Explanation:** Every second, we fill up a cold cup.\n\n**Constraints:**\n\n*   `amount.length == 3`\n*   `0 <= amount[i] <= 100`",
+  "difficulty": "Easy",
+  "category": null,
+  "xpReward": 0,
+  "timeLimitMs": 5000,
+  "memoryLimitMb": 256,
+  "starterCode": [],
+  "solutionCode": "",
+  "hints": [],
+  "isPremium": false,
+  "createdBy": null,
+  "testCases": [
+    {
+      "input": [
+        [
+          1,
+          4,
+          2
+        ]
+      ],
+      "expectedOutput": 4
+    },
+    {
+      "input": [
+        [
+          5,
+          4,
+          4
+        ]
+      ],
+      "expectedOutput": 7
+    },
+    {
+      "input": [
+        [
+          5,
+          0,
+          0
+        ]
+      ],
+      "expectedOutput": 5
+    }
+  ],
+  "hiddenTestCases": [
+    {
+      "input": [
+        [
+          1,
+          4,
+          2
+        ]
+      ],
+      "expectedOutput": 4
+    },
+    {
+      "input": [
+        [
+          5,
+          4,
+          4
+        ]
+      ],
+      "expectedOutput": 7
+    }
+  ],
+  "tags": [],
+  "constraints": [],
+  "examples": [],
+  "createdAt": "2025-11-14T21:25:20.81828+00:00",
+  "updatedAt": "2025-12-04T04:35:49.108Z"
+}

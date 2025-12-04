@@ -1,0 +1,49 @@
+{
+  "id": "188650b8-d07b-474d-bbde-617e811538d3",
+  "title": "Removing Stars From a String",
+  "slug": "removing-stars-from-a-string",
+  "description": "You are given a string `s`, which contains stars `*`.\n\nIn one operation, you can:\n\n*   Choose a star in `s`.\n*   Remove the closest **non-star** character to its **left**, as well as remove the star itself.\n\nReturn _the string after **all** stars have been removed_.\n\n**Note:**\n\n*   The input will be generated such that the operation is always possible.\n*   It can be shown that the resulting string will always be unique.\n\n**Example 1:**\n\n**Input:** s =  \"leet\\*\\*cod\\*e \"\n**Output:**  \"lecoe \"\n**Explanation:** Performing the removals from left to right:\n- The closest character to the 1st star is 't' in  \"lee**t**\\*\\*cod\\*e \". s becomes  \"lee\\*cod\\*e \".\n- The closest character to the 2nd star is 'e' in  \"le**e**\\*cod\\*e \". s becomes  \"lecod\\*e \".\n- The closest character to the 3rd star is 'd' in  \"leco**d**\\*e \". s becomes  \"lecoe \".\nThere are no more stars, so we return  \"lecoe \".\n\n**Example 2:**\n\n**Input:** s =  \"erase\\*\\*\\*\\*\\* \"\n**Output:**  \" \"\n**Explanation:** The entire string is removed, so we return an empty string.\n\n**Constraints:**\n\n*   `1 <= s.length <= 105`\n*   `s` consists of lowercase English letters and stars `*`.\n*   The operation above can be performed on `s`.",
+  "difficulty": "Medium",
+  "category": null,
+  "xpReward": 0,
+  "timeLimitMs": 5000,
+  "memoryLimitMb": 256,
+  "starterCode": [],
+  "solutionCode": "",
+  "hints": [],
+  "isPremium": false,
+  "createdBy": null,
+  "testCases": [
+    {
+      "input": [
+        "\"leet\\*\\*cod\\*e \""
+      ],
+      "expectedOutput": "lecoe "
+    },
+    {
+      "input": [
+        "\"erase\\*\\*\\*\\*\\* \""
+      ],
+      "expectedOutput": " "
+    }
+  ],
+  "hiddenTestCases": [
+    {
+      "input": [
+        "\"leet\\*\\*cod\\*e \""
+      ],
+      "expectedOutput": "lecoe "
+    },
+    {
+      "input": [
+        "\"erase\\*\\*\\*\\*\\* \""
+      ],
+      "expectedOutput": " "
+    }
+  ],
+  "tags": [],
+  "constraints": [],
+  "examples": [],
+  "createdAt": "2025-11-14T21:25:33.714691+00:00",
+  "updatedAt": "2025-12-04T04:35:42.924Z"
+}

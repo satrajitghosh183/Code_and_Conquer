@@ -1,0 +1,50 @@
+{
+  "id": "86314591-803c-4819-ad4e-ee32b0467b4d",
+  "title": "Three Divisors",
+  "slug": "three-divisors",
+  "description": "Given an integer `n`, return `true` _if_ `n` _has **exactly three positive divisors**. Otherwise, return_ `false`.\n\nAn integer `m` is a **divisor** of `n` if there exists an integer `k` such that `n = k * m`.\n\n**Example 1:**\n\n**Input:** n = 2\n**Output:** false\n**Explantion:** 2 has only two divisors: 1 and 2.\n\n**Example 2:**\n\n**Input:** n = 4\n**Output:** true\n**Explantion:** 4 has three divisors: 1, 2, and 4.\n\n**Constraints:**\n\n*   `1 <= n <= 104`",
+  "difficulty": "Easy",
+  "category": null,
+  "xpReward": 0,
+  "timeLimitMs": 5000,
+  "memoryLimitMb": 256,
+  "starterCode": {},
+  "solutionCode": "",
+  "hints": [],
+  "isPremium": false,
+  "createdBy": null,
+  "testCases": [
+    {
+      "input": [
+        2
+      ],
+      "expectedOutput": "false\n**Explantion:** 2 has only two divisors: 1 and 2."
+    },
+    {
+      "input": [
+        4
+      ],
+      "expectedOutput": "true\n**Explantion:** 4 has three divisors: 1, 2, and 4.\n\n**Constraints:**\n\n*   `1 <= n <= 104`"
+    }
+  ],
+  "hiddenTestCases": [
+    {
+      "input": [
+        2
+      ],
+      "expectedOutput": "false\n**Explantion:** 2 has only two divisors: 1 and 2."
+    },
+    {
+      "input": [
+        4
+      ],
+      "expectedOutput": "true\n**Explantion:** 4 has three divisors: 1, 2, and 4.\n\n**Constraints:**\n\n*   `1 <= n <= 104`"
+    }
+  ],
+  "tags": [],
+  "constraints": [],
+  "examples": [],
+  "problemNumber": null,
+  "createdAt": "2025-11-14T21:23:46.759384+00:00",
+  "updatedAt": "2025-12-04T04:36:30.271Z"
+}

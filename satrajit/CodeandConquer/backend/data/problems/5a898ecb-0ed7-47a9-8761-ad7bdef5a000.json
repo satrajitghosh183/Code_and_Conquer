@@ -1,0 +1,109 @@
+{
+  "id": "5a898ecb-0ed7-47a9-8761-ad7bdef5a000",
+  "title": "Minimum Number of Lines to Cover Points",
+  "slug": "minimum-number-of-lines-to-cover-points",
+  "description": "You are given an array `points` where `points[i] = [xi, yi]` represents a point on an **X-Y** plane.\n\n**Straight lines** are going to be added to the **X-Y** plane, such that every point is covered by at **least** one line.\n\nReturn _the **minimum** number of **straight lines** needed to cover all the points_.\n\n**Example 1:**\n\n**Input:** points = \\[\\[0,1\\],\\[2,3\\],\\[4,5\\],\\[4,3\\]\\]\n**Output:** 2\n**Explanation:** The minimum number of straight lines needed is two. One possible solution is to add:\n- One line connecting the point at (0, 1) to the point at (4, 5).\n- Another line connecting the point at (2, 3) to the point at (4, 3).\n\n**Example 2:**\n\n**Input:** points = \\[\\[0,2\\],\\[-2,-2\\],\\[1,4\\]\\]\n**Output:** 1\n**Explanation:** The minimum number of straight lines needed is one. The only solution is to add:\n- One line connecting the point at (-2, -2) to the point at (1, 4).\n\n**Constraints:**\n\n*   `1 <= points.length <= 10`\n*   `points[i].length == 2`\n*   `-100 <= xi, yi <= 100`\n*   All the `points` are **unique**.",
+  "difficulty": "Medium",
+  "category": null,
+  "xpReward": 0,
+  "timeLimitMs": 5000,
+  "memoryLimitMb": 256,
+  "starterCode": [],
+  "solutionCode": "",
+  "hints": [],
+  "isPremium": false,
+  "createdBy": null,
+  "testCases": [
+    {
+      "input": [
+        [
+          [
+            0,
+            1
+          ],
+          [
+            2,
+            3
+          ],
+          [
+            4,
+            5
+          ],
+          [
+            4,
+            3
+          ]
+        ]
+      ],
+      "expectedOutput": 2
+    },
+    {
+      "input": [
+        [
+          [
+            0,
+            2
+          ],
+          [
+            -2,
+            -2
+          ],
+          [
+            1,
+            4
+          ]
+        ]
+      ],
+      "expectedOutput": 1
+    }
+  ],
+  "hiddenTestCases": [
+    {
+      "input": [
+        [
+          [
+            0,
+            1
+          ],
+          [
+            2,
+            3
+          ],
+          [
+            4,
+            5
+          ],
+          [
+            4,
+            3
+          ]
+        ]
+      ],
+      "expectedOutput": 2
+    },
+    {
+      "input": [
+        [
+          [
+            0,
+            2
+          ],
+          [
+            -2,
+            -2
+          ],
+          [
+            1,
+            4
+          ]
+        ]
+      ],
+      "expectedOutput": 1
+    }
+  ],
+  "tags": [],
+  "constraints": [],
+  "examples": [],
+  "createdAt": "2025-11-14T21:24:36.494722+00:00",
+  "updatedAt": "2025-12-04T04:36:09.426Z"
+}

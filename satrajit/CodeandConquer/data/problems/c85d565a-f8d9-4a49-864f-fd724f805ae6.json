@@ -1,0 +1,50 @@
+{
+  "id": "c85d565a-f8d9-4a49-864f-fd724f805ae6",
+  "title": "Smallest Value After Replacing With Sum of Prime Factors",
+  "slug": "smallest-value-after-replacing-with-sum-of-prime-factors",
+  "description": "You are given a positive integer `n`.\n\nContinuously replace `n` with the sum of its **prime factors**.\n\n*   Note that if a prime factor divides `n` multiple times, it should be included in the sum as many times as it divides `n`.\n\nReturn _the smallest value_ `n` _will take on._\n\n**Example 1:**\n\n**Input:** n = 15\n**Output:** 5\n**Explanation:** Initially, n = 15.\n15 = 3 \\* 5, so replace n with 3 + 5 = 8.\n8 = 2 \\* 2 \\* 2, so replace n with 2 + 2 + 2 = 6.\n6 = 2 \\* 3, so replace n with 2 + 3 = 5.\n5 is the smallest value n will take on.\n\n**Example 2:**\n\n**Input:** n = 3\n**Output:** 3\n**Explanation:** Initially, n = 3.\n3 is the smallest value n will take on.\n\n**Constraints:**\n\n*   `2 <= n <= 105`",
+  "difficulty": "Medium",
+  "category": null,
+  "xpReward": 0,
+  "timeLimitMs": 5000,
+  "memoryLimitMb": 256,
+  "starterCode": {},
+  "solutionCode": "",
+  "hints": [],
+  "isPremium": false,
+  "createdBy": null,
+  "testCases": [
+    {
+      "input": [
+        15
+      ],
+      "expectedOutput": 5
+    },
+    {
+      "input": [
+        3
+      ],
+      "expectedOutput": 3
+    }
+  ],
+  "hiddenTestCases": [
+    {
+      "input": [
+        15
+      ],
+      "expectedOutput": 5
+    },
+    {
+      "input": [
+        3
+      ],
+      "expectedOutput": 3
+    }
+  ],
+  "tags": [],
+  "constraints": [],
+  "examples": [],
+  "problemNumber": null,
+  "createdAt": "2025-11-14T21:26:05.82922+00:00",
+  "updatedAt": "2025-12-04T04:35:25.731Z"
+}

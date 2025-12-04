@@ -1,0 +1,56 @@
+{
+  "id": "e06b11f9-5c15-4994-a488-2f9f2d3f23ca",
+  "title": "Count the Number of Good Subsequences",
+  "slug": "count-the-number-of-good-subsequences",
+  "description": "A **subsequence** of a string is good if it is not empty and the frequency of each one of its characters is the same.\n\nGiven a string `s`, return _the number of good subsequences of_ `s`. Since the answer may be too large, return it modulo `109 + 7`.\n\nA **subsequence** is a string that can be derived from another string by deleting some or no characters without changing the order of the remaining characters.\n\n**Example 1:**\n\n**Input:** s =  \"aabb \"\n**Output:** 11\n**Explanation:** The total number of subsequences is `24.` There are five subsequences which are not good:  \"**aab**b \",  \"a**abb** \",  \"**a**a**bb** \",  \"**aa**b**b** \", and the empty subsequence. Hence, the number of good subsequences is `24-5 = 11`.\n\n**Example 2:**\n\n**Input:** s =  \"leet \"\n**Output:** 12\n**Explanation:** There are four subsequences which are not good:  \"**l_ee_**t \",  \"l**eet** \",  \"**leet** \", and the empty subsequence. Hence, the number of good subsequences is `24-4 = 12`.\n\n**Example 3:**\n\n**Input:** s =  \"abcd \"\n**Output:** 15\n**Explanation:** All of the non-empty subsequences are good subsequences. Hence, the number of good subsequences is `24-1 = 15`.\n\n**Constraints:**\n\n*   `1 <= s.length <= 104`\n*   `s` consists of only lowercase English letters.",
+  "difficulty": "Medium",
+  "category": null,
+  "xpReward": 0,
+  "timeLimitMs": 5000,
+  "memoryLimitMb": 256,
+  "starterCode": {},
+  "solutionCode": "",
+  "hints": [],
+  "isPremium": false,
+  "createdBy": null,
+  "testCases": [
+    {
+      "input": [
+        "aabb "
+      ],
+      "expectedOutput": 11
+    },
+    {
+      "input": [
+        "leet "
+      ],
+      "expectedOutput": 12
+    },
+    {
+      "input": [
+        "abcd "
+      ],
+      "expectedOutput": 15
+    }
+  ],
+  "hiddenTestCases": [
+    {
+      "input": [
+        "aabb "
+      ],
+      "expectedOutput": 11
+    },
+    {
+      "input": [
+        "leet "
+      ],
+      "expectedOutput": 12
+    }
+  ],
+  "tags": [],
+  "constraints": [],
+  "examples": [],
+  "problemNumber": null,
+  "createdAt": "2025-11-14T21:26:14.289873+00:00",
+  "updatedAt": "2025-12-04T04:35:22.393Z"
+}

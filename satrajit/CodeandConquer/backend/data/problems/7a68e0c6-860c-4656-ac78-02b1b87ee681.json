@@ -1,0 +1,49 @@
+{
+  "id": "7a68e0c6-860c-4656-ac78-02b1b87ee681",
+  "title": "Construct Smallest Number From DI String",
+  "slug": "construct-smallest-number-from-di-string",
+  "description": "You are given a **0-indexed** string `pattern` of length `n` consisting of the characters `'I'` meaning **increasing** and `'D'` meaning **decreasing**.\n\nA **0-indexed** string `num` of length `n + 1` is created using the following conditions:\n\n*   `num` consists of the digits `'1'` to `'9'`, where each digit is used **at most** once.\n*   If `pattern[i] == 'I'`, then `num[i] < num[i + 1]`.\n*   If `pattern[i] == 'D'`, then `num[i] > num[i + 1]`.\n\nReturn _the lexicographically **smallest** possible string_ `num` _that meets the conditions._\n\n**Example 1:**\n\n**Input:** pattern =  \"IIIDIDDD \"\n**Output:**  \"123549876 \"\n**Explanation:**\nAt indices 0, 1, 2, and 4 we must have that num\\[i\\] < num\\[i+1\\].\nAt indices 3, 5, 6, and 7 we must have that num\\[i\\] > num\\[i+1\\].\nSome possible values of num are  \"245639871 \",  \"135749862 \", and  \"123849765 \".\nIt can be proven that  \"123549876 \" is the smallest possible num that meets the conditions.\nNote that  \"123414321 \" is not possible because the digit '1' is used more than once.\n\n**Example 2:**\n\n**Input:** pattern =  \"DDD \"\n**Output:**  \"4321 \"\n**Explanation:**\nSome possible values of num are  \"9876 \",  \"7321 \", and  \"8742 \".\nIt can be proven that  \"4321 \" is the smallest possible num that meets the conditions.\n\n**Constraints:**\n\n*   `1 <= pattern.length <= 8`\n*   `pattern` consists of only the letters `'I'` and `'D'`.",
+  "difficulty": "Medium",
+  "category": null,
+  "xpReward": 0,
+  "timeLimitMs": 5000,
+  "memoryLimitMb": 256,
+  "starterCode": [],
+  "solutionCode": "",
+  "hints": [],
+  "isPremium": false,
+  "createdBy": null,
+  "testCases": [
+    {
+      "input": [
+        "IIIDIDDD "
+      ],
+      "expectedOutput": "123549876 "
+    },
+    {
+      "input": [
+        "DDD "
+      ],
+      "expectedOutput": "4321 "
+    }
+  ],
+  "hiddenTestCases": [
+    {
+      "input": [
+        "IIIDIDDD "
+      ],
+      "expectedOutput": "123549876 "
+    },
+    {
+      "input": [
+        "DDD "
+      ],
+      "expectedOutput": "4321 "
+    }
+  ],
+  "tags": [],
+  "constraints": [],
+  "examples": [],
+  "createdAt": "2025-11-14T21:25:30.495372+00:00",
+  "updatedAt": "2025-12-04T04:35:44.891Z"
+}

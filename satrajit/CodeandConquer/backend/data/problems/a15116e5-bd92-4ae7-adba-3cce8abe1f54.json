@@ -1,0 +1,102 @@
+{
+  "id": "a15116e5-bd92-4ae7-adba-3cce8abe1f54",
+  "title": "Make the XOR of All Segments Equal to Zero",
+  "slug": "make-the-xor-of-all-segments-equal-to-zero",
+  "description": "You are given an array `nums`​​​ and an integer `k`​​​​​. The XOR of a segment `[left, right]` where `left <= right` is the `XOR` of all the elements with indices between `left` and `right`, inclusive: `nums[left] XOR nums[left+1] XOR ... XOR nums[right]`.\n\nReturn _the minimum number of elements to change in the array_ such that the `XOR` of all segments of size `k`​​​​​​ is equal to zero.\n\n**Example 1:**\n\n**Input:** nums = \\[1,2,0,3,0\\], k = 1\n**Output:** 3\n**Explanation:** Modify the array from \\[**1**,**2**,0,**3**,0\\] to from \\[**0**,**0**,0,**0**,0\\].\n\n**Example 2:**\n\n**Input:** nums = \\[3,4,5,2,1,7,3,4,7\\], k = 3\n**Output:** 3\n**Explanation:** Modify the array from \\[3,4,**5**,**2**,**1**,7,3,4,7\\] to \\[3,4,**7**,**3**,**4**,7,3,4,7\\].\n\n**Example 3:**\n\n**Input:** nums = \\[1,2,4,1,2,5,1,2,6\\], k = 3\n**Output:** 3\n**Explanation:** Modify the array from \\[1,2,**4,**1,2,**5**,1,2,**6**\\] to \\[1,2,**3**,1,2,**3**,1,2,**3**\\].\n\n**Constraints:**\n\n*   `1 <= k <= nums.length <= 2000`\n*   `​​​​​​0 <= nums[i] < 210`",
+  "difficulty": "Hard",
+  "category": null,
+  "xpReward": 0,
+  "timeLimitMs": 5000,
+  "memoryLimitMb": 256,
+  "starterCode": [],
+  "solutionCode": "",
+  "hints": [],
+  "isPremium": false,
+  "createdBy": null,
+  "testCases": [
+    {
+      "input": [
+        [
+          1,
+          2,
+          0,
+          3,
+          0
+        ],
+        1
+      ],
+      "expectedOutput": 3
+    },
+    {
+      "input": [
+        [
+          3,
+          4,
+          5,
+          2,
+          1,
+          7,
+          3,
+          4,
+          7
+        ],
+        3
+      ],
+      "expectedOutput": 3
+    },
+    {
+      "input": [
+        [
+          1,
+          2,
+          4,
+          1,
+          2,
+          5,
+          1,
+          2,
+          6
+        ],
+        3
+      ],
+      "expectedOutput": 3
+    }
+  ],
+  "hiddenTestCases": [
+    {
+      "input": [
+        [
+          1,
+          2,
+          0,
+          3,
+          0
+        ],
+        1
+      ],
+      "expectedOutput": 3
+    },
+    {
+      "input": [
+        [
+          3,
+          4,
+          5,
+          2,
+          1,
+          7,
+          3,
+          4,
+          7
+        ],
+        3
+      ],
+      "expectedOutput": 3
+    }
+  ],
+  "tags": [],
+  "constraints": [],
+  "examples": [],
+  "createdAt": "2025-11-14T21:23:07.353194+00:00",
+  "updatedAt": "2025-12-04T04:36:48.929Z"
+}

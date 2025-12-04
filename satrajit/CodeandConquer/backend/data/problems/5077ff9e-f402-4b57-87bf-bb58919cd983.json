@@ -1,0 +1,55 @@
+{
+  "id": "5077ff9e-f402-4b57-87bf-bb58919cd983",
+  "title": "Minimum Changes To Make Alternating Binary String",
+  "slug": "minimum-changes-to-make-alternating-binary-string",
+  "description": "You are given a string `s` consisting only of the characters `'0'` and `'1'`. In one operation, you can change any `'0'` to `'1'` or vice versa.\n\nThe string is called alternating if no two adjacent characters are equal. For example, the string `\"010 \"` is alternating, while the string `\"0100 \"` is not.\n\nReturn _the **minimum** number of operations needed to make_ `s` _alternating_.\n\n**Example 1:**\n\n**Input:** s =  \"0100 \"\n**Output:** 1\n**Explanation:** If you change the last character to '1', s will be  \"0101 \", which is alternating.\n\n**Example 2:**\n\n**Input:** s =  \"10 \"\n**Output:** 0\n**Explanation:** s is already alternating.\n\n**Example 3:**\n\n**Input:** s =  \"1111 \"\n**Output:** 2\n**Explanation:** You need two operations to reach  \"0101 \" or  \"1010 \".\n\n**Constraints:**\n\n*   `1 <= s.length <= 104`\n*   `s[i]` is either `'0'` or `'1'`.",
+  "difficulty": "Easy",
+  "category": null,
+  "xpReward": 0,
+  "timeLimitMs": 5000,
+  "memoryLimitMb": 256,
+  "starterCode": [],
+  "solutionCode": "",
+  "hints": [],
+  "isPremium": false,
+  "createdBy": null,
+  "testCases": [
+    {
+      "input": [
+        "0100 "
+      ],
+      "expectedOutput": 1
+    },
+    {
+      "input": [
+        "10 "
+      ],
+      "expectedOutput": 0
+    },
+    {
+      "input": [
+        "1111 "
+      ],
+      "expectedOutput": 2
+    }
+  ],
+  "hiddenTestCases": [
+    {
+      "input": [
+        "0100 "
+      ],
+      "expectedOutput": 1
+    },
+    {
+      "input": [
+        "10 "
+      ],
+      "expectedOutput": 0
+    }
+  ],
+  "tags": [],
+  "constraints": [],
+  "examples": [],
+  "createdAt": "2025-11-14T21:22:59.389958+00:00",
+  "updatedAt": "2025-12-04T04:36:53.356Z"
+}

@@ -1,0 +1,54 @@
+{
+  "id": "e35c8a34-af7c-4c86-bde1-93424b72dcfc",
+  "title": "Take K of Each Character From Left and Right",
+  "slug": "take-k-of-each-character-from-left-and-right",
+  "description": "You are given a string `s` consisting of the characters `'a'`, `'b'`, and `'c'` and a non-negative integer `k`. Each minute, you may take either the **leftmost** character of `s`, or the **rightmost** character of `s`.\n\nReturn _the **minimum** number of minutes needed for you to take **at least**_ `k` _of each character, or return_ `-1` _if it is not possible to take_ `k` _of each character._\n\n**Example 1:**\n\n**Input:** s =  \"aabaaaacaabc \", k = 2\n**Output:** 8\n**Explanation:** \nTake three characters from the left of s. You now have two 'a' characters, and one 'b' character.\nTake five characters from the right of s. You now have four 'a' characters, two 'b' characters, and two 'c' characters.\nA total of 3 + 5 = 8 minutes is needed.\nIt can be proven that 8 is the minimum number of minutes needed.\n\n**Example 2:**\n\n**Input:** s =  \"a \", k = 1\n**Output:** -1\n**Explanation:** It is not possible to take one 'b' or 'c' so return -1.\n\n**Constraints:**\n\n*   `1 <= s.length <= 105`\n*   `s` consists of only the letters `'a'`, `'b'`, and `'c'`.\n*   `0 <= k <= s.length`",
+  "difficulty": "Medium",
+  "category": null,
+  "xpReward": 0,
+  "timeLimitMs": 5000,
+  "memoryLimitMb": 256,
+  "starterCode": {},
+  "solutionCode": "",
+  "hints": [],
+  "isPremium": false,
+  "createdBy": null,
+  "testCases": [
+    {
+      "input": [
+        "aabaaaacaabc ",
+        2
+      ],
+      "expectedOutput": 8
+    },
+    {
+      "input": [
+        "a ",
+        1
+      ],
+      "expectedOutput": -1
+    }
+  ],
+  "hiddenTestCases": [
+    {
+      "input": [
+        "aabaaaacaabc ",
+        2
+      ],
+      "expectedOutput": 8
+    },
+    {
+      "input": [
+        "a ",
+        1
+      ],
+      "expectedOutput": -1
+    }
+  ],
+  "tags": [],
+  "constraints": [],
+  "examples": [],
+  "problemNumber": null,
+  "createdAt": "2025-11-14T21:26:07.961926+00:00",
+  "updatedAt": "2025-12-04T04:35:24.834Z"
+}

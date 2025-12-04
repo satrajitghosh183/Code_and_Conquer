@@ -1,0 +1,140 @@
+{
+  "id": "d696f37c-8be2-4dd8-9b14-e6e957038e0f",
+  "title": "Check if Word Can Be Placed In Crossword",
+  "slug": "check-if-word-can-be-placed-in-crossword",
+  "description": "You are given an `m x n` matrix `board`, representing the **current** state of a crossword puzzle. The crossword contains lowercase English letters (from solved words), `' '` to represent any **empty** cells, and `'#'` to represent any **blocked** cells.\n\nA word can be placed **horizontally** (left to right **or** right to left) or **vertically** (top to bottom **or** bottom to top) in the board if:\n\n*   It does not occupy a cell containing the character `'#'`.\n*   The cell each letter is placed in must either be `' '` (empty) or **match** the letter already on the `board`.\n*   There must not be any empty cells `' '` or other lowercase letters **directly left or right** of the word if the word was placed **horizontally**.\n*   There must not be any empty cells `' '` or other lowercase letters **directly above or below** the word if the word was placed **vertically**.\n\nGiven a string `word`, return `true` _if_ `word` _can be placed in_ `board`_, or_ `false` _**otherwise**_.\n\n**Example 1:**\n\n**Input:** board = \\[\\[ \"# \",  \"  \",  \"# \"\\], \\[ \"  \",  \"  \",  \"# \"\\], \\[ \"# \",  \"c \",  \"  \"\\]\\], word =  \"abc \"\n**Output:** true\n**Explanation:** The word  \"abc \" can be placed as shown above (top to bottom).\n\n**Example 2:**\n\n**Input:** board = \\[\\[ \"  \",  \"# \",  \"a \"\\], \\[ \"  \",  \"# \",  \"c \"\\], \\[ \"  \",  \"# \",  \"a \"\\]\\], word =  \"ac \"\n**Output:** false\n**Explanation:** It is impossible to place the word because there will always be a space/letter above or below it.\n\n**Example 3:**\n\n**Input:** board = \\[\\[ \"# \",  \"  \",  \"# \"\\], \\[ \"  \",  \"  \",  \"# \"\\], \\[ \"# \",  \"  \",  \"c \"\\]\\], word =  \"ca \"\n**Output:** true\n**Explanation:** The word  \"ca \" can be placed as shown above (right to left). \n\n**Constraints:**\n\n*   `m == board.length`\n*   `n == board[i].length`\n*   `1 <= m * n <= 2 * 105`\n*   `board[i][j]` will be `' '`, `'#'`, or a lowercase English letter.\n*   `1 <= word.length <= max(m, n)`\n*   `word` will contain only lowercase English letters.",
+  "difficulty": "Medium",
+  "category": null,
+  "xpReward": 0,
+  "timeLimitMs": 5000,
+  "memoryLimitMb": 256,
+  "starterCode": [],
+  "solutionCode": "",
+  "hints": [],
+  "isPremium": false,
+  "createdBy": null,
+  "testCases": [
+    {
+      "input": [
+        [
+          [
+            "# ",
+            "  ",
+            "# "
+          ],
+          [
+            "  ",
+            "  ",
+            "# "
+          ],
+          [
+            "# ",
+            "c ",
+            "  "
+          ]
+        ],
+        "abc "
+      ],
+      "expectedOutput": true
+    },
+    {
+      "input": [
+        [
+          [
+            "  ",
+            "# ",
+            "a "
+          ],
+          [
+            "  ",
+            "# ",
+            "c "
+          ],
+          [
+            "  ",
+            "# ",
+            "a "
+          ]
+        ],
+        "ac "
+      ],
+      "expectedOutput": false
+    },
+    {
+      "input": [
+        [
+          [
+            "# ",
+            "  ",
+            "# "
+          ],
+          [
+            "  ",
+            "  ",
+            "# "
+          ],
+          [
+            "# ",
+            "  ",
+            "c "
+          ]
+        ],
+        "ca "
+      ],
+      "expectedOutput": true
+    }
+  ],
+  "hiddenTestCases": [
+    {
+      "input": [
+        [
+          [
+            "# ",
+            "  ",
+            "# "
+          ],
+          [
+            "  ",
+            "  ",
+            "# "
+          ],
+          [
+            "# ",
+            "c ",
+            "  "
+          ]
+        ],
+        "abc "
+      ],
+      "expectedOutput": true
+    },
+    {
+      "input": [
+        [
+          [
+            "  ",
+            "# ",
+            "a "
+          ],
+          [
+            "  ",
+            "# ",
+            "c "
+          ],
+          [
+            "  ",
+            "# ",
+            "a "
+          ]
+        ],
+        "ac "
+      ],
+      "expectedOutput": false
+    }
+  ],
+  "tags": [],
+  "constraints": [],
+  "examples": [],
+  "createdAt": "2025-11-14T21:24:02.051304+00:00",
+  "updatedAt": "2025-12-04T04:36:23.647Z"
+}

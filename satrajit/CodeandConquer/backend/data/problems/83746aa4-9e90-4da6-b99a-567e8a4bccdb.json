@@ -1,0 +1,97 @@
+{
+  "id": "83746aa4-9e90-4da6-b99a-567e8a4bccdb",
+  "title": "Median of a Row Wise Sorted Matrix",
+  "slug": "median-of-a-row-wise-sorted-matrix",
+  "description": "Given an `m x n` matrix `grid` containing an **odd** number of integers where each row is sorted in **non-decreasing** order, return _the **median** of the matrix_.\n\nYou must solve the problem in less than `O(m * n)` time complexity.\n\n**Example 1:**\n\n**Input:** grid = \\[\\[1,1,2\\],\\[2,3,3\\],\\[1,3,4\\]\\]\n**Output:** 2\n**Explanation:** The elements of the matrix in sorted order are 1,1,1,2,2,3,3,3,4. The median is 2.\n\n**Example 2:**\n\n**Input:** grid = \\[\\[1,1,3,3,4\\]\\]\n**Output:** 3\n**Explanation:** The elements of the matrix in sorted order are 1,1,3,3,4. The median is 3.\n\n**Constraints:**\n\n*   `m == grid.length`\n*   `n == grid[i].length`\n*   `1 <= m, n <= 500`\n*   `m` and `n` are both odd.\n*   `1 <= grid[i][j] <= 106`\n*   `grid[i]` is sorted in non-decreasing order.",
+  "difficulty": "Medium",
+  "category": null,
+  "xpReward": 0,
+  "timeLimitMs": 5000,
+  "memoryLimitMb": 256,
+  "starterCode": [],
+  "solutionCode": "",
+  "hints": [],
+  "isPremium": false,
+  "createdBy": null,
+  "testCases": [
+    {
+      "input": [
+        [
+          [
+            1,
+            1,
+            2
+          ],
+          [
+            2,
+            3,
+            3
+          ],
+          [
+            1,
+            3,
+            4
+          ]
+        ]
+      ],
+      "expectedOutput": 2
+    },
+    {
+      "input": [
+        [
+          [
+            1,
+            1,
+            3,
+            3,
+            4
+          ]
+        ]
+      ],
+      "expectedOutput": 3
+    }
+  ],
+  "hiddenTestCases": [
+    {
+      "input": [
+        [
+          [
+            1,
+            1,
+            2
+          ],
+          [
+            2,
+            3,
+            3
+          ],
+          [
+            1,
+            3,
+            4
+          ]
+        ]
+      ],
+      "expectedOutput": 2
+    },
+    {
+      "input": [
+        [
+          [
+            1,
+            1,
+            3,
+            3,
+            4
+          ]
+        ]
+      ],
+      "expectedOutput": 3
+    }
+  ],
+  "tags": [],
+  "constraints": [],
+  "examples": [],
+  "createdAt": "2025-11-14T21:25:33.237569+00:00",
+  "updatedAt": "2025-12-04T04:35:43.242Z"
+}

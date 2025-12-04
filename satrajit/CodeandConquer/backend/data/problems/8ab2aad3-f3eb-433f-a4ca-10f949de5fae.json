@@ -1,0 +1,73 @@
+{
+  "id": "8ab2aad3-f3eb-433f-a4ca-10f949de5fae",
+  "title": "Keep Multiplying Found Values by Two",
+  "slug": "keep-multiplying-found-values-by-two",
+  "description": "You are given an array of integers `nums`. You are also given an integer `original` which is the first number that needs to be searched for in `nums`.\n\nYou then do the following steps:\n\n1.  If `original` is found in `nums`, **multiply** it by two (i.e., set `original = 2 * original`).\n2.  Otherwise, **stop** the process.\n3.  **Repeat** this process with the new number as long as you keep finding the number.\n\nReturn _the **final** value of_ `original`.\n\n**Example 1:**\n\n**Input:** nums = \\[5,3,6,1,12\\], original = 3\n**Output:** 24\n**Explanation:** \n- 3 is found in nums. 3 is multiplied by 2 to obtain 6.\n- 6 is found in nums. 6 is multiplied by 2 to obtain 12.\n- 12 is found in nums. 12 is multiplied by 2 to obtain 24.\n- 24 is not found in nums. Thus, 24 is returned.\n\n**Example 2:**\n\n**Input:** nums = \\[2,7,9\\], original = 4\n**Output:** 4\n**Explanation:**\n- 4 is not found in nums. Thus, 4 is returned.\n\n**Constraints:**\n\n*   `1 <= nums.length <= 1000`\n*   `1 <= nums[i], original <= 1000`",
+  "difficulty": "Easy",
+  "category": null,
+  "xpReward": 0,
+  "timeLimitMs": 5000,
+  "memoryLimitMb": 256,
+  "starterCode": [],
+  "solutionCode": "",
+  "hints": [],
+  "isPremium": false,
+  "createdBy": null,
+  "testCases": [
+    {
+      "input": [
+        [
+          5,
+          3,
+          6,
+          1,
+          12
+        ],
+        3
+      ],
+      "expectedOutput": 24
+    },
+    {
+      "input": [
+        [
+          2,
+          7,
+          9
+        ],
+        4
+      ],
+      "expectedOutput": 4
+    }
+  ],
+  "hiddenTestCases": [
+    {
+      "input": [
+        [
+          5,
+          3,
+          6,
+          1,
+          12
+        ],
+        3
+      ],
+      "expectedOutput": 24
+    },
+    {
+      "input": [
+        [
+          2,
+          7,
+          9
+        ],
+        4
+      ],
+      "expectedOutput": 4
+    }
+  ],
+  "tags": [],
+  "constraints": [],
+  "examples": [],
+  "createdAt": "2025-11-14T21:24:36.710976+00:00",
+  "updatedAt": "2025-12-04T04:36:09.327Z"
+}

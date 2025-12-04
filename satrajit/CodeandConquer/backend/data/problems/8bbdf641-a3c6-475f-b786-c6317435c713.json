@@ -1,0 +1,221 @@
+{
+  "id": "8bbdf641-a3c6-475f-b786-c6317435c713",
+  "title": "Largest Local Values in a Matrix",
+  "slug": "largest-local-values-in-a-matrix",
+  "description": "You are given an `n x n` integer matrix `grid`.\n\nGenerate an integer matrix `maxLocal` of size `(n - 2) x (n - 2)` such that:\n\n*   `maxLocal[i][j]` is equal to the **largest** value of the `3 x 3` matrix in `grid` centered around row `i + 1` and column `j + 1`.\n\nIn other words, we want to find the largest value in every contiguous `3 x 3` matrix in `grid`.\n\nReturn _the generated matrix_.\n\n**Example 1:**\n\n**Input:** grid = \\[\\[9,9,8,1\\],\\[5,6,2,6\\],\\[8,2,6,4\\],\\[6,2,2,2\\]\\]\n**Output:** \\[\\[9,9\\],\\[8,6\\]\\]\n**Explanation:** The diagram above shows the original matrix and the generated matrix.\nNotice that each value in the generated matrix corresponds to the largest value of a contiguous 3 x 3 matrix in grid.\n\n**Example 2:**\n\n**Input:** grid = \\[\\[1,1,1,1,1\\],\\[1,1,1,1,1\\],\\[1,1,2,1,1\\],\\[1,1,1,1,1\\],\\[1,1,1,1,1\\]\\]\n**Output:** \\[\\[2,2,2\\],\\[2,2,2\\],\\[2,2,2\\]\\]\n**Explanation:** Notice that the 2 is contained within every contiguous 3 x 3 matrix in grid.\n\n**Constraints:**\n\n*   `n == grid.length == grid[i].length`\n*   `3 <= n <= 100`\n*   `1 <= grid[i][j] <= 100`",
+  "difficulty": "Easy",
+  "category": null,
+  "xpReward": 0,
+  "timeLimitMs": 5000,
+  "memoryLimitMb": 256,
+  "starterCode": [],
+  "solutionCode": "",
+  "hints": [],
+  "isPremium": false,
+  "createdBy": null,
+  "testCases": [
+    {
+      "input": [
+        [
+          [
+            9,
+            9,
+            8,
+            1
+          ],
+          [
+            5,
+            6,
+            2,
+            6
+          ],
+          [
+            8,
+            2,
+            6,
+            4
+          ],
+          [
+            6,
+            2,
+            2,
+            2
+          ]
+        ]
+      ],
+      "expectedOutput": [
+        [
+          9,
+          9
+        ],
+        [
+          8,
+          6
+        ]
+      ]
+    },
+    {
+      "input": [
+        [
+          [
+            1,
+            1,
+            1,
+            1,
+            1
+          ],
+          [
+            1,
+            1,
+            1,
+            1,
+            1
+          ],
+          [
+            1,
+            1,
+            2,
+            1,
+            1
+          ],
+          [
+            1,
+            1,
+            1,
+            1,
+            1
+          ],
+          [
+            1,
+            1,
+            1,
+            1,
+            1
+          ]
+        ]
+      ],
+      "expectedOutput": [
+        [
+          2,
+          2,
+          2
+        ],
+        [
+          2,
+          2,
+          2
+        ],
+        [
+          2,
+          2,
+          2
+        ]
+      ]
+    }
+  ],
+  "hiddenTestCases": [
+    {
+      "input": [
+        [
+          [
+            9,
+            9,
+            8,
+            1
+          ],
+          [
+            5,
+            6,
+            2,
+            6
+          ],
+          [
+            8,
+            2,
+            6,
+            4
+          ],
+          [
+            6,
+            2,
+            2,
+            2
+          ]
+        ]
+      ],
+      "expectedOutput": [
+        [
+          9,
+          9
+        ],
+        [
+          8,
+          6
+        ]
+      ]
+    },
+    {
+      "input": [
+        [
+          [
+            1,
+            1,
+            1,
+            1,
+            1
+          ],
+          [
+            1,
+            1,
+            1,
+            1,
+            1
+          ],
+          [
+            1,
+            1,
+            2,
+            1,
+            1
+          ],
+          [
+            1,
+            1,
+            1,
+            1,
+            1
+          ],
+          [
+            1,
+            1,
+            1,
+            1,
+            1
+          ]
+        ]
+      ],
+      "expectedOutput": [
+        [
+          2,
+          2,
+          2
+        ],
+        [
+          2,
+          2,
+          2
+        ],
+        [
+          2,
+          2,
+          2
+        ]
+      ]
+    }
+  ],
+  "tags": [],
+  "constraints": [],
+  "examples": [],
+  "createdAt": "2025-11-14T21:25:29.997379+00:00",
+  "updatedAt": "2025-12-04T04:35:45.197Z"
+}

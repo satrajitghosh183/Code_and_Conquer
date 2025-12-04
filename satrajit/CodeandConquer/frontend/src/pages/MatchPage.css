@@ -1,7 +1,9 @@
+@import '../styles/theme.css';
+
 .match-page {
   width: 100vw;
   height: 100vh;
-  background: #000000;
+  background: var(--dark-red-bg);
   position: relative;
   overflow: hidden;
 }
@@ -29,11 +31,12 @@
 }
 
 .player-card {
-  background: #111118;
-  border: 1px solid #1a1a24;
+  background: var(--dark-red-bg);
+  border: 1px solid var(--red-3);
   border-radius: 16px;
   padding: 24px;
   min-width: 200px;
+  box-shadow: var(--glow-effect);
 }
 
 .player-name {
@@ -54,24 +57,28 @@
 .vs {
   font-size: 24px;
   font-weight: 600;
-  color: #00d4ff;
+  color: var(--red-glow);
+  text-shadow: 0 0 15px rgba(255, 0, 0, 0.6);
 }
 
 .start-btn {
   padding: 14px 32px;
-  background: #00d4ff;
-  color: #000000;
-  border: none;
+  background: var(--button-bg);
+  color: #ffffff;
+  border: 2px solid var(--red-5);
   border-radius: 12px;
   font-size: 16px;
   font-weight: 600;
   cursor: pointer;
   transition: all 0.2s;
+  box-shadow: var(--glow-effect);
 }
 
 .start-btn:hover {
-  background: #00b8e6;
+  background: var(--button-hover);
+  border-color: var(--red-glow);
   transform: translateY(-2px);
+  box-shadow: 0 8px 30px rgba(255, 0, 0, 0.5);
 }
 
 .match-header {
@@ -150,12 +157,144 @@
 
 .match-ended button {
   padding: 14px 32px;
-  background: #00d4ff;
-  color: #000000;
-  border: none;
+  background: var(--button-bg);
+  color: #ffffff;
+  border: 2px solid var(--red-5);
   border-radius: 12px;
   font-size: 16px;
   font-weight: 600;
   cursor: pointer;
+  box-shadow: var(--glow-effect);
+  transition: all 0.2s;
+}
+
+.match-ended button:hover {
+  background: var(--button-hover);
+  border-color: var(--red-glow);
+  transform: translateY(-2px);
+}
+
+/* ==================== RESPONSIVE STYLES ==================== */
+
+@media (max-width: 1024px) {
+  .match-header {
+    padding: 12px 24px;
+  }
+
+  .player-stats {
+    gap: 16px;
+  }
+
+  .stat-value {
+    font-size: 18px;
+  }
+
+  .opponent-info {
+    gap: 24px;
+  }
+
+  .player-card {
+    padding: 20px;
+    min-width: 180px;
+  }
+}
+
+@media (max-width: 768px) {
+  .match-header {
+    flex-direction: column;
+    gap: 16px;
+    padding: 12px 16px;
+  }
+
+  .player-stats {
+    width: 100%;
+    justify-content: center;
+    gap: 20px;
+  }
+
+  .match-actions {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .opponent-info {
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .vs {
+    font-size: 20px;
+  }
+
+  .player-card {
+    min-width: 100%;
+    max-width: 280px;
+  }
+
+  .player-name {
+    font-size: 18px;
+  }
+
+  .start-btn,
+  .match-ended button {
+    padding: 12px 28px;
+    font-size: 15px;
+    width: 100%;
+    max-width: 280px;
+  }
+
+  .match-ended h2 {
+    font-size: 36px;
+  }
+}
+
+@media (max-width: 480px) {
+  .match-header {
+    padding: 10px 12px;
+  }
+
+  .player-stats {
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+
+  .stat {
+    min-width: 80px;
+  }
+
+  .stat-label {
+    font-size: 11px;
+  }
+
+  .stat-value {
+    font-size: 16px;
+  }
+
+  .action-btn {
+    padding: 8px 16px;
+    font-size: 13px;
+  }
+
+  .player-card {
+    padding: 16px;
+  }
+
+  .player-name {
+    font-size: 16px;
+    margin-bottom: 12px;
+  }
+
+  .player-buffs {
+    font-size: 13px;
+  }
+
+  .match-ended h2 {
+    font-size: 28px;
+  }
+
+  .match-briefing {
+    gap: 24px;
+    padding: 20px;
+  }
 }
 

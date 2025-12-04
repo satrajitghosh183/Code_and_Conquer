@@ -1,0 +1,55 @@
+{
+  "id": "4fe89d81-86e5-4ef4-be5d-d75f9f3d476c",
+  "title": "Next Palindrome Using Same Digits",
+  "slug": "next-palindrome-using-same-digits",
+  "description": "You are given a numeric string `num`, representing a very large **palindrome**.\n\nReturn _the **smallest palindrome larger than**_ `num` _that can be created by rearranging its digits. If no such palindrome exists, return an empty string_ `\" \"`.\n\nA **palindrome** is a number that reads the same backward as forward.\n\n**Example 1:**\n\n**Input:** num =  \"1221 \"\n**Output:**  \"2112 \"\n**Explanation:** The next palindrome larger than  \"1221 \" is  \"2112 \".\n\n**Example 2:**\n\n**Input:** num =  \"32123 \"\n**Output:**  \" \"\n**Explanation:** No palindromes larger than  \"32123 \" can be made by rearranging the digits.\n\n**Example 3:**\n\n**Input:** num =  \"45544554 \"\n**Output:**  \"54455445 \"\n**Explanation:** The next palindrome larger than  \"45544554 \" is  \"54455445 \".\n\n**Constraints:**\n\n*   `1 <= num.length <= 105`\n*   `num` is a **palindrome**.",
+  "difficulty": "Hard",
+  "category": null,
+  "xpReward": 0,
+  "timeLimitMs": 5000,
+  "memoryLimitMb": 256,
+  "starterCode": [],
+  "solutionCode": "",
+  "hints": [],
+  "isPremium": false,
+  "createdBy": null,
+  "testCases": [
+    {
+      "input": [
+        "1221 "
+      ],
+      "expectedOutput": "2112 "
+    },
+    {
+      "input": [
+        "32123 "
+      ],
+      "expectedOutput": " "
+    },
+    {
+      "input": [
+        "45544554 "
+      ],
+      "expectedOutput": "54455445 "
+    }
+  ],
+  "hiddenTestCases": [
+    {
+      "input": [
+        "1221 "
+      ],
+      "expectedOutput": "2112 "
+    },
+    {
+      "input": [
+        "32123 "
+      ],
+      "expectedOutput": " "
+    }
+  ],
+  "tags": [],
+  "constraints": [],
+  "examples": [],
+  "createdAt": "2025-11-14T21:23:21.319752+00:00",
+  "updatedAt": "2025-12-04T04:36:41.206Z"
+}

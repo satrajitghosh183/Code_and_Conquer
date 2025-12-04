@@ -1,0 +1,67 @@
+{
+  "id": "4ca906ef-42e8-4e93-a966-8494c0197913",
+  "title": "Number of Ways to Build Sturdy Brick Wall",
+  "slug": "number-of-ways-to-build-sturdy-brick-wall",
+  "description": "You are given integers `height` and `width` which specify the dimensions of a brick wall you are building. You are also given a **0-indexed** array of **unique** integers `bricks`, where the `ith` brick has a height of `1` and a width of `bricks[i]`. You have an **infinite** supply of each type of brick and bricks may **not** be rotated.\n\nEach row in the wall must be exactly `width` units long. For the wall to be **sturdy**, adjacent rows in the wall should **not** join bricks at the same location, except at the ends of the wall.\n\nReturn _the number of ways to build a **sturdy** wall._ Since the answer may be very large, return it **modulo** `109 + 7`.\n\n**Example 1:**\n\n**Input:** height = 2, width = 3, bricks = \\[1,2\\]\n**Output:** 2\n**Explanation:**\nThe first two walls in the diagram show the only two ways to build a sturdy brick wall.\nNote that the third wall in the diagram is not sturdy because adjacent rows join bricks 2 units from the left.\n\n**Example 2:**\n\n**Input:** height = 1, width = 1, bricks = \\[5\\]\n**Output:** 0\n**Explanation:**\nThere are no ways to build a sturdy wall because the only type of brick we have is longer than the width of the wall.\n\n**Constraints:**\n\n*   `1 <= height <= 100`\n*   `1 <= width <= 10`\n*   `1 <= bricks.length <= 10`\n*   `1 <= bricks[i] <= 10`\n*   All the values of `bricks` are **unique**.",
+  "difficulty": "Medium",
+  "category": null,
+  "xpReward": 0,
+  "timeLimitMs": 5000,
+  "memoryLimitMb": 256,
+  "starterCode": [],
+  "solutionCode": "",
+  "hints": [],
+  "isPremium": false,
+  "createdBy": null,
+  "testCases": [
+    {
+      "input": [
+        2,
+        3,
+        [
+          1,
+          2
+        ]
+      ],
+      "expectedOutput": 2
+    },
+    {
+      "input": [
+        1,
+        1,
+        [
+          5
+        ]
+      ],
+      "expectedOutput": 0
+    }
+  ],
+  "hiddenTestCases": [
+    {
+      "input": [
+        2,
+        3,
+        [
+          1,
+          2
+        ]
+      ],
+      "expectedOutput": 2
+    },
+    {
+      "input": [
+        1,
+        1,
+        [
+          5
+        ]
+      ],
+      "expectedOutput": 0
+    }
+  ],
+  "tags": [],
+  "constraints": [],
+  "examples": [],
+  "createdAt": "2025-11-14T21:24:42.776165+00:00",
+  "updatedAt": "2025-12-04T04:36:06.597Z"
+}

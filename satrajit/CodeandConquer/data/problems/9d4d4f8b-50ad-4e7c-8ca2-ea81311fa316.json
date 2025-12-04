@@ -1,0 +1,107 @@
+{
+  "id": "9d4d4f8b-50ad-4e7c-8ca2-ea81311fa316",
+  "title": "Furthest Building You Can Reach",
+  "slug": "furthest-building-you-can-reach",
+  "description": "You are given an integer array `heights` representing the heights of buildings, some `bricks`, and some `ladders`.\n\nYou start your journey from building `0` and move to the next building by possibly using bricks or ladders.\n\nWhile moving from building `i` to building `i+1` (**0-indexed**),\n\n*   If the current building's height is **greater than or equal** to the next building's height, you do **not** need a ladder or bricks.\n*   If the current building's height is **less than** the next building's height, you can either use **one ladder** or `(h[i+1] - h[i])` **bricks**.\n\n_Return the furthest building index (0-indexed) you can reach if you use the given ladders and bricks optimally._\n\n**Example 1:**\n\n**Input:** heights = \\[4,2,7,6,9,14,12\\], bricks = 5, ladders = 1\n**Output:** 4\n**Explanation:** Starting at building 0, you can follow these steps:\n- Go to building 1 without using ladders nor bricks since 4 >= 2.\n- Go to building 2 using 5 bricks. You must use either bricks or ladders because 2 < 7.\n- Go to building 3 without using ladders nor bricks since 7 >= 6.\n- Go to building 4 using your only ladder. You must use either bricks or ladders because 6 < 9.\nIt is impossible to go beyond building 4 because you do not have any more bricks or ladders.\n\n**Example 2:**\n\n**Input:** heights = \\[4,12,2,7,3,18,20,3,19\\], bricks = 10, ladders = 2\n**Output:** 7\n\n**Example 3:**\n\n**Input:** heights = \\[14,3,19,3\\], bricks = 17, ladders = 0\n**Output:** 3\n\n**Constraints:**\n\n*   `1 <= heights.length <= 105`\n*   `1 <= heights[i] <= 106`\n*   `0 <= bricks <= 109`\n*   `0 <= ladders <= heights.length`",
+  "difficulty": "Medium",
+  "category": null,
+  "xpReward": 0,
+  "timeLimitMs": 5000,
+  "memoryLimitMb": 256,
+  "starterCode": {},
+  "solutionCode": "",
+  "hints": [],
+  "isPremium": false,
+  "createdBy": null,
+  "testCases": [
+    {
+      "input": [
+        [
+          4,
+          2,
+          7,
+          6,
+          9,
+          14,
+          12
+        ],
+        5,
+        1
+      ],
+      "expectedOutput": 4
+    },
+    {
+      "input": [
+        [
+          4,
+          12,
+          2,
+          7,
+          3,
+          18,
+          20,
+          3,
+          19
+        ],
+        10,
+        2
+      ],
+      "expectedOutput": 7
+    },
+    {
+      "input": [
+        [
+          14,
+          3,
+          19,
+          3
+        ],
+        17,
+        0
+      ],
+      "expectedOutput": "3\n\n**Constraints:**\n\n*   `1 <= heights.length <= 105`\n*   `1 <= heights[i] <= 106`\n*   `0 <= bricks <= 109`\n*   `0 <= ladders <= heights.length`"
+    }
+  ],
+  "hiddenTestCases": [
+    {
+      "input": [
+        [
+          4,
+          2,
+          7,
+          6,
+          9,
+          14,
+          12
+        ],
+        5,
+        1
+      ],
+      "expectedOutput": 4
+    },
+    {
+      "input": [
+        [
+          4,
+          12,
+          2,
+          7,
+          3,
+          18,
+          20,
+          3,
+          19
+        ],
+        10,
+        2
+      ],
+      "expectedOutput": 7
+    }
+  ],
+  "tags": [],
+  "constraints": [],
+  "examples": [],
+  "problemNumber": null,
+  "createdAt": "2025-11-14T21:22:32.53481+00:00",
+  "updatedAt": "2025-12-04T04:37:09.866Z"
+}

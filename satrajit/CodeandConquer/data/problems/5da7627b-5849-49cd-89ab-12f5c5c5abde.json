@@ -1,0 +1,54 @@
+{
+  "id": "5da7627b-5849-49cd-89ab-12f5c5c5abde",
+  "title": "Count Pairs of Equal Substrings With Minimum Difference",
+  "slug": "count-pairs-of-equal-substrings-with-minimum-difference",
+  "description": "You are given two strings `firstString` and `secondString` that are **0-indexed** and consist only of lowercase English letters. Count the number of index quadruples `(i,j,a,b)` that satisfy the following conditions:\n\n*   `0 <= i <= j < firstString.length`\n*   `0 <= a <= b < secondString.length`\n*   The substring of `firstString` that starts at the `ith` character and ends at the `jth` character (inclusive) is **equal** to the substring of `secondString` that starts at the `ath` character and ends at the `bth` character (inclusive).\n*   `j - a` is the **minimum** possible value among all quadruples that satisfy the previous conditions.\n\nReturn _the **number** of such quadruples_.\n\n**Example 1:**\n\n**Input:** firstString =  \"abcd \", secondString =  \"bccda \"\n**Output:** 1\n**Explanation:** The quadruple (0,0,4,4) is the only one that satisfies all the conditions and minimizes j - a.\n\n**Example 2:**\n\n**Input:** firstString =  \"ab \", secondString =  \"cd \"\n**Output:** 0\n**Explanation:** There are no quadruples satisfying all the conditions.\n\n**Constraints:**\n\n*   `1 <= firstString.length, secondString.length <= 2 * 105`\n*   Both strings consist only of lowercase English letters.",
+  "difficulty": "Medium",
+  "category": null,
+  "xpReward": 0,
+  "timeLimitMs": 5000,
+  "memoryLimitMb": 256,
+  "starterCode": {},
+  "solutionCode": "",
+  "hints": [],
+  "isPremium": false,
+  "createdBy": null,
+  "testCases": [
+    {
+      "input": [
+        "abcd ",
+        "bccda "
+      ],
+      "expectedOutput": 1
+    },
+    {
+      "input": [
+        "ab ",
+        "cd "
+      ],
+      "expectedOutput": 0
+    }
+  ],
+  "hiddenTestCases": [
+    {
+      "input": [
+        "abcd ",
+        "bccda "
+      ],
+      "expectedOutput": 1
+    },
+    {
+      "input": [
+        "ab ",
+        "cd "
+      ],
+      "expectedOutput": 0
+    }
+  ],
+  "tags": [],
+  "constraints": [],
+  "examples": [],
+  "problemNumber": null,
+  "createdAt": "2025-11-14T21:23:09.001509+00:00",
+  "updatedAt": "2025-12-04T04:36:47.411Z"
+}

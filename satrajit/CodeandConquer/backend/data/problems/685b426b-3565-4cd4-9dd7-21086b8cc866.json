@@ -1,0 +1,103 @@
+{
+  "id": "685b426b-3565-4cd4-9dd7-21086b8cc866",
+  "title": "Maximum Font to Fit a Sentence in a Screen",
+  "slug": "maximum-font-to-fit-a-sentence-in-a-screen",
+  "description": "You are given a string `text`. We want to display `text` on a screen of width `w` and height `h`. You can choose any font size from array `fonts`, which contains the available font sizes **in ascending order**.\n\nYou can use the `FontInfo` interface to get the width and height of any character at any available font size.\n\nThe `FontInfo` interface is defined as such:\n\ninterface FontInfo {\n  // Returns the width of character ch on the screen using font size fontSize.\n  // O(1) per call\n  public int getWidth(int fontSize, char ch);\n\n  // Returns the height of any character on the screen using font size fontSize.\n  // O(1) per call\n  public int getHeight(int fontSize);\n}\n\nThe calculated width of `text` for some `fontSize` is the **sum** of every `getWidth(fontSize, text[i])` call for each `0 <= i < text.length` (**0-indexed**). The calculated height of `text` for some `fontSize` is `getHeight(fontSize)`. Note that `text` is displayed on a **single line**.\n\nIt is guaranteed that `FontInfo` will return the same value if you call `getHeight` or `getWidth` with the same parameters.\n\nIt is also guaranteed that for any font size `fontSize` and any character `ch`:\n\n*   `getHeight(fontSize) <= getHeight(fontSize+1)`\n*   `getWidth(fontSize, ch) <= getWidth(fontSize+1, ch)`\n\nReturn _the maximum font size you can use to display_ `text` _on the screen_. If `text` cannot fit on the display with any font size, return `-1`.\n\n**Example 1:**\n\n**Input:** text =  \"helloworld \", w = 80, h = 20, fonts = \\[6,8,10,12,14,16,18,24,36\\]\n**Output:** 6\n\n**Example 2:**\n\n**Input:** text =  \"leetcode \", w = 1000, h = 50, fonts = \\[1,2,4\\]\n**Output:** 4\n\n**Example 3:**\n\n**Input:** text =  \"easyquestion \", w = 100, h = 100, fonts = \\[10,15,20,25\\]\n**Output:** -1\n\n**Constraints:**\n\n*   `1 <= text.length <= 50000`\n*   `text` contains only lowercase English letters.\n*   `1 <= w <= 107`\n*   `1 <= h <= 104`\n*   `1 <= fonts.length <= 105`\n*   `1 <= fonts[i] <= 105`\n*   `fonts` is sorted in ascending order and does not contain duplicates.",
+  "difficulty": "Medium",
+  "category": null,
+  "xpReward": 0,
+  "timeLimitMs": 5000,
+  "memoryLimitMb": 256,
+  "starterCode": [],
+  "solutionCode": "",
+  "hints": [],
+  "isPremium": false,
+  "createdBy": null,
+  "testCases": [
+    {
+      "input": [
+        "helloworld ",
+        80,
+        20,
+        [
+          6,
+          8,
+          10,
+          12,
+          14,
+          16,
+          18,
+          24,
+          36
+        ]
+      ],
+      "expectedOutput": 6
+    },
+    {
+      "input": [
+        "leetcode ",
+        1000,
+        50,
+        [
+          1,
+          2,
+          4
+        ]
+      ],
+      "expectedOutput": 4
+    },
+    {
+      "input": [
+        "easyquestion ",
+        100,
+        100,
+        [
+          10,
+          15,
+          20,
+          25
+        ]
+      ],
+      "expectedOutput": "-1\n\n**Constraints:**\n\n*   `1 <= text.length <= 50000`\n*   `text` contains only lowercase English letters.\n*   `1 <= w <= 107`\n*   `1 <= h <= 104`\n*   `1 <= fonts.length <= 105`\n*   `1 <= fonts[i] <= 105`\n*   `fonts` is sorted in ascending order and does not contain duplicates."
+    }
+  ],
+  "hiddenTestCases": [
+    {
+      "input": [
+        "helloworld ",
+        80,
+        20,
+        [
+          6,
+          8,
+          10,
+          12,
+          14,
+          16,
+          18,
+          24,
+          36
+        ]
+      ],
+      "expectedOutput": 6
+    },
+    {
+      "input": [
+        "leetcode ",
+        1000,
+        50,
+        [
+          1,
+          2,
+          4
+        ]
+      ],
+      "expectedOutput": 4
+    }
+  ],
+  "tags": [],
+  "constraints": [],
+  "examples": [],
+  "createdAt": "2025-11-14T21:22:27.47425+00:00",
+  "updatedAt": "2025-12-04T04:37:11.893Z"
+}

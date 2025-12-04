@@ -1,0 +1,61 @@
+{
+  "id": "2a6f69c6-194e-4478-8848-b82b977a09b0",
+  "title": "Painting a Grid With Three Different Colors",
+  "slug": "painting-a-grid-with-three-different-colors",
+  "description": "You are given two integers `m` and `n`. Consider an `m x n` grid where each cell is initially white. You can paint each cell **red**, **green**, or **blue**. All cells **must** be painted.\n\nReturn _the number of ways to color the grid with **no two adjacent cells having the same color**_. Since the answer can be very large, return it **modulo** `109 + 7`.\n\n**Example 1:**\n\n**Input:** m = 1, n = 1\n**Output:** 3\n**Explanation:** The three possible colorings are shown in the image above.\n\n**Example 2:**\n\n**Input:** m = 1, n = 2\n**Output:** 6\n**Explanation:** The six possible colorings are shown in the image above.\n\n**Example 3:**\n\n**Input:** m = 5, n = 5\n**Output:** 580986\n\n**Constraints:**\n\n*   `1 <= m <= 5`\n*   `1 <= n <= 1000`",
+  "difficulty": "Hard",
+  "category": null,
+  "xpReward": 0,
+  "timeLimitMs": 5000,
+  "memoryLimitMb": 256,
+  "starterCode": {},
+  "solutionCode": "",
+  "hints": [],
+  "isPremium": false,
+  "createdBy": null,
+  "testCases": [
+    {
+      "input": [
+        1,
+        1
+      ],
+      "expectedOutput": 3
+    },
+    {
+      "input": [
+        1,
+        2
+      ],
+      "expectedOutput": 6
+    },
+    {
+      "input": [
+        5,
+        5
+      ],
+      "expectedOutput": "580986\n\n**Constraints:**\n\n*   `1 <= m <= 5`\n*   `1 <= n <= 1000`"
+    }
+  ],
+  "hiddenTestCases": [
+    {
+      "input": [
+        1,
+        1
+      ],
+      "expectedOutput": 3
+    },
+    {
+      "input": [
+        1,
+        2
+      ],
+      "expectedOutput": 6
+    }
+  ],
+  "tags": [],
+  "constraints": [],
+  "examples": [],
+  "problemNumber": null,
+  "createdAt": "2025-11-14T21:23:42.988159+00:00",
+  "updatedAt": "2025-12-04T04:36:32.227Z"
+}

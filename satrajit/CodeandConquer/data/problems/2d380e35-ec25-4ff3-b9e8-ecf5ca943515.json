@@ -1,0 +1,110 @@
+{
+  "id": "2d380e35-ec25-4ff3-b9e8-ecf5ca943515",
+  "title": " Check if There Is a Valid Parentheses String Path",
+  "slug": "check-if-there-is-a-valid-parentheses-string-path",
+  "description": "A parentheses string is a **non-empty** string consisting only of `'('` and `')'`. It is **valid** if **any** of the following conditions is **true**:\n\n*   It is `()`.\n*   It can be written as `AB` (`A` concatenated with `B`), where `A` and `B` are valid parentheses strings.\n*   It can be written as `(A)`, where `A` is a valid parentheses string.\n\nYou are given an `m x n` matrix of parentheses `grid`. A **valid parentheses string path** in the grid is a path satisfying **all** of the following conditions:\n\n*   The path starts from the upper left cell `(0, 0)`.\n*   The path ends at the bottom-right cell `(m - 1, n - 1)`.\n*   The path only ever moves **down** or **right**.\n*   The resulting parentheses string formed by the path is **valid**.\n\nReturn `true` _if there exists a **valid parentheses string path** in the grid._ Otherwise, return `false`.\n\n**Example 1:**\n\n**Input:** grid = \\[\\[ \"( \", \"( \", \"( \"\\],\\[ \") \", \"( \", \") \"\\],\\[ \"( \", \"( \", \") \"\\],\\[ \"( \", \"( \", \") \"\\]\\]\n**Output:** true\n**Explanation:** The above diagram shows two possible paths that form valid parentheses strings.\nThe first path shown results in the valid parentheses string  \"()(()) \".\nThe second path shown results in the valid parentheses string  \"((())) \".\nNote that there may be other valid parentheses string paths.\n\n**Example 2:**\n\n**Input:** grid = \\[\\[ \") \", \") \"\\],\\[ \"( \", \"( \"\\]\\]\n**Output:** false\n**Explanation:** The two possible paths form the parentheses strings  \"))( \" and  \")(( \". Since neither of them are valid parentheses strings, we return false.\n\n**Constraints:**\n\n*   `m == grid.length`\n*   `n == grid[i].length`\n*   `1 <= m, n <= 100`\n*   `grid[i][j]` is either `'('` or `')'`.",
+  "difficulty": "Hard",
+  "category": null,
+  "xpReward": 0,
+  "timeLimitMs": 5000,
+  "memoryLimitMb": 256,
+  "starterCode": {},
+  "solutionCode": "",
+  "hints": [],
+  "isPremium": false,
+  "createdBy": null,
+  "testCases": [
+    {
+      "input": [
+        [
+          [
+            "( ",
+            "( ",
+            "( "
+          ],
+          [
+            ") ",
+            "( ",
+            ") "
+          ],
+          [
+            "( ",
+            "( ",
+            ") "
+          ],
+          [
+            "( ",
+            "( ",
+            ") "
+          ]
+        ]
+      ],
+      "expectedOutput": true
+    },
+    {
+      "input": [
+        [
+          [
+            ") ",
+            ") "
+          ],
+          [
+            "( ",
+            "( "
+          ]
+        ]
+      ],
+      "expectedOutput": false
+    }
+  ],
+  "hiddenTestCases": [
+    {
+      "input": [
+        [
+          [
+            "( ",
+            "( ",
+            "( "
+          ],
+          [
+            ") ",
+            "( ",
+            ") "
+          ],
+          [
+            "( ",
+            "( ",
+            ") "
+          ],
+          [
+            "( ",
+            "( ",
+            ") "
+          ]
+        ]
+      ],
+      "expectedOutput": true
+    },
+    {
+      "input": [
+        [
+          [
+            ") ",
+            ") "
+          ],
+          [
+            "( ",
+            "( "
+          ]
+        ]
+      ],
+      "expectedOutput": false
+    }
+  ],
+  "tags": [],
+  "constraints": [],
+  "examples": [],
+  "problemNumber": null,
+  "createdAt": "2025-11-14T21:25:03.291674+00:00",
+  "updatedAt": "2025-12-04T04:35:57.179Z"
+}

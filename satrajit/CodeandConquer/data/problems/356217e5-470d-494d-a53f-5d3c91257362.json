@@ -1,0 +1,56 @@
+{
+  "id": "356217e5-470d-494d-a53f-5d3c91257362",
+  "title": "Minimum Insertions to Balance a Parentheses String",
+  "slug": "minimum-insertions-to-balance-a-parentheses-string",
+  "description": "Given a parentheses string `s` containing only the characters `'('` and `')'`. A parentheses string is **balanced** if:\n\n*   Any left parenthesis `'('` must have a corresponding two consecutive right parenthesis `'))'`.\n*   Left parenthesis `'('` must go before the corresponding two consecutive right parenthesis `'))'`.\n\nIn other words, we treat `'('` as an opening parenthesis and `'))'` as a closing parenthesis.\n\n*   For example, `\"()) \"`, `\"())(()))) \"` and `\"(())()))) \"` are balanced, `\")() \"`, `\"())) \"` and `\"(())) \"` are not balanced.\n\nYou can insert the characters `'('` and `')'` at any position of the string to balance it if needed.\n\nReturn _the minimum number of insertions_ needed to make `s` balanced.\n\n**Example 1:**\n\n**Input:** s =  \"(())) \"\n**Output:** 1\n**Explanation:** The second '(' has two matching '))', but the first '(' has only ')' matching. We need to add one more ')' at the end of the string to be  \"(()))) \" which is balanced.\n\n**Example 2:**\n\n**Input:** s =  \"()) \"\n**Output:** 0\n**Explanation:** The string is already balanced.\n\n**Example 3:**\n\n**Input:** s =  \"))())( \"\n**Output:** 3\n**Explanation:** Add '(' to match the first '))', Add '))' to match the last '('.\n\n**Constraints:**\n\n*   `1 <= s.length <= 105`\n*   `s` consists of `'('` and `')'` only.",
+  "difficulty": "Medium",
+  "category": null,
+  "xpReward": 0,
+  "timeLimitMs": 5000,
+  "memoryLimitMb": 256,
+  "starterCode": {},
+  "solutionCode": "",
+  "hints": [],
+  "isPremium": false,
+  "createdBy": null,
+  "testCases": [
+    {
+      "input": [
+        "(())) "
+      ],
+      "expectedOutput": 1
+    },
+    {
+      "input": [
+        "()) "
+      ],
+      "expectedOutput": 0
+    },
+    {
+      "input": [
+        "))())( "
+      ],
+      "expectedOutput": 3
+    }
+  ],
+  "hiddenTestCases": [
+    {
+      "input": [
+        "(())) "
+      ],
+      "expectedOutput": 1
+    },
+    {
+      "input": [
+        "()) "
+      ],
+      "expectedOutput": 0
+    }
+  ],
+  "tags": [],
+  "constraints": [],
+  "examples": [],
+  "problemNumber": null,
+  "createdAt": "2025-11-14T21:21:55.375699+00:00",
+  "updatedAt": "2025-12-04T04:37:18.512Z"
+}

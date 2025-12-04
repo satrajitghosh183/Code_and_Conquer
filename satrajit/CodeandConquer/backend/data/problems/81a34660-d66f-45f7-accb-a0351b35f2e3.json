@@ -1,0 +1,169 @@
+{
+  "id": "81a34660-d66f-45f7-accb-a0351b35f2e3",
+  "title": "Stamping the Grid",
+  "slug": "stamping-the-grid",
+  "description": "You are given an `m x n` binary matrix `grid` where each cell is either `0` (empty) or `1` (occupied).\n\nYou are then given stamps of size `stampHeight x stampWidth`. We want to fit the stamps such that they follow the given **restrictions** and **requirements**:\n\n1.  Cover all the **empty** cells.\n2.  Do not cover any of the **occupied** cells.\n3.  We can put as **many** stamps as we want.\n4.  Stamps can **overlap** with each other.\n5.  Stamps are not allowed to be **rotated**.\n6.  Stamps must stay completely **inside** the grid.\n\nReturn `true` _if it is possible to fit the stamps while following the given restrictions and requirements. Otherwise, return_ `false`.\n\n**Example 1:**\n\n**Input:** grid = \\[\\[1,0,0,0\\],\\[1,0,0,0\\],\\[1,0,0,0\\],\\[1,0,0,0\\],\\[1,0,0,0\\]\\], stampHeight = 4, stampWidth = 3\n**Output:** true\n**Explanation:** We have two overlapping stamps (labeled 1 and 2 in the image) that are able to cover all the empty cells.\n\n**Example 2:**\n\n**Input:** grid = \\[\\[1,0,0,0\\],\\[0,1,0,0\\],\\[0,0,1,0\\],\\[0,0,0,1\\]\\], stampHeight = 2, stampWidth = 2 \n**Output:** false \n**Explanation:** There is no way to fit the stamps onto all the empty cells without the stamps going outside the grid.\n\n**Constraints:**\n\n*   `m == grid.length`\n*   `n == grid[r].length`\n*   `1 <= m, n <= 105`\n*   `1 <= m * n <= 2 * 105`\n*   `grid[r][c]` is either `0` or `1`.\n*   `1 <= stampHeight, stampWidth <= 105`",
+  "difficulty": "Hard",
+  "category": null,
+  "xpReward": 0,
+  "timeLimitMs": 5000,
+  "memoryLimitMb": 256,
+  "starterCode": [],
+  "solutionCode": "",
+  "hints": [],
+  "isPremium": false,
+  "createdBy": null,
+  "testCases": [
+    {
+      "input": [
+        [
+          [
+            1,
+            0,
+            0,
+            0
+          ],
+          [
+            1,
+            0,
+            0,
+            0
+          ],
+          [
+            1,
+            0,
+            0,
+            0
+          ],
+          [
+            1,
+            0,
+            0,
+            0
+          ],
+          [
+            1,
+            0,
+            0,
+            0
+          ]
+        ],
+        4,
+        3
+      ],
+      "expectedOutput": true
+    },
+    {
+      "input": [
+        [
+          [
+            1,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            1,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            1,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            1
+          ]
+        ],
+        2,
+        2
+      ],
+      "expectedOutput": false
+    }
+  ],
+  "hiddenTestCases": [
+    {
+      "input": [
+        [
+          [
+            1,
+            0,
+            0,
+            0
+          ],
+          [
+            1,
+            0,
+            0,
+            0
+          ],
+          [
+            1,
+            0,
+            0,
+            0
+          ],
+          [
+            1,
+            0,
+            0,
+            0
+          ],
+          [
+            1,
+            0,
+            0,
+            0
+          ]
+        ],
+        4,
+        3
+      ],
+      "expectedOutput": true
+    },
+    {
+      "input": [
+        [
+          [
+            1,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            1,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            1,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            1
+          ]
+        ],
+        2,
+        2
+      ],
+      "expectedOutput": false
+    }
+  ],
+  "tags": [],
+  "constraints": [],
+  "examples": [],
+  "createdAt": "2025-11-14T21:24:31.821014+00:00",
+  "updatedAt": "2025-12-04T04:36:11.638Z"
+}

@@ -517,6 +517,497 @@ class PublicDatabaseService {
       progress: progress,
     });
   }
+
+  // User Settings
+  async getUserSettings(userId) {
+    const results = await this.query(PUBLIC_TABLES.USER_SETTINGS, {
+      where: { user_id: userId },
+      limit: 1,
+    });
+    return results[0] || null;
+  }
+
+  async updateUserSettings(userId, updates) {
+    const existing = await this.getUserSettings(userId);
+    if (existing) {
+      return this.update(PUBLIC_TABLES.USER_SETTINGS, existing.id, updates);
+    } else {
+      return this.insert(PUBLIC_TABLES.USER_SETTINGS, { user_id: userId, ...updates });
+    }
+  }
+
+  // User Activity
+  async createUserActivity(activityData) {
+    return this.insert(PUBLIC_TABLES.USER_ACTIVITY, activityData);
+  }
+
+  async getUserActivities(userId, limit = 50) {
+    return this.query(PUBLIC_TABLES.USER_ACTIVITY, {
+      where: { user_id: userId },
+      orderBy: { field: 'created_at', ascending: false },
+      limit: limit,
+    });
+  }
+
+  // Event Logs
+  async createEventLog(eventData) {
+    return this.insert(PUBLIC_TABLES.EVENT_LOGS, eventData);
+  }
+
+  async getEventLogs(userId = null, limit = 100) {
+    const where = userId ? { user_id: userId } : {};
+    return this.query(PUBLIC_TABLES.EVENT_LOGS, {
+      where: where,
+      orderBy: { field: 'created_at', ascending: false },
+      limit: limit,
+    });
+  }
+
+  // Transactions
+  async createTransaction(transactionData) {
+    return this.insert(PUBLIC_TABLES.TRANSACTIONS, transactionData);
+  }
+
+  async getUserTransactions(userId, limit = 50) {
+    return this.query(PUBLIC_TABLES.TRANSACTIONS, {
+      where: { user_id: userId },
+      orderBy: { field: 'created_at', ascending: false },
+      limit: limit,
+    });
+  }
+
+  async updateTransaction(transactionId, updates) {
+    return this.update(PUBLIC_TABLES.TRANSACTIONS, transactionId, updates);
+  }
+
+  // Customers
+  async getCustomer(userId) {
+    const results = await this.query(PUBLIC_TABLES.CUSTOMERS, {
+      where: { user_id: userId },
+      limit: 1,
+    });
+    return results[0] || null;
+  }
+
+  async createCustomer(customerData) {
+    return this.insert(PUBLIC_TABLES.CUSTOMERS, customerData);
+  }
+
+  // Entitlements
+  async getUserEntitlements(userId) {
+    return this.query(PUBLIC_TABLES.ENTITLEMENTS, {
+      where: { user_id: userId },
+    });
+  }
+
+  async createEntitlement(entitlementData) {
+    return this.insert(PUBLIC_TABLES.ENTITLEMENTS, entitlementData);
+  }
+
+  async deleteEntitlement(entitlementId) {
+    return this.delete(PUBLIC_TABLES.ENTITLEMENTS, entitlementId);
+  }
+
+  // Game Actions
+  async createGameAction(actionData) {
+    return this.insert(PUBLIC_TABLES.GAME_ACTIONS, actionData);
+  }
+
+  async getMatchGameActions(matchId, limit = 100) {
+    return this.query(PUBLIC_TABLES.GAME_ACTIONS, {
+      where: { match_id: matchId },
+      orderBy: { field: 'timestamp', ascending: true },
+      limit: limit,
+    });
+  }
+
+  // Match Results
+  async getMatchResult(matchId) {
+    const results = await this.query(PUBLIC_TABLES.MATCH_RESULTS, {
+      where: { match_id: matchId },
+      limit: 1,
+    });
+    return results[0] || null;
+  }
+
+  async createMatchResult(resultData) {
+    return this.insert(PUBLIC_TABLES.MATCH_RESULTS, resultData);
+  }
+
+  async updateMatchResult(matchId, updates) {
+    const existing = await this.getMatchResult(matchId);
+    if (existing) {
+      return this.update(PUBLIC_TABLES.MATCH_RESULTS, existing.id, updates);
+    }
+    return null;
+  }
+
+  // Towers
+  async getAllTowers() {
+    return this.query(PUBLIC_TABLES.TOWERS, {});
+  }
+
+  async getTower(towerId) {
+    return this.getById(PUBLIC_TABLES.TOWERS, towerId);
+  }
+
+  async createTower(towerData) {
+    return this.insert(PUBLIC_TABLES.TOWERS, towerData);
+  }
+
+  // Player Inventory
+  async getUserInventory(userId) {
+    return this.query(PUBLIC_TABLES.PLAYER_INVENTORY, {
+      where: { user_id: userId },
+    });
+  }
+
+  async addToInventory(inventoryData) {
+    return this.insert(PUBLIC_TABLES.PLAYER_INVENTORY, inventoryData);
+  }
+
+  async updateInventory(inventoryId, updates) {
+    return this.update(PUBLIC_TABLES.PLAYER_INVENTORY, inventoryId, updates);
+  }
+
+  // Tasks
+  async getUserTasks(userId, filters = {}) {
+    const where = { user_id: userId, ...filters };
+    return this.query(PUBLIC_TABLES.TASKS, {
+      where: where,
+      orderBy: { field: 'due_date', ascending: true },
+    });
+  }
+
+  async createTask(taskData) {
+    return this.insert(PUBLIC_TABLES.TASKS, taskData);
+  }
+
+  async updateTask(taskId, updates) {
+    return this.update(PUBLIC_TABLES.TASKS, taskId, updates);
+  }
+
+  async deleteTask(taskId) {
+    return this.delete(PUBLIC_TABLES.TASKS, taskId);
+  }
+
+  // Task Integrations
+  async getUserTaskIntegrations(userId) {
+    return this.query(PUBLIC_TABLES.TASK_INTEGRATIONS, {
+      where: { user_id: userId },
+    });
+  }
+
+  async updateTaskIntegration(integrationId, updates) {
+    return this.update(PUBLIC_TABLES.TASK_INTEGRATIONS, integrationId, updates);
+  }
+
+  // Match History (from migration)
+  async createMatchHistory(historyData) {
+    if (!this.hasAccess) return null;
+    
+    try {
+      const { data, error } = await supabase
+        .from('match_history')
+        .insert(historyData)
+        .select()
+        .single();
+
+      if (error) {
+        if (error.code === '42P01' || error.code === 'PGRST205') {
+          return null; // Table doesn't exist
+        }
+        throw error;
+      }
+      return data;
+    } catch (error) {
+      if (error.code === '42P01' || error.code === 'PGRST205') {
+        return null;
+      }
+      console.error('Error creating match history:', error);
+      throw error;
+    }
+  }
+
+  async getUserMatchHistory(userId, limit = 20) {
+    if (!this.hasAccess) return [];
+    
+    try {
+
+      const { data, error } = await supabase
+        .from('match_history')
+        .select('*')
+        .eq('user_id', userId)
+        .order('created_at', { ascending: false })
+        .limit(limit);
+
+      if (error) {
+        if (error.code === '42P01' || error.code === 'PGRST205') {
+          return []; // Table doesn't exist
+        }
+        throw error;
+      }
+      return data || [];
+    } catch (error) {
+      if (error.code === '42P01' || error.code === 'PGRST205') {
+        return [];
+      }
+      console.error('Error getting match history:', error);
+      return [];
+    }
+  }
+
+  // Daily Challenges (from migration)
+  async getDailyChallenge(date = null) {
+    if (!this.hasAccess) return null;
+    
+    try {
+
+      const targetDate = date || new Date().toISOString().split('T')[0];
+      
+      const { data, error } = await supabase
+        .from('daily_challenges')
+        .select('*')
+        .eq('challenge_date', targetDate)
+        .single();
+
+      if (error) {
+        if (error.code === 'PGRST116') return null; // Not found
+        if (error.code === '42P01' || error.code === 'PGRST205') {
+          return null; // Table doesn't exist
+        }
+        throw error;
+      }
+      return data;
+    } catch (error) {
+      if (error.code === '42P01' || error.code === 'PGRST205') {
+        return null;
+      }
+      console.error('Error getting daily challenge:', error);
+      return null;
+    }
+  }
+
+  async createDailyChallenge(challengeData) {
+    if (!this.hasAccess) return null;
+    
+    try {
+
+      const { data, error } = await supabase
+        .from('daily_challenges')
+        .insert(challengeData)
+        .select()
+        .single();
+
+      if (error) {
+        if (error.code === '42P01' || error.code === 'PGRST205') {
+          return null; // Table doesn't exist
+        }
+        throw error;
+      }
+      return data;
+    } catch (error) {
+      if (error.code === '42P01' || error.code === 'PGRST205') {
+        return null;
+      }
+      console.error('Error creating daily challenge:', error);
+      throw error;
+    }
+  }
+
+  async getUserDailyCompletion(userId, challengeId) {
+    if (!this.hasAccess) return null;
+    
+    try {
+
+      const { data, error } = await supabase
+        .from('user_daily_completions')
+        .select('*')
+        .eq('user_id', userId)
+        .eq('challenge_id', challengeId)
+        .single();
+
+      if (error) {
+        if (error.code === 'PGRST116') return null; // Not found
+        if (error.code === '42P01' || error.code === 'PGRST205') {
+          return null; // Table doesn't exist
+        }
+        throw error;
+      }
+      return data;
+    } catch (error) {
+      if (error.code === '42P01' || error.code === 'PGRST205') {
+        return null;
+      }
+      console.error('Error getting user daily completion:', error);
+      return null;
+    }
+  }
+
+  async completeDailyChallenge(userId, challengeId) {
+    if (!this.hasAccess) return null;
+    
+    try {
+
+      const { data, error } = await supabase
+        .from('user_daily_completions')
+        .insert({
+          user_id: userId,
+          challenge_id: challengeId,
+          completed_at: new Date().toISOString(),
+        })
+        .select()
+        .single();
+
+      if (error) {
+        if (error.code === '42P01' || error.code === 'PGRST205') {
+          return null; // Table doesn't exist
+        }
+        if (error.code === '23505') {
+          // Already completed
+          return await this.getUserDailyCompletion(userId, challengeId);
+        }
+        throw error;
+      }
+      return data;
+    } catch (error) {
+      if (error.code === '42P01' || error.code === 'PGRST205') {
+        return null;
+      }
+      console.error('Error completing daily challenge:', error);
+      throw error;
+    }
+  }
+
+  // User Powerups (from migration)
+  async getUserPowerups(userId) {
+    if (!this.hasAccess) return [];
+    
+    try {
+
+      const { data, error } = await supabase
+        .from('user_powerups')
+        .select('*')
+        .eq('user_id', userId);
+
+      if (error) {
+        if (error.code === '42P01' || error.code === 'PGRST205') {
+          return []; // Table doesn't exist
+        }
+        throw error;
+      }
+      return data || [];
+    } catch (error) {
+      if (error.code === '42P01' || error.code === 'PGRST205') {
+        return [];
+      }
+      console.error('Error getting user powerups:', error);
+      return [];
+    }
+  }
+
+  async addPowerup(userId, powerupType, quantity = 1, expiresAt = null) {
+    if (!this.hasAccess) return null;
+    
+    try {
+
+      // Check if powerup already exists
+      const { data: existing } = await supabase
+        .from('user_powerups')
+        .select('*')
+        .eq('user_id', userId)
+        .eq('powerup_type', powerupType)
+        .single();
+
+      if (existing) {
+        // Update quantity
+        const { data, error } = await supabase
+          .from('user_powerups')
+          .update({
+            quantity: existing.quantity + quantity,
+            expires_at: expiresAt || existing.expires_at,
+          })
+          .eq('id', existing.id)
+          .select()
+          .single();
+
+        if (error) throw error;
+        return data;
+      } else {
+        // Create new powerup
+        const { data, error } = await supabase
+          .from('user_powerups')
+          .insert({
+            user_id: userId,
+            powerup_type: powerupType,
+            quantity: quantity,
+            expires_at: expiresAt,
+          })
+          .select()
+          .single();
+
+        if (error) {
+          if (error.code === '42P01' || error.code === 'PGRST205') {
+            return null; // Table doesn't exist
+          }
+          throw error;
+        }
+        return data;
+      }
+    } catch (error) {
+      if (error.code === '42P01' || error.code === 'PGRST205') {
+        return null;
+      }
+      console.error('Error adding powerup:', error);
+      throw error;
+    }
+  }
+
+  async usePowerup(userId, powerupType, quantity = 1) {
+    if (!this.hasAccess) return false;
+    
+    try {
+
+      const { data: existing } = await supabase
+        .from('user_powerups')
+        .select('*')
+        .eq('user_id', userId)
+        .eq('powerup_type', powerupType)
+        .single();
+
+      if (!existing || existing.quantity < quantity) {
+        return false;
+      }
+
+      const newQuantity = existing.quantity - quantity;
+      
+      if (newQuantity <= 0) {
+        // Delete if quantity reaches 0
+        const { error } = await supabase
+          .from('user_powerups')
+          .delete()
+          .eq('id', existing.id);
+        
+        if (error) throw error;
+      } else {
+        // Update quantity
+        const { error } = await supabase
+          .from('user_powerups')
+          .update({ quantity: newQuantity })
+          .eq('id', existing.id);
+        
+        if (error) throw error;
+      }
+
+      return true;
+    } catch (error) {
+      if (error.code === '42P01' || error.code === 'PGRST205') {
+        return false;
+      }
+      console.error('Error using powerup:', error);
+      return false;
+    }
+  }
 }
 
 export default new PublicDatabaseService();

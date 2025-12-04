@@ -1,0 +1,126 @@
+{
+  "id": "99f128bb-fcd7-45c4-9137-ecd02c287cbe",
+  "title": "Divide Intervals Into Minimum Number of Groups",
+  "slug": "divide-intervals-into-minimum-number-of-groups",
+  "description": "You are given a 2D integer array `intervals` where `intervals[i] = [lefti, righti]` represents the **inclusive** interval `[lefti, righti]`.\n\nYou have to divide the intervals into one or more **groups** such that each interval is in **exactly** one group, and no two intervals that are in the same group **intersect** each other.\n\nReturn _the **minimum** number of groups you need to make_.\n\nTwo intervals **intersect** if there is at least one common number between them. For example, the intervals `[1, 5]` and `[5, 8]` intersect.\n\n**Example 1:**\n\n**Input:** intervals = \\[\\[5,10\\],\\[6,8\\],\\[1,5\\],\\[2,3\\],\\[1,10\\]\\]\n**Output:** 3\n**Explanation:** We can divide the intervals into the following groups:\n- Group 1: \\[1, 5\\], \\[6, 8\\].\n- Group 2: \\[2, 3\\], \\[5, 10\\].\n- Group 3: \\[1, 10\\].\nIt can be proven that it is not possible to divide the intervals into fewer than 3 groups.\n\n**Example 2:**\n\n**Input:** intervals = \\[\\[1,3\\],\\[5,6\\],\\[8,10\\],\\[11,13\\]\\]\n**Output:** 1\n**Explanation:** None of the intervals overlap, so we can put all of them in one group.\n\n**Constraints:**\n\n*   `1 <= intervals.length <= 105`\n*   `intervals[i].length == 2`\n*   `1 <= lefti <= righti <= 106`",
+  "difficulty": "Medium",
+  "category": null,
+  "xpReward": 0,
+  "timeLimitMs": 5000,
+  "memoryLimitMb": 256,
+  "starterCode": {},
+  "solutionCode": "",
+  "hints": [],
+  "isPremium": false,
+  "createdBy": null,
+  "testCases": [
+    {
+      "input": [
+        [
+          [
+            5,
+            10
+          ],
+          [
+            6,
+            8
+          ],
+          [
+            1,
+            5
+          ],
+          [
+            2,
+            3
+          ],
+          [
+            1,
+            10
+          ]
+        ]
+      ],
+      "expectedOutput": 3
+    },
+    {
+      "input": [
+        [
+          [
+            1,
+            3
+          ],
+          [
+            5,
+            6
+          ],
+          [
+            8,
+            10
+          ],
+          [
+            11,
+            13
+          ]
+        ]
+      ],
+      "expectedOutput": 1
+    }
+  ],
+  "hiddenTestCases": [
+    {
+      "input": [
+        [
+          [
+            5,
+            10
+          ],
+          [
+            6,
+            8
+          ],
+          [
+            1,
+            5
+          ],
+          [
+            2,
+            3
+          ],
+          [
+            1,
+            10
+          ]
+        ]
+      ],
+      "expectedOutput": 3
+    },
+    {
+      "input": [
+        [
+          [
+            1,
+            3
+          ],
+          [
+            5,
+            6
+          ],
+          [
+            8,
+            10
+          ],
+          [
+            11,
+            13
+          ]
+        ]
+      ],
+      "expectedOutput": 1
+    }
+  ],
+  "tags": [],
+  "constraints": [],
+  "examples": [],
+  "problemNumber": null,
+  "createdAt": "2025-11-14T21:25:38.508692+00:00",
+  "updatedAt": "2025-12-04T04:35:40.836Z"
+}

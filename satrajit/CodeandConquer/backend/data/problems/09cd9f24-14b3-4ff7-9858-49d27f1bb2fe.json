@@ -1,0 +1,131 @@
+{
+  "id": "09cd9f24-14b3-4ff7-9858-49d27f1bb2fe",
+  "title": "Maximum Number of Points From Grid Queries",
+  "slug": "maximum-number-of-points-from-grid-queries",
+  "description": "You are given an `m x n` integer matrix `grid` and an array `queries` of size `k`.\n\nFind an array `answer` of size `k` such that for each integer `queries[i]` you start in the **top left** cell of the matrix and repeat the following process:\n\n*   If `queries[i]` is **strictly** greater than the value of the current cell that you are in, then you get one point if it is your first time visiting this cell, and you can move to any **adjacent** cell in all `4` directions: up, down, left, and right.\n*   Otherwise, you do not get any points, and you end this process.\n\nAfter the process, `answer[i]` is the **maximum** number of points you can get. **Note** that for each query you are allowed to visit the same cell **multiple** times.\n\nReturn _the resulting array_ `answer`.\n\n**Example 1:**\n\n**Input:** grid = \\[\\[1,2,3\\],\\[2,5,7\\],\\[3,5,1\\]\\], queries = \\[5,6,2\\]\n**Output:** \\[5,8,1\\]\n**Explanation:** The diagrams above show which cells we visit to get points for each query.\n\n**Example 2:**\n\n**Input:** grid = \\[\\[5,2,1\\],\\[1,1,2\\]\\], queries = \\[3\\]\n**Output:** \\[0\\]\n**Explanation:** We can not get any points because the value of the top left cell is already greater than or equal to 3.\n\n**Constraints:**\n\n*   `m == grid.length`\n*   `n == grid[i].length`\n*   `2 <= m, n <= 1000`\n*   `4 <= m * n <= 105`\n*   `k == queries.length`\n*   `1 <= k <= 104`\n*   `1 <= grid[i][j], queries[i] <= 106`",
+  "difficulty": "Hard",
+  "category": null,
+  "xpReward": 0,
+  "timeLimitMs": 5000,
+  "memoryLimitMb": 256,
+  "starterCode": [],
+  "solutionCode": "",
+  "hints": [],
+  "isPremium": false,
+  "createdBy": null,
+  "testCases": [
+    {
+      "input": [
+        [
+          [
+            1,
+            2,
+            3
+          ],
+          [
+            2,
+            5,
+            7
+          ],
+          [
+            3,
+            5,
+            1
+          ]
+        ],
+        [
+          5,
+          6,
+          2
+        ]
+      ],
+      "expectedOutput": [
+        5,
+        8,
+        1
+      ]
+    },
+    {
+      "input": [
+        [
+          [
+            5,
+            2,
+            1
+          ],
+          [
+            1,
+            1,
+            2
+          ]
+        ],
+        [
+          3
+        ]
+      ],
+      "expectedOutput": [
+        0
+      ]
+    }
+  ],
+  "hiddenTestCases": [
+    {
+      "input": [
+        [
+          [
+            1,
+            2,
+            3
+          ],
+          [
+            2,
+            5,
+            7
+          ],
+          [
+            3,
+            5,
+            1
+          ]
+        ],
+        [
+          5,
+          6,
+          2
+        ]
+      ],
+      "expectedOutput": [
+        5,
+        8,
+        1
+      ]
+    },
+    {
+      "input": [
+        [
+          [
+            5,
+            2,
+            1
+          ],
+          [
+            1,
+            1,
+            2
+          ]
+        ],
+        [
+          3
+        ]
+      ],
+      "expectedOutput": [
+        0
+      ]
+    }
+  ],
+  "tags": [],
+  "constraints": [],
+  "examples": [],
+  "createdAt": "2025-11-14T21:26:05.056524+00:00",
+  "updatedAt": "2025-12-04T04:35:26.108Z"
+}

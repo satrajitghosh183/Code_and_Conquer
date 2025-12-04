@@ -1,0 +1,172 @@
+{
+  "id": "b4815f8d-9208-4bb3-98c1-9f07778e6a4b",
+  "title": "Strange Printer II",
+  "slug": "strange-printer-ii",
+  "description": "There is a strange printer with the following two special requirements:\n\n*   On each turn, the printer will print a solid rectangular pattern of a single color on the grid. This will cover up the existing colors in the rectangle.\n*   Once the printer has used a color for the above operation, **the same color cannot be used again**.\n\nYou are given a `m x n` matrix `targetGrid`, where `targetGrid[row][col]` is the color in the position `(row, col)` of the grid.\n\nReturn `true` _if it is possible to print the matrix_ `targetGrid`_,_ _otherwise, return_ `false`.\n\n**Example 1:**\n\n**Input:** targetGrid = \\[\\[1,1,1,1\\],\\[1,2,2,1\\],\\[1,2,2,1\\],\\[1,1,1,1\\]\\]\n**Output:** true\n\n**Example 2:**\n\n**Input:** targetGrid = \\[\\[1,1,1,1\\],\\[1,1,3,3\\],\\[1,1,3,4\\],\\[5,5,1,4\\]\\]\n**Output:** true\n\n**Example 3:**\n\n**Input:** targetGrid = \\[\\[1,2,1\\],\\[2,1,2\\],\\[1,2,1\\]\\]\n**Output:** false\n**Explanation:** It is impossible to form targetGrid because it is not allowed to print the same color in different turns.\n\n**Constraints:**\n\n*   `m == targetGrid.length`\n*   `n == targetGrid[i].length`\n*   `1 <= m, n <= 60`\n*   `1 <= targetGrid[row][col] <= 60`",
+  "difficulty": "Hard",
+  "category": null,
+  "xpReward": 0,
+  "timeLimitMs": 5000,
+  "memoryLimitMb": 256,
+  "starterCode": {},
+  "solutionCode": "",
+  "hints": [],
+  "isPremium": false,
+  "createdBy": null,
+  "testCases": [
+    {
+      "input": [
+        [
+          [
+            1,
+            1,
+            1,
+            1
+          ],
+          [
+            1,
+            2,
+            2,
+            1
+          ],
+          [
+            1,
+            2,
+            2,
+            1
+          ],
+          [
+            1,
+            1,
+            1,
+            1
+          ]
+        ]
+      ],
+      "expectedOutput": true
+    },
+    {
+      "input": [
+        [
+          [
+            1,
+            1,
+            1,
+            1
+          ],
+          [
+            1,
+            1,
+            3,
+            3
+          ],
+          [
+            1,
+            1,
+            3,
+            4
+          ],
+          [
+            5,
+            5,
+            1,
+            4
+          ]
+        ]
+      ],
+      "expectedOutput": true
+    },
+    {
+      "input": [
+        [
+          [
+            1,
+            2,
+            1
+          ],
+          [
+            2,
+            1,
+            2
+          ],
+          [
+            1,
+            2,
+            1
+          ]
+        ]
+      ],
+      "expectedOutput": false
+    }
+  ],
+  "hiddenTestCases": [
+    {
+      "input": [
+        [
+          [
+            1,
+            1,
+            1,
+            1
+          ],
+          [
+            1,
+            2,
+            2,
+            1
+          ],
+          [
+            1,
+            2,
+            2,
+            1
+          ],
+          [
+            1,
+            1,
+            1,
+            1
+          ]
+        ]
+      ],
+      "expectedOutput": true
+    },
+    {
+      "input": [
+        [
+          [
+            1,
+            1,
+            1,
+            1
+          ],
+          [
+            1,
+            1,
+            3,
+            3
+          ],
+          [
+            1,
+            1,
+            3,
+            4
+          ],
+          [
+            5,
+            5,
+            1,
+            4
+          ]
+        ]
+      ],
+      "expectedOutput": true
+    }
+  ],
+  "tags": [],
+  "constraints": [],
+  "examples": [],
+  "problemNumber": null,
+  "createdAt": "2025-11-14T21:22:21.809907+00:00",
+  "updatedAt": "2025-12-04T04:37:14.295Z"
+}

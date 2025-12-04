@@ -1,0 +1,150 @@
+{
+  "id": "1079e640-cd6e-4c1f-8c8d-a1308a6e5486",
+  "title": "Nearest Exit from Entrance in Maze",
+  "slug": "nearest-exit-from-entrance-in-maze",
+  "description": "You are given an `m x n` matrix `maze` (**0-indexed**) with empty cells (represented as `'.'`) and walls (represented as `'+'`). You are also given the `entrance` of the maze, where `entrance = [entrancerow, entrancecol]` denotes the row and column of the cell you are initially standing at.\n\nIn one step, you can move one cell **up**, **down**, **left**, or **right**. You cannot step into a cell with a wall, and you cannot step outside the maze. Your goal is to find the **nearest exit** from the `entrance`. An **exit** is defined as an **empty cell** that is at the **border** of the `maze`. The `entrance` **does not count** as an exit.\n\nReturn _the **number of steps** in the shortest path from the_ `entrance` _to the nearest exit, or_ `-1` _if no such path exists_.\n\n**Example 1:**\n\n**Input:** maze = \\[\\[ \"+ \", \"+ \", \". \", \"+ \"\\],\\[ \". \", \". \", \". \", \"+ \"\\],\\[ \"+ \", \"+ \", \"+ \", \". \"\\]\\], entrance = \\[1,2\\]\n**Output:** 1\n**Explanation:** There are 3 exits in this maze at \\[1,0\\], \\[0,2\\], and \\[2,3\\].\nInitially, you are at the entrance cell \\[1,2\\].\n- You can reach \\[1,0\\] by moving 2 steps left.\n- You can reach \\[0,2\\] by moving 1 step up.\nIt is impossible to reach \\[2,3\\] from the entrance.\nThus, the nearest exit is \\[0,2\\], which is 1 step away.\n\n**Example 2:**\n\n**Input:** maze = \\[\\[ \"+ \", \"+ \", \"+ \"\\],\\[ \". \", \". \", \". \"\\],\\[ \"+ \", \"+ \", \"+ \"\\]\\], entrance = \\[1,0\\]\n**Output:** 2\n**Explanation:** There is 1 exit in this maze at \\[1,2\\].\n\\[1,0\\] does not count as an exit since it is the entrance cell.\nInitially, you are at the entrance cell \\[1,0\\].\n- You can reach \\[1,2\\] by moving 2 steps right.\nThus, the nearest exit is \\[1,2\\], which is 2 steps away.\n\n**Example 3:**\n\n**Input:** maze = \\[\\[ \". \", \"+ \"\\]\\], entrance = \\[0,0\\]\n**Output:** -1\n**Explanation:** There are no exits in this maze.\n\n**Constraints:**\n\n*   `maze.length == m`\n*   `maze[i].length == n`\n*   `1 <= m, n <= 100`\n*   `maze[i][j]` is either `'.'` or `'+'`.\n*   `entrance.length == 2`\n*   `0 <= entrancerow < m`\n*   `0 <= entrancecol < n`\n*   `entrance` will always be an empty cell.",
+  "difficulty": "Medium",
+  "category": null,
+  "xpReward": 0,
+  "timeLimitMs": 5000,
+  "memoryLimitMb": 256,
+  "starterCode": [],
+  "solutionCode": "",
+  "hints": [],
+  "isPremium": false,
+  "createdBy": null,
+  "testCases": [
+    {
+      "input": [
+        [
+          [
+            "+ ",
+            "+ ",
+            ". ",
+            "+ "
+          ],
+          [
+            ". ",
+            ". ",
+            ". ",
+            "+ "
+          ],
+          [
+            "+ ",
+            "+ ",
+            "+ ",
+            ". "
+          ]
+        ],
+        [
+          1,
+          2
+        ]
+      ],
+      "expectedOutput": 1
+    },
+    {
+      "input": [
+        [
+          [
+            "+ ",
+            "+ ",
+            "+ "
+          ],
+          [
+            ". ",
+            ". ",
+            ". "
+          ],
+          [
+            "+ ",
+            "+ ",
+            "+ "
+          ]
+        ],
+        [
+          1,
+          0
+        ]
+      ],
+      "expectedOutput": 2
+    },
+    {
+      "input": [
+        [
+          [
+            ". ",
+            "+ "
+          ]
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "expectedOutput": -1
+    }
+  ],
+  "hiddenTestCases": [
+    {
+      "input": [
+        [
+          [
+            "+ ",
+            "+ ",
+            ". ",
+            "+ "
+          ],
+          [
+            ". ",
+            ". ",
+            ". ",
+            "+ "
+          ],
+          [
+            "+ ",
+            "+ ",
+            "+ ",
+            ". "
+          ]
+        ],
+        [
+          1,
+          2
+        ]
+      ],
+      "expectedOutput": 1
+    },
+    {
+      "input": [
+        [
+          [
+            "+ ",
+            "+ ",
+            "+ "
+          ],
+          [
+            ". ",
+            ". ",
+            ". "
+          ],
+          [
+            "+ ",
+            "+ ",
+            "+ "
+          ]
+        ],
+        [
+          1,
+          0
+        ]
+      ],
+      "expectedOutput": 2
+    }
+  ],
+  "tags": [],
+  "constraints": [],
+  "examples": [],
+  "createdAt": "2025-11-14T21:23:41.878416+00:00",
+  "updatedAt": "2025-12-04T04:36:32.913Z"
+}

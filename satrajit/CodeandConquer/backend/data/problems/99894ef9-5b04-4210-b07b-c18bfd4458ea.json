@@ -1,0 +1,53 @@
+{
+  "id": "99894ef9-5b04-4210-b07b-c18bfd4458ea",
+  "title": "Remove All Occurrences of a Substring",
+  "slug": "remove-all-occurrences-of-a-substring",
+  "description": "Given two strings `s` and `part`, perform the following operation on `s` until **all** occurrences of the substring `part` are removed:\n\n*   Find the **leftmost** occurrence of the substring `part` and **remove** it from `s`.\n\nReturn `s` _after removing all occurrences of_ `part`.\n\nA **substring** is a contiguous sequence of characters in a string.\n\n**Example 1:**\n\n**Input:** s =  \"daabcbaabcbc \", part =  \"abc \"\n**Output:**  \"dab \"\n**Explanation**: The following operations are done:\n- s =  \"da**abc**baabcbc \", remove  \"abc \" starting at index 2, so s =  \"dabaabcbc \".\n- s =  \"daba**abc**bc \", remove  \"abc \" starting at index 4, so s =  \"dababc \".\n- s =  \"dab**abc** \", remove  \"abc \" starting at index 3, so s =  \"dab \".\nNow s has no occurrences of  \"abc \".\n\n**Example 2:**\n\n**Input:** s =  \"axxxxyyyyb \", part =  \"xy \"\n**Output:**  \"ab \"\n**Explanation**: The following operations are done:\n- s =  \"axxx**xy**yyyb \", remove  \"xy \" starting at index 4 so s =  \"axxxyyyb \".\n- s =  \"axx**xy**yyb \", remove  \"xy \" starting at index 3 so s =  \"axxyyb \".\n- s =  \"ax**xy**yb \", remove  \"xy \" starting at index 2 so s =  \"axyb \".\n- s =  \"a**xy**b \", remove  \"xy \" starting at index 1 so s =  \"ab \".\nNow s has no occurrences of  \"xy \".\n\n**Constraints:**\n\n*   `1 <= s.length <= 1000`\n*   `1 <= part.length <= 1000`\n*   `s`​​​​​​ and `part` consists of lowercase English letters.",
+  "difficulty": "Medium",
+  "category": null,
+  "xpReward": 0,
+  "timeLimitMs": 5000,
+  "memoryLimitMb": 256,
+  "starterCode": [],
+  "solutionCode": "",
+  "hints": [],
+  "isPremium": false,
+  "createdBy": null,
+  "testCases": [
+    {
+      "input": [
+        "daabcbaabcbc ",
+        "abc "
+      ],
+      "expectedOutput": "\"dab \"\n**Explanation**: The following operations are done:\n- s =  \"da**abc**baabcbc \", remove  \"abc \" starting at index 2, so s =  \"dabaabcbc \".\n- s =  \"daba**abc**bc \", remove  \"abc \" starting at index 4, so s =  \"dababc \".\n- s =  \"dab**abc** \", remove  \"abc \" starting at index 3, so s =  \"dab \".\nNow s has no occurrences of  \"abc \"."
+    },
+    {
+      "input": [
+        "axxxxyyyyb ",
+        "xy "
+      ],
+      "expectedOutput": "\"ab \"\n**Explanation**: The following operations are done:\n- s =  \"axxx**xy**yyyb \", remove  \"xy \" starting at index 4 so s =  \"axxxyyyb \".\n- s =  \"axx**xy**yyb \", remove  \"xy \" starting at index 3 so s =  \"axxyyb \".\n- s =  \"ax**xy**yb \", remove  \"xy \" starting at index 2 so s =  \"axyb \".\n- s =  \"a**xy**b \", remove  \"xy \" starting at index 1 so s =  \"ab \".\nNow s has no occurrences of  \"xy \".\n\n**Constraints:**\n\n*   `1 <= s.length <= 1000`\n*   `1 <= part.length <= 1000`\n*   `s`​​​​​​ and `part` consists of lowercase English letters."
+    }
+  ],
+  "hiddenTestCases": [
+    {
+      "input": [
+        "daabcbaabcbc ",
+        "abc "
+      ],
+      "expectedOutput": "\"dab \"\n**Explanation**: The following operations are done:\n- s =  \"da**abc**baabcbc \", remove  \"abc \" starting at index 2, so s =  \"dabaabcbc \".\n- s =  \"daba**abc**bc \", remove  \"abc \" starting at index 4, so s =  \"dababc \".\n- s =  \"dab**abc** \", remove  \"abc \" starting at index 3, so s =  \"dab \".\nNow s has no occurrences of  \"abc \"."
+    },
+    {
+      "input": [
+        "axxxxyyyyb ",
+        "xy "
+      ],
+      "expectedOutput": "\"ab \"\n**Explanation**: The following operations are done:\n- s =  \"axxx**xy**yyyb \", remove  \"xy \" starting at index 4 so s =  \"axxxyyyb \".\n- s =  \"axx**xy**yyb \", remove  \"xy \" starting at index 3 so s =  \"axxyyb \".\n- s =  \"ax**xy**yb \", remove  \"xy \" starting at index 2 so s =  \"axyb \".\n- s =  \"a**xy**b \", remove  \"xy \" starting at index 1 so s =  \"ab \".\nNow s has no occurrences of  \"xy \".\n\n**Constraints:**\n\n*   `1 <= s.length <= 1000`\n*   `1 <= part.length <= 1000`\n*   `s`​​​​​​ and `part` consists of lowercase English letters."
+    }
+  ],
+  "tags": [],
+  "constraints": [],
+  "examples": [],
+  "createdAt": "2025-11-14T21:23:38.430777+00:00",
+  "updatedAt": "2025-12-04T04:36:34.457Z"
+}

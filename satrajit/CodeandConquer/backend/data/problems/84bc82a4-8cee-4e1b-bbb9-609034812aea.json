@@ -1,0 +1,81 @@
+{
+  "id": "84bc82a4-8cee-4e1b-bbb9-609034812aea",
+  "title": "Maximum Price to Fill a Bag",
+  "slug": "maximum-price-to-fill-a-bag",
+  "description": "You are given a 2D integer array `items` where `items[i] = [pricei, weighti]` denotes the price and weight of the `ith` item, respectively.\n\nYou are also given a **positive** integer `capacity`.\n\nEach item can be divided into two items with ratios `part1` and `part2`, where `part1 + part2 == 1`.\n\n*   The weight of the first item is `weighti * part1` and the price of the first item is `pricei * part1`.\n*   Similarly, the weight of the second item is `weighti * part2` and the price of the second item is `pricei * part2`.\n\nReturn _**the maximum total price** to fill a bag of capacity_ `capacity` _with given items_. If it is impossible to fill a bag return `-1`. Answers within `10-5` of the **actual answer** will be considered accepted.\n\n**Example 1:**\n\n**Input:** items = \\[\\[50,1\\],\\[10,8\\]\\], capacity = 5\n**Output:** 55.00000\n**Explanation:** \nWe divide the 2nd item into two parts with part1 = 0.5 and part2 = 0.5.\nThe price and weight of the 1st item are 5, 4. And similarly, the price and the weight of the 2nd item are 5, 4.\nThe array items after operation becomes \\[\\[50,1\\],\\[5,4\\],\\[5,4\\]\\]. \nTo fill a bag with capacity 5 we take the 1st element with a price of 50 and the 2nd element with a price of 5.\nIt can be proved that 55.0 is the maximum total price that we can achieve.\n\n**Example 2:**\n\n**Input:** items = \\[\\[100,30\\]\\], capacity = 50\n**Output:** -1.00000\n**Explanation:** It is impossible to fill a bag with the given item.\n\n**Constraints:**\n\n*   `1 <= items.length <= 105`\n*   `items[i].length == 2`\n*   `1 <= pricei, weighti <= 104`\n*   `1 <= capacity <= 109`",
+  "difficulty": "Medium",
+  "category": null,
+  "xpReward": 0,
+  "timeLimitMs": 5000,
+  "memoryLimitMb": 256,
+  "starterCode": [],
+  "solutionCode": "",
+  "hints": [],
+  "isPremium": false,
+  "createdBy": null,
+  "testCases": [
+    {
+      "input": [
+        [
+          [
+            50,
+            1
+          ],
+          [
+            10,
+            8
+          ]
+        ],
+        5
+      ],
+      "expectedOutput": 55
+    },
+    {
+      "input": [
+        [
+          [
+            100,
+            30
+          ]
+        ],
+        50
+      ],
+      "expectedOutput": -1
+    }
+  ],
+  "hiddenTestCases": [
+    {
+      "input": [
+        [
+          [
+            50,
+            1
+          ],
+          [
+            10,
+            8
+          ]
+        ],
+        5
+      ],
+      "expectedOutput": 55
+    },
+    {
+      "input": [
+        [
+          [
+            100,
+            30
+          ]
+        ],
+        50
+      ],
+      "expectedOutput": -1
+    }
+  ],
+  "tags": [],
+  "constraints": [],
+  "examples": [],
+  "createdAt": "2025-11-14T21:26:17.801245+00:00",
+  "updatedAt": "2025-12-04T04:35:21.406Z"
+}

@@ -1,0 +1,50 @@
+{
+  "id": "0a0ae7a3-9ca8-42b6-b92b-1489ef024acd",
+  "title": "Length of the Longest Alphabetical Continuous Substring",
+  "slug": "length-of-the-longest-alphabetical-continuous-substring",
+  "description": "An **alphabetical continuous string** is a string consisting of consecutive letters in the alphabet. In other words, it is any substring of the string `\"abcdefghijklmnopqrstuvwxyz \"`.\n\n*   For example, `\"abc \"` is an alphabetical continuous string, while `\"acb \"` and `\"za \"` are not.\n\nGiven a string `s` consisting of lowercase letters only, return the _length of the **longest** alphabetical continuous substring._\n\n**Example 1:**\n\n**Input:** s =  \"abacaba \"\n**Output:** 2\n**Explanation:** There are 4 distinct continuous substrings:  \"a \",  \"b \",  \"c \" and  \"ab \".\n \"ab \" is the longest continuous substring.\n\n**Example 2:**\n\n**Input:** s =  \"abcde \"\n**Output:** 5\n**Explanation:**  \"abcde \" is the longest continuous substring.\n\n**Constraints:**\n\n*   `1 <= s.length <= 105`\n*   `s` consists of only English lowercase letters.",
+  "difficulty": "Medium",
+  "category": null,
+  "xpReward": 0,
+  "timeLimitMs": 5000,
+  "memoryLimitMb": 256,
+  "starterCode": {},
+  "solutionCode": "",
+  "hints": [],
+  "isPremium": false,
+  "createdBy": null,
+  "testCases": [
+    {
+      "input": [
+        "abacaba "
+      ],
+      "expectedOutput": 2
+    },
+    {
+      "input": [
+        "abcde "
+      ],
+      "expectedOutput": 5
+    }
+  ],
+  "hiddenTestCases": [
+    {
+      "input": [
+        "abacaba "
+      ],
+      "expectedOutput": 2
+    },
+    {
+      "input": [
+        "abcde "
+      ],
+      "expectedOutput": 5
+    }
+  ],
+  "tags": [],
+  "constraints": [],
+  "examples": [],
+  "problemNumber": null,
+  "createdAt": "2025-11-14T21:25:40.532978+00:00",
+  "updatedAt": "2025-12-04T04:35:39.789Z"
+}

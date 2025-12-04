@@ -1,0 +1,55 @@
+{
+  "id": "f01c76e8-cca7-456e-ac41-7f044c04e6e9",
+  "title": "Greatest English Letter in Upper and Lower Case",
+  "slug": "greatest-english-letter-in-upper-and-lower-case",
+  "description": "Given a string of English letters `s`, return _the **greatest** English letter which occurs as **both** a lowercase and uppercase letter in_ `s`. The returned letter should be in **uppercase**. If no such letter exists, return _an empty string_.\n\nAn English letter `b` is **greater** than another letter `a` if `b` appears **after** `a` in the English alphabet.\n\n**Example 1:**\n\n**Input:** s =  \"l**Ee**TcOd**E** \"\n**Output:**  \"E \"\n**Explanation:**\nThe letter 'E' is the only letter to appear in both lower and upper case.\n\n**Example 2:**\n\n**Input:** s =  \"a**rR**AzFif \"\n**Output:**  \"R \"\n**Explanation:**\nThe letter 'R' is the greatest letter to appear in both lower and upper case.\nNote that 'A' and 'F' also appear in both lower and upper case, but 'R' is greater than 'F' or 'A'.\n\n**Example 3:**\n\n**Input:** s =  \"AbCdEfGhIjK \"\n**Output:**  \" \"\n**Explanation:**\nThere is no letter that appears in both lower and upper case.\n\n**Constraints:**\n\n*   `1 <= s.length <= 1000`\n*   `s` consists of lowercase and uppercase English letters.",
+  "difficulty": "Easy",
+  "category": null,
+  "xpReward": 0,
+  "timeLimitMs": 5000,
+  "memoryLimitMb": 256,
+  "starterCode": [],
+  "solutionCode": "",
+  "hints": [],
+  "isPremium": false,
+  "createdBy": null,
+  "testCases": [
+    {
+      "input": [
+        "l**Ee**TcOd**E** "
+      ],
+      "expectedOutput": "E "
+    },
+    {
+      "input": [
+        "a**rR**AzFif "
+      ],
+      "expectedOutput": "R "
+    },
+    {
+      "input": [
+        "AbCdEfGhIjK "
+      ],
+      "expectedOutput": " "
+    }
+  ],
+  "hiddenTestCases": [
+    {
+      "input": [
+        "l**Ee**TcOd**E** "
+      ],
+      "expectedOutput": "E "
+    },
+    {
+      "input": [
+        "a**rR**AzFif "
+      ],
+      "expectedOutput": "R "
+    }
+  ],
+  "tags": [],
+  "constraints": [],
+  "examples": [],
+  "createdAt": "2025-11-14T21:25:14.478847+00:00",
+  "updatedAt": "2025-12-04T04:35:52.099Z"
+}

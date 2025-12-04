@@ -1,0 +1,104 @@
+{
+  "id": "f17c25dc-6e60-463f-9e8c-5a09705e901d",
+  "title": "Find Missing Observations",
+  "slug": "find-missing-observations",
+  "description": "You have observations of `n + m` **6-sided** dice rolls with each face numbered from `1` to `6`. `n` of the observations went missing, and you only have the observations of `m` rolls. Fortunately, you have also calculated the **average value** of the `n + m` rolls.\n\nYou are given an integer array `rolls` of length `m` where `rolls[i]` is the value of the `ith` observation. You are also given the two integers `mean` and `n`.\n\nReturn _an array of length_ `n` _containing the missing observations such that the **average value** of the_ `n + m` _rolls is **exactly**_ `mean`. If there are multiple valid answers, return _any of them_. If no such array exists, return _an empty array_.\n\nThe **average value** of a set of `k` numbers is the sum of the numbers divided by `k`.\n\nNote that `mean` is an integer, so the sum of the `n + m` rolls should be divisible by `n + m`.\n\n**Example 1:**\n\n**Input:** rolls = \\[3,2,4,3\\], mean = 4, n = 2\n**Output:** \\[6,6\\]\n**Explanation:** The mean of all n + m rolls is (3 + 2 + 4 + 3 + 6 + 6) / 6 = 4.\n\n**Example 2:**\n\n**Input:** rolls = \\[1,5,6\\], mean = 3, n = 4\n**Output:** \\[2,3,2,2\\]\n**Explanation:** The mean of all n + m rolls is (1 + 5 + 6 + 2 + 3 + 2 + 2) / 7 = 3.\n\n**Example 3:**\n\n**Input:** rolls = \\[1,2,3,4\\], mean = 6, n = 4\n**Output:** \\[\\]\n**Explanation:** It is impossible for the mean to be 6 no matter what the 4 missing rolls are.\n\n**Constraints:**\n\n*   `m == rolls.length`\n*   `1 <= n, m <= 105`\n*   `1 <= rolls[i], mean <= 6`",
+  "difficulty": "Medium",
+  "category": null,
+  "xpReward": 0,
+  "timeLimitMs": 5000,
+  "memoryLimitMb": 256,
+  "starterCode": [],
+  "solutionCode": "",
+  "hints": [],
+  "isPremium": false,
+  "createdBy": null,
+  "testCases": [
+    {
+      "input": [
+        [
+          3,
+          2,
+          4,
+          3
+        ],
+        4,
+        2
+      ],
+      "expectedOutput": [
+        6,
+        6
+      ]
+    },
+    {
+      "input": [
+        [
+          1,
+          5,
+          6
+        ],
+        3,
+        4
+      ],
+      "expectedOutput": [
+        2,
+        3,
+        2,
+        2
+      ]
+    },
+    {
+      "input": [
+        [
+          1,
+          2,
+          3,
+          4
+        ],
+        6,
+        4
+      ],
+      "expectedOutput": []
+    }
+  ],
+  "hiddenTestCases": [
+    {
+      "input": [
+        [
+          3,
+          2,
+          4,
+          3
+        ],
+        4,
+        2
+      ],
+      "expectedOutput": [
+        6,
+        6
+      ]
+    },
+    {
+      "input": [
+        [
+          1,
+          5,
+          6
+        ],
+        3,
+        4
+      ],
+      "expectedOutput": [
+        2,
+        3,
+        2,
+        2
+      ]
+    }
+  ],
+  "tags": [],
+  "constraints": [],
+  "examples": [],
+  "createdAt": "2025-11-14T21:24:04.06831+00:00",
+  "updatedAt": "2025-12-04T04:36:22.666Z"
+}

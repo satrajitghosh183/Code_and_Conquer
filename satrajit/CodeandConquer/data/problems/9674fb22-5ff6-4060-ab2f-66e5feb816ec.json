@@ -1,0 +1,56 @@
+{
+  "id": "9674fb22-5ff6-4060-ab2f-66e5feb816ec",
+  "title": "Number of Substrings With Only 1s",
+  "slug": "number-of-substrings-with-only-1s",
+  "description": "Given a binary string `s`, return _the number of substrings with all characters_ `1`_'s_. Since the answer may be too large, return it modulo `109 + 7`.\n\n**Example 1:**\n\n**Input:** s =  \"0110111 \"\n**Output:** 9\n**Explanation:** There are 9 substring in total with only 1's characters.\n \"1 \" -> 5 times.\n \"11 \" -> 3 times.\n \"111 \" -> 1 time.\n\n**Example 2:**\n\n**Input:** s =  \"101 \"\n**Output:** 2\n**Explanation:** Substring  \"1 \" is shown 2 times in s.\n\n**Example 3:**\n\n**Input:** s =  \"111111 \"\n**Output:** 21\n**Explanation:** Each substring contains only 1's characters.\n\n**Constraints:**\n\n*   `1 <= s.length <= 105`\n*   `s[i]` is either `'0'` or `'1'`.",
+  "difficulty": "Medium",
+  "category": null,
+  "xpReward": 0,
+  "timeLimitMs": 5000,
+  "memoryLimitMb": 256,
+  "starterCode": {},
+  "solutionCode": "",
+  "hints": [],
+  "isPremium": false,
+  "createdBy": null,
+  "testCases": [
+    {
+      "input": [
+        "0110111 "
+      ],
+      "expectedOutput": 9
+    },
+    {
+      "input": [
+        "101 "
+      ],
+      "expectedOutput": 2
+    },
+    {
+      "input": [
+        "111111 "
+      ],
+      "expectedOutput": 21
+    }
+  ],
+  "hiddenTestCases": [
+    {
+      "input": [
+        "0110111 "
+      ],
+      "expectedOutput": 9
+    },
+    {
+      "input": [
+        "101 "
+      ],
+      "expectedOutput": 2
+    }
+  ],
+  "tags": [],
+  "constraints": [],
+  "examples": [],
+  "problemNumber": null,
+  "createdAt": "2025-11-14T21:21:45.794228+00:00",
+  "updatedAt": "2025-12-04T04:37:20.921Z"
+}

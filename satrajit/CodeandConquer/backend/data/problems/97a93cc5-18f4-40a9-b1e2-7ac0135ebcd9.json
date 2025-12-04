@@ -1,0 +1,60 @@
+{
+  "id": "97a93cc5-18f4-40a9-b1e2-7ac0135ebcd9",
+  "title": "Check if One String Swap Can Make Strings Equal",
+  "slug": "check-if-one-string-swap-can-make-strings-equal",
+  "description": "You are given two strings `s1` and `s2` of equal length. A **string swap** is an operation where you choose two indices in a string (not necessarily different) and swap the characters at these indices.\n\nReturn `true` _if it is possible to make both strings equal by performing **at most one string swap** on **exactly one** of the strings._ Otherwise, return `false`.\n\n**Example 1:**\n\n**Input:** s1 =  \"bank \", s2 =  \"kanb \"\n**Output:** true\n**Explanation:** For example, swap the first character with the last character of s2 to make  \"bank \".\n\n**Example 2:**\n\n**Input:** s1 =  \"attack \", s2 =  \"defend \"\n**Output:** false\n**Explanation:** It is impossible to make them equal with one string swap.\n\n**Example 3:**\n\n**Input:** s1 =  \"kelb \", s2 =  \"kelb \"\n**Output:** true\n**Explanation:** The two strings are already equal, so no string swap operation is required.\n\n**Constraints:**\n\n*   `1 <= s1.length, s2.length <= 100`\n*   `s1.length == s2.length`\n*   `s1` and `s2` consist of only lowercase English letters.",
+  "difficulty": "Easy",
+  "category": null,
+  "xpReward": 0,
+  "timeLimitMs": 5000,
+  "memoryLimitMb": 256,
+  "starterCode": [],
+  "solutionCode": "",
+  "hints": [],
+  "isPremium": false,
+  "createdBy": null,
+  "testCases": [
+    {
+      "input": [
+        "bank ",
+        "kanb "
+      ],
+      "expectedOutput": true
+    },
+    {
+      "input": [
+        "attack ",
+        "defend "
+      ],
+      "expectedOutput": false
+    },
+    {
+      "input": [
+        "kelb ",
+        "kelb "
+      ],
+      "expectedOutput": true
+    }
+  ],
+  "hiddenTestCases": [
+    {
+      "input": [
+        "bank ",
+        "kanb "
+      ],
+      "expectedOutput": true
+    },
+    {
+      "input": [
+        "attack ",
+        "defend "
+      ],
+      "expectedOutput": false
+    }
+  ],
+  "tags": [],
+  "constraints": [],
+  "examples": [],
+  "createdAt": "2025-11-14T21:23:07.977414+00:00",
+  "updatedAt": "2025-12-04T04:36:48.554Z"
+}

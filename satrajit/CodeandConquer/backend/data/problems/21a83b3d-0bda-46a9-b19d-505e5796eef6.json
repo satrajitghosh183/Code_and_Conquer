@@ -1,0 +1,65 @@
+{
+  "id": "21a83b3d-0bda-46a9-b19d-505e5796eef6",
+  "title": "Can Convert String in K Moves",
+  "slug": "can-convert-string-in-k-moves",
+  "description": "Given two strings `s` and `t`, your goal is to convert `s` into `t` in `k` moves or less.\n\nDuring the `ith` (`1 <= i <= k`) move you can:\n\n*   Choose any index `j` (1-indexed) from `s`, such that `1 <= j <= s.length` and `j` has not been chosen in any previous move, and shift the character at that index `i` times.\n*   Do nothing.\n\nShifting a character means replacing it by the next letter in the alphabet (wrapping around so that `'z'` becomes `'a'`). Shifting a character by `i` means applying the shift operations `i` times.\n\nRemember that any index `j` can be picked at most once.\n\nReturn `true` if it's possible to convert `s` into `t` in no more than `k` moves, otherwise return `false`.\n\n**Example 1:**\n\n**Input:** s =  \"input \", t =  \"ouput \", k = 9\n**Output:** true\n**Explanation:** In the 6th move, we shift 'i' 6 times to get 'o'. And in the 7th move we shift 'n' to get 'u'.\n\n**Example 2:**\n\n**Input:** s =  \"abc \", t =  \"bcd \", k = 10\n**Output:** false\n**Explanation:** We need to shift each character in s one time to convert it into t. We can shift 'a' to 'b' during the 1st move. However, there is no way to shift the other characters in the remaining moves to obtain t from s.\n\n**Example 3:**\n\n**Input:** s =  \"aab \", t =  \"bbb \", k = 27\n**Output:** true\n**Explanation:** In the 1st move, we shift the first 'a' 1 time to get 'b'. In the 27th move, we shift the second 'a' 27 times to get 'b'.\n\n**Constraints:**\n\n*   `1 <= s.length, t.length <= 10^5`\n*   `0 <= k <= 10^9`\n*   `s`, `t` contain only lowercase English letters.",
+  "difficulty": "Medium",
+  "category": null,
+  "xpReward": 0,
+  "timeLimitMs": 5000,
+  "memoryLimitMb": 256,
+  "starterCode": [],
+  "solutionCode": "",
+  "hints": [],
+  "isPremium": false,
+  "createdBy": null,
+  "testCases": [
+    {
+      "input": [
+        "input ",
+        "ouput ",
+        9
+      ],
+      "expectedOutput": true
+    },
+    {
+      "input": [
+        "abc ",
+        "bcd ",
+        10
+      ],
+      "expectedOutput": false
+    },
+    {
+      "input": [
+        "aab ",
+        "bbb ",
+        27
+      ],
+      "expectedOutput": true
+    }
+  ],
+  "hiddenTestCases": [
+    {
+      "input": [
+        "input ",
+        "ouput ",
+        9
+      ],
+      "expectedOutput": true
+    },
+    {
+      "input": [
+        "abc ",
+        "bcd ",
+        10
+      ],
+      "expectedOutput": false
+    }
+  ],
+  "tags": [],
+  "constraints": [],
+  "examples": [],
+  "createdAt": "2025-11-14T21:21:55.169704+00:00",
+  "updatedAt": "2025-12-04T04:37:18.663Z"
+}

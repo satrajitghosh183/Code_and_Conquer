@@ -1,0 +1,54 @@
+{
+  "id": "9394b5f7-2fa5-4a34-95d1-a87333539df9",
+  "title": "Water Bottles",
+  "slug": "water-bottles",
+  "description": "There are `numBottles` water bottles that are initially full of water. You can exchange `numExchange` empty water bottles from the market with one full water bottle.\n\nThe operation of drinking a full water bottle turns it into an empty bottle.\n\nGiven the two integers `numBottles` and `numExchange`, return _the **maximum** number of water bottles you can drink_.\n\n**Example 1:**\n\n**Input:** numBottles = 9, numExchange = 3\n**Output:** 13\n**Explanation:** You can exchange 3 empty bottles to get 1 full water bottle.\nNumber of water bottles you can drink: 9 + 3 + 1 = 13.\n\n**Example 2:**\n\n**Input:** numBottles = 15, numExchange = 4\n**Output:** 19\n**Explanation:** You can exchange 4 empty bottles to get 1 full water bottle. \nNumber of water bottles you can drink: 15 + 3 + 1 = 19.\n\n**Constraints:**\n\n*   `1 <= numBottles <= 100`\n*   `2 <= numExchange <= 100`",
+  "difficulty": "Easy",
+  "category": null,
+  "xpReward": 0,
+  "timeLimitMs": 5000,
+  "memoryLimitMb": 256,
+  "starterCode": {},
+  "solutionCode": "",
+  "hints": [],
+  "isPremium": false,
+  "createdBy": null,
+  "testCases": [
+    {
+      "input": [
+        9,
+        3
+      ],
+      "expectedOutput": 13
+    },
+    {
+      "input": [
+        15,
+        4
+      ],
+      "expectedOutput": 19
+    }
+  ],
+  "hiddenTestCases": [
+    {
+      "input": [
+        9,
+        3
+      ],
+      "expectedOutput": 13
+    },
+    {
+      "input": [
+        15,
+        4
+      ],
+      "expectedOutput": 19
+    }
+  ],
+  "tags": [],
+  "constraints": [],
+  "examples": [],
+  "problemNumber": null,
+  "createdAt": "2025-11-14T21:21:47.246619+00:00",
+  "updatedAt": "2025-12-04T04:37:20.536Z"
+}

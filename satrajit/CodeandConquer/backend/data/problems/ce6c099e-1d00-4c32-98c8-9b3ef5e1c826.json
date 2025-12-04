@@ -1,0 +1,73 @@
+{
+  "id": "ce6c099e-1d00-4c32-98c8-9b3ef5e1c826",
+  "title": "Number of Unequal Triplets in Array",
+  "slug": "number-of-unequal-triplets-in-array",
+  "description": "You are given a **0-indexed** array of positive integers `nums`. Find the number of triplets `(i, j, k)` that meet the following conditions:\n\n*   `0 <= i < j < k < nums.length`\n*   `nums[i]`, `nums[j]`, and `nums[k]` are **pairwise distinct**.\n    *   In other words, `nums[i] != nums[j]`, `nums[i] != nums[k]`, and `nums[j] != nums[k]`.\n\nReturn _the number of triplets that meet the conditions._\n\n**Example 1:**\n\n**Input:** nums = \\[4,4,2,4,3\\]\n**Output:** 3\n**Explanation:** The following triplets meet the conditions:\n- (0, 2, 4) because 4 != 2 != 3\n- (1, 2, 4) because 4 != 2 != 3\n- (2, 3, 4) because 2 != 4 != 3\nSince there are 3 triplets, we return 3.\nNote that (2, 0, 4) is not a valid triplet because 2 > 0.\n\n**Example 2:**\n\n**Input:** nums = \\[1,1,1,1,1\\]\n**Output:** 0\n**Explanation:** No triplets meet the conditions so we return 0.\n\n**Constraints:**\n\n*   `3 <= nums.length <= 100`\n*   `1 <= nums[i] <= 1000`",
+  "difficulty": "Easy",
+  "category": null,
+  "xpReward": 0,
+  "timeLimitMs": 5000,
+  "memoryLimitMb": 256,
+  "starterCode": [],
+  "solutionCode": "",
+  "hints": [],
+  "isPremium": false,
+  "createdBy": null,
+  "testCases": [
+    {
+      "input": [
+        [
+          4,
+          4,
+          2,
+          4,
+          3
+        ]
+      ],
+      "expectedOutput": 3
+    },
+    {
+      "input": [
+        [
+          1,
+          1,
+          1,
+          1,
+          1
+        ]
+      ],
+      "expectedOutput": 0
+    }
+  ],
+  "hiddenTestCases": [
+    {
+      "input": [
+        [
+          4,
+          4,
+          2,
+          4,
+          3
+        ]
+      ],
+      "expectedOutput": 3
+    },
+    {
+      "input": [
+        [
+          1,
+          1,
+          1,
+          1,
+          1
+        ]
+      ],
+      "expectedOutput": 0
+    }
+  ],
+  "tags": [],
+  "constraints": [],
+  "examples": [],
+  "createdAt": "2025-11-14T21:25:57.951213+00:00",
+  "updatedAt": "2025-12-04T04:35:31.008Z"
+}

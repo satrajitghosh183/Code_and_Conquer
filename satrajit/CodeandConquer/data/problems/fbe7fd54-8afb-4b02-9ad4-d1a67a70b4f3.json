@@ -1,0 +1,132 @@
+{
+  "id": "fbe7fd54-8afb-4b02-9ad4-d1a67a70b4f3",
+  "title": "Design an Ordered Stream",
+  "slug": "design-an-ordered-stream",
+  "description": "There is a stream of `n` `(idKey, value)` pairs arriving in an **arbitrary** order, where `idKey` is an integer between `1` and `n` and `value` is a string. No two pairs have the same `id`.\n\nDesign a stream that returns the values in **increasing order of their IDs** by returning a **chunk** (list) of values after each insertion. The concatenation of all the **chunks** should result in a list of the sorted values.\n\nImplement the `OrderedStream` class:\n\n*   `OrderedStream(int n)` Constructs the stream to take `n` values.\n*   `String[] insert(int idKey, String value)` Inserts the pair `(idKey, value)` into the stream, then returns the **largest possible chunk** of currently inserted values that appear next in the order.\n\n**Example:**\n\n**Input**\n\\[ \"OrderedStream \",  \"insert \",  \"insert \",  \"insert \",  \"insert \",  \"insert \"\\]\n\\[\\[5\\], \\[3,  \"ccccc \"\\], \\[1,  \"aaaaa \"\\], \\[2,  \"bbbbb \"\\], \\[5,  \"eeeee \"\\], \\[4,  \"ddddd \"\\]\\]\n**Output**\n\\[null, \\[\\], \\[ \"aaaaa \"\\], \\[ \"bbbbb \",  \"ccccc \"\\], \\[\\], \\[ \"ddddd \",  \"eeeee \"\\]\\]\n\n**Explanation**\n// Note that the values ordered by ID is \\[ \"aaaaa \",  \"bbbbb \",  \"ccccc \",  \"ddddd \",  \"eeeee \"\\].\nOrderedStream os = new OrderedStream(5);\nos.insert(3,  \"ccccc \"); // Inserts (3,  \"ccccc \"), returns \\[\\].\nos.insert(1,  \"aaaaa \"); // Inserts (1,  \"aaaaa \"), returns \\[ \"aaaaa \"\\].\nos.insert(2,  \"bbbbb \"); // Inserts (2,  \"bbbbb \"), returns \\[ \"bbbbb \",  \"ccccc \"\\].\nos.insert(5,  \"eeeee \"); // Inserts (5,  \"eeeee \"), returns \\[\\].\nos.insert(4,  \"ddddd \"); // Inserts (4,  \"ddddd \"), returns \\[ \"ddddd \",  \"eeeee \"\\].\n// Concatentating all the chunks returned:\n// \\[\\] + \\[ \"aaaaa \"\\] + \\[ \"bbbbb \",  \"ccccc \"\\] + \\[\\] + \\[ \"ddddd \",  \"eeeee \"\\] = \\[ \"aaaaa \",  \"bbbbb \",  \"ccccc \",  \"ddddd \",  \"eeeee \"\\]\n// The resulting order is the same as the order above.\n\n**Constraints:**\n\n*   `1 <= n <= 1000`\n*   `1 <= id <= n`\n*   `value.length == 5`\n*   `value` consists only of lowercase letters.\n*   Each call to `insert` will have a unique `id.`\n*   Exactly `n` calls will be made to `insert`.",
+  "difficulty": "Easy",
+  "category": null,
+  "xpReward": 0,
+  "timeLimitMs": 5000,
+  "memoryLimitMb": 256,
+  "starterCode": {},
+  "solutionCode": "",
+  "hints": [],
+  "isPremium": false,
+  "createdBy": null,
+  "testCases": [
+    {
+      "input": {
+        "methods": [
+          "OrderedStream",
+          "insert",
+          "insert",
+          "insert",
+          "insert",
+          "insert"
+        ],
+        "args": [
+          [
+            5
+          ],
+          [
+            3,
+            "ccccc "
+          ],
+          [
+            1,
+            "aaaaa "
+          ],
+          [
+            2,
+            "bbbbb "
+          ],
+          [
+            5,
+            "eeeee "
+          ],
+          [
+            4,
+            "ddddd "
+          ]
+        ]
+      },
+      "expectedOutput": [
+        null,
+        [],
+        [
+          "aaaaa "
+        ],
+        [
+          "bbbbb ",
+          "ccccc "
+        ],
+        [],
+        [
+          "ddddd ",
+          "eeeee "
+        ]
+      ]
+    }
+  ],
+  "hiddenTestCases": [
+    {
+      "input": {
+        "methods": [
+          "OrderedStream",
+          "insert",
+          "insert",
+          "insert",
+          "insert",
+          "insert"
+        ],
+        "args": [
+          [
+            5
+          ],
+          [
+            3,
+            "ccccc "
+          ],
+          [
+            1,
+            "aaaaa "
+          ],
+          [
+            2,
+            "bbbbb "
+          ],
+          [
+            5,
+            "eeeee "
+          ],
+          [
+            4,
+            "ddddd "
+          ]
+        ]
+      },
+      "expectedOutput": [
+        null,
+        [],
+        [
+          "aaaaa "
+        ],
+        [
+          "bbbbb ",
+          "ccccc "
+        ],
+        [],
+        [
+          "ddddd ",
+          "eeeee "
+        ]
+      ]
+    }
+  ],
+  "tags": [],
+  "constraints": [],
+  "examples": [],
+  "problemNumber": null,
+  "createdAt": "2025-11-14T21:22:35.385928+00:00",
+  "updatedAt": "2025-12-04T04:38:01.098Z"
+}

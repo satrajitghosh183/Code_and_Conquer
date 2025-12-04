@@ -1,0 +1,82 @@
+{
+  "id": "e3f3ba5d-05cf-4029-82d4-ce9053385850",
+  "title": "Maximum Erasure Value",
+  "slug": "maximum-erasure-value",
+  "description": "You are given an array of positive integers `nums` and want to erase a subarray containing **unique elements**. The **score** you get by erasing the subarray is equal to the **sum** of its elements.\n\nReturn _the **maximum score** you can get by erasing **exactly one** subarray._\n\nAn array `b` is called to be a subarray of `a` if it forms a contiguous subsequence of `a`, that is, if it is equal to `a[l],a[l+1],...,a[r]` for some `(l,r)`.\n\n**Example 1:**\n\n**Input:** nums = \\[4,2,4,5,6\\]\n**Output:** 17\n**Explanation:** The optimal subarray here is \\[2,4,5,6\\].\n\n**Example 2:**\n\n**Input:** nums = \\[5,2,1,2,5,2,1,2,5\\]\n**Output:** 8\n**Explanation:** The optimal subarray here is \\[5,2,1\\] or \\[1,2,5\\].\n\n**Constraints:**\n\n*   `1 <= nums.length <= 105`\n*   `1 <= nums[i] <= 104`",
+  "difficulty": "Medium",
+  "category": null,
+  "xpReward": 0,
+  "timeLimitMs": 5000,
+  "memoryLimitMb": 256,
+  "starterCode": {},
+  "solutionCode": "",
+  "hints": [],
+  "isPremium": false,
+  "createdBy": null,
+  "testCases": [
+    {
+      "input": [
+        [
+          4,
+          2,
+          4,
+          5,
+          6
+        ]
+      ],
+      "expectedOutput": 17
+    },
+    {
+      "input": [
+        [
+          5,
+          2,
+          1,
+          2,
+          5,
+          2,
+          1,
+          2,
+          5
+        ]
+      ],
+      "expectedOutput": 8
+    }
+  ],
+  "hiddenTestCases": [
+    {
+      "input": [
+        [
+          4,
+          2,
+          4,
+          5,
+          6
+        ]
+      ],
+      "expectedOutput": 17
+    },
+    {
+      "input": [
+        [
+          5,
+          2,
+          1,
+          2,
+          5,
+          2,
+          1,
+          2,
+          5
+        ]
+      ],
+      "expectedOutput": 8
+    }
+  ],
+  "tags": [],
+  "constraints": [],
+  "examples": [],
+  "problemNumber": null,
+  "createdAt": "2025-11-14T21:22:43.828615+00:00",
+  "updatedAt": "2025-12-04T04:37:04.171Z"
+}

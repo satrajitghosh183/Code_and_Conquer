@@ -1,0 +1,85 @@
+{
+  "id": "4b33d7cb-ddf8-4e23-9302-2906b9ee5cee",
+  "title": "Partition Array Such That Maximum Difference Is K",
+  "slug": "partition-array-such-that-maximum-difference-is-k",
+  "description": "You are given an integer array `nums` and an integer `k`. You may partition `nums` into one or more **subsequences** such that each element in `nums` appears in **exactly** one of the subsequences.\n\nReturn _the **minimum** number of subsequences needed such that the difference between the maximum and minimum values in each subsequence is **at most**_ `k`_._\n\nA **subsequence** is a sequence that can be derived from another sequence by deleting some or no elements without changing the order of the remaining elements.\n\n**Example 1:**\n\n**Input:** nums = \\[3,6,1,2,5\\], k = 2\n**Output:** 2\n**Explanation:**\nWe can partition nums into the two subsequences \\[3,1,2\\] and \\[6,5\\].\nThe difference between the maximum and minimum value in the first subsequence is 3 - 1 = 2.\nThe difference between the maximum and minimum value in the second subsequence is 6 - 5 = 1.\nSince two subsequences were created, we return 2. It can be shown that 2 is the minimum number of subsequences needed.\n\n**Example 2:**\n\n**Input:** nums = \\[1,2,3\\], k = 1\n**Output:** 2\n**Explanation:**\nWe can partition nums into the two subsequences \\[1,2\\] and \\[3\\].\nThe difference between the maximum and minimum value in the first subsequence is 2 - 1 = 1.\nThe difference between the maximum and minimum value in the second subsequence is 3 - 3 = 0.\nSince two subsequences were created, we return 2. Note that another optimal solution is to partition nums into the two subsequences \\[1\\] and \\[2,3\\].\n\n**Example 3:**\n\n**Input:** nums = \\[2,2,4,5\\], k = 0\n**Output:** 3\n**Explanation:**\nWe can partition nums into the three subsequences \\[2,2\\], \\[4\\], and \\[5\\].\nThe difference between the maximum and minimum value in the first subsequences is 2 - 2 = 0.\nThe difference between the maximum and minimum value in the second subsequences is 4 - 4 = 0.\nThe difference between the maximum and minimum value in the third subsequences is 5 - 5 = 0.\nSince three subsequences were created, we return 3. It can be shown that 3 is the minimum number of subsequences needed.\n\n**Constraints:**\n\n*   `1 <= nums.length <= 105`\n*   `0 <= nums[i] <= 105`\n*   `0 <= k <= 105`",
+  "difficulty": "Medium",
+  "category": null,
+  "xpReward": 0,
+  "timeLimitMs": 5000,
+  "memoryLimitMb": 256,
+  "starterCode": [],
+  "solutionCode": "",
+  "hints": [],
+  "isPremium": false,
+  "createdBy": null,
+  "testCases": [
+    {
+      "input": [
+        [
+          3,
+          6,
+          1,
+          2,
+          5
+        ],
+        2
+      ],
+      "expectedOutput": 2
+    },
+    {
+      "input": [
+        [
+          1,
+          2,
+          3
+        ],
+        1
+      ],
+      "expectedOutput": 2
+    },
+    {
+      "input": [
+        [
+          2,
+          2,
+          4,
+          5
+        ],
+        0
+      ],
+      "expectedOutput": 3
+    }
+  ],
+  "hiddenTestCases": [
+    {
+      "input": [
+        [
+          3,
+          6,
+          1,
+          2,
+          5
+        ],
+        2
+      ],
+      "expectedOutput": 2
+    },
+    {
+      "input": [
+        [
+          1,
+          2,
+          3
+        ],
+        1
+      ],
+      "expectedOutput": 2
+    }
+  ],
+  "tags": [],
+  "constraints": [],
+  "examples": [],
+  "createdAt": "2025-11-14T21:25:10.721078+00:00",
+  "updatedAt": "2025-12-04T04:35:53.791Z"
+}

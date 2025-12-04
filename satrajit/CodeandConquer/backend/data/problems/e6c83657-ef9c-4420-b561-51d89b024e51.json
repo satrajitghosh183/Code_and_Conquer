@@ -1,0 +1,61 @@
+{
+  "id": "e6c83657-ef9c-4420-b561-51d89b024e51",
+  "title": "Count Days Spent Together",
+  "slug": "count-days-spent-together",
+  "description": "Alice and Bob are traveling to Rome for separate business meetings.\n\nYou are given 4 strings `arriveAlice`, `leaveAlice`, `arriveBob`, and `leaveBob`. Alice will be in the city from the dates `arriveAlice` to `leaveAlice` (**inclusive**), while Bob will be in the city from the dates `arriveBob` to `leaveBob` (**inclusive**). Each will be a 5-character string in the format `\"MM-DD \"`, corresponding to the month and day of the date.\n\nReturn _the total number of days that Alice and Bob are in Rome together._\n\nYou can assume that all dates occur in the **same** calendar year, which is **not** a leap year. Note that the number of days per month can be represented as: `[31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]`.\n\n**Example 1:**\n\n**Input:** arriveAlice =  \"08-15 \", leaveAlice =  \"08-18 \", arriveBob =  \"08-16 \", leaveBob =  \"08-19 \"\n**Output:** 3\n**Explanation:** Alice will be in Rome from August 15 to August 18. Bob will be in Rome from August 16 to August 19. They are both in Rome together on August 16th, 17th, and 18th, so the answer is 3.\n\n**Example 2:**\n\n**Input:** arriveAlice =  \"10-01 \", leaveAlice =  \"10-31 \", arriveBob =  \"11-01 \", leaveBob =  \"12-31 \"\n**Output:** 0\n**Explanation:** There is no day when Alice and Bob are in Rome together, so we return 0.\n\n**Constraints:**\n\n*   All dates are provided in the format `\"MM-DD \"`.\n*   Alice and Bob's arrival dates are **earlier than or equal to** their leaving dates.\n*   The given dates are valid dates of a **non-leap** year.",
+  "difficulty": "Easy",
+  "category": null,
+  "xpReward": 0,
+  "timeLimitMs": 5000,
+  "memoryLimitMb": 256,
+  "starterCode": [],
+  "solutionCode": "",
+  "hints": [],
+  "isPremium": false,
+  "createdBy": null,
+  "testCases": [
+    {
+      "input": [
+        "08-15 ",
+        "08-18 ",
+        "08-16 ",
+        "08-19 "
+      ],
+      "expectedOutput": 3
+    },
+    {
+      "input": [
+        "10-01 ",
+        "10-31 ",
+        "11-01 ",
+        "12-31 "
+      ],
+      "expectedOutput": 0
+    }
+  ],
+  "hiddenTestCases": [
+    {
+      "input": [
+        "08-15 ",
+        "08-18 ",
+        "08-16 ",
+        "08-19 "
+      ],
+      "expectedOutput": 3
+    },
+    {
+      "input": [
+        "10-01 ",
+        "10-31 ",
+        "11-01 ",
+        "12-31 "
+      ],
+      "expectedOutput": 0
+    }
+  ],
+  "tags": [],
+  "constraints": [],
+  "examples": [],
+  "createdAt": "2025-11-14T21:25:39.260528+00:00",
+  "updatedAt": "2025-12-04T04:35:40.605Z"
+}

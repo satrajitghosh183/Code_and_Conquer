@@ -1,0 +1,112 @@
+{
+  "id": "67ada5c9-f1cc-4bad-b03d-913728c0682a",
+  "title": "Minimum Cost Homecoming of a Robot in a Grid",
+  "slug": "minimum-cost-homecoming-of-a-robot-in-a-grid",
+  "description": "There is an `m x n` grid, where `(0, 0)` is the top-left cell and `(m - 1, n - 1)` is the bottom-right cell. You are given an integer array `startPos` where `startPos = [startrow, startcol]` indicates that **initially**, a **robot** is at the cell `(startrow, startcol)`. You are also given an integer array `homePos` where `homePos = [homerow, homecol]` indicates that its **home** is at the cell `(homerow, homecol)`.\n\nThe robot needs to go to its home. It can move one cell in four directions: **left**, **right**, **up**, or **down**, and it can not move outside the boundary. Every move incurs some cost. You are further given two **0-indexed** integer arrays: `rowCosts` of length `m` and `colCosts` of length `n`.\n\n*   If the robot moves **up** or **down** into a cell whose **row** is `r`, then this move costs `rowCosts[r]`.\n*   If the robot moves **left** or **right** into a cell whose **column** is `c`, then this move costs `colCosts[c]`.\n\nReturn _the **minimum total cost** for this robot to return home_.\n\n**Example 1:**\n\n**Input:** startPos = \\[1, 0\\], homePos = \\[2, 3\\], rowCosts = \\[5, 4, 3\\], colCosts = \\[8, 2, 6, 7\\]\n**Output:** 18\n**Explanation:** One optimal path is that:\nStarting from (1, 0)\n-> It goes down to (**2**, 0). This move costs rowCosts\\[2\\] = 3.\n-> It goes right to (2, **1**). This move costs colCosts\\[1\\] = 2.\n-> It goes right to (2, **2**). This move costs colCosts\\[2\\] = 6.\n-> It goes right to (2, **3**). This move costs colCosts\\[3\\] = 7.\nThe total cost is 3 + 2 + 6 + 7 = 18\n\n**Example 2:**\n\n**Input:** startPos = \\[0, 0\\], homePos = \\[0, 0\\], rowCosts = \\[5\\], colCosts = \\[26\\]\n**Output:** 0\n**Explanation:** The robot is already at its home. Since no moves occur, the total cost is 0.\n\n**Constraints:**\n\n*   `m == rowCosts.length`\n*   `n == colCosts.length`\n*   `1 <= m, n <= 105`\n*   `0 <= rowCosts[r], colCosts[c] <= 104`\n*   `startPos.length == 2`\n*   `homePos.length == 2`\n*   `0 <= startrow, homerow < m`\n*   `0 <= startcol, homecol < n`",
+  "difficulty": "Medium",
+  "category": null,
+  "xpReward": 0,
+  "timeLimitMs": 5000,
+  "memoryLimitMb": 256,
+  "starterCode": {},
+  "solutionCode": "",
+  "hints": [],
+  "isPremium": false,
+  "createdBy": null,
+  "testCases": [
+    {
+      "input": [
+        [
+          1,
+          0
+        ],
+        [
+          2,
+          3
+        ],
+        [
+          5,
+          4,
+          3
+        ],
+        [
+          8,
+          2,
+          6,
+          7
+        ]
+      ],
+      "expectedOutput": 18
+    },
+    {
+      "input": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          5
+        ],
+        [
+          26
+        ]
+      ],
+      "expectedOutput": 0
+    }
+  ],
+  "hiddenTestCases": [
+    {
+      "input": [
+        [
+          1,
+          0
+        ],
+        [
+          2,
+          3
+        ],
+        [
+          5,
+          4,
+          3
+        ],
+        [
+          8,
+          2,
+          6,
+          7
+        ]
+      ],
+      "expectedOutput": 18
+    },
+    {
+      "input": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          5
+        ],
+        [
+          26
+        ]
+      ],
+      "expectedOutput": 0
+    }
+  ],
+  "tags": [],
+  "constraints": [],
+  "examples": [],
+  "problemNumber": null,
+  "createdAt": "2025-11-14T21:24:19.446051+00:00",
+  "updatedAt": "2025-12-04T04:36:16.663Z"
+}

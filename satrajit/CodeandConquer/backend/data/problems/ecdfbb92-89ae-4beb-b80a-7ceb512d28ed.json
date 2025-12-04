@@ -1,0 +1,121 @@
+{
+  "id": "ecdfbb92-89ae-4beb-b80a-7ceb512d28ed",
+  "title": "Paths in Matrix Whose Sum Is Divisible by K",
+  "slug": "paths-in-matrix-whose-sum-is-divisible-by-k",
+  "description": "You are given a **0-indexed** `m x n` integer matrix `grid` and an integer `k`. You are currently at position `(0, 0)` and you want to reach position `(m - 1, n - 1)` moving only **down** or **right**.\n\nReturn _the number of paths where the sum of the elements on the path is divisible by_ `k`. Since the answer may be very large, return it **modulo** `109 + 7`.\n\n**Example 1:**\n\n**Input:** grid = \\[\\[5,2,4\\],\\[3,0,5\\],\\[0,7,2\\]\\], k = 3\n**Output:** 2\n**Explanation:** There are two paths where the sum of the elements on the path is divisible by k.\nThe first path highlighted in red has a sum of 5 + 2 + 4 + 5 + 2 = 18 which is divisible by 3.\nThe second path highlighted in blue has a sum of 5 + 3 + 0 + 5 + 2 = 15 which is divisible by 3.\n\n**Example 2:**\n\n**Input:** grid = \\[\\[0,0\\]\\], k = 5\n**Output:** 1\n**Explanation:** The path highlighted in red has a sum of 0 + 0 = 0 which is divisible by 5.\n\n**Example 3:**\n\n**Input:** grid = \\[\\[7,3,4,9\\],\\[2,3,6,2\\],\\[2,3,7,0\\]\\], k = 1\n**Output:** 10\n**Explanation:** Every integer is divisible by 1 so the sum of the elements on every possible path is divisible by k.\n\n**Constraints:**\n\n*   `m == grid.length`\n*   `n == grid[i].length`\n*   `1 <= m, n <= 5 * 104`\n*   `1 <= m * n <= 5 * 104`\n*   `0 <= grid[i][j] <= 100`\n*   `1 <= k <= 50`",
+  "difficulty": "Hard",
+  "category": null,
+  "xpReward": 0,
+  "timeLimitMs": 5000,
+  "memoryLimitMb": 256,
+  "starterCode": [],
+  "solutionCode": "",
+  "hints": [],
+  "isPremium": false,
+  "createdBy": null,
+  "testCases": [
+    {
+      "input": [
+        [
+          [
+            5,
+            2,
+            4
+          ],
+          [
+            3,
+            0,
+            5
+          ],
+          [
+            0,
+            7,
+            2
+          ]
+        ],
+        3
+      ],
+      "expectedOutput": 2
+    },
+    {
+      "input": [
+        [
+          [
+            0,
+            0
+          ]
+        ],
+        5
+      ],
+      "expectedOutput": 1
+    },
+    {
+      "input": [
+        [
+          [
+            7,
+            3,
+            4,
+            9
+          ],
+          [
+            2,
+            3,
+            6,
+            2
+          ],
+          [
+            2,
+            3,
+            7,
+            0
+          ]
+        ],
+        1
+      ],
+      "expectedOutput": 10
+    }
+  ],
+  "hiddenTestCases": [
+    {
+      "input": [
+        [
+          [
+            5,
+            2,
+            4
+          ],
+          [
+            3,
+            0,
+            5
+          ],
+          [
+            0,
+            7,
+            2
+          ]
+        ],
+        3
+      ],
+      "expectedOutput": 2
+    },
+    {
+      "input": [
+        [
+          [
+            0,
+            0
+          ]
+        ],
+        5
+      ],
+      "expectedOutput": 1
+    }
+  ],
+  "tags": [],
+  "constraints": [],
+  "examples": [],
+  "createdAt": "2025-11-14T21:25:45.871169+00:00",
+  "updatedAt": "2025-12-04T04:35:37.009Z"
+}

@@ -1,0 +1,114 @@
+{
+  "id": "7f99cf8e-3030-4d44-9311-90c8afceab11",
+  "title": "Number of Spaces Cleaning Robot Cleaned",
+  "slug": "number-of-spaces-cleaning-robot-cleaned",
+  "description": "A room is represented by a **0-indexed** 2D binary matrix `room` where a `0` represents an **empty** space and a `1` represents a space with an **object**. The top left corner of the room will be empty in all test cases.\n\nA cleaning robot starts at the top left corner of the room and is facing right. The robot will continue heading straight until it reaches the edge of the room or it hits an object, after which it will turn 90 degrees **clockwise** and repeat this process. The starting space and all spaces that the robot visits are **cleaned** by it.\n\nReturn _the number of **clean** spaces in the room if the robot runs indefinetely._\n\n**Example 1:**  \n\n**Input:** room = \\[\\[0,0,0\\],\\[1,1,0\\],\\[0,0,0\\]\\]\n**Output:** 7\n**Explanation:**\nThe robot cleans the spaces at (0, 0), (0, 1), and (0, 2).\nThe robot is at the edge of the room, so it turns 90 degrees clockwise and now faces down.\nThe robot cleans the spaces at (1, 2), and (2, 2).\nThe robot is at the edge of the room, so it turns 90 degrees clockwise and now faces left.\nThe robot cleans the spaces at (2, 1), and (2, 0).\nThe robot has cleaned all 7 empty spaces, so return 7.\n\n**Example 2:**  \n\n**Input:** room = \\[\\[0,1,0\\],\\[1,0,0\\],\\[0,0,0\\]\\]\n**Output:** 1\n**Explanation:**\nThe robot cleans the space at (0, 0).\nThe robot hits an object, so it turns 90 degrees clockwise and now faces down.\nThe robot hits an object, so it turns 90 degrees clockwise and now faces left.\nThe robot is at the edge of the room, so it turns 90 degrees clockwise and now faces up.\nThe robot is at the edge of the room, so it turns 90 degrees clockwise and now faces right.\nThe robot is back at its starting position.\nThe robot has cleaned 1 space, so return 1.\n\n**Constraints:**\n\n*   `m == room.length`\n*   `n == room[r].length`\n*   `1 <= m, n <= 300`\n*   `room[r][c]` is either `0` or `1`.\n*   `room[0][0] == 0`",
+  "difficulty": "Medium",
+  "category": null,
+  "xpReward": 0,
+  "timeLimitMs": 5000,
+  "memoryLimitMb": 256,
+  "starterCode": {},
+  "solutionCode": "",
+  "hints": [],
+  "isPremium": false,
+  "createdBy": null,
+  "testCases": [
+    {
+      "input": [
+        [
+          [
+            0,
+            0,
+            0
+          ],
+          [
+            1,
+            1,
+            0
+          ],
+          [
+            0,
+            0,
+            0
+          ]
+        ]
+      ],
+      "expectedOutput": 7
+    },
+    {
+      "input": [
+        [
+          [
+            0,
+            1,
+            0
+          ],
+          [
+            1,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0
+          ]
+        ]
+      ],
+      "expectedOutput": 1
+    }
+  ],
+  "hiddenTestCases": [
+    {
+      "input": [
+        [
+          [
+            0,
+            0,
+            0
+          ],
+          [
+            1,
+            1,
+            0
+          ],
+          [
+            0,
+            0,
+            0
+          ]
+        ]
+      ],
+      "expectedOutput": 7
+    },
+    {
+      "input": [
+        [
+          [
+            0,
+            1,
+            0
+          ],
+          [
+            1,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0
+          ]
+        ]
+      ],
+      "expectedOutput": 1
+    }
+  ],
+  "tags": [],
+  "constraints": [],
+  "examples": [],
+  "problemNumber": null,
+  "createdAt": "2025-11-14T21:24:13.180958+00:00",
+  "updatedAt": "2025-12-04T04:36:19.003Z"
+}

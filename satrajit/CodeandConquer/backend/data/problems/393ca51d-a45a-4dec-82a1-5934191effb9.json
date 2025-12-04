@@ -1,0 +1,119 @@
+{
+  "id": "393ca51d-a45a-4dec-82a1-5934191effb9",
+  "title": "Count Submatrices With All Ones",
+  "slug": "count-submatrices-with-all-ones",
+  "description": "Given an `m x n` binary matrix `mat`, _return the number of **submatrices** that have all ones_.\n\n**Example 1:**\n\n**Input:** mat = \\[\\[1,0,1\\],\\[1,1,0\\],\\[1,1,0\\]\\]\n**Output:** 13\n**Explanation:** \nThere are 6 rectangles of side 1x1.\nThere are 2 rectangles of side 1x2.\nThere are 3 rectangles of side 2x1.\nThere is 1 rectangle of side 2x2. \nThere is 1 rectangle of side 3x1.\nTotal number of rectangles = 6 + 2 + 3 + 1 + 1 = 13.\n\n**Example 2:**\n\n**Input:** mat = \\[\\[0,1,1,0\\],\\[0,1,1,1\\],\\[1,1,1,0\\]\\]\n**Output:** 24\n**Explanation:** \nThere are 8 rectangles of side 1x1.\nThere are 5 rectangles of side 1x2.\nThere are 2 rectangles of side 1x3. \nThere are 4 rectangles of side 2x1.\nThere are 2 rectangles of side 2x2. \nThere are 2 rectangles of side 3x1. \nThere is 1 rectangle of side 3x2. \nTotal number of rectangles = 8 + 5 + 2 + 4 + 2 + 2 + 1 = 24.\n\n**Constraints:**\n\n*   `1 <= m, n <= 150`\n*   `mat[i][j]` is either `0` or `1`.",
+  "difficulty": "Medium",
+  "category": null,
+  "xpReward": 0,
+  "timeLimitMs": 5000,
+  "memoryLimitMb": 256,
+  "starterCode": [],
+  "solutionCode": "",
+  "hints": [],
+  "isPremium": false,
+  "createdBy": null,
+  "testCases": [
+    {
+      "input": [
+        [
+          [
+            1,
+            0,
+            1
+          ],
+          [
+            1,
+            1,
+            0
+          ],
+          [
+            1,
+            1,
+            0
+          ]
+        ]
+      ],
+      "expectedOutput": 13
+    },
+    {
+      "input": [
+        [
+          [
+            0,
+            1,
+            1,
+            0
+          ],
+          [
+            0,
+            1,
+            1,
+            1
+          ],
+          [
+            1,
+            1,
+            1,
+            0
+          ]
+        ]
+      ],
+      "expectedOutput": 24
+    }
+  ],
+  "hiddenTestCases": [
+    {
+      "input": [
+        [
+          [
+            1,
+            0,
+            1
+          ],
+          [
+            1,
+            1,
+            0
+          ],
+          [
+            1,
+            1,
+            0
+          ]
+        ]
+      ],
+      "expectedOutput": 13
+    },
+    {
+      "input": [
+        [
+          [
+            0,
+            1,
+            1,
+            0
+          ],
+          [
+            0,
+            1,
+            1,
+            1
+          ],
+          [
+            1,
+            1,
+            1,
+            0
+          ]
+        ]
+      ],
+      "expectedOutput": 24
+    }
+  ],
+  "tags": [],
+  "constraints": [],
+  "examples": [],
+  "createdAt": "2025-11-14T21:21:41.393656+00:00",
+  "updatedAt": "2025-12-04T04:37:21.837Z"
+}

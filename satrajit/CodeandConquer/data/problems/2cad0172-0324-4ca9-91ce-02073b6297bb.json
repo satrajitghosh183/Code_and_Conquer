@@ -1,0 +1,56 @@
+{
+  "id": "2cad0172-0324-4ca9-91ce-02073b6297bb",
+  "title": "Longest Substring Of All Vowels in Order",
+  "slug": "longest-substring-of-all-vowels-in-order",
+  "description": "A string is considered **beautiful** if it satisfies the following conditions:\n\n*   Each of the 5 English vowels (`'a'`, `'e'`, `'i'`, `'o'`, `'u'`) must appear **at least once** in it.\n*   The letters must be sorted in **alphabetical order** (i.e. all `'a'`s before `'e'`s, all `'e'`s before `'i'`s, etc.).\n\nFor example, strings `\"aeiou \"` and `\"aaaaaaeiiiioou \"` are considered **beautiful**, but `\"uaeio \"`, `\"aeoiu \"`, and `\"aaaeeeooo \"` are **not beautiful**.\n\nGiven a string `word` consisting of English vowels, return _the **length of the longest beautiful substring** of_ `word`_. If no such substring exists, return_ `0`.\n\nA **substring** is a contiguous sequence of characters in a string.\n\n**Example 1:**\n\n**Input:** word =  \"aeiaaioaaaaeiiiiouuuooaauuaeiu \"\n**Output:** 13\n**Explanation:** The longest beautiful substring in word is  \"aaaaeiiiiouuu \" of length 13.\n\n**Example 2:**\n\n**Input:** word =  \"aeeeiiiioooauuuaeiou \"\n**Output:** 5\n**Explanation:** The longest beautiful substring in word is  \"aeiou \" of length 5.\n\n**Example 3:**\n\n**Input:** word =  \"a \"\n**Output:** 0\n**Explanation:** There is no beautiful substring, so return 0.\n\n**Constraints:**\n\n*   `1 <= word.length <= 5 * 105`\n*   `word` consists of characters `'a'`, `'e'`, `'i'`, `'o'`, and `'u'`.",
+  "difficulty": "Medium",
+  "category": null,
+  "xpReward": 0,
+  "timeLimitMs": 5000,
+  "memoryLimitMb": 256,
+  "starterCode": {},
+  "solutionCode": "",
+  "hints": [],
+  "isPremium": false,
+  "createdBy": null,
+  "testCases": [
+    {
+      "input": [
+        "aeiaaioaaaaeiiiiouuuooaauuaeiu "
+      ],
+      "expectedOutput": 13
+    },
+    {
+      "input": [
+        "aeeeiiiioooauuuaeiou "
+      ],
+      "expectedOutput": 5
+    },
+    {
+      "input": [
+        "a "
+      ],
+      "expectedOutput": 0
+    }
+  ],
+  "hiddenTestCases": [
+    {
+      "input": [
+        "aeiaaioaaaaeiiiiouuuooaauuaeiu "
+      ],
+      "expectedOutput": 13
+    },
+    {
+      "input": [
+        "aeeeiiiioooauuuaeiou "
+      ],
+      "expectedOutput": 5
+    }
+  ],
+  "tags": [],
+  "constraints": [],
+  "examples": [],
+  "problemNumber": null,
+  "createdAt": "2025-11-14T21:23:20.808255+00:00",
+  "updatedAt": "2025-12-04T04:36:41.398Z"
+}

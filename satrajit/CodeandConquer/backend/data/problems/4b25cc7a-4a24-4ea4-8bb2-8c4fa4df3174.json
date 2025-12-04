@@ -1,0 +1,85 @@
+{
+  "id": "4b25cc7a-4a24-4ea4-8bb2-8c4fa4df3174",
+  "title": "Sender With Largest Word Count",
+  "slug": "sender-with-largest-word-count",
+  "description": "You have a chat log of `n` messages. You are given two string arrays `messages` and `senders` where `messages[i]` is a **message** sent by `senders[i]`.\n\nA **message** is list of **words** that are separated by a single space with no leading or trailing spaces. The **word count** of a sender is the total number of **words** sent by the sender. Note that a sender may send more than one message.\n\nReturn _the sender with the **largest** word count_. If there is more than one sender with the largest word count, return _the one with the **lexicographically largest** name_.\n\n**Note:**\n\n*   Uppercase letters come before lowercase letters in lexicographical order.\n*   `\"Alice \"` and `\"alice \"` are distinct.\n\n**Example 1:**\n\n**Input:** messages = \\[ \"Hello userTwooo \", \"Hi userThree \", \"Wonderful day Alice \", \"Nice day userThree \"\\], senders = \\[ \"Alice \", \"userTwo \", \"userThree \", \"Alice \"\\]\n**Output:**  \"Alice \"\n**Explanation:** Alice sends a total of 2 + 3 = 5 words.\nuserTwo sends a total of 2 words.\nuserThree sends a total of 3 words.\nSince Alice has the largest word count, we return  \"Alice \".\n\n**Example 2:**\n\n**Input:** messages = \\[ \"How is leetcode for everyone \", \"Leetcode is useful for practice \"\\], senders = \\[ \"Bob \", \"Charlie \"\\]\n**Output:**  \"Charlie \"\n**Explanation:** Bob sends a total of 5 words.\nCharlie sends a total of 5 words.\nSince there is a tie for the largest word count, we return the sender with the lexicographically larger name, Charlie.\n\n**Constraints:**\n\n*   `n == messages.length == senders.length`\n*   `1 <= n <= 104`\n*   `1 <= messages[i].length <= 100`\n*   `1 <= senders[i].length <= 10`\n*   `messages[i]` consists of uppercase and lowercase English letters and `' '`.\n*   All the words in `messages[i]` are separated by **a single space**.\n*   `messages[i]` does not have leading or trailing spaces.\n*   `senders[i]` consists of uppercase and lowercase English letters only.",
+  "difficulty": "Medium",
+  "category": null,
+  "xpReward": 0,
+  "timeLimitMs": 5000,
+  "memoryLimitMb": 256,
+  "starterCode": [],
+  "solutionCode": "",
+  "hints": [],
+  "isPremium": false,
+  "createdBy": null,
+  "testCases": [
+    {
+      "input": [
+        [
+          "Hello userTwooo ",
+          "Hi userThree ",
+          "Wonderful day Alice ",
+          "Nice day userThree "
+        ],
+        [
+          "Alice ",
+          "userTwo ",
+          "userThree ",
+          "Alice "
+        ]
+      ],
+      "expectedOutput": "Alice "
+    },
+    {
+      "input": [
+        [
+          "How is leetcode for everyone ",
+          "Leetcode is useful for practice "
+        ],
+        [
+          "Bob ",
+          "Charlie "
+        ]
+      ],
+      "expectedOutput": "Charlie "
+    }
+  ],
+  "hiddenTestCases": [
+    {
+      "input": [
+        [
+          "Hello userTwooo ",
+          "Hi userThree ",
+          "Wonderful day Alice ",
+          "Nice day userThree "
+        ],
+        [
+          "Alice ",
+          "userTwo ",
+          "userThree ",
+          "Alice "
+        ]
+      ],
+      "expectedOutput": "Alice "
+    },
+    {
+      "input": [
+        [
+          "How is leetcode for everyone ",
+          "Leetcode is useful for practice "
+        ],
+        [
+          "Bob ",
+          "Charlie "
+        ]
+      ],
+      "expectedOutput": "Charlie "
+    }
+  ],
+  "tags": [],
+  "constraints": [],
+  "examples": [],
+  "createdAt": "2025-11-14T21:25:08.481998+00:00",
+  "updatedAt": "2025-12-04T04:35:54.954Z"
+}

@@ -1,0 +1,115 @@
+{
+  "id": "ae3614fb-f873-4d98-bf8f-a8647961b7f1",
+  "title": "Shortest Path in a Hidden Grid",
+  "slug": "shortest-path-in-a-hidden-grid",
+  "description": "This is an **interactive problem**.\n\nThere is a robot in a hidden grid, and you are trying to get it from its starting cell to the target cell in this grid. The grid is of size `m x n`, and each cell in the grid is either empty or blocked. It is **guaranteed** that the starting cell and the target cell are different, and neither of them is blocked.\n\nYou want to find the minimum distance to the target cell. However, you **do not know** the grid's dimensions, the starting cell, nor the target cell. You are only allowed to ask queries to the `GridMaster` object.\n\nThr `GridMaster` class has the following functions:\n\n*   `boolean canMove(char direction)` Returns `true` if the robot can move in that direction. Otherwise, it returns `false`.\n*   `void move(char direction)` Moves the robot in that direction. If this move would move the robot to a blocked cell or off the grid, the move will be **ignored**, and the robot will remain in the same position.\n*   `boolean isTarget()` Returns `true` if the robot is currently on the target cell. Otherwise, it returns `false`.\n\nNote that `direction` in the above functions should be a character from `{'U','D','L','R'}`, representing the directions up, down, left, and right, respectively.\n\nReturn _the **minimum distance** between the robot's initial starting cell and the target cell. If there is no valid path between the cells, return_ `-1`.\n\n**Custom testing:**\n\nThe test input is read as a 2D matrix `grid` of size `m x n` where:\n\n*   `grid[i][j] == -1` indicates that the robot is in cell `(i, j)` (the starting cell).\n*   `grid[i][j] == 0` indicates that the cell `(i, j)` is blocked.\n*   `grid[i][j] == 1` indicates that the cell `(i, j)` is empty.\n*   `grid[i][j] == 2` indicates that the cell `(i, j)` is the target cell.\n\nThere is exactly one `-1` and `2` in `grid`. Remember that you will **not** have this information in your code.\n\n**Example 1:**\n\n**Input:** grid = \\[\\[1,2\\],\\[-1,0\\]\\]\n**Output:** 2\n**Explanation:** One possible interaction is described below:\nThe robot is initially standing on cell (1, 0), denoted by the -1.\n- master.canMove('U') returns true.\n- master.canMove('D') returns false.\n- master.canMove('L') returns false.\n- master.canMove('R') returns false.\n- master.move('U') moves the robot to the cell (0, 0).\n- master.isTarget() returns false.\n- master.canMove('U') returns false.\n- master.canMove('D') returns true.\n- master.canMove('L') returns false.\n- master.canMove('R') returns true.\n- master.move('R') moves the robot to the cell (0, 1).\n- master.isTarget() returns true. \nWe now know that the target is the cell (0, 1), and the shortest path to the target cell is 2.\n\n**Example 2:**\n\n**Input:** grid = \\[\\[0,0,-1\\],\\[1,1,1\\],\\[2,0,0\\]\\]\n**Output:** 4\n**Explanation:** The minimum distance between the robot and the target cell is 4.\n\n**Example 3:**\n\n**Input:** grid = \\[\\[-1,0\\],\\[0,2\\]\\]\n**Output:** -1\n**Explanation:** There is no path from the robot to the target cell.\n\n**Constraints:**\n\n*   `1 <= n, m <= 500`\n*   `m == grid.length`\n*   `n == grid[i].length`\n*   `grid[i][j]` is either `-1`, `0`, `1`, or `2`.\n*   There is **exactly one** `-1` in `grid`.\n*   There is **exactly one** `2` in `grid`.",
+  "difficulty": "Medium",
+  "category": null,
+  "xpReward": 0,
+  "timeLimitMs": 5000,
+  "memoryLimitMb": 256,
+  "starterCode": {},
+  "solutionCode": "",
+  "hints": [],
+  "isPremium": false,
+  "createdBy": null,
+  "testCases": [
+    {
+      "input": [
+        [
+          [
+            1,
+            2
+          ],
+          [
+            -1,
+            0
+          ]
+        ]
+      ],
+      "expectedOutput": 2
+    },
+    {
+      "input": [
+        [
+          [
+            0,
+            0,
+            -1
+          ],
+          [
+            1,
+            1,
+            1
+          ],
+          [
+            2,
+            0,
+            0
+          ]
+        ]
+      ],
+      "expectedOutput": 4
+    },
+    {
+      "input": [
+        [
+          [
+            -1,
+            0
+          ],
+          [
+            0,
+            2
+          ]
+        ]
+      ],
+      "expectedOutput": -1
+    }
+  ],
+  "hiddenTestCases": [
+    {
+      "input": [
+        [
+          [
+            1,
+            2
+          ],
+          [
+            -1,
+            0
+          ]
+        ]
+      ],
+      "expectedOutput": 2
+    },
+    {
+      "input": [
+        [
+          [
+            0,
+            0,
+            -1
+          ],
+          [
+            1,
+            1,
+            1
+          ],
+          [
+            2,
+            0,
+            0
+          ]
+        ]
+      ],
+      "expectedOutput": 4
+    }
+  ],
+  "tags": [],
+  "constraints": [],
+  "examples": [],
+  "problemNumber": null,
+  "createdAt": "2025-11-14T21:23:04.787005+00:00",
+  "updatedAt": "2025-12-04T04:36:50.248Z"
+}

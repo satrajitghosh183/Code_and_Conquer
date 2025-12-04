@@ -1,0 +1,71 @@
+{
+  "id": "a3886b61-dfac-4fe4-bbda-afd835115839",
+  "title": "Count Nice Pairs in an Array",
+  "slug": "count-nice-pairs-in-an-array",
+  "description": "You are given an array `nums` that consists of non-negative integers. Let us define `rev(x)` as the reverse of the non-negative integer `x`. For example, `rev(123) = 321`, and `rev(120) = 21`. A pair of indices `(i, j)` is **nice** if it satisfies all of the following conditions:\n\n*   `0 <= i < j < nums.length`\n*   `nums[i] + rev(nums[j]) == nums[j] + rev(nums[i])`\n\nReturn _the number of nice pairs of indices_. Since that number can be too large, return it **modulo** `109 + 7`.\n\n**Example 1:**\n\n**Input:** nums = \\[42,11,1,97\\]\n**Output:** 2\n**Explanation:** The two pairs are:\n - (0,3) : 42 + rev(97) = 42 + 79 = 121, 97 + rev(42) = 97 + 24 = 121.\n - (1,2) : 11 + rev(1) = 11 + 1 = 12, 1 + rev(11) = 1 + 11 = 12.\n\n**Example 2:**\n\n**Input:** nums = \\[13,10,35,24,76\\]\n**Output:** 4\n\n**Constraints:**\n\n*   `1 <= nums.length <= 105`\n*   `0 <= nums[i] <= 109`",
+  "difficulty": "Medium",
+  "category": null,
+  "xpReward": 0,
+  "timeLimitMs": 5000,
+  "memoryLimitMb": 256,
+  "starterCode": [],
+  "solutionCode": "",
+  "hints": [],
+  "isPremium": false,
+  "createdBy": null,
+  "testCases": [
+    {
+      "input": [
+        [
+          42,
+          11,
+          1,
+          97
+        ]
+      ],
+      "expectedOutput": 2
+    },
+    {
+      "input": [
+        [
+          13,
+          10,
+          35,
+          24,
+          76
+        ]
+      ],
+      "expectedOutput": "4\n\n**Constraints:**\n\n*   `1 <= nums.length <= 105`\n*   `0 <= nums[i] <= 109`"
+    }
+  ],
+  "hiddenTestCases": [
+    {
+      "input": [
+        [
+          42,
+          11,
+          1,
+          97
+        ]
+      ],
+      "expectedOutput": 2
+    },
+    {
+      "input": [
+        [
+          13,
+          10,
+          35,
+          24,
+          76
+        ]
+      ],
+      "expectedOutput": "4\n\n**Constraints:**\n\n*   `1 <= nums.length <= 105`\n*   `0 <= nums[i] <= 109`"
+    }
+  ],
+  "tags": [],
+  "constraints": [],
+  "examples": [],
+  "createdAt": "2025-11-14T21:23:13.643747+00:00",
+  "updatedAt": "2025-12-04T04:36:43.950Z"
+}

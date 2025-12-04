@@ -1,0 +1,85 @@
+{
+  "id": "1d648d2d-f790-481e-b778-304e2c02665e",
+  "title": "Minimum Health to Beat Game",
+  "slug": "minimum-health-to-beat-game",
+  "description": "You are playing a game that has `n` levels numbered from `0` to `n - 1`. You are given a **0-indexed** integer array `damage` where `damage[i]` is the amount of health you will lose to complete the `ith` level.\n\nYou are also given an integer `armor`. You may use your armor ability **at most once** during the game on **any** level which will protect you from **at most** `armor` damage.\n\nYou must complete the levels in order and your health must be **greater than** `0` at all times to beat the game.\n\nReturn _the **minimum** health you need to start with to beat the game._\n\n**Example 1:**\n\n**Input:** damage = \\[2,7,4,3\\], armor = 4\n**Output:** 13\n**Explanation:** One optimal way to beat the game starting at 13 health is:\nOn round 1, take 2 damage. You have 13 - 2 = 11 health.\nOn round 2, take 7 damage. You have 11 - 7 = 4 health.\nOn round 3, use your armor to protect you from 4 damage. You have 4 - 0 = 4 health.\nOn round 4, take 3 damage. You have 4 - 3 = 1 health.\nNote that 13 is the minimum health you need to start with to beat the game.\n\n**Example 2:**\n\n**Input:** damage = \\[2,5,3,4\\], armor = 7\n**Output:** 10\n**Explanation:** One optimal way to beat the game starting at 10 health is:\nOn round 1, take 2 damage. You have 10 - 2 = 8 health.\nOn round 2, use your armor to protect you from 5 damage. You have 8 - 0 = 8 health.\nOn round 3, take 3 damage. You have 8 - 3 = 5 health.\nOn round 4, take 4 damage. You have 5 - 4 = 1 health.\nNote that 10 is the minimum health you need to start with to beat the game.\n\n**Example 3:**\n\n**Input:** damage = \\[3,3,3\\], armor = 0\n**Output:** 10\n**Explanation:** One optimal way to beat the game starting at 10 health is:\nOn round 1, take 3 damage. You have 10 - 3 = 7 health.\nOn round 2, take 3 damage. You have 7 - 3 = 4 health.\nOn round 3, take 3 damage. You have 4 - 3 = 1 health.\nNote that you did not use your armor ability.\n\n**Constraints:**\n\n*   `n == damage.length`\n*   `1 <= n <= 105`\n*   `0 <= damage[i] <= 105`\n*   `0 <= armor <= 105`",
+  "difficulty": "Medium",
+  "category": null,
+  "xpReward": 0,
+  "timeLimitMs": 5000,
+  "memoryLimitMb": 256,
+  "starterCode": {},
+  "solutionCode": "",
+  "hints": [],
+  "isPremium": false,
+  "createdBy": null,
+  "testCases": [
+    {
+      "input": [
+        [
+          2,
+          7,
+          4,
+          3
+        ],
+        4
+      ],
+      "expectedOutput": 13
+    },
+    {
+      "input": [
+        [
+          2,
+          5,
+          3,
+          4
+        ],
+        7
+      ],
+      "expectedOutput": 10
+    },
+    {
+      "input": [
+        [
+          3,
+          3,
+          3
+        ],
+        0
+      ],
+      "expectedOutput": 10
+    }
+  ],
+  "hiddenTestCases": [
+    {
+      "input": [
+        [
+          2,
+          7,
+          4,
+          3
+        ],
+        4
+      ],
+      "expectedOutput": 13
+    },
+    {
+      "input": [
+        [
+          2,
+          5,
+          3,
+          4
+        ],
+        7
+      ],
+      "expectedOutput": 10
+    }
+  ],
+  "tags": [],
+  "constraints": [],
+  "examples": [],
+  "problemNumber": null,
+  "createdAt": "2025-11-14T21:24:49.521552+00:00",
+  "updatedAt": "2025-12-04T04:36:03.486Z"
+}

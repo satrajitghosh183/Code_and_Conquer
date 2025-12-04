@@ -1,0 +1,71 @@
+{
+  "id": "60dc47d5-a641-4b66-a019-6f76fd3b86f4",
+  "title": "Find the Student that Will Replace the Chalk",
+  "slug": "find-the-student-that-will-replace-the-chalk",
+  "description": "There are `n` students in a class numbered from `0` to `n - 1`. The teacher will give each student a problem starting with the student number `0`, then the student number `1`, and so on until the teacher reaches the student number `n - 1`. After that, the teacher will restart the process, starting with the student number `0` again.\n\nYou are given a **0-indexed** integer array `chalk` and an integer `k`. There are initially `k` pieces of chalk. When the student number `i` is given a problem to solve, they will use `chalk[i]` pieces of chalk to solve that problem. However, if the current number of chalk pieces is **strictly less** than `chalk[i]`, then the student number `i` will be asked to **replace** the chalk.\n\nReturn _the **index** of the student that will **replace** the chalk pieces_.\n\n**Example 1:**\n\n**Input:** chalk = \\[5,1,5\\], k = 22\n**Output:** 0\n**Explanation:** The students go in turns as follows:\n- Student number 0 uses 5 chalk, so k = 17.\n- Student number 1 uses 1 chalk, so k = 16.\n- Student number 2 uses 5 chalk, so k = 11.\n- Student number 0 uses 5 chalk, so k = 6.\n- Student number 1 uses 1 chalk, so k = 5.\n- Student number 2 uses 5 chalk, so k = 0.\nStudent number 0 does not have enough chalk, so they will have to replace it.\n\n**Example 2:**\n\n**Input:** chalk = \\[3,4,1,2\\], k = 25\n**Output:** 1\n**Explanation:** The students go in turns as follows:\n- Student number 0 uses 3 chalk so k = 22.\n- Student number 1 uses 4 chalk so k = 18.\n- Student number 2 uses 1 chalk so k = 17.\n- Student number 3 uses 2 chalk so k = 15.\n- Student number 0 uses 3 chalk so k = 12.\n- Student number 1 uses 4 chalk so k = 8.\n- Student number 2 uses 1 chalk so k = 7.\n- Student number 3 uses 2 chalk so k = 5.\n- Student number 0 uses 3 chalk so k = 2.\nStudent number 1 does not have enough chalk, so they will have to replace it.\n\n**Constraints:**\n\n*   `chalk.length == n`\n*   `1 <= n <= 105`\n*   `1 <= chalk[i] <= 105`\n*   `1 <= k <= 109`",
+  "difficulty": "Medium",
+  "category": null,
+  "xpReward": 0,
+  "timeLimitMs": 5000,
+  "memoryLimitMb": 256,
+  "starterCode": [],
+  "solutionCode": "",
+  "hints": [],
+  "isPremium": false,
+  "createdBy": null,
+  "testCases": [
+    {
+      "input": [
+        [
+          5,
+          1,
+          5
+        ],
+        22
+      ],
+      "expectedOutput": 0
+    },
+    {
+      "input": [
+        [
+          3,
+          4,
+          1,
+          2
+        ],
+        25
+      ],
+      "expectedOutput": 1
+    }
+  ],
+  "hiddenTestCases": [
+    {
+      "input": [
+        [
+          5,
+          1,
+          5
+        ],
+        22
+      ],
+      "expectedOutput": 0
+    },
+    {
+      "input": [
+        [
+          3,
+          4,
+          1,
+          2
+        ],
+        25
+      ],
+      "expectedOutput": 1
+    }
+  ],
+  "tags": [],
+  "constraints": [],
+  "examples": [],
+  "createdAt": "2025-11-14T21:23:33.313828+00:00",
+  "updatedAt": "2025-12-04T04:36:36.247Z"
+}

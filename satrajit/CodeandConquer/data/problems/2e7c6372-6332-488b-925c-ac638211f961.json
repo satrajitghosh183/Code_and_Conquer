@@ -1,0 +1,68 @@
+{
+  "id": "2e7c6372-6332-488b-925c-ac638211f961",
+  "title": "Minimum Average Difference",
+  "slug": "minimum-average-difference",
+  "description": "You are given a **0-indexed** integer array `nums` of length `n`.\n\nThe **average difference** of the index `i` is the **absolute** **difference** between the average of the **first** `i + 1` elements of `nums` and the average of the **last** `n - i - 1` elements. Both averages should be **rounded down** to the nearest integer.\n\nReturn _the index with the **minimum average difference**_. If there are multiple such indices, return the **smallest** one.\n\n**Note:**\n\n*   The **absolute difference** of two numbers is the absolute value of their difference.\n*   The **average** of `n` elements is the **sum** of the `n` elements divided (**integer division**) by `n`.\n*   The average of `0` elements is considered to be `0`.\n\n**Example 1:**\n\n**Input:** nums = \\[2,5,3,9,5,3\\]\n**Output:** 3\n**Explanation:**\n- The average difference of index 0 is: |2 / 1 - (5 + 3 + 9 + 5 + 3) / 5| = |2 / 1 - 25 / 5| = |2 - 5| = 3.\n- The average difference of index 1 is: |(2 + 5) / 2 - (3 + 9 + 5 + 3) / 4| = |7 / 2 - 20 / 4| = |3 - 5| = 2.\n- The average difference of index 2 is: |(2 + 5 + 3) / 3 - (9 + 5 + 3) / 3| = |10 / 3 - 17 / 3| = |3 - 5| = 2.\n- The average difference of index 3 is: |(2 + 5 + 3 + 9) / 4 - (5 + 3) / 2| = |19 / 4 - 8 / 2| = |4 - 4| = 0.\n- The average difference of index 4 is: |(2 + 5 + 3 + 9 + 5) / 5 - 3 / 1| = |24 / 5 - 3 / 1| = |4 - 3| = 1.\n- The average difference of index 5 is: |(2 + 5 + 3 + 9 + 5 + 3) / 6 - 0| = |27 / 6 - 0| = |4 - 0| = 4.\nThe average difference of index 3 is the minimum average difference so return 3.\n\n**Example 2:**\n\n**Input:** nums = \\[0\\]\n**Output:** 0\n**Explanation:**\nThe only index is 0 so return 0.\nThe average difference of index 0 is: |0 / 1 - 0| = |0 - 0| = 0.\n\n**Constraints:**\n\n*   `1 <= nums.length <= 105`\n*   `0 <= nums[i] <= 105`",
+  "difficulty": "Medium",
+  "category": null,
+  "xpReward": 0,
+  "timeLimitMs": 5000,
+  "memoryLimitMb": 256,
+  "starterCode": {},
+  "solutionCode": "",
+  "hints": [],
+  "isPremium": false,
+  "createdBy": null,
+  "testCases": [
+    {
+      "input": [
+        [
+          2,
+          5,
+          3,
+          9,
+          5,
+          3
+        ]
+      ],
+      "expectedOutput": 3
+    },
+    {
+      "input": [
+        [
+          0
+        ]
+      ],
+      "expectedOutput": 0
+    }
+  ],
+  "hiddenTestCases": [
+    {
+      "input": [
+        [
+          2,
+          5,
+          3,
+          9,
+          5,
+          3
+        ]
+      ],
+      "expectedOutput": 3
+    },
+    {
+      "input": [
+        [
+          0
+        ]
+      ],
+      "expectedOutput": 0
+    }
+  ],
+  "tags": [],
+  "constraints": [],
+  "examples": [],
+  "problemNumber": null,
+  "createdAt": "2025-11-14T21:24:59.992203+00:00",
+  "updatedAt": "2025-12-04T04:35:58.621Z"
+}

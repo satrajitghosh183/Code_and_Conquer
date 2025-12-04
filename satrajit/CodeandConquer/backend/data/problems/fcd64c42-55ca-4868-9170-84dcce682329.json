@@ -1,0 +1,113 @@
+{
+  "id": "fcd64c42-55ca-4868-9170-84dcce682329",
+  "title": "Disconnect Path in a Binary Matrix by at Most One Flip",
+  "slug": "disconnect-path-in-a-binary-matrix-by-at-most-one-flip",
+  "description": "You are given a **0-indexed** `m x n` **binary** matrix `grid`. You can move from a cell `(row, col)` to any of the cells `(row + 1, col)` or `(row, col + 1)` that has the value `1`. The matrix is **disconnected** if there is no path from `(0, 0)` to `(m - 1, n - 1)`.\n\nYou can flip the value of **at most one** (possibly none) cell. You **cannot flip** the cells `(0, 0)` and `(m - 1, n - 1)`.\n\nReturn `true` _if it is possible to make the matrix disconnect or_ `false` _otherwise_.\n\n**Note** that flipping a cell changes its value from `0` to `1` or from `1` to `0`.\n\n**Example 1:**\n\n**Input:** grid = \\[\\[1,1,1\\],\\[1,0,0\\],\\[1,1,1\\]\\]\n**Output:** true\n**Explanation:** We can change the cell shown in the diagram above. There is no path from (0, 0) to (2, 2) in the resulting grid.\n\n**Example 2:**\n\n**Input:** grid = \\[\\[1,1,1\\],\\[1,0,1\\],\\[1,1,1\\]\\]\n**Output:** false\n**Explanation:** It is not possible to change at most one cell such that there is not path from (0, 0) to (2, 2).\n\n**Constraints:**\n\n*   `m == grid.length`\n*   `n == grid[i].length`\n*   `1 <= m, n <= 1000`\n*   `1 <= m * n <= 105`\n*   `grid[i][j]` is either `0` or `1`.\n*   `grid[0][0] == grid[m - 1][n - 1] == 1`",
+  "difficulty": "Medium",
+  "category": null,
+  "xpReward": 0,
+  "timeLimitMs": 5000,
+  "memoryLimitMb": 256,
+  "starterCode": [],
+  "solutionCode": "",
+  "hints": [],
+  "isPremium": false,
+  "createdBy": null,
+  "testCases": [
+    {
+      "input": [
+        [
+          [
+            1,
+            1,
+            1
+          ],
+          [
+            1,
+            0,
+            0
+          ],
+          [
+            1,
+            1,
+            1
+          ]
+        ]
+      ],
+      "expectedOutput": true
+    },
+    {
+      "input": [
+        [
+          [
+            1,
+            1,
+            1
+          ],
+          [
+            1,
+            0,
+            1
+          ],
+          [
+            1,
+            1,
+            1
+          ]
+        ]
+      ],
+      "expectedOutput": false
+    }
+  ],
+  "hiddenTestCases": [
+    {
+      "input": [
+        [
+          [
+            1,
+            1,
+            1
+          ],
+          [
+            1,
+            0,
+            0
+          ],
+          [
+            1,
+            1,
+            1
+          ]
+        ]
+      ],
+      "expectedOutput": true
+    },
+    {
+      "input": [
+        [
+          [
+            1,
+            1,
+            1
+          ],
+          [
+            1,
+            0,
+            1
+          ],
+          [
+            1,
+            1,
+            1
+          ]
+        ]
+      ],
+      "expectedOutput": false
+    }
+  ],
+  "tags": [],
+  "constraints": [],
+  "examples": [],
+  "createdAt": "2025-11-14T21:26:20.965877+00:00",
+  "updatedAt": "2025-12-04T04:35:20.558Z"
+}

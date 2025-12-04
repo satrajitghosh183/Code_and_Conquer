@@ -1,0 +1,130 @@
+{
+  "id": "16f48eb4-27a8-4922-a052-4dc38cbe46d0",
+  "title": "Divide Nodes Into the Maximum Number of Groups",
+  "slug": "divide-nodes-into-the-maximum-number-of-groups",
+  "description": "You are given a positive integer `n` representing the number of nodes in an **undirected** graph. The nodes are labeled from `1` to `n`.\n\nYou are also given a 2D integer array `edges`, where `edges[i] = [ai, bi]` indicates that there is a **bidirectional** edge between nodes `ai` and `bi`. **Notice** that the given graph may be disconnected.\n\nDivide the nodes of the graph into `m` groups (**1-indexed**) such that:\n\n*   Each node in the graph belongs to exactly one group.\n*   For every pair of nodes in the graph that are connected by an edge `[ai, bi]`, if `ai` belongs to the group with index `x`, and `bi` belongs to the group with index `y`, then `|y - x| = 1`.\n\nReturn _the maximum number of groups (i.e., maximum_ `m`_) into which you can divide the nodes_. Return `-1` _if it is impossible to group the nodes with the given conditions_.\n\n**Example 1:**\n\n**Input:** n = 6, edges = \\[\\[1,2\\],\\[1,4\\],\\[1,5\\],\\[2,6\\],\\[2,3\\],\\[4,6\\]\\]\n**Output:** 4\n**Explanation:** As shown in the image we:\n- Add node 5 to the first group.\n- Add node 1 to the second group.\n- Add nodes 2 and 4 to the third group.\n- Add nodes 3 and 6 to the fourth group.\nWe can see that every edge is satisfied.\nIt can be shown that that if we create a fifth group and move any node from the third or fourth group to it, at least on of the edges will not be satisfied.\n\n**Example 2:**\n\n**Input:** n = 3, edges = \\[\\[1,2\\],\\[2,3\\],\\[3,1\\]\\]\n**Output:** -1\n**Explanation:** If we add node 1 to the first group, node 2 to the second group, and node 3 to the third group to satisfy the first two edges, we can see that the third edge will not be satisfied.\nIt can be shown that no grouping is possible.\n\n**Constraints:**\n\n*   `1 <= n <= 500`\n*   `1 <= edges.length <= 104`\n*   `edges[i].length == 2`\n*   `1 <= ai, bi <= n`\n*   `ai != bi`\n*   There is at most one edge between any pair of vertices.",
+  "difficulty": "Hard",
+  "category": null,
+  "xpReward": 0,
+  "timeLimitMs": 5000,
+  "memoryLimitMb": 256,
+  "starterCode": {},
+  "solutionCode": "",
+  "hints": [],
+  "isPremium": false,
+  "createdBy": null,
+  "testCases": [
+    {
+      "input": [
+        6,
+        [
+          [
+            1,
+            2
+          ],
+          [
+            1,
+            4
+          ],
+          [
+            1,
+            5
+          ],
+          [
+            2,
+            6
+          ],
+          [
+            2,
+            3
+          ],
+          [
+            4,
+            6
+          ]
+        ]
+      ],
+      "expectedOutput": 4
+    },
+    {
+      "input": [
+        3,
+        [
+          [
+            1,
+            2
+          ],
+          [
+            2,
+            3
+          ],
+          [
+            3,
+            1
+          ]
+        ]
+      ],
+      "expectedOutput": -1
+    }
+  ],
+  "hiddenTestCases": [
+    {
+      "input": [
+        6,
+        [
+          [
+            1,
+            2
+          ],
+          [
+            1,
+            4
+          ],
+          [
+            1,
+            5
+          ],
+          [
+            2,
+            6
+          ],
+          [
+            2,
+            3
+          ],
+          [
+            4,
+            6
+          ]
+        ]
+      ],
+      "expectedOutput": 4
+    },
+    {
+      "input": [
+        3,
+        [
+          [
+            1,
+            2
+          ],
+          [
+            2,
+            3
+          ],
+          [
+            3,
+            1
+          ]
+        ]
+      ],
+      "expectedOutput": -1
+    }
+  ],
+  "tags": [],
+  "constraints": [],
+  "examples": [],
+  "problemNumber": null,
+  "createdAt": "2025-11-14T21:26:02.257198+00:00",
+  "updatedAt": "2025-12-04T04:35:27.500Z"
+}

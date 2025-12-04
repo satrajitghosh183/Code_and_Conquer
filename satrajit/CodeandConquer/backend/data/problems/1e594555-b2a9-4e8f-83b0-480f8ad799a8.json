@@ -1,0 +1,49 @@
+{
+  "id": "1e594555-b2a9-4e8f-83b0-480f8ad799a8",
+  "title": "Count Integers With Even Digit Sum",
+  "slug": "count-integers-with-even-digit-sum",
+  "description": "Given a positive integer `num`, return _the number of positive integers **less than or equal to**_ `num` _whose digit sums are **even**_.\n\nThe **digit sum** of a positive integer is the sum of all its digits.\n\n**Example 1:**\n\n**Input:** num = 4\n**Output:** 2\n**Explanation:**\nThe only integers less than or equal to 4 whose digit sums are even are 2 and 4.    \n\n**Example 2:**\n\n**Input:** num = 30\n**Output:** 14\n**Explanation:**\nThe 14 integers less than or equal to 30 whose digit sums are even are\n2, 4, 6, 8, 11, 13, 15, 17, 19, 20, 22, 24, 26, and 28.\n\n**Constraints:**\n\n*   `1 <= num <= 1000`",
+  "difficulty": "Easy",
+  "category": null,
+  "xpReward": 0,
+  "timeLimitMs": 5000,
+  "memoryLimitMb": 256,
+  "starterCode": [],
+  "solutionCode": "",
+  "hints": [],
+  "isPremium": false,
+  "createdBy": null,
+  "testCases": [
+    {
+      "input": [
+        4
+      ],
+      "expectedOutput": 2
+    },
+    {
+      "input": [
+        30
+      ],
+      "expectedOutput": 14
+    }
+  ],
+  "hiddenTestCases": [
+    {
+      "input": [
+        4
+      ],
+      "expectedOutput": 2
+    },
+    {
+      "input": [
+        30
+      ],
+      "expectedOutput": 14
+    }
+  ],
+  "tags": [],
+  "constraints": [],
+  "examples": [],
+  "createdAt": "2025-11-14T21:24:41.797871+00:00",
+  "updatedAt": "2025-12-04T04:36:07.030Z"
+}

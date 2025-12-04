@@ -1,0 +1,76 @@
+{
+  "id": "83070784-ae5b-4418-838e-10239dd8fba3",
+  "title": "Find First Palindromic String in the Array",
+  "slug": "find-first-palindromic-string-in-the-array",
+  "description": "Given an array of strings `words`, return _the first **palindromic** string in the array_. If there is no such string, return _an **empty string**_ `\" \"`.\n\nA string is **palindromic** if it reads the same forward and backward.\n\n**Example 1:**\n\n**Input:** words = \\[ \"abc \", \"car \", \"ada \", \"racecar \", \"cool \"\\]\n**Output:**  \"ada \"\n**Explanation:** The first string that is palindromic is  \"ada \".\nNote that  \"racecar \" is also palindromic, but it is not the first.\n\n**Example 2:**\n\n**Input:** words = \\[ \"notapalindrome \", \"racecar \"\\]\n**Output:**  \"racecar \"\n**Explanation:** The first and only string that is palindromic is  \"racecar \".\n\n**Example 3:**\n\n**Input:** words = \\[ \"def \", \"ghi \"\\]\n**Output:**  \" \"\n**Explanation:** There are no palindromic strings, so the empty string is returned.\n\n**Constraints:**\n\n*   `1 <= words.length <= 100`\n*   `1 <= words[i].length <= 100`\n*   `words[i]` consists only of lowercase English letters.",
+  "difficulty": "Easy",
+  "category": null,
+  "xpReward": 0,
+  "timeLimitMs": 5000,
+  "memoryLimitMb": 256,
+  "starterCode": [],
+  "solutionCode": "",
+  "hints": [],
+  "isPremium": false,
+  "createdBy": null,
+  "testCases": [
+    {
+      "input": [
+        [
+          "abc ",
+          "car ",
+          "ada ",
+          "racecar ",
+          "cool "
+        ]
+      ],
+      "expectedOutput": "ada "
+    },
+    {
+      "input": [
+        [
+          "notapalindrome ",
+          "racecar "
+        ]
+      ],
+      "expectedOutput": "racecar "
+    },
+    {
+      "input": [
+        [
+          "def ",
+          "ghi "
+        ]
+      ],
+      "expectedOutput": " "
+    }
+  ],
+  "hiddenTestCases": [
+    {
+      "input": [
+        [
+          "abc ",
+          "car ",
+          "ada ",
+          "racecar ",
+          "cool "
+        ]
+      ],
+      "expectedOutput": "ada "
+    },
+    {
+      "input": [
+        [
+          "notapalindrome ",
+          "racecar "
+        ]
+      ],
+      "expectedOutput": "racecar "
+    }
+  ],
+  "tags": [],
+  "constraints": [],
+  "examples": [],
+  "createdAt": "2025-11-14T21:24:26.592515+00:00",
+  "updatedAt": "2025-12-04T04:36:14.213Z"
+}

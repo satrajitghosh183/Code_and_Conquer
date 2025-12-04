@@ -1,0 +1,68 @@
+{
+  "id": "ee716147-57f4-44da-a31d-620f9c5daf28",
+  "title": "Odd String Difference",
+  "slug": "odd-string-difference",
+  "description": "You are given an array of equal-length strings `words`. Assume that the length of each string is `n`.\n\nEach string `words[i]` can be converted into a **difference integer array** `difference[i]` of length `n - 1` where `difference[i][j] = words[i][j+1] - words[i][j]` where `0 <= j <= n - 2`. Note that the difference between two letters is the difference between their **positions** in the alphabet i.e. the position of `'a'` is `0`, `'b'` is `1`, and `'z'` is `25`.\n\n*   For example, for the string `\"acb \"`, the difference integer array is `[2 - 0, 1 - 2] = [2, -1]`.\n\nAll the strings in words have the same difference integer array, **except one**. You should find that string.\n\nReturn _the string in_ `words` _that has different **difference integer array**._\n\n**Example 1:**\n\n**Input:** words = \\[ \"adc \", \"wzy \", \"abc \"\\]\n**Output:**  \"abc \"\n**Explanation:** \n- The difference integer array of  \"adc \" is \\[3 - 0, 2 - 3\\] = \\[3, -1\\].\n- The difference integer array of  \"wzy \" is \\[25 - 22, 24 - 25\\]= \\[3, -1\\].\n- The difference integer array of  \"abc \" is \\[1 - 0, 2 - 1\\] = \\[1, 1\\]. \nThe odd array out is \\[1, 1\\], so we return the corresponding string,  \"abc \".\n\n**Example 2:**\n\n**Input:** words = \\[ \"aaa \", \"bob \", \"ccc \", \"ddd \"\\]\n**Output:**  \"bob \"\n**Explanation:** All the integer arrays are \\[0, 0\\] except for  \"bob \", which corresponds to \\[13, -13\\].\n\n**Constraints:**\n\n*   `3 <= words.length <= 100`\n*   `n == words[i].length`\n*   `2 <= n <= 20`\n*   `words[i]` consists of lowercase English letters.",
+  "difficulty": "Easy",
+  "category": null,
+  "xpReward": 0,
+  "timeLimitMs": 5000,
+  "memoryLimitMb": 256,
+  "starterCode": {},
+  "solutionCode": "",
+  "hints": [],
+  "isPremium": false,
+  "createdBy": null,
+  "testCases": [
+    {
+      "input": [
+        [
+          "adc ",
+          "wzy ",
+          "abc "
+        ]
+      ],
+      "expectedOutput": "abc "
+    },
+    {
+      "input": [
+        [
+          "aaa ",
+          "bob ",
+          "ccc ",
+          "ddd "
+        ]
+      ],
+      "expectedOutput": "bob "
+    }
+  ],
+  "hiddenTestCases": [
+    {
+      "input": [
+        [
+          "adc ",
+          "wzy ",
+          "abc "
+        ]
+      ],
+      "expectedOutput": "abc "
+    },
+    {
+      "input": [
+        [
+          "aaa ",
+          "bob ",
+          "ccc ",
+          "ddd "
+        ]
+      ],
+      "expectedOutput": "bob "
+    }
+  ],
+  "tags": [],
+  "constraints": [],
+  "examples": [],
+  "problemNumber": null,
+  "createdAt": "2025-11-14T21:25:51.535347+00:00",
+  "updatedAt": "2025-12-04T04:35:34.591Z"
+}

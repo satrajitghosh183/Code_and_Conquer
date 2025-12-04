@@ -1,0 +1,62 @@
+{
+  "id": "0f32909c-a2e0-4c33-90b8-a887bb1f505d",
+  "title": "Number of Good Binary Strings",
+  "slug": "number-of-good-binary-strings",
+  "description": "You are given four integers `minLength`, `maxLength`, `oneGroup` and `zeroGroup`.\n\nA binary string is **good** if it satisfies the following conditions:\n\n*   The length of the string is in the range `[minLength, maxLength]`.\n*   The size of each block of consecutive `1`'s is a multiple of `oneGroup`.\n    *   For example in a binary string `00110111100` sizes of each block of consecutive ones are `[2,4]`.\n*   The size of each block of consecutive `0`'s is a multiple of `zeroGroup`.\n    *   For example, in a binary string `00110111100` sizes of each block of consecutive ones are `[2,1,2]`.\n\nReturn _the number of **good** binary strings_. Since the answer may be too large, return it **modulo** `109 + 7`.\n\n**Note** that `0` is considered a multiple of all the numbers.\n\n**Example 1:**\n\n**Input:** minLength = 2, maxLength = 3, oneGroup = 1, zeroGroup = 2\n**Output:** 5\n**Explanation:** There are 5 good binary strings in this example:  \"00 \",  \"11 \",  \"001 \",  \"100 \", and  \"111 \".\nIt can be proven that there are only 5 good strings satisfying all conditions.\n\n**Example 2:**\n\n**Input:** minLength = 4, maxLength = 4, oneGroup = 4, zeroGroup = 3\n**Output:** 1\n**Explanation:** There is only 1 good binary string in this example:  \"1111 \".\nIt can be proven that there is only 1 good string satisfying all conditions.\n\n**Constraints:**\n\n*   `1 <= minLength <= maxLength <= 105`\n*   `1 <= oneGroup, zeroGroup <= maxLength`",
+  "difficulty": "Medium",
+  "category": null,
+  "xpReward": 0,
+  "timeLimitMs": 5000,
+  "memoryLimitMb": 256,
+  "starterCode": {},
+  "solutionCode": "",
+  "hints": [],
+  "isPremium": false,
+  "createdBy": null,
+  "testCases": [
+    {
+      "input": [
+        2,
+        3,
+        1,
+        2
+      ],
+      "expectedOutput": 5
+    },
+    {
+      "input": [
+        4,
+        4,
+        4,
+        3
+      ],
+      "expectedOutput": 1
+    }
+  ],
+  "hiddenTestCases": [
+    {
+      "input": [
+        2,
+        3,
+        1,
+        2
+      ],
+      "expectedOutput": 5
+    },
+    {
+      "input": [
+        4,
+        4,
+        4,
+        3
+      ],
+      "expectedOutput": 1
+    }
+  ],
+  "tags": [],
+  "constraints": [],
+  "examples": [],
+  "problemNumber": null,
+  "createdAt": "2025-11-14T21:26:12.651816+00:00",
+  "updatedAt": "2025-12-04T04:35:23.081Z"
+}

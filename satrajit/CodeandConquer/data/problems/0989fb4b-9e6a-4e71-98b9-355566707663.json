@@ -1,0 +1,98 @@
+{
+  "id": "0989fb4b-9e6a-4e71-98b9-355566707663",
+  "title": "The Latest Time to Catch a Bus",
+  "slug": "the-latest-time-to-catch-a-bus",
+  "description": "You are given a **0-indexed** integer array `buses` of length `n`, where `buses[i]` represents the departure time of the `ith` bus. You are also given a **0-indexed** integer array `passengers` of length `m`, where `passengers[j]` represents the arrival time of the `jth` passenger. All bus departure times are unique. All passenger arrival times are unique.\n\nYou are given an integer `capacity`, which represents the **maximum** number of passengers that can get on each bus.\n\nWhen a passenger arrives, they will wait in line for the next available bus. You can get on a bus that departs at `x` minutes if you arrive at `y` minutes where `y <= x`, and the bus is not full. Passengers with the **earliest** arrival times get on the bus first.\n\nMore formally when a bus arrives, either:\n\n*   If `capacity` or fewer passengers are waiting for a bus, they will **all** get on the bus, or\n*   The `capacity` passengers with the **earliest** arrival times will get on the bus.\n\nReturn _the latest time you may arrive at the bus station to catch a bus_. You **cannot** arrive at the same time as another passenger.\n\n**Note:** The arrays `buses` and `passengers` are not necessarily sorted.\n\n**Example 1:**\n\n**Input:** buses = \\[10,20\\], passengers = \\[2,17,18,19\\], capacity = 2\n**Output:** 16\n**Explanation:** Suppose you arrive at time 16.\nAt time 10, the first bus departs with the 0th passenger. \nAt time 20, the second bus departs with you and the 1st passenger.\nNote that you may not arrive at the same time as another passenger, which is why you must arrive before the 1st passenger to catch the bus.\n\n**Example 2:**\n\n**Input:** buses = \\[20,30,10\\], passengers = \\[19,13,26,4,25,11,21\\], capacity = 2\n**Output:** 20\n**Explanation:** Suppose you arrive at time 20.\nAt time 10, the first bus departs with the 3rd passenger. \nAt time 20, the second bus departs with the 5th and 1st passengers.\nAt time 30, the third bus departs with the 0th passenger and you.\nNotice if you had arrived any later, then the 6th passenger would have taken your seat on the third bus.\n\n**Constraints:**\n\n*   `n == buses.length`\n*   `m == passengers.length`\n*   `1 <= n, m, capacity <= 105`\n*   `2 <= buses[i], passengers[i] <= 109`\n*   Each element in `buses` is **unique**.\n*   Each element in `passengers` is **unique**.",
+  "difficulty": "Medium",
+  "category": null,
+  "xpReward": 0,
+  "timeLimitMs": 5000,
+  "memoryLimitMb": 256,
+  "starterCode": {},
+  "solutionCode": "",
+  "hints": [],
+  "isPremium": false,
+  "createdBy": null,
+  "testCases": [
+    {
+      "input": [
+        [
+          10,
+          20
+        ],
+        [
+          2,
+          17,
+          18,
+          19
+        ],
+        2
+      ],
+      "expectedOutput": 16
+    },
+    {
+      "input": [
+        [
+          20,
+          30,
+          10
+        ],
+        [
+          19,
+          13,
+          26,
+          4,
+          25,
+          11,
+          21
+        ],
+        2
+      ],
+      "expectedOutput": 20
+    }
+  ],
+  "hiddenTestCases": [
+    {
+      "input": [
+        [
+          10,
+          20
+        ],
+        [
+          2,
+          17,
+          18,
+          19
+        ],
+        2
+      ],
+      "expectedOutput": 16
+    },
+    {
+      "input": [
+        [
+          20,
+          30,
+          10
+        ],
+        [
+          19,
+          13,
+          26,
+          4,
+          25,
+          11,
+          21
+        ],
+        2
+      ],
+      "expectedOutput": 20
+    }
+  ],
+  "tags": [],
+  "constraints": [],
+  "examples": [],
+  "problemNumber": null,
+  "createdAt": "2025-11-14T21:25:19.902172+00:00",
+  "updatedAt": "2025-12-04T04:35:49.487Z"
+}

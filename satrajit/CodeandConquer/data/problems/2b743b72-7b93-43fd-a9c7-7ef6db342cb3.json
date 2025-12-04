@@ -1,0 +1,80 @@
+{
+  "id": "2b743b72-7b93-43fd-a9c7-7ef6db342cb3",
+  "title": "Minimum Rounds to Complete All Tasks",
+  "slug": "minimum-rounds-to-complete-all-tasks",
+  "description": "You are given a **0-indexed** integer array `tasks`, where `tasks[i]` represents the difficulty level of a task. In each round, you can complete either 2 or 3 tasks of the **same difficulty level**.\n\nReturn _the **minimum** rounds required to complete all the tasks, or_ `-1` _if it is not possible to complete all the tasks._\n\n**Example 1:**\n\n**Input:** tasks = \\[2,2,3,3,2,4,4,4,4,4\\]\n**Output:** 4\n**Explanation:** To complete all the tasks, a possible plan is:\n- In the first round, you complete 3 tasks of difficulty level 2. \n- In the second round, you complete 2 tasks of difficulty level 3. \n- In the third round, you complete 3 tasks of difficulty level 4. \n- In the fourth round, you complete 2 tasks of difficulty level 4.  \nIt can be shown that all the tasks cannot be completed in fewer than 4 rounds, so the answer is 4.\n\n**Example 2:**\n\n**Input:** tasks = \\[2,3,3\\]\n**Output:** -1\n**Explanation:** There is only 1 task of difficulty level 2, but in each round, you can only complete either 2 or 3 tasks of the same difficulty level. Hence, you cannot complete all the tasks, and the answer is -1.\n\n**Constraints:**\n\n*   `1 <= tasks.length <= 105`\n*   `1 <= tasks[i] <= 109`",
+  "difficulty": "Medium",
+  "category": null,
+  "xpReward": 0,
+  "timeLimitMs": 5000,
+  "memoryLimitMb": 256,
+  "starterCode": {},
+  "solutionCode": "",
+  "hints": [],
+  "isPremium": false,
+  "createdBy": null,
+  "testCases": [
+    {
+      "input": [
+        [
+          2,
+          2,
+          3,
+          3,
+          2,
+          4,
+          4,
+          4,
+          4,
+          4
+        ]
+      ],
+      "expectedOutput": 4
+    },
+    {
+      "input": [
+        [
+          2,
+          3,
+          3
+        ]
+      ],
+      "expectedOutput": -1
+    }
+  ],
+  "hiddenTestCases": [
+    {
+      "input": [
+        [
+          2,
+          2,
+          3,
+          3,
+          2,
+          4,
+          4,
+          4,
+          4,
+          4
+        ]
+      ],
+      "expectedOutput": 4
+    },
+    {
+      "input": [
+        [
+          2,
+          3,
+          3
+        ]
+      ],
+      "expectedOutput": -1
+    }
+  ],
+  "tags": [],
+  "constraints": [],
+  "examples": [],
+  "problemNumber": null,
+  "createdAt": "2025-11-14T21:24:57.090918+00:00",
+  "updatedAt": "2025-12-04T04:36:00.327Z"
+}

@@ -1,0 +1,138 @@
+{
+  "id": "37e5b617-d15c-4391-9b76-3bbcd5616e9e",
+  "title": "Find Root of N-Ary Tree",
+  "slug": "find-root-of-n-ary-tree",
+  "description": "You are given all the nodes of an **[N-ary tree](https://leetcode.com/explore/learn/card/n-ary-tree/)** as an array of `Node` objects, where each node has a **unique value**.\n\nReturn _the **root** of the N-ary tree_.\n\n**Custom testing:**\n\nAn N-ary tree can be serialized as represented in its level order traversal where each group of children is separated by the `null` value (see examples).\n\nFor example, the above tree is serialized as `[1,null,2,3,4,5,null,null,6,7,null,8,null,9,10,null,null,11,null,12,null,13,null,null,14]`.\n\nThe testing will be done in the following way:\n\n1.  The **input data** should be provided as a serialization of the tree.\n2.  The driver code will construct the tree from the serialized input data and put each `Node` object into an array **in an arbitrary order**.\n3.  The driver code will pass the array to `findRoot`, and your function should find and return the root `Node` object in the array.\n4.  The driver code will take the returned `Node` object and serialize it. If the serialized value and the input data are the **same**, the test **passes**.\n\n**Example 1:**\n\n**Input:** tree = \\[1,null,3,2,4,null,5,6\\]\n**Output:** \\[1,null,3,2,4,null,5,6\\]\n**Explanation:** The tree from the input data is shown above.\nThe driver code creates the tree and gives findRoot the Node objects in an arbitrary order.\nFor example, the passed array could be \\[Node(5),Node(4),Node(3),Node(6),Node(2),Node(1)\\] or \\[Node(2),Node(6),Node(1),Node(3),Node(5),Node(4)\\].\nThe findRoot function should return the root Node(1), and the driver code will serialize it and compare with the input data.\nThe input data and serialized Node(1) are the same, so the test passes.\n\n**Example 2:**\n\n**Input:** tree = \\[1,null,2,3,4,5,null,null,6,7,null,8,null,9,10,null,null,11,null,12,null,13,null,null,14\\]\n**Output:** \\[1,null,2,3,4,5,null,null,6,7,null,8,null,9,10,null,null,11,null,12,null,13,null,null,14\\]\n\n**Constraints:**\n\n*   The total number of nodes is between `[1, 5 * 104]`.\n*   Each node has a **unique** value.\n\n**Follow up:**\n\n*   Could you solve this problem in constant space complexity with a linear time algorithm?",
+  "difficulty": "Medium",
+  "category": null,
+  "xpReward": 0,
+  "timeLimitMs": 5000,
+  "memoryLimitMb": 256,
+  "starterCode": {},
+  "solutionCode": "",
+  "hints": [],
+  "isPremium": false,
+  "createdBy": null,
+  "testCases": [
+    {
+      "input": [
+        [
+          1,
+          null,
+          3,
+          2,
+          4,
+          null,
+          5,
+          6
+        ]
+      ],
+      "expectedOutput": [
+        1,
+        null,
+        3,
+        2,
+        4,
+        null,
+        5,
+        6
+      ]
+    },
+    {
+      "input": [
+        [
+          1,
+          null,
+          2,
+          3,
+          4,
+          5,
+          null,
+          null,
+          6,
+          7,
+          null,
+          8,
+          null,
+          9,
+          10,
+          null,
+          null,
+          11,
+          null,
+          12,
+          null,
+          13,
+          null,
+          null,
+          14
+        ]
+      ],
+      "expectedOutput": "[1,null,2,3,4,5,null,null,6,7,null,8,null,9,10,null,null,11,null,12,null,13,null,null,14]\n\n**Constraints:**\n\n*   The total number of nodes is between `[1, 5 * 104]`.\n*   Each node has a **unique** value.\n\n**Follow up:**\n\n*   Could you solve this problem in constant space complexity with a linear time algorithm?"
+    }
+  ],
+  "hiddenTestCases": [
+    {
+      "input": [
+        [
+          1,
+          null,
+          3,
+          2,
+          4,
+          null,
+          5,
+          6
+        ]
+      ],
+      "expectedOutput": [
+        1,
+        null,
+        3,
+        2,
+        4,
+        null,
+        5,
+        6
+      ]
+    },
+    {
+      "input": [
+        [
+          1,
+          null,
+          2,
+          3,
+          4,
+          5,
+          null,
+          null,
+          6,
+          7,
+          null,
+          8,
+          null,
+          9,
+          10,
+          null,
+          null,
+          11,
+          null,
+          12,
+          null,
+          13,
+          null,
+          null,
+          14
+        ]
+      ],
+      "expectedOutput": "[1,null,2,3,4,5,null,null,6,7,null,8,null,9,10,null,null,11,null,12,null,13,null,null,14]\n\n**Constraints:**\n\n*   The total number of nodes is between `[1, 5 * 104]`.\n*   Each node has a **unique** value.\n\n**Follow up:**\n\n*   Could you solve this problem in constant space complexity with a linear time algorithm?"
+    }
+  ],
+  "tags": [],
+  "constraints": [],
+  "examples": [],
+  "problemNumber": null,
+  "createdAt": "2025-11-14T21:21:42.615683+00:00",
+  "updatedAt": "2025-12-04T04:37:21.604Z"
+}

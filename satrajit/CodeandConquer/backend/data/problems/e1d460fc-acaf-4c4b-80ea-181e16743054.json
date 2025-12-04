@@ -1,0 +1,105 @@
+{
+  "id": "e1d460fc-acaf-4c4b-80ea-181e16743054",
+  "title": "Build Array from Permutation",
+  "slug": "build-array-from-permutation",
+  "description": "Given a **zero-based permutation** `nums` (**0-indexed**), build an array `ans` of the **same length** where `ans[i] = nums[nums[i]]` for each `0 <= i < nums.length` and return it.\n\nA **zero-based permutation** `nums` is an array of **distinct** integers from `0` to `nums.length - 1` (**inclusive**).\n\n**Example 1:**\n\n**Input:** nums = \\[0,2,1,5,3,4\\]\n**Output:** \\[0,1,2,4,5,3\\]\n**Explanation:** The array ans is built as follows: \nans = \\[nums\\[nums\\[0\\]\\], nums\\[nums\\[1\\]\\], nums\\[nums\\[2\\]\\], nums\\[nums\\[3\\]\\], nums\\[nums\\[4\\]\\], nums\\[nums\\[5\\]\\]\\]\n    = \\[nums\\[0\\], nums\\[2\\], nums\\[1\\], nums\\[5\\], nums\\[3\\], nums\\[4\\]\\]\n    = \\[0,1,2,4,5,3\\]\n\n**Example 2:**\n\n**Input:** nums = \\[5,0,1,2,3,4\\]\n**Output:** \\[4,5,0,1,2,3\\]\n**Explanation:** The array ans is built as follows:\nans = \\[nums\\[nums\\[0\\]\\], nums\\[nums\\[1\\]\\], nums\\[nums\\[2\\]\\], nums\\[nums\\[3\\]\\], nums\\[nums\\[4\\]\\], nums\\[nums\\[5\\]\\]\\]\n    = \\[nums\\[5\\], nums\\[0\\], nums\\[1\\], nums\\[2\\], nums\\[3\\], nums\\[4\\]\\]\n    = \\[4,5,0,1,2,3\\]\n\n**Constraints:**\n\n*   `1 <= nums.length <= 1000`\n*   `0 <= nums[i] < nums.length`\n*   The elements in `nums` are **distinct**.\n\n**Follow-up:** Can you solve it without using an extra space (i.e., `O(1)` memory)?",
+  "difficulty": "Easy",
+  "category": null,
+  "xpReward": 0,
+  "timeLimitMs": 5000,
+  "memoryLimitMb": 256,
+  "starterCode": [],
+  "solutionCode": "",
+  "hints": [],
+  "isPremium": false,
+  "createdBy": null,
+  "testCases": [
+    {
+      "input": [
+        [
+          0,
+          2,
+          1,
+          5,
+          3,
+          4
+        ]
+      ],
+      "expectedOutput": [
+        0,
+        1,
+        2,
+        4,
+        5,
+        3
+      ]
+    },
+    {
+      "input": [
+        [
+          5,
+          0,
+          1,
+          2,
+          3,
+          4
+        ]
+      ],
+      "expectedOutput": [
+        4,
+        5,
+        0,
+        1,
+        2,
+        3
+      ]
+    }
+  ],
+  "hiddenTestCases": [
+    {
+      "input": [
+        [
+          0,
+          2,
+          1,
+          5,
+          3,
+          4
+        ]
+      ],
+      "expectedOutput": [
+        0,
+        1,
+        2,
+        4,
+        5,
+        3
+      ]
+    },
+    {
+      "input": [
+        [
+          5,
+          0,
+          1,
+          2,
+          3,
+          4
+        ]
+      ],
+      "expectedOutput": [
+        4,
+        5,
+        0,
+        1,
+        2,
+        3
+      ]
+    }
+  ],
+  "tags": [],
+  "constraints": [],
+  "examples": [],
+  "createdAt": "2025-11-14T21:23:40.520536+00:00",
+  "updatedAt": "2025-12-04T04:36:33.613Z"
+}

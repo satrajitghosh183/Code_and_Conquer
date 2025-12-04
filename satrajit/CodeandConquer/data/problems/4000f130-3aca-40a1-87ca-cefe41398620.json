@@ -1,0 +1,158 @@
+{
+  "id": "4000f130-3aca-40a1-87ca-cefe41398620",
+  "title": "Maximum Points in an Archery Competition",
+  "slug": "maximum-points-in-an-archery-competition",
+  "description": "Alice and Bob are opponents in an archery competition. The competition has set the following rules:\n\n1.  Alice first shoots `numArrows` arrows and then Bob shoots `numArrows` arrows.\n2.  The points are then calculated as follows:\n    1.  The target has integer scoring sections ranging from `0` to `11` **inclusive**.\n    2.  For **each** section of the target with score `k` (in between `0` to `11`), say Alice and Bob have shot `ak` and `bk` arrows on that section respectively. If `ak >= bk`, then Alice takes `k` points. If `ak < bk`, then Bob takes `k` points.\n    3.  However, if `ak == bk == 0`, then **nobody** takes `k` points.\n\n*   For example, if Alice and Bob both shot `2` arrows on the section with score `11`, then Alice takes `11` points. On the other hand, if Alice shot `0` arrows on the section with score `11` and Bob shot `2` arrows on that same section, then Bob takes `11` points.\n    \n\nYou are given the integer `numArrows` and an integer array `aliceArrows` of size `12`, which represents the number of arrows Alice shot on each scoring section from `0` to `11`. Now, Bob wants to **maximize** the total number of points he can obtain.\n\nReturn _the array_ `bobArrows` _which represents the number of arrows Bob shot on **each** scoring section from_ `0` _to_ `11`. The sum of the values in `bobArrows` should equal `numArrows`.\n\nIf there are multiple ways for Bob to earn the maximum total points, return **any** one of them.\n\n**Example 1:**\n\n**Input:** numArrows = 9, aliceArrows = \\[1,1,0,1,0,0,2,1,0,1,2,0\\]\n**Output:** \\[0,0,0,0,1,1,0,0,1,2,3,1\\]\n**Explanation:** The table above shows how the competition is scored. \nBob earns a total point of 4 + 5 + 8 + 9 + 10 + 11 = 47.\nIt can be shown that Bob cannot obtain a score higher than 47 points.\n\n**Example 2:**\n\n**Input:** numArrows = 3, aliceArrows = \\[0,0,1,0,0,0,0,0,0,0,0,2\\]\n**Output:** \\[0,0,0,0,0,0,0,0,1,1,1,0\\]\n**Explanation:** The table above shows how the competition is scored.\nBob earns a total point of 8 + 9 + 10 = 27.\nIt can be shown that Bob cannot obtain a score higher than 27 points.\n\n**Constraints:**\n\n*   `1 <= numArrows <= 105`\n*   `aliceArrows.length == bobArrows.length == 12`\n*   `0 <= aliceArrows[i], bobArrows[i] <= numArrows`\n*   `sum(aliceArrows[i]) == numArrows`",
+  "difficulty": "Medium",
+  "category": null,
+  "xpReward": 0,
+  "timeLimitMs": 5000,
+  "memoryLimitMb": 256,
+  "starterCode": {},
+  "solutionCode": "",
+  "hints": [],
+  "isPremium": false,
+  "createdBy": null,
+  "testCases": [
+    {
+      "input": [
+        9,
+        [
+          1,
+          1,
+          0,
+          1,
+          0,
+          0,
+          2,
+          1,
+          0,
+          1,
+          2,
+          0
+        ]
+      ],
+      "expectedOutput": [
+        0,
+        0,
+        0,
+        0,
+        1,
+        1,
+        0,
+        0,
+        1,
+        2,
+        3,
+        1
+      ]
+    },
+    {
+      "input": [
+        3,
+        [
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          2
+        ]
+      ],
+      "expectedOutput": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        1,
+        1,
+        1,
+        0
+      ]
+    }
+  ],
+  "hiddenTestCases": [
+    {
+      "input": [
+        9,
+        [
+          1,
+          1,
+          0,
+          1,
+          0,
+          0,
+          2,
+          1,
+          0,
+          1,
+          2,
+          0
+        ]
+      ],
+      "expectedOutput": [
+        0,
+        0,
+        0,
+        0,
+        1,
+        1,
+        0,
+        0,
+        1,
+        2,
+        3,
+        1
+      ]
+    },
+    {
+      "input": [
+        3,
+        [
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          2
+        ]
+      ],
+      "expectedOutput": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        1,
+        1,
+        1,
+        0
+      ]
+    }
+  ],
+  "tags": [],
+  "constraints": [],
+  "examples": [],
+  "problemNumber": null,
+  "createdAt": "2025-11-14T21:24:49.072423+00:00",
+  "updatedAt": "2025-12-04T04:36:03.685Z"
+}

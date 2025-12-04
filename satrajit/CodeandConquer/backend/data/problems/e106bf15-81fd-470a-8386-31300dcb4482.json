@@ -1,0 +1,139 @@
+{
+  "id": "e106bf15-81fd-470a-8386-31300dcb4482",
+  "title": "Maximum XOR With an Element From Array",
+  "slug": "maximum-xor-with-an-element-from-array",
+  "description": "You are given an array `nums` consisting of non-negative integers. You are also given a `queries` array, where `queries[i] = [xi, mi]`.\n\nThe answer to the `ith` query is the maximum bitwise `XOR` value of `xi` and any element of `nums` that does not exceed `mi`. In other words, the answer is `max(nums[j] XOR xi)` for all `j` such that `nums[j] <= mi`. If all elements in `nums` are larger than `mi`, then the answer is `-1`.\n\nReturn _an integer array_ `answer` _where_ `answer.length == queries.length` _and_ `answer[i]` _is the answer to the_ `ith` _query._\n\n**Example 1:**\n\n**Input:** nums = \\[0,1,2,3,4\\], queries = \\[\\[3,1\\],\\[1,3\\],\\[5,6\\]\\]\n**Output:** \\[3,3,7\\]\n**Explanation:**\n1) 0 and 1 are the only two integers not greater than 1. 0 XOR 3 = 3 and 1 XOR 3 = 2. The larger of the two is 3.\n2) 1 XOR 2 = 3.\n3) 5 XOR 2 = 7.\n\n**Example 2:**\n\n**Input:** nums = \\[5,2,4,6,6,3\\], queries = \\[\\[12,4\\],\\[8,1\\],\\[6,3\\]\\]\n**Output:** \\[15,-1,5\\]\n\n**Constraints:**\n\n*   `1 <= nums.length, queries.length <= 105`\n*   `queries[i].length == 2`\n*   `0 <= nums[j], xi, mi <= 109`",
+  "difficulty": "Hard",
+  "category": null,
+  "xpReward": 0,
+  "timeLimitMs": 5000,
+  "memoryLimitMb": 256,
+  "starterCode": [],
+  "solutionCode": "",
+  "hints": [],
+  "isPremium": false,
+  "createdBy": null,
+  "testCases": [
+    {
+      "input": [
+        [
+          0,
+          1,
+          2,
+          3,
+          4
+        ],
+        [
+          [
+            3,
+            1
+          ],
+          [
+            1,
+            3
+          ],
+          [
+            5,
+            6
+          ]
+        ]
+      ],
+      "expectedOutput": [
+        3,
+        3,
+        7
+      ]
+    },
+    {
+      "input": [
+        [
+          5,
+          2,
+          4,
+          6,
+          6,
+          3
+        ],
+        [
+          [
+            12,
+            4
+          ],
+          [
+            8,
+            1
+          ],
+          [
+            6,
+            3
+          ]
+        ]
+      ],
+      "expectedOutput": "[15,-1,5]\n\n**Constraints:**\n\n*   `1 <= nums.length, queries.length <= 105`\n*   `queries[i].length == 2`\n*   `0 <= nums[j], xi, mi <= 109`"
+    }
+  ],
+  "hiddenTestCases": [
+    {
+      "input": [
+        [
+          0,
+          1,
+          2,
+          3,
+          4
+        ],
+        [
+          [
+            3,
+            1
+          ],
+          [
+            1,
+            3
+          ],
+          [
+            5,
+            6
+          ]
+        ]
+      ],
+      "expectedOutput": [
+        3,
+        3,
+        7
+      ]
+    },
+    {
+      "input": [
+        [
+          5,
+          2,
+          4,
+          6,
+          6,
+          3
+        ],
+        [
+          [
+            12,
+            4
+          ],
+          [
+            8,
+            1
+          ],
+          [
+            6,
+            3
+          ]
+        ]
+      ],
+      "expectedOutput": "[15,-1,5]\n\n**Constraints:**\n\n*   `1 <= nums.length, queries.length <= 105`\n*   `queries[i].length == 2`\n*   `0 <= nums[j], xi, mi <= 109`"
+    }
+  ],
+  "tags": [],
+  "constraints": [],
+  "examples": [],
+  "createdAt": "2025-11-14T21:22:46.857565+00:00",
+  "updatedAt": "2025-12-04T04:37:02.665Z"
+}

@@ -1,0 +1,50 @@
+{
+  "id": "071292f2-8720-40f3-94e3-8362d6d742e1",
+  "title": "Sorting the Sentence",
+  "slug": "sorting-the-sentence",
+  "description": "A **sentence** is a list of words that are separated by a single space with no leading or trailing spaces. Each word consists of lowercase and uppercase English letters.\n\nA sentence can be **shuffled** by appending the **1-indexed word position** to each word then rearranging the words in the sentence.\n\n*   For example, the sentence `\"This is a sentence \"` can be shuffled as `\"sentence4 a3 is2 This1 \"` or `\"is2 sentence4 This1 a3 \"`.\n\nGiven a **shuffled sentence** `s` containing no more than `9` words, reconstruct and return _the original sentence_.\n\n**Example 1:**\n\n**Input:** s =  \"is2 sentence4 This1 a3 \"\n**Output:**  \"This is a sentence \"\n**Explanation:** Sort the words in s to their original positions  \"This1 is2 a3 sentence4 \", then remove the numbers.\n\n**Example 2:**\n\n**Input:** s =  \"Myself2 Me1 I4 and3 \"\n**Output:**  \"Me Myself and I \"\n**Explanation:** Sort the words in s to their original positions  \"Me1 Myself2 and3 I4 \", then remove the numbers.\n\n**Constraints:**\n\n*   `2 <= s.length <= 200`\n*   `s` consists of lowercase and uppercase English letters, spaces, and digits from `1` to `9`.\n*   The number of words in `s` is between `1` and `9`.\n*   The words in `s` are separated by a single space.\n*   `s` contains no leading or trailing spaces.\n\n1\\. All characters in a are strictly less than those in b (i.e., a\\[i\\] < b\\[i\\] for all i). 2. All characters in b are strictly less than those in a (i.e., a\\[i\\] > b\\[i\\] for all i). 3. All characters in a and b are the same (i.e., a\\[i\\] = b\\[i\\] for all i).",
+  "difficulty": "Easy",
+  "category": null,
+  "xpReward": 0,
+  "timeLimitMs": 5000,
+  "memoryLimitMb": 256,
+  "starterCode": {},
+  "solutionCode": "",
+  "hints": [],
+  "isPremium": false,
+  "createdBy": null,
+  "testCases": [
+    {
+      "input": [
+        "is2 sentence4 This1 a3 "
+      ],
+      "expectedOutput": "This is a sentence "
+    },
+    {
+      "input": [
+        "Myself2 Me1 I4 and3 "
+      ],
+      "expectedOutput": "Me Myself and I "
+    }
+  ],
+  "hiddenTestCases": [
+    {
+      "input": [
+        "is2 sentence4 This1 a3 "
+      ],
+      "expectedOutput": "This is a sentence "
+    },
+    {
+      "input": [
+        "Myself2 Me1 I4 and3 "
+      ],
+      "expectedOutput": "Me Myself and I "
+    }
+  ],
+  "tags": [],
+  "constraints": [],
+  "examples": [],
+  "problemNumber": null,
+  "createdAt": "2025-11-14T21:23:25.615893+00:00",
+  "updatedAt": "2025-12-04T04:36:39.473Z"
+}

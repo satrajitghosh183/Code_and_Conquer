@@ -1,0 +1,50 @@
+{
+  "id": "d20c1d54-8249-446f-9740-98b82ad3f197",
+  "title": "Count Square Sum Triples",
+  "slug": "count-square-sum-triples",
+  "description": "A **square triple** `(a,b,c)` is a triple where `a`, `b`, and `c` are **integers** and `a2 + b2 = c2`.\n\nGiven an integer `n`, return _the number of **square triples** such that_ `1 <= a, b, c <= n`.\n\n**Example 1:**\n\n**Input:** n = 5\n**Output:** 2\n**Explanation**: The square triples are (3,4,5) and (4,3,5).\n\n**Example 2:**\n\n**Input:** n = 10\n**Output:** 4\n**Explanation**: The square triples are (3,4,5), (4,3,5), (6,8,10), and (8,6,10).\n\n**Constraints:**\n\n*   `1 <= n <= 250`",
+  "difficulty": "Easy",
+  "category": null,
+  "xpReward": 0,
+  "timeLimitMs": 5000,
+  "memoryLimitMb": 256,
+  "starterCode": {},
+  "solutionCode": "",
+  "hints": [],
+  "isPremium": false,
+  "createdBy": null,
+  "testCases": [
+    {
+      "input": [
+        5
+      ],
+      "expectedOutput": "2\n**Explanation**: The square triples are (3,4,5) and (4,3,5)."
+    },
+    {
+      "input": [
+        10
+      ],
+      "expectedOutput": "4\n**Explanation**: The square triples are (3,4,5), (4,3,5), (6,8,10), and (8,6,10).\n\n**Constraints:**\n\n*   `1 <= n <= 250`"
+    }
+  ],
+  "hiddenTestCases": [
+    {
+      "input": [
+        5
+      ],
+      "expectedOutput": "2\n**Explanation**: The square triples are (3,4,5) and (4,3,5)."
+    },
+    {
+      "input": [
+        10
+      ],
+      "expectedOutput": "4\n**Explanation**: The square triples are (3,4,5), (4,3,5), (6,8,10), and (8,6,10).\n\n**Constraints:**\n\n*   `1 <= n <= 250`"
+    }
+  ],
+  "tags": [],
+  "constraints": [],
+  "examples": [],
+  "problemNumber": null,
+  "createdAt": "2025-11-14T21:23:41.658662+00:00",
+  "updatedAt": "2025-12-04T04:36:32.967Z"
+}

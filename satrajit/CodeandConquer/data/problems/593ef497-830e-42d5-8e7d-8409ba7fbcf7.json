@@ -1,0 +1,54 @@
+{
+  "id": "593ef497-830e-42d5-8e7d-8409ba7fbcf7",
+  "title": "Pass the Pillow",
+  "slug": "pass-the-pillow",
+  "description": "There are `n` people standing in a line labeled from `1` to `n`. The first person in the line is holding a pillow initially. Every second, the person holding the pillow passes it to the next person standing in the line. Once the pillow reaches the end of the line, the direction changes, and people continue passing the pillow in the opposite direction.\n\n*   For example, once the pillow reaches the `nth` person they pass it to the `n - 1th` person, then to the `n - 2th` person and so on.\n\nGiven the two positive integers `n` and `time`, return _the index of the person holding the pillow after_ `time` _seconds_.\n\n**Example 1:**\n\n**Input:** n = 4, time = 5\n**Output:** 2\n**Explanation:** People pass the pillow in the following way: 1 -> 2 -> 3 -> 4 -> 3 -> 2.\nAfer five seconds, the pillow is given to the 2nd person.\n\n**Example 2:**\n\n**Input:** n = 3, time = 2\n**Output:** 3\n**Explanation:** People pass the pillow in the following way: 1 -> 2 -> 3.\nAfer two seconds, the pillow is given to the 3rd person.\n\n**Constraints:**\n\n*   `2 <= n <= 1000`\n*   `1 <= time <= 1000`",
+  "difficulty": "Easy",
+  "category": null,
+  "xpReward": 0,
+  "timeLimitMs": 5000,
+  "memoryLimitMb": 256,
+  "starterCode": {},
+  "solutionCode": "",
+  "hints": [],
+  "isPremium": false,
+  "createdBy": null,
+  "testCases": [
+    {
+      "input": [
+        4,
+        5
+      ],
+      "expectedOutput": 2
+    },
+    {
+      "input": [
+        3,
+        2
+      ],
+      "expectedOutput": 3
+    }
+  ],
+  "hiddenTestCases": [
+    {
+      "input": [
+        4,
+        5
+      ],
+      "expectedOutput": 2
+    },
+    {
+      "input": [
+        3,
+        2
+      ],
+      "expectedOutput": 3
+    }
+  ],
+  "tags": [],
+  "constraints": [],
+  "examples": [],
+  "problemNumber": null,
+  "createdAt": "2025-11-14T21:26:28.070298+00:00",
+  "updatedAt": "2025-12-04T04:35:17.705Z"
+}

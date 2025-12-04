@@ -1,0 +1,71 @@
+{
+  "id": "ee620661-efb5-4466-abb0-26e7052e9173",
+  "title": "Maximum Value of a String in an Array",
+  "slug": "maximum-value-of-a-string-in-an-array",
+  "description": "The **value** of an alphanumeric string can be defined as:\n\n*   The **numeric** representation of the string in base `10`, if it comprises of digits **only**.\n*   The **length** of the string, otherwise.\n\nGiven an array `strs` of alphanumeric strings, return _the **maximum value** of any string in_ `strs`.\n\n**Example 1:**\n\n**Input:** strs = \\[ \"alic3 \", \"bob \", \"3 \", \"4 \", \"00000 \"\\]\n**Output:** 5\n**Explanation:** \n-  \"alic3 \" consists of both letters and digits, so its value is its length, i.e. 5.\n-  \"bob \" consists only of letters, so its value is also its length, i.e. 3.\n-  \"3 \" consists only of digits, so its value is its numeric equivalent, i.e. 3.\n-  \"4 \" also consists only of digits, so its value is 4.\n-  \"00000 \" consists only of digits, so its value is 0.\nHence, the maximum value is 5, of  \"alic3 \".\n\n**Example 2:**\n\n**Input:** strs = \\[ \"1 \", \"01 \", \"001 \", \"0001 \"\\]\n**Output:** 1\n**Explanation:** \nEach string in the array has value 1. Hence, we return 1.\n\n**Constraints:**\n\n*   `1 <= strs.length <= 100`\n*   `1 <= strs[i].length <= 9`\n*   `strs[i]` consists of only lowercase English letters and digits.",
+  "difficulty": "Easy",
+  "category": null,
+  "xpReward": 0,
+  "timeLimitMs": 5000,
+  "memoryLimitMb": 256,
+  "starterCode": [],
+  "solutionCode": "",
+  "hints": [],
+  "isPremium": false,
+  "createdBy": null,
+  "testCases": [
+    {
+      "input": [
+        [
+          "alic3 ",
+          "bob ",
+          "3 ",
+          "4 ",
+          "00000 "
+        ]
+      ],
+      "expectedOutput": 5
+    },
+    {
+      "input": [
+        [
+          "1 ",
+          "01 ",
+          "001 ",
+          "0001 "
+        ]
+      ],
+      "expectedOutput": 1
+    }
+  ],
+  "hiddenTestCases": [
+    {
+      "input": [
+        [
+          "alic3 ",
+          "bob ",
+          "3 ",
+          "4 ",
+          "00000 "
+        ]
+      ],
+      "expectedOutput": 5
+    },
+    {
+      "input": [
+        [
+          "1 ",
+          "01 ",
+          "001 ",
+          "0001 "
+        ]
+      ],
+      "expectedOutput": 1
+    }
+  ],
+  "tags": [],
+  "constraints": [],
+  "examples": [],
+  "createdAt": "2025-11-14T21:26:02.741809+00:00",
+  "updatedAt": "2025-12-04T04:35:26.827Z"
+}

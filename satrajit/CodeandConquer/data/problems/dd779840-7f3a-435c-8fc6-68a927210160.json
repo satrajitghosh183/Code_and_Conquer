@@ -1,0 +1,56 @@
+{
+  "id": "dd779840-7f3a-435c-8fc6-68a927210160",
+  "title": "Circular Sentence",
+  "slug": "circular-sentence",
+  "description": "A **sentence** is a list of words that are separated by a **single** space with no leading or trailing spaces.\n\n*   For example, `\"Hello World \"`, `\"HELLO \"`, `\"hello world hello world \"` are all sentences.\n\nWords consist of **only** uppercase and lowercase English letters. Uppercase and lowercase English letters are considered different.\n\nA sentence is **circular** if:\n\n*   The last character of a word is equal to the first character of the next word.\n*   The last character of the last word is equal to the first character of the first word.\n\nFor example, `\"leetcode exercises sound delightful \"`, `\"eetcode \"`, `\"leetcode eats soul \"` are all circular sentences. However, `\"Leetcode is cool \"`, `\"happy Leetcode \"`, `\"Leetcode \"` and `\"I like Leetcode \"` are **not** circular sentences.\n\nGiven a string `sentence`, return `true` _if it is circular_. Otherwise, return `false`.\n\n**Example 1:**\n\n**Input:** sentence =  \"leetcode exercises sound delightful \"\n**Output:** true\n**Explanation:** The words in sentence are \\[ \"leetcode \",  \"exercises \",  \"sound \",  \"delightful \"\\].\n- leetcode's last character is equal to exercises's first character.\n- exercises's last character is equal to sound's first character.\n- sound's last character is equal to delightful's first character.\n- delightful's last character is equal to leetcode's first character.\nThe sentence is circular.\n\n**Example 2:**\n\n**Input:** sentence =  \"eetcode \"\n**Output:** true\n**Explanation:** The words in sentence are \\[ \"eetcode \"\\].\n- eetcode's last character is equal to eetcode's first character.\nThe sentence is circular.\n\n**Example 3:**\n\n**Input:** sentence =  \"Leetcode is cool \"\n**Output:** false\n**Explanation:** The words in sentence are \\[ \"Leetcode \",  \"is \",  \"cool \"\\].\n- Leetcode's last character is **not** equal to is's first character.\nThe sentence is **not** circular.\n\n**Constraints:**\n\n*   `1 <= sentence.length <= 500`\n*   `sentence` consist of only lowercase and uppercase English letters and spaces.\n*   The words in `sentence` are separated by a single space.\n*   There are no leading or trailing spaces.",
+  "difficulty": "Easy",
+  "category": null,
+  "xpReward": 0,
+  "timeLimitMs": 5000,
+  "memoryLimitMb": 256,
+  "starterCode": {},
+  "solutionCode": "",
+  "hints": [],
+  "isPremium": false,
+  "createdBy": null,
+  "testCases": [
+    {
+      "input": [
+        "leetcode exercises sound delightful "
+      ],
+      "expectedOutput": true
+    },
+    {
+      "input": [
+        "eetcode "
+      ],
+      "expectedOutput": true
+    },
+    {
+      "input": [
+        "Leetcode is cool "
+      ],
+      "expectedOutput": false
+    }
+  ],
+  "hiddenTestCases": [
+    {
+      "input": [
+        "leetcode exercises sound delightful "
+      ],
+      "expectedOutput": true
+    },
+    {
+      "input": [
+        "eetcode "
+      ],
+      "expectedOutput": true
+    }
+  ],
+  "tags": [],
+  "constraints": [],
+  "examples": [],
+  "problemNumber": null,
+  "createdAt": "2025-11-14T21:26:01.482771+00:00",
+  "updatedAt": "2025-12-04T04:35:28.509Z"
+}

@@ -1,0 +1,89 @@
+{
+  "id": "c9cbd2c7-6290-4b46-b3a8-e80e67d9d462",
+  "title": "Split Message Based on Limit",
+  "slug": "split-message-based-on-limit",
+  "description": "You are given a string, `message`, and a positive integer, `limit`.\n\nYou must **split** `message` into one or more **parts** based on `limit`. Each resulting part should have the suffix `\" \"`, where `\"b \"` is to be **replaced** with the total number of parts and `\"a \"` is to be **replaced** with the index of the part, starting from `1` and going up to `b`. Additionally, the length of each resulting part (including its suffix) should be **equal** to `limit`, except for the last part whose length can be **at most** `limit`.\n\nThe resulting parts should be formed such that when their suffixes are removed and they are all concatenated **in order**, they should be equal to `message`. Also, the result should contain as few parts as possible.\n\nReturn _the parts_ `message` _would be split into as an array of strings_. If it is impossible to split `message` as required, return _an empty array_.\n\n**Example 1:**\n\n**Input:** message =  \"this is really a very awesome message \", limit = 9\n**Output:** \\[ \"thi<1/14> \", \"s i<2/14> \", \"s r<3/14> \", \"eal<4/14> \", \"ly <5/14> \", \"a v<6/14> \", \"ery<7/14> \", \" aw<8/14> \", \"eso<9/14> \", \"me<10/14> \", \" m<11/14> \", \"es<12/14> \", \"sa<13/14> \", \"ge<14/14> \"\\]\n**Explanation:**\nThe first 9 parts take 3 characters each from the beginning of message.\nThe next 5 parts take 2 characters each to finish splitting message. \nIn this example, each part, including the last, has length 9. \nIt can be shown it is not possible to split message into less than 14 parts.\n\n**Example 2:**\n\n**Input:** message =  \"short message \", limit = 15\n**Output:** \\[ \"short mess<1/2> \", \"age<2/2> \"\\]\n**Explanation:**\nUnder the given constraints, the string can be split into two parts: \n- The first part comprises of the first 10 characters, and has a length 15.\n- The next part comprises of the last 3 characters, and has a length 8.\n\n**Constraints:**\n\n*   `1 <= message.length <= 104`\n*   `message` consists only of lowercase English letters and `' '`.\n*   `1 <= limit <= 104`",
+  "difficulty": "Hard",
+  "category": null,
+  "xpReward": 0,
+  "timeLimitMs": 5000,
+  "memoryLimitMb": 256,
+  "starterCode": [],
+  "solutionCode": "",
+  "hints": [],
+  "isPremium": false,
+  "createdBy": null,
+  "testCases": [
+    {
+      "input": [
+        "this is really a very awesome message ",
+        9
+      ],
+      "expectedOutput": [
+        "thi<1/14> ",
+        "s i<2/14> ",
+        "s r<3/14> ",
+        "eal<4/14> ",
+        "ly <5/14> ",
+        "a v<6/14> ",
+        "ery<7/14> ",
+        " aw<8/14> ",
+        "eso<9/14> ",
+        "me<10/14> ",
+        " m<11/14> ",
+        "es<12/14> ",
+        "sa<13/14> ",
+        "ge<14/14> "
+      ]
+    },
+    {
+      "input": [
+        "short message ",
+        15
+      ],
+      "expectedOutput": [
+        "short mess<1/2> ",
+        "age<2/2> "
+      ]
+    }
+  ],
+  "hiddenTestCases": [
+    {
+      "input": [
+        "this is really a very awesome message ",
+        9
+      ],
+      "expectedOutput": [
+        "thi<1/14> ",
+        "s i<2/14> ",
+        "s r<3/14> ",
+        "eal<4/14> ",
+        "ly <5/14> ",
+        "a v<6/14> ",
+        "ery<7/14> ",
+        " aw<8/14> ",
+        "eso<9/14> ",
+        "me<10/14> ",
+        " m<11/14> ",
+        "es<12/14> ",
+        "sa<13/14> ",
+        "ge<14/14> "
+      ]
+    },
+    {
+      "input": [
+        "short message ",
+        15
+      ],
+      "expectedOutput": [
+        "short mess<1/2> ",
+        "age<2/2> "
+      ]
+    }
+  ],
+  "tags": [],
+  "constraints": [],
+  "examples": [],
+  "createdAt": "2025-11-14T21:25:56.369995+00:00",
+  "updatedAt": "2025-12-04T04:35:31.957Z"
+}

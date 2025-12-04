@@ -1,0 +1,105 @@
+{
+  "id": "74cec7ca-ef86-462c-94f6-dbaa4a19a5a2",
+  "title": "Minimum Jumps to Reach Home",
+  "slug": "minimum-jumps-to-reach-home",
+  "description": "A certain bug's home is on the x-axis at position `x`. Help them get there from position `0`.\n\nThe bug jumps according to the following rules:\n\n*   It can jump exactly `a` positions **forward** (to the right).\n*   It can jump exactly `b` positions **backward** (to the left).\n*   It cannot jump backward twice in a row.\n*   It cannot jump to any `forbidden` positions.\n\nThe bug may jump forward **beyond** its home, but it **cannot jump** to positions numbered with **negative** integers.\n\nGiven an array of integers `forbidden`, where `forbidden[i]` means that the bug cannot jump to the position `forbidden[i]`, and integers `a`, `b`, and `x`, return _the minimum number of jumps needed for the bug to reach its home_. If there is no possible sequence of jumps that lands the bug on position `x`, return `-1.`\n\n**Example 1:**\n\n**Input:** forbidden = \\[14,4,18,1,15\\], a = 3, b = 15, x = 9\n**Output:** 3\n**Explanation:** 3 jumps forward (0 -> 3 -> 6 -> 9) will get the bug home.\n\n**Example 2:**\n\n**Input:** forbidden = \\[8,3,16,6,12,20\\], a = 15, b = 13, x = 11\n**Output:** -1\n\n**Example 3:**\n\n**Input:** forbidden = \\[1,6,2,14,5,17,4\\], a = 16, b = 9, x = 7\n**Output:** 2\n**Explanation:** One jump forward (0 -> 16) then one jump backward (16 -> 7) will get the bug home.\n\n**Constraints:**\n\n*   `1 <= forbidden.length <= 1000`\n*   `1 <= a, b, forbidden[i] <= 2000`\n*   `0 <= x <= 2000`\n*   All the elements in `forbidden` are distinct.\n*   Position `x` is not forbidden.",
+  "difficulty": "Medium",
+  "category": null,
+  "xpReward": 0,
+  "timeLimitMs": 5000,
+  "memoryLimitMb": 256,
+  "starterCode": {},
+  "solutionCode": "",
+  "hints": [],
+  "isPremium": false,
+  "createdBy": null,
+  "testCases": [
+    {
+      "input": [
+        [
+          14,
+          4,
+          18,
+          1,
+          15
+        ],
+        3,
+        15,
+        9
+      ],
+      "expectedOutput": 3
+    },
+    {
+      "input": [
+        [
+          8,
+          3,
+          16,
+          6,
+          12,
+          20
+        ],
+        15,
+        13,
+        11
+      ],
+      "expectedOutput": -1
+    },
+    {
+      "input": [
+        [
+          1,
+          6,
+          2,
+          14,
+          5,
+          17,
+          4
+        ],
+        16,
+        9,
+        7
+      ],
+      "expectedOutput": 2
+    }
+  ],
+  "hiddenTestCases": [
+    {
+      "input": [
+        [
+          14,
+          4,
+          18,
+          1,
+          15
+        ],
+        3,
+        15,
+        9
+      ],
+      "expectedOutput": 3
+    },
+    {
+      "input": [
+        [
+          8,
+          3,
+          16,
+          6,
+          12,
+          20
+        ],
+        15,
+        13,
+        11
+      ],
+      "expectedOutput": -1
+    }
+  ],
+  "tags": [],
+  "constraints": [],
+  "examples": [],
+  "problemNumber": null,
+  "createdAt": "2025-11-14T21:22:34.929941+00:00",
+  "updatedAt": "2025-12-04T04:37:08.867Z"
+}

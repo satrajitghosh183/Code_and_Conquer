@@ -1,0 +1,66 @@
+{
+  "id": "9243fe57-f475-4e7c-b715-14100f058edf",
+  "title": "Minimum Time to Complete Trips",
+  "slug": "minimum-time-to-complete-trips",
+  "description": "You are given an array `time` where `time[i]` denotes the time taken by the `ith` bus to complete **one trip**.\n\nEach bus can make multiple trips **successively**; that is, the next trip can start **immediately after** completing the current trip. Also, each bus operates **independently**; that is, the trips of one bus do not influence the trips of any other bus.\n\nYou are also given an integer `totalTrips`, which denotes the number of trips all buses should make **in total**. Return _the **minimum time** required for all buses to complete **at least**_ `totalTrips` _trips_.\n\n**Example 1:**\n\n**Input:** time = \\[1,2,3\\], totalTrips = 5\n**Output:** 3\n**Explanation:**\n- At time t = 1, the number of trips completed by each bus are \\[1,0,0\\]. \n  The total number of trips completed is 1 + 0 + 0 = 1.\n- At time t = 2, the number of trips completed by each bus are \\[2,1,0\\]. \n  The total number of trips completed is 2 + 1 + 0 = 3.\n- At time t = 3, the number of trips completed by each bus are \\[3,1,1\\]. \n  The total number of trips completed is 3 + 1 + 1 = 5.\nSo the minimum time needed for all buses to complete at least 5 trips is 3.\n\n**Example 2:**\n\n**Input:** time = \\[2\\], totalTrips = 1\n**Output:** 2\n**Explanation:**\nThere is only one bus, and it will complete its first trip at t = 2.\nSo the minimum time needed to complete 1 trip is 2.\n\n**Constraints:**\n\n*   `1 <= time.length <= 105`\n*   `1 <= time[i], totalTrips <= 107`",
+  "difficulty": "Medium",
+  "category": null,
+  "xpReward": 0,
+  "timeLimitMs": 5000,
+  "memoryLimitMb": 256,
+  "starterCode": {},
+  "solutionCode": "",
+  "hints": [],
+  "isPremium": false,
+  "createdBy": null,
+  "testCases": [
+    {
+      "input": [
+        [
+          1,
+          2,
+          3
+        ],
+        5
+      ],
+      "expectedOutput": 3
+    },
+    {
+      "input": [
+        [
+          2
+        ],
+        1
+      ],
+      "expectedOutput": 2
+    }
+  ],
+  "hiddenTestCases": [
+    {
+      "input": [
+        [
+          1,
+          2,
+          3
+        ],
+        5
+      ],
+      "expectedOutput": 3
+    },
+    {
+      "input": [
+        [
+          2
+        ],
+        1
+      ],
+      "expectedOutput": 2
+    }
+  ],
+  "tags": [],
+  "constraints": [],
+  "examples": [],
+  "problemNumber": null,
+  "createdAt": "2025-11-14T21:24:43.56121+00:00",
+  "updatedAt": "2025-12-04T04:36:06.191Z"
+}

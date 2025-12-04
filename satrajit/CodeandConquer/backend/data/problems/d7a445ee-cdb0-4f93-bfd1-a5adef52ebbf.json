@@ -1,0 +1,143 @@
+{
+  "id": "d7a445ee-cdb0-4f93-bfd1-a5adef52ebbf",
+  "title": "Elements in Array After Removing and Replacing Elements",
+  "slug": "elements-in-array-after-removing-and-replacing-elements",
+  "description": "You are given a **0-indexed** integer array `nums`. Initially on minute `0`, the array is unchanged. Every minute, the **leftmost** element in `nums` is removed until no elements remain. Then, every minute, one element is appended to the **end** of `nums`, in the order they were removed in, until the original array is restored. This process repeats indefinitely.\n\n*   For example, the array `[0,1,2]` would change as follows: `[0,1,2] -> [1,2] -> [2] -> [] -> [0] -> [0,1] -> [0,1,2] -> [1,2] -> [2] -> [] -> [0] -> [0,1] -> [0,1,2] -> ...`\n\nYou are also given a 2D integer array `queries` of size `n` where `queries[j] = [timej, indexj]`. The answer to the `jth` query is:\n\n*   `nums[indexj]` if `indexj < nums.length` at minute `timej`\n*   `-1` if `indexj >= nums.length` at minute `timej`\n\nReturn _an integer array `ans` of size_ `n` _where_ `ans[j]` _is the answer to the_ `jth` _query_.\n\n**Example 1:**\n\n**Input:** nums = \\[0,1,2\\], queries = \\[\\[0,2\\],\\[2,0\\],\\[3,2\\],\\[5,0\\]\\]\n**Output:** \\[2,2,-1,0\\]\n**Explanation:**\nMinute 0: \\[0,1,2\\] - All elements are in the nums.\nMinute 1: \\[1,2\\]   - The leftmost element, 0, is removed.\nMinute 2: \\[2\\]     - The leftmost element, 1, is removed.\nMinute 3: \\[\\]      - The leftmost element, 2, is removed.\nMinute 4: \\[0\\]     - 0 is added to the end of nums.\nMinute 5: \\[0,1\\]   - 1 is added to the end of nums.\n\nAt minute 0, nums\\[2\\] is 2.\nAt minute 2, nums\\[0\\] is 2.\nAt minute 3, nums\\[2\\] does not exist.\nAt minute 5, nums\\[0\\] is 0.\n\n**Example 2:**\n\n**Input:** nums = \\[2\\], queries = \\[\\[0,0\\],\\[1,0\\],\\[2,0\\],\\[3,0\\]\\]\n**Output:** \\[2,-1,2,-1\\]\nMinute 0: \\[2\\] - All elements are in the nums.\nMinute 1: \\[\\]  - The leftmost element, 2, is removed.\nMinute 2: \\[2\\] - 2 is added to the end of nums.\nMinute 3: \\[\\]  - The leftmost element, 2, is removed.\n\nAt minute 0, nums\\[0\\] is 2.\nAt minute 1, nums\\[0\\] does not exist.\nAt minute 2, nums\\[0\\] is 2.\nAt minute 3, nums\\[0\\] does not exist.\n\n**Constraints:**\n\n*   `1 <= nums.length <= 100`\n*   `0 <= nums[i] <= 100`\n*   `n == queries.length`\n*   `1 <= n <= 105`\n*   `queries[j].length == 2`\n*   `0 <= timej <= 105`\n*   `0 <= indexj < nums.length`",
+  "difficulty": "Medium",
+  "category": null,
+  "xpReward": 0,
+  "timeLimitMs": 5000,
+  "memoryLimitMb": 256,
+  "starterCode": [],
+  "solutionCode": "",
+  "hints": [],
+  "isPremium": false,
+  "createdBy": null,
+  "testCases": [
+    {
+      "input": [
+        [
+          0,
+          1,
+          2
+        ],
+        [
+          [
+            0,
+            2
+          ],
+          [
+            2,
+            0
+          ],
+          [
+            3,
+            2
+          ],
+          [
+            5,
+            0
+          ]
+        ]
+      ],
+      "expectedOutput": [
+        2,
+        2,
+        -1,
+        0
+      ]
+    },
+    {
+      "input": [
+        [
+          2
+        ],
+        [
+          [
+            0,
+            0
+          ],
+          [
+            1,
+            0
+          ],
+          [
+            2,
+            0
+          ],
+          [
+            3,
+            0
+          ]
+        ]
+      ],
+      "expectedOutput": "[2,-1,2,-1]\nMinute 0: [2] - All elements are in the nums.\nMinute 1: []  - The leftmost element, 2, is removed.\nMinute 2: [2] - 2 is added to the end of nums.\nMinute 3: []  - The leftmost element, 2, is removed.\n\nAt minute 0, nums[0] is 2.\nAt minute 1, nums[0] does not exist.\nAt minute 2, nums[0] is 2.\nAt minute 3, nums[0] does not exist.\n\n**Constraints:**\n\n*   `1 <= nums.length <= 100`\n*   `0 <= nums[i] <= 100`\n*   `n == queries.length`\n*   `1 <= n <= 105`\n*   `queries[j].length == 2`\n*   `0 <= timej <= 105`\n*   `0 <= indexj < nums.length`"
+    }
+  ],
+  "hiddenTestCases": [
+    {
+      "input": [
+        [
+          0,
+          1,
+          2
+        ],
+        [
+          [
+            0,
+            2
+          ],
+          [
+            2,
+            0
+          ],
+          [
+            3,
+            2
+          ],
+          [
+            5,
+            0
+          ]
+        ]
+      ],
+      "expectedOutput": [
+        2,
+        2,
+        -1,
+        0
+      ]
+    },
+    {
+      "input": [
+        [
+          2
+        ],
+        [
+          [
+            0,
+            0
+          ],
+          [
+            1,
+            0
+          ],
+          [
+            2,
+            0
+          ],
+          [
+            3,
+            0
+          ]
+        ]
+      ],
+      "expectedOutput": "[2,-1,2,-1]\nMinute 0: [2] - All elements are in the nums.\nMinute 1: []  - The leftmost element, 2, is removed.\nMinute 2: [2] - 2 is added to the end of nums.\nMinute 3: []  - The leftmost element, 2, is removed.\n\nAt minute 0, nums[0] is 2.\nAt minute 1, nums[0] does not exist.\nAt minute 2, nums[0] is 2.\nAt minute 3, nums[0] does not exist.\n\n**Constraints:**\n\n*   `1 <= nums.length <= 100`\n*   `0 <= nums[i] <= 100`\n*   `n == queries.length`\n*   `1 <= n <= 105`\n*   `queries[j].length == 2`\n*   `0 <= timej <= 105`\n*   `0 <= indexj < nums.length`"
+    }
+  ],
+  "tags": [],
+  "constraints": [],
+  "examples": [],
+  "createdAt": "2025-11-14T21:24:27.48043+00:00",
+  "updatedAt": "2025-12-04T04:36:13.748Z"
+}

@@ -1,0 +1,165 @@
+{
+  "id": "bbd0e9be-9249-4992-b6c2-398ef55d0b97",
+  "title": "Determine Whether Matrix Can Be Obtained By Rotation",
+  "slug": "determine-whether-matrix-can-be-obtained-by-rotation",
+  "description": "Given two `n x n` binary matrices `mat` and `target`, return `true` _if it is possible to make_ `mat` _equal to_ `target` _by **rotating**_ `mat` _in **90-degree increments**, or_ `false` _otherwise._\n\n**Example 1:**\n\n**Input:** mat = \\[\\[0,1\\],\\[1,0\\]\\], target = \\[\\[1,0\\],\\[0,1\\]\\]\n**Output:** true\n**Explanation:** We can rotate mat 90 degrees clockwise to make mat equal target.\n\n**Example 2:**\n\n**Input:** mat = \\[\\[0,1\\],\\[1,1\\]\\], target = \\[\\[1,0\\],\\[0,1\\]\\]\n**Output:** false\n**Explanation:** It is impossible to make mat equal to target by rotating mat.\n\n**Example 3:**\n\n**Input:** mat = \\[\\[0,0,0\\],\\[0,1,0\\],\\[1,1,1\\]\\], target = \\[\\[1,1,1\\],\\[0,1,0\\],\\[0,0,0\\]\\]\n**Output:** true\n**Explanation:** We can rotate mat 90 degrees clockwise two times to make mat equal target.\n\n**Constraints:**\n\n*   `n == mat.length == target.length`\n*   `n == mat[i].length == target[i].length`\n*   `1 <= n <= 10`\n*   `mat[i][j]` and `target[i][j]` are either `0` or `1`.",
+  "difficulty": "Easy",
+  "category": null,
+  "xpReward": 0,
+  "timeLimitMs": 5000,
+  "memoryLimitMb": 256,
+  "starterCode": {},
+  "solutionCode": "",
+  "hints": [],
+  "isPremium": false,
+  "createdBy": null,
+  "testCases": [
+    {
+      "input": [
+        [
+          [
+            0,
+            1
+          ],
+          [
+            1,
+            0
+          ]
+        ],
+        [
+          [
+            1,
+            0
+          ],
+          [
+            0,
+            1
+          ]
+        ]
+      ],
+      "expectedOutput": true
+    },
+    {
+      "input": [
+        [
+          [
+            0,
+            1
+          ],
+          [
+            1,
+            1
+          ]
+        ],
+        [
+          [
+            1,
+            0
+          ],
+          [
+            0,
+            1
+          ]
+        ]
+      ],
+      "expectedOutput": false
+    },
+    {
+      "input": [
+        [
+          [
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            1,
+            0
+          ],
+          [
+            1,
+            1,
+            1
+          ]
+        ],
+        [
+          [
+            1,
+            1,
+            1
+          ],
+          [
+            0,
+            1,
+            0
+          ],
+          [
+            0,
+            0,
+            0
+          ]
+        ]
+      ],
+      "expectedOutput": true
+    }
+  ],
+  "hiddenTestCases": [
+    {
+      "input": [
+        [
+          [
+            0,
+            1
+          ],
+          [
+            1,
+            0
+          ]
+        ],
+        [
+          [
+            1,
+            0
+          ],
+          [
+            0,
+            1
+          ]
+        ]
+      ],
+      "expectedOutput": true
+    },
+    {
+      "input": [
+        [
+          [
+            0,
+            1
+          ],
+          [
+            1,
+            1
+          ]
+        ],
+        [
+          [
+            1,
+            0
+          ],
+          [
+            0,
+            1
+          ]
+        ]
+      ],
+      "expectedOutput": false
+    }
+  ],
+  "tags": [],
+  "constraints": [],
+  "examples": [],
+  "problemNumber": null,
+  "createdAt": "2025-11-14T21:23:31.890304+00:00",
+  "updatedAt": "2025-12-04T04:36:36.759Z"
+}

@@ -1,0 +1,56 @@
+{
+  "id": "e01d6aba-d6ae-44db-a9f1-d70404c4a886",
+  "title": "Delete Characters to Make Fancy String",
+  "slug": "delete-characters-to-make-fancy-string",
+  "description": "A **fancy string** is a string where no **three** **consecutive** characters are equal.\n\nGiven a string `s`, delete the **minimum** possible number of characters from `s` to make it **fancy**.\n\nReturn _the final string after the deletion_. It can be shown that the answer will always be **unique**.\n\n**Example 1:**\n\n**Input:** s =  \"leeetcode \"\n**Output:**  \"leetcode \"\n**Explanation:**\nRemove an 'e' from the first group of 'e's to create  \"leetcode \".\nNo three consecutive characters are equal, so return  \"leetcode \".\n\n**Example 2:**\n\n**Input:** s =  \"aaabaaaa \"\n**Output:**  \"aabaa \"\n**Explanation:**\nRemove an 'a' from the first group of 'a's to create  \"aabaaaa \".\nRemove two 'a's from the second group of 'a's to create  \"aabaa \".\nNo three consecutive characters are equal, so return  \"aabaa \".\n\n**Example 3:**\n\n**Input:** s =  \"aab \"\n**Output:**  \"aab \"\n**Explanation:** No three consecutive characters are equal, so return  \"aab \".\n\n**Constraints:**\n\n*   `1 <= s.length <= 105`\n*   `s` consists only of lowercase English letters.",
+  "difficulty": "Easy",
+  "category": null,
+  "xpReward": 0,
+  "timeLimitMs": 5000,
+  "memoryLimitMb": 256,
+  "starterCode": {},
+  "solutionCode": "",
+  "hints": [],
+  "isPremium": false,
+  "createdBy": null,
+  "testCases": [
+    {
+      "input": [
+        "leeetcode "
+      ],
+      "expectedOutput": "leetcode "
+    },
+    {
+      "input": [
+        "aaabaaaa "
+      ],
+      "expectedOutput": "aabaa "
+    },
+    {
+      "input": [
+        "aab "
+      ],
+      "expectedOutput": "aab "
+    }
+  ],
+  "hiddenTestCases": [
+    {
+      "input": [
+        "leeetcode "
+      ],
+      "expectedOutput": "leetcode "
+    },
+    {
+      "input": [
+        "aaabaaaa "
+      ],
+      "expectedOutput": "aabaa "
+    }
+  ],
+  "tags": [],
+  "constraints": [],
+  "examples": [],
+  "problemNumber": null,
+  "createdAt": "2025-11-14T21:23:48.100022+00:00",
+  "updatedAt": "2025-12-04T04:36:29.676Z"
+}

@@ -1,0 +1,50 @@
+{
+  "id": "3ef93df0-359f-4a8a-b350-9954ac89ea66",
+  "title": "Optimal Partition of String",
+  "slug": "optimal-partition-of-string",
+  "description": "Given a string `s`, partition the string into one or more **substrings** such that the characters in each substring are **unique**. That is, no letter appears in a single substring more than **once**.\n\nReturn _the **minimum** number of substrings in such a partition._\n\nNote that each character should belong to exactly one substring in a partition.\n\n**Example 1:**\n\n**Input:** s =  \"abacaba \"\n**Output:** 4\n**Explanation:**\nTwo possible partitions are ( \"a \", \"ba \", \"cab \", \"a \") and ( \"ab \", \"a \", \"ca \", \"ba \").\nIt can be shown that 4 is the minimum number of substrings needed.\n\n**Example 2:**\n\n**Input:** s =  \"ssssss \"\n**Output:** 6\n**Explanation:**\nThe only valid partition is ( \"s \", \"s \", \"s \", \"s \", \"s \", \"s \").\n\n**Constraints:**\n\n*   `1 <= s.length <= 105`\n*   `s` consists of only English lowercase letters.",
+  "difficulty": "Medium",
+  "category": null,
+  "xpReward": 0,
+  "timeLimitMs": 5000,
+  "memoryLimitMb": 256,
+  "starterCode": {},
+  "solutionCode": "",
+  "hints": [],
+  "isPremium": false,
+  "createdBy": null,
+  "testCases": [
+    {
+      "input": [
+        "abacaba "
+      ],
+      "expectedOutput": 4
+    },
+    {
+      "input": [
+        "ssssss "
+      ],
+      "expectedOutput": 6
+    }
+  ],
+  "hiddenTestCases": [
+    {
+      "input": [
+        "abacaba "
+      ],
+      "expectedOutput": 4
+    },
+    {
+      "input": [
+        "ssssss "
+      ],
+      "expectedOutput": 6
+    }
+  ],
+  "tags": [],
+  "constraints": [],
+  "examples": [],
+  "problemNumber": null,
+  "createdAt": "2025-11-14T21:25:38.133422+00:00",
+  "updatedAt": "2025-12-04T04:35:40.959Z"
+}

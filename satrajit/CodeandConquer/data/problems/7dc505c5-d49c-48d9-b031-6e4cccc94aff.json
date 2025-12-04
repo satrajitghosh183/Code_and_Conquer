@@ -1,0 +1,80 @@
+{
+  "id": "7dc505c5-d49c-48d9-b031-6e4cccc94aff",
+  "title": "Stone Game VII",
+  "slug": "stone-game-vii",
+  "description": "Alice and Bob take turns playing a game, with **Alice starting first**.\n\nThere are `n` stones arranged in a row. On each player's turn, they can **remove** either the leftmost stone or the rightmost stone from the row and receive points equal to the **sum** of the remaining stones' values in the row. The winner is the one with the higher score when there are no stones left to remove.\n\nBob found that he will always lose this game (poor Bob, he always loses), so he decided to **minimize the score's difference**. Alice's goal is to **maximize the difference** in the score.\n\nGiven an array of integers `stones` where `stones[i]` represents the value of the `ith` stone **from the left**, return _the **difference** in Alice and Bob's score if they both play **optimally**._\n\n**Example 1:**\n\n**Input:** stones = \\[5,3,1,4,2\\]\n**Output:** 6\n**Explanation:** \n- Alice removes 2 and gets 5 + 3 + 1 + 4 = 13 points. Alice = 13, Bob = 0, stones = \\[5,3,1,4\\].\n- Bob removes 5 and gets 3 + 1 + 4 = 8 points. Alice = 13, Bob = 8, stones = \\[3,1,4\\].\n- Alice removes 3 and gets 1 + 4 = 5 points. Alice = 18, Bob = 8, stones = \\[1,4\\].\n- Bob removes 1 and gets 4 points. Alice = 18, Bob = 12, stones = \\[4\\].\n- Alice removes 4 and gets 0 points. Alice = 18, Bob = 12, stones = \\[\\].\nThe score difference is 18 - 12 = 6.\n\n**Example 2:**\n\n**Input:** stones = \\[7,90,5,1,100,10,10,2\\]\n**Output:** 122\n\n**Constraints:**\n\n*   `n == stones.length`\n*   `2 <= n <= 1000`\n*   `1 <= stones[i] <= 1000`",
+  "difficulty": "Medium",
+  "category": null,
+  "xpReward": 0,
+  "timeLimitMs": 5000,
+  "memoryLimitMb": 256,
+  "starterCode": {},
+  "solutionCode": "",
+  "hints": [],
+  "isPremium": false,
+  "createdBy": null,
+  "testCases": [
+    {
+      "input": [
+        [
+          5,
+          3,
+          1,
+          4,
+          2
+        ]
+      ],
+      "expectedOutput": 6
+    },
+    {
+      "input": [
+        [
+          7,
+          90,
+          5,
+          1,
+          100,
+          10,
+          10,
+          2
+        ]
+      ],
+      "expectedOutput": "122\n\n**Constraints:**\n\n*   `n == stones.length`\n*   `2 <= n <= 1000`\n*   `1 <= stones[i] <= 1000`"
+    }
+  ],
+  "hiddenTestCases": [
+    {
+      "input": [
+        [
+          5,
+          3,
+          1,
+          4,
+          2
+        ]
+      ],
+      "expectedOutput": 6
+    },
+    {
+      "input": [
+        [
+          7,
+          90,
+          5,
+          1,
+          100,
+          10,
+          10,
+          2
+        ]
+      ],
+      "expectedOutput": "122\n\n**Constraints:**\n\n*   `n == stones.length`\n*   `2 <= n <= 1000`\n*   `1 <= stones[i] <= 1000`"
+    }
+  ],
+  "tags": [],
+  "constraints": [],
+  "examples": [],
+  "problemNumber": null,
+  "createdAt": "2025-11-14T21:22:43.080743+00:00",
+  "updatedAt": "2025-12-04T04:37:04.695Z"
+}

@@ -1,0 +1,120 @@
+{
+  "id": "8a08b2d1-cbc2-4f13-9bfa-ec7aacacd9a2",
+  "title": "Most Profitable Path in a Tree",
+  "slug": "most-profitable-path-in-a-tree",
+  "description": "There is an undirected tree with `n` nodes labeled from `0` to `n - 1`, rooted at node `0`. You are given a 2D integer array `edges` of length `n - 1` where `edges[i] = [ai, bi]` indicates that there is an edge between nodes `ai` and `bi` in the tree.\n\nAt every node `i`, there is a gate. You are also given an array of even integers `amount`, where `amount[i]` represents:\n\n*   the price needed to open the gate at node `i`, if `amount[i]` is negative, or,\n*   the cash reward obtained on opening the gate at node `i`, otherwise.\n\nThe game goes on as follows:\n\n*   Initially, Alice is at node `0` and Bob is at node `bob`.\n*   At every second, Alice and Bob **each** move to an adjacent node. Alice moves towards some **leaf node**, while Bob moves towards node `0`.\n*   For **every** node along their path, Alice and Bob either spend money to open the gate at that node, or accept the reward. Note that:\n    *   If the gate is **already open**, no price will be required, nor will there be any cash reward.\n    *   If Alice and Bob reach the node **simultaneously**, they share the price/reward for opening the gate there. In other words, if the price to open the gate is `c`, then both Alice and Bob pay `c / 2` each. Similarly, if the reward at the gate is `c`, both of them receive `c / 2` each.\n*   If Alice reaches a leaf node, she stops moving. Similarly, if Bob reaches node `0`, he stops moving. Note that these events are **independent** of each other.\n\nReturn _the **maximum** net income Alice can have if she travels towards the optimal leaf node._\n\n**Example 1:**\n\n**Input:** edges = \\[\\[0,1\\],\\[1,2\\],\\[1,3\\],\\[3,4\\]\\], bob = 3, amount = \\[-2,4,2,-4,6\\]\n**Output:** 6\n**Explanation:** \nThe above diagram represents the given tree. The game goes as follows:\n- Alice is initially on node 0, Bob on node 3. They open the gates of their respective nodes.\n  Alice's net income is now -2.\n- Both Alice and Bob move to node 1. \n  Since they reach here simultaneously, they open the gate together and share the reward.\n  Alice's net income becomes -2 + (4 / 2) = 0.\n- Alice moves on to node 3. Since Bob already opened its gate, Alice's income remains unchanged.\n  Bob moves on to node 0, and stops moving.\n- Alice moves on to node 4 and opens the gate there. Her net income becomes 0 + 6 = 6.\nNow, neither Alice nor Bob can make any further moves, and the game ends.\nIt is not possible for Alice to get a higher net income.\n\n**Example 2:**\n\n**Input:** edges = \\[\\[0,1\\]\\], bob = 1, amount = \\[-7280,2350\\]\n**Output:** -7280\n**Explanation:** \nAlice follows the path 0->1 whereas Bob follows the path 1->0.\nThus, Alice opens the gate at node 0 only. Hence, her net income is -7280. \n\n**Constraints:**\n\n*   `2 <= n <= 105`\n*   `edges.length == n - 1`\n*   `edges[i].length == 2`\n*   `0 <= ai, bi < n`\n*   `ai != bi`\n*   `edges` represents a valid tree.\n*   `1 <= bob < n`\n*   `amount.length == n`\n*   `amount[i]` is an **even** integer in the range `[-104, 104]`.",
+  "difficulty": "Medium",
+  "category": null,
+  "xpReward": 0,
+  "timeLimitMs": 5000,
+  "memoryLimitMb": 256,
+  "starterCode": {},
+  "solutionCode": "",
+  "hints": [],
+  "isPremium": false,
+  "createdBy": null,
+  "testCases": [
+    {
+      "input": [
+        [
+          [
+            0,
+            1
+          ],
+          [
+            1,
+            2
+          ],
+          [
+            1,
+            3
+          ],
+          [
+            3,
+            4
+          ]
+        ],
+        3,
+        [
+          -2,
+          4,
+          2,
+          -4,
+          6
+        ]
+      ],
+      "expectedOutput": 6
+    },
+    {
+      "input": [
+        [
+          [
+            0,
+            1
+          ]
+        ],
+        1,
+        [
+          -7280,
+          2350
+        ]
+      ],
+      "expectedOutput": -7280
+    }
+  ],
+  "hiddenTestCases": [
+    {
+      "input": [
+        [
+          [
+            0,
+            1
+          ],
+          [
+            1,
+            2
+          ],
+          [
+            1,
+            3
+          ],
+          [
+            3,
+            4
+          ]
+        ],
+        3,
+        [
+          -2,
+          4,
+          2,
+          -4,
+          6
+        ]
+      ],
+      "expectedOutput": 6
+    },
+    {
+      "input": [
+        [
+          [
+            0,
+            1
+          ]
+        ],
+        1,
+        [
+          -7280,
+          2350
+        ]
+      ],
+      "expectedOutput": -7280
+    }
+  ],
+  "tags": [],
+  "constraints": [],
+  "examples": [],
+  "problemNumber": null,
+  "createdAt": "2025-11-14T21:25:56.16321+00:00",
+  "updatedAt": "2025-12-04T04:35:32.025Z"
+}

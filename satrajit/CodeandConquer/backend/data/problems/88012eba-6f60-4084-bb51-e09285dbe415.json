@@ -1,0 +1,49 @@
+{
+  "id": "88012eba-6f60-4084-bb51-e09285dbe415",
+  "title": "Strictly Palindromic Number",
+  "slug": "strictly-palindromic-number",
+  "description": "An integer `n` is **strictly palindromic** if, for **every** base `b` between `2` and `n - 2` (**inclusive**), the string representation of the integer `n` in base `b` is **palindromic**.\n\nGiven an integer `n`, return `true` _if_ `n` _is **strictly palindromic** and_ `false` _otherwise_.\n\nA string is **palindromic** if it reads the same forward and backward.\n\n**Example 1:**\n\n**Input:** n = 9\n**Output:** false\n**Explanation:** In base 2: 9 = 1001 (base 2), which is palindromic.\nIn base 3: 9 = 100 (base 3), which is not palindromic.\nTherefore, 9 is not strictly palindromic so we return false.\nNote that in bases 4, 5, 6, and 7, n = 9 is also not palindromic.\n\n**Example 2:**\n\n**Input:** n = 4\n**Output:** false\n**Explanation:** We only consider base 2: 4 = 100 (base 2), which is not palindromic.\nTherefore, we return false.\n\n**Constraints:**\n\n*   `4 <= n <= 105`",
+  "difficulty": "Medium",
+  "category": null,
+  "xpReward": 0,
+  "timeLimitMs": 5000,
+  "memoryLimitMb": 256,
+  "starterCode": [],
+  "solutionCode": "",
+  "hints": [],
+  "isPremium": false,
+  "createdBy": null,
+  "testCases": [
+    {
+      "input": [
+        9
+      ],
+      "expectedOutput": false
+    },
+    {
+      "input": [
+        4
+      ],
+      "expectedOutput": false
+    }
+  ],
+  "hiddenTestCases": [
+    {
+      "input": [
+        9
+      ],
+      "expectedOutput": false
+    },
+    {
+      "input": [
+        4
+      ],
+      "expectedOutput": false
+    }
+  ],
+  "tags": [],
+  "constraints": [],
+  "examples": [],
+  "createdAt": "2025-11-14T21:25:35.211479+00:00",
+  "updatedAt": "2025-12-04T04:35:42.222Z"
+}

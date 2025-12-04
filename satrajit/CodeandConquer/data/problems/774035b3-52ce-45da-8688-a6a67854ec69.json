@@ -1,0 +1,56 @@
+{
+  "id": "774035b3-52ce-45da-8688-a6a67854ec69",
+  "title": "Number of Ways to Separate Numbers",
+  "slug": "number-of-ways-to-separate-numbers",
+  "description": "You wrote down many **positive** integers in a string called `num`. However, you realized that you forgot to add commas to seperate the different numbers. You remember that the list of integers was **non-decreasing** and that **no** integer had leading zeros.\n\nReturn _the **number of possible lists of integers** that you could have written down to get the string_ `num`. Since the answer may be large, return it **modulo** `109 + 7`.\n\n**Example 1:**\n\n**Input:** num =  \"327 \"\n**Output:** 2\n**Explanation:** You could have written down the numbers:\n3, 27\n327\n\n**Example 2:**\n\n**Input:** num =  \"094 \"\n**Output:** 0\n**Explanation:** No numbers can have leading zeros and all numbers must be positive.\n\n**Example 3:**\n\n**Input:** num =  \"0 \"\n**Output:** 0\n**Explanation:** No numbers can have leading zeros and all numbers must be positive.\n\n**Constraints:**\n\n*   `1 <= num.length <= 3500`\n*   `num` consists of digits `'0'` through `'9'`.",
+  "difficulty": "Hard",
+  "category": null,
+  "xpReward": 0,
+  "timeLimitMs": 5000,
+  "memoryLimitMb": 256,
+  "starterCode": {},
+  "solutionCode": "",
+  "hints": [],
+  "isPremium": false,
+  "createdBy": null,
+  "testCases": [
+    {
+      "input": [
+        "327 "
+      ],
+      "expectedOutput": 2
+    },
+    {
+      "input": [
+        "094 "
+      ],
+      "expectedOutput": 0
+    },
+    {
+      "input": [
+        "0 "
+      ],
+      "expectedOutput": 0
+    }
+  ],
+  "hiddenTestCases": [
+    {
+      "input": [
+        "327 "
+      ],
+      "expectedOutput": 2
+    },
+    {
+      "input": [
+        "094 "
+      ],
+      "expectedOutput": 0
+    }
+  ],
+  "tags": [],
+  "constraints": [],
+  "examples": [],
+  "problemNumber": null,
+  "createdAt": "2025-11-14T21:23:52.058501+00:00",
+  "updatedAt": "2025-12-04T04:36:27.561Z"
+}

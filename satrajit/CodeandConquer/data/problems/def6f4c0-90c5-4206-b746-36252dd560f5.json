@@ -1,0 +1,117 @@
+{
+  "id": "def6f4c0-90c5-4206-b746-36252dd560f5",
+  "title": "Minimum Total Cost to Make Arrays Unequal",
+  "slug": "minimum-total-cost-to-make-arrays-unequal",
+  "description": "You are given two **0-indexed** integer arrays `nums1` and `nums2`, of equal length `n`.\n\nIn one operation, you can swap the values of any two indices of `nums1`. The **cost** of this operation is the **sum** of the indices.\n\nFind the **minimum** total cost of performing the given operation **any** number of times such that `nums1[i] != nums2[i]` for all `0 <= i <= n - 1` after performing all the operations.\n\nReturn _the **minimum total cost** such that_ `nums1` and `nums2` _satisfy the above condition_. In case it is not possible, return `-1`.\n\n**Example 1:**\n\n**Input:** nums1 = \\[1,2,3,4,5\\], nums2 = \\[1,2,3,4,5\\]\n**Output:** 10\n**Explanation:** \nOne of the ways we can perform the operations is:\n- Swap values at indices 0 and 3, incurring cost = 0 + 3 = 3. Now, nums1 = \\[4,2,3,1,5\\]\n- Swap values at indices 1 and 2, incurring cost = 1 + 2 = 3. Now, nums1 = \\[4,3,2,1,5\\].\n- Swap values at indices 0 and 4, incurring cost = 0 + 4 = 4. Now, nums1 =\\[5,3,2,1,4\\].\nWe can see that for each index i, nums1\\[i\\] != nums2\\[i\\]. The cost required here is 10.\nNote that there are other ways to swap values, but it can be proven that it is not possible to obtain a cost less than 10.\n\n**Example 2:**\n\n**Input:** nums1 = \\[2,2,2,1,3\\], nums2 = \\[1,2,2,3,3\\]\n**Output:** 10\n**Explanation:** \nOne of the ways we can perform the operations is:\n- Swap values at indices 2 and 3, incurring cost = 2 + 3 = 5. Now, nums1 = \\[2,2,1,2,3\\].\n- Swap values at indices 1 and 4, incurring cost = 1 + 4 = 5. Now, nums1 = \\[2,3,1,2,2\\].\nThe total cost needed here is 10, which is the minimum possible.\n\n**Example 3:**\n\n**Input:** nums1 = \\[1,2,2\\], nums2 = \\[1,2,2\\]\n**Output:** -1\n**Explanation:** \nIt can be shown that it is not possible to satisfy the given conditions irrespective of the number of operations we perform.\nHence, we return -1.\n\n**Constraints:**\n\n*   `n == nums1.length == nums2.length`\n*   `1 <= n <= 105`\n*   `1 <= nums1[i], nums2[i] <= n`",
+  "difficulty": "Hard",
+  "category": null,
+  "xpReward": 0,
+  "timeLimitMs": 5000,
+  "memoryLimitMb": 256,
+  "starterCode": {},
+  "solutionCode": "",
+  "hints": [],
+  "isPremium": false,
+  "createdBy": null,
+  "testCases": [
+    {
+      "input": [
+        [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        [
+          1,
+          2,
+          3,
+          4,
+          5
+        ]
+      ],
+      "expectedOutput": 10
+    },
+    {
+      "input": [
+        [
+          2,
+          2,
+          2,
+          1,
+          3
+        ],
+        [
+          1,
+          2,
+          2,
+          3,
+          3
+        ]
+      ],
+      "expectedOutput": 10
+    },
+    {
+      "input": [
+        [
+          1,
+          2,
+          2
+        ],
+        [
+          1,
+          2,
+          2
+        ]
+      ],
+      "expectedOutput": -1
+    }
+  ],
+  "hiddenTestCases": [
+    {
+      "input": [
+        [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        [
+          1,
+          2,
+          3,
+          4,
+          5
+        ]
+      ],
+      "expectedOutput": 10
+    },
+    {
+      "input": [
+        [
+          2,
+          2,
+          2,
+          1,
+          3
+        ],
+        [
+          1,
+          2,
+          2,
+          3,
+          3
+        ]
+      ],
+      "expectedOutput": 10
+    }
+  ],
+  "tags": [],
+  "constraints": [],
+  "examples": [],
+  "problemNumber": null,
+  "createdAt": "2025-11-14T21:26:04.000393+00:00",
+  "updatedAt": "2025-12-04T04:35:26.399Z"
+}

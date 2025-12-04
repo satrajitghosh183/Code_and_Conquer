@@ -1,0 +1,115 @@
+{
+  "id": "b533bdb6-59eb-448d-b110-a5d2233448b4",
+  "title": "Largest Submatrix With Rearrangements",
+  "slug": "largest-submatrix-with-rearrangements",
+  "description": "You are given a binary matrix `matrix` of size `m x n`, and you are allowed to rearrange the **columns** of the `matrix` in any order.\n\nReturn _the area of the largest submatrix within_ `matrix` _where **every** element of the submatrix is_ `1` _after reordering the columns optimally._\n\n**Example 1:**\n\n**Input:** matrix = \\[\\[0,0,1\\],\\[1,1,1\\],\\[1,0,1\\]\\]\n**Output:** 4\n**Explanation:** You can rearrange the columns as shown above.\nThe largest submatrix of 1s, in bold, has an area of 4.\n\n**Example 2:**\n\n**Input:** matrix = \\[\\[1,0,1,0,1\\]\\]\n**Output:** 3\n**Explanation:** You can rearrange the columns as shown above.\nThe largest submatrix of 1s, in bold, has an area of 3.\n\n**Example 3:**\n\n**Input:** matrix = \\[\\[1,1,0\\],\\[1,0,1\\]\\]\n**Output:** 2\n**Explanation:** Notice that you must rearrange entire columns, and there is no way to make a submatrix of 1s larger than an area of 2.\n\n**Constraints:**\n\n*   `m == matrix.length`\n*   `n == matrix[i].length`\n*   `1 <= m * n <= 105`\n*   `matrix[i][j]` is either `0` or `1`.",
+  "difficulty": "Medium",
+  "category": null,
+  "xpReward": 0,
+  "timeLimitMs": 5000,
+  "memoryLimitMb": 256,
+  "starterCode": {},
+  "solutionCode": "",
+  "hints": [],
+  "isPremium": false,
+  "createdBy": null,
+  "testCases": [
+    {
+      "input": [
+        [
+          [
+            0,
+            0,
+            1
+          ],
+          [
+            1,
+            1,
+            1
+          ],
+          [
+            1,
+            0,
+            1
+          ]
+        ]
+      ],
+      "expectedOutput": 4
+    },
+    {
+      "input": [
+        [
+          [
+            1,
+            0,
+            1,
+            0,
+            1
+          ]
+        ]
+      ],
+      "expectedOutput": 3
+    },
+    {
+      "input": [
+        [
+          [
+            1,
+            1,
+            0
+          ],
+          [
+            1,
+            0,
+            1
+          ]
+        ]
+      ],
+      "expectedOutput": 2
+    }
+  ],
+  "hiddenTestCases": [
+    {
+      "input": [
+        [
+          [
+            0,
+            0,
+            1
+          ],
+          [
+            1,
+            1,
+            1
+          ],
+          [
+            1,
+            0,
+            1
+          ]
+        ]
+      ],
+      "expectedOutput": 4
+    },
+    {
+      "input": [
+        [
+          [
+            1,
+            0,
+            1,
+            0,
+            1
+          ]
+        ]
+      ],
+      "expectedOutput": 3
+    }
+  ],
+  "tags": [],
+  "constraints": [],
+  "examples": [],
+  "problemNumber": null,
+  "createdAt": "2025-11-14T21:22:52.078443+00:00",
+  "updatedAt": "2025-12-04T04:36:59.009Z"
+}

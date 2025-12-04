@@ -1,0 +1,55 @@
+{
+  "id": "9c116d0a-52c4-40b1-ae17-7d75a18881ef",
+  "title": "Shortest Path to Get Food",
+  "slug": "shortest-path-to-get-food",
+  "description": "You are starving and you want to eat food as quickly as possible. You want to find the shortest path to arrive at any food cell.\n\nYou are given an `m x n` character matrix, `grid`, of these different types of cells:\n\n*   `'*'` is your location. There is **exactly one** `'*'` cell.\n*   `'#'` is a food cell. There may be **multiple** food cells.\n*   `'O'` is free space, and you can travel through these cells.\n*   `'X'` is an obstacle, and you cannot travel through these cells.\n\nYou can travel to any adjacent cell north, east, south, or west of your current location if there is not an obstacle.\n\nReturn _the **length** of the shortest path for you to reach **any** food cell_. If there is no path for you to reach food, return `-1`.\n\n**Example 1:**\n\n**Input:** grid = \\[\\[ \"X \", \"X \", \"X \", \"X \", \"X \", \"X \"\\],\\[ \"X \", \"\\* \", \"O \", \"O \", \"O \", \"X \"\\],\\[ \"X \", \"O \", \"O \", \"# \", \"O \", \"X \"\\],\\[ \"X \", \"X \", \"X \", \"X \", \"X \", \"X \"\\]\\]\n**Output:** 3\n**Explanation:** It takes 3 steps to reach the food.\n\n**Example 2:**\n\n**Input:** grid = \\[\\[ \"X \", \"X \", \"X \", \"X \", \"X \"\\],\\[ \"X \", \"\\* \", \"X \", \"O \", \"X \"\\],\\[ \"X \", \"O \", \"X \", \"# \", \"X \"\\],\\[ \"X \", \"X \", \"X \", \"X \", \"X \"\\]\\]\n**Output:** -1\n**Explanation:** It is not possible to reach the food.\n\n**Example 3:**\n\n**Input:** grid = \\[\\[ \"X \", \"X \", \"X \", \"X \", \"X \", \"X \", \"X \", \"X \"\\],\\[ \"X \", \"\\* \", \"O \", \"X \", \"O \", \"# \", \"O \", \"X \"\\],\\[ \"X \", \"O \", \"O \", \"X \", \"O \", \"O \", \"X \", \"X \"\\],\\[ \"X \", \"O \", \"O \", \"O \", \"O \", \"# \", \"O \", \"X \"\\],\\[ \"X \", \"X \", \"X \", \"X \", \"X \", \"X \", \"X \", \"X \"\\]\\]\n**Output:** 6\n**Explanation:** There can be multiple food cells. It only takes 6 steps to reach the bottom food.\n\n**Constraints:**\n\n*   `m == grid.length`\n*   `n == grid[i].length`\n*   `1 <= m, n <= 200`\n*   `grid[row][col]` is `'*'`, `'X'`, `'O'`, or `'#'`.\n*   The `grid` contains **exactly one** `'*'`.",
+  "difficulty": "Medium",
+  "category": null,
+  "xpReward": 0,
+  "timeLimitMs": 5000,
+  "memoryLimitMb": 256,
+  "starterCode": [],
+  "solutionCode": "",
+  "hints": [],
+  "isPremium": false,
+  "createdBy": null,
+  "testCases": [
+    {
+      "input": [
+        "[[ \"X \", \"X \", \"X \", \"X \", \"X \", \"X \"],[ \"X \", \"\\* \", \"O \", \"O \", \"O \", \"X \"],[ \"X \", \"O \", \"O \", \"# \", \"O \", \"X \"],[ \"X \", \"X \", \"X \", \"X \", \"X \", \"X \"]]"
+      ],
+      "expectedOutput": 3
+    },
+    {
+      "input": [
+        "[[ \"X \", \"X \", \"X \", \"X \", \"X \"],[ \"X \", \"\\* \", \"X \", \"O \", \"X \"],[ \"X \", \"O \", \"X \", \"# \", \"X \"],[ \"X \", \"X \", \"X \", \"X \", \"X \"]]"
+      ],
+      "expectedOutput": -1
+    },
+    {
+      "input": [
+        "[[ \"X \", \"X \", \"X \", \"X \", \"X \", \"X \", \"X \", \"X \"],[ \"X \", \"\\* \", \"O \", \"X \", \"O \", \"# \", \"O \", \"X \"],[ \"X \", \"O \", \"O \", \"X \", \"O \", \"O \", \"X \", \"X \"],[ \"X \", \"O \", \"O \", \"O \", \"O \", \"# \", \"O \", \"X \"],[ \"X \", \"X \", \"X \", \"X \", \"X \", \"X \", \"X \", \"X \"]]"
+      ],
+      "expectedOutput": 6
+    }
+  ],
+  "hiddenTestCases": [
+    {
+      "input": [
+        "[[ \"X \", \"X \", \"X \", \"X \", \"X \", \"X \"],[ \"X \", \"\\* \", \"O \", \"O \", \"O \", \"X \"],[ \"X \", \"O \", \"O \", \"# \", \"O \", \"X \"],[ \"X \", \"X \", \"X \", \"X \", \"X \", \"X \"]]"
+      ],
+      "expectedOutput": 3
+    },
+    {
+      "input": [
+        "[[ \"X \", \"X \", \"X \", \"X \", \"X \"],[ \"X \", \"\\* \", \"X \", \"O \", \"X \"],[ \"X \", \"O \", \"X \", \"# \", \"X \"],[ \"X \", \"X \", \"X \", \"X \", \"X \"]]"
+      ],
+      "expectedOutput": -1
+    }
+  ],
+  "tags": [],
+  "constraints": [],
+  "examples": [],
+  "createdAt": "2025-11-14T21:22:52.598671+00:00",
+  "updatedAt": "2025-12-04T04:36:58.820Z"
+}

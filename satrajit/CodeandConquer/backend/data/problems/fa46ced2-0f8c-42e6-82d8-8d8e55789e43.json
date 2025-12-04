@@ -1,0 +1,53 @@
+{
+  "id": "fa46ced2-0f8c-42e6-82d8-8d8e55789e43",
+  "title": "Decode the Message",
+  "slug": "decode-the-message",
+  "description": "You are given the strings `key` and `message`, which represent a cipher key and a secret message, respectively. The steps to decode `message` are as follows:\n\n1.  Use the **first** appearance of all 26 lowercase English letters in `key` as the **order** of the substitution table.\n2.  Align the substitution table with the regular English alphabet.\n3.  Each letter in `message` is then **substituted** using the table.\n4.  Spaces `' '` are transformed to themselves.\n\n*   For example, given `key = \"**hap**p**y** **bo**y \"` (actual key would have **at least one** instance of each letter in the alphabet), we have the partial substitution table of (`'h' -> 'a'`, `'a' -> 'b'`, `'p' -> 'c'`, `'y' -> 'd'`, `'b' -> 'e'`, `'o' -> 'f'`).\n\nReturn _the decoded message_.\n\n**Example 1:**\n\n**Input:** key =  \"the quick brown fox jumps over the lazy dog \", message =  \"vkbs bs t suepuv \"\n**Output:**  \"this is a secret \"\n**Explanation:** The diagram above shows the substitution table.\nIt is obtained by taking the first appearance of each letter in  \"**the** **quick** **brown** **f**o**x** **j**u**mps** o**v**er the **lazy** **d**o**g** \".\n\n**Example 2:**\n\n**Input:** key =  \"eljuxhpwnyrdgtqkviszcfmabo \", message =  \"zwx hnfx lqantp mnoeius ycgk vcnjrdb \"\n**Output:**  \"the five boxing wizards jump quickly \"\n**Explanation:** The diagram above shows the substitution table.\nIt is obtained by taking the first appearance of each letter in  \"**eljuxhpwnyrdgtqkviszcfmabo** \".\n\n**Constraints:**\n\n*   `26 <= key.length <= 2000`\n*   `key` consists of lowercase English letters and `' '`.\n*   `key` contains every letter in the English alphabet (`'a'` to `'z'`) **at least once**.\n*   `1 <= message.length <= 2000`\n*   `message` consists of lowercase English letters and `' '`.",
+  "difficulty": "Easy",
+  "category": null,
+  "xpReward": 0,
+  "timeLimitMs": 5000,
+  "memoryLimitMb": 256,
+  "starterCode": [],
+  "solutionCode": "",
+  "hints": [],
+  "isPremium": false,
+  "createdBy": null,
+  "testCases": [
+    {
+      "input": [
+        "the quick brown fox jumps over the lazy dog ",
+        "vkbs bs t suepuv "
+      ],
+      "expectedOutput": "this is a secret "
+    },
+    {
+      "input": [
+        "eljuxhpwnyrdgtqkviszcfmabo ",
+        "zwx hnfx lqantp mnoeius ycgk vcnjrdb "
+      ],
+      "expectedOutput": "the five boxing wizards jump quickly "
+    }
+  ],
+  "hiddenTestCases": [
+    {
+      "input": [
+        "the quick brown fox jumps over the lazy dog ",
+        "vkbs bs t suepuv "
+      ],
+      "expectedOutput": "this is a secret "
+    },
+    {
+      "input": [
+        "eljuxhpwnyrdgtqkviszcfmabo ",
+        "zwx hnfx lqantp mnoeius ycgk vcnjrdb "
+      ],
+      "expectedOutput": "the five boxing wizards jump quickly "
+    }
+  ],
+  "tags": [],
+  "constraints": [],
+  "examples": [],
+  "createdAt": "2025-11-14T21:25:18.322327+00:00",
+  "updatedAt": "2025-12-04T04:35:50.272Z"
+}

@@ -1,0 +1,65 @@
+{
+  "id": "be4b9128-36ae-4c77-911c-9514698a8fcf",
+  "title": "The Number of Beautiful Subsets",
+  "slug": "the-number-of-beautiful-subsets",
+  "description": "You are given an array `nums` of positive integers and a **positive** integer `k`.\n\nA subset of `nums` is **beautiful** if it does not contain two integers with an absolute difference equal to `k`.\n\nReturn _the number of **non-empty beautiful** subsets of the array_ `nums`.\n\nA **subset** of `nums` is an array that can be obtained by deleting some (possibly none) elements from `nums`. Two subsets are different if and only if the chosen indices to delete are different.\n\n**Example 1:**\n\n**Input:** nums = \\[2,4,6\\], k = 2\n**Output:** 4\n**Explanation:** The beautiful subsets of the array nums are: \\[2\\], \\[4\\], \\[6\\], \\[2, 6\\].\nIt can be proved that there are only 4 beautiful subsets in the array \\[2,4,6\\].\n\n**Example 2:**\n\n**Input:** nums = \\[1\\], k = 1\n**Output:** 1\n**Explanation:** The beautiful subset of the array nums is \\[1\\].\nIt can be proved that there is only 1 beautiful subset in the array \\[1\\].\n\n**Constraints:**\n\n*   `1 <= nums.length <= 20`\n*   `1 <= nums[i], k <= 1000`",
+  "difficulty": "Medium",
+  "category": null,
+  "xpReward": 0,
+  "timeLimitMs": 5000,
+  "memoryLimitMb": 256,
+  "starterCode": [],
+  "solutionCode": "",
+  "hints": [],
+  "isPremium": false,
+  "createdBy": null,
+  "testCases": [
+    {
+      "input": [
+        [
+          2,
+          4,
+          6
+        ],
+        2
+      ],
+      "expectedOutput": 4
+    },
+    {
+      "input": [
+        [
+          1
+        ],
+        1
+      ],
+      "expectedOutput": 1
+    }
+  ],
+  "hiddenTestCases": [
+    {
+      "input": [
+        [
+          2,
+          4,
+          6
+        ],
+        2
+      ],
+      "expectedOutput": 4
+    },
+    {
+      "input": [
+        [
+          1
+        ],
+        1
+      ],
+      "expectedOutput": 1
+    }
+  ],
+  "tags": [],
+  "constraints": [],
+  "examples": [],
+  "createdAt": "2025-11-14T21:26:32.780948+00:00",
+  "updatedAt": "2025-12-04T04:35:16.228Z"
+}

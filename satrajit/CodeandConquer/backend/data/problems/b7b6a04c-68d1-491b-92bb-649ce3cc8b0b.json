@@ -1,0 +1,55 @@
+{
+  "id": "b7b6a04c-68d1-491b-92bb-649ce3cc8b0b",
+  "title": "Minimize Result by Adding Parentheses to Expression",
+  "slug": "minimize-result-by-adding-parentheses-to-expression",
+  "description": "You are given a **0-indexed** string `expression` of the form `\"+ \"` where and represent positive integers.\n\nAdd a pair of parentheses to `expression` such that after the addition of parentheses, `expression` is a **valid** mathematical expression and evaluates to the **smallest** possible value. The left parenthesis **must** be added to the left of `'+'` and the right parenthesis **must** be added to the right of `'+'`.\n\nReturn `expression` _after adding a pair of parentheses such that_ `expression` _evaluates to the **smallest** possible value._ If there are multiple answers that yield the same result, return any of them.\n\nThe input has been generated such that the original value of `expression`, and the value of `expression` after adding any pair of parentheses that meets the requirements fits within a signed 32-bit integer.\n\n**Example 1:**\n\n**Input:** expression =  \"247+38 \"\n**Output:**  \"2(47+38) \"\n**Explanation:** The `expression` evaluates to 2 \\* (47 + 38) = 2 \\* 85 = 170.\nNote that  \"2(4)7+38 \" is invalid because the right parenthesis must be to the right of the `'+'`.\nIt can be shown that 170 is the smallest possible value.\n\n**Example 2:**\n\n**Input:** expression =  \"12+34 \"\n**Output:**  \"1(2+3)4 \"\n**Explanation:** The expression evaluates to 1 \\* (2 + 3) \\* 4 = 1 \\* 5 \\* 4 = 20.\n\n**Example 3:**\n\n**Input:** expression =  \"999+999 \"\n**Output:**  \"(999+999) \"\n**Explanation:** The `expression` evaluates to 999 + 999 = 1998.\n\n**Constraints:**\n\n*   `3 <= expression.length <= 10`\n*   `expression` consists of digits from `'1'` to `'9'` and `'+'`.\n*   `expression` starts and ends with digits.\n*   `expression` contains exactly one `'+'`.\n*   The original value of `expression`, and the value of `expression` after adding any pair of parentheses that meets the requirements fits within a signed 32-bit integer.",
+  "difficulty": "Medium",
+  "category": null,
+  "xpReward": 0,
+  "timeLimitMs": 5000,
+  "memoryLimitMb": 256,
+  "starterCode": [],
+  "solutionCode": "",
+  "hints": [],
+  "isPremium": false,
+  "createdBy": null,
+  "testCases": [
+    {
+      "input": [
+        "247+38 "
+      ],
+      "expectedOutput": "2(47+38) "
+    },
+    {
+      "input": [
+        "12+34 "
+      ],
+      "expectedOutput": "1(2+3)4 "
+    },
+    {
+      "input": [
+        "999+999 "
+      ],
+      "expectedOutput": "(999+999) "
+    }
+  ],
+  "hiddenTestCases": [
+    {
+      "input": [
+        "247+38 "
+      ],
+      "expectedOutput": "2(47+38) "
+    },
+    {
+      "input": [
+        "12+34 "
+      ],
+      "expectedOutput": "1(2+3)4 "
+    }
+  ],
+  "tags": [],
+  "constraints": [],
+  "examples": [],
+  "createdAt": "2025-11-14T21:24:53.716467+00:00",
+  "updatedAt": "2025-12-04T04:36:01.894Z"
+}

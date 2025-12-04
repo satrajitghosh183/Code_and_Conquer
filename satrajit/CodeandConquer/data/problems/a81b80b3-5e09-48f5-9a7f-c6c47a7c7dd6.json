@@ -1,0 +1,54 @@
+{
+  "id": "a81b80b3-5e09-48f5-9a7f-c6c47a7c7dd6",
+  "title": "Maximum Value after Insertion",
+  "slug": "maximum-value-after-insertion",
+  "description": "You are given a very large integer `n`, represented as a string,​​​​​​ and an integer digit `x`. The digits in `n` and the digit `x` are in the **inclusive** range `[1, 9]`, and `n` may represent a **negative** number.\n\nYou want to **maximize** `n`**'s numerical value** by inserting `x` anywhere in the decimal representation of `n`​​​​​​. You **cannot** insert `x` to the left of the negative sign.\n\n*   For example, if `n = 73` and `x = 6`, it would be best to insert it between `7` and `3`, making `n = 763`.\n*   If `n = -55` and `x = 2`, it would be best to insert it before the first `5`, making `n = -255`.\n\nReturn _a string representing the **maximum** value of_ `n`_​​​​​​ after the insertion_.\n\n**Example 1:**\n\n**Input:** n =  \"99 \", x = 9\n**Output:**  \"999 \"\n**Explanation:** The result is the same regardless of where you insert 9.\n\n**Example 2:**\n\n**Input:** n =  \"-13 \", x = 2\n**Output:**  \"-123 \"\n**Explanation:** You can make n one of {-213, -123, -132}, and the largest of those three is -123.\n\n**Constraints:**\n\n*   `1 <= n.length <= 105`\n*   `1 <= x <= 9`\n*   The digits in `n`​​​ are in the range `[1, 9]`.\n*   `n` is a valid representation of an integer.\n*   In the case of a negative `n`,​​​​​​ it will begin with `'-'`.",
+  "difficulty": "Medium",
+  "category": null,
+  "xpReward": 0,
+  "timeLimitMs": 5000,
+  "memoryLimitMb": 256,
+  "starterCode": {},
+  "solutionCode": "",
+  "hints": [],
+  "isPremium": false,
+  "createdBy": null,
+  "testCases": [
+    {
+      "input": [
+        "99 ",
+        9
+      ],
+      "expectedOutput": "999 "
+    },
+    {
+      "input": [
+        "-13 ",
+        2
+      ],
+      "expectedOutput": "-123 "
+    }
+  ],
+  "hiddenTestCases": [
+    {
+      "input": [
+        "99 ",
+        9
+      ],
+      "expectedOutput": "999 "
+    },
+    {
+      "input": [
+        "-13 ",
+        2
+      ],
+      "expectedOutput": "-123 "
+    }
+  ],
+  "tags": [],
+  "constraints": [],
+  "examples": [],
+  "problemNumber": null,
+  "createdAt": "2025-11-14T21:23:30.619306+00:00",
+  "updatedAt": "2025-12-04T04:36:37.334Z"
+}

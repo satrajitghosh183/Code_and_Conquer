@@ -1,0 +1,113 @@
+# ===========================================
+# Code and Conquer - Render Blueprint
+# ===========================================
+# Deploy using: Dashboard > New > Blueprint Instance > Connect GitHub
+
+services:
+  # ===========================================
+  # Backend API Service
+  # ===========================================
+  - type: web
+    name: code-and-conquer-backend
+    runtime: node
+    region: oregon
+    plan: starter  # Use 'free' for testing, 'starter' or higher for production
+    rootDir: backend
+    buildCommand: npm ci --only=production
+    startCommand: npm start
+    healthCheckPath: /api/health
+    autoDeploy: true
+    
+    envVars:
+      # Server Configuration
+      - key: NODE_ENV
+        value: production
+      - key: PORT
+        value: 5000
+      - key: HOST
+        value: 0.0.0.0
+      
+      # Database
+      - key: DATABASE_TYPE
+        value: supabase
+      
+      # Supabase (Required - set in dashboard)
+      - key: SUPABASE_URL
+        sync: false
+      - key: SUPABASE_SERVICE_ROLE_KEY
+        sync: false
+      
+      # Frontend URL (Required - set after frontend deploys)
+      - key: CLIENT_URL
+        sync: false
+      
+      # Security & Performance
+      - key: LOG_LEVEL
+        value: info
+      - key: RATE_LIMIT_WINDOW_MS
+        value: "60000"
+      - key: RATE_LIMIT_MAX_REQUESTS
+        value: "100"
+      - key: EXECUTION_TIMEOUT
+        value: "10000"
+      
+      # Optional: Stripe Payments
+      - key: STRIPE_SECRET_KEY
+        sync: false
+      - key: STRIPE_WEBHOOK_SECRET
+        sync: false
+
+  # ===========================================
+  # Frontend Static Site
+  # ===========================================
+  - type: web
+    name: code-and-conquer-frontend
+    runtime: static
+    region: oregon
+    rootDir: frontend
+    buildCommand: npm ci && npm run build
+    staticPublishPath: dist
+    autoDeploy: true
+    
+    # SPA routing
+    routes:
+      - type: rewrite
+        source: /*
+        destination: /index.html
+    
+    # Security headers
+    headers:
+      - path: /*
+        name: X-Frame-Options
+        value: SAMEORIGIN
+      - path: /*
+        name: X-Content-Type-Options
+        value: nosniff
+      - path: /*
+        name: X-XSS-Protection
+        value: 1; mode=block
+      - path: /*
+        name: Referrer-Policy
+        value: strict-origin-when-cross-origin
+      
+      # Cache static assets
+      - path: /assets/*
+        name: Cache-Control
+        value: public, max-age=31536000, immutable
+    
+    envVars:
+      # Backend API URL (Required - set after backend deploys)
+      - key: VITE_API_URL
+        sync: false
+      
+      # Supabase Client (Required)
+      - key: VITE_SUPABASE_URL
+        sync: false
+      - key: VITE_SUPABASE_ANON_KEY
+        sync: false
+      
+      # Optional: Stripe
+      - key: VITE_STRIPE_PUBLISHABLE_KEY
+        sync: false
+      - key: VITE_STRIPE_PRICE_ID
+        sync: false

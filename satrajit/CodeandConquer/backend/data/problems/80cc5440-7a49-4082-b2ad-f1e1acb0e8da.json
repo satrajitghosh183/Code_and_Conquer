@@ -1,0 +1,55 @@
+{
+  "id": "80cc5440-7a49-4082-b2ad-f1e1acb0e8da",
+  "title": "Count Asterisks",
+  "slug": "count-asterisks",
+  "description": "You are given a string `s`, where every **two** consecutive vertical bars `'|'` are grouped into a **pair**. In other words, the 1st and 2nd `'|'` make a pair, the 3rd and 4th `'|'` make a pair, and so forth.\n\nReturn _the number of_ `'*'` _in_ `s`_, **excluding** the_ `'*'` _between each pair of_ `'|'`.\n\n**Note** that each `'|'` will belong to **exactly** one pair.\n\n**Example 1:**\n\n**Input:** s =  \"l|\\*e\\*et|c\\*\\*o|\\*de| \"\n**Output:** 2\n**Explanation:** The considered characters are underlined:  \"l|\\*e\\*et|c\\*\\*o|\\*de| \".\nThe characters between the first and second '|' are excluded from the answer.\nAlso, the characters between the third and fourth '|' are excluded from the answer.\nThere are 2 asterisks considered. Therefore, we return 2.\n\n**Example 2:**\n\n**Input:** s =  \"iamprogrammer \"\n**Output:** 0\n**Explanation:** In this example, there are no asterisks in s. Therefore, we return 0.\n\n**Example 3:**\n\n**Input:** s =  \"yo|uar|e\\*\\*|b|e\\*\\*\\*au|tifu|l \"\n**Output:** 5\n**Explanation:** The considered characters are underlined:  \"yo|uar|e\\*\\*|b|e\\*\\*\\*au|tifu|l \". There are 5 asterisks considered. Therefore, we return 5.\n\n**Constraints:**\n\n*   `1 <= s.length <= 1000`\n*   `s` consists of lowercase English letters, vertical bars `'|'`, and asterisks `'*'`.\n*   `s` contains an **even** number of vertical bars `'|'`.",
+  "difficulty": "Easy",
+  "category": null,
+  "xpReward": 0,
+  "timeLimitMs": 5000,
+  "memoryLimitMb": 256,
+  "starterCode": [],
+  "solutionCode": "",
+  "hints": [],
+  "isPremium": false,
+  "createdBy": null,
+  "testCases": [
+    {
+      "input": [
+        "\"l|\\*e\\*et|c\\*\\*o|\\*de| \""
+      ],
+      "expectedOutput": 2
+    },
+    {
+      "input": [
+        "iamprogrammer "
+      ],
+      "expectedOutput": 0
+    },
+    {
+      "input": [
+        "\"yo|uar|e\\*\\*|b|e\\*\\*\\*au|tifu|l \""
+      ],
+      "expectedOutput": 5
+    }
+  ],
+  "hiddenTestCases": [
+    {
+      "input": [
+        "\"l|\\*e\\*et|c\\*\\*o|\\*de| \""
+      ],
+      "expectedOutput": 2
+    },
+    {
+      "input": [
+        "iamprogrammer "
+      ],
+      "expectedOutput": 0
+    }
+  ],
+  "tags": [],
+  "constraints": [],
+  "examples": [],
+  "createdAt": "2025-11-14T21:25:15.858975+00:00",
+  "updatedAt": "2025-12-04T04:35:51.448Z"
+}

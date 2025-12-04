@@ -1,0 +1,86 @@
+{
+  "id": "72c37bf5-dd7a-47fd-81ce-ea273707ec3e",
+  "title": "Kth Distinct String in an Array",
+  "slug": "kth-distinct-string-in-an-array",
+  "description": "A **distinct string** is a string that is present only **once** in an array.\n\nGiven an array of strings `arr`, and an integer `k`, return _the_ `kth` _**distinct string** present in_ `arr`. If there are **fewer** than `k` distinct strings, return _an **empty string**_ `\" \"`.\n\nNote that the strings are considered in the **order in which they appear** in the array.\n\n**Example 1:**\n\n**Input:** arr = \\[ \"d \", \"b \", \"c \", \"b \", \"c \", \"a \"\\], k = 2\n**Output:**  \"a \"\n**Explanation:**\nThe only distinct strings in arr are  \"d \" and  \"a \".\n \"d \" appears 1st, so it is the 1st distinct string.\n \"a \" appears 2nd, so it is the 2nd distinct string.\nSince k == 2,  \"a \" is returned. \n\n**Example 2:**\n\n**Input:** arr = \\[ \"aaa \", \"aa \", \"a \"\\], k = 1\n**Output:**  \"aaa \"\n**Explanation:**\nAll strings in arr are distinct, so the 1st string  \"aaa \" is returned.\n\n**Example 3:**\n\n**Input:** arr = \\[ \"a \", \"b \", \"a \"\\], k = 3\n**Output:**  \" \"\n**Explanation:**\nThe only distinct string is  \"b \". Since there are fewer than 3 distinct strings, we return an empty string  \" \".\n\n**Constraints:**\n\n*   `1 <= k <= arr.length <= 1000`\n*   `1 <= arr[i].length <= 5`\n*   `arr[i]` consists of lowercase English letters.",
+  "difficulty": "Easy",
+  "category": null,
+  "xpReward": 0,
+  "timeLimitMs": 5000,
+  "memoryLimitMb": 256,
+  "starterCode": [],
+  "solutionCode": "",
+  "hints": [],
+  "isPremium": false,
+  "createdBy": null,
+  "testCases": [
+    {
+      "input": [
+        [
+          "d ",
+          "b ",
+          "c ",
+          "b ",
+          "c ",
+          "a "
+        ],
+        2
+      ],
+      "expectedOutput": "a "
+    },
+    {
+      "input": [
+        [
+          "aaa ",
+          "aa ",
+          "a "
+        ],
+        1
+      ],
+      "expectedOutput": "aaa "
+    },
+    {
+      "input": [
+        [
+          "a ",
+          "b ",
+          "a "
+        ],
+        3
+      ],
+      "expectedOutput": " "
+    }
+  ],
+  "hiddenTestCases": [
+    {
+      "input": [
+        [
+          "d ",
+          "b ",
+          "c ",
+          "b ",
+          "c ",
+          "a "
+        ],
+        2
+      ],
+      "expectedOutput": "a "
+    },
+    {
+      "input": [
+        [
+          "aaa ",
+          "aa ",
+          "a "
+        ],
+        1
+      ],
+      "expectedOutput": "aaa "
+    }
+  ],
+  "tags": [],
+  "constraints": [],
+  "examples": [],
+  "createdAt": "2025-11-14T21:24:10.602213+00:00",
+  "updatedAt": "2025-12-04T04:36:20.128Z"
+}

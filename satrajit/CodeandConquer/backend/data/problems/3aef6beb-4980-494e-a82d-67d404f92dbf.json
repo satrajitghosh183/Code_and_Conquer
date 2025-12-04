@@ -1,0 +1,65 @@
+{
+  "id": "3aef6beb-4980-494e-a82d-67d404f92dbf",
+  "title": "Root Equals Sum of Children",
+  "slug": "root-equals-sum-of-children",
+  "description": "You are given the `root` of a **binary tree** that consists of exactly `3` nodes: the root, its left child, and its right child.\n\nReturn `true` _if the value of the root is equal to the **sum** of the values of its two children, or_ `false` _otherwise_.\n\n**Example 1:**\n\n**Input:** root = \\[10,4,6\\]\n**Output:** true\n**Explanation:** The values of the root, its left child, and its right child are 10, 4, and 6, respectively.\n10 is equal to 4 + 6, so we return true.\n\n**Example 2:**\n\n**Input:** root = \\[5,3,1\\]\n**Output:** false\n**Explanation:** The values of the root, its left child, and its right child are 5, 3, and 1, respectively.\n5 is not equal to 3 + 1, so we return false.\n\n**Constraints:**\n\n*   The tree consists only of the root, its left child, and its right child.\n*   `-100 <= Node.val <= 100`",
+  "difficulty": "Easy",
+  "category": null,
+  "xpReward": 0,
+  "timeLimitMs": 5000,
+  "memoryLimitMb": 256,
+  "starterCode": [],
+  "solutionCode": "",
+  "hints": [],
+  "isPremium": false,
+  "createdBy": null,
+  "testCases": [
+    {
+      "input": [
+        [
+          10,
+          4,
+          6
+        ]
+      ],
+      "expectedOutput": true
+    },
+    {
+      "input": [
+        [
+          5,
+          3,
+          1
+        ]
+      ],
+      "expectedOutput": false
+    }
+  ],
+  "hiddenTestCases": [
+    {
+      "input": [
+        [
+          10,
+          4,
+          6
+        ]
+      ],
+      "expectedOutput": true
+    },
+    {
+      "input": [
+        [
+          5,
+          3,
+          1
+        ]
+      ],
+      "expectedOutput": false
+    }
+  ],
+  "tags": [],
+  "constraints": [],
+  "examples": [],
+  "createdAt": "2025-11-14T21:24:54.86008+00:00",
+  "updatedAt": "2025-12-04T04:36:01.441Z"
+}

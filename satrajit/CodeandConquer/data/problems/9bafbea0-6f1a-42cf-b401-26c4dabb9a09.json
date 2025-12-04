@@ -1,0 +1,54 @@
+{
+  "id": "9bafbea0-6f1a-42cf-b401-26c4dabb9a09",
+  "title": "Number of Common Factors",
+  "slug": "number-of-common-factors",
+  "description": "Given two positive integers `a` and `b`, return _the number of **common** factors of_ `a` _and_ `b`.\n\nAn integer `x` is a **common factor** of `a` and `b` if `x` divides both `a` and `b`.\n\n**Example 1:**\n\n**Input:** a = 12, b = 6\n**Output:** 4\n**Explanation:** The common factors of 12 and 6 are 1, 2, 3, 6.\n\n**Example 2:**\n\n**Input:** a = 25, b = 30\n**Output:** 2\n**Explanation:** The common factors of 25 and 30 are 1, 5.\n\n**Constraints:**\n\n*   `1 <= a, b <= 1000`",
+  "difficulty": "Easy",
+  "category": null,
+  "xpReward": 0,
+  "timeLimitMs": 5000,
+  "memoryLimitMb": 256,
+  "starterCode": {},
+  "solutionCode": "",
+  "hints": [],
+  "isPremium": false,
+  "createdBy": null,
+  "testCases": [
+    {
+      "input": [
+        12,
+        6
+      ],
+      "expectedOutput": 4
+    },
+    {
+      "input": [
+        25,
+        30
+      ],
+      "expectedOutput": 2
+    }
+  ],
+  "hiddenTestCases": [
+    {
+      "input": [
+        12,
+        6
+      ],
+      "expectedOutput": 4
+    },
+    {
+      "input": [
+        25,
+        30
+      ],
+      "expectedOutput": 2
+    }
+  ],
+  "tags": [],
+  "constraints": [],
+  "examples": [],
+  "problemNumber": null,
+  "createdAt": "2025-11-14T21:25:43.933658+00:00",
+  "updatedAt": "2025-12-04T04:35:38.062Z"
+}

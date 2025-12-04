@@ -1,0 +1,50 @@
+{
+  "id": "4eda230a-3043-4f8a-984d-2a4e1b68deed",
+  "title": "Count Number of Texts",
+  "slug": "count-number-of-texts",
+  "description": "Alice is texting Bob using her phone. The **mapping** of digits to letters is shown in the figure below.\n\nIn order to **add** a letter, Alice has to **press** the key of the corresponding digit `i` times, where `i` is the position of the letter in the key.\n\n*   For example, to add the letter `'s'`, Alice has to press `'7'` four times. Similarly, to add the letter `'k'`, Alice has to press `'5'` twice.\n*   Note that the digits `'0'` and `'1'` do not map to any letters, so Alice **does not** use them.\n\nHowever, due to an error in transmission, Bob did not receive Alice's text message but received a **string of pressed keys** instead.\n\n*   For example, when Alice sent the message `\"bob \"`, Bob received the string `\"2266622 \"`.\n\nGiven a string `pressedKeys` representing the string received by Bob, return _the **total number of possible text messages** Alice could have sent_.\n\nSince the answer may be very large, return it **modulo** `109 + 7`.\n\n**Example 1:**\n\n**Input:** pressedKeys =  \"22233 \"\n**Output:** 8\n**Explanation:**\nThe possible text messages Alice could have sent are:\n \"aaadd \",  \"abdd \",  \"badd \",  \"cdd \",  \"aaae \",  \"abe \",  \"bae \", and  \"ce \".\nSince there are 8 possible messages, we return 8.\n\n**Example 2:**\n\n**Input:** pressedKeys =  \"222222222222222222222222222222222222 \"\n**Output:** 82876089\n**Explanation:**\nThere are 2082876103 possible text messages Alice could have sent.\nSince we need to return the answer modulo 109 + 7, we return 2082876103 % (109 + 7) = 82876089.\n\n**Constraints:**\n\n*   `1 <= pressedKeys.length <= 105`\n*   `pressedKeys` only consists of digits from `'2'` - `'9'`.",
+  "difficulty": "Medium",
+  "category": null,
+  "xpReward": 0,
+  "timeLimitMs": 5000,
+  "memoryLimitMb": 256,
+  "starterCode": {},
+  "solutionCode": "",
+  "hints": [],
+  "isPremium": false,
+  "createdBy": null,
+  "testCases": [
+    {
+      "input": [
+        "22233 "
+      ],
+      "expectedOutput": 8
+    },
+    {
+      "input": [
+        "222222222222222222222222222222222222 "
+      ],
+      "expectedOutput": 82876089
+    }
+  ],
+  "hiddenTestCases": [
+    {
+      "input": [
+        "22233 "
+      ],
+      "expectedOutput": 8
+    },
+    {
+      "input": [
+        "222222222222222222222222222222222222 "
+      ],
+      "expectedOutput": 82876089
+    }
+  ],
+  "tags": [],
+  "constraints": [],
+  "examples": [],
+  "problemNumber": null,
+  "createdAt": "2025-11-14T21:25:02.994562+00:00",
+  "updatedAt": "2025-12-04T04:35:57.293Z"
+}

@@ -1,0 +1,69 @@
+{
+  "id": "6e7bab43-716e-44b8-98a0-421893894c29",
+  "title": "Game of Nim",
+  "slug": "game-of-nim",
+  "description": "Alice and Bob take turns playing a game with **Alice starting first**.\n\nIn this game, there are `n` piles of stones. On each player's turn, the player should remove any **positive** number of stones from a non-empty pile **of his or her choice**. The first player who cannot make a move loses, and the other player wins.\n\nGiven an integer array `piles`, where `piles[i]` is the number of stones in the `ith` pile, return `true` _if Alice wins, or_ `false` _if Bob wins_.\n\nBoth Alice and Bob play **optimally**.\n\n**Example 1:**\n\n**Input:** piles = \\[1\\]\n**Output:** true\n**Explanation:** There is only one possible scenario:\n- On the first turn, Alice removes one stone from the first pile. piles = \\[0\\].\n- On the second turn, there are no stones left for Bob to remove. Alice wins.\n\n**Example 2:**\n\n**Input:** piles = \\[1,1\\]\n**Output:** false\n**Explanation:** It can be proven that Bob will always win. One possible scenario is:\n- On the first turn, Alice removes one stone from the first pile. piles = \\[0,1\\].\n- On the second turn, Bob removes one stone from the second pile. piles = \\[0,0\\].\n- On the third turn, there are no stones left for Alice to remove. Bob wins.\n\n**Example 3:**\n\n**Input:** piles = \\[1,2,3\\]\n**Output:** false\n**Explanation:** It can be proven that Bob will always win. One possible scenario is:\n- On the first turn, Alice removes three stones from the third pile. piles = \\[1,2,0\\].\n- On the second turn, Bob removes one stone from the second pile. piles = \\[1,1,0\\].\n- On the third turn, Alice removes one stone from the first pile. piles = \\[0,1,0\\].\n- On the fourth turn, Bob removes one stone from the second pile. piles = \\[0,0,0\\].\n- On the fifth turn, there are no stones left for Alice to remove. Bob wins.\n\n**Constraints:**\n\n*   `n == piles.length`\n*   `1 <= n <= 7`\n*   `1 <= piles[i] <= 7`\n\n**Follow-up:** Could you find a linear time solution? Although the linear time solution may be beyond the scope of an interview, it could be interesting to know.",
+  "difficulty": "Medium",
+  "category": null,
+  "xpReward": 0,
+  "timeLimitMs": 5000,
+  "memoryLimitMb": 256,
+  "starterCode": [],
+  "solutionCode": "",
+  "hints": [],
+  "isPremium": false,
+  "createdBy": null,
+  "testCases": [
+    {
+      "input": [
+        [
+          1
+        ]
+      ],
+      "expectedOutput": true
+    },
+    {
+      "input": [
+        [
+          1,
+          1
+        ]
+      ],
+      "expectedOutput": false
+    },
+    {
+      "input": [
+        [
+          1,
+          2,
+          3
+        ]
+      ],
+      "expectedOutput": false
+    }
+  ],
+  "hiddenTestCases": [
+    {
+      "input": [
+        [
+          1
+        ]
+      ],
+      "expectedOutput": true
+    },
+    {
+      "input": [
+        [
+          1,
+          1
+        ]
+      ],
+      "expectedOutput": false
+    }
+  ],
+  "tags": [],
+  "constraints": [],
+  "examples": [],
+  "createdAt": "2025-11-14T21:23:37.912546+00:00",
+  "updatedAt": "2025-12-04T04:36:34.685Z"
+}

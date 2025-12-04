@@ -1,0 +1,79 @@
+{
+  "id": "c6808fb8-d4f2-497b-9413-4172838b1d36",
+  "title": "Magnetic Force Between Two Balls",
+  "slug": "magnetic-force-between-two-balls",
+  "description": "In the universe Earth C-137, Rick discovered a special form of magnetic force between two balls if they are put in his new invented basket. Rick has `n` empty baskets, the `ith` basket is at `position[i]`, Morty has `m` balls and needs to distribute the balls into the baskets such that the **minimum magnetic force** between any two balls is **maximum**.\n\nRick stated that magnetic force between two different balls at positions `x` and `y` is `|x - y|`.\n\nGiven the integer array `position` and the integer `m`. Return _the required force_.\n\n**Example 1:**\n\n**Input:** position = \\[1,2,3,4,7\\], m = 3\n**Output:** 3\n**Explanation:** Distributing the 3 balls into baskets 1, 4 and 7 will make the magnetic force between ball pairs \\[3, 3, 6\\]. The minimum magnetic force is 3. We cannot achieve a larger minimum magnetic force than 3.\n\n**Example 2:**\n\n**Input:** position = \\[5,4,3,2,1,1000000000\\], m = 2\n**Output:** 999999999\n**Explanation:** We can use baskets 1 and 1000000000.\n\n**Constraints:**\n\n*   `n == position.length`\n*   `2 <= n <= 105`\n*   `1 <= position[i] <= 109`\n*   All integers in `position` are **distinct**.\n*   `2 <= m <= position.length`",
+  "difficulty": "Medium",
+  "category": null,
+  "xpReward": 0,
+  "timeLimitMs": 5000,
+  "memoryLimitMb": 256,
+  "starterCode": [],
+  "solutionCode": "",
+  "hints": [],
+  "isPremium": false,
+  "createdBy": null,
+  "testCases": [
+    {
+      "input": [
+        [
+          1,
+          2,
+          3,
+          4,
+          7
+        ],
+        3
+      ],
+      "expectedOutput": 3
+    },
+    {
+      "input": [
+        [
+          5,
+          4,
+          3,
+          2,
+          1,
+          1000000000
+        ],
+        2
+      ],
+      "expectedOutput": 999999999
+    }
+  ],
+  "hiddenTestCases": [
+    {
+      "input": [
+        [
+          1,
+          2,
+          3,
+          4,
+          7
+        ],
+        3
+      ],
+      "expectedOutput": 3
+    },
+    {
+      "input": [
+        [
+          5,
+          4,
+          3,
+          2,
+          1,
+          1000000000
+        ],
+        2
+      ],
+      "expectedOutput": 999999999
+    }
+  ],
+  "tags": [],
+  "constraints": [],
+  "examples": [],
+  "createdAt": "2025-11-14T21:21:59.334665+00:00",
+  "updatedAt": "2025-12-04T04:37:17.715Z"
+}

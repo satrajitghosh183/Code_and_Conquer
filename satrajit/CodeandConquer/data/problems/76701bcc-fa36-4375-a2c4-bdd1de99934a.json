@@ -1,0 +1,54 @@
+{
+  "id": "76701bcc-fa36-4375-a2c4-bdd1de99934a",
+  "title": "Find the K-Beauty of a Number",
+  "slug": "find-the-k-beauty-of-a-number",
+  "description": "The **k-beauty** of an integer `num` is defined as the number of **substrings** of `num` when it is read as a string that meet the following conditions:\n\n*   It has a length of `k`.\n*   It is a divisor of `num`.\n\nGiven integers `num` and `k`, return _the k-beauty of_ `num`.\n\nNote:\n\n*   **Leading zeros** are allowed.\n*   `0` is not a divisor of any value.\n\nA **substring** is a contiguous sequence of characters in a string.\n\n**Example 1:**\n\n**Input:** num = 240, k = 2\n**Output:** 2\n**Explanation:** The following are the substrings of num of length k:\n-  \"24 \" from  \"**24**0 \": 24 is a divisor of 240.\n-  \"40 \" from  \"2**40** \": 40 is a divisor of 240.\nTherefore, the k-beauty is 2.\n\n**Example 2:**\n\n**Input:** num = 430043, k = 2\n**Output:** 2\n**Explanation:** The following are the substrings of num of length k:\n-  \"43 \" from  \"**43**0043 \": 43 is a divisor of 430043.\n-  \"30 \" from  \"4**30**043 \": 30 is not a divisor of 430043.\n-  \"00 \" from  \"43**00**43 \": 0 is not a divisor of 430043.\n-  \"04 \" from  \"430**04**3 \": 4 is not a divisor of 430043.\n-  \"43 \" from  \"4300**43** \": 43 is a divisor of 430043.\nTherefore, the k-beauty is 2.\n\n**Constraints:**\n\n*   `1 <= num <= 109`\n*   `1 <= k <= num.length` (taking `num` as a string)",
+  "difficulty": "Easy",
+  "category": null,
+  "xpReward": 0,
+  "timeLimitMs": 5000,
+  "memoryLimitMb": 256,
+  "starterCode": {},
+  "solutionCode": "",
+  "hints": [],
+  "isPremium": false,
+  "createdBy": null,
+  "testCases": [
+    {
+      "input": [
+        240,
+        2
+      ],
+      "expectedOutput": 2
+    },
+    {
+      "input": [
+        430043,
+        2
+      ],
+      "expectedOutput": 2
+    }
+  ],
+  "hiddenTestCases": [
+    {
+      "input": [
+        240,
+        2
+      ],
+      "expectedOutput": 2
+    },
+    {
+      "input": [
+        430043,
+        2
+      ],
+      "expectedOutput": 2
+    }
+  ],
+  "tags": [],
+  "constraints": [],
+  "examples": [],
+  "problemNumber": null,
+  "createdAt": "2025-11-14T21:25:03.951715+00:00",
+  "updatedAt": "2025-12-04T04:35:56.901Z"
+}

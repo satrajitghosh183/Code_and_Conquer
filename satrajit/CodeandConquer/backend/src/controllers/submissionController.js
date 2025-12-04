@@ -81,11 +81,19 @@ export const submitCode = async (req, res) => {
     // Calculate rewards
     const rewards = calculateRewards(problem.difficulty, testResults.allPassed, complexityAnalysis);
 
+    console.log(`[Submission] Problem ${problemId} for user ${userId}:`, {
+      status: testResults.allPassed ? 'accepted' : 'wrong_answer',
+      rewards: testResults.allPassed ? rewards : null
+    });
+
     // Update user stats if submission was accepted
     if (testResults.allPassed && publicDatabaseService.isAvailable()) {
       try {
+        console.log(`[Submission] Updating user stats for ${userId}: +${rewards.coins} coins, +${rewards.xp} XP`);
         await updateUserStats(userId, rewards, problem.difficulty);
         await updateLeaderboard(userId, rewards);
+        await logXPActivity(userId, rewards.xp, problemId, problem.difficulty);
+        console.log(`[Submission] User stats updated successfully for ${userId}`);
       } catch (error) {
         console.error('Error updating user stats or leaderboard:', error);
         // Don't fail the submission if stats update fails
@@ -302,7 +310,7 @@ async function updateUserStats(userId, rewards, difficulty) {
         }]);
     }
 
-    // Also update user_progress table if it exists
+    // Also update user_progress table if it exists (for day streak tracking)
     try {
       const { data: userProgress } = await supabase
         .from('user_progress')
@@ -310,16 +318,52 @@ async function updateUserStats(userId, rewards, difficulty) {
         .eq('user_id', userId)
         .single();
 
+      const today = new Date().toISOString().split('T')[0]; // YYYY-MM-DD format
+      const lastActivityDate = userProgress?.last_activity_date || null;
+      
+      // Calculate day streak
+      let currentStreak = 1;
+      let longestStreak = 1;
+      
       if (userProgress) {
+        if (lastActivityDate === today) {
+          // User was already active today, keep current streak
+          currentStreak = userProgress.current_streak || 1;
+          longestStreak = userProgress.longest_streak || 1;
+        } else if (lastActivityDate) {
+          // Check if streak continues (yesterday)
+          const yesterday = new Date();
+          yesterday.setDate(yesterday.getDate() - 1);
+          const yesterdayStr = yesterday.toISOString().split('T')[0];
+          
+          if (lastActivityDate === yesterdayStr) {
+            // Streak continues
+            currentStreak = (userProgress.current_streak || 0) + 1;
+            longestStreak = Math.max(currentStreak, userProgress.longest_streak || 1);
+          } else {
+            // Streak broken, start over
+            currentStreak = 1;
+            longestStreak = userProgress.longest_streak || 1;
+          }
+        } else {
+          // First activity
+          currentStreak = 1;
+          longestStreak = 1;
+        }
+
         await supabase
           .from('user_progress')
           .update({
             total_xp: (userProgress.total_xp || 0) + (rewards.xp || 0),
             coding_level: Math.floor(((userProgress.total_xp || 0) + (rewards.xp || 0)) / 100) + 1,
+            current_streak: currentStreak,
+            longest_streak: longestStreak,
+            last_activity_date: today,
             updated_at: new Date().toISOString()
           })
           .eq('user_id', userId);
       } else {
+        // Create new user progress entry
         await supabase
           .from('user_progress')
           .insert([{
@@ -330,14 +374,16 @@ async function updateUserStats(userId, rewards, difficulty) {
             rank_level: 1,
             current_streak: 1,
             longest_streak: 1,
-            last_activity_date: new Date().toISOString().split('T')[0],
+            last_activity_date: today,
             created_at: new Date().toISOString(),
             updated_at: new Date().toISOString()
           }]);
       }
     } catch (error) {
       // user_progress table might not exist, that's ok
-      console.warn('Could not update user_progress:', error.message);
+      if (error.code !== 'PGRST205' && error.code !== '42P01') {
+        console.warn('Could not update user_progress:', error.message);
+      }
     }
   } catch (error) {
     console.error('Error updating user stats:', error);
@@ -381,4 +427,66 @@ async function updateLeaderboard(userId, rewards) {
     // Don't throw - leaderboard update failure shouldn't break submission
   }
 }
+
+// Log XP activity for tracking/charts
+async function logXPActivity(userId, xp, problemId, difficulty) {
+  try {
+    const supabase = database.getSupabaseClient();
+    if (!supabase) return;
+
+    // Try to log to user_activity table
+    await supabase
+      .from('user_activity')
+      .insert([{
+        user_id: userId,
+        activity_type: 'problem_solved',
+        xp_earned: xp,
+        problem_id: problemId,
+        difficulty: difficulty,
+        created_at: new Date().toISOString()
+      }]);
+    
+    console.log(`[XP Activity] Logged ${xp} XP for user ${userId}`);
+  } catch (error) {
+    // Silently handle missing table errors - table might not exist
+    if (error.code !== 'PGRST204' && error.code !== 'PGRST205' && error.code !== '42P01') {
+      console.warn('Could not log XP activity:', error.message);
+    }
+    // Don't throw - activity logging failure shouldn't break anything
+  }
+}
+
+// Get available languages based on executor capability
+export const getAvailableLanguages = async (req, res) => {
+  try {
+    const languages = executorService.getAvailableLanguages();
+    const dockerAvailable = executorService.isDockerAvailable();
+    
+    // Full language info
+    const languageInfo = [
+      { value: 'javascript', label: 'JavaScript', available: true },
+      { value: 'typescript', label: 'TypeScript', available: dockerAvailable || languages.includes('typescript') },
+      { value: 'python', label: 'Python', available: dockerAvailable || languages.includes('python') },
+      { value: 'java', label: 'Java', available: dockerAvailable },
+      { value: 'cpp', label: 'C++', available: dockerAvailable },
+      { value: 'c', label: 'C', available: dockerAvailable },
+      { value: 'go', label: 'Go', available: dockerAvailable },
+      { value: 'rust', label: 'Rust', available: dockerAvailable },
+      { value: 'ruby', label: 'Ruby', available: dockerAvailable },
+      { value: 'php', label: 'PHP', available: dockerAvailable }
+    ];
+
+    res.json({
+      dockerAvailable,
+      languages: languageInfo,
+      availableLanguages: languages,
+      message: dockerAvailable 
+        ? 'All languages available (Docker mode)' 
+        : 'Limited languages available (Fallback mode - JavaScript, Python)'
+    });
+  } catch (error) {
+    console.error('Error getting available languages:', error);
+    res.status(500).json({ error: error.message });
+  }
+};
 

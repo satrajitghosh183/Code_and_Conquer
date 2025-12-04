@@ -1,110 +1,152 @@
 import database from '../config/database.js';
 import { Problem } from '../models/Problem.js';
 
+// Helper to check if a problem has valid test cases
+const checkHasTestCases = (problem) => {
+  const visibleTestCases = problem.testCases && Array.isArray(problem.testCases) ? problem.testCases : [];
+  const hiddenTestCases = problem.hiddenTestCases && Array.isArray(problem.hiddenTestCases) ? problem.hiddenTestCases : [];
+  
+  // A problem is runnable if it has at least one valid test case with input and expectedOutput
+  const hasValidVisible = visibleTestCases.some(tc => 
+    tc && (tc.input !== undefined || tc.expectedOutput !== undefined)
+  );
+  const hasValidHidden = hiddenTestCases.some(tc => 
+    tc && (tc.input !== undefined || tc.expectedOutput !== undefined)
+  );
+  
+  return {
+    hasTestCases: hasValidVisible || hasValidHidden,
+    visibleCount: visibleTestCases.length,
+    hiddenCount: hiddenTestCases.length,
+    totalCount: visibleTestCases.length + hiddenTestCases.length
+  };
+};
+
 export const getAllProblems = async (req, res) => {
   try {
-    const { difficulty, category, isPremium } = req.query;
+    const { difficulty, category, isPremium, runnableOnly } = req.query;
     const filters = {};
     if (difficulty) filters.difficulty = difficulty;
     if (category) filters.category = category;
     if (isPremium !== undefined) filters.isPremium = isPremium === 'true';
 
-    const problems = await database.getAllProblems(filters);
+    let problems = await database.getAllProblems(filters);
     
-    // Sort problems: first by difficulty (easy, medium, hard), then by created_at (or id if available)
+    // Add hasTestCases flag to each problem
+    problems = problems.map(p => {
+      const testCaseInfo = checkHasTestCases(p);
+      return { ...p, ...testCaseInfo };
+    });
+    
+    // Filter to only runnable problems if requested (default: true for production-ready)
+    if (runnableOnly !== 'false') {
+      problems = problems.filter(p => p.hasTestCases);
+    }
+    
+    // Sort problems: by difficulty (easy, medium, hard), then by displayId/created_at
     const difficultyOrder = { easy: 1, medium: 2, hard: 3 };
     const sorted = problems.sort((a, b) => {
+      // First priority: difficulty
       const diffA = difficultyOrder[a.difficulty?.toLowerCase()] || 99;
       const diffB = difficultyOrder[b.difficulty?.toLowerCase()] || 99;
       if (diffA !== diffB) return diffA - diffB;
       
-      // If same difficulty, sort by created_at (oldest first) or by id if it's numeric
+      // Second priority: created_at (oldest first)
       if (a.createdAt && b.createdAt) {
         return new Date(a.createdAt) - new Date(b.createdAt);
       }
       
-      // Try to parse IDs as numbers
-      const idA = parseInt(a.id) || (a.id ? String(a.id).charCodeAt(0) : 0);
-      const idB = parseInt(b.id) || (b.id ? String(b.id).charCodeAt(0) : 0);
-      if (typeof idA === 'number' && typeof idB === 'number') return idA - idB;
-      
-      // Fallback to string comparison
-      return String(a.id || '').localeCompare(String(b.id || ''));
+      // Fallback to ID comparison
+      const idA = parseInt(a.id) || 0;
+      const idB = parseInt(b.id) || 0;
+      return idA - idB;
     });
     
     // Assign sequential display IDs (1, 2, 3, ...) based on sorted order
     const sanitized = sorted.map((p, index) => {
-      // Use problem_number from database if available, otherwise compute from index
       const displayId = p.problemNumber || p.problem_number || (index + 1);
       
       return {
-        ...p,
-        displayId: displayId, // Sequential display ID (1, 2, 3, ...)
-        problemNumber: displayId, // Also include as problemNumber for compatibility
-        hiddenTestCases: undefined,
-        testCases: p.testCases?.slice(0, 3),
-        // Ensure tags are always an array
-        tags: Array.isArray(p.tags) ? p.tags : (p.tags ? [p.tags] : [])
+        id: p.id,
+        title: p.title,
+        slug: p.slug,
+        description: p.description?.substring(0, 300) + (p.description?.length > 300 ? '...' : ''), // Truncate for list
+        difficulty: p.difficulty,
+        category: p.category,
+        displayId: displayId,
+        problemNumber: displayId,
+        hasTestCases: p.hasTestCases,
+        testCaseCount: p.totalCount,
+        tags: Array.isArray(p.tags) ? p.tags : (p.tags ? [p.tags] : []),
+        isPremium: p.isPremium || false,
+        xpReward: p.xpReward || 0,
+        // Include first 2 test cases for preview (input only, not answers)
+        sampleTestCases: p.testCases && Array.isArray(p.testCases) 
+          ? p.testCases.slice(0, 2).map(tc => ({ input: tc.input }))
+          : []
       };
     });
     
     res.json(sanitized);
   } catch (error) {
+    console.error('Error fetching problems:', error);
     res.status(500).json({ error: error.message });
   }
 };
 
 export const getProblemById = async (req, res) => {
   try {
-    const { includeHidden } = req.query; // Allow fetching with hidden test cases for submissions
+    const { includeHidden } = req.query;
     const problem = await database.getProblemById(req.params.id);
     if (!problem) {
       return res.status(404).json({ error: 'Problem not found' });
     }
     
-    // Get all problems to compute displayId
-    const allProblems = await database.getAllProblems({});
-    const difficultyOrder = { easy: 1, medium: 2, hard: 3 };
-    const sorted = allProblems.sort((a, b) => {
-      const diffA = difficultyOrder[a.difficulty?.toLowerCase()] || 99;
-      const diffB = difficultyOrder[b.difficulty?.toLowerCase()] || 99;
-      if (diffA !== diffB) return diffA - diffB;
-      if (a.createdAt && b.createdAt) {
-        return new Date(a.createdAt) - new Date(b.createdAt);
-      }
-      const idA = parseInt(a.id) || (a.id ? String(a.id).charCodeAt(0) : 0);
-      const idB = parseInt(b.id) || (b.id ? String(b.id).charCodeAt(0) : 0);
-      if (typeof idA === 'number' && typeof idB === 'number') return idA - idB;
-      return String(a.id || '').localeCompare(String(b.id || ''));
-    });
+    // Check test cases availability
+    const testCaseInfo = checkHasTestCases(problem);
     
-    // Find the index of this problem in the sorted list
-    const problemIndex = sorted.findIndex(p => p.id === problem.id);
-    const displayId = problem.problemNumber || problem.problem_number || (problemIndex >= 0 ? problemIndex + 1 : null);
+    // Get display ID (simplified - just use problem number if available)
+    const displayId = problem.problemNumber || problem.problem_number || null;
     
-    // For frontend display, sanitize test cases
     // For submissions (includeHidden=true), return all test cases
     if (includeHidden === 'true') {
-      // Return full problem with all test cases (used by submission controller)
       res.json({
         ...problem,
-        displayId: displayId,
-        problemNumber: displayId
+        displayId,
+        problemNumber: displayId,
+        ...testCaseInfo
       });
     } else {
-      // Return sanitized problem (used by frontend)
+      // Return sanitized problem for frontend
+      const testCasesArray = Array.isArray(problem.testCases) ? problem.testCases : [];
+      
       const sanitized = {
-        ...problem,
-        displayId: displayId,
+        id: problem.id,
+        title: problem.title,
+        slug: problem.slug,
+        description: problem.description,
+        difficulty: problem.difficulty,
+        category: problem.category,
+        displayId,
         problemNumber: displayId,
-        hiddenTestCases: undefined,
-        testCases: problem.testCases || [], // Return all visible test cases, not just first 3
-        // Ensure tags are always an array
-        tags: Array.isArray(problem.tags) ? problem.tags : (problem.tags ? [problem.tags] : [])
+        hasTestCases: testCaseInfo.hasTestCases,
+        testCaseCount: testCaseInfo.totalCount,
+        testCases: testCasesArray,
+        hiddenTestCaseCount: testCaseInfo.hiddenCount,
+        tags: Array.isArray(problem.tags) ? problem.tags : (problem.tags ? [problem.tags] : []),
+        hints: problem.hints || [],
+        constraints: problem.constraints || [],
+        starterCode: problem.starterCode || {},
+        xpReward: problem.xpReward || 0,
+        timeLimitMs: problem.timeLimitMs || 5000,
+        memoryLimitMb: problem.memoryLimitMb || 256,
+        isPremium: problem.isPremium || false
       };
+      
       res.json(sanitized);
     }
   } catch (error) {
+    console.error('Error fetching problem by ID:', error);
     res.status(500).json({ error: error.message });
   }
 };

@@ -1,0 +1,83 @@
+{
+  "id": "7c945401-2e9c-4b1d-a172-60c566afa9f9",
+  "title": "Number of Strings That Appear as Substrings in Word",
+  "slug": "number-of-strings-that-appear-as-substrings-in-word",
+  "description": "Given an array of strings `patterns` and a string `word`, return _the **number** of strings in_ `patterns` _that exist as a **substring** in_ `word`.\n\nA **substring** is a contiguous sequence of characters within a string.\n\n**Example 1:**\n\n**Input:** patterns = \\[ \"a \", \"abc \", \"bc \", \"d \"\\], word =  \"abc \"\n**Output:** 3\n**Explanation:**\n-  \"a \" appears as a substring in  \"abc \".\n-  \"abc \" appears as a substring in  \"abc \".\n-  \"bc \" appears as a substring in  \"abc \".\n-  \"d \" does not appear as a substring in  \"abc \".\n3 of the strings in patterns appear as a substring in word.\n\n**Example 2:**\n\n**Input:** patterns = \\[ \"a \", \"b \", \"c \"\\], word =  \"aaaaabbbbb \"\n**Output:** 2\n**Explanation:**\n-  \"a \" appears as a substring in  \"aaaaabbbbb \".\n-  \"b \" appears as a substring in  \"aaaaabbbbb \".\n-  \"c \" does not appear as a substring in  \"aaaaabbbbb \".\n2 of the strings in patterns appear as a substring in word.\n\n**Example 3:**\n\n**Input:** patterns = \\[ \"a \", \"a \", \"a \"\\], word =  \"ab \"\n**Output:** 3\n**Explanation:** Each of the patterns appears as a substring in word  \"ab \".\n\n**Constraints:**\n\n*   `1 <= patterns.length <= 100`\n*   `1 <= patterns[i].length <= 100`\n*   `1 <= word.length <= 100`\n*   `patterns[i]` and `word` consist of lowercase English letters.",
+  "difficulty": "Easy",
+  "category": null,
+  "xpReward": 0,
+  "timeLimitMs": 5000,
+  "memoryLimitMb": 256,
+  "starterCode": {},
+  "solutionCode": "",
+  "hints": [],
+  "isPremium": false,
+  "createdBy": null,
+  "testCases": [
+    {
+      "input": [
+        [
+          "a ",
+          "abc ",
+          "bc ",
+          "d "
+        ],
+        "abc "
+      ],
+      "expectedOutput": 3
+    },
+    {
+      "input": [
+        [
+          "a ",
+          "b ",
+          "c "
+        ],
+        "aaaaabbbbb "
+      ],
+      "expectedOutput": 2
+    },
+    {
+      "input": [
+        [
+          "a ",
+          "a ",
+          "a "
+        ],
+        "ab "
+      ],
+      "expectedOutput": 3
+    }
+  ],
+  "hiddenTestCases": [
+    {
+      "input": [
+        [
+          "a ",
+          "abc ",
+          "bc ",
+          "d "
+        ],
+        "abc "
+      ],
+      "expectedOutput": 3
+    },
+    {
+      "input": [
+        [
+          "a ",
+          "b ",
+          "c "
+        ],
+        "aaaaabbbbb "
+      ],
+      "expectedOutput": 2
+    }
+  ],
+  "tags": [],
+  "constraints": [],
+  "examples": [],
+  "problemNumber": null,
+  "createdAt": "2025-11-14T21:23:50.186807+00:00",
+  "updatedAt": "2025-12-04T04:36:28.637Z"
+}

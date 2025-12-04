@@ -1,6 +1,7 @@
 // In-memory matchmaking queue and match management
 import taskService from './taskService.js';
 import publicDatabaseService from './publicDatabaseService.js';
+import matchHistoryService from './matchHistoryService.js';
 import { v4 as uuidv4 } from 'uuid';
 
 class MatchmakingService {
@@ -144,17 +145,40 @@ class MatchmakingService {
   async updateMatch(matchId, updates) {
     const match = this.matches.get(matchId)
     if (match) {
+      const oldState = match.state
       Object.assign(match, updates)
       this.matches.set(matchId, match)
+
+      // Check if match just finished - record history
+      const newState = updates.state || updates.status || match.state
+      const winnerId = updates.winnerId || updates.winner_id || match.winnerId
+      
+      if ((oldState !== 'finished' && newState === 'finished') && winnerId) {
+        // Match just finished - record history
+        try {
+          const matchData = {
+            id: matchId,
+            player1_id: match.players?.[0]?.id || match.player1_id,
+            player2_id: match.players?.[1]?.id || match.player2_id,
+            start_time: match.startTime || match.start_time,
+            game_state: match.gameState || match.game_state,
+            winner_id: winnerId,
+          }
+          await matchHistoryService.recordMatchEnd(matchData, winnerId)
+        } catch (error) {
+          console.error('Error recording match history:', error)
+          // Continue even if history recording fails
+        }
+      }
 
       // Update in database if available
       if (publicDatabaseService.isAvailable()) {
         try {
           const dbUpdates = {
-            status: updates.state || updates.status || match.state,
+            status: newState,
             start_time: updates.startTime || updates.start_time || match.startTime,
             end_time: updates.endTime || updates.end_time || match.endTime,
-            winner_id: updates.winnerId || updates.winner_id || match.winnerId,
+            winner_id: winnerId,
             game_state: updates.gameState || updates.game_state || match.gameState,
             updated_at: new Date().toISOString()
           }

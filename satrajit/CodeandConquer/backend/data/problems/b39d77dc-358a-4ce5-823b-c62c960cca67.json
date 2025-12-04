@@ -1,0 +1,53 @@
+{
+  "id": "b39d77dc-358a-4ce5-823b-c62c960cca67",
+  "title": "Change Minimum Characters to Satisfy One of Three Conditions",
+  "slug": "change-minimum-characters-to-satisfy-one-of-three-conditions",
+  "description": "You are given two strings `a` and `b` that consist of lowercase letters. In one operation, you can change any character in `a` or `b` to **any lowercase letter**.\n\nYour goal is to satisfy **one** of the following three conditions:\n\n*   **Every** letter in `a` is **strictly less** than **every** letter in `b` in the alphabet.\n*   **Every** letter in `b` is **strictly less** than **every** letter in `a` in the alphabet.\n*   **Both** `a` and `b` consist of **only one** distinct letter.\n\nReturn _the **minimum** number of operations needed to achieve your goal._\n\n**Example 1:**\n\n**Input:** a =  \"aba \", b =  \"caa \"\n**Output:** 2\n**Explanation:** Consider the best way to make each condition true:\n1) Change b to  \"ccc \" in 2 operations, then every letter in a is less than every letter in b.\n2) Change a to  \"bbb \" and b to  \"aaa \" in 3 operations, then every letter in b is less than every letter in a.\n3) Change a to  \"aaa \" and b to  \"aaa \" in 2 operations, then a and b consist of one distinct letter.\nThe best way was done in 2 operations (either condition 1 or condition 3).\n\n**Example 2:**\n\n**Input:** a =  \"dabadd \", b =  \"cda \"\n**Output:** 3\n**Explanation:** The best way is to make condition 1 true by changing b to  \"eee \".\n\n**Constraints:**\n\n*   `1 <= a.length, b.length <= 105`\n*   `a` and `b` consist only of lowercase letters.",
+  "difficulty": "Medium",
+  "category": null,
+  "xpReward": 0,
+  "timeLimitMs": 5000,
+  "memoryLimitMb": 256,
+  "starterCode": [],
+  "solutionCode": "",
+  "hints": [],
+  "isPremium": false,
+  "createdBy": null,
+  "testCases": [
+    {
+      "input": [
+        "aba ",
+        "caa "
+      ],
+      "expectedOutput": 2
+    },
+    {
+      "input": [
+        "dabadd ",
+        "cda "
+      ],
+      "expectedOutput": 3
+    }
+  ],
+  "hiddenTestCases": [
+    {
+      "input": [
+        "aba ",
+        "caa "
+      ],
+      "expectedOutput": 2
+    },
+    {
+      "input": [
+        "dabadd ",
+        "cda "
+      ],
+      "expectedOutput": 3
+    }
+  ],
+  "tags": [],
+  "constraints": [],
+  "examples": [],
+  "createdAt": "2025-11-14T21:22:54.516618+00:00",
+  "updatedAt": "2025-12-04T04:36:57.715Z"
+}

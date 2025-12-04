@@ -1,0 +1,75 @@
+{
+  "id": "01050623-b6ab-4c19-ae15-9ae7d3d08d97",
+  "title": "House Robber IV",
+  "slug": "house-robber-iv",
+  "description": "There are several consecutive houses along a street, each of which has some money inside. There is also a robber, who wants to steal money from the homes, but he **refuses to steal from adjacent homes**.\n\nThe **capability** of the robber is the maximum amount of money he steals from one house of all the houses he robbed.\n\nYou are given an integer array `nums` representing how much money is stashed in each house. More formally, the `ith` house from the left has `nums[i]` dollars.\n\nYou are also given an integer `k`, representing the **minimum** number of houses the robber will steal from. It is always possible to steal at least `k` houses.\n\nReturn _the **minimum** capability of the robber out of all the possible ways to steal at least_ `k` _houses_.\n\n**Example 1:**\n\n**Input:** nums = \\[2,3,5,9\\], k = 2\n**Output:** 5\n**Explanation:** \nThere are three ways to rob at least 2 houses:\n- Rob the houses at indices 0 and 2. Capability is max(nums\\[0\\], nums\\[2\\]) = 5.\n- Rob the houses at indices 0 and 3. Capability is max(nums\\[0\\], nums\\[3\\]) = 9.\n- Rob the houses at indices 1 and 3. Capability is max(nums\\[1\\], nums\\[3\\]) = 9.\nTherefore, we return min(5, 9, 9) = 5.\n\n**Example 2:**\n\n**Input:** nums = \\[2,7,9,3,1\\], k = 2\n**Output:** 2\n**Explanation:** There are 7 ways to rob the houses. The way which leads to minimum capability is to rob the house at index 0 and 4. Return max(nums\\[0\\], nums\\[4\\]) = 2.\n\n**Constraints:**\n\n*   `1 <= nums.length <= 105`\n*   `1 <= nums[i] <= 109`\n*   `1 <= k <= (nums.length + 1)/2`",
+  "difficulty": "Medium",
+  "category": null,
+  "xpReward": 0,
+  "timeLimitMs": 5000,
+  "memoryLimitMb": 256,
+  "starterCode": [],
+  "solutionCode": "",
+  "hints": [],
+  "isPremium": false,
+  "createdBy": null,
+  "testCases": [
+    {
+      "input": [
+        [
+          2,
+          3,
+          5,
+          9
+        ],
+        2
+      ],
+      "expectedOutput": 5
+    },
+    {
+      "input": [
+        [
+          2,
+          7,
+          9,
+          3,
+          1
+        ],
+        2
+      ],
+      "expectedOutput": 2
+    }
+  ],
+  "hiddenTestCases": [
+    {
+      "input": [
+        [
+          2,
+          3,
+          5,
+          9
+        ],
+        2
+      ],
+      "expectedOutput": 5
+    },
+    {
+      "input": [
+        [
+          2,
+          7,
+          9,
+          3,
+          1
+        ],
+        2
+      ],
+      "expectedOutput": 2
+    }
+  ],
+  "tags": [],
+  "constraints": [],
+  "examples": [],
+  "createdAt": "2025-11-14T21:26:21.988173+00:00",
+  "updatedAt": "2025-12-04T04:35:20.133Z"
+}

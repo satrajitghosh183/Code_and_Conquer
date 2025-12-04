@@ -1,0 +1,55 @@
+{
+  "id": "a409c2f7-1f8f-4e6e-adac-8fc6207c22bb",
+  "title": "Partitioning Into Minimum Number Of Deci-Binary Numbers",
+  "slug": "partitioning-into-minimum-number-of-deci-binary-numbers",
+  "description": "A decimal number is called **deci-binary** if each of its digits is either `0` or `1` without any leading zeros. For example, `101` and `1100` are **deci-binary**, while `112` and `3001` are not.\n\nGiven a string `n` that represents a positive decimal integer, return _the **minimum** number of positive **deci-binary** numbers needed so that they sum up to_ `n`_._\n\n**Example 1:**\n\n**Input:** n =  \"32 \"\n**Output:** 3\n**Explanation:** 10 + 11 + 11 = 32\n\n**Example 2:**\n\n**Input:** n =  \"82734 \"\n**Output:** 8\n\n**Example 3:**\n\n**Input:** n =  \"27346209830709182346 \"\n**Output:** 9\n\n**Constraints:**\n\n*   `1 <= n.length <= 105`\n*   `n` consists of only digits.\n*   `n` does not contain any leading zeros and represents a positive integer.",
+  "difficulty": "Medium",
+  "category": null,
+  "xpReward": 0,
+  "timeLimitMs": 5000,
+  "memoryLimitMb": 256,
+  "starterCode": [],
+  "solutionCode": "",
+  "hints": [],
+  "isPremium": false,
+  "createdBy": null,
+  "testCases": [
+    {
+      "input": [
+        "32 "
+      ],
+      "expectedOutput": 3
+    },
+    {
+      "input": [
+        "82734 "
+      ],
+      "expectedOutput": 8
+    },
+    {
+      "input": [
+        "27346209830709182346 "
+      ],
+      "expectedOutput": "9\n\n**Constraints:**\n\n*   `1 <= n.length <= 105`\n*   `n` consists of only digits.\n*   `n` does not contain any leading zeros and represents a positive integer."
+    }
+  ],
+  "hiddenTestCases": [
+    {
+      "input": [
+        "32 "
+      ],
+      "expectedOutput": 3
+    },
+    {
+      "input": [
+        "82734 "
+      ],
+      "expectedOutput": 8
+    }
+  ],
+  "tags": [],
+  "constraints": [],
+  "examples": [],
+  "createdAt": "2025-11-14T21:22:42.843294+00:00",
+  "updatedAt": "2025-12-04T04:37:04.924Z"
+}

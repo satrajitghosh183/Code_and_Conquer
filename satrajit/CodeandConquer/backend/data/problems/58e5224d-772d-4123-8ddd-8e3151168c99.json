@@ -1,0 +1,65 @@
+{
+  "id": "58e5224d-772d-4123-8ddd-8e3151168c99",
+  "title": "Naming a Company",
+  "slug": "naming-a-company",
+  "description": "You are given an array of strings `ideas` that represents a list of names to be used in the process of naming a company. The process of naming a company is as follows:\n\n1.  Choose 2 **distinct** names from `ideas`, call them `ideaA` and `ideaB`.\n2.  Swap the first letters of `ideaA` and `ideaB` with each other.\n3.  If **both** of the new names are not found in the original `ideas`, then the name `ideaA ideaB` (the **concatenation** of `ideaA` and `ideaB`, separated by a space) is a valid company name.\n4.  Otherwise, it is not a valid name.\n\nReturn _the number of **distinct** valid names for the company_.\n\n**Example 1:**\n\n**Input:** ideas = \\[ \"coffee \", \"donuts \", \"time \", \"toffee \"\\]\n**Output:** 6\n**Explanation:** The following selections are valid:\n- ( \"coffee \",  \"donuts \"): The company name created is  \"doffee conuts \".\n- ( \"donuts \",  \"coffee \"): The company name created is  \"conuts doffee \".\n- ( \"donuts \",  \"time \"): The company name created is  \"tonuts dime \".\n- ( \"donuts \",  \"toffee \"): The company name created is  \"tonuts doffee \".\n- ( \"time \",  \"donuts \"): The company name created is  \"dime tonuts \".\n- ( \"toffee \",  \"donuts \"): The company name created is  \"doffee tonuts \".\nTherefore, there are a total of 6 distinct company names.\n\nThe following are some examples of invalid selections:\n- ( \"coffee \",  \"time \"): The name  \"toffee \" formed after swapping already exists in the original array.\n- ( \"time \",  \"toffee \"): Both names are still the same after swapping and exist in the original array.\n- ( \"coffee \",  \"toffee \"): Both names formed after swapping already exist in the original array.\n\n**Example 2:**\n\n**Input:** ideas = \\[ \"lack \", \"back \"\\]\n**Output:** 0\n**Explanation:** There are no valid selections. Therefore, 0 is returned.\n\n**Constraints:**\n\n*   `2 <= ideas.length <= 5 * 104`\n*   `1 <= ideas[i].length <= 10`\n*   `ideas[i]` consists of lowercase English letters.\n*   All the strings in `ideas` are **unique**.",
+  "difficulty": "Hard",
+  "category": null,
+  "xpReward": 0,
+  "timeLimitMs": 5000,
+  "memoryLimitMb": 256,
+  "starterCode": [],
+  "solutionCode": "",
+  "hints": [],
+  "isPremium": false,
+  "createdBy": null,
+  "testCases": [
+    {
+      "input": [
+        [
+          "coffee ",
+          "donuts ",
+          "time ",
+          "toffee "
+        ]
+      ],
+      "expectedOutput": 6
+    },
+    {
+      "input": [
+        [
+          "lack ",
+          "back "
+        ]
+      ],
+      "expectedOutput": 0
+    }
+  ],
+  "hiddenTestCases": [
+    {
+      "input": [
+        [
+          "coffee ",
+          "donuts ",
+          "time ",
+          "toffee "
+        ]
+      ],
+      "expectedOutput": 6
+    },
+    {
+      "input": [
+        [
+          "lack ",
+          "back "
+        ]
+      ],
+      "expectedOutput": 0
+    }
+  ],
+  "tags": [],
+  "constraints": [],
+  "examples": [],
+  "createdAt": "2025-11-14T21:25:13.890831+00:00",
+  "updatedAt": "2025-12-04T04:35:52.376Z"
+}

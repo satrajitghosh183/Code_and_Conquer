@@ -1,0 +1,151 @@
+{
+  "id": "91add283-3b84-48fc-a2cc-bd96e134cae4",
+  "title": "Minimum Number of Vertices to Reach All Nodes",
+  "slug": "minimum-number-of-vertices-to-reach-all-nodes",
+  "description": "Given a **directed acyclic graph**, with `n` vertices numbered from `0` to `n-1`, and an array `edges` where `edges[i] = [fromi, toi]` represents a directed edge from node `fromi` to node `toi`.\n\nFind _the smallest set of vertices from which all nodes in the graph are reachable_. It's guaranteed that a unique solution exists.\n\nNotice that you can return the vertices in any order.\n\n**Example 1:**\n\n**Input:** n = 6, edges = \\[\\[0,1\\],\\[0,2\\],\\[2,5\\],\\[3,4\\],\\[4,2\\]\\]\n**Output:** \\[0,3\\]\n**Explanation:** It's not possible to reach all the nodes from a single vertex. From 0 we can reach \\[0,1,2,5\\]. From 3 we can reach \\[3,4,2,5\\]. So we output \\[0,3\\].\n\n**Example 2:**\n\n**Input:** n = 5, edges = \\[\\[0,1\\],\\[2,1\\],\\[3,1\\],\\[1,4\\],\\[2,4\\]\\]\n**Output:** \\[0,2,3\\]\n**Explanation:** Notice that vertices 0, 3 and 2 are not reachable from any other node, so we must include them. Also any of these vertices can reach nodes 1 and 4.\n\n**Constraints:**\n\n*   `2 <= n <= 10^5`\n*   `1 <= edges.length <= min(10^5, n * (n - 1) / 2)`\n*   `edges[i].length == 2`\n*   `0 <= fromi, toi < n`\n*   All pairs `(fromi, toi)` are distinct.",
+  "difficulty": "Medium",
+  "category": null,
+  "xpReward": 0,
+  "timeLimitMs": 5000,
+  "memoryLimitMb": 256,
+  "starterCode": [],
+  "solutionCode": "",
+  "hints": [],
+  "isPremium": false,
+  "createdBy": null,
+  "testCases": [
+    {
+      "input": [
+        6,
+        [
+          [
+            0,
+            1
+          ],
+          [
+            0,
+            2
+          ],
+          [
+            2,
+            5
+          ],
+          [
+            3,
+            4
+          ],
+          [
+            4,
+            2
+          ]
+        ]
+      ],
+      "expectedOutput": [
+        0,
+        3
+      ]
+    },
+    {
+      "input": [
+        5,
+        [
+          [
+            0,
+            1
+          ],
+          [
+            2,
+            1
+          ],
+          [
+            3,
+            1
+          ],
+          [
+            1,
+            4
+          ],
+          [
+            2,
+            4
+          ]
+        ]
+      ],
+      "expectedOutput": [
+        0,
+        2,
+        3
+      ]
+    }
+  ],
+  "hiddenTestCases": [
+    {
+      "input": [
+        6,
+        [
+          [
+            0,
+            1
+          ],
+          [
+            0,
+            2
+          ],
+          [
+            2,
+            5
+          ],
+          [
+            3,
+            4
+          ],
+          [
+            4,
+            2
+          ]
+        ]
+      ],
+      "expectedOutput": [
+        0,
+        3
+      ]
+    },
+    {
+      "input": [
+        5,
+        [
+          [
+            0,
+            1
+          ],
+          [
+            2,
+            1
+          ],
+          [
+            3,
+            1
+          ],
+          [
+            1,
+            4
+          ],
+          [
+            2,
+            4
+          ]
+        ]
+      ],
+      "expectedOutput": [
+        0,
+        2,
+        3
+      ]
+    }
+  ],
+  "tags": [],
+  "constraints": [],
+  "examples": [],
+  "createdAt": "2025-11-14T21:22:02.465309+00:00",
+  "updatedAt": "2025-12-04T04:37:17.335Z"
+}

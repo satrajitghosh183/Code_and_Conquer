@@ -1,0 +1,69 @@
+{
+  "id": "6681d625-6ca2-4c28-906f-8030001929d1",
+  "title": "Minimum Score by Changing Two Elements",
+  "slug": "minimum-score-by-changing-two-elements",
+  "description": "You are given a **0-indexed** integer array `nums`.\n\n*   The **low** score of `nums` is the minimum value of `|nums[i] - nums[j]|` over all `0 <= i < j < nums.length`.\n*   The **high** score of `nums` is the maximum value of `|nums[i] - nums[j]|` over all `0 <= i < j < nums.length`.\n*   The **score** of `nums` is the sum of the **high** and **low** scores of nums.\n\nTo minimize the score of `nums`, we can change the value of **at most two** elements of `nums`.\n\nReturn _the **minimum** possible **score** after changing the value of **at most two** elements o_f `nums`.\n\nNote that `|x|` denotes the absolute value of `x`.\n\n**Example 1:**\n\n**Input:** nums = \\[1,4,3\\]\n**Output:** 0\n**Explanation:** Change value of nums\\[1\\] and nums\\[2\\] to 1 so that nums becomes \\[1,1,1\\]. Now, the value of `|nums[i] - nums[j]|` is always equal to 0, so we return 0 + 0 = 0.\n\n**Example 2:**\n\n**Input:** nums = \\[1,4,7,8,5\\]\n**Output:** 3\n**Explanation:** Change nums\\[0\\] and nums\\[1\\] to be 6. Now nums becomes \\[6,6,7,8,5\\].\nOur low score is achieved when i = 0 and j = 1, in which case |`nums[i] - nums[j]`| = |6 - 6| = 0.\nOur high score is achieved when i = 3 and j = 4, in which case |`nums[i] - nums[j]`| = |8 - 5| = 3.\nThe sum of our high and low score is 3, which we can prove to be minimal.\n\n**Constraints:**\n\n*   `3 <= nums.length <= 105`\n*   `1 <= nums[i] <= 109`",
+  "difficulty": "Medium",
+  "category": null,
+  "xpReward": 0,
+  "timeLimitMs": 5000,
+  "memoryLimitMb": 256,
+  "starterCode": [],
+  "solutionCode": "",
+  "hints": [],
+  "isPremium": false,
+  "createdBy": null,
+  "testCases": [
+    {
+      "input": [
+        [
+          1,
+          4,
+          3
+        ]
+      ],
+      "expectedOutput": 0
+    },
+    {
+      "input": [
+        [
+          1,
+          4,
+          7,
+          8,
+          5
+        ]
+      ],
+      "expectedOutput": 3
+    }
+  ],
+  "hiddenTestCases": [
+    {
+      "input": [
+        [
+          1,
+          4,
+          3
+        ]
+      ],
+      "expectedOutput": 0
+    },
+    {
+      "input": [
+        [
+          1,
+          4,
+          7,
+          8,
+          5
+        ]
+      ],
+      "expectedOutput": 3
+    }
+  ],
+  "tags": [],
+  "constraints": [],
+  "examples": [],
+  "createdAt": "2025-11-14T21:26:24.126629+00:00",
+  "updatedAt": "2025-12-04T04:35:19.339Z"
+}

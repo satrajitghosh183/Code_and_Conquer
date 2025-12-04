@@ -1,0 +1,56 @@
+{
+  "id": "063b1583-edba-456b-b78a-528666eceb8a",
+  "title": "Make The String Great",
+  "slug": "make-the-string-great",
+  "description": "Given a string `s` of lower and upper case English letters.\n\nA good string is a string which doesn't have **two adjacent characters** `s[i]` and `s[i + 1]` where:\n\n*   `0 <= i <= s.length - 2`\n*   `s[i]` is a lower-case letter and `s[i + 1]` is the same letter but in upper-case or **vice-versa**.\n\nTo make the string good, you can choose **two adjacent** characters that make the string bad and remove them. You can keep doing this until the string becomes good.\n\nReturn _the string_ after making it good. The answer is guaranteed to be unique under the given constraints.\n\n**Notice** that an empty string is also good.\n\n**Example 1:**\n\n**Input:** s =  \"leEeetcode \"\n**Output:**  \"leetcode \"\n**Explanation:** In the first step, either you choose i = 1 or i = 2, both will result  \"leEeetcode \" to be reduced to  \"leetcode \".\n\n**Example 2:**\n\n**Input:** s =  \"abBAcC \"\n**Output:**  \" \"\n**Explanation:** We have many possible scenarios, and all lead to the same answer. For example:\n \"abBAcC \" -->  \"aAcC \" -->  \"cC \" -->  \" \"\n \"abBAcC \" -->  \"abBA \" -->  \"aA \" -->  \" \"\n\n**Example 3:**\n\n**Input:** s =  \"s \"\n**Output:**  \"s \"\n\n**Constraints:**\n\n*   `1 <= s.length <= 100`\n*   `s` contains only lower and upper case English letters.",
+  "difficulty": "Easy",
+  "category": null,
+  "xpReward": 0,
+  "timeLimitMs": 5000,
+  "memoryLimitMb": 256,
+  "starterCode": {},
+  "solutionCode": "",
+  "hints": [],
+  "isPremium": false,
+  "createdBy": null,
+  "testCases": [
+    {
+      "input": [
+        "leEeetcode "
+      ],
+      "expectedOutput": "leetcode "
+    },
+    {
+      "input": [
+        "abBAcC "
+      ],
+      "expectedOutput": " "
+    },
+    {
+      "input": [
+        "s "
+      ],
+      "expectedOutput": "\"s \"\n\n**Constraints:**\n\n*   `1 <= s.length <= 100`\n*   `s` contains only lower and upper case English letters."
+    }
+  ],
+  "hiddenTestCases": [
+    {
+      "input": [
+        "leEeetcode "
+      ],
+      "expectedOutput": "leetcode "
+    },
+    {
+      "input": [
+        "abBAcC "
+      ],
+      "expectedOutput": " "
+    }
+  ],
+  "tags": [],
+  "constraints": [],
+  "examples": [],
+  "problemNumber": null,
+  "createdAt": "2025-11-14T21:21:56.048999+00:00",
+  "updatedAt": "2025-12-04T04:37:18.311Z"
+}

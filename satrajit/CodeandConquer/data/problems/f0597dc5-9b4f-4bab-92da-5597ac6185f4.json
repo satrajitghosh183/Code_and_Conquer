@@ -1,0 +1,56 @@
+{
+  "id": "f0597dc5-9b4f-4bab-92da-5597ac6185f4",
+  "title": "Capitalize the Title",
+  "slug": "capitalize-the-title",
+  "description": "You are given a string `title` consisting of one or more words separated by a single space, where each word consists of English letters. **Capitalize** the string by changing the capitalization of each word such that:\n\n*   If the length of the word is `1` or `2` letters, change all letters to lowercase.\n*   Otherwise, change the first letter to uppercase and the remaining letters to lowercase.\n\nReturn _the **capitalized**_ `title`.\n\n**Example 1:**\n\n**Input:** title =  \"capiTalIze tHe titLe \"\n**Output:**  \"Capitalize The Title \"\n**Explanation:**\nSince all the words have a length of at least 3, the first letter of each word is uppercase, and the remaining letters are lowercase.\n\n**Example 2:**\n\n**Input:** title =  \"First leTTeR of EACH Word \"\n**Output:**  \"First Letter of Each Word \"\n**Explanation:**\nThe word  \"of \" has length 2, so it is all lowercase.\nThe remaining words have a length of at least 3, so the first letter of each remaining word is uppercase, and the remaining letters are lowercase.\n\n**Example 3:**\n\n**Input:** title =  \"i lOve leetcode \"\n**Output:**  \"i Love Leetcode \"\n**Explanation:**\nThe word  \"i \" has length 1, so it is lowercase.\nThe remaining words have a length of at least 3, so the first letter of each remaining word is uppercase, and the remaining letters are lowercase.\n\n**Constraints:**\n\n*   `1 <= title.length <= 100`\n*   `title` consists of words separated by a single space without any leading or trailing spaces.\n*   Each word consists of uppercase and lowercase English letters and is **non-empty**.",
+  "difficulty": "Easy",
+  "category": null,
+  "xpReward": 0,
+  "timeLimitMs": 5000,
+  "memoryLimitMb": 256,
+  "starterCode": {},
+  "solutionCode": "",
+  "hints": [],
+  "isPremium": false,
+  "createdBy": null,
+  "testCases": [
+    {
+      "input": [
+        "capiTalIze tHe titLe "
+      ],
+      "expectedOutput": "Capitalize The Title "
+    },
+    {
+      "input": [
+        "First leTTeR of EACH Word "
+      ],
+      "expectedOutput": "First Letter of Each Word "
+    },
+    {
+      "input": [
+        "i lOve leetcode "
+      ],
+      "expectedOutput": "i Love Leetcode "
+    }
+  ],
+  "hiddenTestCases": [
+    {
+      "input": [
+        "capiTalIze tHe titLe "
+      ],
+      "expectedOutput": "Capitalize The Title "
+    },
+    {
+      "input": [
+        "First leTTeR of EACH Word "
+      ],
+      "expectedOutput": "First Letter of Each Word "
+    }
+  ],
+  "tags": [],
+  "constraints": [],
+  "examples": [],
+  "problemNumber": null,
+  "createdAt": "2025-11-14T21:24:30.679731+00:00",
+  "updatedAt": "2025-12-04T04:36:11.944Z"
+}

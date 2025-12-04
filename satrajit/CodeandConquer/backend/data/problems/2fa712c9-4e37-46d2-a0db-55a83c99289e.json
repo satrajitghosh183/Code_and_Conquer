@@ -1,0 +1,87 @@
+{
+  "id": "2fa712c9-4e37-46d2-a0db-55a83c99289e",
+  "title": "Maximum Number of Coins You Can Get",
+  "slug": "maximum-number-of-coins-you-can-get",
+  "description": "There are `3n` piles of coins of varying size, you and your friends will take piles of coins as follows:\n\n*   In each step, you will choose **any** `3` piles of coins (not necessarily consecutive).\n*   Of your choice, Alice will pick the pile with the maximum number of coins.\n*   You will pick the next pile with the maximum number of coins.\n*   Your friend Bob will pick the last pile.\n*   Repeat until there are no more piles of coins.\n\nGiven an array of integers `piles` where `piles[i]` is the number of coins in the `ith` pile.\n\nReturn the maximum number of coins that you can have.\n\n**Example 1:**\n\n**Input:** piles = \\[2,4,1,2,7,8\\]\n**Output:** 9\n**Explanation:** Choose the triplet (2, 7, 8), Alice Pick the pile with 8 coins, you the pile with **7** coins and Bob the last one.\nChoose the triplet (1, 2, 4), Alice Pick the pile with 4 coins, you the pile with **2** coins and Bob the last one.\nThe maximum number of coins which you can have are: 7 + 2 = 9.\nOn the other hand if we choose this arrangement (1, **2**, 8), (2, **4**, 7) you only get 2 + 4 = 6 coins which is not optimal.\n\n**Example 2:**\n\n**Input:** piles = \\[2,4,5\\]\n**Output:** 4\n\n**Example 3:**\n\n**Input:** piles = \\[9,8,7,6,5,1,2,3,4\\]\n**Output:** 18\n\n**Constraints:**\n\n*   `3 <= piles.length <= 105`\n*   `piles.length % 3 == 0`\n*   `1 <= piles[i] <= 104`",
+  "difficulty": "Medium",
+  "category": null,
+  "xpReward": 0,
+  "timeLimitMs": 5000,
+  "memoryLimitMb": 256,
+  "starterCode": [],
+  "solutionCode": "",
+  "hints": [],
+  "isPremium": false,
+  "createdBy": null,
+  "testCases": [
+    {
+      "input": [
+        [
+          2,
+          4,
+          1,
+          2,
+          7,
+          8
+        ]
+      ],
+      "expectedOutput": 9
+    },
+    {
+      "input": [
+        [
+          2,
+          4,
+          5
+        ]
+      ],
+      "expectedOutput": 4
+    },
+    {
+      "input": [
+        [
+          9,
+          8,
+          7,
+          6,
+          5,
+          1,
+          2,
+          3,
+          4
+        ]
+      ],
+      "expectedOutput": "18\n\n**Constraints:**\n\n*   `3 <= piles.length <= 105`\n*   `piles.length % 3 == 0`\n*   `1 <= piles[i] <= 104`"
+    }
+  ],
+  "hiddenTestCases": [
+    {
+      "input": [
+        [
+          2,
+          4,
+          1,
+          2,
+          7,
+          8
+        ]
+      ],
+      "expectedOutput": 9
+    },
+    {
+      "input": [
+        [
+          2,
+          4,
+          5
+        ]
+      ],
+      "expectedOutput": 4
+    }
+  ],
+  "tags": [],
+  "constraints": [],
+  "examples": [],
+  "createdAt": "2025-11-14T21:22:03.902673+00:00",
+  "updatedAt": "2025-12-04T04:37:16.954Z"
+}

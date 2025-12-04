@@ -1,0 +1,77 @@
+{
+  "id": "5d8060a8-023c-460f-9a40-de99e395cabd",
+  "title": "Maximum Sum of Distinct Subarrays With Length K",
+  "slug": "maximum-sum-of-distinct-subarrays-with-length-k",
+  "description": "You are given an integer array `nums` and an integer `k`. Find the maximum subarray sum of all the subarrays of `nums` that meet the following conditions:\n\n*   The length of the subarray is `k`, and\n*   All the elements of the subarray are **distinct**.\n\nReturn _the maximum subarray sum of all the subarrays that meet the conditions__._ If no subarray meets the conditions, return `0`.\n\n_A **subarray** is a contiguous non-empty sequence of elements within an array._\n\n**Example 1:**\n\n**Input:** nums = \\[1,5,4,2,9,9,9\\], k = 3\n**Output:** 15\n**Explanation:** The subarrays of nums with length 3 are:\n- \\[1,5,4\\] which meets the requirements and has a sum of 10.\n- \\[5,4,2\\] which meets the requirements and has a sum of 11.\n- \\[4,2,9\\] which meets the requirements and has a sum of 15.\n- \\[2,9,9\\] which does not meet the requirements because the element 9 is repeated.\n- \\[9,9,9\\] which does not meet the requirements because the element 9 is repeated.\nWe return 15 because it is the maximum subarray sum of all the subarrays that meet the conditions\n\n**Example 2:**\n\n**Input:** nums = \\[4,4,4\\], k = 3\n**Output:** 0\n**Explanation:** The subarrays of nums with length 3 are:\n- \\[4,4,4\\] which does not meet the requirements because the element 4 is repeated.\nWe return 0 because no subarrays meet the conditions.\n\n**Constraints:**\n\n*   `1 <= k <= nums.length <= 105`\n*   `1 <= nums[i] <= 105`",
+  "difficulty": "Medium",
+  "category": null,
+  "xpReward": 0,
+  "timeLimitMs": 5000,
+  "memoryLimitMb": 256,
+  "starterCode": [],
+  "solutionCode": "",
+  "hints": [],
+  "isPremium": false,
+  "createdBy": null,
+  "testCases": [
+    {
+      "input": [
+        [
+          1,
+          5,
+          4,
+          2,
+          9,
+          9,
+          9
+        ],
+        3
+      ],
+      "expectedOutput": 15
+    },
+    {
+      "input": [
+        [
+          4,
+          4,
+          4
+        ],
+        3
+      ],
+      "expectedOutput": 0
+    }
+  ],
+  "hiddenTestCases": [
+    {
+      "input": [
+        [
+          1,
+          5,
+          4,
+          2,
+          9,
+          9,
+          9
+        ],
+        3
+      ],
+      "expectedOutput": 15
+    },
+    {
+      "input": [
+        [
+          4,
+          4,
+          4
+        ],
+        3
+      ],
+      "expectedOutput": 0
+    }
+  ],
+  "tags": [],
+  "constraints": [],
+  "examples": [],
+  "createdAt": "2025-11-14T21:25:54.677879+00:00",
+  "updatedAt": "2025-12-04T04:35:32.904Z"
+}

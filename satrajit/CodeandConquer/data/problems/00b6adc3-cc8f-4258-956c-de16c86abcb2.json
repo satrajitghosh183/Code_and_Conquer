@@ -1,0 +1,56 @@
+{
+  "id": "00b6adc3-cc8f-4258-956c-de16c86abcb2",
+  "title": "Minimum Penalty for a Shop",
+  "slug": "minimum-penalty-for-a-shop",
+  "description": "You are given the customer visit log of a shop represented by a **0-indexed** string `customers` consisting only of characters `'N'` and `'Y'`:\n\n*   if the `ith` character is `'Y'`, it means that customers come at the `ith` hour\n*   whereas `'N'` indicates that no customers come at the `ith` hour.\n\nIf the shop closes at the `jth` hour (`0 <= j <= n`), the **penalty** is calculated as follows:\n\n*   For every hour when the shop is open and no customers come, the penalty increases by `1`.\n*   For every hour when the shop is closed and customers come, the penalty increases by `1`.\n\nReturn _the **earliest** hour at which the shop must be closed to incur a **minimum** penalty._\n\n**Note** that if a shop closes at the `jth` hour, it means the shop is closed at the hour `j`.\n\n**Example 1:**\n\n**Input:** customers =  \"YYNY \"\n**Output:** 2\n**Explanation:** \n- Closing the shop at the 0th hour incurs in 1+1+0+1 = 3 penalty.\n- Closing the shop at the 1st hour incurs in 0+1+0+1 = 2 penalty.\n- Closing the shop at the 2nd hour incurs in 0+0+0+1 = 1 penalty.\n- Closing the shop at the 3rd hour incurs in 0+0+1+1 = 2 penalty.\n- Closing the shop at the 4th hour incurs in 0+0+1+0 = 1 penalty.\nClosing the shop at 2nd or 4th hour gives a minimum penalty. Since 2 is earlier, the optimal closing time is 2.\n\n**Example 2:**\n\n**Input:** customers =  \"NNNNN \"\n**Output:** 0\n**Explanation:** It is best to close the shop at the 0th hour as no customers arrive.\n\n**Example 3:**\n\n**Input:** customers =  \"YYYY \"\n**Output:** 4\n**Explanation:** It is best to close the shop at the 4th hour as customers arrive at each hour.\n\n**Constraints:**\n\n*   `1 <= customers.length <= 105`\n*   `customers` consists only of characters `'Y'` and `'N'`.",
+  "difficulty": "Medium",
+  "category": null,
+  "xpReward": 0,
+  "timeLimitMs": 5000,
+  "memoryLimitMb": 256,
+  "starterCode": {},
+  "solutionCode": "",
+  "hints": [],
+  "isPremium": false,
+  "createdBy": null,
+  "testCases": [
+    {
+      "input": [
+        "YYNY "
+      ],
+      "expectedOutput": 2
+    },
+    {
+      "input": [
+        "NNNNN "
+      ],
+      "expectedOutput": 0
+    },
+    {
+      "input": [
+        "YYYY "
+      ],
+      "expectedOutput": 4
+    }
+  ],
+  "hiddenTestCases": [
+    {
+      "input": [
+        "YYNY "
+      ],
+      "expectedOutput": 2
+    },
+    {
+      "input": [
+        "NNNNN "
+      ],
+      "expectedOutput": 0
+    }
+  ],
+  "tags": [],
+  "constraints": [],
+  "examples": [],
+  "problemNumber": null,
+  "createdAt": "2025-11-14T21:25:59.865269+00:00",
+  "updatedAt": "2025-12-04T04:35:29.897Z"
+}

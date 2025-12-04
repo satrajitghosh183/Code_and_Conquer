@@ -1,0 +1,225 @@
+{
+  "id": "8e8c8fa0-9d73-4f53-aecb-473fe6c2e926",
+  "title": "Merge Two 2D Arrays by Summing Values",
+  "slug": "merge-two-2d-arrays-by-summing-values",
+  "description": "You are given two **2D** integer arrays `nums1` and `nums2.`\n\n*   `nums1[i] = [idi, vali]` indicate that the number with the id `idi` has a value equal to `vali`.\n*   `nums2[i] = [idi, vali]` indicate that the number with the id `idi` has a value equal to `vali`.\n\nEach array contains **unique** ids and is sorted in **ascending** order by id.\n\nMerge the two arrays into one array that is sorted in ascending order by id, respecting the following conditions:\n\n*   Only ids that appear in at least one of the two arrays should be included in the resulting array.\n*   Each id should be included **only once** and its value should be the sum of the values of this id in the two arrays. If the id does not exist in one of the two arrays then its value in that array is considered to be `0`.\n\nReturn _the resulting array_. The returned array must be sorted in ascending order by id.\n\n**Example 1:**\n\n**Input:** nums1 = \\[\\[1,2\\],\\[2,3\\],\\[4,5\\]\\], nums2 = \\[\\[1,4\\],\\[3,2\\],\\[4,1\\]\\]\n**Output:** \\[\\[1,6\\],\\[2,3\\],\\[3,2\\],\\[4,6\\]\\]\n**Explanation:** The resulting array contains the following:\n- id = 1, the value of this id is 2 + 4 = 6.\n- id = 2, the value of this id is 3.\n- id = 3, the value of this id is 2.\n- id = 4, the value of this id is 5 + 1 = 6.\n\n**Example 2:**\n\n**Input:** nums1 = \\[\\[2,4\\],\\[3,6\\],\\[5,5\\]\\], nums2 = \\[\\[1,3\\],\\[4,3\\]\\]\n**Output:** \\[\\[1,3\\],\\[2,4\\],\\[3,6\\],\\[4,3\\],\\[5,5\\]\\]\n**Explanation:** There are no common ids, so we just include each id with its value in the resulting list.\n\n**Constraints:**\n\n*   `1 <= nums1.length, nums2.length <= 200`\n*   `nums1[i].length == nums2[j].length == 2`\n*   `1 <= idi, vali <= 1000`\n*   Both arrays contain unique ids.\n*   Both arrays are in strictly ascending order by id.",
+  "difficulty": "Easy",
+  "category": null,
+  "xpReward": 0,
+  "timeLimitMs": 5000,
+  "memoryLimitMb": 256,
+  "starterCode": [],
+  "solutionCode": "",
+  "hints": [],
+  "isPremium": false,
+  "createdBy": null,
+  "testCases": [
+    {
+      "input": [
+        [
+          [
+            1,
+            2
+          ],
+          [
+            2,
+            3
+          ],
+          [
+            4,
+            5
+          ]
+        ],
+        [
+          [
+            1,
+            4
+          ],
+          [
+            3,
+            2
+          ],
+          [
+            4,
+            1
+          ]
+        ]
+      ],
+      "expectedOutput": [
+        [
+          1,
+          6
+        ],
+        [
+          2,
+          3
+        ],
+        [
+          3,
+          2
+        ],
+        [
+          4,
+          6
+        ]
+      ]
+    },
+    {
+      "input": [
+        [
+          [
+            2,
+            4
+          ],
+          [
+            3,
+            6
+          ],
+          [
+            5,
+            5
+          ]
+        ],
+        [
+          [
+            1,
+            3
+          ],
+          [
+            4,
+            3
+          ]
+        ]
+      ],
+      "expectedOutput": [
+        [
+          1,
+          3
+        ],
+        [
+          2,
+          4
+        ],
+        [
+          3,
+          6
+        ],
+        [
+          4,
+          3
+        ],
+        [
+          5,
+          5
+        ]
+      ]
+    }
+  ],
+  "hiddenTestCases": [
+    {
+      "input": [
+        [
+          [
+            1,
+            2
+          ],
+          [
+            2,
+            3
+          ],
+          [
+            4,
+            5
+          ]
+        ],
+        [
+          [
+            1,
+            4
+          ],
+          [
+            3,
+            2
+          ],
+          [
+            4,
+            1
+          ]
+        ]
+      ],
+      "expectedOutput": [
+        [
+          1,
+          6
+        ],
+        [
+          2,
+          3
+        ],
+        [
+          3,
+          2
+        ],
+        [
+          4,
+          6
+        ]
+      ]
+    },
+    {
+      "input": [
+        [
+          [
+            2,
+            4
+          ],
+          [
+            3,
+            6
+          ],
+          [
+            5,
+            5
+          ]
+        ],
+        [
+          [
+            1,
+            3
+          ],
+          [
+            4,
+            3
+          ]
+        ]
+      ],
+      "expectedOutput": [
+        [
+          1,
+          3
+        ],
+        [
+          2,
+          4
+        ],
+        [
+          3,
+          6
+        ],
+        [
+          4,
+          3
+        ],
+        [
+          5,
+          5
+        ]
+      ]
+    }
+  ],
+  "tags": [],
+  "constraints": [],
+  "examples": [],
+  "createdAt": "2025-11-14T21:26:24.931017+00:00",
+  "updatedAt": "2025-12-04T04:35:19.030Z"
+}

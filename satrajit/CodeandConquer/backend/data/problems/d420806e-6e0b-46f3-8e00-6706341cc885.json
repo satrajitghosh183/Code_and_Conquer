@@ -1,0 +1,78 @@
+{
+  "id": "d420806e-6e0b-46f3-8e00-6706341cc885",
+  "title": "Find the Middle Index in Array",
+  "slug": "find-the-middle-index-in-array",
+  "description": "Given a **0-indexed** integer array `nums`, find the **leftmost** `middleIndex` (i.e., the smallest amongst all the possible ones).\n\nA `middleIndex` is an index where `nums[0] + nums[1] + ... + nums[middleIndex-1] == nums[middleIndex+1] + nums[middleIndex+2] + ... + nums[nums.length-1]`.\n\nIf `middleIndex == 0`, the left side sum is considered to be `0`. Similarly, if `middleIndex == nums.length - 1`, the right side sum is considered to be `0`.\n\nReturn _the **leftmost**_ `middleIndex` _that satisfies the condition, or_ `-1` _if there is no such index_.\n\n**Example 1:**\n\n**Input:** nums = \\[2,3,-1,8,4\\]\n**Output:** 3\n**Explanation:** The sum of the numbers before index 3 is: 2 + 3 + -1 = 4\nThe sum of the numbers after index 3 is: 4 = 4\n\n**Example 2:**\n\n**Input:** nums = \\[1,-1,4\\]\n**Output:** 2\n**Explanation:** The sum of the numbers before index 2 is: 1 + -1 = 0\nThe sum of the numbers after index 2 is: 0\n\n**Example 3:**\n\n**Input:** nums = \\[2,5\\]\n**Output:** -1\n**Explanation:** There is no valid middleIndex.\n\n**Constraints:**\n\n*   `1 <= nums.length <= 100`\n*   `-1000 <= nums[i] <= 1000`\n\n**Note:** This question is the same as 724: [https://leetcode.com/problems/find-pivot-index/](https://leetcode.com/problems/find-pivot-index/)",
+  "difficulty": "Easy",
+  "category": null,
+  "xpReward": 0,
+  "timeLimitMs": 5000,
+  "memoryLimitMb": 256,
+  "starterCode": [],
+  "solutionCode": "",
+  "hints": [],
+  "isPremium": false,
+  "createdBy": null,
+  "testCases": [
+    {
+      "input": [
+        [
+          2,
+          3,
+          -1,
+          8,
+          4
+        ]
+      ],
+      "expectedOutput": 3
+    },
+    {
+      "input": [
+        [
+          1,
+          -1,
+          4
+        ]
+      ],
+      "expectedOutput": 2
+    },
+    {
+      "input": [
+        [
+          2,
+          5
+        ]
+      ],
+      "expectedOutput": -1
+    }
+  ],
+  "hiddenTestCases": [
+    {
+      "input": [
+        [
+          2,
+          3,
+          -1,
+          8,
+          4
+        ]
+      ],
+      "expectedOutput": 3
+    },
+    {
+      "input": [
+        [
+          1,
+          -1,
+          4
+        ]
+      ],
+      "expectedOutput": 2
+    }
+  ],
+  "tags": [],
+  "constraints": [],
+  "examples": [],
+  "createdAt": "2025-11-14T21:23:54.538239+00:00",
+  "updatedAt": "2025-12-04T04:36:26.292Z"
+}

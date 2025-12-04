@@ -1,5 +1,5 @@
 import { createContext, useContext, useState, useEffect } from 'react'
-import { getUserStats, updateUserStats } from '../services/api'
+import { getUserStats } from '../services/api'
 import { useAuth } from './AuthContext'
 
 const GameContext = createContext({})
@@ -37,7 +37,17 @@ export const GameProvider = ({ children }) => {
     if (!user) return
     try {
       const response = await getUserStats(user.id)
-      setStats(response.data)
+      const data = response.data
+      
+      // Map backend field names to frontend field names
+      setStats({
+        coins: data.coins || 0,
+        xp: data.xp || 0,
+        level: data.level || Math.floor((data.xp || 0) / 100) + 1,
+        problemsSolved: data.problems_solved || data.problemsSolved || 0,
+        gamesPlayed: data.games_played || data.gamesPlayed || 0,
+        wins: data.wins || 0
+      })
     } catch (error) {
       console.error('Error loading stats:', error)
     } finally {
@@ -45,61 +55,88 @@ export const GameProvider = ({ children }) => {
     }
   }
 
+  /**
+   * Add rewards after successful submission
+   * NOTE: The backend already updates the database stats in submissionController.js
+   * This function ONLY updates local state and refreshes from server
+   * DO NOT call updateUserStats API here - it would cause double-counting!
+   */
   const addRewards = async (rewards) => {
     if (!user) return
 
-    const { coins, xp, powerUps: newPowerUps } = rewards
+    const { coins = 0, xp = 0, powerUps: newPowerUps } = rewards
 
-    try {
-      await updateUserStats(user.id, {
-        coins,
-        xp,
-        problemsSolved: 1
-      })
+    console.log('[GameContext] Adding rewards (local state only):', { coins, xp })
 
-    setStats(prev => ({
-      ...prev,
-      coins: prev.coins + coins,
-      xp: prev.xp + xp,
-      problemsSolved: prev.problemsSolved + 1,
-      level: Math.floor((prev.xp + xp) / 100) + 1
-    }))
+    // Update local state immediately for instant feedback
+    setStats(prev => {
+      const newXp = prev.xp + xp
+      return {
+        ...prev,
+        coins: prev.coins + coins,
+        xp: newXp,
+        problemsSolved: prev.problemsSolved + 1,
+        level: Math.floor(newXp / 100) + 1
+      }
+    })
 
+    // Add power-ups if any
     if (newPowerUps && newPowerUps.length > 0) {
       setPowerUps(prev => [...prev, ...newPowerUps])
     }
-    } catch (error) {
-      console.error('Error updating stats:', error)
-    }
+
+    // Refresh stats from server to ensure consistency
+    // (backend already updated the database)
+    setTimeout(() => {
+      loadStats()
+    }, 1000)
   }
 
+  /**
+   * Spend coins (e.g., for purchasing items)
+   * This DOES need to call the API since it's a user-initiated action
+   */
   const spendCoins = async (amount) => {
     if (!user || stats.coins < amount) return false
 
     try {
-      await updateUserStats(user.id, {
-        coins: -amount
+      const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000/api'
+      const response = await fetch(`${API_URL}/users/${user.id}/stats/update`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ coins: -amount })
       })
 
-      setStats(prev => ({
-        ...prev,
-        coins: prev.coins - amount
-      }))
-
-      return true
+      if (response.ok) {
+        setStats(prev => ({
+          ...prev,
+          coins: prev.coins - amount
+        }))
+        return true
+      }
+      return false
     } catch (error) {
       console.error('Error spending coins:', error)
       return false
     }
   }
 
+  /**
+   * Add game result (win/loss)
+   * This DOES need to call the API since it's recording a game outcome
+   */
   const addGameResult = async (won) => {
     if (!user) return
 
     try {
-      await updateUserStats(user.id, {
-        gamesPlayed: 1,
-        wins: won ? 1 : 0
+      const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000/api'
+      await fetch(`${API_URL}/users/${user.id}/stats/update`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          gamesPlayed: 1,
+          wins: won ? 1 : 0
+        })
       })
 
       setStats(prev => ({
@@ -128,4 +165,3 @@ export const GameProvider = ({ children }) => {
     </GameContext.Provider>
   )
 }
-

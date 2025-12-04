@@ -1,0 +1,96 @@
+{
+  "id": "c369ba72-6820-4772-9b7d-518773ad9e2b",
+  "title": "Distribute Repeating Integers",
+  "slug": "distribute-repeating-integers",
+  "description": "You are given an array of `n` integers, `nums`, where there are at most `50` unique values in the array. You are also given an array of `m` customer order quantities, `quantity`, where `quantity[i]` is the amount of integers the `ith` customer ordered. Determine if it is possible to distribute `nums` such that:\n\n*   The `ith` customer gets **exactly** `quantity[i]` integers,\n*   The integers the `ith` customer gets are **all equal**, and\n*   Every customer is satisfied.\n\nReturn `true` _if it is possible to distribute_ `nums` _according to the above conditions_.\n\n**Example 1:**\n\n**Input:** nums = \\[1,2,3,4\\], quantity = \\[2\\]\n**Output:** false\n**Explanation:** The 0th customer cannot be given two different integers.\n\n**Example 2:**\n\n**Input:** nums = \\[1,2,3,3\\], quantity = \\[2\\]\n**Output:** true\n**Explanation:** The 0th customer is given \\[3,3\\]. The integers \\[1,2\\] are not used.\n\n**Example 3:**\n\n**Input:** nums = \\[1,1,2,2\\], quantity = \\[2,2\\]\n**Output:** true\n**Explanation:** The 0th customer is given \\[1,1\\], and the 1st customer is given \\[2,2\\].\n\n**Constraints:**\n\n*   `n == nums.length`\n*   `1 <= n <= 105`\n*   `1 <= nums[i] <= 1000`\n*   `m == quantity.length`\n*   `1 <= m <= 10`\n*   `1 <= quantity[i] <= 105`\n*   There are at most `50` unique values in `nums`.",
+  "difficulty": "Hard",
+  "category": null,
+  "xpReward": 0,
+  "timeLimitMs": 5000,
+  "memoryLimitMb": 256,
+  "starterCode": [],
+  "solutionCode": "",
+  "hints": [],
+  "isPremium": false,
+  "createdBy": null,
+  "testCases": [
+    {
+      "input": [
+        [
+          1,
+          2,
+          3,
+          4
+        ],
+        [
+          2
+        ]
+      ],
+      "expectedOutput": false
+    },
+    {
+      "input": [
+        [
+          1,
+          2,
+          3,
+          3
+        ],
+        [
+          2
+        ]
+      ],
+      "expectedOutput": true
+    },
+    {
+      "input": [
+        [
+          1,
+          1,
+          2,
+          2
+        ],
+        [
+          2,
+          2
+        ]
+      ],
+      "expectedOutput": true
+    }
+  ],
+  "hiddenTestCases": [
+    {
+      "input": [
+        [
+          1,
+          2,
+          3,
+          4
+        ],
+        [
+          2
+        ]
+      ],
+      "expectedOutput": false
+    },
+    {
+      "input": [
+        [
+          1,
+          2,
+          3,
+          3
+        ],
+        [
+          2
+        ]
+      ],
+      "expectedOutput": true
+    }
+  ],
+  "tags": [],
+  "constraints": [],
+  "examples": [],
+  "createdAt": "2025-11-14T21:22:35.144765+00:00",
+  "updatedAt": "2025-12-04T04:37:08.819Z"
+}

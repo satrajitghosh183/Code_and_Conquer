@@ -1,0 +1,149 @@
+{
+  "id": "7df3c2be-6db6-43ed-8085-ad95ba34c37f",
+  "title": "Map of Highest Peak",
+  "slug": "map-of-highest-peak",
+  "description": "You are given an integer matrix `isWater` of size `m x n` that represents a map of **land** and **water** cells.\n\n*   If `isWater[i][j] == 0`, cell `(i, j)` is a **land** cell.\n*   If `isWater[i][j] == 1`, cell `(i, j)` is a **water** cell.\n\nYou must assign each cell a height in a way that follows these rules:\n\n*   The height of each cell must be non-negative.\n*   If the cell is a **water** cell, its height must be `0`.\n*   Any two adjacent cells must have an absolute height difference of **at most** `1`. A cell is adjacent to another cell if the former is directly north, east, south, or west of the latter (i.e., their sides are touching).\n\nFind an assignment of heights such that the maximum height in the matrix is **maximized**.\n\nReturn _an integer matrix_ `height` _of size_ `m x n` _where_ `height[i][j]` _is cell_ `(i, j)`_'s height. If there are multiple solutions, return **any** of them_.\n\n**Example 1:**\n\n**Input:** isWater = \\[\\[0,1\\],\\[0,0\\]\\]\n**Output:** \\[\\[1,0\\],\\[2,1\\]\\]\n**Explanation:** The image shows the assigned heights of each cell.\nThe blue cell is the water cell, and the green cells are the land cells.\n\n**Example 2:**\n\n**Input:** isWater = \\[\\[0,0,1\\],\\[1,0,0\\],\\[0,0,0\\]\\]\n**Output:** \\[\\[1,1,0\\],\\[0,1,1\\],\\[1,2,2\\]\\]\n**Explanation:** A height of 2 is the maximum possible height of any assignment.\nAny height assignment that has a maximum height of 2 while still meeting the rules will also be accepted.\n\n**Constraints:**\n\n*   `m == isWater.length`\n*   `n == isWater[i].length`\n*   `1 <= m, n <= 1000`\n*   `isWater[i][j]` is `0` or `1`.\n*   There is at least **one** water cell.",
+  "difficulty": "Medium",
+  "category": null,
+  "xpReward": 0,
+  "timeLimitMs": 5000,
+  "memoryLimitMb": 256,
+  "starterCode": [],
+  "solutionCode": "",
+  "hints": [],
+  "isPremium": false,
+  "createdBy": null,
+  "testCases": [
+    {
+      "input": [
+        [
+          [
+            0,
+            1
+          ],
+          [
+            0,
+            0
+          ]
+        ]
+      ],
+      "expectedOutput": [
+        [
+          1,
+          0
+        ],
+        [
+          2,
+          1
+        ]
+      ]
+    },
+    {
+      "input": [
+        [
+          [
+            0,
+            0,
+            1
+          ],
+          [
+            1,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0
+          ]
+        ]
+      ],
+      "expectedOutput": [
+        [
+          1,
+          1,
+          0
+        ],
+        [
+          0,
+          1,
+          1
+        ],
+        [
+          1,
+          2,
+          2
+        ]
+      ]
+    }
+  ],
+  "hiddenTestCases": [
+    {
+      "input": [
+        [
+          [
+            0,
+            1
+          ],
+          [
+            0,
+            0
+          ]
+        ]
+      ],
+      "expectedOutput": [
+        [
+          1,
+          0
+        ],
+        [
+          2,
+          1
+        ]
+      ]
+    },
+    {
+      "input": [
+        [
+          [
+            0,
+            0,
+            1
+          ],
+          [
+            1,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0
+          ]
+        ]
+      ],
+      "expectedOutput": [
+        [
+          1,
+          1,
+          0
+        ],
+        [
+          0,
+          1,
+          1
+        ],
+        [
+          1,
+          2,
+          2
+        ]
+      ]
+    }
+  ],
+  "tags": [],
+  "constraints": [],
+  "examples": [],
+  "createdAt": "2025-11-14T21:23:01.313888+00:00",
+  "updatedAt": "2025-12-04T04:36:52.000Z"
+}

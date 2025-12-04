@@ -1,0 +1,113 @@
+{
+  "id": "5d9f91f2-5ea1-46f8-af6d-6b38b6263b24",
+  "title": "Special Positions in a Binary Matrix",
+  "slug": "special-positions-in-a-binary-matrix",
+  "description": "Given an `m x n` binary matrix `mat`, return _the number of special positions in_ `mat`_._\n\nA position `(i, j)` is called **special** if `mat[i][j] == 1` and all other elements in row `i` and column `j` are `0` (rows and columns are **0-indexed**).\n\n**Example 1:**\n\n**Input:** mat = \\[\\[1,0,0\\],\\[0,0,1\\],\\[1,0,0\\]\\]\n**Output:** 1\n**Explanation:** (1, 2) is a special position because mat\\[1\\]\\[2\\] == 1 and all other elements in row 1 and column 2 are 0.\n\n**Example 2:**\n\n**Input:** mat = \\[\\[1,0,0\\],\\[0,1,0\\],\\[0,0,1\\]\\]\n**Output:** 3\n**Explanation:** (0, 0), (1, 1) and (2, 2) are special positions.\n\n**Constraints:**\n\n*   `m == mat.length`\n*   `n == mat[i].length`\n*   `1 <= m, n <= 100`\n*   `mat[i][j]` is either `0` or `1`.",
+  "difficulty": "Easy",
+  "category": null,
+  "xpReward": 0,
+  "timeLimitMs": 5000,
+  "memoryLimitMb": 256,
+  "starterCode": [],
+  "solutionCode": "",
+  "hints": [],
+  "isPremium": false,
+  "createdBy": null,
+  "testCases": [
+    {
+      "input": [
+        [
+          [
+            1,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            1
+          ],
+          [
+            1,
+            0,
+            0
+          ]
+        ]
+      ],
+      "expectedOutput": 1
+    },
+    {
+      "input": [
+        [
+          [
+            1,
+            0,
+            0
+          ],
+          [
+            0,
+            1,
+            0
+          ],
+          [
+            0,
+            0,
+            1
+          ]
+        ]
+      ],
+      "expectedOutput": 3
+    }
+  ],
+  "hiddenTestCases": [
+    {
+      "input": [
+        [
+          [
+            1,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            1
+          ],
+          [
+            1,
+            0,
+            0
+          ]
+        ]
+      ],
+      "expectedOutput": 1
+    },
+    {
+      "input": [
+        [
+          [
+            1,
+            0,
+            0
+          ],
+          [
+            0,
+            1,
+            0
+          ],
+          [
+            0,
+            0,
+            1
+          ]
+        ]
+      ],
+      "expectedOutput": 3
+    }
+  ],
+  "tags": [],
+  "constraints": [],
+  "examples": [],
+  "createdAt": "2025-11-14T21:22:18.162493+00:00",
+  "updatedAt": "2025-12-04T04:37:15.165Z"
+}

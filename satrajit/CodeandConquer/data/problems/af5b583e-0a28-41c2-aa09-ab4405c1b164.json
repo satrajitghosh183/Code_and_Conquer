@@ -1,0 +1,74 @@
+{
+  "id": "af5b583e-0a28-41c2-aa09-ab4405c1b164",
+  "title": "Minimum Consecutive Cards to Pick Up",
+  "slug": "minimum-consecutive-cards-to-pick-up",
+  "description": "You are given an integer array `cards` where `cards[i]` represents the **value** of the `ith` card. A pair of cards are **matching** if the cards have the **same** value.\n\nReturn _the **minimum** number of **consecutive** cards you have to pick up to have a pair of **matching** cards among the picked cards._ If it is impossible to have matching cards, return `-1`.\n\n**Example 1:**\n\n**Input:** cards = \\[3,4,2,3,4,7\\]\n**Output:** 4\n**Explanation:** We can pick up the cards \\[3,4,2,3\\] which contain a matching pair of cards with value 3. Note that picking up the cards \\[4,2,3,4\\] is also optimal.\n\n**Example 2:**\n\n**Input:** cards = \\[1,0,5,3\\]\n**Output:** -1\n**Explanation:** There is no way to pick up a set of consecutive cards that contain a pair of matching cards.\n\n**Constraints:**\n\n*   `1 <= cards.length <= 105`\n*   `0 <= cards[i] <= 106`",
+  "difficulty": "Medium",
+  "category": null,
+  "xpReward": 0,
+  "timeLimitMs": 5000,
+  "memoryLimitMb": 256,
+  "starterCode": {},
+  "solutionCode": "",
+  "hints": [],
+  "isPremium": false,
+  "createdBy": null,
+  "testCases": [
+    {
+      "input": [
+        [
+          3,
+          4,
+          2,
+          3,
+          4,
+          7
+        ]
+      ],
+      "expectedOutput": 4
+    },
+    {
+      "input": [
+        [
+          1,
+          0,
+          5,
+          3
+        ]
+      ],
+      "expectedOutput": -1
+    }
+  ],
+  "hiddenTestCases": [
+    {
+      "input": [
+        [
+          3,
+          4,
+          2,
+          3,
+          4,
+          7
+        ]
+      ],
+      "expectedOutput": 4
+    },
+    {
+      "input": [
+        [
+          1,
+          0,
+          5,
+          3
+        ]
+      ],
+      "expectedOutput": -1
+    }
+  ],
+  "tags": [],
+  "constraints": [],
+  "examples": [],
+  "problemNumber": null,
+  "createdAt": "2025-11-14T21:25:01.085824+00:00",
+  "updatedAt": "2025-12-04T04:35:57.979Z"
+}

@@ -1,0 +1,95 @@
+{
+  "id": "94a3d89f-cf80-497b-9778-f89eb2627e33",
+  "title": "Maximum Number of Pairs in Array",
+  "slug": "maximum-number-of-pairs-in-array",
+  "description": "You are given a **0-indexed** integer array `nums`. In one operation, you may do the following:\n\n*   Choose **two** integers in `nums` that are **equal**.\n*   Remove both integers from `nums`, forming a **pair**.\n\nThe operation is done on `nums` as many times as possible.\n\nReturn _a **0-indexed** integer array_ `answer` _of size_ `2` _where_ `answer[0]` _is the number of pairs that are formed and_ `answer[1]` _is the number of leftover integers in_ `nums` _after doing the operation as many times as possible_.\n\n**Example 1:**\n\n**Input:** nums = \\[1,3,2,1,3,2,2\\]\n**Output:** \\[3,1\\]\n**Explanation:**\nForm a pair with nums\\[0\\] and nums\\[3\\] and remove them from nums. Now, nums = \\[3,2,3,2,2\\].\nForm a pair with nums\\[0\\] and nums\\[2\\] and remove them from nums. Now, nums = \\[2,2,2\\].\nForm a pair with nums\\[0\\] and nums\\[1\\] and remove them from nums. Now, nums = \\[2\\].\nNo more pairs can be formed. A total of 3 pairs have been formed, and there is 1 number leftover in nums.\n\n**Example 2:**\n\n**Input:** nums = \\[1,1\\]\n**Output:** \\[1,0\\]\n**Explanation:** Form a pair with nums\\[0\\] and nums\\[1\\] and remove them from nums. Now, nums = \\[\\].\nNo more pairs can be formed. A total of 1 pair has been formed, and there are 0 numbers leftover in nums.\n\n**Example 3:**\n\n**Input:** nums = \\[0\\]\n**Output:** \\[0,1\\]\n**Explanation:** No pairs can be formed, and there is 1 number leftover in nums.\n\n**Constraints:**\n\n*   `1 <= nums.length <= 100`\n*   `0 <= nums[i] <= 100`",
+  "difficulty": "Easy",
+  "category": null,
+  "xpReward": 0,
+  "timeLimitMs": 5000,
+  "memoryLimitMb": 256,
+  "starterCode": {},
+  "solutionCode": "",
+  "hints": [],
+  "isPremium": false,
+  "createdBy": null,
+  "testCases": [
+    {
+      "input": [
+        [
+          1,
+          3,
+          2,
+          1,
+          3,
+          2,
+          2
+        ]
+      ],
+      "expectedOutput": [
+        3,
+        1
+      ]
+    },
+    {
+      "input": [
+        [
+          1,
+          1
+        ]
+      ],
+      "expectedOutput": [
+        1,
+        0
+      ]
+    },
+    {
+      "input": [
+        [
+          0
+        ]
+      ],
+      "expectedOutput": [
+        0,
+        1
+      ]
+    }
+  ],
+  "hiddenTestCases": [
+    {
+      "input": [
+        [
+          1,
+          3,
+          2,
+          1,
+          3,
+          2,
+          2
+        ]
+      ],
+      "expectedOutput": [
+        3,
+        1
+      ]
+    },
+    {
+      "input": [
+        [
+          1,
+          1
+        ]
+      ],
+      "expectedOutput": [
+        1,
+        0
+      ]
+    }
+  ],
+  "tags": [],
+  "constraints": [],
+  "examples": [],
+  "problemNumber": null,
+  "createdAt": "2025-11-14T21:25:22.05422+00:00",
+  "updatedAt": "2025-12-04T04:35:48.599Z"
+}

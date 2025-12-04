@@ -1,0 +1,49 @@
+{
+  "id": "53c50a61-9758-49e1-bd9c-791de505681d",
+  "title": "Minimum Number of Keypresses",
+  "slug": "minimum-number-of-keypresses",
+  "description": "You have a keypad with `9` buttons, numbered from `1` to `9`, each mapped to lowercase English letters. You can choose which characters each button is matched to as long as:\n\n*   All 26 lowercase English letters are mapped to.\n*   Each character is mapped to by **exactly** `1` button.\n*   Each button maps to **at most** `3` characters.\n\nTo type the first character matched to a button, you press the button once. To type the second character, you press the button twice, and so on.\n\nGiven a string `s`, return _the **minimum** number of keypresses needed to type_ `s` _using your keypad._\n\n**Note** that the characters mapped to by each button, and the order they are mapped in cannot be changed.\n\n**Example 1:**\n\n**Input:** s =  \"apple \"\n**Output:** 5\n**Explanation:** One optimal way to setup your keypad is shown above.\nType 'a' by pressing button 1 once.\nType 'p' by pressing button 6 once.\nType 'p' by pressing button 6 once.\nType 'l' by pressing button 5 once.\nType 'e' by pressing button 3 once.\nA total of 5 button presses are needed, so return 5.\n\n**Example 2:**\n\n**Input:** s =  \"abcdefghijkl \"\n**Output:** 15\n**Explanation:** One optimal way to setup your keypad is shown above.\nThe letters 'a' to 'i' can each be typed by pressing a button once.\nType 'j' by pressing button 1 twice.\nType 'k' by pressing button 2 twice.\nType 'l' by pressing button 3 twice.\nA total of 15 button presses are needed, so return 15.\n\n**Constraints:**\n\n*   `1 <= s.length <= 105`\n*   `s` consists of lowercase English letters.",
+  "difficulty": "Medium",
+  "category": null,
+  "xpReward": 0,
+  "timeLimitMs": 5000,
+  "memoryLimitMb": 256,
+  "starterCode": [],
+  "solutionCode": "",
+  "hints": [],
+  "isPremium": false,
+  "createdBy": null,
+  "testCases": [
+    {
+      "input": [
+        "apple "
+      ],
+      "expectedOutput": 5
+    },
+    {
+      "input": [
+        "abcdefghijkl "
+      ],
+      "expectedOutput": 15
+    }
+  ],
+  "hiddenTestCases": [
+    {
+      "input": [
+        "apple "
+      ],
+      "expectedOutput": 5
+    },
+    {
+      "input": [
+        "abcdefghijkl "
+      ],
+      "expectedOutput": 15
+    }
+  ],
+  "tags": [],
+  "constraints": [],
+  "examples": [],
+  "createdAt": "2025-11-14T21:25:03.575015+00:00",
+  "updatedAt": "2025-12-04T04:35:57.088Z"
+}

@@ -1,0 +1,126 @@
+{
+  "id": "498c4571-75cb-4953-bb5e-74b3fc763ff5",
+  "title": "Count Ways to Make Array With Product",
+  "slug": "count-ways-to-make-array-with-product",
+  "description": "You are given a 2D integer array, `queries`. For each `queries[i]`, where `queries[i] = [ni, ki]`, find the number of different ways you can place positive integers into an array of size `ni` such that the product of the integers is `ki`. As the number of ways may be too large, the answer to the `ith` query is the number of ways **modulo** `109 + 7`.\n\nReturn _an integer array_ `answer` _where_ `answer.length == queries.length`_, and_ `answer[i]` _is the answer to the_ `ith` _query._\n\n**Example 1:**\n\n**Input:** queries = \\[\\[2,6\\],\\[5,1\\],\\[73,660\\]\\]\n**Output:** \\[4,1,50734910\\]\n**Explanation:** Each query is independent.\n\\[2,6\\]: There are 4 ways to fill an array of size 2 that multiply to 6: \\[1,6\\], \\[2,3\\], \\[3,2\\], \\[6,1\\].\n\\[5,1\\]: There is 1 way to fill an array of size 5 that multiply to 1: \\[1,1,1,1,1\\].\n\\[73,660\\]: There are 1050734917 ways to fill an array of size 73 that multiply to 660. 1050734917 modulo 109 + 7 = 50734910.\n\n**Example 2:**\n\n**Input:** queries = \\[\\[1,1\\],\\[2,2\\],\\[3,3\\],\\[4,4\\],\\[5,5\\]\\]\n**Output:** \\[1,2,3,10,5\\]\n\n**Constraints:**\n\n*   `1 <= queries.length <= 104`\n*   `1 <= ni, ki <= 104`",
+  "difficulty": "Hard",
+  "category": null,
+  "xpReward": 0,
+  "timeLimitMs": 5000,
+  "memoryLimitMb": 256,
+  "starterCode": {},
+  "solutionCode": "",
+  "hints": [],
+  "isPremium": false,
+  "createdBy": null,
+  "testCases": [
+    {
+      "input": [
+        [
+          [
+            2,
+            6
+          ],
+          [
+            5,
+            1
+          ],
+          [
+            73,
+            660
+          ]
+        ]
+      ],
+      "expectedOutput": [
+        4,
+        1,
+        50734910
+      ]
+    },
+    {
+      "input": [
+        [
+          [
+            1,
+            1
+          ],
+          [
+            2,
+            2
+          ],
+          [
+            3,
+            3
+          ],
+          [
+            4,
+            4
+          ],
+          [
+            5,
+            5
+          ]
+        ]
+      ],
+      "expectedOutput": "[1,2,3,10,5]\n\n**Constraints:**\n\n*   `1 <= queries.length <= 104`\n*   `1 <= ni, ki <= 104`"
+    }
+  ],
+  "hiddenTestCases": [
+    {
+      "input": [
+        [
+          [
+            2,
+            6
+          ],
+          [
+            5,
+            1
+          ],
+          [
+            73,
+            660
+          ]
+        ]
+      ],
+      "expectedOutput": [
+        4,
+        1,
+        50734910
+      ]
+    },
+    {
+      "input": [
+        [
+          [
+            1,
+            1
+          ],
+          [
+            2,
+            2
+          ],
+          [
+            3,
+            3
+          ],
+          [
+            4,
+            4
+          ],
+          [
+            5,
+            5
+          ]
+        ]
+      ],
+      "expectedOutput": "[1,2,3,10,5]\n\n**Constraints:**\n\n*   `1 <= queries.length <= 104`\n*   `1 <= ni, ki <= 104`"
+    }
+  ],
+  "tags": [],
+  "constraints": [],
+  "examples": [],
+  "problemNumber": null,
+  "createdAt": "2025-11-14T21:22:53.716487+00:00",
+  "updatedAt": "2025-12-04T04:36:57.978Z"
+}

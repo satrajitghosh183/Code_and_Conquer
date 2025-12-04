@@ -1,0 +1,49 @@
+{
+  "id": "33b03ec3-eae3-4d64-87a1-566b4065474b",
+  "title": "Removing Minimum Number of Magic Beans",
+  "slug": "removing-minimum-number-of-magic-beans",
+  "description": "You are given an array of **positive** integers `beans`, where each integer represents the number of magic beans found in a particular magic bag.\n\n**Remove** any number of beans (**possibly none**) from each bag such that the number of beans in each remaining **non-empty** bag (still containing **at least one** bean) is **equal**. Once a bean has been removed from a bag, you are **not** allowed to return it to any of the bags.\n\nReturn _the **minimum** number of magic beans that you have to remove_.\n\n**Example 1:**\n\n**Input:** beans = \\[4,**1**,6,5\\]\n**Output:** 4\n**Explanation:** \n- We remove 1 bean from the bag with only 1 bean.\n  This results in the remaining bags: \\[4,**0**,6,5\\]\n- Then we remove 2 beans from the bag with 6 beans.\n  This results in the remaining bags: \\[4,0,**4**,5\\]\n- Then we remove 1 bean from the bag with 5 beans.\n  This results in the remaining bags: \\[4,0,4,**4**\\]\nWe removed a total of 1 + 2 + 1 = 4 beans to make the remaining non-empty bags have an equal number of beans.\nThere are no other solutions that remove 4 beans or fewer.\n\n**Example 2:**\n\n**Input:** beans = \\[**2**,10,**3**,**2**\\]\n**Output:** 7\n**Explanation:**\n- We remove 2 beans from one of the bags with 2 beans.\n  This results in the remaining bags: \\[**0**,10,3,2\\]\n- Then we remove 2 beans from the other bag with 2 beans.\n  This results in the remaining bags: \\[0,10,3,**0**\\]\n- Then we remove 3 beans from the bag with 3 beans. \n  This results in the remaining bags: \\[0,10,**0**,0\\]\nWe removed a total of 2 + 2 + 3 = 7 beans to make the remaining non-empty bags have an equal number of beans.\nThere are no other solutions that removes 7 beans or fewer.\n\n**Constraints:**\n\n*   `1 <= beans.length <= 105`\n*   `1 <= beans[i] <= 105`",
+  "difficulty": "Medium",
+  "category": null,
+  "xpReward": 0,
+  "timeLimitMs": 5000,
+  "memoryLimitMb": 256,
+  "starterCode": [],
+  "solutionCode": "",
+  "hints": [],
+  "isPremium": false,
+  "createdBy": null,
+  "testCases": [
+    {
+      "input": [
+        "[4,**1**,6,5]"
+      ],
+      "expectedOutput": 4
+    },
+    {
+      "input": [
+        "[**2**,10,**3**,**2**]"
+      ],
+      "expectedOutput": 7
+    }
+  ],
+  "hiddenTestCases": [
+    {
+      "input": [
+        "[4,**1**,6,5]"
+      ],
+      "expectedOutput": 4
+    },
+    {
+      "input": [
+        "[**2**,10,**3**,**2**]"
+      ],
+      "expectedOutput": 7
+    }
+  ],
+  "tags": [],
+  "constraints": [],
+  "examples": [],
+  "createdAt": "2025-11-14T21:24:40.089984+00:00",
+  "updatedAt": "2025-12-04T04:36:07.824Z"
+}

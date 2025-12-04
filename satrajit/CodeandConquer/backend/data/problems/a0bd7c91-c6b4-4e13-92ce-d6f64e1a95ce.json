@@ -1,0 +1,83 @@
+{
+  "id": "a0bd7c91-c6b4-4e13-92ce-d6f64e1a95ce",
+  "title": "Find the Divisibility Array of a String",
+  "slug": "find-the-divisibility-array-of-a-string",
+  "description": "You are given a **0-indexed** string `word` of length `n` consisting of digits, and a positive integer `m`.\n\nThe **divisibility array** `div` of `word` is an integer array of length `n` such that:\n\n*   `div[i] = 1` if the **numeric value** of `word[0,...,i]` is divisible by `m`, or\n*   `div[i] = 0` otherwise.\n\nReturn _the divisibility array of_ `word`.\n\n**Example 1:**\n\n**Input:** word =  \"998244353 \", m = 3\n**Output:** \\[1,1,0,0,0,1,1,0,0\\]\n**Explanation:** There are only 4 prefixes that are divisible by 3:  \"9 \",  \"99 \",  \"998244 \", and  \"9982443 \".\n\n**Example 2:**\n\n**Input:** word =  \"1010 \", m = 10\n**Output:** \\[0,1,0,1\\]\n**Explanation:** There are only 2 prefixes that are divisible by 10:  \"10 \", and  \"1010 \".\n\n**Constraints:**\n\n*   `1 <= n <= 105`\n*   `word.length == n`\n*   `word` consists of digits from `0` to `9`\n*   `1 <= m <= 109`",
+  "difficulty": "Medium",
+  "category": null,
+  "xpReward": 0,
+  "timeLimitMs": 5000,
+  "memoryLimitMb": 256,
+  "starterCode": [],
+  "solutionCode": "",
+  "hints": [],
+  "isPremium": false,
+  "createdBy": null,
+  "testCases": [
+    {
+      "input": [
+        "998244353 ",
+        3
+      ],
+      "expectedOutput": [
+        1,
+        1,
+        0,
+        0,
+        0,
+        1,
+        1,
+        0,
+        0
+      ]
+    },
+    {
+      "input": [
+        "1010 ",
+        10
+      ],
+      "expectedOutput": [
+        0,
+        1,
+        0,
+        1
+      ]
+    }
+  ],
+  "hiddenTestCases": [
+    {
+      "input": [
+        "998244353 ",
+        3
+      ],
+      "expectedOutput": [
+        1,
+        1,
+        0,
+        0,
+        0,
+        1,
+        1,
+        0,
+        0
+      ]
+    },
+    {
+      "input": [
+        "1010 ",
+        10
+      ],
+      "expectedOutput": [
+        0,
+        1,
+        0,
+        1
+      ]
+    }
+  ],
+  "tags": [],
+  "constraints": [],
+  "examples": [],
+  "createdAt": "2025-11-14T21:26:26.429368+00:00",
+  "updatedAt": "2025-12-04T04:35:18.401Z"
+}

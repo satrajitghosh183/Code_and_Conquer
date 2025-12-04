@@ -1,0 +1,97 @@
+{
+  "id": "f48c3be7-73d5-4c5d-b734-066383d3d88e",
+  "title": "Find Palindrome With Fixed Length",
+  "slug": "find-palindrome-with-fixed-length",
+  "description": "Given an integer array `queries` and a **positive** integer `intLength`, return _an array_ `answer` _where_ `answer[i]` _is either the_ `queries[i]th` _smallest **positive palindrome** of length_ `intLength` _or_ `-1` _if no such palindrome exists_.\n\nA **palindrome** is a number that reads the same backwards and forwards. Palindromes cannot have leading zeros.\n\n**Example 1:**\n\n**Input:** queries = \\[1,2,3,4,5,90\\], intLength = 3\n**Output:** \\[101,111,121,131,141,999\\]\n**Explanation:**\nThe first few palindromes of length 3 are:\n101, 111, 121, 131, 141, 151, 161, 171, 181, 191, 202, ...\nThe 90th palindrome of length 3 is 999.\n\n**Example 2:**\n\n**Input:** queries = \\[2,4,6\\], intLength = 4\n**Output:** \\[1111,1331,1551\\]\n**Explanation:**\nThe first six palindromes of length 4 are:\n1001, 1111, 1221, 1331, 1441, and 1551.\n\n**Constraints:**\n\n*   `1 <= queries.length <= 5 * 104`\n*   `1 <= queries[i] <= 109`\n*   `1 <= intLength <= 15`",
+  "difficulty": "Medium",
+  "category": null,
+  "xpReward": 0,
+  "timeLimitMs": 5000,
+  "memoryLimitMb": 256,
+  "starterCode": [],
+  "solutionCode": "",
+  "hints": [],
+  "isPremium": false,
+  "createdBy": null,
+  "testCases": [
+    {
+      "input": [
+        [
+          1,
+          2,
+          3,
+          4,
+          5,
+          90
+        ],
+        3
+      ],
+      "expectedOutput": [
+        101,
+        111,
+        121,
+        131,
+        141,
+        999
+      ]
+    },
+    {
+      "input": [
+        [
+          2,
+          4,
+          6
+        ],
+        4
+      ],
+      "expectedOutput": [
+        1111,
+        1331,
+        1551
+      ]
+    }
+  ],
+  "hiddenTestCases": [
+    {
+      "input": [
+        [
+          1,
+          2,
+          3,
+          4,
+          5,
+          90
+        ],
+        3
+      ],
+      "expectedOutput": [
+        101,
+        111,
+        121,
+        131,
+        141,
+        999
+      ]
+    },
+    {
+      "input": [
+        [
+          2,
+          4,
+          6
+        ],
+        4
+      ],
+      "expectedOutput": [
+        1111,
+        1331,
+        1551
+      ]
+    }
+  ],
+  "tags": [],
+  "constraints": [],
+  "examples": [],
+  "createdAt": "2025-11-14T21:24:50.460525+00:00",
+  "updatedAt": "2025-12-04T04:36:03.230Z"
+}

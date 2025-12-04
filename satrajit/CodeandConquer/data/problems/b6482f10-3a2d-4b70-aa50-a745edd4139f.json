@@ -1,0 +1,50 @@
+{
+  "id": "b6482f10-3a2d-4b70-aa50-a745edd4139f",
+  "title": "Closest Fair Integer",
+  "slug": "closest-fair-integer",
+  "description": "You are given a **positive** integer `n`.\n\nWe call an integer `k` fair if the number of **even** digits in `k` is equal to the number of **odd** digits in it.\n\nReturn _the **smallest** fair integer that is **greater than or equal** to_ `n`.\n\n**Example 1:**\n\n**Input:** n = 2\n**Output:** 10\n**Explanation:** The smallest fair integer that is greater than or equal to 2 is 10.\n10 is fair because it has an equal number of even and odd digits (one odd digit and one even digit).\n\n**Example 2:**\n\n**Input:** n = 403\n**Output:** 1001\n**Explanation:** The smallest fair integer that is greater than or equal to 403 is 1001.\n1001 is fair because it has an equal number of even and odd digits (two odd digits and two even digits).\n\n**Constraints:**\n\n*   `1 <= n <= 109`",
+  "difficulty": "Medium",
+  "category": null,
+  "xpReward": 0,
+  "timeLimitMs": 5000,
+  "memoryLimitMb": 256,
+  "starterCode": {},
+  "solutionCode": "",
+  "hints": [],
+  "isPremium": false,
+  "createdBy": null,
+  "testCases": [
+    {
+      "input": [
+        2
+      ],
+      "expectedOutput": 10
+    },
+    {
+      "input": [
+        403
+      ],
+      "expectedOutput": 1001
+    }
+  ],
+  "hiddenTestCases": [
+    {
+      "input": [
+        2
+      ],
+      "expectedOutput": 10
+    },
+    {
+      "input": [
+        403
+      ],
+      "expectedOutput": 1001
+    }
+  ],
+  "tags": [],
+  "constraints": [],
+  "examples": [],
+  "problemNumber": null,
+  "createdAt": "2025-11-14T21:25:41.32929+00:00",
+  "updatedAt": "2025-12-04T04:35:39.337Z"
+}

@@ -1,0 +1,206 @@
+{
+  "id": "8cac8128-6d28-47db-b050-5edf9ace364a",
+  "title": "Find Players With Zero or One Losses",
+  "slug": "find-players-with-zero-or-one-losses",
+  "description": "You are given an integer array `matches` where `matches[i] = [winneri, loseri]` indicates that the player `winneri` defeated player `loseri` in a match.\n\nReturn _a list_ `answer` _of size_ `2` _where:_\n\n*   `answer[0]` is a list of all players that have **not** lost any matches.\n*   `answer[1]` is a list of all players that have lost exactly **one** match.\n\nThe values in the two lists should be returned in **increasing** order.\n\n**Note:**\n\n*   You should only consider the players that have played **at least one** match.\n*   The testcases will be generated such that **no** two matches will have the **same** outcome.\n\n**Example 1:**\n\n**Input:** matches = \\[\\[1,3\\],\\[2,3\\],\\[3,6\\],\\[5,6\\],\\[5,7\\],\\[4,5\\],\\[4,8\\],\\[4,9\\],\\[10,4\\],\\[10,9\\]\\]\n**Output:** \\[\\[1,2,10\\],\\[4,5,7,8\\]\\]\n**Explanation:**\nPlayers 1, 2, and 10 have not lost any matches.\nPlayers 4, 5, 7, and 8 each have lost one match.\nPlayers 3, 6, and 9 each have lost two matches.\nThus, answer\\[0\\] = \\[1,2,10\\] and answer\\[1\\] = \\[4,5,7,8\\].\n\n**Example 2:**\n\n**Input:** matches = \\[\\[2,3\\],\\[1,3\\],\\[5,4\\],\\[6,4\\]\\]\n**Output:** \\[\\[1,2,5,6\\],\\[\\]\\]\n**Explanation:**\nPlayers 1, 2, 5, and 6 have not lost any matches.\nPlayers 3 and 4 each have lost two matches.\nThus, answer\\[0\\] = \\[1,2,5,6\\] and answer\\[1\\] = \\[\\].\n\n**Constraints:**\n\n*   `1 <= matches.length <= 105`\n*   `matches[i].length == 2`\n*   `1 <= winneri, loseri <= 105`\n*   `winneri != loseri`\n*   All `matches[i]` are **unique**.",
+  "difficulty": "Medium",
+  "category": null,
+  "xpReward": 0,
+  "timeLimitMs": 5000,
+  "memoryLimitMb": 256,
+  "starterCode": {},
+  "solutionCode": "",
+  "hints": [],
+  "isPremium": false,
+  "createdBy": null,
+  "testCases": [
+    {
+      "input": [
+        [
+          [
+            1,
+            3
+          ],
+          [
+            2,
+            3
+          ],
+          [
+            3,
+            6
+          ],
+          [
+            5,
+            6
+          ],
+          [
+            5,
+            7
+          ],
+          [
+            4,
+            5
+          ],
+          [
+            4,
+            8
+          ],
+          [
+            4,
+            9
+          ],
+          [
+            10,
+            4
+          ],
+          [
+            10,
+            9
+          ]
+        ]
+      ],
+      "expectedOutput": [
+        [
+          1,
+          2,
+          10
+        ],
+        [
+          4,
+          5,
+          7,
+          8
+        ]
+      ]
+    },
+    {
+      "input": [
+        [
+          [
+            2,
+            3
+          ],
+          [
+            1,
+            3
+          ],
+          [
+            5,
+            4
+          ],
+          [
+            6,
+            4
+          ]
+        ]
+      ],
+      "expectedOutput": [
+        [
+          1,
+          2,
+          5,
+          6
+        ],
+        []
+      ]
+    }
+  ],
+  "hiddenTestCases": [
+    {
+      "input": [
+        [
+          [
+            1,
+            3
+          ],
+          [
+            2,
+            3
+          ],
+          [
+            3,
+            6
+          ],
+          [
+            5,
+            6
+          ],
+          [
+            5,
+            7
+          ],
+          [
+            4,
+            5
+          ],
+          [
+            4,
+            8
+          ],
+          [
+            4,
+            9
+          ],
+          [
+            10,
+            4
+          ],
+          [
+            10,
+            9
+          ]
+        ]
+      ],
+      "expectedOutput": [
+        [
+          1,
+          2,
+          10
+        ],
+        [
+          4,
+          5,
+          7,
+          8
+        ]
+      ]
+    },
+    {
+      "input": [
+        [
+          [
+            2,
+            3
+          ],
+          [
+            1,
+            3
+          ],
+          [
+            5,
+            4
+          ],
+          [
+            6,
+            4
+          ]
+        ]
+      ],
+      "expectedOutput": [
+        [
+          1,
+          2,
+          5,
+          6
+        ],
+        []
+      ]
+    }
+  ],
+  "tags": [],
+  "constraints": [],
+  "examples": [],
+  "problemNumber": null,
+  "createdAt": "2025-11-14T21:24:52.356156+00:00",
+  "updatedAt": "2025-12-04T04:36:02.294Z"
+}

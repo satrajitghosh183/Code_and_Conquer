@@ -1,0 +1,154 @@
+{
+  "id": "8a7e874e-ecb5-41c2-bd38-df1069976fe2",
+  "title": "Design SQL",
+  "slug": "design-sql",
+  "description": "You are given `n` tables represented with two arrays `names` and `columns`, where `names[i]` is the name of the `ith` table and `columns[i]` is the number of columns of the `ith` table.\n\nYou should be able to perform the following **operations**:\n\n*   **Insert** a row in a specific table. Each row you insert has an id. The id is assigned using an auto-increment method where the id of the first inserted row is 1, and the id of each other row inserted into the same table is the id of the last inserted row (even if it was deleted) plus one.\n*   **Delete** a row from a specific table. **Note** that deleting a row does not affect the id of the next inserted row.\n*   **Select** a specific cell from any table and return its value.\n\nImplement the `SQL` class:\n\n*   `SQL(String[] names, int[] columns)` Creates the `n` tables.\n*   `void insertRow(String name, String[] row)` Adds a row to the table `name`. It is **guaranteed** that the table will exist, and the size of the array `row` is equal to the number of columns in the table.\n*   `void deleteRow(String name, int rowId)` Removes the row `rowId` from the table `name`. It is **guaranteed** that the table and row will **exist**.\n*   `String selectCell(String name, int rowId, int columnId)` Returns the value of the cell in the row `rowId` and the column `columnId` from the table `name`.\n\n**Example 1:**\n\n**Input**\n\\[ \"SQL \",  \"insertRow \",  \"selectCell \",  \"insertRow \",  \"deleteRow \",  \"selectCell \"\\]\n\\[\\[\\[ \"one \",  \"two \",  \"three \"\\], \\[2, 3, 1\\]\\], \\[ \"two \", \\[ \"first \",  \"second \",  \"third \"\\]\\], \\[ \"two \", 1, 3\\], \\[ \"two \", \\[ \"fourth \",  \"fifth \",  \"sixth \"\\]\\], \\[ \"two \", 1\\], \\[ \"two \", 2, 2\\]\\]\n**Output**\n\\[null, null,  \"third \", null, null,  \"fifth \"\\]\n\n**Explanation**\nSQL sql = new SQL(\\[ \"one \",  \"two \",  \"three \"\\], \\[2, 3, 1\\]); // creates three tables.\nsql.insertRow( \"two \", \\[ \"first \",  \"second \",  \"third \"\\]); // adds a row to the table  \"two \". Its id is 1.\nsql.selectCell( \"two \", 1, 3); // return  \"third \", finds the value of the third column in the row with id 1 of the table  \"two \".\nsql.insertRow( \"two \", \\[ \"fourth \",  \"fifth \",  \"sixth \"\\]); // adds another row to the table  \"two \". Its id is 2.\nsql.deleteRow( \"two \", 1); // deletes the first row of the table  \"two \". Note that the second row will still have the id 2.\nsql.selectCell( \"two \", 2, 2); // return  \"fifth \", finds the value of the second column in the row with id 2 of the table  \"two \".\n\n**Constraints:**\n\n*   `n == names.length == columns.length`\n*   `1 <= n <= 104`\n*   `1 <= names[i].length, row[i].length, name.length <= 20`\n*   `names[i]`, `row[i]`, and `name` consist of lowercase English letters.\n*   `1 <= columns[i] <= 100`\n*   All the strings of `names` are **distinct**.\n*   `name` exists in the array `names`.\n*   `row.length` equals the number of columns in the chosen table.\n*   `rowId` and `columnId` will be valid.\n*   At most `250` calls will be made to `insertRow` and `deleteRow`.\n*   At most `104` calls will be made to `selectCell`.",
+  "difficulty": "Medium",
+  "category": null,
+  "xpReward": 0,
+  "timeLimitMs": 5000,
+  "memoryLimitMb": 256,
+  "starterCode": {},
+  "solutionCode": "",
+  "hints": [],
+  "isPremium": false,
+  "createdBy": null,
+  "testCases": [
+    {
+      "input": {
+        "methods": [
+          "SQL",
+          "insertRow",
+          "selectCell",
+          "insertRow",
+          "deleteRow",
+          "selectCell"
+        ],
+        "args": [
+          [
+            [
+              "one ",
+              "two ",
+              "three "
+            ],
+            [
+              2,
+              3,
+              1
+            ]
+          ],
+          [
+            "two ",
+            [
+              "first ",
+              "second ",
+              "third "
+            ]
+          ],
+          [
+            "two ",
+            1,
+            3
+          ],
+          [
+            "two ",
+            [
+              "fourth ",
+              "fifth ",
+              "sixth "
+            ]
+          ],
+          [
+            "two ",
+            1
+          ],
+          [
+            "two ",
+            2,
+            2
+          ]
+        ]
+      },
+      "expectedOutput": [
+        null,
+        null,
+        "third ",
+        null,
+        null,
+        "fifth "
+      ]
+    }
+  ],
+  "hiddenTestCases": [
+    {
+      "input": {
+        "methods": [
+          "SQL",
+          "insertRow",
+          "selectCell",
+          "insertRow",
+          "deleteRow",
+          "selectCell"
+        ],
+        "args": [
+          [
+            [
+              "one ",
+              "two ",
+              "three "
+            ],
+            [
+              2,
+              3,
+              1
+            ]
+          ],
+          [
+            "two ",
+            [
+              "first ",
+              "second ",
+              "third "
+            ]
+          ],
+          [
+            "two ",
+            1,
+            3
+          ],
+          [
+            "two ",
+            [
+              "fourth ",
+              "fifth ",
+              "sixth "
+            ]
+          ],
+          [
+            "two ",
+            1
+          ],
+          [
+            "two ",
+            2,
+            2
+          ]
+        ]
+      },
+      "expectedOutput": [
+        null,
+        null,
+        "third ",
+        null,
+        null,
+        "fifth "
+      ]
+    }
+  ],
+  "tags": [],
+  "constraints": [],
+  "examples": [],
+  "problemNumber": null,
+  "createdAt": "2025-11-14T21:25:39.003272+00:00",
+  "updatedAt": "2025-12-04T04:38:01.062Z"
+}

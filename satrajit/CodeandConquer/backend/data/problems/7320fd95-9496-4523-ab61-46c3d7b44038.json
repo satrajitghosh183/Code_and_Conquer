@@ -1,0 +1,49 @@
+{
+  "id": "7320fd95-9496-4523-ab61-46c3d7b44038",
+  "title": "Count Total Number of Colored Cells",
+  "slug": "count-total-number-of-colored-cells",
+  "description": "There exists an infinitely large two-dimensional grid of uncolored unit cells. You are given a positive integer `n`, indicating that you must do the following routine for `n` minutes:\n\n*   At the first minute, color **any** arbitrary unit cell blue.\n*   Every minute thereafter, color blue **every** uncolored cell that touches a blue cell.\n\nBelow is a pictorial representation of the state of the grid after minutes 1, 2, and 3.\n\nReturn _the number of **colored cells** at the end of_ `n` _minutes_.\n\n**Example 1:**\n\n**Input:** n = 1\n**Output:** 1\n**Explanation:** After 1 minute, there is only 1 blue cell, so we return 1.\n\n**Example 2:**\n\n**Input:** n = 2\n**Output:** 5\n**Explanation:** After 2 minutes, there are 4 colored cells on the boundary and 1 in the center, so we return 5. \n\n**Constraints:**\n\n*   `1 <= n <= 105`",
+  "difficulty": "Medium",
+  "category": null,
+  "xpReward": 0,
+  "timeLimitMs": 5000,
+  "memoryLimitMb": 256,
+  "starterCode": [],
+  "solutionCode": "",
+  "hints": [],
+  "isPremium": false,
+  "createdBy": null,
+  "testCases": [
+    {
+      "input": [
+        1
+      ],
+      "expectedOutput": 1
+    },
+    {
+      "input": [
+        2
+      ],
+      "expectedOutput": 5
+    }
+  ],
+  "hiddenTestCases": [
+    {
+      "input": [
+        1
+      ],
+      "expectedOutput": 1
+    },
+    {
+      "input": [
+        2
+      ],
+      "expectedOutput": 5
+    }
+  ],
+  "tags": [],
+  "constraints": [],
+  "examples": [],
+  "createdAt": "2025-11-14T21:26:27.254673+00:00",
+  "updatedAt": "2025-12-04T04:35:18.103Z"
+}

@@ -1,0 +1,93 @@
+{
+  "id": "597417eb-c9cd-4817-a711-d802e6658af0",
+  "title": "Minimum Time to Eat All Grains",
+  "slug": "minimum-time-to-eat-all-grains",
+  "description": "There are `n` hens and `m` grains on a line. You are given the initial positions of the hens and the grains in two integer arrays `hens` and `grains` of size `n` and `m` respectively.\n\nAny hen can eat a grain if they are on the same position. The time taken for this is negligible. One hen can also eat multiple grains.\n\nIn `1` second, a hen can move right or left by `1` unit. The hens can move simultaneously and independently of each other.\n\nReturn _the **minimum** time to eat all grains if the hens act optimally._\n\n**Example 1:**\n\n**Input:** hens = \\[3,6,7\\], grains = \\[2,4,7,9\\]\n**Output:** 2\n**Explanation:** \nOne of the ways hens eat all grains in 2 seconds is described below:\n- The first hen eats the grain at position 2 in 1 second. \n- The second hen eats the grain at position 4 in 2 seconds. \n- The third hen eats the grains at positions 7 and 9 in 2 seconds. \nSo, the maximum time needed is 2.\nIt can be proven that the hens cannot eat all grains before 2 seconds.\n\n**Example 2:**\n\n**Input:** hens = \\[4,6,109,111,213,215\\], grains = \\[5,110,214\\]\n**Output:** 1\n**Explanation:** \nOne of the ways hens eat all grains in 1 second is described below:\n- The first hen eats the grain at position 5 in 1 second. \n- The fourth hen eats the grain at position 110 in 1 second.\n- The sixth hen eats the grain at position 214 in 1 second. \n- The other hens do not move. \nSo, the maximum time needed is 1.\n\n**Constraints:**\n\n*   `1 <= hens.length, grains.length <= 2*104`\n*   `0 <= hens[i], grains[j] <= 109`",
+  "difficulty": "Hard",
+  "category": null,
+  "xpReward": 0,
+  "timeLimitMs": 5000,
+  "memoryLimitMb": 256,
+  "starterCode": [],
+  "solutionCode": "",
+  "hints": [],
+  "isPremium": false,
+  "createdBy": null,
+  "testCases": [
+    {
+      "input": [
+        [
+          3,
+          6,
+          7
+        ],
+        [
+          2,
+          4,
+          7,
+          9
+        ]
+      ],
+      "expectedOutput": 2
+    },
+    {
+      "input": [
+        [
+          4,
+          6,
+          109,
+          111,
+          213,
+          215
+        ],
+        [
+          5,
+          110,
+          214
+        ]
+      ],
+      "expectedOutput": 1
+    }
+  ],
+  "hiddenTestCases": [
+    {
+      "input": [
+        [
+          3,
+          6,
+          7
+        ],
+        [
+          2,
+          4,
+          7,
+          9
+        ]
+      ],
+      "expectedOutput": 2
+    },
+    {
+      "input": [
+        [
+          4,
+          6,
+          109,
+          111,
+          213,
+          215
+        ],
+        [
+          5,
+          110,
+          214
+        ]
+      ],
+      "expectedOutput": 1
+    }
+  ],
+  "tags": [],
+  "constraints": [],
+  "examples": [],
+  "createdAt": "2025-11-14T21:26:34.665766+00:00",
+  "updatedAt": "2025-12-04T04:35:15.440Z"
+}

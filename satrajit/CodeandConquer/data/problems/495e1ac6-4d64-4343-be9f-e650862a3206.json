@@ -1,0 +1,98 @@
+{
+  "id": "495e1ac6-4d64-4343-be9f-e650862a3206",
+  "title": "Count the Number of Consistent Strings",
+  "slug": "count-the-number-of-consistent-strings",
+  "description": "You are given a string `allowed` consisting of **distinct** characters and an array of strings `words`. A string is **consistent** if all characters in the string appear in the string `allowed`.\n\nReturn _the number of **consistent** strings in the array_ `words`.\n\n**Example 1:**\n\n**Input:** allowed =  \"ab \", words = \\[ \"ad \", \"bd \", \"aaab \", \"baa \", \"badab \"\\]\n**Output:** 2\n**Explanation:** Strings  \"aaab \" and  \"baa \" are consistent since they only contain characters 'a' and 'b'.\n\n**Example 2:**\n\n**Input:** allowed =  \"abc \", words = \\[ \"a \", \"b \", \"c \", \"ab \", \"ac \", \"bc \", \"abc \"\\]\n**Output:** 7\n**Explanation:** All strings are consistent.\n\n**Example 3:**\n\n**Input:** allowed =  \"cad \", words = \\[ \"cc \", \"acd \", \"b \", \"ba \", \"bac \", \"bad \", \"ac \", \"d \"\\]\n**Output:** 4\n**Explanation:** Strings  \"cc \",  \"acd \",  \"ac \", and  \"d \" are consistent.\n\n**Constraints:**\n\n*   `1 <= words.length <= 104`\n*   `1 <= allowed.length <= 26`\n*   `1 <= words[i].length <= 10`\n*   The characters in `allowed` are **distinct**.\n*   `words[i]` and `allowed` contain only lowercase English letters.",
+  "difficulty": "Easy",
+  "category": null,
+  "xpReward": 0,
+  "timeLimitMs": 5000,
+  "memoryLimitMb": 256,
+  "starterCode": {},
+  "solutionCode": "",
+  "hints": [],
+  "isPremium": false,
+  "createdBy": null,
+  "testCases": [
+    {
+      "input": [
+        "ab ",
+        [
+          "ad ",
+          "bd ",
+          "aaab ",
+          "baa ",
+          "badab "
+        ]
+      ],
+      "expectedOutput": 2
+    },
+    {
+      "input": [
+        "abc ",
+        [
+          "a ",
+          "b ",
+          "c ",
+          "ab ",
+          "ac ",
+          "bc ",
+          "abc "
+        ]
+      ],
+      "expectedOutput": 7
+    },
+    {
+      "input": [
+        "cad ",
+        [
+          "cc ",
+          "acd ",
+          "b ",
+          "ba ",
+          "bac ",
+          "bad ",
+          "ac ",
+          "d "
+        ]
+      ],
+      "expectedOutput": 4
+    }
+  ],
+  "hiddenTestCases": [
+    {
+      "input": [
+        "ab ",
+        [
+          "ad ",
+          "bd ",
+          "aaab ",
+          "baa ",
+          "badab "
+        ]
+      ],
+      "expectedOutput": 2
+    },
+    {
+      "input": [
+        "abc ",
+        [
+          "a ",
+          "b ",
+          "c ",
+          "ab ",
+          "ac ",
+          "bc ",
+          "abc "
+        ]
+      ],
+      "expectedOutput": 7
+    }
+  ],
+  "tags": [],
+  "constraints": [],
+  "examples": [],
+  "problemNumber": null,
+  "createdAt": "2025-11-14T21:22:41.463609+00:00",
+  "updatedAt": "2025-12-04T04:37:05.820Z"
+}

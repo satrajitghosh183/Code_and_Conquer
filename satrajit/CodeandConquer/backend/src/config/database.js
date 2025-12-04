@@ -52,7 +52,47 @@ class Database {
         const { data, error } = await query.order('created_at', { ascending: false });
 
         if (error) throw error;
-        return (data || []).map(p => this.mapSupabaseProblem(p));
+        
+        // Map problems and load test cases from local files or Supabase test_cases table
+        const mappedProblems = await Promise.all((data || []).map(async (p) => {
+          const mapped = this.mapSupabaseProblem(p);
+          let hasTestCases = mapped.testCases && mapped.testCases.length > 0;
+          
+          // 1. Try to load test cases from local files (fastest)
+          try {
+            const localProblem = await this.getProblemByIdLocal(mapped.id);
+            if (localProblem) {
+              if (localProblem.testCases && Array.isArray(localProblem.testCases) && localProblem.testCases.length > 0) {
+                mapped.testCases = localProblem.testCases;
+                hasTestCases = true;
+              }
+              if (localProblem.hiddenTestCases && Array.isArray(localProblem.hiddenTestCases) && localProblem.hiddenTestCases.length > 0) {
+                mapped.hiddenTestCases = localProblem.hiddenTestCases;
+              }
+            }
+          } catch (error) {
+            // Silently ignore errors when trying to load local file
+          }
+          
+          // 2. If still no test cases, try Supabase test_cases table
+          if (!hasTestCases) {
+            try {
+              const testCases = await this.getTestCasesFromSupabase(mapped.id);
+              if (testCases.visible.length > 0) {
+                mapped.testCases = testCases.visible;
+              }
+              if (testCases.hidden.length > 0) {
+                mapped.hiddenTestCases = testCases.hidden;
+              }
+            } catch (error) {
+              // Silently ignore
+            }
+          }
+          
+          return mapped;
+        }));
+        
+        return mappedProblems;
       } catch (error) {
         console.error('Error fetching problems from Supabase:', error);
         // Fallback to local
@@ -106,37 +146,35 @@ class Database {
         
         const problem = this.mapSupabaseProblem(data);
         
-        // If problem from Supabase doesn't have test cases or tags, try local fallback
-        const needsLocalData = (!problem.testCases || problem.testCases.length === 0) && 
-                                (!problem.hiddenTestCases || problem.hiddenTestCases.length === 0);
-        const needsTags = !problem.tags || problem.tags.length === 0;
+        // Try to load test cases from multiple sources (in priority order):
+        // 1. Local files (fastest, always up to date)
+        // 2. Supabase test_cases table
         
-        if (needsLocalData || needsTags) {
-          const localProblem = await this.getProblemByIdLocal(id);
-          if (localProblem) {
-            // Merge test cases from local if missing
-            if (needsLocalData && localProblem.testCases && localProblem.testCases.length > 0) {
-              // Silently merge test cases from local file (don't log warnings)
-              problem.testCases = localProblem.testCases;
-              problem.hiddenTestCases = localProblem.hiddenTestCases || [];
-            }
-            
-            // Merge tags from local if missing
-            if (needsTags && localProblem.tags && localProblem.tags.length > 0) {
-              problem.tags = localProblem.tags;
-              // Optionally update tags in database for future requests (silently)
-              try {
-                await this.updateProblemTags(id, localProblem.tags);
-              } catch (error) {
-                // Silently handle missing table/column errors
-                if (error.code === 'PGRST204' || error.code === 'PGRST205' || error.code === '42P01') {
-                  // Table or column doesn't exist - skip silently
-                } else {
-                  // Only log unexpected errors
-                  console.warn(`Failed to update tags in database for problem ${id}:`, error.message);
-                }
-              }
-            }
+        let hasTestCases = problem.testCases && problem.testCases.length > 0;
+        
+        // 1. Try local files first
+        const localProblem = await this.getProblemByIdLocal(id);
+        if (localProblem) {
+          if (localProblem.testCases && Array.isArray(localProblem.testCases) && localProblem.testCases.length > 0) {
+            problem.testCases = localProblem.testCases;
+            hasTestCases = true;
+          }
+          if (localProblem.hiddenTestCases && Array.isArray(localProblem.hiddenTestCases) && localProblem.hiddenTestCases.length > 0) {
+            problem.hiddenTestCases = localProblem.hiddenTestCases;
+          }
+          if ((!problem.tags || problem.tags.length === 0) && localProblem.tags && localProblem.tags.length > 0) {
+            problem.tags = localProblem.tags;
+          }
+        }
+        
+        // 2. If still no test cases, try Supabase test_cases table
+        if (!hasTestCases) {
+          const testCases = await this.getTestCasesFromSupabase(id);
+          if (testCases.visible.length > 0) {
+            problem.testCases = testCases.visible;
+          }
+          if (testCases.hidden.length > 0) {
+            problem.hiddenTestCases = testCases.hidden;
           }
         }
         
@@ -150,6 +188,44 @@ class Database {
 
     // Fallback to local storage
     return this.getProblemByIdLocal(id);
+  }
+  
+  // Fetch test cases from the Supabase test_cases table
+  async getTestCasesFromSupabase(problemId) {
+    if (!supabase) return { visible: [], hidden: [] };
+    
+    try {
+      const { data, error } = await supabase
+        .from('test_cases')
+        .select('*')
+        .eq('problem_id', problemId);
+      
+      if (error || !data) {
+        return { visible: [], hidden: [] };
+      }
+      
+      const visible = [];
+      const hidden = [];
+      
+      for (const tc of data) {
+        const testCase = {
+          input: tc.input,
+          expectedOutput: tc.expected_output,
+          explanation: tc.explanation
+        };
+        
+        if (tc.is_hidden) {
+          hidden.push(testCase);
+        } else {
+          visible.push(testCase);
+        }
+      }
+      
+      return { visible, hidden };
+    } catch (error) {
+      console.error('Error fetching test cases from Supabase:', error);
+      return { visible: [], hidden: [] };
+    }
   }
 
   async getProblemByIdLocal(id) {
@@ -260,17 +336,86 @@ class Database {
     throw new Error('Problem not found');
   }
 
+  async updateProblem(problemId, updates) {
+    if (this.type === 'supabase' && supabase) {
+      try {
+        const { testCases, hiddenTestCases, ...otherUpdates } = updates;
+        
+        const updatePayload = {
+          ...otherUpdates,
+          updated_at: new Date().toISOString()
+        };
+        
+        // Handle test cases if provided
+        // Note: If columns don't exist, we'll gracefully fall back to local storage
+        if (testCases !== undefined) {
+          const testCasesArray = Array.isArray(testCases) ? testCases : [];
+          const hiddenTestCasesArray = Array.isArray(hiddenTestCases) ? hiddenTestCases : [];
+          
+          // Combine all test cases into test_cases field (if column exists)
+          // If it doesn't exist, the error will be caught and we'll fall back to local
+          updatePayload.test_cases = JSON.stringify([...testCasesArray, ...hiddenTestCasesArray]);
+        }
+        
+        const { data, error } = await supabase
+          .from('problems')
+          .update(updatePayload)
+          .eq('id', problemId)
+          .select()
+          .single();
+
+        // Handle PGRST204 (column not found) silently - fall back to local
+        if (error) {
+          if (error.code === 'PGRST204') {
+            // Column doesn't exist - silently fall back to local
+            return this.updateProblemLocal(problemId, updates);
+          }
+          throw error;
+        }
+        return this.mapSupabaseProblem(data);
+      } catch (error) {
+        // Only log non-PGRST204 errors
+        if (error.code !== 'PGRST204') {
+          console.error('Error updating problem in Supabase:', error);
+        }
+        // Fallback to local
+        return this.updateProblemLocal(problemId, updates);
+      }
+    }
+
+    return this.updateProblemLocal(problemId, updates);
+  }
+
+  async updateProblemLocal(problemId, updates) {
+    const filePath = path.join(PROBLEMS_DIR, `${problemId}.json`);
+    if (await fs.pathExists(filePath)) {
+      const problem = await fs.readJson(filePath);
+      Object.assign(problem, updates);
+      problem.updatedAt = new Date().toISOString();
+      await fs.writeJson(filePath, problem, { spaces: 2 });
+      return problem;
+    }
+    // If file doesn't exist, create it with the updates
+    const newProblem = { id: problemId, ...updates, updatedAt: new Date().toISOString() };
+    await fs.writeJson(filePath, newProblem, { spaces: 2 });
+    return newProblem;
+  }
+
   mapSupabaseProblem(data) {
     // Helper function to parse JSON fields
-    const parseJsonField = (field) => {
+    const parseJsonField = (field, fieldName = 'unknown') => {
       if (!field) return [];
       if (Array.isArray(field)) return field;
       if (typeof field === 'string') {
+        // Check if it's an empty string or just whitespace
+        if (field.trim() === '' || field.trim() === 'null' || field.trim() === '[]') {
+          return [];
+        }
         try {
           const parsed = JSON.parse(field);
           // Ensure we return an array if it's an array, or wrap in array if it's a single object
           if (Array.isArray(parsed)) {
-            return parsed;
+            return parsed.length > 0 ? parsed : [];
           }
           // If it's an object but not an array, check if it's a single test case
           if (typeof parsed === 'object' && parsed !== null) {
@@ -278,12 +423,20 @@ class Database {
             if ('input' in parsed && 'expectedOutput' in parsed) {
               return [parsed]; // Wrap single test case in array
             }
-            // Otherwise, return as array
+            // Check if it's an object with numeric keys (like {0: {...}, 1: {...}})
+            const keys = Object.keys(parsed);
+            if (keys.length > 0 && keys.every(k => !isNaN(parseInt(k)))) {
+              return Object.values(parsed).filter(v => v !== null && v !== undefined);
+            }
+            // Otherwise, return as array if it has content
             return Object.keys(parsed).length > 0 ? [parsed] : [];
           }
           return [];
         } catch (e) {
-          console.warn('Failed to parse JSON field:', e.message, 'Field:', field);
+          // Only log if it's not an empty/null value
+          if (field && field.trim() !== '' && field.trim() !== 'null') {
+            console.warn(`Failed to parse JSON field "${fieldName}":`, e.message, 'Value:', field.substring(0, 100));
+          }
           return [];
         }
       }
@@ -322,14 +475,14 @@ class Database {
       memoryLimitMb: data.memory_limit_mb,
       starterCode: parseObjectField(data.starter_code),
       solutionCode: data.solution_code || '',
-      hints: parseJsonField(data.hints),
+      hints: parseJsonField(data.hints, 'hints'),
       isPremium: data.is_premium || false,
       createdBy: data.created_by,
-      testCases: parseJsonField(data.test_cases),
-      hiddenTestCases: parseJsonField(data.hidden_test_cases),
+      testCases: parseJsonField(data.test_cases || data.testCases, 'test_cases'),
+      hiddenTestCases: parseJsonField(data.hidden_test_cases || data.hiddenTestCases, 'hidden_test_cases'),
       tags: tags, // Ensure tags are always an array
-      constraints: parseJsonField(data.constraints),
-      examples: parseJsonField(data.examples),
+      constraints: parseJsonField(data.constraints, 'constraints'),
+      examples: parseJsonField(data.examples, 'examples'),
       timeComplexity: data.time_complexity,
       spaceComplexity: data.space_complexity,
       problemNumber: data.problem_number || null, // Support problem_number column if it exists

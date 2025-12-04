@@ -1,0 +1,63 @@
+{
+  "id": "2324f222-0acd-45fe-af8a-af26ab607f2d",
+  "title": "Count the Number of Square-Free Subsets",
+  "slug": "count-the-number-of-square-free-subsets",
+  "description": "You are given a positive integer **0-indexed** array `nums`.\n\nA subset of the array `nums` is **square-free** if the product of its elements is a **square-free integer**.\n\nA **square-free integer** is an integer that is divisible by no square number other than `1`.\n\nReturn _the number of square-free non-empty subsets of the array_ **nums**. Since the answer may be too large, return it **modulo** `109 + 7`.\n\nA **non-empty** **subset** of `nums` is an array that can be obtained by deleting some (possibly none but not all) elements from `nums`. Two subsets are different if and only if the chosen indices to delete are different.\n\n**Example 1:**\n\n**Input:** nums = \\[3,4,4,5\\]\n**Output:** 3\n**Explanation:** There are 3 square-free subsets in this example:\n- The subset consisting of the 0th element \\[3\\]. The product of its elements is 3, which is a square-free integer.\n- The subset consisting of the 3rd element \\[5\\]. The product of its elements is 5, which is a square-free integer.\n- The subset consisting of 0th and 3rd elements \\[3,5\\]. The product of its elements is 15, which is a square-free integer.\nIt can be proven that there are no more than 3 square-free subsets in the given array.\n\n**Example 2:**\n\n**Input:** nums = \\[1\\]\n**Output:** 1\n**Explanation:** There is 1 square-free subset in this example:\n- The subset consisting of the 0th element \\[1\\]. The product of its elements is 1, which is a square-free integer.\nIt can be proven that there is no more than 1 square-free subset in the given array.\n\n**Constraints:**\n\n*   `1 <= nums.length <= 1000`\n*   `1 <= nums[i] <= 30`",
+  "difficulty": "Medium",
+  "category": null,
+  "xpReward": 0,
+  "timeLimitMs": 5000,
+  "memoryLimitMb": 256,
+  "starterCode": [],
+  "solutionCode": "",
+  "hints": [],
+  "isPremium": false,
+  "createdBy": null,
+  "testCases": [
+    {
+      "input": [
+        [
+          3,
+          4,
+          4,
+          5
+        ]
+      ],
+      "expectedOutput": 3
+    },
+    {
+      "input": [
+        [
+          1
+        ]
+      ],
+      "expectedOutput": 1
+    }
+  ],
+  "hiddenTestCases": [
+    {
+      "input": [
+        [
+          3,
+          4,
+          4,
+          5
+        ]
+      ],
+      "expectedOutput": 3
+    },
+    {
+      "input": [
+        [
+          1
+        ]
+      ],
+      "expectedOutput": 1
+    }
+  ],
+  "tags": [],
+  "constraints": [],
+  "examples": [],
+  "createdAt": "2025-11-14T21:26:25.53018+00:00",
+  "updatedAt": "2025-12-04T04:35:18.709Z"
+}

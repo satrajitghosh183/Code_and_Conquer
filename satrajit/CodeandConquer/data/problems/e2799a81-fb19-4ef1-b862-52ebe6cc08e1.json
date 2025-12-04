@@ -1,0 +1,50 @@
+{
+  "id": "e2799a81-fb19-4ef1-b862-52ebe6cc08e1",
+  "title": "Maximum Binary String After Change",
+  "slug": "maximum-binary-string-after-change",
+  "description": "You are given a binary string `binary` consisting of only `0`'s or `1`'s. You can apply each of the following operations any number of times:\n\n*   Operation 1: If the number contains the substring `\"00 \"`, you can replace it with `\"10 \"`.\n    *   For example, `\"00010 \" -> \"10010` \"\n*   Operation 2: If the number contains the substring `\"10 \"`, you can replace it with `\"01 \"`.\n    *   For example, `\"00010 \" -> \"00001 \"`\n\n_Return the **maximum binary string** you can obtain after any number of operations. Binary string `x` is greater than binary string `y` if `x`'s decimal representation is greater than `y`'s decimal representation._\n\n**Example 1:**\n\n**Input:** binary =  \"000110 \"\n**Output:**  \"111011 \"\n**Explanation:** A valid transformation sequence can be:\n \"000110 \" ->  \"000101 \" \n \"000101 \" ->  \"100101 \" \n \"100101 \" ->  \"110101 \" \n \"110101 \" ->  \"110011 \" \n \"110011 \" ->  \"111011 \"\n\n**Example 2:**\n\n**Input:** binary =  \"01 \"\n**Output:**  \"01 \"\n**Explanation:**  \"01 \" cannot be transformed any further.\n\n**Constraints:**\n\n*   `1 <= binary.length <= 105`\n*   `binary` consist of `'0'` and `'1'`.",
+  "difficulty": "Medium",
+  "category": null,
+  "xpReward": 0,
+  "timeLimitMs": 5000,
+  "memoryLimitMb": 256,
+  "starterCode": {},
+  "solutionCode": "",
+  "hints": [],
+  "isPremium": false,
+  "createdBy": null,
+  "testCases": [
+    {
+      "input": [
+        "000110 "
+      ],
+      "expectedOutput": "111011 "
+    },
+    {
+      "input": [
+        "01 "
+      ],
+      "expectedOutput": "01 "
+    }
+  ],
+  "hiddenTestCases": [
+    {
+      "input": [
+        "000110 "
+      ],
+      "expectedOutput": "111011 "
+    },
+    {
+      "input": [
+        "01 "
+      ],
+      "expectedOutput": "01 "
+    }
+  ],
+  "tags": [],
+  "constraints": [],
+  "examples": [],
+  "problemNumber": null,
+  "createdAt": "2025-11-14T21:22:45.428999+00:00",
+  "updatedAt": "2025-12-04T04:37:03.291Z"
+}

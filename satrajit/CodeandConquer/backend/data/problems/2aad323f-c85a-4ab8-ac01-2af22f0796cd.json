@@ -1,0 +1,101 @@
+{
+  "id": "2aad323f-c85a-4ab8-ac01-2af22f0796cd",
+  "title": "Intervals Between Identical Elements",
+  "slug": "intervals-between-identical-elements",
+  "description": "You are given a **0-indexed** array of `n` integers `arr`.\n\nThe **interval** between two elements in `arr` is defined as the **absolute difference** between their indices. More formally, the **interval** between `arr[i]` and `arr[j]` is `|i - j|`.\n\nReturn _an array_ `intervals` _of length_ `n` _where_ `intervals[i]` _is **the sum of intervals** between_ `arr[i]` _and each element in_ `arr` _with the same value as_ `arr[i]`_._\n\n**Note:** `|x|` is the absolute value of `x`.\n\n**Example 1:**\n\n**Input:** arr = \\[2,1,3,1,2,3,3\\]\n**Output:** \\[4,2,7,2,4,4,5\\]\n**Explanation:**\n- Index 0: Another 2 is found at index 4. |0 - 4| = 4\n- Index 1: Another 1 is found at index 3. |1 - 3| = 2\n- Index 2: Two more 3s are found at indices 5 and 6. |2 - 5| + |2 - 6| = 7\n- Index 3: Another 1 is found at index 1. |3 - 1| = 2\n- Index 4: Another 2 is found at index 0. |4 - 0| = 4\n- Index 5: Two more 3s are found at indices 2 and 6. |5 - 2| + |5 - 6| = 4\n- Index 6: Two more 3s are found at indices 2 and 5. |6 - 2| + |6 - 5| = 5\n\n**Example 2:**\n\n**Input:** arr = \\[10,5,10,10\\]\n**Output:** \\[5,0,3,4\\]\n**Explanation:**\n- Index 0: Two more 10s are found at indices 2 and 3. |0 - 2| + |0 - 3| = 5\n- Index 1: There is only one 5 in the array, so its sum of intervals to identical elements is 0.\n- Index 2: Two more 10s are found at indices 0 and 3. |2 - 0| + |2 - 3| = 3\n- Index 3: Two more 10s are found at indices 0 and 2. |3 - 0| + |3 - 2| = 4\n\n**Constraints:**\n\n*   `n == arr.length`\n*   `1 <= n <= 105`\n*   `1 <= arr[i] <= 105`",
+  "difficulty": "Medium",
+  "category": null,
+  "xpReward": 0,
+  "timeLimitMs": 5000,
+  "memoryLimitMb": 256,
+  "starterCode": [],
+  "solutionCode": "",
+  "hints": [],
+  "isPremium": false,
+  "createdBy": null,
+  "testCases": [
+    {
+      "input": [
+        [
+          2,
+          1,
+          3,
+          1,
+          2,
+          3,
+          3
+        ]
+      ],
+      "expectedOutput": [
+        4,
+        2,
+        7,
+        2,
+        4,
+        4,
+        5
+      ]
+    },
+    {
+      "input": [
+        [
+          10,
+          5,
+          10,
+          10
+        ]
+      ],
+      "expectedOutput": [
+        5,
+        0,
+        3,
+        4
+      ]
+    }
+  ],
+  "hiddenTestCases": [
+    {
+      "input": [
+        [
+          2,
+          1,
+          3,
+          1,
+          2,
+          3,
+          3
+        ]
+      ],
+      "expectedOutput": [
+        4,
+        2,
+        7,
+        2,
+        4,
+        4,
+        5
+      ]
+    },
+    {
+      "input": [
+        [
+          10,
+          5,
+          10,
+          10
+        ]
+      ],
+      "expectedOutput": [
+        5,
+        0,
+        3,
+        4
+      ]
+    }
+  ],
+  "tags": [],
+  "constraints": [],
+  "examples": [],
+  "createdAt": "2025-11-14T21:24:28.972224+00:00",
+  "updatedAt": "2025-12-04T04:36:12.820Z"
+}

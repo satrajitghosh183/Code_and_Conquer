@@ -1,0 +1,73 @@
+{
+  "id": "857eac8f-38da-43e1-9c91-2d26b2b8080c",
+  "title": "Decode XORed Permutation",
+  "slug": "decode-xored-permutation",
+  "description": "There is an integer array `perm` that is a permutation of the first `n` positive integers, where `n` is always **odd**.\n\nIt was encoded into another integer array `encoded` of length `n - 1`, such that `encoded[i] = perm[i] XOR perm[i + 1]`. For example, if `perm = [1,3,2]`, then `encoded = [2,1]`.\n\nGiven the `encoded` array, return _the original array_ `perm`. It is guaranteed that the answer exists and is unique.\n\n**Example 1:**\n\n**Input:** encoded = \\[3,1\\]\n**Output:** \\[1,2,3\\]\n**Explanation:** If perm = \\[1,2,3\\], then encoded = \\[1 XOR 2,2 XOR 3\\] = \\[3,1\\]\n\n**Example 2:**\n\n**Input:** encoded = \\[6,5,4,6\\]\n**Output:** \\[2,4,1,5,3\\]\n\n**Constraints:**\n\n*   `3 <= n < 105`\n*   `n` is odd.\n*   `encoded.length == n - 1`",
+  "difficulty": "Medium",
+  "category": null,
+  "xpReward": 0,
+  "timeLimitMs": 5000,
+  "memoryLimitMb": 256,
+  "starterCode": [],
+  "solutionCode": "",
+  "hints": [],
+  "isPremium": false,
+  "createdBy": null,
+  "testCases": [
+    {
+      "input": [
+        [
+          3,
+          1
+        ]
+      ],
+      "expectedOutput": [
+        1,
+        2,
+        3
+      ]
+    },
+    {
+      "input": [
+        [
+          6,
+          5,
+          4,
+          6
+        ]
+      ],
+      "expectedOutput": "[2,4,1,5,3]\n\n**Constraints:**\n\n*   `3 <= n < 105`\n*   `n` is odd.\n*   `encoded.length == n - 1`"
+    }
+  ],
+  "hiddenTestCases": [
+    {
+      "input": [
+        [
+          3,
+          1
+        ]
+      ],
+      "expectedOutput": [
+        1,
+        2,
+        3
+      ]
+    },
+    {
+      "input": [
+        [
+          6,
+          5,
+          4,
+          6
+        ]
+      ],
+      "expectedOutput": "[2,4,1,5,3]\n\n**Constraints:**\n\n*   `3 <= n < 105`\n*   `n` is odd.\n*   `encoded.length == n - 1`"
+    }
+  ],
+  "tags": [],
+  "constraints": [],
+  "examples": [],
+  "createdAt": "2025-11-14T21:22:53.381843+00:00",
+  "updatedAt": "2025-12-04T04:36:58.261Z"
+}

@@ -1,0 +1,55 @@
+{
+  "id": "f1b44d7d-ff19-4da1-8ba3-bfea57db2283",
+  "title": "Minimum Cost to Change the Final Value of Expression",
+  "slug": "minimum-cost-to-change-the-final-value-of-expression",
+  "description": "You are given a **valid** boolean expression as a string `expression` consisting of the characters `'1'`,`'0'`,`'&'` (bitwise **AND** operator),`'|'` (bitwise **OR** operator),`'('`, and `')'`.\n\n*   For example, `\"()1|1 \"` and `\"(1)&() \"` are **not valid** while `\"1 \"`, `\"(((1))|(0)) \"`, and `\"1|(0&(1)) \"` are **valid** expressions.\n\nReturn _the **minimum cost** to change the final value of the expression_.\n\n*   For example, if `expression = \"1|1|(0&0)&1 \"`, its **value** is `1|1|(0&0)&1 = 1|1|0&1 = 1|0&1 = 1&1 = 1`. We want to apply operations so that the **new** expression evaluates to `0`.\n\nThe **cost** of changing the final value of an expression is the **number of operations** performed on the expression. The types of **operations** are described as follows:\n\n*   Turn a `'1'` into a `'0'`.\n*   Turn a `'0'` into a `'1'`.\n*   Turn a `'&'` into a `'|'`.\n*   Turn a `'|'` into a `'&'`.\n\n**Note:** `'&'` does **not** take precedence over `'|'` in the **order of calculation**. Evaluate parentheses **first**, then in **left-to-right** order.\n\n**Example 1:**\n\n**Input:** expression =  \"1&(0|1) \"\n**Output:** 1\n**Explanation:** We can turn  \"1&(0**|**1) \" into  \"1&(0**&**1) \" by changing the '|' to a '&' using 1 operation.\nThe new expression evaluates to 0. \n\n**Example 2:**\n\n**Input:** expression =  \"(0&0)&(0&0&0) \"\n**Output:** 3\n**Explanation:** We can turn  \"(0**&0**)**&**(0&0&0) \" into  \"(0**|1**)**|**(0&0&0) \" using 3 operations.\nThe new expression evaluates to 1.\n\n**Example 3:**\n\n**Input:** expression =  \"(0|(1|0&1)) \"\n**Output:** 1\n**Explanation:** We can turn  \"(0|(**1**|0&1)) \" into  \"(0|(**0**|0&1)) \" using 1 operation.\nThe new expression evaluates to 0.\n\n**Constraints:**\n\n*   `1 <= expression.length <= 105`\n*   `expression` only contains `'1'`,`'0'`,`'&'`,`'|'`,`'('`, and `')'`\n*   All parentheses are properly matched.\n*   There will be no empty parentheses (i.e: `\"() \"` is not a substring of `expression`).",
+  "difficulty": "Hard",
+  "category": null,
+  "xpReward": 0,
+  "timeLimitMs": 5000,
+  "memoryLimitMb": 256,
+  "starterCode": [],
+  "solutionCode": "",
+  "hints": [],
+  "isPremium": false,
+  "createdBy": null,
+  "testCases": [
+    {
+      "input": [
+        "1&(0|1) "
+      ],
+      "expectedOutput": 1
+    },
+    {
+      "input": [
+        "(0&0)&(0&0&0) "
+      ],
+      "expectedOutput": 3
+    },
+    {
+      "input": [
+        "(0|(1|0&1)) "
+      ],
+      "expectedOutput": 1
+    }
+  ],
+  "hiddenTestCases": [
+    {
+      "input": [
+        "1&(0|1) "
+      ],
+      "expectedOutput": 1
+    },
+    {
+      "input": [
+        "(0&0)&(0&0&0) "
+      ],
+      "expectedOutput": 3
+    }
+  ],
+  "tags": [],
+  "constraints": [],
+  "examples": [],
+  "createdAt": "2025-11-14T21:23:33.853435+00:00",
+  "updatedAt": "2025-12-04T04:36:36.021Z"
+}

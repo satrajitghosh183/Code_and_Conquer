@@ -1,0 +1,50 @@
+{
+  "id": "23071885-1d4f-4126-84f3-6c8cc9073d35",
+  "title": "Maximum Product of the Length of Two Palindromic Substrings",
+  "slug": "maximum-product-of-the-length-of-two-palindromic-substrings",
+  "description": "You are given a **0-indexed** string `s` and are tasked with finding two **non-intersecting palindromic** substrings of **odd** length such that the product of their lengths is maximized.\n\nMore formally, you want to choose four integers `i`, `j`, `k`, `l` such that `0 <= i <= j < k <= l < s.length` and both the substrings `s[i...j]` and `s[k...l]` are palindromes and have odd lengths. `s[i...j]` denotes a substring from index `i` to index `j` **inclusive**.\n\nReturn _the **maximum** possible product of the lengths of the two non-intersecting palindromic substrings._\n\nA **palindrome** is a string that is the same forward and backward. A **substring** is a contiguous sequence of characters in a string.\n\n**Example 1:**\n\n**Input:** s =  \"ababbb \"\n**Output:** 9\n**Explanation:** Substrings  \"aba \" and  \"bbb \" are palindromes with odd length. product = 3 \\* 3 = 9.\n\n**Example 2:**\n\n**Input:** s =  \"zaaaxbbby \"\n**Output:** 9\n**Explanation:** Substrings  \"aaa \" and  \"bbb \" are palindromes with odd length. product = 3 \\* 3 = 9.\n\n**Constraints:**\n\n*   `2 <= s.length <= 105`\n*   `s` consists of lowercase English letters.",
+  "difficulty": "Hard",
+  "category": null,
+  "xpReward": 0,
+  "timeLimitMs": 5000,
+  "memoryLimitMb": 256,
+  "starterCode": {},
+  "solutionCode": "",
+  "hints": [],
+  "isPremium": false,
+  "createdBy": null,
+  "testCases": [
+    {
+      "input": [
+        "ababbb "
+      ],
+      "expectedOutput": 9
+    },
+    {
+      "input": [
+        "zaaaxbbby "
+      ],
+      "expectedOutput": 9
+    }
+  ],
+  "hiddenTestCases": [
+    {
+      "input": [
+        "ababbb "
+      ],
+      "expectedOutput": 9
+    },
+    {
+      "input": [
+        "zaaaxbbby "
+      ],
+      "expectedOutput": 9
+    }
+  ],
+  "tags": [],
+  "constraints": [],
+  "examples": [],
+  "problemNumber": null,
+  "createdAt": "2025-11-14T21:23:48.808919+00:00",
+  "updatedAt": "2025-12-04T04:36:29.312Z"
+}

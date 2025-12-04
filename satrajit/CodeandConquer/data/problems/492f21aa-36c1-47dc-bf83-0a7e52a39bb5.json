@@ -1,0 +1,166 @@
+{
+  "id": "492f21aa-36c1-47dc-bf83-0a7e52a39bb5",
+  "title": "Sort the Students by Their Kth Score",
+  "slug": "sort-the-students-by-their-kth-score",
+  "description": "There is a class with `m` students and `n` exams. You are given a **0-indexed** `m x n` integer matrix `score`, where each row represents one student and `score[i][j]` denotes the score the `ith` student got in the `jth` exam. The matrix `score` contains **distinct** integers only.\n\nYou are also given an integer `k`. Sort the students (i.e., the rows of the matrix) by their scores in the `kth` (**0-indexed**) exam from the highest to the lowest.\n\nReturn _the matrix after sorting it._\n\n**Example 1:**\n\n**Input:** score = \\[\\[10,6,9,1\\],\\[7,5,11,2\\],\\[4,8,3,15\\]\\], k = 2\n**Output:** \\[\\[7,5,11,2\\],\\[10,6,9,1\\],\\[4,8,3,15\\]\\]\n**Explanation:** In the above diagram, S denotes the student, while E denotes the exam.\n- The student with index 1 scored 11 in exam 2, which is the highest score, so they got first place.\n- The student with index 0 scored 9 in exam 2, which is the second highest score, so they got second place.\n- The student with index 2 scored 3 in exam 2, which is the lowest score, so they got third place.\n\n**Example 2:**\n\n**Input:** score = \\[\\[3,4\\],\\[5,6\\]\\], k = 0\n**Output:** \\[\\[5,6\\],\\[3,4\\]\\]\n**Explanation:** In the above diagram, S denotes the student, while E denotes the exam.\n- The student with index 1 scored 5 in exam 0, which is the highest score, so they got first place.\n- The student with index 0 scored 3 in exam 0, which is the lowest score, so they got second place.\n\n**Constraints:**\n\n*   `m == score.length`\n*   `n == score[i].length`\n*   `1 <= m, n <= 250`\n*   `1 <= score[i][j] <= 105`\n*   `score` consists of **distinct** integers.\n*   `0 <= k < n`",
+  "difficulty": "Medium",
+  "category": null,
+  "xpReward": 0,
+  "timeLimitMs": 5000,
+  "memoryLimitMb": 256,
+  "starterCode": {},
+  "solutionCode": "",
+  "hints": [],
+  "isPremium": false,
+  "createdBy": null,
+  "testCases": [
+    {
+      "input": [
+        [
+          [
+            10,
+            6,
+            9,
+            1
+          ],
+          [
+            7,
+            5,
+            11,
+            2
+          ],
+          [
+            4,
+            8,
+            3,
+            15
+          ]
+        ],
+        2
+      ],
+      "expectedOutput": [
+        [
+          7,
+          5,
+          11,
+          2
+        ],
+        [
+          10,
+          6,
+          9,
+          1
+        ],
+        [
+          4,
+          8,
+          3,
+          15
+        ]
+      ]
+    },
+    {
+      "input": [
+        [
+          [
+            3,
+            4
+          ],
+          [
+            5,
+            6
+          ]
+        ],
+        0
+      ],
+      "expectedOutput": [
+        [
+          5,
+          6
+        ],
+        [
+          3,
+          4
+        ]
+      ]
+    }
+  ],
+  "hiddenTestCases": [
+    {
+      "input": [
+        [
+          [
+            10,
+            6,
+            9,
+            1
+          ],
+          [
+            7,
+            5,
+            11,
+            2
+          ],
+          [
+            4,
+            8,
+            3,
+            15
+          ]
+        ],
+        2
+      ],
+      "expectedOutput": [
+        [
+          7,
+          5,
+          11,
+          2
+        ],
+        [
+          10,
+          6,
+          9,
+          1
+        ],
+        [
+          4,
+          8,
+          3,
+          15
+        ]
+      ]
+    },
+    {
+      "input": [
+        [
+          [
+            3,
+            4
+          ],
+          [
+            5,
+            6
+          ]
+        ],
+        0
+      ],
+      "expectedOutput": [
+        [
+          5,
+          6
+        ],
+        [
+          3,
+          4
+        ]
+      ]
+    }
+  ],
+  "tags": [],
+  "constraints": [],
+  "examples": [],
+  "problemNumber": null,
+  "createdAt": "2025-11-14T21:26:16.144805+00:00",
+  "updatedAt": "2025-12-04T04:35:21.702Z"
+}

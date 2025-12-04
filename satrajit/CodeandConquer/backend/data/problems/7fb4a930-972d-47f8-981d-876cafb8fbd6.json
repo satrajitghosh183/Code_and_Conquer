@@ -1,0 +1,119 @@
+{
+  "id": "7fb4a930-972d-47f8-981d-876cafb8fbd6",
+  "title": "Check if There is a Path With Equal Number of 0's And 1's",
+  "slug": "check-if-there-is-a-path-with-equal-number-of-0s-and-1s",
+  "description": "You are given a **0-indexed** `m x n` **binary** matrix `grid`. You can move from a cell `(row, col)` to any of the cells `(row + 1, col)` or `(row, col + 1)`.\n\nReturn `true` _if there is a path from_ `(0, 0)` _to_ `(m - 1, n - 1)` _that visits an **equal** number of_ `0`_'s and_ `1`_'s_. Otherwise return `false`.\n\n**Example 1:**\n\n**Input:** grid = \\[\\[0,1,0,0\\],\\[0,1,0,0\\],\\[1,0,1,0\\]\\]\n**Output:** true\n**Explanation:** The path colored in blue in the above diagram is a valid path because we have 3 cells with a value of 1 and 3 with a value of 0. Since there is a valid path, we return true.\n\n**Example 2:**\n\n**Input:** grid = \\[\\[1,1,0\\],\\[0,0,1\\],\\[1,0,0\\]\\]\n**Output:** false\n**Explanation:** There is no path in this grid with an equal number of 0's and 1's.\n\n**Constraints:**\n\n*   `m == grid.length`\n*   `n == grid[i].length`\n*   `2 <= m, n <= 100`\n*   `grid[i][j]` is either `0` or `1`.",
+  "difficulty": "Medium",
+  "category": null,
+  "xpReward": 0,
+  "timeLimitMs": 5000,
+  "memoryLimitMb": 256,
+  "starterCode": [],
+  "solutionCode": "",
+  "hints": [],
+  "isPremium": false,
+  "createdBy": null,
+  "testCases": [
+    {
+      "input": [
+        [
+          [
+            0,
+            1,
+            0,
+            0
+          ],
+          [
+            0,
+            1,
+            0,
+            0
+          ],
+          [
+            1,
+            0,
+            1,
+            0
+          ]
+        ]
+      ],
+      "expectedOutput": true
+    },
+    {
+      "input": [
+        [
+          [
+            1,
+            1,
+            0
+          ],
+          [
+            0,
+            0,
+            1
+          ],
+          [
+            1,
+            0,
+            0
+          ]
+        ]
+      ],
+      "expectedOutput": false
+    }
+  ],
+  "hiddenTestCases": [
+    {
+      "input": [
+        [
+          [
+            0,
+            1,
+            0,
+            0
+          ],
+          [
+            0,
+            1,
+            0,
+            0
+          ],
+          [
+            1,
+            0,
+            1,
+            0
+          ]
+        ]
+      ],
+      "expectedOutput": true
+    },
+    {
+      "input": [
+        [
+          [
+            1,
+            1,
+            0
+          ],
+          [
+            0,
+            0,
+            1
+          ],
+          [
+            1,
+            0,
+            0
+          ]
+        ]
+      ],
+      "expectedOutput": false
+    }
+  ],
+  "tags": [],
+  "constraints": [],
+  "examples": [],
+  "createdAt": "2025-11-14T21:26:06.663525+00:00",
+  "updatedAt": "2025-12-04T04:35:25.464Z"
+}

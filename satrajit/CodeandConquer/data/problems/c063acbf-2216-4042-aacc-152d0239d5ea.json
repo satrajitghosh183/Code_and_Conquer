@@ -1,0 +1,56 @@
+{
+  "id": "c063acbf-2216-4042-aacc-152d0239d5ea",
+  "title": "Number of Different Integers in a String",
+  "slug": "number-of-different-integers-in-a-string",
+  "description": "You are given a string `word` that consists of digits and lowercase English letters.\n\nYou will replace every non-digit character with a space. For example, `\"a123bc34d8ef34 \"` will become `\" 123 34 8 34 \"`. Notice that you are left with some integers that are separated by at least one space: `\"123 \"`, `\"34 \"`, `\"8 \"`, and `\"34 \"`.\n\nReturn _the number of **different** integers after performing the replacement operations on_ `word`.\n\nTwo integers are considered different if their decimal representations **without any leading zeros** are different.\n\n**Example 1:**\n\n**Input:** word =  \"a123bc34d8ef34 \"\n**Output:** 3\n**Explanation:** The three different integers are  \"123 \",  \"34 \", and  \"8 \". Notice that  \"34 \" is only counted once.\n\n**Example 2:**\n\n**Input:** word =  \"leet1234code234 \"\n**Output:** 2\n\n**Example 3:**\n\n**Input:** word =  \"a1b01c001 \"\n**Output:** 1\n**Explanation:** The three integers  \"1 \",  \"01 \", and  \"001 \" all represent the same integer because\nthe leading zeros are ignored when comparing their decimal values.\n\n**Constraints:**\n\n*   `1 <= word.length <= 1000`\n*   `word` consists of digits and lowercase English letters.",
+  "difficulty": "Easy",
+  "category": null,
+  "xpReward": 0,
+  "timeLimitMs": 5000,
+  "memoryLimitMb": 256,
+  "starterCode": {},
+  "solutionCode": "",
+  "hints": [],
+  "isPremium": false,
+  "createdBy": null,
+  "testCases": [
+    {
+      "input": [
+        "a123bc34d8ef34 "
+      ],
+      "expectedOutput": 3
+    },
+    {
+      "input": [
+        "leet1234code234 "
+      ],
+      "expectedOutput": 2
+    },
+    {
+      "input": [
+        "a1b01c001 "
+      ],
+      "expectedOutput": 1
+    }
+  ],
+  "hiddenTestCases": [
+    {
+      "input": [
+        "a123bc34d8ef34 "
+      ],
+      "expectedOutput": 3
+    },
+    {
+      "input": [
+        "leet1234code234 "
+      ],
+      "expectedOutput": 2
+    }
+  ],
+  "tags": [],
+  "constraints": [],
+  "examples": [],
+  "problemNumber": null,
+  "createdAt": "2025-11-14T21:23:11.308594+00:00",
+  "updatedAt": "2025-12-04T04:36:44.793Z"
+}

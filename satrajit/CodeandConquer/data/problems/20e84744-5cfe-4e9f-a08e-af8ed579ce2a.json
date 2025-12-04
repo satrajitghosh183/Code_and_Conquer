@@ -1,0 +1,50 @@
+{
+  "id": "20e84744-5cfe-4e9f-a08e-af8ed579ce2a",
+  "title": "Count Distinct Numbers on Board",
+  "slug": "count-distinct-numbers-on-board",
+  "description": "You are given a positive integer `n`, that is initially placed on a board. Every day, for `109` days, you perform the following procedure:\n\n*   For each number `x` present on the board, find all numbers `1 <= i <= n` such that `x % i == 1`.\n*   Then, place those numbers on the board.\n\nReturn _the number of **distinct** integers present on the board after_ `109` _days have elapsed_.\n\n**Note:**\n\n*   Once a number is placed on the board, it will remain on it until the end.\n*   `%` stands for the modulo operation. For example, `14 % 3` is `2`.\n\n**Example 1:**\n\n**Input:** n = 5\n**Output:** 4\n**Explanation:** Initially, 5 is present on the board. \nThe next day, 2 and 4 will be added since 5 % 2 == 1 and 5 % 4 == 1. \nAfter that day, 3 will be added to the board because 4 % 3 == 1. \nAt the end of a billion days, the distinct numbers on the board will be 2, 3, 4, and 5. \n\n**Example 2:**\n\n**Input:** n = 3\n**Output:** 2\n**Explanation:** \nSince 3 % 2 == 1, 2 will be added to the board. \nAfter a billion days, the only two distinct numbers on the board are 2 and 3. \n\n**Constraints:**\n\n*   `1 <= n <= 100`",
+  "difficulty": "Easy",
+  "category": null,
+  "xpReward": 0,
+  "timeLimitMs": 5000,
+  "memoryLimitMb": 256,
+  "starterCode": {},
+  "solutionCode": "",
+  "hints": [],
+  "isPremium": false,
+  "createdBy": null,
+  "testCases": [
+    {
+      "input": [
+        5
+      ],
+      "expectedOutput": 4
+    },
+    {
+      "input": [
+        3
+      ],
+      "expectedOutput": 2
+    }
+  ],
+  "hiddenTestCases": [
+    {
+      "input": [
+        5
+      ],
+      "expectedOutput": 4
+    },
+    {
+      "input": [
+        3
+      ],
+      "expectedOutput": 2
+    }
+  ],
+  "tags": [],
+  "constraints": [],
+  "examples": [],
+  "problemNumber": null,
+  "createdAt": "2025-11-14T21:26:18.139223+00:00",
+  "updatedAt": "2025-12-04T04:35:21.247Z"
+}

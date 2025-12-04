@@ -1,0 +1,222 @@
+{
+  "id": "62785b39-ad27-49e1-bd1e-2940d5271455",
+  "title": "Queries on Number of Points Inside a Circle",
+  "slug": "queries-on-number-of-points-inside-a-circle",
+  "description": "You are given an array `points` where `points[i] = [xi, yi]` is the coordinates of the `ith` point on a 2D plane. Multiple points can have the **same** coordinates.\n\nYou are also given an array `queries` where `queries[j] = [xj, yj, rj]` describes a circle centered at `(xj, yj)` with a radius of `rj`.\n\nFor each query `queries[j]`, compute the number of points **inside** the `jth` circle. Points **on the border** of the circle are considered **inside**.\n\nReturn _an array_ `answer`_, where_ `answer[j]` _is the answer to the_ `jth` _query_.\n\n**Example 1:**\n\n**Input:** points = \\[\\[1,3\\],\\[3,3\\],\\[5,3\\],\\[2,2\\]\\], queries = \\[\\[2,3,1\\],\\[4,3,1\\],\\[1,1,2\\]\\]\n**Output:** \\[3,2,2\\]\n**Explanation:** The points and circles are shown above.\nqueries\\[0\\] is the green circle, queries\\[1\\] is the red circle, and queries\\[2\\] is the blue circle.\n\n**Example 2:**\n\n**Input:** points = \\[\\[1,1\\],\\[2,2\\],\\[3,3\\],\\[4,4\\],\\[5,5\\]\\], queries = \\[\\[1,2,2\\],\\[2,2,2\\],\\[4,3,2\\],\\[4,3,3\\]\\]\n**Output:** \\[2,3,2,4\\]\n**Explanation:** The points and circles are shown above.\nqueries\\[0\\] is green, queries\\[1\\] is red, queries\\[2\\] is blue, and queries\\[3\\] is purple.\n\n**Constraints:**\n\n*   `1 <= points.length <= 500`\n*   `points[i].length == 2`\n*   `0 <= x​​​​​​i, y​​​​​​i <= 500`\n*   `1 <= queries.length <= 500`\n*   `queries[j].length == 3`\n*   `0 <= xj, yj <= 500`\n*   `1 <= rj <= 500`\n*   All coordinates are integers.\n\n**Follow up:** Could you find the answer for each query in better complexity than `O(n)`?",
+  "difficulty": "Medium",
+  "category": null,
+  "xpReward": 0,
+  "timeLimitMs": 5000,
+  "memoryLimitMb": 256,
+  "starterCode": {},
+  "solutionCode": "",
+  "hints": [],
+  "isPremium": false,
+  "createdBy": null,
+  "testCases": [
+    {
+      "input": [
+        [
+          [
+            1,
+            3
+          ],
+          [
+            3,
+            3
+          ],
+          [
+            5,
+            3
+          ],
+          [
+            2,
+            2
+          ]
+        ],
+        [
+          [
+            2,
+            3,
+            1
+          ],
+          [
+            4,
+            3,
+            1
+          ],
+          [
+            1,
+            1,
+            2
+          ]
+        ]
+      ],
+      "expectedOutput": [
+        3,
+        2,
+        2
+      ]
+    },
+    {
+      "input": [
+        [
+          [
+            1,
+            1
+          ],
+          [
+            2,
+            2
+          ],
+          [
+            3,
+            3
+          ],
+          [
+            4,
+            4
+          ],
+          [
+            5,
+            5
+          ]
+        ],
+        [
+          [
+            1,
+            2,
+            2
+          ],
+          [
+            2,
+            2,
+            2
+          ],
+          [
+            4,
+            3,
+            2
+          ],
+          [
+            4,
+            3,
+            3
+          ]
+        ]
+      ],
+      "expectedOutput": [
+        2,
+        3,
+        2,
+        4
+      ]
+    }
+  ],
+  "hiddenTestCases": [
+    {
+      "input": [
+        [
+          [
+            1,
+            3
+          ],
+          [
+            3,
+            3
+          ],
+          [
+            5,
+            3
+          ],
+          [
+            2,
+            2
+          ]
+        ],
+        [
+          [
+            2,
+            3,
+            1
+          ],
+          [
+            4,
+            3,
+            1
+          ],
+          [
+            1,
+            1,
+            2
+          ]
+        ]
+      ],
+      "expectedOutput": [
+        3,
+        2,
+        2
+      ]
+    },
+    {
+      "input": [
+        [
+          [
+            1,
+            1
+          ],
+          [
+            2,
+            2
+          ],
+          [
+            3,
+            3
+          ],
+          [
+            4,
+            4
+          ],
+          [
+            5,
+            5
+          ]
+        ],
+        [
+          [
+            1,
+            2,
+            2
+          ],
+          [
+            2,
+            2,
+            2
+          ],
+          [
+            4,
+            3,
+            2
+          ],
+          [
+            4,
+            3,
+            3
+          ]
+        ]
+      ],
+      "expectedOutput": [
+        2,
+        3,
+        2,
+        4
+      ]
+    }
+  ],
+  "tags": [],
+  "constraints": [],
+  "examples": [],
+  "problemNumber": null,
+  "createdAt": "2025-11-14T21:23:16.925296+00:00",
+  "updatedAt": "2025-12-04T04:36:42.539Z"
+}

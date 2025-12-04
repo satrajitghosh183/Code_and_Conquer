@@ -1,0 +1,95 @@
+{
+  "id": "8923b8d0-8e9a-429c-a4cc-977b8171c59c",
+  "title": "Guess the Majority in a Hidden Array",
+  "slug": "guess-the-majority-in-a-hidden-array",
+  "description": "We have an integer array `nums`, where all the integers in `nums` are **0** or **1**. You will not be given direct access to the array, instead, you will have an **API** `ArrayReader` which have the following functions:\n\n*   `int query(int a, int b, int c, int d)`: where `0 <= a < b < c < d < ArrayReader.length()`. The function returns the distribution of the value of the 4 elements and returns:\n    *   **4** : if the values of the 4 elements are the same (0 or 1).\n    *   **2** : if three elements have a value equal to 0 and one element has value equal to 1 or vice versa.\n    *   **0** : if two element have a value equal to 0 and two elements have a value equal to 1.\n*   `int length()`: Returns the size of the array.\n\nYou are allowed to call `query()` **2 \\* n times** at most where n is equal to `ArrayReader.length()`.\n\nReturn **any** index of the most frequent value in `nums`, in case of tie, return -1.\n\n**Example 1:**\n\n**Input:** nums = \\[0,0,1,0,1,1,1,1\\]\n**Output:** 5\n**Explanation:** The following calls to the API\nreader.length() // returns 8 because there are 8 elements in the hidden array.\nreader.query(0,1,2,3) // returns 2 this is a query that compares the elements nums\\[0\\], nums\\[1\\], nums\\[2\\], nums\\[3\\]\n// Three elements have a value equal to 0 and one element has value equal to 1 or viceversa.\nreader.query(4,5,6,7) // returns 4 because nums\\[4\\], nums\\[5\\], nums\\[6\\], nums\\[7\\] have the same value.\nwe can infer that the most frequent value is found in the last 4 elements.\nIndex 2, 4, 6, 7 is also a correct answer.\n\n**Example 2:**\n\n**Input:** nums = \\[0,0,1,1,0\\]\n**Output:** 0\n\n**Example 3:**\n\n**Input:** nums = \\[1,0,1,0,1,0,1,0\\]\n**Output:** -1\n\n**Constraints:**\n\n*   `5 <= nums.length <= 105`\n*   `0 <= nums[i] <= 1`\n\n**Follow up:** What is the minimum number of calls needed to find the majority element?",
+  "difficulty": "Medium",
+  "category": null,
+  "xpReward": 0,
+  "timeLimitMs": 5000,
+  "memoryLimitMb": 256,
+  "starterCode": {},
+  "solutionCode": "",
+  "hints": [],
+  "isPremium": false,
+  "createdBy": null,
+  "testCases": [
+    {
+      "input": [
+        [
+          0,
+          0,
+          1,
+          0,
+          1,
+          1,
+          1,
+          1
+        ]
+      ],
+      "expectedOutput": 5
+    },
+    {
+      "input": [
+        [
+          0,
+          0,
+          1,
+          1,
+          0
+        ]
+      ],
+      "expectedOutput": 0
+    },
+    {
+      "input": [
+        [
+          1,
+          0,
+          1,
+          0,
+          1,
+          0,
+          1,
+          0
+        ]
+      ],
+      "expectedOutput": "-1\n\n**Constraints:**\n\n*   `5 <= nums.length <= 105`\n*   `0 <= nums[i] <= 1`\n\n**Follow up:** What is the minimum number of calls needed to find the majority element?"
+    }
+  ],
+  "hiddenTestCases": [
+    {
+      "input": [
+        [
+          0,
+          0,
+          1,
+          0,
+          1,
+          1,
+          1,
+          1
+        ]
+      ],
+      "expectedOutput": 5
+    },
+    {
+      "input": [
+        [
+          0,
+          0,
+          1,
+          1,
+          0
+        ]
+      ],
+      "expectedOutput": 0
+    }
+  ],
+  "tags": [],
+  "constraints": [],
+  "examples": [],
+  "problemNumber": null,
+  "createdAt": "2025-11-14T21:21:54.462207+00:00",
+  "updatedAt": "2025-12-04T04:37:18.818Z"
+}

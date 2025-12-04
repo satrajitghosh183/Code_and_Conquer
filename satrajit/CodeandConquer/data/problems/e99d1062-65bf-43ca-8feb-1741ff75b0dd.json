@@ -1,0 +1,162 @@
+{
+  "id": "e99d1062-65bf-43ca-8feb-1741ff75b0dd",
+  "title": "Create Binary Tree From Descriptions",
+  "slug": "create-binary-tree-from-descriptions",
+  "description": "You are given a 2D integer array `descriptions` where `descriptions[i] = [parenti, childi, isLefti]` indicates that `parenti` is the **parent** of `childi` in a **binary** tree of **unique** values. Furthermore,\n\n*   If `isLefti == 1`, then `childi` is the left child of `parenti`.\n*   If `isLefti == 0`, then `childi` is the right child of `parenti`.\n\nConstruct the binary tree described by `descriptions` and return _its **root**_.\n\nThe test cases will be generated such that the binary tree is **valid**.\n\n**Example 1:**\n\n**Input:** descriptions = \\[\\[20,15,1\\],\\[20,17,0\\],\\[50,20,1\\],\\[50,80,0\\],\\[80,19,1\\]\\]\n**Output:** \\[50,20,80,15,17,19\\]\n**Explanation:** The root node is the node with value 50 since it has no parent.\nThe resulting binary tree is shown in the diagram.\n\n**Example 2:**\n\n**Input:** descriptions = \\[\\[1,2,1\\],\\[2,3,0\\],\\[3,4,1\\]\\]\n**Output:** \\[1,2,null,null,3,4\\]\n**Explanation:** The root node is the node with value 1 since it has no parent.\nThe resulting binary tree is shown in the diagram.\n\n**Constraints:**\n\n*   `1 <= descriptions.length <= 104`\n*   `descriptions[i].length == 3`\n*   `1 <= parenti, childi <= 105`\n*   `0 <= isLefti <= 1`\n*   The binary tree described by `descriptions` is valid.",
+  "difficulty": "Medium",
+  "category": null,
+  "xpReward": 0,
+  "timeLimitMs": 5000,
+  "memoryLimitMb": 256,
+  "starterCode": {},
+  "solutionCode": "",
+  "hints": [],
+  "isPremium": false,
+  "createdBy": null,
+  "testCases": [
+    {
+      "input": [
+        [
+          [
+            20,
+            15,
+            1
+          ],
+          [
+            20,
+            17,
+            0
+          ],
+          [
+            50,
+            20,
+            1
+          ],
+          [
+            50,
+            80,
+            0
+          ],
+          [
+            80,
+            19,
+            1
+          ]
+        ]
+      ],
+      "expectedOutput": [
+        50,
+        20,
+        80,
+        15,
+        17,
+        19
+      ]
+    },
+    {
+      "input": [
+        [
+          [
+            1,
+            2,
+            1
+          ],
+          [
+            2,
+            3,
+            0
+          ],
+          [
+            3,
+            4,
+            1
+          ]
+        ]
+      ],
+      "expectedOutput": [
+        1,
+        2,
+        null,
+        null,
+        3,
+        4
+      ]
+    }
+  ],
+  "hiddenTestCases": [
+    {
+      "input": [
+        [
+          [
+            20,
+            15,
+            1
+          ],
+          [
+            20,
+            17,
+            0
+          ],
+          [
+            50,
+            20,
+            1
+          ],
+          [
+            50,
+            80,
+            0
+          ],
+          [
+            80,
+            19,
+            1
+          ]
+        ]
+      ],
+      "expectedOutput": [
+        50,
+        20,
+        80,
+        15,
+        17,
+        19
+      ]
+    },
+    {
+      "input": [
+        [
+          [
+            1,
+            2,
+            1
+          ],
+          [
+            2,
+            3,
+            0
+          ],
+          [
+            3,
+            4,
+            1
+          ]
+        ]
+      ],
+      "expectedOutput": [
+        1,
+        2,
+        null,
+        null,
+        3,
+        4
+      ]
+    }
+  ],
+  "tags": [],
+  "constraints": [],
+  "examples": [],
+  "problemNumber": null,
+  "createdAt": "2025-11-14T21:24:46.063423+00:00",
+  "updatedAt": "2025-12-04T04:36:05.151Z"
+}

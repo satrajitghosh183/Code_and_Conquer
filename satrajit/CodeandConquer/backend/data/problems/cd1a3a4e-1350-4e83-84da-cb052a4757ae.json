@@ -1,0 +1,153 @@
+{
+  "id": "cd1a3a4e-1350-4e83-84da-cb052a4757ae",
+  "title": "Check Knight Tour Configuration",
+  "slug": "check-knight-tour-configuration",
+  "description": "There is a knight on an `n x n` chessboard. In a valid configuration, the knight starts **at the top-left cell** of the board and visits every cell on the board **exactly once**.\n\nYou are given an `n x n` integer matrix `grid` consisting of distinct integers from the range `[0, n * n - 1]` where `grid[row][col]` indicates that the cell `(row, col)` is the `grid[row][col]th` cell that the knight visited. The moves are **0-indexed**.\n\nReturn `true` _if_ `grid` _represents a valid configuration of the knight's movements or_ `false` _otherwise_.\n\n**Note** that a valid knight move consists of moving two squares vertically and one square horizontally, or two squares horizontally and one square vertically. The figure below illustrates all the possible eight moves of a knight from some cell.\n\n**Example 1:**\n\n**Input:** grid = \\[\\[0,11,16,5,20\\],\\[17,4,19,10,15\\],\\[12,1,8,21,6\\],\\[3,18,23,14,9\\],\\[24,13,2,7,22\\]\\]\n**Output:** true\n**Explanation:** The above diagram represents the grid. It can be shown that it is a valid configuration.\n\n**Example 2:**\n\n**Input:** grid = \\[\\[0,3,6\\],\\[5,8,1\\],\\[2,7,4\\]\\]\n**Output:** false\n**Explanation:** The above diagram represents the grid. The 8th move of the knight is not valid considering its position after the 7th move.\n\n**Constraints:**\n\n*   `n == grid.length == grid[i].length`\n*   `3 <= n <= 7`\n*   `0 <= grid[row][col] < n * n`\n*   All integers in `grid` are **unique**.",
+  "difficulty": "Medium",
+  "category": null,
+  "xpReward": 0,
+  "timeLimitMs": 5000,
+  "memoryLimitMb": 256,
+  "starterCode": [],
+  "solutionCode": "",
+  "hints": [],
+  "isPremium": false,
+  "createdBy": null,
+  "testCases": [
+    {
+      "input": [
+        [
+          [
+            0,
+            11,
+            16,
+            5,
+            20
+          ],
+          [
+            17,
+            4,
+            19,
+            10,
+            15
+          ],
+          [
+            12,
+            1,
+            8,
+            21,
+            6
+          ],
+          [
+            3,
+            18,
+            23,
+            14,
+            9
+          ],
+          [
+            24,
+            13,
+            2,
+            7,
+            22
+          ]
+        ]
+      ],
+      "expectedOutput": true
+    },
+    {
+      "input": [
+        [
+          [
+            0,
+            3,
+            6
+          ],
+          [
+            5,
+            8,
+            1
+          ],
+          [
+            2,
+            7,
+            4
+          ]
+        ]
+      ],
+      "expectedOutput": false
+    }
+  ],
+  "hiddenTestCases": [
+    {
+      "input": [
+        [
+          [
+            0,
+            11,
+            16,
+            5,
+            20
+          ],
+          [
+            17,
+            4,
+            19,
+            10,
+            15
+          ],
+          [
+            12,
+            1,
+            8,
+            21,
+            6
+          ],
+          [
+            3,
+            18,
+            23,
+            14,
+            9
+          ],
+          [
+            24,
+            13,
+            2,
+            7,
+            22
+          ]
+        ]
+      ],
+      "expectedOutput": true
+    },
+    {
+      "input": [
+        [
+          [
+            0,
+            3,
+            6
+          ],
+          [
+            5,
+            8,
+            1
+          ],
+          [
+            2,
+            7,
+            4
+          ]
+        ]
+      ],
+      "expectedOutput": false
+    }
+  ],
+  "tags": [],
+  "constraints": [],
+  "examples": [],
+  "createdAt": "2025-11-14T21:26:32.516149+00:00",
+  "updatedAt": "2025-12-04T04:35:16.327Z"
+}

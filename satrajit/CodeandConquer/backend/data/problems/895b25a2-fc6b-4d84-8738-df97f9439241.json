@@ -1,0 +1,55 @@
+{
+  "id": "895b25a2-fc6b-4d84-8738-df97f9439241",
+  "title": "Check if String Is Decomposable Into Value-Equal Substrings",
+  "slug": "check-if-string-is-decomposable-into-value-equal-substrings",
+  "description": "A **value-equal** string is a string where **all** characters are the same.\n\n*   For example, `\"1111 \"` and `\"33 \"` are value-equal strings.\n*   In contrast, `\"123 \"` is not a value-equal string.\n\nGiven a digit string `s`, decompose the string into some number of **consecutive value-equal** substrings where **exactly one** substring has a **length of** `2` and the remaining substrings have a **length of** `3`.\n\nReturn `true` _if you can decompose_ `s` _according to the above rules. Otherwise, return_ `false`.\n\nA **substring** is a contiguous sequence of characters in a string.\n\n**Example 1:**\n\n**Input:** s =  \"000111000 \"\n**Output:** false\n**Explanation:** s cannot be decomposed according to the rules because \\[ \"000 \",  \"111 \",  \"000 \"\\] does not have a substring of length 2.\n\n**Example 2:**\n\n**Input:** s =  \"00011111222 \"\n**Output:** true\n**Explanation:** s can be decomposed into \\[ \"000 \",  \"111 \",  \"11 \",  \"222 \"\\].\n\n**Example 3:**\n\n**Input:** s =  \"011100022233 \"\n**Output:** false\n**Explanation:** s cannot be decomposed according to the rules because of the first '0'.\n\n**Constraints:**\n\n*   `1 <= s.length <= 1000`\n*   `s` consists of only digits `'0'` through `'9'`.",
+  "difficulty": "Easy",
+  "category": null,
+  "xpReward": 0,
+  "timeLimitMs": 5000,
+  "memoryLimitMb": 256,
+  "starterCode": [],
+  "solutionCode": "",
+  "hints": [],
+  "isPremium": false,
+  "createdBy": null,
+  "testCases": [
+    {
+      "input": [
+        "000111000 "
+      ],
+      "expectedOutput": false
+    },
+    {
+      "input": [
+        "00011111222 "
+      ],
+      "expectedOutput": true
+    },
+    {
+      "input": [
+        "011100022233 "
+      ],
+      "expectedOutput": false
+    }
+  ],
+  "hiddenTestCases": [
+    {
+      "input": [
+        "000111000 "
+      ],
+      "expectedOutput": false
+    },
+    {
+      "input": [
+        "00011111222 "
+      ],
+      "expectedOutput": true
+    }
+  ],
+  "tags": [],
+  "constraints": [],
+  "examples": [],
+  "createdAt": "2025-11-14T21:23:43.416101+00:00",
+  "updatedAt": "2025-12-04T04:36:32.054Z"
+}

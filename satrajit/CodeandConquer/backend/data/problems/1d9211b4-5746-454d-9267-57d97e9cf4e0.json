@@ -1,0 +1,193 @@
+{
+  "id": "1d9211b4-5746-454d-9267-57d97e9cf4e0",
+  "title": "Count Number of Possible Root Nodes",
+  "slug": "count-number-of-possible-root-nodes",
+  "description": "Alice has an undirected tree with `n` nodes labeled from `0` to `n - 1`. The tree is represented as a 2D integer array `edges` of length `n - 1` where `edges[i] = [ai, bi]` indicates that there is an edge between nodes `ai` and `bi` in the tree.\n\nAlice wants Bob to find the root of the tree. She allows Bob to make several **guesses** about her tree. In one guess, he does the following:\n\n*   Chooses two **distinct** integers `u` and `v` such that there exists an edge `[u, v]` in the tree.\n*   He tells Alice that `u` is the **parent** of `v` in the tree.\n\nBob's guesses are represented by a 2D integer array `guesses` where `guesses[j] = [uj, vj]` indicates Bob guessed `uj` to be the parent of `vj`.\n\nAlice being lazy, does not reply to each of Bob's guesses, but just says that **at least** `k` of his guesses are `true`.\n\nGiven the 2D integer arrays `edges`, `guesses` and the integer `k`, return _the **number of possible nodes** that can be the root of Alice's tree_. If there is no such tree, return `0`.\n\n**Example 1:**\n\n**Input:** edges = \\[\\[0,1\\],\\[1,2\\],\\[1,3\\],\\[4,2\\]\\], guesses = \\[\\[1,3\\],\\[0,1\\],\\[1,0\\],\\[2,4\\]\\], k = 3\n**Output:** 3\n**Explanation:** \nRoot = 0, correct guesses = \\[1,3\\], \\[0,1\\], \\[2,4\\]\nRoot = 1, correct guesses = \\[1,3\\], \\[1,0\\], \\[2,4\\]\nRoot = 2, correct guesses = \\[1,3\\], \\[1,0\\], \\[2,4\\]\nRoot = 3, correct guesses = \\[1,0\\], \\[2,4\\]\nRoot = 4, correct guesses = \\[1,3\\], \\[1,0\\]\nConsidering 0, 1, or 2 as root node leads to 3 correct guesses.\n\n**Example 2:**\n\n**Input:** edges = \\[\\[0,1\\],\\[1,2\\],\\[2,3\\],\\[3,4\\]\\], guesses = \\[\\[1,0\\],\\[3,4\\],\\[2,1\\],\\[3,2\\]\\], k = 1\n**Output:** 5\n**Explanation:** \nRoot = 0, correct guesses = \\[3,4\\]\nRoot = 1, correct guesses = \\[1,0\\], \\[3,4\\]\nRoot = 2, correct guesses = \\[1,0\\], \\[2,1\\], \\[3,4\\]\nRoot = 3, correct guesses = \\[1,0\\], \\[2,1\\], \\[3,2\\], \\[3,4\\]\nRoot = 4, correct guesses = \\[1,0\\], \\[2,1\\], \\[3,2\\]\nConsidering any node as root will give at least 1 correct guess. \n\n**Constraints:**\n\n*   `edges.length == n - 1`\n*   `2 <= n <= 105`\n*   `1 <= guesses.length <= 105`\n*   `0 <= ai, bi, uj, vj <= n - 1`\n*   `ai != bi`\n*   `uj != vj`\n*   `edges` represents a valid tree.\n*   `guesses[j]` is an edge of the tree.\n*   `guesses` is unique.\n*   `0 <= k <= guesses.length`",
+  "difficulty": "Hard",
+  "category": null,
+  "xpReward": 0,
+  "timeLimitMs": 5000,
+  "memoryLimitMb": 256,
+  "starterCode": [],
+  "solutionCode": "",
+  "hints": [],
+  "isPremium": false,
+  "createdBy": null,
+  "testCases": [
+    {
+      "input": [
+        [
+          [
+            0,
+            1
+          ],
+          [
+            1,
+            2
+          ],
+          [
+            1,
+            3
+          ],
+          [
+            4,
+            2
+          ]
+        ],
+        [
+          [
+            1,
+            3
+          ],
+          [
+            0,
+            1
+          ],
+          [
+            1,
+            0
+          ],
+          [
+            2,
+            4
+          ]
+        ],
+        3
+      ],
+      "expectedOutput": 3
+    },
+    {
+      "input": [
+        [
+          [
+            0,
+            1
+          ],
+          [
+            1,
+            2
+          ],
+          [
+            2,
+            3
+          ],
+          [
+            3,
+            4
+          ]
+        ],
+        [
+          [
+            1,
+            0
+          ],
+          [
+            3,
+            4
+          ],
+          [
+            2,
+            1
+          ],
+          [
+            3,
+            2
+          ]
+        ],
+        1
+      ],
+      "expectedOutput": 5
+    }
+  ],
+  "hiddenTestCases": [
+    {
+      "input": [
+        [
+          [
+            0,
+            1
+          ],
+          [
+            1,
+            2
+          ],
+          [
+            1,
+            3
+          ],
+          [
+            4,
+            2
+          ]
+        ],
+        [
+          [
+            1,
+            3
+          ],
+          [
+            0,
+            1
+          ],
+          [
+            1,
+            0
+          ],
+          [
+            2,
+            4
+          ]
+        ],
+        3
+      ],
+      "expectedOutput": 3
+    },
+    {
+      "input": [
+        [
+          [
+            0,
+            1
+          ],
+          [
+            1,
+            2
+          ],
+          [
+            2,
+            3
+          ],
+          [
+            3,
+            4
+          ]
+        ],
+        [
+          [
+            1,
+            0
+          ],
+          [
+            3,
+            4
+          ],
+          [
+            2,
+            1
+          ],
+          [
+            3,
+            2
+          ]
+        ],
+        1
+      ],
+      "expectedOutput": 5
+    }
+  ],
+  "tags": [],
+  "constraints": [],
+  "examples": [],
+  "createdAt": "2025-11-14T21:26:27.842914+00:00",
+  "updatedAt": "2025-12-04T04:35:17.872Z"
+}

@@ -1,0 +1,77 @@
+{
+  "id": "7a76ca56-5a7b-49f8-8793-dc747975544d",
+  "title": "Amount of Time for Binary Tree to Be Infected",
+  "slug": "amount-of-time-for-binary-tree-to-be-infected",
+  "description": "You are given the `root` of a binary tree with **unique** values, and an integer `start`. At minute `0`, an **infection** starts from the node with value `start`.\n\nEach minute, a node becomes infected if:\n\n*   The node is currently uninfected.\n*   The node is adjacent to an infected node.\n\nReturn _the number of minutes needed for the entire tree to be infected._\n\n**Example 1:**\n\n**Input:** root = \\[1,5,3,null,4,10,6,9,2\\], start = 3\n**Output:** 4\n**Explanation:** The following nodes are infected during:\n- Minute 0: Node 3\n- Minute 1: Nodes 1, 10 and 6\n- Minute 2: Node 5\n- Minute 3: Node 4\n- Minute 4: Nodes 9 and 2\nIt takes 4 minutes for the whole tree to be infected so we return 4.\n\n**Example 2:**\n\n**Input:** root = \\[1\\], start = 1\n**Output:** 0\n**Explanation:** At minute 0, the only node in the tree is infected so we return 0.\n\n**Constraints:**\n\n*   The number of nodes in the tree is in the range `[1, 105]`.\n*   `1 <= Node.val <= 105`\n*   Each node has a **unique** value.\n*   A node with a value of `start` exists in the tree.",
+  "difficulty": "Medium",
+  "category": null,
+  "xpReward": 0,
+  "timeLimitMs": 5000,
+  "memoryLimitMb": 256,
+  "starterCode": [],
+  "solutionCode": "",
+  "hints": [],
+  "isPremium": false,
+  "createdBy": null,
+  "testCases": [
+    {
+      "input": [
+        [
+          1,
+          5,
+          3,
+          null,
+          4,
+          10,
+          6,
+          9,
+          2
+        ],
+        3
+      ],
+      "expectedOutput": 4
+    },
+    {
+      "input": [
+        [
+          1
+        ],
+        1
+      ],
+      "expectedOutput": 0
+    }
+  ],
+  "hiddenTestCases": [
+    {
+      "input": [
+        [
+          1,
+          5,
+          3,
+          null,
+          4,
+          10,
+          6,
+          9,
+          2
+        ],
+        3
+      ],
+      "expectedOutput": 4
+    },
+    {
+      "input": [
+        [
+          1
+        ],
+        1
+      ],
+      "expectedOutput": 0
+    }
+  ],
+  "tags": [],
+  "constraints": [],
+  "examples": [],
+  "createdAt": "2025-11-14T21:25:32.743589+00:00",
+  "updatedAt": "2025-12-04T04:35:43.523Z"
+}

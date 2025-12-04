@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react'
 import { useAuth } from '../contexts/AuthContext'
 import { useGame } from '../contexts/GameContext'
 import { usePayment } from '../contexts/PaymentContext'
+import { useNotifications } from '../contexts/NotificationContext'
 import { useNavigate } from 'react-router-dom'
 import { 
   Bell, 
@@ -21,6 +22,8 @@ import Matchmaking from '../components/Matchmaking'
 import PricingModal from '../components/PricingModal'
 import ProfileSettings from '../components/ProfileSettings'
 import TaskPanel from '../components/TaskPanel'
+import NotificationPanel from '../components/NotificationPanel'
+import { formatMarkdown } from '../utils/markdown'
 import './Dashboard.css'
 
 const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000/api'
@@ -29,6 +32,7 @@ export default function Dashboard() {
   const { user, profile } = useAuth()
   const { stats } = useGame()
   const { isPremium } = usePayment()
+  const { unreadCount } = useNotifications()
   const navigate = useNavigate()
   const [showMatchmaking, setShowMatchmaking] = useState(false)
   const [showPricing, setShowPricing] = useState(false)
@@ -36,18 +40,59 @@ export default function Dashboard() {
   const [showTasks, setShowTasks] = useState(false)
   const [tasks, setTasks] = useState([])
   const [taskBuffs, setTaskBuffs] = useState(null)
+  const [dashboardStats, setDashboardStats] = useState({
+    problemsSolved: 0,
+    dayStreak: 0,
+    towersUnlocked: 0,
+    globalRank: null,
+    rankScore: 0
+  })
+  const [dailyChallenge, setDailyChallenge] = useState(null)
+  const [loadingStats, setLoadingStats] = useState(true)
+  const [xpHistory, setXpHistory] = useState(null)
+  const [loadingXpHistory, setLoadingXpHistory] = useState(true)
+  const [xpPeriod, setXpPeriod] = useState(7)
+  const [showPeriodDropdown, setShowPeriodDropdown] = useState(false)
+  const [showNotifications, setShowNotifications] = useState(false)
 
   const displayName = profile?.username || user?.user_metadata?.username || user?.email?.split('@')[0] || 'User'
+
+  // Close dropdowns when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (e) => {
+      if (!e.target.closest('.notification-wrapper')) {
+        setShowNotifications(false)
+      }
+      if (!e.target.closest('.period-selector-wrapper')) {
+        setShowPeriodDropdown(false)
+      }
+    }
+    document.addEventListener('click', handleClickOutside)
+    return () => document.removeEventListener('click', handleClickOutside)
+  }, [])
 
   useEffect(() => {
     if (user) {
       loadTasks()
       loadTaskBuffs()
+      loadDashboardStats()
+      loadDailyChallenge()
+      loadXpHistory()
     }
   }, [user])
 
+  // Refresh dashboard stats when GameContext stats change (after solving problems)
+  useEffect(() => {
+    if (user && stats && stats.xp > 0) {
+      console.log('[Dashboard] GameContext stats changed, refreshing dashboard stats:', stats)
+      loadDashboardStats()
+      loadXpHistory() // Also refresh XP chart
+    }
+  }, [stats?.xp, stats?.coins, stats?.problemsSolved, user])
+
   // Check for OAuth success messages
   useEffect(() => {
+    if (!user?.id) return
     const params = new URLSearchParams(window.location.search)
     if (params.get('todoist') === 'connected' || params.get('calendar') === 'connected') {
       loadTasks()
@@ -55,30 +100,128 @@ export default function Dashboard() {
       // Clean URL
       window.history.replaceState({}, '', window.location.pathname)
     }
-  }, [])
+  }, [user])
 
   const loadTasks = async () => {
+    if (!user?.id) return
     try {
       const response = await fetch(`${API_URL}/tasks?playerId=${user.id}`)
+      if (!response.ok) {
+        throw new Error(`Failed to load tasks: ${response.statusText}`)
+      }
       const data = await response.json()
       setTasks(data || [])
     } catch (error) {
       console.error('Failed to load tasks:', error)
+      setTasks([]) // Set empty array on error
     }
   }
 
   const loadTaskBuffs = async () => {
+    if (!user?.id) return
     try {
       const response = await fetch(`${API_URL}/tasks/buffs/${user.id}`)
+      if (!response.ok) {
+        throw new Error(`Failed to load task buffs: ${response.statusText}`)
+      }
       const data = await response.json()
       setTaskBuffs(data)
     } catch (error) {
       console.error('Failed to load task buffs:', error)
+      setTaskBuffs(null) // Set null on error
+    }
+  }
+
+  const loadDashboardStats = async () => {
+    if (!user?.id) return
+    try {
+      setLoadingStats(true)
+      const response = await fetch(`${API_URL}/dashboard/stats/${user.id}`)
+      if (!response.ok) {
+        throw new Error(`Failed to load dashboard stats: ${response.statusText}`)
+      }
+      const data = await response.json()
+      setDashboardStats(data || {
+        problemsSolved: 0,
+        dayStreak: 0,
+        towersUnlocked: 0,
+        globalRank: null,
+        rankScore: 0
+      })
+    } catch (error) {
+      console.error('Failed to load dashboard stats:', error)
+      // Keep default stats on error
+    } finally {
+      setLoadingStats(false)
+    }
+  }
+
+  const loadDailyChallenge = async () => {
+    try {
+      const response = await fetch(`${API_URL}/dashboard/daily-challenge`)
+      if (!response.ok) {
+        // 404 is acceptable for daily challenge (might not be available)
+        if (response.status === 404) {
+          setDailyChallenge(null)
+          return
+        }
+        throw new Error(`Failed to load daily challenge: ${response.statusText}`)
+      }
+      const data = await response.json()
+      setDailyChallenge(data)
+    } catch (error) {
+      console.error('Failed to load daily challenge:', error)
+      setDailyChallenge(null) // Set null on error
+    }
+  }
+
+  const loadXpHistory = async (days = xpPeriod) => {
+    if (!user?.id) return
+    try {
+      setLoadingXpHistory(true)
+      const response = await fetch(`${API_URL}/dashboard/xp-history/${user.id}?days=${days}`)
+      if (!response.ok) {
+        throw new Error(`Failed to load XP history: ${response.statusText}`)
+      }
+      const data = await response.json()
+      setXpHistory(data)
+    } catch (error) {
+      console.error('Failed to load XP history:', error)
+      // Set mock data as fallback
+      setXpHistory({
+        history: [
+          { date: 'Mon', dayName: 'Mon', xp: 0 },
+          { date: 'Tue', dayName: 'Tue', xp: 0 },
+          { date: 'Wed', dayName: 'Wed', xp: 0 },
+          { date: 'Thu', dayName: 'Thu', xp: 0 },
+          { date: 'Fri', dayName: 'Fri', xp: 0 },
+          { date: 'Sat', dayName: 'Sat', xp: 0 },
+          { date: 'Sun', dayName: 'Sun', xp: 0 }
+        ],
+        summary: { totalXP: 0, avgXP: 0, days: 7, activeDays: 0 }
+      })
+    } finally {
+      setLoadingXpHistory(false)
     }
   }
 
   const completedTasks = tasks.filter(t => t.status === 'DONE').length
+  const pendingTasks = tasks.filter(t => t.status !== 'DONE').length
   const totalTasks = tasks.length
+
+  // Don't render if user is not loaded yet
+  if (!user) {
+    return (
+      <div className="dashboard-page" style={{ 
+        display: 'flex', 
+        justifyContent: 'center', 
+        alignItems: 'center', 
+        minHeight: '50vh' 
+      }}>
+        <p>Loading...</p>
+      </div>
+    )
+  }
 
   return (
     <div className="dashboard-page">
@@ -89,18 +232,32 @@ export default function Dashboard() {
           <p>Ready to level up your coding skills?</p>
         </div>
         <div className="top-bar-actions">
-          <div className="stat-badge">
+          <div className="stat-badge" title="Experience Points">
             <Zap size={16} />
-            <span>{stats.xp || 0} XP</span>
+            <span>{stats?.xp || dashboardStats?.xp || 0} XP</span>
           </div>
-          <div className="stat-badge">
+          <div className="stat-badge" title="Coins">
             <Coins size={16} />
-            <span>{stats.coins || 0}</span>
+            <span>{stats?.coins || dashboardStats?.coins || 0}</span>
           </div>
-          <button className="notification-btn">
-            <Bell size={20} />
-            <span className="notification-dot"></span>
-          </button>
+          <div className="notification-wrapper">
+            <button 
+              className="notification-btn" 
+              onClick={() => setShowNotifications(!showNotifications)}
+              title="Notifications"
+            >
+              <Bell size={20} />
+              {unreadCount > 0 && (
+                <span className="notification-dot">
+                  {unreadCount > 9 ? '9+' : unreadCount}
+                </span>
+              )}
+            </button>
+            <NotificationPanel 
+              isOpen={showNotifications} 
+              onClose={() => setShowNotifications(false)} 
+            />
+          </div>
         </div>
       </header>
 
@@ -109,36 +266,42 @@ export default function Dashboard() {
         <div className="stat-card">
           <div className="stat-card-header">
             <LineChart size={20} className="stat-icon" />
-            <span className="stat-change positive">+12%</span>
+            <span className="stat-change positive">+{dashboardStats.problemsSolved || 0}</span>
           </div>
-          <div className="stat-value">{stats.problemsSolved || 0}</div>
+          <div className="stat-value">{dashboardStats.problemsSolved || stats?.problemsSolved || 0}</div>
           <div className="stat-label">Problems Solved</div>
         </div>
 
         <div className="stat-card">
           <div className="stat-card-header">
             <Flame size={20} className="stat-icon flame" />
-            <span className="stat-badge-small">Active</span>
+            <span className="stat-badge-small">{dashboardStats.dayStreak > 0 ? 'Active' : 'Start'}</span>
           </div>
-          <div className="stat-value">23</div>
+          <div className="stat-value">{dashboardStats.dayStreak || 0}</div>
           <div className="stat-label">Day Streak</div>
         </div>
 
         <div className="stat-card">
           <div className="stat-card-header">
             <Building2 size={20} className="stat-icon tower" />
-            <span className="stat-badge-small">+3 New</span>
+            <span className="stat-badge-small">
+              {dashboardStats.towersUnlocked > 0 ? `Level ${dashboardStats.level || 1}` : 'Level 1'}
+            </span>
           </div>
-          <div className="stat-value">18</div>
+          <div className="stat-value">{dashboardStats.towersUnlocked || 0}</div>
           <div className="stat-label">Towers Unlocked</div>
         </div>
 
         <div className="stat-card">
           <div className="stat-card-header">
             <Award size={20} className="stat-icon award" />
-            <span className="stat-badge-small">#247</span>
+            <span className="stat-badge-small">
+              {dashboardStats.globalRank ? `#${dashboardStats.globalRank}` : 'Unranked'}
+            </span>
           </div>
-          <div className="stat-value">1,847</div>
+          <div className="stat-value">
+            {dashboardStats.globalRank ? dashboardStats.globalRank.toLocaleString() : '—'}
+          </div>
           <div className="stat-label">Global Rank</div>
         </div>
       </div>
@@ -148,17 +311,81 @@ export default function Dashboard() {
         <div className="section-header">
           <div>
             <h2>XP Progress</h2>
-            <p>Track your weekly coding activity</p>
+            <p>Track your {xpPeriod === 7 ? 'weekly' : xpPeriod === 14 ? 'bi-weekly' : 'monthly'} coding activity</p>
           </div>
-          <div className="time-selector">
-            <span>Last 7 Days</span>
-            <ChevronDown size={16} />
+          <div className="period-selector-wrapper">
+            <button 
+              className="time-selector"
+              onClick={() => setShowPeriodDropdown(!showPeriodDropdown)}
+            >
+              <span>Last {xpPeriod} Days</span>
+              <ChevronDown size={16} className={showPeriodDropdown ? 'rotated' : ''} />
+            </button>
+            {showPeriodDropdown && (
+              <div className="period-dropdown">
+                {[7, 14, 30].map(days => (
+                  <button
+                    key={days}
+                    className={`period-option ${xpPeriod === days ? 'active' : ''}`}
+                    onClick={() => {
+                      setXpPeriod(days)
+                      setShowPeriodDropdown(false)
+                      loadXpHistory(days)
+                    }}
+                  >
+                    Last {days} Days
+                  </button>
+                ))}
+              </div>
+            )}
           </div>
         </div>
-        <div className="xp-chart-placeholder">
-          <LineChart size={48} opacity={0.3} />
-          <p>Chart will be displayed here</p>
-        </div>
+        
+        {loadingXpHistory ? (
+          <div className="xp-chart-placeholder">
+            <div className="loading-spinner-small"></div>
+            <p>Loading activity...</p>
+          </div>
+        ) : xpHistory && xpHistory.history ? (
+          <div className="xp-chart-container">
+            <div className={`xp-chart ${xpPeriod > 14 ? 'very-compact' : xpPeriod > 7 ? 'compact' : ''}`}>
+              {xpHistory.history.map((day, index) => {
+                const maxXP = Math.max(...xpHistory.history.map(d => d.xp), 50)
+                const height = day.xp > 0 ? Math.max((day.xp / maxXP) * 100, 10) : 5
+                const showLabel = xpPeriod <= 14 || index % 2 === 0
+                return (
+                  <div key={index} className="xp-bar-wrapper" title={`${day.dayName}: ${day.xp} XP`}>
+                    <div className="xp-bar-value">{day.xp > 0 ? `+${day.xp}` : ''}</div>
+                    <div 
+                      className={`xp-bar ${day.xp > 0 ? 'active' : ''}`}
+                      style={{ height: `${height}%` }}
+                    />
+                    <div className="xp-bar-label">{showLabel ? day.dayName : ''}</div>
+                  </div>
+                )
+              })}
+            </div>
+            <div className="xp-chart-summary">
+              <div className="xp-summary-item">
+                <span className="xp-summary-value">{xpHistory.summary.totalXP}</span>
+                <span className="xp-summary-label">Total XP</span>
+              </div>
+              <div className="xp-summary-item">
+                <span className="xp-summary-value">{xpHistory.summary.avgXP}</span>
+                <span className="xp-summary-label">Avg/Day</span>
+              </div>
+              <div className="xp-summary-item">
+                <span className="xp-summary-value">{xpHistory.summary.activeDays}</span>
+                <span className="xp-summary-label">Active Days</span>
+              </div>
+            </div>
+          </div>
+        ) : (
+          <div className="xp-chart-placeholder">
+            <Zap size={48} opacity={0.3} />
+            <p>Solve problems to earn XP!</p>
+          </div>
+        )}
       </div>
 
       {/* Tasks Section */}
@@ -178,15 +405,20 @@ export default function Dashboard() {
         <div className="tasks-grid">
           <div className="task-summary-card">
             <div className="task-summary-header">
-              <CheckCircle2 size={20} className="task-icon" />
-              <span className="task-count">{completedTasks}/{totalTasks}</span>
+              <ListTodo size={20} className="task-icon" />
+              <span className="task-count">{pendingTasks}</span>
             </div>
-            <div className="task-summary-label">Tasks Completed</div>
-            {taskBuffs && (
+            <div className="task-summary-label">Pending Tasks</div>
+            {taskBuffs && taskBuffs.taskPoints > 0 && (
               <div className="task-buffs-preview">
-                <div className="buff-item">+{taskBuffs.startingEnergyBonus} Energy</div>
-                <div className="buff-item">+{taskBuffs.baseHpBonusPercent}% HP</div>
-                <div className="buff-item">+{taskBuffs.bonusTowerSlots} Slots</div>
+                <div className="buff-item">+{taskBuffs.startingEnergyBonus || 0} Energy</div>
+                <div className="buff-item">+{taskBuffs.baseHpBonusPercent || 0}% HP</div>
+                <div className="buff-item">+{taskBuffs.bonusTowerSlots || 0} Slots</div>
+              </div>
+            )}
+            {(!taskBuffs || taskBuffs.taskPoints === 0) && (
+              <div className="task-buffs-hint">
+                Complete tasks to earn buffs!
               </div>
             )}
           </div>
@@ -225,27 +457,49 @@ export default function Dashboard() {
               <Star size={20} />
               <h2>Daily Challenge</h2>
             </div>
-            <p>Expires in 8h 23m</p>
+            <p>
+              {dailyChallenge ? dailyChallenge.expiresIn : 'Loading...'}
+            </p>
           </div>
         </div>
-        <div className="challenge-card">
-          <h3>Binary Tree Traversal</h3>
-          <p>Implement an in-order traversal algorithm for a binary tree structure.</p>
-          <div className="challenge-tags">
-            <span className="tag medium">Medium</span>
-            <span className="tag topic">Trees</span>
-          </div>
-          <div className="challenge-rewards">
-            <div className="reward-item">
-              <Zap size={16} />
-              <span>+500 XP</span>
+        {dailyChallenge ? (
+          <div 
+            className="challenge-card" 
+            onClick={() => navigate(`/problems/${dailyChallenge.problem.id}`)}
+            style={{ cursor: 'pointer' }}
+          >
+            <h3>{dailyChallenge.problem.title}</h3>
+            <p
+              dangerouslySetInnerHTML={{
+                __html: dailyChallenge.problem.description && dailyChallenge.problem.description.length > 150
+                  ? formatMarkdown(dailyChallenge.problem.description.substring(0, 150) + '...')
+                  : formatMarkdown(dailyChallenge.problem.description || 'Solve this daily challenge to earn bonus rewards!')
+              }}
+            />
+            <div className="challenge-tags">
+              <span className={`tag ${dailyChallenge.problem.difficulty}`}>
+                {dailyChallenge.problem.difficulty ? dailyChallenge.problem.difficulty.charAt(0).toUpperCase() + dailyChallenge.problem.difficulty.slice(1) : 'Medium'}
+              </span>
+              {dailyChallenge.problem.firstTag && (
+                <span className="tag topic">{dailyChallenge.problem.firstTag}</span>
+              )}
             </div>
-            <div className="reward-item">
-              <Coins size={16} />
-              <span>+200</span>
+            <div className="challenge-rewards">
+              <div className="reward-item">
+                <Zap size={16} />
+                <span>+{dailyChallenge.rewards?.xp || 0} XP</span>
+              </div>
+              <div className="reward-item">
+                <Coins size={16} />
+                <span>+{dailyChallenge.rewards?.coins || 0}</span>
+              </div>
             </div>
           </div>
-        </div>
+        ) : (
+          <div className="challenge-card">
+            <p>Loading daily challenge...</p>
+          </div>
+        )}
       </div>
 
       {/* Actions Grid */}
@@ -254,9 +508,13 @@ export default function Dashboard() {
           <div className="action-title">Practice</div>
           <div className="action-subtitle">Solve coding challenges</div>
         </div>
+        <div className="action-minimal" onClick={() => navigate('/play')}>
+          <div className="action-title">Play Game</div>
+          <div className="action-subtitle">Single player or multiplayer</div>
+        </div>
         <div className="action-minimal" onClick={() => setShowMatchmaking(true)}>
-          <div className="action-title">1v1 Battle</div>
-          <div className="action-subtitle">Compete in real-time matches</div>
+          <div className="action-title">Quick Match</div>
+          <div className="action-subtitle">Jump into 1v1 battle</div>
         </div>
       </div>
 

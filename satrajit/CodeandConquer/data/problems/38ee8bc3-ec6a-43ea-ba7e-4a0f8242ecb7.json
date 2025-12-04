@@ -1,0 +1,114 @@
+{
+  "id": "38ee8bc3-ec6a-43ea-ba7e-4a0f8242ecb7",
+  "title": "Maximum White Tiles Covered by a Carpet",
+  "slug": "maximum-white-tiles-covered-by-a-carpet",
+  "description": "You are given a 2D integer array `tiles` where `tiles[i] = [li, ri]` represents that every tile `j` in the range `li <= j <= ri` is colored white.\n\nYou are also given an integer `carpetLen`, the length of a single carpet that can be placed **anywhere**.\n\nReturn _the **maximum** number of white tiles that can be covered by the carpet_.\n\n**Example 1:**\n\n**Input:** tiles = \\[\\[1,5\\],\\[10,11\\],\\[12,18\\],\\[20,25\\],\\[30,32\\]\\], carpetLen = 10\n**Output:** 9\n**Explanation:** Place the carpet starting on tile 10. \nIt covers 9 white tiles, so we return 9.\nNote that there may be other places where the carpet covers 9 white tiles.\nIt can be shown that the carpet cannot cover more than 9 white tiles.\n\n**Example 2:**\n\n**Input:** tiles = \\[\\[10,11\\],\\[1,1\\]\\], carpetLen = 2\n**Output:** 2\n**Explanation:** Place the carpet starting on tile 10. \nIt covers 2 white tiles, so we return 2.\n\n**Constraints:**\n\n*   `1 <= tiles.length <= 5 * 104`\n*   `tiles[i].length == 2`\n*   `1 <= li <= ri <= 109`\n*   `1 <= carpetLen <= 109`\n*   The `tiles` are **non-overlapping**.",
+  "difficulty": "Medium",
+  "category": null,
+  "xpReward": 0,
+  "timeLimitMs": 5000,
+  "memoryLimitMb": 256,
+  "starterCode": {},
+  "solutionCode": "",
+  "hints": [],
+  "isPremium": false,
+  "createdBy": null,
+  "testCases": [
+    {
+      "input": [
+        [
+          [
+            1,
+            5
+          ],
+          [
+            10,
+            11
+          ],
+          [
+            12,
+            18
+          ],
+          [
+            20,
+            25
+          ],
+          [
+            30,
+            32
+          ]
+        ],
+        10
+      ],
+      "expectedOutput": 9
+    },
+    {
+      "input": [
+        [
+          [
+            10,
+            11
+          ],
+          [
+            1,
+            1
+          ]
+        ],
+        2
+      ],
+      "expectedOutput": 2
+    }
+  ],
+  "hiddenTestCases": [
+    {
+      "input": [
+        [
+          [
+            1,
+            5
+          ],
+          [
+            10,
+            11
+          ],
+          [
+            12,
+            18
+          ],
+          [
+            20,
+            25
+          ],
+          [
+            30,
+            32
+          ]
+        ],
+        10
+      ],
+      "expectedOutput": 9
+    },
+    {
+      "input": [
+        [
+          [
+            10,
+            11
+          ],
+          [
+            1,
+            1
+          ]
+        ],
+        2
+      ],
+      "expectedOutput": 2
+    }
+  ],
+  "tags": [],
+  "constraints": [],
+  "examples": [],
+  "problemNumber": null,
+  "createdAt": "2025-11-14T21:25:04.607007+00:00",
+  "updatedAt": "2025-12-04T04:35:56.551Z"
+}

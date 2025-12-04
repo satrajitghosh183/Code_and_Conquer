@@ -1,0 +1,70 @@
+{
+  "id": "862b162c-c066-4907-a087-40376d038734",
+  "title": "Maximum Product After K Increments",
+  "slug": "maximum-product-after-k-increments",
+  "description": "You are given an array of non-negative integers `nums` and an integer `k`. In one operation, you may choose **any** element from `nums` and **increment** it by `1`.\n\nReturn _the **maximum** **product** of_ `nums` _after **at most**_ `k` _operations._ Since the answer may be very large, return it **modulo** `109 + 7`. Note that you should maximize the product before taking the modulo.\n\n**Example 1:**\n\n**Input:** nums = \\[0,4\\], k = 5\n**Output:** 20\n**Explanation:** Increment the first number 5 times.\nNow nums = \\[5, 4\\], with a product of 5 \\* 4 = 20.\nIt can be shown that 20 is maximum product possible, so we return 20.\nNote that there may be other ways to increment nums to have the maximum product.\n\n**Example 2:**\n\n**Input:** nums = \\[6,3,3,2\\], k = 2\n**Output:** 216\n**Explanation:** Increment the second number 1 time and increment the fourth number 1 time.\nNow nums = \\[6, 4, 3, 3\\], with a product of 6 \\* 4 \\* 3 \\* 3 = 216.\nIt can be shown that 216 is maximum product possible, so we return 216.\nNote that there may be other ways to increment nums to have the maximum product.\n\n**Constraints:**\n\n*   `1 <= nums.length, k <= 105`\n*   `0 <= nums[i] <= 106`",
+  "difficulty": "Medium",
+  "category": null,
+  "xpReward": 0,
+  "timeLimitMs": 5000,
+  "memoryLimitMb": 256,
+  "starterCode": {},
+  "solutionCode": "",
+  "hints": [],
+  "isPremium": false,
+  "createdBy": null,
+  "testCases": [
+    {
+      "input": [
+        [
+          0,
+          4
+        ],
+        5
+      ],
+      "expectedOutput": 20
+    },
+    {
+      "input": [
+        [
+          6,
+          3,
+          3,
+          2
+        ],
+        2
+      ],
+      "expectedOutput": 216
+    }
+  ],
+  "hiddenTestCases": [
+    {
+      "input": [
+        [
+          0,
+          4
+        ],
+        5
+      ],
+      "expectedOutput": 20
+    },
+    {
+      "input": [
+        [
+          6,
+          3,
+          3,
+          2
+        ],
+        2
+      ],
+      "expectedOutput": 216
+    }
+  ],
+  "tags": [],
+  "constraints": [],
+  "examples": [],
+  "problemNumber": null,
+  "createdAt": "2025-11-14T21:24:53.989222+00:00",
+  "updatedAt": "2025-12-04T04:36:01.735Z"
+}

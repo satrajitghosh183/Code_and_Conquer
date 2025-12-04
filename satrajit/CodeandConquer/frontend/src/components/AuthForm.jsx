@@ -1,6 +1,6 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { useAuth } from '../contexts/AuthContext'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useLocation } from 'react-router-dom'
 import './AuthForm.css'
 
 export default function AuthForm() {
@@ -12,8 +12,29 @@ export default function AuthForm() {
   const [loading, setLoading] = useState(false)
   const [message, setMessage] = useState('')
   
-  const { signUp, signIn, signInWithGoogle, signInWithGithub, signInWithDiscord } = useAuth()
+  const { signUp, signIn, signInWithGoogle, signInWithGithub, signInWithDiscord, user } = useAuth()
   const navigate = useNavigate()
+  const location = useLocation()
+  
+  // Check for OAuth errors in URL params
+  useEffect(() => {
+    const params = new URLSearchParams(location.search)
+    const errorParam = params.get('error')
+    const errorDescription = params.get('error_description')
+    
+    if (errorParam || errorDescription) {
+      setError(errorDescription || errorParam || 'Authentication failed')
+      // Clear the error from URL
+      window.history.replaceState(null, '', '/login')
+    }
+  }, [location])
+  
+  // Redirect if already logged in
+  useEffect(() => {
+    if (user) {
+      navigate('/dashboard', { replace: true })
+    }
+  }, [user, navigate])
 
   const handleSubmit = async (e) => {
     e.preventDefault()

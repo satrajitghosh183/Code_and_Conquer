@@ -1,0 +1,83 @@
+{
+  "id": "3ef44a6a-1853-407b-b80b-8ce29daf5518",
+  "title": "Maximum Matching of Players With Trainers",
+  "slug": "maximum-matching-of-players-with-trainers",
+  "description": "You are given a **0-indexed** integer array `players`, where `players[i]` represents the **ability** of the `ith` player. You are also given a **0-indexed** integer array `trainers`, where `trainers[j]` represents the **training capacity** of the `jth` trainer.\n\nThe `ith` player can **match** with the `jth` trainer if the player's ability is **less than or equal to** the trainer's training capacity. Additionally, the `ith` player can be matched with at most one trainer, and the `jth` trainer can be matched with at most one player.\n\nReturn _the **maximum** number of matchings between_ `players` _and_ `trainers` _that satisfy these conditions._\n\n**Example 1:**\n\n**Input:** players = \\[4,7,9\\], trainers = \\[8,2,5,8\\]\n**Output:** 2\n**Explanation:**\nOne of the ways we can form two matchings is as follows:\n- players\\[0\\] can be matched with trainers\\[0\\] since 4 <= 8.\n- players\\[1\\] can be matched with trainers\\[3\\] since 7 <= 8.\nIt can be proven that 2 is the maximum number of matchings that can be formed.\n\n**Example 2:**\n\n**Input:** players = \\[1,1,1\\], trainers = \\[10\\]\n**Output:** 1\n**Explanation:**\nThe trainer can be matched with any of the 3 players.\nEach player can only be matched with one trainer, so the maximum answer is 1.\n\n**Constraints:**\n\n*   `1 <= players.length, trainers.length <= 105`\n*   `1 <= players[i], trainers[j] <= 109`",
+  "difficulty": "Medium",
+  "category": null,
+  "xpReward": 0,
+  "timeLimitMs": 5000,
+  "memoryLimitMb": 256,
+  "starterCode": [],
+  "solutionCode": "",
+  "hints": [],
+  "isPremium": false,
+  "createdBy": null,
+  "testCases": [
+    {
+      "input": [
+        [
+          4,
+          7,
+          9
+        ],
+        [
+          8,
+          2,
+          5,
+          8
+        ]
+      ],
+      "expectedOutput": 2
+    },
+    {
+      "input": [
+        [
+          1,
+          1,
+          1
+        ],
+        [
+          10
+        ]
+      ],
+      "expectedOutput": 1
+    }
+  ],
+  "hiddenTestCases": [
+    {
+      "input": [
+        [
+          4,
+          7,
+          9
+        ],
+        [
+          8,
+          2,
+          5,
+          8
+        ]
+      ],
+      "expectedOutput": 2
+    },
+    {
+      "input": [
+        [
+          1,
+          1,
+          1
+        ],
+        [
+          10
+        ]
+      ],
+      "expectedOutput": 1
+    }
+  ],
+  "tags": [],
+  "constraints": [],
+  "examples": [],
+  "createdAt": "2025-11-14T21:25:39.531296+00:00",
+  "updatedAt": "2025-12-04T04:35:40.495Z"
+}

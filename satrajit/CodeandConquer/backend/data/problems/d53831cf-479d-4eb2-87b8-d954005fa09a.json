@@ -1,0 +1,55 @@
+{
+  "id": "d53831cf-479d-4eb2-87b8-d954005fa09a",
+  "title": "Count Palindromic Subsequences",
+  "slug": "count-palindromic-subsequences",
+  "description": "Given a string of digits `s`, return _the number of **palindromic subsequences** of_ `s` _having length_ `5`. Since the answer may be very large, return it **modulo** `109 + 7`.\n\n**Note:**\n\n*   A string is **palindromic** if it reads the same forward and backward.\n*   A **subsequence** is a string that can be derived from another string by deleting some or no characters without changing the order of the remaining characters.\n\n**Example 1:**\n\n**Input:** s =  \"103301 \"\n**Output:** 2\n**Explanation:** \nThere are 6 possible subsequences of length 5:  \"10330 \", \"10331 \", \"10301 \", \"10301 \", \"13301 \", \"03301 \". \nTwo of them (both equal to  \"10301 \") are palindromic.\n\n**Example 2:**\n\n**Input:** s =  \"0000000 \"\n**Output:** 21\n**Explanation:** All 21 subsequences are  \"00000 \", which is palindromic.\n\n**Example 3:**\n\n**Input:** s =  \"9999900000 \"\n**Output:** 2\n**Explanation:** The only two palindromic subsequences are  \"99999 \" and  \"00000 \".\n\n**Constraints:**\n\n*   `1 <= s.length <= 104`\n*   `s` consists of digits.",
+  "difficulty": "Hard",
+  "category": null,
+  "xpReward": 0,
+  "timeLimitMs": 5000,
+  "memoryLimitMb": 256,
+  "starterCode": [],
+  "solutionCode": "",
+  "hints": [],
+  "isPremium": false,
+  "createdBy": null,
+  "testCases": [
+    {
+      "input": [
+        "103301 "
+      ],
+      "expectedOutput": 2
+    },
+    {
+      "input": [
+        "0000000 "
+      ],
+      "expectedOutput": 21
+    },
+    {
+      "input": [
+        "9999900000 "
+      ],
+      "expectedOutput": 2
+    }
+  ],
+  "hiddenTestCases": [
+    {
+      "input": [
+        "103301 "
+      ],
+      "expectedOutput": 2
+    },
+    {
+      "input": [
+        "0000000 "
+      ],
+      "expectedOutput": 21
+    }
+  ],
+  "tags": [],
+  "constraints": [],
+  "examples": [],
+  "createdAt": "2025-11-14T21:26:00.091368+00:00",
+  "updatedAt": "2025-12-04T04:35:29.806Z"
+}

@@ -1,0 +1,70 @@
+{
+  "id": "f817386d-9d5f-441e-955d-c033c5a813a8",
+  "title": "Smallest K-Length Subsequence With Occurrences of a Letter",
+  "slug": "smallest-k-length-subsequence-with-occurrences-of-a-letter",
+  "description": "You are given a string `s`, an integer `k`, a letter `letter`, and an integer `repetition`.\n\nReturn _the **lexicographically smallest** subsequence of_ `s` _of length_ `k` _that has the letter_ `letter` _appear **at least**_ `repetition` _times_. The test cases are generated so that the `letter` appears in `s` **at least** `repetition` times.\n\nA **subsequence** is a string that can be derived from another string by deleting some or no characters without changing the order of the remaining characters.\n\nA string `a` is **lexicographically smaller** than a string `b` if in the first position where `a` and `b` differ, string `a` has a letter that appears earlier in the alphabet than the corresponding letter in `b`.\n\n**Example 1:**\n\n**Input:** s =  \"leet \", k = 3, letter =  \"e \", repetition = 1\n**Output:**  \"eet \"\n**Explanation:** There are four subsequences of length 3 that have the letter 'e' appear at least 1 time:\n-  \"lee \" (from  \"**lee**t \")\n-  \"let \" (from  \"**le**e**t** \")\n-  \"let \" (from  \"**l**e**et** \")\n-  \"eet \" (from  \"l**eet** \")\nThe lexicographically smallest subsequence among them is  \"eet \".\n\n**Example 2:**\n\n**Input:** s =  \"leetcode \", k = 4, letter =  \"e \", repetition = 2\n**Output:**  \"ecde \"\n**Explanation:**  \"ecde \" is the lexicographically smallest subsequence of length 4 that has the letter  \"e \" appear at least 2 times.\n\n**Example 3:**\n\n**Input:** s =  \"bb \", k = 2, letter =  \"b \", repetition = 2\n**Output:**  \"bb \"\n**Explanation:**  \"bb \" is the only subsequence of length 2 that has the letter  \"b \" appear at least 2 times.\n\n**Constraints:**\n\n*   `1 <= repetition <= k <= s.length <= 5 * 104`\n*   `s` consists of lowercase English letters.\n*   `letter` is a lowercase English letter, and appears in `s` at least `repetition` times.",
+  "difficulty": "Hard",
+  "category": null,
+  "xpReward": 0,
+  "timeLimitMs": 5000,
+  "memoryLimitMb": 256,
+  "starterCode": [],
+  "solutionCode": "",
+  "hints": [],
+  "isPremium": false,
+  "createdBy": null,
+  "testCases": [
+    {
+      "input": [
+        "leet ",
+        3,
+        "e ",
+        1
+      ],
+      "expectedOutput": "eet "
+    },
+    {
+      "input": [
+        "leetcode ",
+        4,
+        "e ",
+        2
+      ],
+      "expectedOutput": "ecde "
+    },
+    {
+      "input": [
+        "bb ",
+        2,
+        "b ",
+        2
+      ],
+      "expectedOutput": "bb "
+    }
+  ],
+  "hiddenTestCases": [
+    {
+      "input": [
+        "leet ",
+        3,
+        "e ",
+        1
+      ],
+      "expectedOutput": "eet "
+    },
+    {
+      "input": [
+        "leetcode ",
+        4,
+        "e ",
+        2
+      ],
+      "expectedOutput": "ecde "
+    }
+  ],
+  "tags": [],
+  "constraints": [],
+  "examples": [],
+  "createdAt": "2025-11-14T21:24:04.510735+00:00",
+  "updatedAt": "2025-12-04T04:36:22.431Z"
+}

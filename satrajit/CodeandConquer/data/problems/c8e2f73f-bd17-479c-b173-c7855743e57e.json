@@ -1,0 +1,54 @@
+{
+  "id": "c8e2f73f-bd17-479c-b173-c7855743e57e",
+  "title": "Minimum Number of Steps to Make Two Strings Anagram II",
+  "slug": "minimum-number-of-steps-to-make-two-strings-anagram-ii",
+  "description": "You are given two strings `s` and `t`. In one step, you can append **any character** to either `s` or `t`.\n\nReturn _the minimum number of steps to make_ `s` _and_ `t` _**anagrams** of each other._\n\nAn **anagram** of a string is a string that contains the same characters with a different (or the same) ordering.\n\n**Example 1:**\n\n**Input:** s =  \"**lee**tco**de** \", t =  \"co**a**t**s** \"\n**Output:** 7\n**Explanation:** \n- In 2 steps, we can append the letters in  \"as \" onto s =  \"leetcode \", forming s =  \"leetcode**as** \".\n- In 5 steps, we can append the letters in  \"leede \" onto t =  \"coats \", forming t =  \"coats**leede** \".\n \"leetcodeas \" and  \"coatsleede \" are now anagrams of each other.\nWe used a total of 2 + 5 = 7 steps.\nIt can be shown that there is no way to make them anagrams of each other with less than 7 steps.\n\n**Example 2:**\n\n**Input:** s =  \"night \", t =  \"thing \"\n**Output:** 0\n**Explanation:** The given strings are already anagrams of each other. Thus, we do not need any further steps.\n\n**Constraints:**\n\n*   `1 <= s.length, t.length <= 2 * 105`\n*   `s` and `t` consist of lowercase English letters.",
+  "difficulty": "Medium",
+  "category": null,
+  "xpReward": 0,
+  "timeLimitMs": 5000,
+  "memoryLimitMb": 256,
+  "starterCode": {},
+  "solutionCode": "",
+  "hints": [],
+  "isPremium": false,
+  "createdBy": null,
+  "testCases": [
+    {
+      "input": [
+        "**lee**tco**de** ",
+        "co**a**t**s** "
+      ],
+      "expectedOutput": 7
+    },
+    {
+      "input": [
+        "night ",
+        "thing "
+      ],
+      "expectedOutput": 0
+    }
+  ],
+  "hiddenTestCases": [
+    {
+      "input": [
+        "**lee**tco**de** ",
+        "co**a**t**s** "
+      ],
+      "expectedOutput": 7
+    },
+    {
+      "input": [
+        "night ",
+        "thing "
+      ],
+      "expectedOutput": 0
+    }
+  ],
+  "tags": [],
+  "constraints": [],
+  "examples": [],
+  "problemNumber": null,
+  "createdAt": "2025-11-14T21:24:43.316046+00:00",
+  "updatedAt": "2025-12-04T04:36:06.324Z"
+}

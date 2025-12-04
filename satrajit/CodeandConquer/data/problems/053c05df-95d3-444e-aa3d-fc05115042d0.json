@@ -1,0 +1,82 @@
+{
+  "id": "053c05df-95d3-444e-aa3d-fc05115042d0",
+  "title": "Check if Array Is Sorted and Rotated",
+  "slug": "check-if-array-is-sorted-and-rotated",
+  "description": "Given an array `nums`, return `true` _if the array was originally sorted in non-decreasing order, then rotated **some** number of positions (including zero)_. Otherwise, return `false`.\n\nThere may be **duplicates** in the original array.\n\n**Note:** An array `A` rotated by `x` positions results in an array `B` of the same length such that `A[i] == B[(i+x) % A.length]`, where `%` is the modulo operation.\n\n**Example 1:**\n\n**Input:** nums = \\[3,4,5,1,2\\]\n**Output:** true\n**Explanation:** \\[1,2,3,4,5\\] is the original sorted array.\nYou can rotate the array by x = 3 positions to begin on the the element of value 3: \\[3,4,5,1,2\\].\n\n**Example 2:**\n\n**Input:** nums = \\[2,1,3,4\\]\n**Output:** false\n**Explanation:** There is no sorted array once rotated that can make nums.\n\n**Example 3:**\n\n**Input:** nums = \\[1,2,3\\]\n**Output:** true\n**Explanation:** \\[1,2,3\\] is the original sorted array.\nYou can rotate the array by x = 0 positions (i.e. no rotation) to make nums.\n\n**Constraints:**\n\n*   `1 <= nums.length <= 100`\n*   `1 <= nums[i] <= 100`",
+  "difficulty": "Easy",
+  "category": null,
+  "xpReward": 0,
+  "timeLimitMs": 5000,
+  "memoryLimitMb": 256,
+  "starterCode": {},
+  "solutionCode": "",
+  "hints": [],
+  "isPremium": false,
+  "createdBy": null,
+  "testCases": [
+    {
+      "input": [
+        [
+          3,
+          4,
+          5,
+          1,
+          2
+        ]
+      ],
+      "expectedOutput": true
+    },
+    {
+      "input": [
+        [
+          2,
+          1,
+          3,
+          4
+        ]
+      ],
+      "expectedOutput": false
+    },
+    {
+      "input": [
+        [
+          1,
+          2,
+          3
+        ]
+      ],
+      "expectedOutput": true
+    }
+  ],
+  "hiddenTestCases": [
+    {
+      "input": [
+        [
+          3,
+          4,
+          5,
+          1,
+          2
+        ]
+      ],
+      "expectedOutput": true
+    },
+    {
+      "input": [
+        [
+          2,
+          1,
+          3,
+          4
+        ]
+      ],
+      "expectedOutput": false
+    }
+  ],
+  "tags": [],
+  "constraints": [],
+  "examples": [],
+  "problemNumber": null,
+  "createdAt": "2025-11-14T21:22:58.070451+00:00",
+  "updatedAt": "2025-12-04T04:36:54.057Z"
+}

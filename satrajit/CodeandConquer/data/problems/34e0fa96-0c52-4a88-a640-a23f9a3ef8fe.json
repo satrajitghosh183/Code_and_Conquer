@@ -1,0 +1,132 @@
+{
+  "id": "34e0fa96-0c52-4a88-a640-a23f9a3ef8fe",
+  "title": "Check if Matrix Is X-Matrix",
+  "slug": "check-if-matrix-is-x-matrix",
+  "description": "A square matrix is said to be an **X-Matrix** if **both** of the following conditions hold:\n\n1.  All the elements in the diagonals of the matrix are **non-zero**.\n2.  All other elements are 0.\n\nGiven a 2D integer array `grid` of size `n x n` representing a square matrix, return `true` _if_ `grid` _is an X-Matrix_. Otherwise, return `false`.\n\n**Example 1:**\n\n**Input:** grid = \\[\\[2,0,0,1\\],\\[0,3,1,0\\],\\[0,5,2,0\\],\\[4,0,0,2\\]\\]\n**Output:** true\n**Explanation:** Refer to the diagram above. \nAn X-Matrix should have the green elements (diagonals) be non-zero and the red elements be 0.\nThus, grid is an X-Matrix.\n\n**Example 2:**\n\n**Input:** grid = \\[\\[5,7,0\\],\\[0,3,1\\],\\[0,5,0\\]\\]\n**Output:** false\n**Explanation:** Refer to the diagram above.\nAn X-Matrix should have the green elements (diagonals) be non-zero and the red elements be 0.\nThus, grid is not an X-Matrix.\n\n**Constraints:**\n\n*   `n == grid.length == grid[i].length`\n*   `3 <= n <= 100`\n*   `0 <= grid[i][j] <= 105`",
+  "difficulty": "Easy",
+  "category": null,
+  "xpReward": 0,
+  "timeLimitMs": 5000,
+  "memoryLimitMb": 256,
+  "starterCode": {},
+  "solutionCode": "",
+  "hints": [],
+  "isPremium": false,
+  "createdBy": null,
+  "testCases": [
+    {
+      "input": [
+        [
+          [
+            2,
+            0,
+            0,
+            1
+          ],
+          [
+            0,
+            3,
+            1,
+            0
+          ],
+          [
+            0,
+            5,
+            2,
+            0
+          ],
+          [
+            4,
+            0,
+            0,
+            2
+          ]
+        ]
+      ],
+      "expectedOutput": true
+    },
+    {
+      "input": [
+        [
+          [
+            5,
+            7,
+            0
+          ],
+          [
+            0,
+            3,
+            1
+          ],
+          [
+            0,
+            5,
+            0
+          ]
+        ]
+      ],
+      "expectedOutput": false
+    }
+  ],
+  "hiddenTestCases": [
+    {
+      "input": [
+        [
+          [
+            2,
+            0,
+            0,
+            1
+          ],
+          [
+            0,
+            3,
+            1,
+            0
+          ],
+          [
+            0,
+            5,
+            2,
+            0
+          ],
+          [
+            4,
+            0,
+            0,
+            2
+          ]
+        ]
+      ],
+      "expectedOutput": true
+    },
+    {
+      "input": [
+        [
+          [
+            5,
+            7,
+            0
+          ],
+          [
+            0,
+            3,
+            1
+          ],
+          [
+            0,
+            5,
+            0
+          ]
+        ]
+      ],
+      "expectedOutput": false
+    }
+  ],
+  "tags": [],
+  "constraints": [],
+  "examples": [],
+  "problemNumber": null,
+  "createdAt": "2025-11-14T21:25:16.986514+00:00",
+  "updatedAt": "2025-12-04T04:35:50.827Z"
+}

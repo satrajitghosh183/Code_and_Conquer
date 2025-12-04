@@ -1,0 +1,105 @@
+{
+  "id": "b6b50850-0434-4102-a249-405231d7e76d",
+  "title": "Kth Smallest Product of Two Sorted Arrays",
+  "slug": "kth-smallest-product-of-two-sorted-arrays",
+  "description": "Given two **sorted 0-indexed** integer arrays `nums1` and `nums2` as well as an integer `k`, return _the_ `kth` _(**1-based**) smallest product of_ `nums1[i] * nums2[j]` _where_ `0 <= i < nums1.length` _and_ `0 <= j < nums2.length`.\n\n**Example 1:**\n\n**Input:** nums1 = \\[2,5\\], nums2 = \\[3,4\\], k = 2\n**Output:** 8\n**Explanation:** The 2 smallest products are:\n- nums1\\[0\\] \\* nums2\\[0\\] = 2 \\* 3 = 6\n- nums1\\[0\\] \\* nums2\\[1\\] = 2 \\* 4 = 8\nThe 2nd smallest product is 8.\n\n**Example 2:**\n\n**Input:** nums1 = \\[-4,-2,0,3\\], nums2 = \\[2,4\\], k = 6\n**Output:** 0\n**Explanation:** The 6 smallest products are:\n- nums1\\[0\\] \\* nums2\\[1\\] = (-4) \\* 4 = -16\n- nums1\\[0\\] \\* nums2\\[0\\] = (-4) \\* 2 = -8\n- nums1\\[1\\] \\* nums2\\[1\\] = (-2) \\* 4 = -8\n- nums1\\[1\\] \\* nums2\\[0\\] = (-2) \\* 2 = -4\n- nums1\\[2\\] \\* nums2\\[0\\] = 0 \\* 2 = 0\n- nums1\\[2\\] \\* nums2\\[1\\] = 0 \\* 4 = 0\nThe 6th smallest product is 0.\n\n**Example 3:**\n\n**Input:** nums1 = \\[-2,-1,0,1,2\\], nums2 = \\[-3,-1,2,4,5\\], k = 3\n**Output:** -6\n**Explanation:** The 3 smallest products are:\n- nums1\\[0\\] \\* nums2\\[4\\] = (-2) \\* 5 = -10\n- nums1\\[0\\] \\* nums2\\[3\\] = (-2) \\* 4 = -8\n- nums1\\[4\\] \\* nums2\\[0\\] = 2 \\* (-3) = -6\nThe 3rd smallest product is -6.\n\n**Constraints:**\n\n*   `1 <= nums1.length, nums2.length <= 5 * 104`\n*   `-105 <= nums1[i], nums2[j] <= 105`\n*   `1 <= k <= nums1.length * nums2.length`\n*   `nums1` and `nums2` are sorted.",
+  "difficulty": "Hard",
+  "category": null,
+  "xpReward": 0,
+  "timeLimitMs": 5000,
+  "memoryLimitMb": 256,
+  "starterCode": [],
+  "solutionCode": "",
+  "hints": [],
+  "isPremium": false,
+  "createdBy": null,
+  "testCases": [
+    {
+      "input": [
+        [
+          2,
+          5
+        ],
+        [
+          3,
+          4
+        ],
+        2
+      ],
+      "expectedOutput": 8
+    },
+    {
+      "input": [
+        [
+          -4,
+          -2,
+          0,
+          3
+        ],
+        [
+          2,
+          4
+        ],
+        6
+      ],
+      "expectedOutput": 0
+    },
+    {
+      "input": [
+        [
+          -2,
+          -1,
+          0,
+          1,
+          2
+        ],
+        [
+          -3,
+          -1,
+          2,
+          4,
+          5
+        ],
+        3
+      ],
+      "expectedOutput": -6
+    }
+  ],
+  "hiddenTestCases": [
+    {
+      "input": [
+        [
+          2,
+          5
+        ],
+        [
+          3,
+          4
+        ],
+        2
+      ],
+      "expectedOutput": 8
+    },
+    {
+      "input": [
+        [
+          -4,
+          -2,
+          0,
+          3
+        ],
+        [
+          2,
+          4
+        ],
+        6
+      ],
+      "expectedOutput": 0
+    }
+  ],
+  "tags": [],
+  "constraints": [],
+  "examples": [],
+  "createdAt": "2025-11-14T21:24:07.038194+00:00",
+  "updatedAt": "2025-12-04T04:36:21.389Z"
+}

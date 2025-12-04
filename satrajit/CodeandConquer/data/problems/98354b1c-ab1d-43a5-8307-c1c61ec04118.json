@@ -1,0 +1,66 @@
+{
+  "id": "98354b1c-ab1d-43a5-8307-c1c61ec04118",
+  "title": "Maximum Number of Words Found in Sentences",
+  "slug": "maximum-number-of-words-found-in-sentences",
+  "description": "A **sentence** is a list of **words** that are separated by a single space with no leading or trailing spaces.\n\nYou are given an array of strings `sentences`, where each `sentences[i]` represents a single **sentence**.\n\nReturn _the **maximum number of words** that appear in a single sentence_.\n\n**Example 1:**\n\n**Input:** sentences = \\[ \"alice and bob love leetcode \",  \"i think so too \",  \"this is great thanks very much \"\\]\n**Output:** 6\n**Explanation:** \n- The first sentence,  \"alice and bob love leetcode \", has 5 words in total.\n- The second sentence,  \"i think so too \", has 4 words in total.\n- The third sentence,  \"this is great thanks very much \", has 6 words in total.\nThus, the maximum number of words in a single sentence comes from the third sentence, which has 6 words.\n\n**Example 2:**\n\n**Input:** sentences = \\[ \"please wait \",  \"continue to fight \",  \"continue to win \"\\]\n**Output:** 3\n**Explanation:** It is possible that multiple sentences contain the same number of words. \nIn this example, the second and third sentences (underlined) have the same number of words.\n\n**Constraints:**\n\n*   `1 <= sentences.length <= 100`\n*   `1 <= sentences[i].length <= 100`\n*   `sentences[i]` consists only of lowercase English letters and `' '` only.\n*   `sentences[i]` does not have leading or trailing spaces.\n*   All the words in `sentences[i]` are separated by a single space.",
+  "difficulty": "Easy",
+  "category": null,
+  "xpReward": 0,
+  "timeLimitMs": 5000,
+  "memoryLimitMb": 256,
+  "starterCode": {},
+  "solutionCode": "",
+  "hints": [],
+  "isPremium": false,
+  "createdBy": null,
+  "testCases": [
+    {
+      "input": [
+        [
+          "alice and bob love leetcode ",
+          "i think so too ",
+          "this is great thanks very much "
+        ]
+      ],
+      "expectedOutput": 6
+    },
+    {
+      "input": [
+        [
+          "please wait ",
+          "continue to fight ",
+          "continue to win "
+        ]
+      ],
+      "expectedOutput": 3
+    }
+  ],
+  "hiddenTestCases": [
+    {
+      "input": [
+        [
+          "alice and bob love leetcode ",
+          "i think so too ",
+          "this is great thanks very much "
+        ]
+      ],
+      "expectedOutput": 6
+    },
+    {
+      "input": [
+        [
+          "please wait ",
+          "continue to fight ",
+          "continue to win "
+        ]
+      ],
+      "expectedOutput": 3
+    }
+  ],
+  "tags": [],
+  "constraints": [],
+  "examples": [],
+  "problemNumber": null,
+  "createdAt": "2025-11-14T21:24:27.674392+00:00",
+  "updatedAt": "2025-12-04T04:36:13.557Z"
+}

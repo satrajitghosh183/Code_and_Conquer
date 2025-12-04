@@ -1,0 +1,116 @@
+{
+  "id": "434cd325-2712-4c5e-8f2d-a4640d596f7a",
+  "title": "Check Array Formation Through Concatenation",
+  "slug": "check-array-formation-through-concatenation",
+  "description": "You are given an array of **distinct** integers `arr` and an array of integer arrays `pieces`, where the integers in `pieces` are **distinct**. Your goal is to form `arr` by concatenating the arrays in `pieces` **in any order**. However, you are **not** allowed to reorder the integers in each array `pieces[i]`.\n\nReturn `true` _if it is possible_ _to form the array_ `arr` _from_ `pieces`. Otherwise, return `false`.\n\n**Example 1:**\n\n**Input:** arr = \\[15,88\\], pieces = \\[\\[88\\],\\[15\\]\\]\n**Output:** true\n**Explanation:** Concatenate \\[15\\] then \\[88\\]\n\n**Example 2:**\n\n**Input:** arr = \\[49,18,16\\], pieces = \\[\\[16,18,49\\]\\]\n**Output:** false\n**Explanation:** Even though the numbers match, we cannot reorder pieces\\[0\\].\n\n**Example 3:**\n\n**Input:** arr = \\[91,4,64,78\\], pieces = \\[\\[78\\],\\[4,64\\],\\[91\\]\\]\n**Output:** true\n**Explanation:** Concatenate \\[91\\] then \\[4,64\\] then \\[78\\]\n\n**Constraints:**\n\n*   `1 <= pieces.length <= arr.length <= 100`\n*   `sum(pieces[i].length) == arr.length`\n*   `1 <= pieces[i].length <= arr.length`\n*   `1 <= arr[i], pieces[i][j] <= 100`\n*   The integers in `arr` are **distinct**.\n*   The integers in `pieces` are **distinct** (i.e., If we flatten pieces in a 1D array, all the integers in this array are distinct).",
+  "difficulty": "Easy",
+  "category": null,
+  "xpReward": 0,
+  "timeLimitMs": 5000,
+  "memoryLimitMb": 256,
+  "starterCode": [],
+  "solutionCode": "",
+  "hints": [],
+  "isPremium": false,
+  "createdBy": null,
+  "testCases": [
+    {
+      "input": [
+        [
+          15,
+          88
+        ],
+        [
+          [
+            88
+          ],
+          [
+            15
+          ]
+        ]
+      ],
+      "expectedOutput": true
+    },
+    {
+      "input": [
+        [
+          49,
+          18,
+          16
+        ],
+        [
+          [
+            16,
+            18,
+            49
+          ]
+        ]
+      ],
+      "expectedOutput": false
+    },
+    {
+      "input": [
+        [
+          91,
+          4,
+          64,
+          78
+        ],
+        [
+          [
+            78
+          ],
+          [
+            4,
+            64
+          ],
+          [
+            91
+          ]
+        ]
+      ],
+      "expectedOutput": true
+    }
+  ],
+  "hiddenTestCases": [
+    {
+      "input": [
+        [
+          15,
+          88
+        ],
+        [
+          [
+            88
+          ],
+          [
+            15
+          ]
+        ]
+      ],
+      "expectedOutput": true
+    },
+    {
+      "input": [
+        [
+          49,
+          18,
+          16
+        ],
+        [
+          [
+            16,
+            18,
+            49
+          ]
+        ]
+      ],
+      "expectedOutput": false
+    }
+  ],
+  "tags": [],
+  "constraints": [],
+  "examples": [],
+  "createdAt": "2025-11-14T21:22:31.774828+00:00",
+  "updatedAt": "2025-12-04T04:37:10.107Z"
+}

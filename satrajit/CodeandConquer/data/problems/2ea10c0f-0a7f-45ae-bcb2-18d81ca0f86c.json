@@ -1,0 +1,86 @@
+{
+  "id": "2ea10c0f-0a7f-45ae-bcb2-18d81ca0f86c",
+  "title": "Maximum Score of a Good Subarray",
+  "slug": "maximum-score-of-a-good-subarray",
+  "description": "You are given an array of integers `nums` **(0-indexed)** and an integer `k`.\n\nThe **score** of a subarray `(i, j)` is defined as `min(nums[i], nums[i+1], ..., nums[j]) * (j - i + 1)`. A **good** subarray is a subarray where `i <= k <= j`.\n\nReturn _the maximum possible **score** of a **good** subarray._\n\n**Example 1:**\n\n**Input:** nums = \\[1,4,3,7,4,5\\], k = 3\n**Output:** 15\n**Explanation:** The optimal subarray is (1, 5) with a score of min(4,3,7,4,5) \\* (5-1+1) = 3 \\* 5 = 15. \n\n**Example 2:**\n\n**Input:** nums = \\[5,5,4,5,4,1,1,1\\], k = 0\n**Output:** 20\n**Explanation:** The optimal subarray is (0, 4) with a score of min(5,5,4,5,4) \\* (4-0+1) = 4 \\* 5 = 20.\n\n**Constraints:**\n\n*   `1 <= nums.length <= 105`\n*   `1 <= nums[i] <= 2 * 104`\n*   `0 <= k < nums.length`",
+  "difficulty": "Hard",
+  "category": null,
+  "xpReward": 0,
+  "timeLimitMs": 5000,
+  "memoryLimitMb": 256,
+  "starterCode": {},
+  "solutionCode": "",
+  "hints": [],
+  "isPremium": false,
+  "createdBy": null,
+  "testCases": [
+    {
+      "input": [
+        [
+          1,
+          4,
+          3,
+          7,
+          4,
+          5
+        ],
+        3
+      ],
+      "expectedOutput": 15
+    },
+    {
+      "input": [
+        [
+          5,
+          5,
+          4,
+          5,
+          4,
+          1,
+          1,
+          1
+        ],
+        0
+      ],
+      "expectedOutput": 20
+    }
+  ],
+  "hiddenTestCases": [
+    {
+      "input": [
+        [
+          1,
+          4,
+          3,
+          7,
+          4,
+          5
+        ],
+        3
+      ],
+      "expectedOutput": 15
+    },
+    {
+      "input": [
+        [
+          5,
+          5,
+          4,
+          5,
+          4,
+          1,
+          1,
+          1
+        ],
+        0
+      ],
+      "expectedOutput": 20
+    }
+  ],
+  "tags": [],
+  "constraints": [],
+  "examples": [],
+  "problemNumber": null,
+  "createdAt": "2025-11-14T21:23:08.766653+00:00",
+  "updatedAt": "2025-12-04T04:36:47.632Z"
+}

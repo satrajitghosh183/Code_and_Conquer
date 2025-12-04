@@ -1,0 +1,101 @@
+{
+  "id": "92394636-7747-4431-acca-1993e748830b",
+  "title": "Sort the People",
+  "slug": "sort-the-people",
+  "description": "You are given an array of strings `names`, and an array `heights` that consists of **distinct** positive integers. Both arrays are of length `n`.\n\nFor each index `i`, `names[i]` and `heights[i]` denote the name and height of the `ith` person.\n\nReturn `names` _sorted in **descending** order by the people's heights_.\n\n**Example 1:**\n\n**Input:** names = \\[ \"Mary \", \"John \", \"Emma \"\\], heights = \\[180,165,170\\]\n**Output:** \\[ \"Mary \", \"Emma \", \"John \"\\]\n**Explanation:** Mary is the tallest, followed by Emma and John.\n\n**Example 2:**\n\n**Input:** names = \\[ \"Alice \", \"Bob \", \"Bob \"\\], heights = \\[155,185,150\\]\n**Output:** \\[ \"Bob \", \"Alice \", \"Bob \"\\]\n**Explanation:** The first Bob is the tallest, followed by Alice and the second Bob.\n\n**Constraints:**\n\n*   `n == names.length == heights.length`\n*   `1 <= n <= 103`\n*   `1 <= names[i].length <= 20`\n*   `1 <= heights[i] <= 105`\n*   `names[i]` consists of lower and upper case English letters.\n*   All the values of `heights` are distinct.",
+  "difficulty": "Easy",
+  "category": null,
+  "xpReward": 0,
+  "timeLimitMs": 5000,
+  "memoryLimitMb": 256,
+  "starterCode": [],
+  "solutionCode": "",
+  "hints": [],
+  "isPremium": false,
+  "createdBy": null,
+  "testCases": [
+    {
+      "input": [
+        [
+          "Mary ",
+          "John ",
+          "Emma "
+        ],
+        [
+          180,
+          165,
+          170
+        ]
+      ],
+      "expectedOutput": [
+        "Mary ",
+        "Emma ",
+        "John "
+      ]
+    },
+    {
+      "input": [
+        [
+          "Alice ",
+          "Bob ",
+          "Bob "
+        ],
+        [
+          155,
+          185,
+          150
+        ]
+      ],
+      "expectedOutput": [
+        "Bob ",
+        "Alice ",
+        "Bob "
+      ]
+    }
+  ],
+  "hiddenTestCases": [
+    {
+      "input": [
+        [
+          "Mary ",
+          "John ",
+          "Emma "
+        ],
+        [
+          180,
+          165,
+          170
+        ]
+      ],
+      "expectedOutput": [
+        "Mary ",
+        "Emma ",
+        "John "
+      ]
+    },
+    {
+      "input": [
+        [
+          "Alice ",
+          "Bob ",
+          "Bob "
+        ],
+        [
+          155,
+          185,
+          150
+        ]
+      ],
+      "expectedOutput": [
+        "Bob ",
+        "Alice ",
+        "Bob "
+      ]
+    }
+  ],
+  "tags": [],
+  "constraints": [],
+  "examples": [],
+  "createdAt": "2025-11-14T21:25:41.564608+00:00",
+  "updatedAt": "2025-12-04T04:35:39.267Z"
+}

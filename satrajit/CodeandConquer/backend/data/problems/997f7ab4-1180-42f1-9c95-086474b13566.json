@@ -1,0 +1,53 @@
+{
+  "id": "997f7ab4-1180-42f1-9c95-086474b13566",
+  "title": "Count Odd Numbers in an Interval Range",
+  "slug": "count-odd-numbers-in-an-interval-range",
+  "description": "Given two non-negative integers `low` and `high`. Return the _count of odd numbers between_ `low` _and_ `high` _(inclusive)_.\n\n**Example 1:**\n\n**Input:** low = 3, high = 7\n**Output:** 3\n**Explanation:** The odd numbers between 3 and 7 are \\[3,5,7\\].\n\n**Example 2:**\n\n**Input:** low = 8, high = 10\n**Output:** 1\n**Explanation:** The odd numbers between 8 and 10 are \\[9\\].\n\n**Constraints:**\n\n*   `0 <= low <= high <= 10^9`",
+  "difficulty": "Easy",
+  "category": null,
+  "xpReward": 0,
+  "timeLimitMs": 5000,
+  "memoryLimitMb": 256,
+  "starterCode": [],
+  "solutionCode": "",
+  "hints": [],
+  "isPremium": false,
+  "createdBy": null,
+  "testCases": [
+    {
+      "input": [
+        3,
+        7
+      ],
+      "expectedOutput": 3
+    },
+    {
+      "input": [
+        8,
+        10
+      ],
+      "expectedOutput": 1
+    }
+  ],
+  "hiddenTestCases": [
+    {
+      "input": [
+        3,
+        7
+      ],
+      "expectedOutput": 3
+    },
+    {
+      "input": [
+        8,
+        10
+      ],
+      "expectedOutput": 1
+    }
+  ],
+  "tags": [],
+  "constraints": [],
+  "examples": [],
+  "createdAt": "2025-11-14T21:21:48.537727+00:00",
+  "updatedAt": "2025-12-04T04:37:20.120Z"
+}

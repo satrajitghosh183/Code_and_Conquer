@@ -1,0 +1,130 @@
+{
+  "id": "fdbc5828-3e95-4ae9-b91e-19c823bd3315",
+  "title": "Find if Path Exists in Graph",
+  "slug": "find-if-path-exists-in-graph",
+  "description": "There is a **bi-directional** graph with `n` vertices, where each vertex is labeled from `0` to `n - 1` (**inclusive**). The edges in the graph are represented as a 2D integer array `edges`, where each `edges[i] = [ui, vi]` denotes a bi-directional edge between vertex `ui` and vertex `vi`. Every vertex pair is connected by **at most one** edge, and no vertex has an edge to itself.\n\nYou want to determine if there is a **valid path** that exists from vertex `source` to vertex `destination`.\n\nGiven `edges` and the integers `n`, `source`, and `destination`, return `true` _if there is a **valid path** from_ `source` _to_ `destination`_, or_ `false` _otherwise__._\n\n**Example 1:**\n\n**Input:** n = 3, edges = \\[\\[0,1\\],\\[1,2\\],\\[2,0\\]\\], source = 0, destination = 2\n**Output:** true\n**Explanation:** There are two paths from vertex 0 to vertex 2:\n- 0 -> 1 -> 2\n- 0 -> 2\n\n**Example 2:**\n\n**Input:** n = 6, edges = \\[\\[0,1\\],\\[0,2\\],\\[3,5\\],\\[5,4\\],\\[4,3\\]\\], source = 0, destination = 5\n**Output:** false\n**Explanation:** There is no path from vertex 0 to vertex 5.\n\n**Constraints:**\n\n*   `1 <= n <= 2 * 105`\n*   `0 <= edges.length <= 2 * 105`\n*   `edges[i].length == 2`\n*   `0 <= ui, vi <= n - 1`\n*   `ui != vi`\n*   `0 <= source, destination <= n - 1`\n*   There are no duplicate edges.\n*   There are no self edges.",
+  "difficulty": "Easy",
+  "category": null,
+  "xpReward": 0,
+  "timeLimitMs": 5000,
+  "memoryLimitMb": 256,
+  "starterCode": {},
+  "solutionCode": "",
+  "hints": [],
+  "isPremium": false,
+  "createdBy": null,
+  "testCases": [
+    {
+      "input": [
+        3,
+        [
+          [
+            0,
+            1
+          ],
+          [
+            1,
+            2
+          ],
+          [
+            2,
+            0
+          ]
+        ],
+        0,
+        2
+      ],
+      "expectedOutput": true
+    },
+    {
+      "input": [
+        6,
+        [
+          [
+            0,
+            1
+          ],
+          [
+            0,
+            2
+          ],
+          [
+            3,
+            5
+          ],
+          [
+            5,
+            4
+          ],
+          [
+            4,
+            3
+          ]
+        ],
+        0,
+        5
+      ],
+      "expectedOutput": false
+    }
+  ],
+  "hiddenTestCases": [
+    {
+      "input": [
+        3,
+        [
+          [
+            0,
+            1
+          ],
+          [
+            1,
+            2
+          ],
+          [
+            2,
+            0
+          ]
+        ],
+        0,
+        2
+      ],
+      "expectedOutput": true
+    },
+    {
+      "input": [
+        6,
+        [
+          [
+            0,
+            1
+          ],
+          [
+            0,
+            2
+          ],
+          [
+            3,
+            5
+          ],
+          [
+            5,
+            4
+          ],
+          [
+            4,
+            3
+          ]
+        ],
+        0,
+        5
+      ],
+      "expectedOutput": false
+    }
+  ],
+  "tags": [],
+  "constraints": [],
+  "examples": [],
+  "problemNumber": null,
+  "createdAt": "2025-11-14T21:23:51.051617+00:00",
+  "updatedAt": "2025-12-04T04:36:28.164Z"
+}

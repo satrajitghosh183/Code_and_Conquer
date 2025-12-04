@@ -1,0 +1,70 @@
+{
+  "id": "dd916522-1ccd-4bf7-8502-d0e25c4a4f63",
+  "title": "Maximize Grid Happiness",
+  "slug": "maximize-grid-happiness",
+  "description": "You are given four integers, `m`, `n`, `introvertsCount`, and `extrovertsCount`. You have an `m x n` grid, and there are two types of people: introverts and extroverts. There are `introvertsCount` introverts and `extrovertsCount` extroverts.\n\nYou should decide how many people you want to live in the grid and assign each of them one grid cell. Note that you **do not** have to have all the people living in the grid.\n\nThe **happiness** of each person is calculated as follows:\n\n*   Introverts **start** with `120` happiness and **lose** `30` happiness for each neighbor (introvert or extrovert).\n*   Extroverts **start** with `40` happiness and **gain** `20` happiness for each neighbor (introvert or extrovert).\n\nNeighbors live in the directly adjacent cells north, east, south, and west of a person's cell.\n\nThe **grid happiness** is the **sum** of each person's happiness. Return _the **maximum possible grid happiness**._\n\n**Example 1:**\n\n**Input:** m = 2, n = 3, introvertsCount = 1, extrovertsCount = 2\n**Output:** 240\n**Explanation:** Assume the grid is 1-indexed with coordinates (row, column).\nWe can put the introvert in cell (1,1) and put the extroverts in cells (1,3) and (2,3).\n- Introvert at (1,1) happiness: 120 (starting happiness) - (0 \\* 30) (0 neighbors) = 120\n- Extrovert at (1,3) happiness: 40 (starting happiness) + (1 \\* 20) (1 neighbor) = 60\n- Extrovert at (2,3) happiness: 40 (starting happiness) + (1 \\* 20) (1 neighbor) = 60\nThe grid happiness is 120 + 60 + 60 = 240.\nThe above figure shows the grid in this example with each person's happiness. The introvert stays in the light green cell while the extroverts live on the light purple cells.\n\n**Example 2:**\n\n**Input:** m = 3, n = 1, introvertsCount = 2, extrovertsCount = 1\n**Output:** 260\n**Explanation:** Place the two introverts in (1,1) and (3,1) and the extrovert at (2,1).\n- Introvert at (1,1) happiness: 120 (starting happiness) - (1 \\* 30) (1 neighbor) = 90\n- Extrovert at (2,1) happiness: 40 (starting happiness) + (2 \\* 20) (2 neighbors) = 80\n- Introvert at (3,1) happiness: 120 (starting happiness) - (1 \\* 30) (1 neighbor) = 90\nThe grid happiness is 90 + 80 + 90 = 260.\n\n**Example 3:**\n\n**Input:** m = 2, n = 2, introvertsCount = 4, extrovertsCount = 0\n**Output:** 240\n\n**Constraints:**\n\n*   `1 <= m, n <= 5`\n*   `0 <= introvertsCount, extrovertsCount <= min(m * n, 6)`",
+  "difficulty": "Hard",
+  "category": null,
+  "xpReward": 0,
+  "timeLimitMs": 5000,
+  "memoryLimitMb": 256,
+  "starterCode": [],
+  "solutionCode": "",
+  "hints": [],
+  "isPremium": false,
+  "createdBy": null,
+  "testCases": [
+    {
+      "input": [
+        2,
+        3,
+        1,
+        2
+      ],
+      "expectedOutput": 240
+    },
+    {
+      "input": [
+        3,
+        1,
+        2,
+        1
+      ],
+      "expectedOutput": 260
+    },
+    {
+      "input": [
+        2,
+        2,
+        4,
+        0
+      ],
+      "expectedOutput": "240\n\n**Constraints:**\n\n*   `1 <= m, n <= 5`\n*   `0 <= introvertsCount, extrovertsCount <= min(m * n, 6)`"
+    }
+  ],
+  "hiddenTestCases": [
+    {
+      "input": [
+        2,
+        3,
+        1,
+        2
+      ],
+      "expectedOutput": 240
+    },
+    {
+      "input": [
+        3,
+        1,
+        2,
+        1
+      ],
+      "expectedOutput": 260
+    }
+  ],
+  "tags": [],
+  "constraints": [],
+  "examples": [],
+  "createdAt": "2025-11-14T21:22:36.111307+00:00",
+  "updatedAt": "2025-12-04T04:37:08.475Z"
+}

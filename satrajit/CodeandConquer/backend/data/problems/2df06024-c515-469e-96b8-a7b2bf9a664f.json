@@ -1,0 +1,169 @@
+{
+  "id": "2df06024-c515-469e-96b8-a7b2bf9a664f",
+  "title": "Product of Two Run-Length Encoded Arrays",
+  "slug": "product-of-two-run-length-encoded-arrays",
+  "description": "**Run-length encoding** is a compression algorithm that allows for an integer array `nums` with many segments of **consecutive repeated** numbers to be represented by a (generally smaller) 2D array `encoded`. Each `encoded[i] = [vali, freqi]` describes the `ith` segment of repeated numbers in `nums` where `vali` is the value that is repeated `freqi` times.\n\n*   For example, `nums = [1,1,1,2,2,2,2,2]` is represented by the **run-length encoded** array `encoded = [[1,3],[2,5]]`. Another way to read this is \"three `1`'s followed by five `2`'s \".\n\nThe **product** of two run-length encoded arrays `encoded1` and `encoded2` can be calculated using the following steps:\n\n1.  **Expand** both `encoded1` and `encoded2` into the full arrays `nums1` and `nums2` respectively.\n2.  Create a new array `prodNums` of length `nums1.length` and set `prodNums[i] = nums1[i] * nums2[i]`.\n3.  **Compress** `prodNums` into a run-length encoded array and return it.\n\nYou are given two **run-length encoded** arrays `encoded1` and `encoded2` representing full arrays `nums1` and `nums2` respectively. Both `nums1` and `nums2` have the **same length**. Each `encoded1[i] = [vali, freqi]` describes the `ith` segment of `nums1`, and each `encoded2[j] = [valj, freqj]` describes the `jth` segment of `nums2`.\n\nReturn _the **product** of_ `encoded1` _and_ `encoded2`.\n\n**Note:** Compression should be done such that the run-length encoded array has the **minimum** possible length.\n\n**Example 1:**\n\n**Input:** encoded1 = \\[\\[1,3\\],\\[2,3\\]\\], encoded2 = \\[\\[6,3\\],\\[3,3\\]\\]\n**Output:** \\[\\[6,6\\]\\]\n**Explanation:** encoded1 expands to \\[1,1,1,2,2,2\\] and encoded2 expands to \\[6,6,6,3,3,3\\].\nprodNums = \\[6,6,6,6,6,6\\], which is compressed into the run-length encoded array \\[\\[6,6\\]\\].\n\n**Example 2:**\n\n**Input:** encoded1 = \\[\\[1,3\\],\\[2,1\\],\\[3,2\\]\\], encoded2 = \\[\\[2,3\\],\\[3,3\\]\\]\n**Output:** \\[\\[2,3\\],\\[6,1\\],\\[9,2\\]\\]\n**Explanation:** encoded1 expands to \\[1,1,1,2,3,3\\] and encoded2 expands to \\[2,2,2,3,3,3\\].\nprodNums = \\[2,2,2,6,9,9\\], which is compressed into the run-length encoded array \\[\\[2,3\\],\\[6,1\\],\\[9,2\\]\\].\n\n**Constraints:**\n\n*   `1 <= encoded1.length, encoded2.length <= 105`\n*   `encoded1[i].length == 2`\n*   `encoded2[j].length == 2`\n*   `1 <= vali, freqi <= 104` for each `encoded1[i]`.\n*   `1 <= valj, freqj <= 104` for each `encoded2[j]`.\n*   The full arrays that `encoded1` and `encoded2` represent are the same length.",
+  "difficulty": "Medium",
+  "category": null,
+  "xpReward": 0,
+  "timeLimitMs": 5000,
+  "memoryLimitMb": 256,
+  "starterCode": [],
+  "solutionCode": "",
+  "hints": [],
+  "isPremium": false,
+  "createdBy": null,
+  "testCases": [
+    {
+      "input": [
+        [
+          [
+            1,
+            3
+          ],
+          [
+            2,
+            3
+          ]
+        ],
+        [
+          [
+            6,
+            3
+          ],
+          [
+            3,
+            3
+          ]
+        ]
+      ],
+      "expectedOutput": [
+        [
+          6,
+          6
+        ]
+      ]
+    },
+    {
+      "input": [
+        [
+          [
+            1,
+            3
+          ],
+          [
+            2,
+            1
+          ],
+          [
+            3,
+            2
+          ]
+        ],
+        [
+          [
+            2,
+            3
+          ],
+          [
+            3,
+            3
+          ]
+        ]
+      ],
+      "expectedOutput": [
+        [
+          2,
+          3
+        ],
+        [
+          6,
+          1
+        ],
+        [
+          9,
+          2
+        ]
+      ]
+    }
+  ],
+  "hiddenTestCases": [
+    {
+      "input": [
+        [
+          [
+            1,
+            3
+          ],
+          [
+            2,
+            3
+          ]
+        ],
+        [
+          [
+            6,
+            3
+          ],
+          [
+            3,
+            3
+          ]
+        ]
+      ],
+      "expectedOutput": [
+        [
+          6,
+          6
+        ]
+      ]
+    },
+    {
+      "input": [
+        [
+          [
+            1,
+            3
+          ],
+          [
+            2,
+            1
+          ],
+          [
+            3,
+            2
+          ]
+        ],
+        [
+          [
+            2,
+            3
+          ],
+          [
+            3,
+            3
+          ]
+        ]
+      ],
+      "expectedOutput": [
+        [
+          2,
+          3
+        ],
+        [
+          6,
+          1
+        ],
+        [
+          9,
+          2
+        ]
+      ]
+    }
+  ],
+  "tags": [],
+  "constraints": [],
+  "examples": [],
+  "createdAt": "2025-11-14T21:23:27.759839+00:00",
+  "updatedAt": "2025-12-04T04:36:38.629Z"
+}

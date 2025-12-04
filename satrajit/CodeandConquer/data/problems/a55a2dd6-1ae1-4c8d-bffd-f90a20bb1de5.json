@@ -1,0 +1,91 @@
+{
+  "id": "a55a2dd6-1ae1-4c8d-bffd-f90a20bb1de5",
+  "title": "Check If Two String Arrays are Equivalent",
+  "slug": "check-if-two-string-arrays-are-equivalent",
+  "description": "Given two string arrays `word1` and `word2`, return `true` _if the two arrays **represent** the same string, and_ `false` _otherwise._\n\nA string is **represented** by an array if the array elements concatenated **in order** forms the string.\n\n**Example 1:**\n\n**Input:** word1 = \\[ \"ab \",  \"c \"\\], word2 = \\[ \"a \",  \"bc \"\\]\n**Output:** true\n**Explanation:**\nword1 represents string  \"ab \" +  \"c \" ->  \"abc \"\nword2 represents string  \"a \" +  \"bc \" ->  \"abc \"\nThe strings are the same, so return true.\n\n**Example 2:**\n\n**Input:** word1 = \\[ \"a \",  \"cb \"\\], word2 = \\[ \"ab \",  \"c \"\\]\n**Output:** false\n\n**Example 3:**\n\n**Input:** word1  = \\[ \"abc \",  \"d \",  \"defg \"\\], word2 = \\[ \"abcddefg \"\\]\n**Output:** true\n\n**Constraints:**\n\n*   `1 <= word1.length, word2.length <= 103`\n*   `1 <= word1[i].length, word2[i].length <= 103`\n*   `1 <= sum(word1[i].length), sum(word2[i].length) <= 103`\n*   `word1[i]` and `word2[i]` consist of lowercase letters.",
+  "difficulty": "Easy",
+  "category": null,
+  "xpReward": 0,
+  "timeLimitMs": 5000,
+  "memoryLimitMb": 256,
+  "starterCode": {},
+  "solutionCode": "",
+  "hints": [],
+  "isPremium": false,
+  "createdBy": null,
+  "testCases": [
+    {
+      "input": [
+        [
+          "ab ",
+          "c "
+        ],
+        [
+          "a ",
+          "bc "
+        ]
+      ],
+      "expectedOutput": true
+    },
+    {
+      "input": [
+        [
+          "a ",
+          "cb "
+        ],
+        [
+          "ab ",
+          "c "
+        ]
+      ],
+      "expectedOutput": false
+    },
+    {
+      "input": [
+        [
+          "abc ",
+          "d ",
+          "defg "
+        ],
+        [
+          "abcddefg "
+        ]
+      ],
+      "expectedOutput": "true\n\n**Constraints:**\n\n*   `1 <= word1.length, word2.length <= 103`\n*   `1 <= word1[i].length, word2[i].length <= 103`\n*   `1 <= sum(word1[i].length), sum(word2[i].length) <= 103`\n*   `word1[i]` and `word2[i]` consist of lowercase letters."
+    }
+  ],
+  "hiddenTestCases": [
+    {
+      "input": [
+        [
+          "ab ",
+          "c "
+        ],
+        [
+          "a ",
+          "bc "
+        ]
+      ],
+      "expectedOutput": true
+    },
+    {
+      "input": [
+        [
+          "a ",
+          "cb "
+        ],
+        [
+          "ab ",
+          "c "
+        ]
+      ],
+      "expectedOutput": false
+    }
+  ],
+  "tags": [],
+  "constraints": [],
+  "examples": [],
+  "problemNumber": null,
+  "createdAt": "2025-11-14T21:22:36.697341+00:00",
+  "updatedAt": "2025-12-04T04:37:08.236Z"
+}

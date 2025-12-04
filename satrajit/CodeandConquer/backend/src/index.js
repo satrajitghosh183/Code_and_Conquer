@@ -3,6 +3,23 @@ import { createServer } from 'http';
 import { Server } from 'socket.io';
 import cors from 'cors';
 import dotenv from 'dotenv';
+
+// Load environment variables first
+dotenv.config();
+
+// Import utilities and middleware
+import logger from './utils/logger.js';
+import validateEnvironment, { getConfig } from './utils/validateEnv.js';
+import {
+  helmetMiddleware,
+  compressionMiddleware,
+  createApiRateLimiter,
+  createExecutionRateLimiter,
+  sanitizeRequest,
+  trustProxy
+} from './middleware/security.js';
+
+// Import routes
 import problemRoutes from './routes/problemRoutes.js';
 import submissionRoutes from './routes/submissionRoutes.js';
 import userRoutes from './routes/userRoutes.js';
@@ -11,68 +28,172 @@ import taskRoutes from './routes/taskRoutes.js';
 import matchRoutes from './routes/matchRoutes.js';
 import authRoutes from './routes/authRoutes.js';
 import leaderboardRoutes from './routes/leaderboardRoutes.js';
-import matchmakingService from './services/matchmakingService.js';
-import gameService from './services/gameService.js';
-import authDatabaseService from './services/authDatabaseService.js';
+import dashboardRoutes from './routes/dashboardRoutes.js';
 import authDatabaseRoutes from './routes/authDatabaseRoutes.js';
-import storageService from './services/storageService.js';
-import realtimeService from './services/realtimeService.js';
-import publicDatabaseService from './services/publicDatabaseService.js';
 import storageRoutes from './routes/storageRoutes.js';
 import realtimeRoutes from './routes/realtimeRoutes.js';
 import publicDatabaseRoutes from './routes/publicDatabaseRoutes.js';
+import progressionRoutes from './routes/progressionRoutes.js';
+import singlePlayerRoutes from './routes/singlePlayerRoutes.js';
 
-dotenv.config();
+// Import services
+import matchmakingService from './services/matchmakingService.js';
+import gameService from './services/gameService.js';
+import authDatabaseService from './services/authDatabaseService.js';
+import storageService from './services/storageService.js';
+import realtimeService from './services/realtimeService.js';
+import publicDatabaseService from './services/publicDatabaseService.js';
 
+// Validate environment
+validateEnvironment();
+const config = getConfig();
+
+// Initialize Express app
 const app = express();
 const httpServer = createServer(app);
+
+// Trust proxy for production deployments
+trustProxy(app);
+
+// Configure CORS
+const allowedOrigins = [
+  'http://localhost:3000',
+  'http://localhost:3001',
+  config.clientUrl
+].filter(Boolean);
+
+const corsOptions = {
+  origin: (origin, callback) => {
+    // Allow requests with no origin (mobile apps, curl, etc.)
+    if (!origin) return callback(null, true);
+    
+    if (allowedOrigins.includes(origin) || !config.isProduction) {
+      callback(null, origin);
+    } else {
+      logger.warn(`CORS blocked request from origin: ${origin}`);
+      callback(new Error('Not allowed by CORS'));
+    }
+  },
+  credentials: true,
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With'],
+  exposedHeaders: ['X-RateLimit-Limit', 'X-RateLimit-Remaining', 'X-RateLimit-Reset']
+};
+
+// Initialize Socket.IO with CORS
 const io = new Server(httpServer, {
   cors: {
-    origin: process.env.CLIENT_URL || 'http://localhost:3000',
-    methods: ['GET', 'POST']
-  }
+    origin: allowedOrigins,
+    methods: ['GET', 'POST'],
+    credentials: true
+  },
+  pingTimeout: 60000,
+  pingInterval: 25000
 });
 
-const PORT = process.env.PORT || 5000;
-
-// Middleware
-app.use(cors());
+// Apply middleware (order matters!)
+app.use(helmetMiddleware);
+app.use(compressionMiddleware);
+app.use(cors(corsOptions));
 app.use(express.json({ limit: '10mb' }));
 app.use(express.urlencoded({ extended: true, limit: '10mb' }));
+app.use(sanitizeRequest);
 
-// Routes
+// Request logging middleware
+app.use((req, res, next) => {
+  const startTime = Date.now();
+  
+  res.on('finish', () => {
+    const duration = Date.now() - startTime;
+    logger.logRequest(req, res.statusCode, duration);
+  });
+  
+  next();
+});
+
+// Create rate limiters after environment is validated
+const apiRateLimiter = createApiRateLimiter();
+const executionRateLimiter = createExecutionRateLimiter();
+
+// Apply rate limiting to API routes
+app.use('/api/', apiRateLimiter);
+
+// Apply stricter rate limiting to code execution
+app.use('/api/submissions/submit', executionRateLimiter);
+app.use('/api/submissions/run', executionRateLimiter);
+
+// API Routes
 app.use('/api/problems', problemRoutes);
 app.use('/api/submissions', submissionRoutes);
 app.use('/api/users', userRoutes);
 app.use('/api', paymentRoutes);
 app.use('/api/tasks', taskRoutes);
 app.use('/api/matches', matchRoutes);
-app.use('/api/leaderboard', leaderboardRoutes); // Leaderboard routes
+app.use('/api/leaderboard', leaderboardRoutes);
+app.use('/api/dashboard', dashboardRoutes);
 app.use('/auth', authRoutes);
-app.use('/api/auth-db', authDatabaseRoutes); // Auth database routes
-app.use('/api/storage', storageRoutes); // Storage routes
-app.use('/api/realtime', realtimeRoutes); // Realtime routes
-app.use('/api/public-db', publicDatabaseRoutes); // Public database routes
+app.use('/api/auth-db', authDatabaseRoutes);
+app.use('/api/storage', storageRoutes);
+app.use('/api/realtime', realtimeRoutes);
+app.use('/api/public-db', publicDatabaseRoutes);
+app.use('/api/progression', progressionRoutes);
+app.use('/api/singleplayer', singlePlayerRoutes);
 
-// Health check
+// Enhanced health check endpoint
 app.get('/api/health', (req, res) => {
-  res.json({ 
-    status: 'ok', 
-    message: 'Code and Conquer API is running',
+  const healthStatus = {
+    status: 'ok',
+    timestamp: new Date().toISOString(),
+    uptime: process.uptime(),
+    version: process.env.npm_package_version || '1.0.0',
+    environment: config.nodeEnv,
     services: {
       authDatabase: authDatabaseService.isAvailable(),
       storage: storageService.isAvailable(),
       realtime: realtimeService.isAvailable(),
       publicDatabase: publicDatabaseService.isAvailable(),
+      matchmaking: true,
+      game: true
+    },
+    memory: {
+      used: Math.round(process.memoryUsage().heapUsed / 1024 / 1024),
+      total: Math.round(process.memoryUsage().heapTotal / 1024 / 1024),
+      unit: 'MB'
     }
-  });
+  };
+  
+  // Check if any critical service is down
+  const criticalServices = ['authDatabase', 'publicDatabase'];
+  const allCriticalUp = criticalServices.every(s => healthStatus.services[s]);
+  
+  if (!allCriticalUp) {
+    healthStatus.status = 'degraded';
+    res.status(503);
+  }
+  
+  res.json(healthStatus);
+});
+
+// Readiness probe for Kubernetes/container orchestration
+app.get('/api/ready', async (req, res) => {
+  try {
+    // Check database connectivity
+    const dbReady = publicDatabaseService.isAvailable();
+    
+    if (dbReady) {
+      res.json({ ready: true });
+    } else {
+      res.status(503).json({ ready: false, reason: 'Database not available' });
+    }
+  } catch (error) {
+    res.status(503).json({ ready: false, reason: error.message });
+  }
 });
 
 // Socket.IO connection handling
 io.on('connection', (socket) => {
-  console.log(`Client connected: ${socket.id}`);
+  logger.info(`Client connected: ${socket.id}`);
 
-  // Join queue for matchmaking
   socket.on('join_queue', async (playerData) => {
     try {
       const playerId = playerData.id || playerData.userId || socket.id;
@@ -83,7 +204,6 @@ io.on('connection', (socket) => {
       });
 
       if (result.matched && result.match) {
-        // Notify both players
         result.match.players.forEach(player => {
           io.to(player.socketId).emit('match_found', {
             matchId: result.match.id,
@@ -95,18 +215,16 @@ io.on('connection', (socket) => {
         socket.emit('queue_update', { queueSize: matchmakingService.queue.length });
       }
     } catch (error) {
-      console.error('Error in join_queue:', error);
+      logger.logError(error, { socketId: socket.id, event: 'join_queue' });
       socket.emit('queue_error', { error: error.message });
     }
   });
 
-  // Leave queue
   socket.on('leave_queue', (playerData) => {
     const playerId = playerData?.id || playerData?.userId || socket.id;
     matchmakingService.leaveQueue(playerId);
   });
 
-  // Join match room
   socket.on('join_match', (matchId) => {
     socket.join(`match_${matchId}`);
     const match = matchmakingService.getMatch(matchId);
@@ -115,7 +233,6 @@ io.on('connection', (socket) => {
     }
   });
 
-  // Start match
   socket.on('start_match', async (matchId) => {
     const match = matchmakingService.getMatch(matchId);
     if (match) {
@@ -123,7 +240,6 @@ io.on('connection', (socket) => {
       await matchmakingService.updateMatch(matchId, { state: 'briefing' });
       io.to(`match_${matchId}`).emit('match_briefing', match);
       
-      // Start game after briefing
       setTimeout(async () => {
         match.state = 'running';
         match.startTime = new Date().toISOString();
@@ -132,16 +248,14 @@ io.on('connection', (socket) => {
           startTime: match.startTime
         });
         io.to(`match_${matchId}`).emit('match_started', match);
-      }, 30000); // 30 second briefing
+      }, 30000);
     }
   });
 
-  // Submit code during match
   socket.on('submit_code', async (data) => {
     const { matchId, playerId, code, problemId, difficulty, language = 'javascript' } = data;
     
     try {
-      // Evaluate code using executor service
       const executorService = (await import('./services/executorService.js')).default;
       const database = (await import('./config/database.js')).default;
       
@@ -154,15 +268,9 @@ io.on('connection', (socket) => {
       const testCases = problem.testCases || [];
       const startTime = Date.now();
       
-      const testResults = await executorService.runTestCases(
-        code,
-        language,
-        testCases
-      );
-      
+      const testResults = await executorService.runTestCases(code, language, testCases);
       const executionTimeMs = Date.now() - startTime;
       
-      // Determine status
       let status = 'FAIL';
       if (testResults.allPassed) {
         status = 'PASS';
@@ -189,19 +297,17 @@ io.on('connection', (socket) => {
           }
         });
         
-        // Broadcast updated game state
         const match = matchmakingService.getMatch(matchId);
         if (match) {
           io.to(`match_${matchId}`).emit('game_state_update', match.gameState);
         }
       }
     } catch (error) {
-      console.error('Error evaluating code:', error);
+      logger.logError(error, { socketId: socket.id, event: 'submit_code' });
       socket.emit('coding_error', { error: error.message });
     }
   });
 
-  // Place tower
   socket.on('place_tower', (data) => {
     const { matchId, playerId, position, towerType } = data;
     const result = gameService.placeTower(matchId, playerId, position, towerType);
@@ -215,7 +321,6 @@ io.on('connection', (socket) => {
     }
   });
 
-  // Spawn wave
   socket.on('spawn_wave', (data) => {
     const { matchId, waveNumber } = data;
     const result = gameService.spawnWave(matchId, waveNumber);
@@ -225,23 +330,21 @@ io.on('connection', (socket) => {
     }
   });
 
-  // Disconnect
   socket.on('disconnect', () => {
-    console.log(`Client disconnected: ${socket.id}`);
+    logger.info(`Client disconnected: ${socket.id}`);
     matchmakingService.leaveQueue(socket.id);
   });
 });
 
 // Game loop - update all active matches
-setInterval(() => {
+const GAME_TICK_RATE = 16; // ~60fps
+let gameLoopInterval = setInterval(() => {
   matchmakingService.matches.forEach((match, matchId) => {
     if (match.state === 'running') {
-      gameService.updateGameState(matchId, 0.016); // ~60fps
+      gameService.updateGameState(matchId, GAME_TICK_RATE / 1000);
       
-      // Broadcast state to all players in match
       io.to(`match_${matchId}`).emit('game_state_update', match.gameState);
       
-      // Check if match ended
       if (match.state === 'finished') {
         io.to(`match_${matchId}`).emit('match_ended', {
           winner: match.winner,
@@ -250,20 +353,107 @@ setInterval(() => {
       }
     }
   });
-}, 16); // ~60fps
+}, GAME_TICK_RATE);
 
-// Error handling middleware
-app.use((err, req, res, next) => {
-  console.error(err.stack);
-  res.status(500).json({ 
-    error: 'Something went wrong!',
-    message: process.env.NODE_ENV === 'development' ? err.message : undefined
+// 404 handler
+app.use((req, res) => {
+  res.status(404).json({
+    error: 'Not Found',
+    message: `Route ${req.method} ${req.path} not found`,
+    path: req.path
   });
 });
 
-httpServer.listen(PORT, () => {
-  console.log(`Code and Conquer Backend running on port ${PORT}`);
-  console.log(`Socket.IO server ready`);
-  console.log(`Environment: ${process.env.NODE_ENV || 'development'}`);
+// Global error handler
+app.use((err, req, res, next) => {
+  logger.logError(err, req);
+  
+  // Handle CORS errors
+  if (err.message === 'Not allowed by CORS') {
+    return res.status(403).json({
+      error: 'Forbidden',
+      message: 'CORS policy does not allow this request'
+    });
+  }
+  
+  // Handle validation errors
+  if (err.name === 'ValidationError') {
+    return res.status(400).json({
+      error: 'Validation Error',
+      message: err.message,
+      details: err.details
+    });
+  }
+  
+  // Handle rate limiting errors
+  if (err.status === 429) {
+    return res.status(429).json({
+      error: 'Too Many Requests',
+      message: 'Rate limit exceeded. Please slow down.',
+      retryAfter: err.retryAfter
+    });
+  }
+  
+  // Generic error response
+  const statusCode = err.status || err.statusCode || 500;
+  res.status(statusCode).json({
+    error: statusCode >= 500 ? 'Internal Server Error' : 'Error',
+    message: config.isDevelopment ? err.message : 'Something went wrong',
+    ...(config.isDevelopment && { stack: err.stack })
+  });
 });
 
+// Graceful shutdown handler
+const gracefulShutdown = async (signal) => {
+  logger.info(`${signal} received. Starting graceful shutdown...`);
+  
+  // Stop accepting new connections
+  httpServer.close(() => {
+    logger.info('HTTP server closed');
+  });
+  
+  // Clear game loop
+  if (gameLoopInterval) {
+    clearInterval(gameLoopInterval);
+    logger.info('Game loop stopped');
+  }
+  
+  // Close all socket connections
+  io.close(() => {
+    logger.info('Socket.IO connections closed');
+  });
+  
+  // Give existing requests time to complete
+  await new Promise(resolve => setTimeout(resolve, 5000));
+  
+  logger.info('Graceful shutdown complete');
+  process.exit(0);
+};
+
+// Listen for termination signals
+process.on('SIGTERM', () => gracefulShutdown('SIGTERM'));
+process.on('SIGINT', () => gracefulShutdown('SIGINT'));
+
+// Handle uncaught exceptions
+process.on('uncaughtException', (error) => {
+  logger.error('Uncaught Exception:', { error: error.message, stack: error.stack });
+  gracefulShutdown('uncaughtException');
+});
+
+process.on('unhandledRejection', (reason, promise) => {
+  logger.error('Unhandled Rejection:', { reason, promise });
+});
+
+// Start server
+httpServer.listen(config.port, config.host, () => {
+  logger.info(`🚀 Code and Conquer Backend started`, {
+    host: config.host,
+    port: config.port,
+    environment: config.nodeEnv,
+    clientUrl: config.clientUrl
+  });
+  logger.info('📡 Socket.IO server ready');
+  logger.info('🎮 Game loop running at 60fps');
+});
+
+export { app, httpServer, io };

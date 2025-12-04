@@ -1,0 +1,50 @@
+{
+  "id": "757f45ba-f297-4a90-bb53-68588c5d6948",
+  "title": "Split With Minimum Sum",
+  "slug": "split-with-minimum-sum",
+  "description": "Given a positive integer `num`, split it into two non-negative integers `num1` and `num2` such that:\n\n*   The concatenation of `num1` and `num2` is a permutation of `num`.\n    *   In other words, the sum of the number of occurrences of each digit in `num1` and `num2` is equal to the number of occurrences of that digit in `num`.\n*   `num1` and `num2` can contain leading zeros.\n\nReturn _the **minimum** possible sum of_ `num1` _and_ `num2`.\n\n**Notes:**\n\n*   It is guaranteed that `num` does not contain any leading zeros.\n*   The order of occurrence of the digits in `num1` and `num2` may differ from the order of occurrence of `num`.\n\n**Example 1:**\n\n**Input:** num = 4325\n**Output:** 59\n**Explanation:** We can split 4325 so that `num1` is 24 and num2 `is` 35, giving a sum of 59. We can prove that 59 is indeed the minimal possible sum.\n\n**Example 2:**\n\n**Input:** num = 687\n**Output:** 75\n**Explanation:** We can split 687 so that `num1` is 68 and `num2` is 7, which would give an optimal sum of 75.\n\n**Constraints:**\n\n*   `10 <= num <= 109`",
+  "difficulty": "Easy",
+  "category": null,
+  "xpReward": 0,
+  "timeLimitMs": 5000,
+  "memoryLimitMb": 256,
+  "starterCode": {},
+  "solutionCode": "",
+  "hints": [],
+  "isPremium": false,
+  "createdBy": null,
+  "testCases": [
+    {
+      "input": [
+        4325
+      ],
+      "expectedOutput": 59
+    },
+    {
+      "input": [
+        687
+      ],
+      "expectedOutput": 75
+    }
+  ],
+  "hiddenTestCases": [
+    {
+      "input": [
+        4325
+      ],
+      "expectedOutput": 59
+    },
+    {
+      "input": [
+        687
+      ],
+      "expectedOutput": 75
+    }
+  ],
+  "tags": [],
+  "constraints": [],
+  "examples": [],
+  "problemNumber": null,
+  "createdAt": "2025-11-14T21:26:26.96622+00:00",
+  "updatedAt": "2025-12-04T04:35:18.149Z"
+}

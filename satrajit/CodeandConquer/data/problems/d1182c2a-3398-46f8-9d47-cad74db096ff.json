@@ -1,0 +1,82 @@
+{
+  "id": "d1182c2a-3398-46f8-9d47-cad74db096ff",
+  "title": "Count Nodes Equal to Sum of Descendants",
+  "slug": "count-nodes-equal-to-sum-of-descendants",
+  "description": "Given the `root` of a binary tree, return _the number of nodes where the value of the node is equal to the **sum** of the values of its descendants_.\n\nA **descendant** of a node `x` is any node that is on the path from node `x` to some leaf node. The sum is considered to be `0` if the node has no descendants.\n\n**Example 1:**\n\n**Input:** root = \\[10,3,4,2,1\\]\n**Output:** 2\n**Explanation:**\nFor the node with value 10: The sum of its descendants is 3+4+2+1 = 10.\nFor the node with value 3: The sum of its descendants is 2+1 = 3.\n\n**Example 2:**\n\n**Input:** root = \\[2,3,null,2,null\\]\n**Output:** 0\n**Explanation:**\nNo node has a value that is equal to the sum of its descendants.\n\n**Example 3:**\n\n**Input:** root = \\[0\\]\n**Output:** 1\nFor the node with value 0: The sum of its descendants is 0 since it has no descendants.\n\n**Constraints:**\n\n*   The number of nodes in the tree is in the range `[1, 105]`.\n*   `0 <= Node.val <= 105`",
+  "difficulty": "Medium",
+  "category": null,
+  "xpReward": 0,
+  "timeLimitMs": 5000,
+  "memoryLimitMb": 256,
+  "starterCode": {},
+  "solutionCode": "",
+  "hints": [],
+  "isPremium": false,
+  "createdBy": null,
+  "testCases": [
+    {
+      "input": [
+        [
+          10,
+          3,
+          4,
+          2,
+          1
+        ]
+      ],
+      "expectedOutput": 2
+    },
+    {
+      "input": [
+        [
+          2,
+          3,
+          null,
+          2,
+          null
+        ]
+      ],
+      "expectedOutput": 0
+    },
+    {
+      "input": [
+        [
+          0
+        ]
+      ],
+      "expectedOutput": "1\nFor the node with value 0: The sum of its descendants is 0 since it has no descendants.\n\n**Constraints:**\n\n*   The number of nodes in the tree is in the range `[1, 105]`.\n*   `0 <= Node.val <= 105`"
+    }
+  ],
+  "hiddenTestCases": [
+    {
+      "input": [
+        [
+          10,
+          3,
+          4,
+          2,
+          1
+        ]
+      ],
+      "expectedOutput": 2
+    },
+    {
+      "input": [
+        [
+          2,
+          3,
+          null,
+          2,
+          null
+        ]
+      ],
+      "expectedOutput": 0
+    }
+  ],
+  "tags": [],
+  "constraints": [],
+  "examples": [],
+  "problemNumber": null,
+  "createdAt": "2025-11-14T21:23:51.250405+00:00",
+  "updatedAt": "2025-12-04T04:36:28.049Z"
+}

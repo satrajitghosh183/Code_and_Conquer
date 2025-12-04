@@ -1,0 +1,53 @@
+{
+  "id": "7e0c1d6e-9f24-449f-96bc-78d7d78653ba",
+  "title": "Partition String Into Substrings With Values at Most K",
+  "slug": "partition-string-into-substrings-with-values-at-most-k",
+  "description": "You are given a string `s` consisting of digits from `1` to `9` and an integer `k`.\n\nA partition of a string `s` is called **good** if:\n\n*   Each digit of `s` is part of **exactly** one substring.\n*   The value of each substring is less than or equal to `k`.\n\nReturn _the **minimum** number of substrings in a **good** partition of_ `s`. If no **good** partition of `s` exists, return `-1`.\n\n**Note** that:\n\n*   The **value** of a string is its result when interpreted as an integer. For example, the value of `\"123 \"` is `123` and the value of `\"1 \"` is `1`.\n*   A **substring** is a contiguous sequence of characters within a string.\n\n**Example 1:**\n\n**Input:** s =  \"165462 \", k = 60\n**Output:** 4\n**Explanation:** We can partition the string into substrings  \"16 \",  \"54 \",  \"6 \", and  \"2 \". Each substring has a value less than or equal to k = 60.\nIt can be shown that we cannot partition the string into less than 4 substrings.\n\n**Example 2:**\n\n**Input:** s =  \"238182 \", k = 5\n**Output:** -1\n**Explanation:** There is no good partition for this string.\n\n**Constraints:**\n\n*   `1 <= s.length <= 105`\n*   `s[i]` is a digit from `'1'` to `'9'`.\n*   `1 <= k <= 109`\n\n.spoilerbutton {display:block; border:dashed; padding: 0px 0px; margin:10px 0px; font-size:150%; font-weight: bold; color:#000000; background-color:cyan; outline:0; } .spoiler {overflow:hidden;} .spoiler > div {-webkit-transition: all 0s ease;-moz-transition: margin 0s ease;-o-transition: all 0s ease;transition: margin 0s ease;} .spoilerbutton\\[value=\"Show Message\"\\] + .spoiler > div {margin-top:-500%;} .spoilerbutton\\[value=\"Hide Message\"\\] + .spoiler {padding:5px;}",
+  "difficulty": "Medium",
+  "category": null,
+  "xpReward": 0,
+  "timeLimitMs": 5000,
+  "memoryLimitMb": 256,
+  "starterCode": [],
+  "solutionCode": "",
+  "hints": [],
+  "isPremium": false,
+  "createdBy": null,
+  "testCases": [
+    {
+      "input": [
+        "165462 ",
+        60
+      ],
+      "expectedOutput": 4
+    },
+    {
+      "input": [
+        "238182 ",
+        5
+      ],
+      "expectedOutput": -1
+    }
+  ],
+  "hiddenTestCases": [
+    {
+      "input": [
+        "165462 ",
+        60
+      ],
+      "expectedOutput": 4
+    },
+    {
+      "input": [
+        "238182 ",
+        5
+      ],
+      "expectedOutput": -1
+    }
+  ],
+  "tags": [],
+  "constraints": [],
+  "examples": [],
+  "createdAt": "2025-11-14T21:26:09.576955+00:00",
+  "updatedAt": "2025-12-04T04:35:24.177Z"
+}

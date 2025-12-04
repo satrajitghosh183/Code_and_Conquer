@@ -1,0 +1,102 @@
+{
+  "id": "34ad1f95-1122-4e2d-873a-7407b1a3afa7",
+  "title": "Minimize Maximum Value in a Grid",
+  "slug": "minimize-maximum-value-in-a-grid",
+  "description": "You are given an `m x n` integer matrix `grid` containing **distinct** positive integers.\n\nYou have to replace each integer in the matrix with a positive integer satisfying the following conditions:\n\n*   The **relative** order of every two elements that are in the same row or column should stay the **same** after the replacements.\n*   The **maximum** number in the matrix after the replacements should be as **small** as possible.\n\nThe relative order stays the same if for all pairs of elements in the original matrix such that `grid[r1][c1] > grid[r2][c2]` where either `r1 == r2` or `c1 == c2`, then it must be true that `grid[r1][c1] > grid[r2][c2]` after the replacements.\n\nFor example, if `grid = [[2, 4, 5], [7, 3, 9]]` then a good replacement could be either `grid = [[1, 2, 3], [2, 1, 4]]` or `grid = [[1, 2, 3], [3, 1, 4]]`.\n\nReturn _the **resulting** matrix._ If there are multiple answers, return **any** of them.\n\n**Example 1:**\n\n**Input:** grid = \\[\\[3,1\\],\\[2,5\\]\\]\n**Output:** \\[\\[2,1\\],\\[1,2\\]\\]\n**Explanation:** The above diagram shows a valid replacement.\nThe maximum number in the matrix is 2. It can be shown that no smaller value can be obtained.\n\n**Example 2:**\n\n**Input:** grid = \\[\\[10\\]\\]\n**Output:** \\[\\[1\\]\\]\n**Explanation:** We replace the only number in the matrix with 1.\n\n**Constraints:**\n\n*   `m == grid.length`\n*   `n == grid[i].length`\n*   `1 <= m, n <= 1000`\n*   `1 <= m * n <= 105`\n*   `1 <= grid[i][j] <= 109`\n*   `grid` consists of distinct integers.",
+  "difficulty": "Hard",
+  "category": null,
+  "xpReward": 0,
+  "timeLimitMs": 5000,
+  "memoryLimitMb": 256,
+  "starterCode": {},
+  "solutionCode": "",
+  "hints": [],
+  "isPremium": false,
+  "createdBy": null,
+  "testCases": [
+    {
+      "input": [
+        [
+          [
+            3,
+            1
+          ],
+          [
+            2,
+            5
+          ]
+        ]
+      ],
+      "expectedOutput": [
+        [
+          2,
+          1
+        ],
+        [
+          1,
+          2
+        ]
+      ]
+    },
+    {
+      "input": [
+        [
+          [
+            10
+          ]
+        ]
+      ],
+      "expectedOutput": [
+        [
+          1
+        ]
+      ]
+    }
+  ],
+  "hiddenTestCases": [
+    {
+      "input": [
+        [
+          [
+            3,
+            1
+          ],
+          [
+            2,
+            5
+          ]
+        ]
+      ],
+      "expectedOutput": [
+        [
+          2,
+          1
+        ],
+        [
+          1,
+          2
+        ]
+      ]
+    },
+    {
+      "input": [
+        [
+          [
+            10
+          ]
+        ]
+      ],
+      "expectedOutput": [
+        [
+          1
+        ]
+      ]
+    }
+  ],
+  "tags": [],
+  "constraints": [],
+  "examples": [],
+  "problemNumber": null,
+  "createdAt": "2025-11-14T21:25:29.761961+00:00",
+  "updatedAt": "2025-12-04T04:35:45.250Z"
+}

@@ -1,0 +1,49 @@
+{
+  "id": "e57b37b3-0cb1-45f8-ab16-e2c82cfb21b1",
+  "title": "Number of Distinct Substrings in a String",
+  "slug": "number-of-distinct-substrings-in-a-string",
+  "description": "Given a string `s`, return _the number of **distinct** substrings of_ `s`.\n\nA **substring** of a string is obtained by deleting any number of characters (possibly zero) from the front of the string and any number (possibly zero) from the back of the string.\n\n**Example 1:**\n\n**Input:** s =  \"aabbaba \"\n**Output:** 21\n**Explanation:** The set of distinct strings is \\[ \"a \", \"b \", \"aa \", \"bb \", \"ab \", \"ba \", \"aab \", \"abb \", \"bab \", \"bba \", \"aba \", \"aabb \", \"abba \", \"bbab \", \"baba \", \"aabba \", \"abbab \", \"bbaba \", \"aabbab \", \"abbaba \", \"aabbaba \"\\]\n\n**Example 2:**\n\n**Input:** s =  \"abcdefg \"\n**Output:** 28\n\n**Constraints:**\n\n*   `1 <= s.length <= 500`\n*   `s` consists of lowercase English letters.\n\n**Follow up:** Can you solve this problem in `O(n)` time complexity?",
+  "difficulty": "Medium",
+  "category": null,
+  "xpReward": 0,
+  "timeLimitMs": 5000,
+  "memoryLimitMb": 256,
+  "starterCode": [],
+  "solutionCode": "",
+  "hints": [],
+  "isPremium": false,
+  "createdBy": null,
+  "testCases": [
+    {
+      "input": [
+        "aabbaba "
+      ],
+      "expectedOutput": 21
+    },
+    {
+      "input": [
+        "abcdefg "
+      ],
+      "expectedOutput": "28\n\n**Constraints:**\n\n*   `1 <= s.length <= 500`\n*   `s` consists of lowercase English letters.\n\n**Follow up:** Can you solve this problem in `O(n)` time complexity?"
+    }
+  ],
+  "hiddenTestCases": [
+    {
+      "input": [
+        "aabbaba "
+      ],
+      "expectedOutput": 21
+    },
+    {
+      "input": [
+        "abcdefg "
+      ],
+      "expectedOutput": "28\n\n**Constraints:**\n\n*   `1 <= s.length <= 500`\n*   `s` consists of lowercase English letters.\n\n**Follow up:** Can you solve this problem in `O(n)` time complexity?"
+    }
+  ],
+  "tags": [],
+  "constraints": [],
+  "examples": [],
+  "createdAt": "2025-11-14T21:22:44.686436+00:00",
+  "updatedAt": "2025-12-04T04:37:03.807Z"
+}

@@ -1,0 +1,85 @@
+{
+  "id": "e136bcb5-16ef-4e6f-bf13-63d6970a5b96",
+  "title": "Steps to Make Array Non-decreasing",
+  "slug": "steps-to-make-array-non-decreasing",
+  "description": "You are given a **0-indexed** integer array `nums`. In one step, **remove** all elements `nums[i]` where `nums[i - 1] > nums[i]` for all `0 < i < nums.length`.\n\nReturn _the number of steps performed until_ `nums` _becomes a **non-decreasing** array_.\n\n**Example 1:**\n\n**Input:** nums = \\[5,3,4,4,7,3,6,11,8,5,11\\]\n**Output:** 3\n**Explanation:** The following are the steps performed:\n- Step 1: \\[5,**3**,4,4,7,**3**,6,11,**8**,**5**,11\\] becomes \\[5,4,4,7,6,11,11\\]\n- Step 2: \\[5,**4**,4,7,**6**,11,11\\] becomes \\[5,4,7,11,11\\]\n- Step 3: \\[5,**4**,7,11,11\\] becomes \\[5,7,11,11\\]\n\\[5,7,11,11\\] is a non-decreasing array. Therefore, we return 3.\n\n**Example 2:**\n\n**Input:** nums = \\[4,5,7,7,13\\]\n**Output:** 0\n**Explanation:** nums is already a non-decreasing array. Therefore, we return 0.\n\n**Constraints:**\n\n*   `1 <= nums.length <= 105`\n*   `1 <= nums[i] <= 109`",
+  "difficulty": "Medium",
+  "category": null,
+  "xpReward": 0,
+  "timeLimitMs": 5000,
+  "memoryLimitMb": 256,
+  "starterCode": [],
+  "solutionCode": "",
+  "hints": [],
+  "isPremium": false,
+  "createdBy": null,
+  "testCases": [
+    {
+      "input": [
+        [
+          5,
+          3,
+          4,
+          4,
+          7,
+          3,
+          6,
+          11,
+          8,
+          5,
+          11
+        ]
+      ],
+      "expectedOutput": 3
+    },
+    {
+      "input": [
+        [
+          4,
+          5,
+          7,
+          7,
+          13
+        ]
+      ],
+      "expectedOutput": 0
+    }
+  ],
+  "hiddenTestCases": [
+    {
+      "input": [
+        [
+          5,
+          3,
+          4,
+          4,
+          7,
+          3,
+          6,
+          11,
+          8,
+          5,
+          11
+        ]
+      ],
+      "expectedOutput": 3
+    },
+    {
+      "input": [
+        [
+          4,
+          5,
+          7,
+          7,
+          13
+        ]
+      ],
+      "expectedOutput": 0
+    }
+  ],
+  "tags": [],
+  "constraints": [],
+  "examples": [],
+  "createdAt": "2025-11-14T21:25:09.619929+00:00",
+  "updatedAt": "2025-12-04T04:35:54.425Z"
+}

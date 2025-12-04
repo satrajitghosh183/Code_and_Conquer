@@ -1,0 +1,121 @@
+{
+  "id": "ec5c499b-5707-428c-938d-601b19e22aab",
+  "title": "Check for Contradictions in Equations",
+  "slug": "check-for-contradictions-in-equations",
+  "description": "You are given a 2D array of strings `equations` and an array of real numbers `values`, where `equations[i] = [Ai, Bi]` and `values[i]` means that `Ai / Bi = values[i]`.\n\nDetermine if there exists a contradiction in the equations. Return `true` _if there is a contradiction, or_ `false` _otherwise_.\n\n**Note**:\n\n*   When checking if two numbers are equal, check that their **absolute difference** is less than `10-5`.\n*   The testcases are generated such that there are no cases targeting precision, i.e. using `double` is enough to solve the problem.\n\n**Example 1:**\n\n**Input:** equations = \\[\\[ \"a \", \"b \"\\],\\[ \"b \", \"c \"\\],\\[ \"a \", \"c \"\\]\\], values = \\[3,0.5,1.5\\]\n**Output:** false\n**Explanation:**\nThe given equations are: a / b = 3, b / c = 0.5, a / c = 1.5\nThere are no contradictions in the equations. One possible assignment to satisfy all equations is:\na = 3, b = 1 and c = 2.\n\n**Example 2:**\n\n**Input:** equations = \\[\\[ \"le \", \"et \"\\],\\[ \"le \", \"code \"\\],\\[ \"code \", \"et \"\\]\\], values = \\[2,5,0.5\\]\n**Output:** true\n**Explanation:**\nThe given equations are: le / et = 2, le / code = 5, code / et = 0.5\nBased on the first two equations, we get code / et = 0.4.\nSince the third equation is code / et = 0.5, we get a contradiction.\n\n**Constraints:**\n\n*   `1 <= equations.length <= 100`\n*   `equations[i].length == 2`\n*   `1 <= Ai.length, Bi.length <= 5`\n*   `Ai`, `Bi` consist of lowercase English letters.\n*   `equations.length == values.length`\n*   `0.0 < values[i] <= 10.0`\n*   `values[i]` has a maximum of 2 decimal places.",
+  "difficulty": "Hard",
+  "category": null,
+  "xpReward": 0,
+  "timeLimitMs": 5000,
+  "memoryLimitMb": 256,
+  "starterCode": [],
+  "solutionCode": "",
+  "hints": [],
+  "isPremium": false,
+  "createdBy": null,
+  "testCases": [
+    {
+      "input": [
+        [
+          [
+            "a ",
+            "b "
+          ],
+          [
+            "b ",
+            "c "
+          ],
+          [
+            "a ",
+            "c "
+          ]
+        ],
+        [
+          3,
+          0.5,
+          1.5
+        ]
+      ],
+      "expectedOutput": false
+    },
+    {
+      "input": [
+        [
+          [
+            "le ",
+            "et "
+          ],
+          [
+            "le ",
+            "code "
+          ],
+          [
+            "code ",
+            "et "
+          ]
+        ],
+        [
+          2,
+          5,
+          0.5
+        ]
+      ],
+      "expectedOutput": true
+    }
+  ],
+  "hiddenTestCases": [
+    {
+      "input": [
+        [
+          [
+            "a ",
+            "b "
+          ],
+          [
+            "b ",
+            "c "
+          ],
+          [
+            "a ",
+            "c "
+          ]
+        ],
+        [
+          3,
+          0.5,
+          1.5
+        ]
+      ],
+      "expectedOutput": false
+    },
+    {
+      "input": [
+        [
+          [
+            "le ",
+            "et "
+          ],
+          [
+            "le ",
+            "code "
+          ],
+          [
+            "code ",
+            "et "
+          ]
+        ],
+        [
+          2,
+          5,
+          0.5
+        ]
+      ],
+      "expectedOutput": true
+    }
+  ],
+  "tags": [],
+  "constraints": [],
+  "examples": [],
+  "createdAt": "2025-11-14T21:25:14.157196+00:00",
+  "updatedAt": "2025-12-04T04:35:52.247Z"
+}

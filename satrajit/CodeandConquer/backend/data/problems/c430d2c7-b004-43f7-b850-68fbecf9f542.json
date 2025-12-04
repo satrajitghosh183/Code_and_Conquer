@@ -1,0 +1,55 @@
+{
+  "id": "c430d2c7-b004-43f7-b850-68fbecf9f542",
+  "title": "Count Special Integers",
+  "slug": "count-special-integers",
+  "description": "We call a positive integer **special** if all of its digits are **distinct**.\n\nGiven a **positive** integer `n`, return _the number of special integers that belong to the interval_ `[1, n]`.\n\n**Example 1:**\n\n**Input:** n = 20\n**Output:** 19\n**Explanation:** All the integers from 1 to 20, except 11, are special. Thus, there are 19 special integers.\n\n**Example 2:**\n\n**Input:** n = 5\n**Output:** 5\n**Explanation:** All the integers from 1 to 5 are special.\n\n**Example 3:**\n\n**Input:** n = 135\n**Output:** 110\n**Explanation:** There are 110 integers from 1 to 135 that are special.\nSome of the integers that are not special are: 22, 114, and 131.\n\n**Constraints:**\n\n*   `1 <= n <= 2 * 109`",
+  "difficulty": "Hard",
+  "category": null,
+  "xpReward": 0,
+  "timeLimitMs": 5000,
+  "memoryLimitMb": 256,
+  "starterCode": [],
+  "solutionCode": "",
+  "hints": [],
+  "isPremium": false,
+  "createdBy": null,
+  "testCases": [
+    {
+      "input": [
+        20
+      ],
+      "expectedOutput": 19
+    },
+    {
+      "input": [
+        5
+      ],
+      "expectedOutput": 5
+    },
+    {
+      "input": [
+        135
+      ],
+      "expectedOutput": 110
+    }
+  ],
+  "hiddenTestCases": [
+    {
+      "input": [
+        20
+      ],
+      "expectedOutput": 19
+    },
+    {
+      "input": [
+        5
+      ],
+      "expectedOutput": 5
+    }
+  ],
+  "tags": [],
+  "constraints": [],
+  "examples": [],
+  "createdAt": "2025-11-14T21:25:30.757657+00:00",
+  "updatedAt": "2025-12-04T04:35:44.777Z"
+}

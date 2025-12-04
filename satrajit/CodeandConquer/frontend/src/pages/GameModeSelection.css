@@ -1,0 +1,603 @@
+.game-mode-page {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #000000 0%, #3e0000 50%, #7c0000 100%);
+  color: #fff;
+  padding: 20px;
+}
+
+.game-mode-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 32px;
+}
+
+.back-btn {
+  padding: 12px 24px;
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 8px;
+  color: #fff;
+  font-size: 16px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.back-btn:hover {
+  background: rgba(255, 255, 255, 0.15);
+  transform: translateX(-4px);
+}
+
+.player-stats {
+  display: flex;
+  gap: 12px;
+}
+
+.stat-badge {
+  padding: 10px 20px;
+  background: linear-gradient(135deg, rgba(248, 0, 0, 0.2) 0%, rgba(186, 0, 0, 0.2) 100%);
+  border: 1px solid #ba0000;
+  border-radius: 20px;
+  font-weight: 600;
+  font-size: 14px;
+}
+
+.game-mode-container {
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.game-mode-title {
+  text-align: center;
+  margin-bottom: 48px;
+}
+
+.game-mode-title h1 {
+  font-size: 48px;
+  font-weight: 800;
+  margin: 0 0 12px 0;
+  background: linear-gradient(135deg, #f80000 0%, #ba0000 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-shadow: 0 0 30px rgba(248, 0, 0, 0.3);
+}
+
+.game-mode-title p {
+  font-size: 18px;
+  color: #94a3b8;
+  margin: 0;
+}
+
+/* Selected Hero Display */
+.selected-hero-display {
+  margin-bottom: 40px;
+}
+
+.hero-card-compact {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  padding: 24px;
+  background: linear-gradient(135deg, #000000 0%, #3e0000 100%);
+  border: 2px solid #ba0000;
+  border-radius: 16px;
+  box-shadow: 0 8px 32px rgba(248, 0, 0, 0.4);
+}
+
+.hero-icon-large {
+  font-size: 80px;
+  filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.5));
+}
+
+.hero-info {
+  flex: 1;
+}
+
+.hero-info h3 {
+  margin: 0 0 6px 0;
+  font-size: 28px;
+  font-weight: 700;
+}
+
+.hero-language {
+  font-size: 16px;
+  color: #f80000;
+  font-weight: 600;
+  margin-bottom: 12px;
+}
+
+.hero-stats-compact {
+  display: flex;
+  gap: 20px;
+  font-size: 16px;
+}
+
+.hero-stats-compact span {
+  padding: 6px 14px;
+  background: rgba(0, 0, 0, 0.3);
+  border-radius: 8px;
+}
+
+.change-hero-btn {
+  padding: 12px 24px;
+  background: linear-gradient(135deg, #f80000 0%, #ba0000 100%);
+  border: none;
+  border-radius: 8px;
+  color: #000;
+  font-weight: 600;
+  font-size: 15px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.change-hero-btn:hover {
+  transform: scale(1.05);
+  box-shadow: 0 6px 20px rgba(248, 0, 0, 0.6);
+  background: linear-gradient(135deg, #ba0000 0%, #7c0000 100%);
+  color: #fff;
+}
+
+/* Loadout Summary */
+.loadout-summary {
+  margin-bottom: 40px;
+  padding: 28px;
+  background: linear-gradient(135deg, rgba(124, 0, 0, 0.2) 0%, rgba(62, 0, 0, 0.2) 100%);
+  border: 2px solid #7c0000;
+  border-radius: 16px;
+}
+
+.loadout-summary h3 {
+  margin: 0 0 20px 0;
+  font-size: 22px;
+  font-weight: 700;
+  color: #f80000;
+}
+
+.loadout-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 16px;
+  margin-bottom: 20px;
+}
+
+.loadout-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 16px;
+  background: rgba(0, 0, 0, 0.3);
+  border-radius: 10px;
+}
+
+.loadout-icon {
+  font-size: 32px;
+}
+
+.loadout-details {
+  flex: 1;
+}
+
+.loadout-label {
+  font-size: 12px;
+  color: #94a3b8;
+  font-weight: 500;
+  margin-bottom: 4px;
+}
+
+.loadout-value {
+  font-size: 20px;
+  font-weight: 700;
+  color: #fff;
+}
+
+.tech-tree-btn {
+  width: 100%;
+  padding: 14px;
+  background: linear-gradient(135deg, #f80000 0%, #ba0000 100%);
+  border: none;
+  border-radius: 10px;
+  color: #000;
+  font-weight: 700;
+  font-size: 16px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.tech-tree-btn:hover {
+  transform: scale(1.02);
+  box-shadow: 0 6px 24px rgba(248, 0, 0, 0.6);
+  background: linear-gradient(135deg, #ba0000 0%, #7c0000 100%);
+  color: #fff;
+}
+
+/* Game Modes Grid */
+.game-modes-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(450px, 1fr));
+  gap: 32px;
+  margin-bottom: 40px;
+}
+
+.game-mode-card {
+  padding: 40px;
+  background: linear-gradient(135deg, #000000 0%, #3e0000 100%);
+  border: 2px solid #7c0000;
+  border-radius: 20px;
+  transition: all 0.3s;
+  position: relative;
+  overflow: hidden;
+}
+
+.game-mode-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 5px;
+  background: linear-gradient(90deg, #ba0000 0%, #f80000 100%);
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.game-mode-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 16px 48px rgba(248, 0, 0, 0.6);
+  border-color: #ba0000;
+  background: linear-gradient(135deg, #3e0000 0%, #7c0000 100%);
+}
+
+.game-mode-card:hover::before {
+  opacity: 1;
+}
+
+.game-mode-card.multiplayer::before {
+  background: linear-gradient(90deg, #f80000 0%, #ba0000 100%);
+}
+
+.mode-icon {
+  font-size: 64px;
+  margin-bottom: 20px;
+  filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.3));
+}
+
+.game-mode-card h2 {
+  margin: 0 0 12px 0;
+  font-size: 32px;
+  font-weight: 800;
+}
+
+.game-mode-card p {
+  font-size: 16px;
+  color: #94a3b8;
+  margin: 0 0 24px 0;
+  line-height: 1.6;
+}
+
+.mode-features {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 28px 0;
+}
+
+.mode-features li {
+  font-size: 15px;
+  color: #cbd5e1;
+  padding: 10px 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.mode-features li:last-child {
+  border-bottom: none;
+}
+
+.mode-btn {
+  width: 100%;
+  padding: 16px;
+  border: none;
+  border-radius: 12px;
+  font-weight: 700;
+  font-size: 18px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.mode-btn.primary {
+  background: linear-gradient(135deg, #f80000 0%, #ba0000 100%);
+  color: #000;
+}
+
+.game-mode-card.multiplayer .mode-btn.primary {
+  background: linear-gradient(135deg, #ba0000 0%, #7c0000 100%);
+  color: #fff;
+}
+
+.mode-btn:hover {
+  transform: scale(1.05);
+  box-shadow: 0 8px 24px rgba(248, 0, 0, 0.8);
+  background: linear-gradient(135deg, #ba0000 0%, #7c0000 100%);
+  color: #fff;
+}
+
+/* Quick Stats */
+.quick-stats {
+  display: flex;
+  justify-content: center;
+  gap: 40px;
+  padding: 32px;
+  background: linear-gradient(135deg, rgba(62, 0, 0, 0.5) 0%, rgba(0, 0, 0, 0.5) 100%);
+  border-radius: 16px;
+  border: 1px solid #7c0000;
+}
+
+.quick-stat {
+  text-align: center;
+}
+
+.quick-stat-label {
+  font-size: 13px;
+  color: #94a3b8;
+  font-weight: 500;
+  margin-bottom: 8px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.quick-stat-value {
+  font-size: 32px;
+  font-weight: 800;
+  background: linear-gradient(135deg, #f80000 0%, #ba0000 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* Loading */
+.loading-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 60vh;
+}
+
+.loading-spinner {
+  font-size: 24px;
+  color: #f80000;
+  font-weight: 600;
+}
+
+/* ==================== RESPONSIVE STYLES ==================== */
+
+@media (max-width: 1200px) {
+  .game-modes-grid {
+    grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
+    gap: 24px;
+  }
+
+  .game-mode-card {
+    padding: 32px;
+  }
+}
+
+@media (max-width: 1024px) {
+  .game-mode-page {
+    padding: 16px;
+  }
+
+  .game-mode-header {
+    flex-direction: column;
+    gap: 16px;
+    align-items: flex-start;
+  }
+
+  .player-stats {
+    width: 100%;
+    flex-wrap: wrap;
+  }
+
+  .game-modes-grid {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+
+  .game-mode-card {
+    padding: 28px;
+  }
+
+  .mode-icon {
+    font-size: 56px;
+    margin-bottom: 16px;
+  }
+
+  .game-mode-card h2 {
+    font-size: 26px;
+  }
+}
+
+@media (max-width: 768px) {
+  .game-mode-page {
+    padding: 12px;
+  }
+
+  .game-mode-title {
+    margin-bottom: 32px;
+  }
+
+  .game-mode-title h1 {
+    font-size: 32px;
+  }
+
+  .game-mode-title p {
+    font-size: 16px;
+  }
+
+  .back-btn {
+    padding: 10px 20px;
+    font-size: 14px;
+  }
+
+  .stat-badge {
+    padding: 8px 14px;
+    font-size: 13px;
+  }
+
+  .hero-card-compact {
+    flex-direction: column;
+    text-align: center;
+    padding: 20px;
+    gap: 16px;
+  }
+
+  .hero-icon-large {
+    font-size: 64px;
+  }
+
+  .hero-info h3 {
+    font-size: 22px;
+  }
+
+  .hero-stats-compact {
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 12px;
+  }
+
+  .hero-stats-compact span {
+    padding: 5px 12px;
+    font-size: 14px;
+  }
+
+  .loadout-summary {
+    padding: 20px;
+    margin-bottom: 28px;
+  }
+
+  .loadout-summary h3 {
+    font-size: 18px;
+    margin-bottom: 16px;
+  }
+
+  .loadout-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+  }
+
+  .loadout-item {
+    padding: 12px;
+    gap: 10px;
+  }
+
+  .loadout-icon {
+    font-size: 26px;
+  }
+
+  .loadout-value {
+    font-size: 16px;
+  }
+
+  .game-mode-card {
+    padding: 24px;
+  }
+
+  .game-mode-card h2 {
+    font-size: 24px;
+    margin-bottom: 8px;
+  }
+
+  .game-mode-card p {
+    font-size: 14px;
+    margin-bottom: 16px;
+  }
+
+  .mode-features li {
+    font-size: 14px;
+    padding: 8px 0;
+  }
+
+  .mode-btn {
+    padding: 14px;
+    font-size: 16px;
+  }
+
+  .quick-stats {
+    flex-direction: column;
+    gap: 16px;
+    padding: 24px;
+  }
+
+  .quick-stat-value {
+    font-size: 26px;
+  }
+
+  .quick-stat-label {
+    font-size: 12px;
+  }
+}
+
+@media (max-width: 480px) {
+  .game-mode-page {
+    padding: 10px;
+  }
+
+  .game-mode-title h1 {
+    font-size: 26px;
+  }
+
+  .game-mode-title p {
+    font-size: 14px;
+  }
+
+  .player-stats {
+    gap: 8px;
+  }
+
+  .stat-badge {
+    padding: 6px 12px;
+    font-size: 12px;
+  }
+
+  .hero-icon-large {
+    font-size: 56px;
+  }
+
+  .hero-info h3 {
+    font-size: 20px;
+  }
+
+  .hero-language {
+    font-size: 14px;
+  }
+
+  .loadout-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .loadout-item {
+    padding: 14px;
+  }
+
+  .game-mode-card {
+    padding: 20px;
+    border-radius: 16px;
+  }
+
+  .mode-icon {
+    font-size: 48px;
+    margin-bottom: 12px;
+  }
+
+  .game-mode-card h2 {
+    font-size: 20px;
+  }
+
+  .mode-btn {
+    padding: 12px;
+    font-size: 14px;
+    border-radius: 10px;
+  }
+
+  .quick-stats {
+    padding: 20px;
+    border-radius: 12px;
+  }
+}
+

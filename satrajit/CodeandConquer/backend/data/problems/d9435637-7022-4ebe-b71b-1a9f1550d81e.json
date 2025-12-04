@@ -1,0 +1,170 @@
+{
+  "id": "d9435637-7022-4ebe-b71b-1a9f1550d81e",
+  "title": "Last Day Where You Can Still Cross",
+  "slug": "last-day-where-you-can-still-cross",
+  "description": "There is a **1-based** binary matrix where `0` represents land and `1` represents water. You are given integers `row` and `col` representing the number of rows and columns in the matrix, respectively.\n\nInitially on day `0`, the **entire** matrix is **land**. However, each day a new cell becomes flooded with **water**. You are given a **1-based** 2D array `cells`, where `cells[i] = [ri, ci]` represents that on the `ith` day, the cell on the `rith` row and `cith` column (**1-based** coordinates) will be covered with **water** (i.e., changed to `1`).\n\nYou want to find the **last** day that it is possible to walk from the **top** to the **bottom** by only walking on land cells. You can start from **any** cell in the top row and end at **any** cell in the bottom row. You can only travel in the **four** cardinal directions (left, right, up, and down).\n\nReturn _the **last** day where it is possible to walk from the **top** to the **bottom** by only walking on land cells_.\n\n**Example 1:**\n\n**Input:** row = 2, col = 2, cells = \\[\\[1,1\\],\\[2,1\\],\\[1,2\\],\\[2,2\\]\\]\n**Output:** 2\n**Explanation:** The above image depicts how the matrix changes each day starting from day 0.\nThe last day where it is possible to cross from top to bottom is on day 2.\n\n**Example 2:**\n\n**Input:** row = 2, col = 2, cells = \\[\\[1,1\\],\\[1,2\\],\\[2,1\\],\\[2,2\\]\\]\n**Output:** 1\n**Explanation:** The above image depicts how the matrix changes each day starting from day 0.\nThe last day where it is possible to cross from top to bottom is on day 1.\n\n**Example 3:**\n\n**Input:** row = 3, col = 3, cells = \\[\\[1,2\\],\\[2,1\\],\\[3,3\\],\\[2,2\\],\\[1,1\\],\\[1,3\\],\\[2,3\\],\\[3,2\\],\\[3,1\\]\\]\n**Output:** 3\n**Explanation:** The above image depicts how the matrix changes each day starting from day 0.\nThe last day where it is possible to cross from top to bottom is on day 3.\n\n**Constraints:**\n\n*   `2 <= row, col <= 2 * 104`\n*   `4 <= row * col <= 2 * 104`\n*   `cells.length == row * col`\n*   `1 <= ri <= row`\n*   `1 <= ci <= col`\n*   All the values of `cells` are **unique**.",
+  "difficulty": "Hard",
+  "category": null,
+  "xpReward": 0,
+  "timeLimitMs": 5000,
+  "memoryLimitMb": 256,
+  "starterCode": [],
+  "solutionCode": "",
+  "hints": [],
+  "isPremium": false,
+  "createdBy": null,
+  "testCases": [
+    {
+      "input": [
+        2,
+        2,
+        [
+          [
+            1,
+            1
+          ],
+          [
+            2,
+            1
+          ],
+          [
+            1,
+            2
+          ],
+          [
+            2,
+            2
+          ]
+        ]
+      ],
+      "expectedOutput": 2
+    },
+    {
+      "input": [
+        2,
+        2,
+        [
+          [
+            1,
+            1
+          ],
+          [
+            1,
+            2
+          ],
+          [
+            2,
+            1
+          ],
+          [
+            2,
+            2
+          ]
+        ]
+      ],
+      "expectedOutput": 1
+    },
+    {
+      "input": [
+        3,
+        3,
+        [
+          [
+            1,
+            2
+          ],
+          [
+            2,
+            1
+          ],
+          [
+            3,
+            3
+          ],
+          [
+            2,
+            2
+          ],
+          [
+            1,
+            1
+          ],
+          [
+            1,
+            3
+          ],
+          [
+            2,
+            3
+          ],
+          [
+            3,
+            2
+          ],
+          [
+            3,
+            1
+          ]
+        ]
+      ],
+      "expectedOutput": 3
+    }
+  ],
+  "hiddenTestCases": [
+    {
+      "input": [
+        2,
+        2,
+        [
+          [
+            1,
+            1
+          ],
+          [
+            2,
+            1
+          ],
+          [
+            1,
+            2
+          ],
+          [
+            2,
+            2
+          ]
+        ]
+      ],
+      "expectedOutput": 2
+    },
+    {
+      "input": [
+        2,
+        2,
+        [
+          [
+            1,
+            1
+          ],
+          [
+            1,
+            2
+          ],
+          [
+            2,
+            1
+          ],
+          [
+            2,
+            2
+          ]
+        ]
+      ],
+      "expectedOutput": 1
+    }
+  ],
+  "tags": [],
+  "constraints": [],
+  "examples": [],
+  "createdAt": "2025-11-14T21:23:50.858406+00:00",
+  "updatedAt": "2025-12-04T04:36:28.325Z"
+}

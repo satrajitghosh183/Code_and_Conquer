@@ -1,0 +1,169 @@
+{
+  "id": "cfb610de-a58e-423e-9518-c8ee54736448",
+  "title": "Minimum Number of People to Teach",
+  "slug": "minimum-number-of-people-to-teach",
+  "description": "On a social network consisting of `m` users and some friendships between users, two users can communicate with each other if they know a common language.\n\nYou are given an integer `n`, an array `languages`, and an array `friendships` where:\n\n*   There are `n` languages numbered `1` through `n`,\n*   `languages[i]` is the set of languages the `i​​​​​​th`​​​​ user knows, and\n*   `friendships[i] = [u​​​​​​i​​​, v​​​​​​i]` denotes a friendship between the users `u​​​​​​​​​​​i`​​​​​ and `vi`.\n\nYou can choose **one** language and teach it to some users so that all friends can communicate with each other. Return _the_ _**minimum**_ _number of users you need to teach._\n\nNote that friendships are not transitive, meaning if `x` is a friend of `y` and `y` is a friend of `z`, this doesn't guarantee that `x` is a friend of `z`.\n\n**Example 1:**\n\n**Input:** n = 2, languages = \\[\\[1\\],\\[2\\],\\[1,2\\]\\], friendships = \\[\\[1,2\\],\\[1,3\\],\\[2,3\\]\\]\n**Output:** 1\n**Explanation:** You can either teach user 1 the second language or user 2 the first language.\n\n**Example 2:**\n\n**Input:** n = 3, languages = \\[\\[2\\],\\[1,3\\],\\[1,2\\],\\[3\\]\\], friendships = \\[\\[1,4\\],\\[1,2\\],\\[3,4\\],\\[2,3\\]\\]\n**Output:** 2\n**Explanation:** Teach the third language to users 1 and 3, yielding two users to teach.\n\n**Constraints:**\n\n*   `2 <= n <= 500`\n*   `languages.length == m`\n*   `1 <= m <= 500`\n*   `1 <= languages[i].length <= n`\n*   `1 <= languages[i][j] <= n`\n*   `1 <= u​​​​​​i < v​​​​​​i <= languages.length`\n*   `1 <= friendships.length <= 500`\n*   All tuples `(u​​​​​i, v​​​​​​i)` are unique\n*   `languages[i]` contains only unique values",
+  "difficulty": "Medium",
+  "category": null,
+  "xpReward": 0,
+  "timeLimitMs": 5000,
+  "memoryLimitMb": 256,
+  "starterCode": [],
+  "solutionCode": "",
+  "hints": [],
+  "isPremium": false,
+  "createdBy": null,
+  "testCases": [
+    {
+      "input": [
+        2,
+        [
+          [
+            1
+          ],
+          [
+            2
+          ],
+          [
+            1,
+            2
+          ]
+        ],
+        [
+          [
+            1,
+            2
+          ],
+          [
+            1,
+            3
+          ],
+          [
+            2,
+            3
+          ]
+        ]
+      ],
+      "expectedOutput": 1
+    },
+    {
+      "input": [
+        3,
+        [
+          [
+            2
+          ],
+          [
+            1,
+            3
+          ],
+          [
+            1,
+            2
+          ],
+          [
+            3
+          ]
+        ],
+        [
+          [
+            1,
+            4
+          ],
+          [
+            1,
+            2
+          ],
+          [
+            3,
+            4
+          ],
+          [
+            2,
+            3
+          ]
+        ]
+      ],
+      "expectedOutput": 2
+    }
+  ],
+  "hiddenTestCases": [
+    {
+      "input": [
+        2,
+        [
+          [
+            1
+          ],
+          [
+            2
+          ],
+          [
+            1,
+            2
+          ]
+        ],
+        [
+          [
+            1,
+            2
+          ],
+          [
+            1,
+            3
+          ],
+          [
+            2,
+            3
+          ]
+        ]
+      ],
+      "expectedOutput": 1
+    },
+    {
+      "input": [
+        3,
+        [
+          [
+            2
+          ],
+          [
+            1,
+            3
+          ],
+          [
+            1,
+            2
+          ],
+          [
+            3
+          ]
+        ],
+        [
+          [
+            1,
+            4
+          ],
+          [
+            1,
+            2
+          ],
+          [
+            3,
+            4
+          ],
+          [
+            2,
+            3
+          ]
+        ]
+      ],
+      "expectedOutput": 2
+    }
+  ],
+  "tags": [],
+  "constraints": [],
+  "examples": [],
+  "createdAt": "2025-11-14T21:22:53.136435+00:00",
+  "updatedAt": "2025-12-04T04:36:58.505Z"
+}

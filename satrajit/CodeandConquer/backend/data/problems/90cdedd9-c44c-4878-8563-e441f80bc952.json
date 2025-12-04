@@ -1,0 +1,60 @@
+{
+  "id": "90cdedd9-c44c-4878-8563-e441f80bc952",
+  "title": "Maximum Repeating Substring",
+  "slug": "maximum-repeating-substring",
+  "description": "For a string `sequence`, a string `word` is **`k`\\-repeating** if `word` concatenated `k` times is a substring of `sequence`. The `word`'s **maximum `k`\\-repeating value** is the highest value `k` where `word` is `k`\\-repeating in `sequence`. If `word` is not a substring of `sequence`, `word`'s maximum `k`\\-repeating value is `0`.\n\nGiven strings `sequence` and `word`, return _the **maximum `k`\\-repeating value** of `word` in `sequence`_.\n\n**Example 1:**\n\n**Input:** sequence =  \"ababc \", word =  \"ab \"\n**Output:** 2\n**Explanation: ** \"abab \" is a substring in  \"ababc \".\n\n**Example 2:**\n\n**Input:** sequence =  \"ababc \", word =  \"ba \"\n**Output:** 1\n**Explanation: ** \"ba \" is a substring in  \"ababc \".  \"baba \" is not a substring in  \"ababc \".\n\n**Example 3:**\n\n**Input:** sequence =  \"ababc \", word =  \"ac \"\n**Output:** 0\n**Explanation: ** \"ac \" is not a substring in  \"ababc \". \n\n**Constraints:**\n\n*   `1 <= sequence.length <= 100`\n*   `1 <= word.length <= 100`\n*   `sequence` and `word` contains only lowercase English letters.",
+  "difficulty": "Easy",
+  "category": null,
+  "xpReward": 0,
+  "timeLimitMs": 5000,
+  "memoryLimitMb": 256,
+  "starterCode": [],
+  "solutionCode": "",
+  "hints": [],
+  "isPremium": false,
+  "createdBy": null,
+  "testCases": [
+    {
+      "input": [
+        "ababc ",
+        "ab "
+      ],
+      "expectedOutput": 2
+    },
+    {
+      "input": [
+        "ababc ",
+        "ba "
+      ],
+      "expectedOutput": 1
+    },
+    {
+      "input": [
+        "ababc ",
+        "ac "
+      ],
+      "expectedOutput": 0
+    }
+  ],
+  "hiddenTestCases": [
+    {
+      "input": [
+        "ababc ",
+        "ab "
+      ],
+      "expectedOutput": 2
+    },
+    {
+      "input": [
+        "ababc ",
+        "ba "
+      ],
+      "expectedOutput": 1
+    }
+  ],
+  "tags": [],
+  "constraints": [],
+  "examples": [],
+  "createdAt": "2025-11-14T21:22:38.099143+00:00",
+  "updatedAt": "2025-12-04T04:37:07.769Z"
+}

@@ -1,0 +1,87 @@
+{
+  "id": "7fb37e63-6709-4aa2-aca8-5071094c06bd",
+  "title": "Number of Subsequences That Satisfy the Given Sum Condition",
+  "slug": "number-of-subsequences-that-satisfy-the-given-sum-condition",
+  "description": "You are given an array of integers `nums` and an integer `target`.\n\nReturn _the number of **non-empty** subsequences of_ `nums` _such that the sum of the minimum and maximum element on it is less or equal to_ `target`. Since the answer may be too large, return it **modulo** `109 + 7`.\n\n**Example 1:**\n\n**Input:** nums = \\[3,5,6,7\\], target = 9\n**Output:** 4\n**Explanation:** There are 4 subsequences that satisfy the condition.\n\\[3\\] -> Min value + max value <= target (3 + 3 <= 9)\n\\[3,5\\] -> (3 + 5 <= 9)\n\\[3,5,6\\] -> (3 + 6 <= 9)\n\\[3,6\\] -> (3 + 6 <= 9)\n\n**Example 2:**\n\n**Input:** nums = \\[3,3,6,8\\], target = 10\n**Output:** 6\n**Explanation:** There are 6 subsequences that satisfy the condition. (nums can have repeated numbers).\n\\[3\\] , \\[3\\] , \\[3,3\\], \\[3,6\\] , \\[3,6\\] , \\[3,3,6\\]\n\n**Example 3:**\n\n**Input:** nums = \\[2,3,3,4,6,7\\], target = 12\n**Output:** 61\n**Explanation:** There are 63 non-empty subsequences, two of them do not satisfy the condition (\\[6,7\\], \\[7\\]).\nNumber of valid subsequences (63 - 2 = 61).\n\n**Constraints:**\n\n*   `1 <= nums.length <= 105`\n*   `1 <= nums[i] <= 106`\n*   `1 <= target <= 106`",
+  "difficulty": "Medium",
+  "category": null,
+  "xpReward": 0,
+  "timeLimitMs": 5000,
+  "memoryLimitMb": 256,
+  "starterCode": [],
+  "solutionCode": "",
+  "hints": [],
+  "isPremium": false,
+  "createdBy": null,
+  "testCases": [
+    {
+      "input": [
+        [
+          3,
+          5,
+          6,
+          7
+        ],
+        9
+      ],
+      "expectedOutput": 4
+    },
+    {
+      "input": [
+        [
+          3,
+          3,
+          6,
+          8
+        ],
+        10
+      ],
+      "expectedOutput": 6
+    },
+    {
+      "input": [
+        [
+          2,
+          3,
+          3,
+          4,
+          6,
+          7
+        ],
+        12
+      ],
+      "expectedOutput": 61
+    }
+  ],
+  "hiddenTestCases": [
+    {
+      "input": [
+        [
+          3,
+          5,
+          6,
+          7
+        ],
+        9
+      ],
+      "expectedOutput": 4
+    },
+    {
+      "input": [
+        [
+          3,
+          3,
+          6,
+          8
+        ],
+        10
+      ],
+      "expectedOutput": 6
+    }
+  ],
+  "tags": [],
+  "constraints": [],
+  "examples": [],
+  "createdAt": "2025-11-14T21:21:38.33156+00:00",
+  "updatedAt": "2025-12-04T04:37:22.192Z"
+}

@@ -1,0 +1,133 @@
+{
+  "id": "124bb310-eea4-4b08-8433-018fa0f1c5c5",
+  "title": "Widest Vertical Area Between Two Points Containing No Points",
+  "slug": "widest-vertical-area-between-two-points-containing-no-points",
+  "description": "Given `n` `points` on a 2D plane where `points[i] = [xi, yi]`, Return _the **widest vertical area** between two points such that no points are inside the area._\n\nA **vertical area** is an area of fixed-width extending infinitely along the y-axis (i.e., infinite height). The **widest vertical area** is the one with the maximum width.\n\nNote that points **on the edge** of a vertical area **are not** considered included in the area.\n\n**Example 1:**\n\n​\n\n**Input:** points = \\[\\[8,7\\],\\[9,9\\],\\[7,4\\],\\[9,7\\]\\]\n**Output:** 1\n**Explanation:** Both the red and the blue area are optimal.\n\n**Example 2:**\n\n**Input:** points = \\[\\[3,1\\],\\[9,0\\],\\[1,0\\],\\[1,4\\],\\[5,3\\],\\[8,8\\]\\]\n**Output:** 3\n\n**Constraints:**\n\n*   `n == points.length`\n*   `2 <= n <= 105`\n*   `points[i].length == 2`\n*   `0 <= xi, yi <= 109`",
+  "difficulty": "Medium",
+  "category": null,
+  "xpReward": 0,
+  "timeLimitMs": 5000,
+  "memoryLimitMb": 256,
+  "starterCode": [],
+  "solutionCode": "",
+  "hints": [],
+  "isPremium": false,
+  "createdBy": null,
+  "testCases": [
+    {
+      "input": [
+        [
+          [
+            8,
+            7
+          ],
+          [
+            9,
+            9
+          ],
+          [
+            7,
+            4
+          ],
+          [
+            9,
+            7
+          ]
+        ]
+      ],
+      "expectedOutput": 1
+    },
+    {
+      "input": [
+        [
+          [
+            3,
+            1
+          ],
+          [
+            9,
+            0
+          ],
+          [
+            1,
+            0
+          ],
+          [
+            1,
+            4
+          ],
+          [
+            5,
+            3
+          ],
+          [
+            8,
+            8
+          ]
+        ]
+      ],
+      "expectedOutput": "3\n\n**Constraints:**\n\n*   `n == points.length`\n*   `2 <= n <= 105`\n*   `points[i].length == 2`\n*   `0 <= xi, yi <= 109`"
+    }
+  ],
+  "hiddenTestCases": [
+    {
+      "input": [
+        [
+          [
+            8,
+            7
+          ],
+          [
+            9,
+            9
+          ],
+          [
+            7,
+            4
+          ],
+          [
+            9,
+            7
+          ]
+        ]
+      ],
+      "expectedOutput": 1
+    },
+    {
+      "input": [
+        [
+          [
+            3,
+            1
+          ],
+          [
+            9,
+            0
+          ],
+          [
+            1,
+            0
+          ],
+          [
+            1,
+            4
+          ],
+          [
+            5,
+            3
+          ],
+          [
+            8,
+            8
+          ]
+        ]
+      ],
+      "expectedOutput": "3\n\n**Constraints:**\n\n*   `n == points.length`\n*   `2 <= n <= 105`\n*   `points[i].length == 2`\n*   `0 <= xi, yi <= 109`"
+    }
+  ],
+  "tags": [],
+  "constraints": [],
+  "examples": [],
+  "createdAt": "2025-11-14T21:22:31.109511+00:00",
+  "updatedAt": "2025-12-04T04:37:10.383Z"
+}

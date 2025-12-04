@@ -1,0 +1,90 @@
+{
+  "id": "435e2548-6570-4975-bb09-0717eb86e0c5",
+  "title": "Shortest Distance to Target String in a Circular Array",
+  "slug": "shortest-distance-to-target-string-in-a-circular-array",
+  "description": "You are given a **0-indexed** **circular** string array `words` and a string `target`. A **circular array** means that the array's end connects to the array's beginning.\n\n*   Formally, the next element of `words[i]` is `words[(i + 1) % n]` and the previous element of `words[i]` is `words[(i - 1 + n) % n]`, where `n` is the length of `words`.\n\nStarting from `startIndex`, you can move to either the next word or the previous word with `1` step at a time.\n\nReturn _the **shortest** distance needed to reach the string_ `target`. If the string `target` does not exist in `words`, return `-1`.\n\n**Example 1:**\n\n**Input:** words = \\[ \"hello \", \"i \", \"am \", \"leetcode \", \"hello \"\\], target =  \"hello \", startIndex = 1\n**Output:** 1\n**Explanation:** We start from index 1 and can reach  \"hello \" by\n- moving 3 units to the right to reach index 4.\n- moving 2 units to the left to reach index 4.\n- moving 4 units to the right to reach index 0.\n- moving 1 unit to the left to reach index 0.\nThe shortest distance to reach  \"hello \" is 1.\n\n**Example 2:**\n\n**Input:** words = \\[ \"a \", \"b \", \"leetcode \"\\], target =  \"leetcode \", startIndex = 0\n**Output:** 1\n**Explanation:** We start from index 0 and can reach  \"leetcode \" by\n- moving 2 units to the right to reach index 3.\n- moving 1 unit to the left to reach index 3.\nThe shortest distance to reach  \"leetcode \" is 1.\n\n**Example 3:**\n\n**Input:** words = \\[ \"i \", \"eat \", \"leetcode \"\\], target =  \"ate \", startIndex = 0\n**Output:** -1\n**Explanation:** Since  \"ate \" does not exist in `words`, we return -1.\n\n**Constraints:**\n\n*   `1 <= words.length <= 100`\n*   `1 <= words[i].length <= 100`\n*   `words[i]` and `target` consist of only lowercase English letters.\n*   `0 <= startIndex < words.length`",
+  "difficulty": "Easy",
+  "category": null,
+  "xpReward": 0,
+  "timeLimitMs": 5000,
+  "memoryLimitMb": 256,
+  "starterCode": {},
+  "solutionCode": "",
+  "hints": [],
+  "isPremium": false,
+  "createdBy": null,
+  "testCases": [
+    {
+      "input": [
+        [
+          "hello ",
+          "i ",
+          "am ",
+          "leetcode ",
+          "hello "
+        ],
+        "hello ",
+        1
+      ],
+      "expectedOutput": 1
+    },
+    {
+      "input": [
+        [
+          "a ",
+          "b ",
+          "leetcode "
+        ],
+        "leetcode ",
+        0
+      ],
+      "expectedOutput": 1
+    },
+    {
+      "input": [
+        [
+          "i ",
+          "eat ",
+          "leetcode "
+        ],
+        "ate ",
+        0
+      ],
+      "expectedOutput": -1
+    }
+  ],
+  "hiddenTestCases": [
+    {
+      "input": [
+        [
+          "hello ",
+          "i ",
+          "am ",
+          "leetcode ",
+          "hello "
+        ],
+        "hello ",
+        1
+      ],
+      "expectedOutput": 1
+    },
+    {
+      "input": [
+        [
+          "a ",
+          "b ",
+          "leetcode "
+        ],
+        "leetcode ",
+        0
+      ],
+      "expectedOutput": 1
+    }
+  ],
+  "tags": [],
+  "constraints": [],
+  "examples": [],
+  "problemNumber": null,
+  "createdAt": "2025-11-14T21:26:07.700995+00:00",
+  "updatedAt": "2025-12-04T04:35:24.950Z"
+}

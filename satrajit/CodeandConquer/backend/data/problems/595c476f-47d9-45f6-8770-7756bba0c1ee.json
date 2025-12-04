@@ -1,0 +1,49 @@
+{
+  "id": "595c476f-47d9-45f6-8770-7756bba0c1ee",
+  "title": "Remove Letter To Equalize Frequency",
+  "slug": "remove-letter-to-equalize-frequency",
+  "description": "You are given a **0-indexed** string `word`, consisting of lowercase English letters. You need to select **one** index and **remove** the letter at that index from `word` so that the **frequency** of every letter present in `word` is equal.\n\nReturn `true` _if it is possible to remove one letter so that the frequency of all letters in_ `word` _are equal, and_ `false` _otherwise_.\n\n**Note:**\n\n*   The **frequency** of a letter `x` is the number of times it occurs in the string.\n*   You **must** remove exactly one letter and cannot chose to do nothing.\n\n**Example 1:**\n\n**Input:** word =  \"abcc \"\n**Output:** true\n**Explanation:** Select index 3 and delete it: word becomes  \"abc \" and each character has a frequency of 1.\n\n**Example 2:**\n\n**Input:** word =  \"aazz \"\n**Output:** false\n**Explanation:** We must delete a character, so either the frequency of  \"a \" is 1 and the frequency of  \"z \" is 2, or vice versa. It is impossible to make all present letters have equal frequency.\n\n**Constraints:**\n\n*   `2 <= word.length <= 100`\n*   `word` consists of lowercase English letters only.",
+  "difficulty": "Easy",
+  "category": null,
+  "xpReward": 0,
+  "timeLimitMs": 5000,
+  "memoryLimitMb": 256,
+  "starterCode": [],
+  "solutionCode": "",
+  "hints": [],
+  "isPremium": false,
+  "createdBy": null,
+  "testCases": [
+    {
+      "input": [
+        "abcc "
+      ],
+      "expectedOutput": true
+    },
+    {
+      "input": [
+        "aazz "
+      ],
+      "expectedOutput": false
+    }
+  ],
+  "hiddenTestCases": [
+    {
+      "input": [
+        "abcc "
+      ],
+      "expectedOutput": true
+    },
+    {
+      "input": [
+        "aazz "
+      ],
+      "expectedOutput": false
+    }
+  ],
+  "tags": [],
+  "constraints": [],
+  "examples": [],
+  "createdAt": "2025-11-14T21:25:42.929436+00:00",
+  "updatedAt": "2025-12-04T04:35:38.694Z"
+}

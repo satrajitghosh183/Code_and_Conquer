@@ -1,0 +1,72 @@
+{
+  "id": "f2ec319f-d84d-4c69-a894-181c12dbf0b4",
+  "title": "Remove Stones to Minimize the Total",
+  "slug": "remove-stones-to-minimize-the-total",
+  "description": "You are given a **0-indexed** integer array `piles`, where `piles[i]` represents the number of stones in the `ith` pile, and an integer `k`. You should apply the following operation **exactly** `k` times:\n\n*   Choose any `piles[i]` and **remove** `floor(piles[i] / 2)` stones from it.\n\n**Notice** that you can apply the operation on the **same** pile more than once.\n\nReturn _the **minimum** possible total number of stones remaining after applying the_ `k` _operations_.\n\n`floor(x)` is the **greatest** integer that is **smaller** than or **equal** to `x` (i.e., rounds `x` down).\n\n**Example 1:**\n\n**Input:** piles = \\[5,4,9\\], k = 2\n**Output:** 12\n**Explanation:** Steps of a possible scenario are:\n- Apply the operation on pile 2. The resulting piles are \\[5,4,5\\].\n- Apply the operation on pile 0. The resulting piles are \\[3,4,5\\].\nThe total number of stones in \\[3,4,5\\] is 12.\n\n**Example 2:**\n\n**Input:** piles = \\[4,3,6,7\\], k = 3\n**Output:** 12\n**Explanation:** Steps of a possible scenario are:\n- Apply the operation on pile 2. The resulting piles are \\[4,3,3,7\\].\n- Apply the operation on pile 3. The resulting piles are \\[4,3,3,4\\].\n- Apply the operation on pile 0. The resulting piles are \\[2,3,3,4\\].\nThe total number of stones in \\[2,3,3,4\\] is 12.\n\n**Constraints:**\n\n*   `1 <= piles.length <= 105`\n*   `1 <= piles[i] <= 104`\n*   `1 <= k <= 105`",
+  "difficulty": "Medium",
+  "category": null,
+  "xpReward": 0,
+  "timeLimitMs": 5000,
+  "memoryLimitMb": 256,
+  "starterCode": {},
+  "solutionCode": "",
+  "hints": [],
+  "isPremium": false,
+  "createdBy": null,
+  "testCases": [
+    {
+      "input": [
+        [
+          5,
+          4,
+          9
+        ],
+        2
+      ],
+      "expectedOutput": 12
+    },
+    {
+      "input": [
+        [
+          4,
+          3,
+          6,
+          7
+        ],
+        3
+      ],
+      "expectedOutput": 12
+    }
+  ],
+  "hiddenTestCases": [
+    {
+      "input": [
+        [
+          5,
+          4,
+          9
+        ],
+        2
+      ],
+      "expectedOutput": 12
+    },
+    {
+      "input": [
+        [
+          4,
+          3,
+          6,
+          7
+        ],
+        3
+      ],
+      "expectedOutput": 12
+    }
+  ],
+  "tags": [],
+  "constraints": [],
+  "examples": [],
+  "problemNumber": null,
+  "createdAt": "2025-11-14T21:23:49.236458+00:00",
+  "updatedAt": "2025-12-04T04:36:29.090Z"
+}

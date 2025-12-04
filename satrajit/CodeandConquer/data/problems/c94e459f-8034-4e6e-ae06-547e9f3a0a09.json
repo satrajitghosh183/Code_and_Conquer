@@ -1,0 +1,50 @@
+{
+  "id": "c94e459f-8034-4e6e-ae06-547e9f3a0a09",
+  "title": "First Letter to Appear Twice",
+  "slug": "first-letter-to-appear-twice",
+  "description": "Given a string `s` consisting of lowercase English letters, return _the first letter to appear **twice**_.\n\n**Note**:\n\n*   A letter `a` appears twice before another letter `b` if the **second** occurrence of `a` is before the **second** occurrence of `b`.\n*   `s` will contain at least one letter that appears twice.\n\n**Example 1:**\n\n**Input:** s =  \"abccbaacz \"\n**Output:**  \"c \"\n**Explanation:**\nThe letter 'a' appears on the indexes 0, 5 and 6.\nThe letter 'b' appears on the indexes 1 and 4.\nThe letter 'c' appears on the indexes 2, 3 and 7.\nThe letter 'z' appears on the index 8.\nThe letter 'c' is the first letter to appear twice, because out of all the letters the index of its second occurrence is the smallest.\n\n**Example 2:**\n\n**Input:** s =  \"abcdd \"\n**Output:**  \"d \"\n**Explanation:**\nThe only letter that appears twice is 'd' so we return 'd'.\n\n**Constraints:**\n\n*   `2 <= s.length <= 100`\n*   `s` consists of lowercase English letters.\n*   `s` has at least one repeated letter.",
+  "difficulty": "Easy",
+  "category": null,
+  "xpReward": 0,
+  "timeLimitMs": 5000,
+  "memoryLimitMb": 256,
+  "starterCode": {},
+  "solutionCode": "",
+  "hints": [],
+  "isPremium": false,
+  "createdBy": null,
+  "testCases": [
+    {
+      "input": [
+        "abccbaacz "
+      ],
+      "expectedOutput": "c "
+    },
+    {
+      "input": [
+        "abcdd "
+      ],
+      "expectedOutput": "d "
+    }
+  ],
+  "hiddenTestCases": [
+    {
+      "input": [
+        "abccbaacz "
+      ],
+      "expectedOutput": "c "
+    },
+    {
+      "input": [
+        "abcdd "
+      ],
+      "expectedOutput": "d "
+    }
+  ],
+  "tags": [],
+  "constraints": [],
+  "examples": [],
+  "problemNumber": null,
+  "createdAt": "2025-11-14T21:25:24.506421+00:00",
+  "updatedAt": "2025-12-04T04:35:47.517Z"
+}

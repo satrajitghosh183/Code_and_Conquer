@@ -1,0 +1,121 @@
+{
+  "id": "db5a331c-f3fe-4e24-b16f-a18115c1d7e2",
+  "title": "Diameter of N-Ary Tree",
+  "slug": "diameter-of-n-ary-tree",
+  "description": "Given a `root` of an [N-ary tree](https://leetcode.com/articles/introduction-to-n-ary-trees/), you need to compute the length of the diameter of the tree.\n\nThe diameter of an N-ary tree is the length of the **longest** path between any two nodes in the tree. This path may or may not pass through the root.\n\n(_Nary-Tree input serialization is represented in their level order traversal, each group of children is separated by the null value.)_\n\n**Example 1:**\n\n**Input:** root = \\[1,null,3,2,4,null,5,6\\]\n**Output:** 3\n**Explanation:** Diameter is shown in red color.\n\n**Example 2:**\n\n**Input:** root = \\[1,null,2,null,3,4,null,5,null,6\\]\n**Output:** 4\n\n**Example 3:**\n\n**Input:** root = \\[1,null,2,3,4,5,null,null,6,7,null,8,null,9,10,null,null,11,null,12,null,13,null,null,14\\]\n**Output:** 7\n\n**Constraints:**\n\n*   The depth of the n-ary tree is less than or equal to `1000`.\n*   The total number of nodes is between `[1, 104]`.",
+  "difficulty": "Medium",
+  "category": null,
+  "xpReward": 0,
+  "timeLimitMs": 5000,
+  "memoryLimitMb": 256,
+  "starterCode": [],
+  "solutionCode": "",
+  "hints": [],
+  "isPremium": false,
+  "createdBy": null,
+  "testCases": [
+    {
+      "input": [
+        [
+          1,
+          null,
+          3,
+          2,
+          4,
+          null,
+          5,
+          6
+        ]
+      ],
+      "expectedOutput": 3
+    },
+    {
+      "input": [
+        [
+          1,
+          null,
+          2,
+          null,
+          3,
+          4,
+          null,
+          5,
+          null,
+          6
+        ]
+      ],
+      "expectedOutput": 4
+    },
+    {
+      "input": [
+        [
+          1,
+          null,
+          2,
+          3,
+          4,
+          5,
+          null,
+          null,
+          6,
+          7,
+          null,
+          8,
+          null,
+          9,
+          10,
+          null,
+          null,
+          11,
+          null,
+          12,
+          null,
+          13,
+          null,
+          null,
+          14
+        ]
+      ],
+      "expectedOutput": "7\n\n**Constraints:**\n\n*   The depth of the n-ary tree is less than or equal to `1000`.\n*   The total number of nodes is between `[1, 104]`."
+    }
+  ],
+  "hiddenTestCases": [
+    {
+      "input": [
+        [
+          1,
+          null,
+          3,
+          2,
+          4,
+          null,
+          5,
+          6
+        ]
+      ],
+      "expectedOutput": 3
+    },
+    {
+      "input": [
+        [
+          1,
+          null,
+          2,
+          null,
+          3,
+          4,
+          null,
+          5,
+          null,
+          6
+        ]
+      ],
+      "expectedOutput": 4
+    }
+  ],
+  "tags": [],
+  "constraints": [],
+  "examples": [],
+  "createdAt": "2025-11-14T21:21:48.267015+00:00",
+  "updatedAt": "2025-12-04T04:37:20.213Z"
+}

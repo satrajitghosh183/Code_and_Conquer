@@ -1,0 +1,53 @@
+{
+  "id": "bb63ee3d-6228-4843-9295-9e5bbdb391c4",
+  "title": "Subsequence With the Minimum Score",
+  "slug": "subsequence-with-the-minimum-score",
+  "description": "You are given two strings `s` and `t`.\n\nYou are allowed to remove any number of characters from the string `t`.\n\nThe score of the string is `0` if no characters are removed from the string `t`, otherwise:\n\n*   Let `left` be the minimum index among all removed characters.\n*   Let `right` be the maximum index among all removed characters.\n\nThen the score of the string is `right - left + 1`.\n\nReturn _the minimum possible score to make_ `t` _a subsequence of_ `s`_._\n\nA **subsequence** of a string is a new string that is formed from the original string by deleting some (can be none) of the characters without disturbing the relative positions of the remaining characters. (i.e., `\"ace \"` is a subsequence of `\"abcde \"` while `\"aec \"` is not).\n\n**Example 1:**\n\n**Input:** s =  \"abacaba \", t =  \"bzaa \"\n**Output:** 1\n**Explanation:** In this example, we remove the character  \"z \" at index 1 (0-indexed).\nThe string t becomes  \"baa \" which is a subsequence of the string  \"abacaba \" and the score is 1 - 1 + 1 = 1.\nIt can be proven that 1 is the minimum score that we can achieve.\n\n**Example 2:**\n\n**Input:** s =  \"cde \", t =  \"xyz \"\n**Output:** 3\n**Explanation:** In this example, we remove characters  \"x \",  \"y \" and  \"z \" at indices 0, 1, and 2 (0-indexed).\nThe string t becomes  \" \" which is a subsequence of the string  \"cde \" and the score is 2 - 0 + 1 = 3.\nIt can be proven that 3 is the minimum score that we can achieve.\n\n**Constraints:**\n\n*   `1 <= s.length, t.length <= 105`\n*   `s` and `t` consist of only lowercase English letters.",
+  "difficulty": "Hard",
+  "category": null,
+  "xpReward": 0,
+  "timeLimitMs": 5000,
+  "memoryLimitMb": 256,
+  "starterCode": [],
+  "solutionCode": "",
+  "hints": [],
+  "isPremium": false,
+  "createdBy": null,
+  "testCases": [
+    {
+      "input": [
+        "abacaba ",
+        "bzaa "
+      ],
+      "expectedOutput": 1
+    },
+    {
+      "input": [
+        "cde ",
+        "xyz "
+      ],
+      "expectedOutput": 3
+    }
+  ],
+  "hiddenTestCases": [
+    {
+      "input": [
+        "abacaba ",
+        "bzaa "
+      ],
+      "expectedOutput": 1
+    },
+    {
+      "input": [
+        "cde ",
+        "xyz "
+      ],
+      "expectedOutput": 3
+    }
+  ],
+  "tags": [],
+  "constraints": [],
+  "examples": [],
+  "createdAt": "2025-11-14T21:26:23.363735+00:00",
+  "updatedAt": "2025-12-04T04:35:19.551Z"
+}

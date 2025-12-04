@@ -1,0 +1,102 @@
+{
+  "id": "1f132007-5ab4-4e7c-a113-4e9b4cf5aec7",
+  "title": "Number of Students Unable to Eat Lunch",
+  "slug": "number-of-students-unable-to-eat-lunch",
+  "description": "The school cafeteria offers circular and square sandwiches at lunch break, referred to by numbers `0` and `1` respectively. All students stand in a queue. Each student either prefers square or circular sandwiches.\n\nThe number of sandwiches in the cafeteria is equal to the number of students. The sandwiches are placed in a **stack**. At each step:\n\n*   If the student at the front of the queue **prefers** the sandwich on the top of the stack, they will **take it** and leave the queue.\n*   Otherwise, they will **leave it** and go to the queue's end.\n\nThis continues until none of the queue students want to take the top sandwich and are thus unable to eat.\n\nYou are given two integer arrays `students` and `sandwiches` where `sandwiches[i]` is the type of the `i​​​​​​th` sandwich in the stack (`i = 0` is the top of the stack) and `students[j]` is the preference of the `j​​​​​​th` student in the initial queue (`j = 0` is the front of the queue). Return _the number of students that are unable to eat._\n\n**Example 1:**\n\n**Input:** students = \\[1,1,0,0\\], sandwiches = \\[0,1,0,1\\]\n**Output:** 0 \n**Explanation:**\n- Front student leaves the top sandwich and returns to the end of the line making students = \\[1,0,0,1\\].\n- Front student leaves the top sandwich and returns to the end of the line making students = \\[0,0,1,1\\].\n- Front student takes the top sandwich and leaves the line making students = \\[0,1,1\\] and sandwiches = \\[1,0,1\\].\n- Front student leaves the top sandwich and returns to the end of the line making students = \\[1,1,0\\].\n- Front student takes the top sandwich and leaves the line making students = \\[1,0\\] and sandwiches = \\[0,1\\].\n- Front student leaves the top sandwich and returns to the end of the line making students = \\[0,1\\].\n- Front student takes the top sandwich and leaves the line making students = \\[1\\] and sandwiches = \\[1\\].\n- Front student takes the top sandwich and leaves the line making students = \\[\\] and sandwiches = \\[\\].\nHence all students are able to eat.\n\n**Example 2:**\n\n**Input:** students = \\[1,1,1,0,0,1\\], sandwiches = \\[1,0,0,0,1,1\\]\n**Output:** 3\n\n**Constraints:**\n\n*   `1 <= students.length, sandwiches.length <= 100`\n*   `students.length == sandwiches.length`\n*   `sandwiches[i]` is `0` or `1`.\n*   `students[i]` is `0` or `1`.",
+  "difficulty": "Easy",
+  "category": null,
+  "xpReward": 0,
+  "timeLimitMs": 5000,
+  "memoryLimitMb": 256,
+  "starterCode": {},
+  "solutionCode": "",
+  "hints": [],
+  "isPremium": false,
+  "createdBy": null,
+  "testCases": [
+    {
+      "input": [
+        [
+          1,
+          1,
+          0,
+          0
+        ],
+        [
+          0,
+          1,
+          0,
+          1
+        ]
+      ],
+      "expectedOutput": 0
+    },
+    {
+      "input": [
+        [
+          1,
+          1,
+          1,
+          0,
+          0,
+          1
+        ],
+        [
+          1,
+          0,
+          0,
+          0,
+          1,
+          1
+        ]
+      ],
+      "expectedOutput": "3\n\n**Constraints:**\n\n*   `1 <= students.length, sandwiches.length <= 100`\n*   `students.length == sandwiches.length`\n*   `sandwiches[i]` is `0` or `1`.\n*   `students[i]` is `0` or `1`."
+    }
+  ],
+  "hiddenTestCases": [
+    {
+      "input": [
+        [
+          1,
+          1,
+          0,
+          0
+        ],
+        [
+          0,
+          1,
+          0,
+          1
+        ]
+      ],
+      "expectedOutput": 0
+    },
+    {
+      "input": [
+        [
+          1,
+          1,
+          1,
+          0,
+          0,
+          1
+        ],
+        [
+          1,
+          0,
+          0,
+          0,
+          1,
+          1
+        ]
+      ],
+      "expectedOutput": "3\n\n**Constraints:**\n\n*   `1 <= students.length, sandwiches.length <= 100`\n*   `students.length == sandwiches.length`\n*   `sandwiches[i]` is `0` or `1`.\n*   `students[i]` is `0` or `1`."
+    }
+  ],
+  "tags": [],
+  "constraints": [],
+  "examples": [],
+  "problemNumber": null,
+  "createdAt": "2025-11-14T21:22:44.925865+00:00",
+  "updatedAt": "2025-12-04T04:37:03.636Z"
+}

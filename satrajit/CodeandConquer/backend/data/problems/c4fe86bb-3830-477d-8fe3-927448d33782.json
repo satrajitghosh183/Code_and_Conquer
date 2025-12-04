@@ -1,0 +1,71 @@
+{
+  "id": "c4fe86bb-3830-477d-8fe3-927448d33782",
+  "title": "Number of Subarrays With GCD Equal to K",
+  "slug": "number-of-subarrays-with-gcd-equal-to-k",
+  "description": "Given an integer array `nums` and an integer `k`, return _the number of **subarrays** of_ `nums` _where the greatest common divisor of the subarray's elements is_ `k`.\n\nA **subarray** is a contiguous non-empty sequence of elements within an array.\n\nThe **greatest common divisor of an array** is the largest integer that evenly divides all the array elements.\n\n**Example 1:**\n\n**Input:** nums = \\[9,3,1,2,6,3\\], k = 3\n**Output:** 4\n**Explanation:** The subarrays of nums where 3 is the greatest common divisor of all the subarray's elements are:\n- \\[9,**3**,1,2,6,3\\]\n- \\[9,3,1,2,6,**3**\\]\n- \\[**9,3**,1,2,6,3\\]\n- \\[9,3,1,2,**6,3**\\]\n\n**Example 2:**\n\n**Input:** nums = \\[4\\], k = 7\n**Output:** 0\n**Explanation:** There are no subarrays of nums where 7 is the greatest common divisor of all the subarray's elements.\n\n**Constraints:**\n\n*   `1 <= nums.length <= 1000`\n*   `1 <= nums[i], k <= 109`",
+  "difficulty": "Medium",
+  "category": null,
+  "xpReward": 0,
+  "timeLimitMs": 5000,
+  "memoryLimitMb": 256,
+  "starterCode": [],
+  "solutionCode": "",
+  "hints": [],
+  "isPremium": false,
+  "createdBy": null,
+  "testCases": [
+    {
+      "input": [
+        [
+          9,
+          3,
+          1,
+          2,
+          6,
+          3
+        ],
+        3
+      ],
+      "expectedOutput": 4
+    },
+    {
+      "input": [
+        [
+          4
+        ],
+        7
+      ],
+      "expectedOutput": 0
+    }
+  ],
+  "hiddenTestCases": [
+    {
+      "input": [
+        [
+          9,
+          3,
+          1,
+          2,
+          6,
+          3
+        ],
+        3
+      ],
+      "expectedOutput": 4
+    },
+    {
+      "input": [
+        [
+          4
+        ],
+        7
+      ],
+      "expectedOutput": 0
+    }
+  ],
+  "tags": [],
+  "constraints": [],
+  "examples": [],
+  "createdAt": "2025-11-14T21:25:50.567479+00:00",
+  "updatedAt": "2025-12-04T04:35:35.223Z"
+}

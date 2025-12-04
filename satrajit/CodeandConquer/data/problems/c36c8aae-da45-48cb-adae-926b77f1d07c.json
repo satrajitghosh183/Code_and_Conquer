@@ -1,0 +1,98 @@
+{
+  "id": "c36c8aae-da45-48cb-adae-926b77f1d07c",
+  "title": "Closest Dessert Cost",
+  "slug": "closest-dessert-cost",
+  "description": "You would like to make dessert and are preparing to buy the ingredients. You have `n` ice cream base flavors and `m` types of toppings to choose from. You must follow these rules when making your dessert:\n\n*   There must be **exactly one** ice cream base.\n*   You can add **one or more** types of topping or have no toppings at all.\n*   There are **at most two** of **each type** of topping.\n\nYou are given three inputs:\n\n*   `baseCosts`, an integer array of length `n`, where each `baseCosts[i]` represents the price of the `ith` ice cream base flavor.\n*   `toppingCosts`, an integer array of length `m`, where each `toppingCosts[i]` is the price of **one** of the `ith` topping.\n*   `target`, an integer representing your target price for dessert.\n\nYou want to make a dessert with a total cost as close to `target` as possible.\n\nReturn _the closest possible cost of the dessert to_ `target`. If there are multiple, return _the **lower** one._\n\n**Example 1:**\n\n**Input:** baseCosts = \\[1,7\\], toppingCosts = \\[3,4\\], target = 10\n**Output:** 10\n**Explanation:** Consider the following combination (all 0-indexed):\n- Choose base 1: cost 7\n- Take 1 of topping 0: cost 1 x 3 = 3\n- Take 0 of topping 1: cost 0 x 4 = 0\nTotal: 7 + 3 + 0 = 10.\n\n**Example 2:**\n\n**Input:** baseCosts = \\[2,3\\], toppingCosts = \\[4,5,100\\], target = 18\n**Output:** 17\n**Explanation:** Consider the following combination (all 0-indexed):\n- Choose base 1: cost 3\n- Take 1 of topping 0: cost 1 x 4 = 4\n- Take 2 of topping 1: cost 2 x 5 = 10\n- Take 0 of topping 2: cost 0 x 100 = 0\nTotal: 3 + 4 + 10 + 0 = 17. You cannot make a dessert with a total cost of 18.\n\n**Example 3:**\n\n**Input:** baseCosts = \\[3,10\\], toppingCosts = \\[2,5\\], target = 9\n**Output:** 8\n**Explanation:** It is possible to make desserts with cost 8 and 10. Return 8 as it is the lower cost.\n\n**Constraints:**\n\n*   `n == baseCosts.length`\n*   `m == toppingCosts.length`\n*   `1 <= n, m <= 10`\n*   `1 <= baseCosts[i], toppingCosts[i] <= 104`\n*   `1 <= target <= 104`",
+  "difficulty": "Medium",
+  "category": null,
+  "xpReward": 0,
+  "timeLimitMs": 5000,
+  "memoryLimitMb": 256,
+  "starterCode": {},
+  "solutionCode": "",
+  "hints": [],
+  "isPremium": false,
+  "createdBy": null,
+  "testCases": [
+    {
+      "input": [
+        [
+          1,
+          7
+        ],
+        [
+          3,
+          4
+        ],
+        10
+      ],
+      "expectedOutput": 10
+    },
+    {
+      "input": [
+        [
+          2,
+          3
+        ],
+        [
+          4,
+          5,
+          100
+        ],
+        18
+      ],
+      "expectedOutput": 17
+    },
+    {
+      "input": [
+        [
+          3,
+          10
+        ],
+        [
+          2,
+          5
+        ],
+        9
+      ],
+      "expectedOutput": 8
+    }
+  ],
+  "hiddenTestCases": [
+    {
+      "input": [
+        [
+          1,
+          7
+        ],
+        [
+          3,
+          4
+        ],
+        10
+      ],
+      "expectedOutput": 10
+    },
+    {
+      "input": [
+        [
+          2,
+          3
+        ],
+        [
+          4,
+          5,
+          100
+        ],
+        18
+      ],
+      "expectedOutput": 17
+    }
+  ],
+  "tags": [],
+  "constraints": [],
+  "examples": [],
+  "problemNumber": null,
+  "createdAt": "2025-11-14T21:23:03.959059+00:00",
+  "updatedAt": "2025-12-04T04:36:50.716Z"
+}

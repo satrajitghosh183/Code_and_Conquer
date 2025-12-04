@@ -1,0 +1,78 @@
+{
+  "id": "dfda7b8a-5a05-46b4-a989-cb84f51b01d4",
+  "title": "Minimum Subarrays in a Valid Split",
+  "slug": "minimum-subarrays-in-a-valid-split",
+  "description": "You are given an integer array `nums`.\n\nSplitting of an integer array `nums` into **subarrays** is **valid** if:\n\n*   the _greatest common divisor_ of the first and last elements of each subarray is **greater** than `1`, and\n*   each element of `nums` belongs to exactly one subarray.\n\nReturn _the **minimum** number of subarrays in a **valid** subarray splitting of_ `nums`. If a valid subarray splitting is not possible, return `-1`.\n\n**Note** that:\n\n*   The **greatest common divisor** of two numbers is the largest positive integer that evenly divides both numbers.\n*   A **subarray** is a contiguous non-empty part of an array.\n\n**Example 1:**\n\n**Input:** nums = \\[2,6,3,4,3\\]\n**Output:** 2\n**Explanation:** We can create a valid split in the following way: \\[2,6\\] | \\[3,4,3\\].\n- The starting element of the 1st subarray is 2 and the ending is 6. Their greatest common divisor is 2, which is greater than 1.\n- The starting element of the 2nd subarray is 3 and the ending is 3. Their greatest common divisor is 3, which is greater than 1.\nIt can be proved that 2 is the minimum number of subarrays that we can obtain in a valid split.\n\n**Example 2:**\n\n**Input:** nums = \\[3,5\\]\n**Output:** 2\n**Explanation:** We can create a valid split in the following way: \\[3\\] | \\[5\\].\n- The starting element of the 1st subarray is 3 and the ending is 3. Their greatest common divisor is 3, which is greater than 1.\n- The starting element of the 2nd subarray is 5 and the ending is 5. Their greatest common divisor is 5, which is greater than 1.\nIt can be proved that 2 is the minimum number of subarrays that we can obtain in a valid split.\n\n**Example 3:**\n\n**Input:** nums = \\[1,2,1\\]\n**Output:** -1\n**Explanation:** It is impossible to create valid split.\n\n**Constraints:**\n\n*   `1 <= nums.length <= 1000`\n*   `1 <= nums[i] <= 105`",
+  "difficulty": "Medium",
+  "category": null,
+  "xpReward": 0,
+  "timeLimitMs": 5000,
+  "memoryLimitMb": 256,
+  "starterCode": {},
+  "solutionCode": "",
+  "hints": [],
+  "isPremium": false,
+  "createdBy": null,
+  "testCases": [
+    {
+      "input": [
+        [
+          2,
+          6,
+          3,
+          4,
+          3
+        ]
+      ],
+      "expectedOutput": 2
+    },
+    {
+      "input": [
+        [
+          3,
+          5
+        ]
+      ],
+      "expectedOutput": 2
+    },
+    {
+      "input": [
+        [
+          1,
+          2,
+          1
+        ]
+      ],
+      "expectedOutput": -1
+    }
+  ],
+  "hiddenTestCases": [
+    {
+      "input": [
+        [
+          2,
+          6,
+          3,
+          4,
+          3
+        ]
+      ],
+      "expectedOutput": 2
+    },
+    {
+      "input": [
+        [
+          3,
+          5
+        ]
+      ],
+      "expectedOutput": 2
+    }
+  ],
+  "tags": [],
+  "constraints": [],
+  "examples": [],
+  "problemNumber": null,
+  "createdAt": "2025-11-14T21:25:55.430392+00:00",
+  "updatedAt": "2025-12-04T04:35:32.433Z"
+}

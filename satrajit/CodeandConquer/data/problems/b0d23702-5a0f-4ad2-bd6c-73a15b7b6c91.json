@@ -1,0 +1,181 @@
+{
+  "id": "b0d23702-5a0f-4ad2-bd6c-73a15b7b6c91",
+  "title": "Mean of Array After Removing Some Elements",
+  "slug": "mean-of-array-after-removing-some-elements",
+  "description": "Given an integer array `arr`, return _the mean of the remaining integers after removing the smallest `5%` and the largest `5%` of the elements._\n\nAnswers within `10-5` of the **actual answer** will be considered accepted.\n\n**Example 1:**\n\n**Input:** arr = \\[1,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,3\\]\n**Output:** 2.00000\n**Explanation:** After erasing the minimum and the maximum values of this array, all elements are equal to 2, so the mean is 2.\n\n**Example 2:**\n\n**Input:** arr = \\[6,2,7,5,1,2,0,3,10,2,5,0,5,5,0,8,7,6,8,0\\]\n**Output:** 4.00000\n\n**Example 3:**\n\n**Input:** arr = \\[6,0,7,0,7,5,7,8,3,4,0,7,8,1,6,8,1,1,2,4,8,1,9,5,4,3,8,5,10,8,6,6,1,0,6,10,8,2,3,4\\]\n**Output:** 4.77778\n\n**Constraints:**\n\n*   `20 <= arr.length <= 1000`\n*   `arr.length` **is a multiple** of `20`.\n*   `0 <= arr[i] <= 105`",
+  "difficulty": "Easy",
+  "category": null,
+  "xpReward": 0,
+  "timeLimitMs": 5000,
+  "memoryLimitMb": 256,
+  "starterCode": {},
+  "solutionCode": "",
+  "hints": [],
+  "isPremium": false,
+  "createdBy": null,
+  "testCases": [
+    {
+      "input": [
+        [
+          1,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          3
+        ]
+      ],
+      "expectedOutput": 2
+    },
+    {
+      "input": [
+        [
+          6,
+          2,
+          7,
+          5,
+          1,
+          2,
+          0,
+          3,
+          10,
+          2,
+          5,
+          0,
+          5,
+          5,
+          0,
+          8,
+          7,
+          6,
+          8,
+          0
+        ]
+      ],
+      "expectedOutput": 4
+    },
+    {
+      "input": [
+        [
+          6,
+          0,
+          7,
+          0,
+          7,
+          5,
+          7,
+          8,
+          3,
+          4,
+          0,
+          7,
+          8,
+          1,
+          6,
+          8,
+          1,
+          1,
+          2,
+          4,
+          8,
+          1,
+          9,
+          5,
+          4,
+          3,
+          8,
+          5,
+          10,
+          8,
+          6,
+          6,
+          1,
+          0,
+          6,
+          10,
+          8,
+          2,
+          3,
+          4
+        ]
+      ],
+      "expectedOutput": 4.77778
+    }
+  ],
+  "hiddenTestCases": [
+    {
+      "input": [
+        [
+          1,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          3
+        ]
+      ],
+      "expectedOutput": 2
+    },
+    {
+      "input": [
+        [
+          6,
+          2,
+          7,
+          5,
+          1,
+          2,
+          0,
+          3,
+          10,
+          2,
+          5,
+          0,
+          5,
+          5,
+          0,
+          8,
+          7,
+          6,
+          8,
+          0
+        ]
+      ],
+      "expectedOutput": 4
+    }
+  ],
+  "tags": [],
+  "constraints": [],
+  "examples": [],
+  "problemNumber": null,
+  "createdAt": "2025-11-14T21:22:27.766244+00:00",
+  "updatedAt": "2025-12-04T04:37:11.732Z"
+}

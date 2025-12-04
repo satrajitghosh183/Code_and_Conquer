@@ -1,0 +1,75 @@
+{
+  "id": "935e1539-0d9f-4a54-b332-bb868a3796ee",
+  "title": "Merge Operations to Turn Array Into a Palindrome",
+  "slug": "merge-operations-to-turn-array-into-a-palindrome",
+  "description": "You are given an array `nums` consisting of **positive** integers.\n\nYou can perform the following operation on the array **any** number of times:\n\n*   Choose any two **adjacent** elements and **replace** them with their **sum**.\n    *   For example, if `nums = [1,2,3,1]`, you can apply one operation to make it `[1,5,1]`.\n\nReturn _the **minimum** number of operations needed to turn the array into a **palindrome**_.\n\n**Example 1:**\n\n**Input:** nums = \\[4,3,2,1,2,3,1\\]\n**Output:** 2\n**Explanation:** We can turn the array into a palindrome in 2 operations as follows:\n- Apply the operation on the fourth and fifth element of the array, nums becomes equal to \\[4,3,2,**3**,3,1\\].\n- Apply the operation on the fifth and sixth element of the array, nums becomes equal to \\[4,3,2,3,**4**\\].\nThe array \\[4,3,2,3,4\\] is a palindrome.\nIt can be shown that 2 is the minimum number of operations needed.\n\n**Example 2:**\n\n**Input:** nums = \\[1,2,3,4\\]\n**Output:** 3\n**Explanation:** We do the operation 3 times in any position, we obtain the array \\[10\\] at the end which is a palindrome.\n\n**Constraints:**\n\n*   `1 <= nums.length <= 105`\n*   `1 <= nums[i] <= 106`",
+  "difficulty": "Medium",
+  "category": null,
+  "xpReward": 0,
+  "timeLimitMs": 5000,
+  "memoryLimitMb": 256,
+  "starterCode": [],
+  "solutionCode": "",
+  "hints": [],
+  "isPremium": false,
+  "createdBy": null,
+  "testCases": [
+    {
+      "input": [
+        [
+          4,
+          3,
+          2,
+          1,
+          2,
+          3,
+          1
+        ]
+      ],
+      "expectedOutput": 2
+    },
+    {
+      "input": [
+        [
+          1,
+          2,
+          3,
+          4
+        ]
+      ],
+      "expectedOutput": 3
+    }
+  ],
+  "hiddenTestCases": [
+    {
+      "input": [
+        [
+          4,
+          3,
+          2,
+          1,
+          2,
+          3,
+          1
+        ]
+      ],
+      "expectedOutput": 2
+    },
+    {
+      "input": [
+        [
+          1,
+          2,
+          3,
+          4
+        ]
+      ],
+      "expectedOutput": 3
+    }
+  ],
+  "tags": [],
+  "constraints": [],
+  "examples": [],
+  "createdAt": "2025-11-14T21:25:42.547673+00:00",
+  "updatedAt": "2025-12-04T04:35:38.826Z"
+}

@@ -1,0 +1,201 @@
+{
+  "id": "4f709d81-a5c8-42b4-9f4f-cddd72a75e1d",
+  "title": "Escape the Spreading Fire",
+  "slug": "escape-the-spreading-fire",
+  "description": "You are given a **0-indexed** 2D integer array `grid` of size `m x n` which represents a field. Each cell has one of three values:\n\n*   `0` represents grass,\n*   `1` represents fire,\n*   `2` represents a wall that you and fire cannot pass through.\n\nYou are situated in the top-left cell, `(0, 0)`, and you want to travel to the safehouse at the bottom-right cell, `(m - 1, n - 1)`. Every minute, you may move to an **adjacent** grass cell. **After** your move, every fire cell will spread to all **adjacent** cells that are not walls.\n\nReturn _the **maximum** number of minutes that you can stay in your initial position before moving while still safely reaching the safehouse_. If this is impossible, return `-1`. If you can **always** reach the safehouse regardless of the minutes stayed, return `109`.\n\nNote that even if the fire spreads to the safehouse immediately after you have reached it, it will be counted as safely reaching the safehouse.\n\nA cell is **adjacent** to another cell if the former is directly north, east, south, or west of the latter (i.e., their sides are touching).\n\n**Example 1:**\n\n**Input:** grid = \\[\\[0,2,0,0,0,0,0\\],\\[0,0,0,2,2,1,0\\],\\[0,2,0,0,1,2,0\\],\\[0,0,2,2,2,0,2\\],\\[0,0,0,0,0,0,0\\]\\]\n**Output:** 3\n**Explanation:** The figure above shows the scenario where you stay in the initial position for 3 minutes.\nYou will still be able to safely reach the safehouse.\nStaying for more than 3 minutes will not allow you to safely reach the safehouse.\n\n**Example 2:**\n\n**Input:** grid = \\[\\[0,0,0,0\\],\\[0,1,2,0\\],\\[0,2,0,0\\]\\]\n**Output:** -1\n**Explanation:** The figure above shows the scenario where you immediately move towards the safehouse.\nFire will spread to any cell you move towards and it is impossible to safely reach the safehouse.\nThus, -1 is returned.\n\n**Example 3:**\n\n**Input:** grid = \\[\\[0,0,0\\],\\[2,2,0\\],\\[1,2,0\\]\\]\n**Output:** 1000000000\n**Explanation:** The figure above shows the initial grid.\nNotice that the fire is contained by walls and you will always be able to safely reach the safehouse.\nThus, 109 is returned.\n\n**Constraints:**\n\n*   `m == grid.length`\n*   `n == grid[i].length`\n*   `2 <= m, n <= 300`\n*   `4 <= m * n <= 2 * 104`\n*   `grid[i][j]` is either `0`, `1`, or `2`.\n*   `grid[0][0] == grid[m - 1][n - 1] == 0`",
+  "difficulty": "Hard",
+  "category": null,
+  "xpReward": 0,
+  "timeLimitMs": 5000,
+  "memoryLimitMb": 256,
+  "starterCode": [],
+  "solutionCode": "",
+  "hints": [],
+  "isPremium": false,
+  "createdBy": null,
+  "testCases": [
+    {
+      "input": [
+        [
+          [
+            0,
+            2,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            2,
+            2,
+            1,
+            0
+          ],
+          [
+            0,
+            2,
+            0,
+            0,
+            1,
+            2,
+            0
+          ],
+          [
+            0,
+            0,
+            2,
+            2,
+            2,
+            0,
+            2
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        ]
+      ],
+      "expectedOutput": 3
+    },
+    {
+      "input": [
+        [
+          [
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            1,
+            2,
+            0
+          ],
+          [
+            0,
+            2,
+            0,
+            0
+          ]
+        ]
+      ],
+      "expectedOutput": -1
+    },
+    {
+      "input": [
+        [
+          [
+            0,
+            0,
+            0
+          ],
+          [
+            2,
+            2,
+            0
+          ],
+          [
+            1,
+            2,
+            0
+          ]
+        ]
+      ],
+      "expectedOutput": 1000000000
+    }
+  ],
+  "hiddenTestCases": [
+    {
+      "input": [
+        [
+          [
+            0,
+            2,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            2,
+            2,
+            1,
+            0
+          ],
+          [
+            0,
+            2,
+            0,
+            0,
+            1,
+            2,
+            0
+          ],
+          [
+            0,
+            0,
+            2,
+            2,
+            2,
+            0,
+            2
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        ]
+      ],
+      "expectedOutput": 3
+    },
+    {
+      "input": [
+        [
+          [
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            1,
+            2,
+            0
+          ],
+          [
+            0,
+            2,
+            0,
+            0
+          ]
+        ]
+      ],
+      "expectedOutput": -1
+    }
+  ],
+  "tags": [],
+  "constraints": [],
+  "examples": [],
+  "createdAt": "2025-11-14T21:25:00.515158+00:00",
+  "updatedAt": "2025-12-04T04:35:58.290Z"
+}

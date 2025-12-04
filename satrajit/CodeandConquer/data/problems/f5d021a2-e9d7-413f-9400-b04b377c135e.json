@@ -1,0 +1,56 @@
+{
+  "id": "f5d021a2-e9d7-413f-9400-b04b377c135e",
+  "title": "Minimum Number of Swaps to Make the Binary String Alternating",
+  "slug": "minimum-number-of-swaps-to-make-the-binary-string-alternating",
+  "description": "Given a binary string `s`, return _the **minimum** number of character swaps to make it **alternating**, or_ `-1` _if it is impossible._\n\nThe string is called **alternating** if no two adjacent characters are equal. For example, the strings `\"010 \"` and `\"1010 \"` are alternating, while the string `\"0100 \"` is not.\n\nAny two characters may be swapped, even if they are **not adjacent**.\n\n**Example 1:**\n\n**Input:** s =  \"111000 \"\n**Output:** 1\n**Explanation:** Swap positions 1 and 4:  \"111000 \" ->  \"101010 \"\nThe string is now alternating.\n\n**Example 2:**\n\n**Input:** s =  \"010 \"\n**Output:** 0\n**Explanation:** The string is already alternating, no swaps are needed.\n\n**Example 3:**\n\n**Input:** s =  \"1110 \"\n**Output:** -1\n\n**Constraints:**\n\n*   `1 <= s.length <= 1000`\n*   `s[i]` is either `'0'` or `'1'`.",
+  "difficulty": "Medium",
+  "category": null,
+  "xpReward": 0,
+  "timeLimitMs": 5000,
+  "memoryLimitMb": 256,
+  "starterCode": {},
+  "solutionCode": "",
+  "hints": [],
+  "isPremium": false,
+  "createdBy": null,
+  "testCases": [
+    {
+      "input": [
+        "111000 "
+      ],
+      "expectedOutput": 1
+    },
+    {
+      "input": [
+        "010 "
+      ],
+      "expectedOutput": 0
+    },
+    {
+      "input": [
+        "1110 "
+      ],
+      "expectedOutput": "-1\n\n**Constraints:**\n\n*   `1 <= s.length <= 1000`\n*   `s[i]` is either `'0'` or `'1'`."
+    }
+  ],
+  "hiddenTestCases": [
+    {
+      "input": [
+        "111000 "
+      ],
+      "expectedOutput": 1
+    },
+    {
+      "input": [
+        "010 "
+      ],
+      "expectedOutput": 0
+    }
+  ],
+  "tags": [],
+  "constraints": [],
+  "examples": [],
+  "problemNumber": null,
+  "createdAt": "2025-11-14T21:23:26.930082+00:00",
+  "updatedAt": "2025-12-04T04:36:38.790Z"
+}

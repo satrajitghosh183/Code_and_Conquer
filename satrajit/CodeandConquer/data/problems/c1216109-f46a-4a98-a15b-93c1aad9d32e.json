@@ -1,0 +1,72 @@
+{
+  "id": "c1216109-f46a-4a98-a15b-93c1aad9d32e",
+  "title": "Maximum Consecutive Floors Without Special Floors",
+  "slug": "maximum-consecutive-floors-without-special-floors",
+  "description": "Alice manages a company and has rented some floors of a building as office space. Alice has decided some of these floors should be **special floors**, used for relaxation only.\n\nYou are given two integers `bottom` and `top`, which denote that Alice has rented all the floors from `bottom` to `top` (**inclusive**). You are also given the integer array `special`, where `special[i]` denotes a special floor that Alice has designated for relaxation.\n\nReturn _the **maximum** number of consecutive floors without a special floor_.\n\n**Example 1:**\n\n**Input:** bottom = 2, top = 9, special = \\[4,6\\]\n**Output:** 3\n**Explanation:** The following are the ranges (inclusive) of consecutive floors without a special floor:\n- (2, 3) with a total amount of 2 floors.\n- (5, 5) with a total amount of 1 floor.\n- (7, 9) with a total amount of 3 floors.\nTherefore, we return the maximum number which is 3 floors.\n\n**Example 2:**\n\n**Input:** bottom = 6, top = 8, special = \\[7,6,8\\]\n**Output:** 0\n**Explanation:** Every floor rented is a special floor, so we return 0.\n\n**Constraints:**\n\n*   `1 <= special.length <= 105`\n*   `1 <= bottom <= special[i] <= top <= 109`\n*   All the values of `special` are **unique**.",
+  "difficulty": "Medium",
+  "category": null,
+  "xpReward": 0,
+  "timeLimitMs": 5000,
+  "memoryLimitMb": 256,
+  "starterCode": {},
+  "solutionCode": "",
+  "hints": [],
+  "isPremium": false,
+  "createdBy": null,
+  "testCases": [
+    {
+      "input": [
+        2,
+        9,
+        [
+          4,
+          6
+        ]
+      ],
+      "expectedOutput": 3
+    },
+    {
+      "input": [
+        6,
+        8,
+        [
+          7,
+          6,
+          8
+        ]
+      ],
+      "expectedOutput": 0
+    }
+  ],
+  "hiddenTestCases": [
+    {
+      "input": [
+        2,
+        9,
+        [
+          4,
+          6
+        ]
+      ],
+      "expectedOutput": 3
+    },
+    {
+      "input": [
+        6,
+        8,
+        [
+          7,
+          6,
+          8
+        ]
+      ],
+      "expectedOutput": 0
+    }
+  ],
+  "tags": [],
+  "constraints": [],
+  "examples": [],
+  "problemNumber": null,
+  "createdAt": "2025-11-14T21:25:05.404965+00:00",
+  "updatedAt": "2025-12-04T04:35:56.196Z"
+}

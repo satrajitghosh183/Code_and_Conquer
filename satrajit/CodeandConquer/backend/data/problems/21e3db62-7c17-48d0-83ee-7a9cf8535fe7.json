@@ -1,0 +1,113 @@
+{
+  "id": "21e3db62-7c17-48d0-83ee-7a9cf8535fe7",
+  "title": "Second Minimum Time to Reach Destination",
+  "slug": "second-minimum-time-to-reach-destination",
+  "description": "A city is represented as a **bi-directional connected** graph with `n` vertices where each vertex is labeled from `1` to `n` (**inclusive**). The edges in the graph are represented as a 2D integer array `edges`, where each `edges[i] = [ui, vi]` denotes a bi-directional edge between vertex `ui` and vertex `vi`. Every vertex pair is connected by **at most one** edge, and no vertex has an edge to itself. The time taken to traverse any edge is `time` minutes.\n\nEach vertex has a traffic signal which changes its color from **green** to **red** and vice versa every `change` minutes. All signals change **at the same time**. You can enter a vertex at **any time**, but can leave a vertex **only when the signal is green**. You **cannot wait** at a vertex if the signal is **green**.\n\nThe **second minimum value** is defined as the smallest value **strictly larger** than the minimum value.\n\n*   For example the second minimum value of `[2, 3, 4]` is `3`, and the second minimum value of `[2, 2, 4]` is `4`.\n\nGiven `n`, `edges`, `time`, and `change`, return _the **second minimum time** it will take to go from vertex_ `1` _to vertex_ `n`.\n\n**Notes:**\n\n*   You can go through any vertex **any** number of times, **including** `1` and `n`.\n*   You can assume that when the journey **starts**, all signals have just turned **green**.\n\n**Example 1:**\n\n       \n\n**Input:** n = 5, edges = \\[\\[1,2\\],\\[1,3\\],\\[1,4\\],\\[3,4\\],\\[4,5\\]\\], time = 3, change = 5\n**Output:** 13\n**Explanation:**\nThe figure on the left shows the given graph.\nThe blue path in the figure on the right is the minimum time path.\nThe time taken is:\n- Start at 1, time elapsed=0\n- 1 -> 4: 3 minutes, time elapsed=3\n- 4 -> 5: 3 minutes, time elapsed=6\nHence the minimum time needed is 6 minutes.\n\nThe red path shows the path to get the second minimum time.\n- Start at 1, time elapsed=0\n- 1 -> 3: 3 minutes, time elapsed=3\n- 3 -> 4: 3 minutes, time elapsed=6\n- Wait at 4 for 4 minutes, time elapsed=10\n- 4 -> 5: 3 minutes, time elapsed=13\nHence the second minimum time is 13 minutes.      \n\n**Example 2:**\n\n**Input:** n = 2, edges = \\[\\[1,2\\]\\], time = 3, change = 2\n**Output:** 11\n**Explanation:**\nThe minimum time path is 1 -> 2 with time = 3 minutes.\nThe second minimum time path is 1 -> 2 -> 1 -> 2 with time = 11 minutes.\n\n**Constraints:**\n\n*   `2 <= n <= 104`\n*   `n - 1 <= edges.length <= min(2 * 104, n * (n - 1) / 2)`\n*   `edges[i].length == 2`\n*   `1 <= ui, vi <= n`\n*   `ui != vi`\n*   There are no duplicate edges.\n*   Each vertex can be reached directly or indirectly from every other vertex.\n*   `1 <= time, change <= 103`",
+  "difficulty": "Hard",
+  "category": null,
+  "xpReward": 0,
+  "timeLimitMs": 5000,
+  "memoryLimitMb": 256,
+  "starterCode": [],
+  "solutionCode": "",
+  "hints": [],
+  "isPremium": false,
+  "createdBy": null,
+  "testCases": [
+    {
+      "input": [
+        5,
+        [
+          [
+            1,
+            2
+          ],
+          [
+            1,
+            3
+          ],
+          [
+            1,
+            4
+          ],
+          [
+            3,
+            4
+          ],
+          [
+            4,
+            5
+          ]
+        ],
+        3,
+        5
+      ],
+      "expectedOutput": 13
+    },
+    {
+      "input": [
+        2,
+        [
+          [
+            1,
+            2
+          ]
+        ],
+        3,
+        2
+      ],
+      "expectedOutput": 11
+    }
+  ],
+  "hiddenTestCases": [
+    {
+      "input": [
+        5,
+        [
+          [
+            1,
+            2
+          ],
+          [
+            1,
+            3
+          ],
+          [
+            1,
+            4
+          ],
+          [
+            3,
+            4
+          ],
+          [
+            4,
+            5
+          ]
+        ],
+        3,
+        5
+      ],
+      "expectedOutput": 13
+    },
+    {
+      "input": [
+        2,
+        [
+          [
+            1,
+            2
+          ]
+        ],
+        3,
+        2
+      ],
+      "expectedOutput": 11
+    }
+  ],
+  "tags": [],
+  "constraints": [],
+  "examples": [],
+  "createdAt": "2025-11-14T21:24:07.885152+00:00",
+  "updatedAt": "2025-12-04T04:36:21.020Z"
+}

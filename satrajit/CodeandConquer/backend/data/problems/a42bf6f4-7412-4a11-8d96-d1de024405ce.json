@@ -1,0 +1,57 @@
+{
+  "id": "a42bf6f4-7412-4a11-8d96-d1de024405ce",
+  "title": "Find Three Consecutive Integers That Sum to a Given Number",
+  "slug": "find-three-consecutive-integers-that-sum-to-a-given-number",
+  "description": "Given an integer `num`, return _three consecutive integers (as a sorted array)_ _that **sum** to_ `num`. If `num` cannot be expressed as the sum of three consecutive integers, return _an **empty** array._\n\n**Example 1:**\n\n**Input:** num = 33\n**Output:** \\[10,11,12\\]\n**Explanation:** 33 can be expressed as 10 + 11 + 12 = 33.\n10, 11, 12 are 3 consecutive integers, so we return \\[10, 11, 12\\].\n\n**Example 2:**\n\n**Input:** num = 4\n**Output:** \\[\\]\n**Explanation:** There is no way to express 4 as the sum of 3 consecutive integers.\n\n**Constraints:**\n\n*   `0 <= num <= 1015`",
+  "difficulty": "Medium",
+  "category": null,
+  "xpReward": 0,
+  "timeLimitMs": 5000,
+  "memoryLimitMb": 256,
+  "starterCode": [],
+  "solutionCode": "",
+  "hints": [],
+  "isPremium": false,
+  "createdBy": null,
+  "testCases": [
+    {
+      "input": [
+        33
+      ],
+      "expectedOutput": [
+        10,
+        11,
+        12
+      ]
+    },
+    {
+      "input": [
+        4
+      ],
+      "expectedOutput": []
+    }
+  ],
+  "hiddenTestCases": [
+    {
+      "input": [
+        33
+      ],
+      "expectedOutput": [
+        10,
+        11,
+        12
+      ]
+    },
+    {
+      "input": [
+        4
+      ],
+      "expectedOutput": []
+    }
+  ],
+  "tags": [],
+  "constraints": [],
+  "examples": [],
+  "createdAt": "2025-11-14T21:24:41.075276+00:00",
+  "updatedAt": "2025-12-04T04:36:07.353Z"
+}

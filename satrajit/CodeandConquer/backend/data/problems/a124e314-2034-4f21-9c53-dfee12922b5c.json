@@ -1,0 +1,69 @@
+{
+  "id": "a124e314-2034-4f21-9c53-dfee12922b5c",
+  "title": "Frog Jump II",
+  "slug": "frog-jump-ii",
+  "description": "You are given a **0-indexed** integer array `stones` sorted in **strictly increasing order** representing the positions of stones in a river.\n\nA frog, initially on the first stone, wants to travel to the last stone and then return to the first stone. However, it can jump to any stone **at most once**.\n\nThe **length** of a jump is the absolute difference between the position of the stone the frog is currently on and the position of the stone to which the frog jumps.\n\n*   More formally, if the frog is at `stones[i]` and is jumping to `stones[j]`, the length of the jump is `|stones[i] - stones[j]|`.\n\nThe **cost** of a path is the **maximum length of a jump** among all jumps in the path.\n\nReturn _the **minimum** cost of a path for the frog_.\n\n**Example 1:**\n\n**Input:** stones = \\[0,2,5,6,7\\]\n**Output:** 5\n**Explanation:** The above figure represents one of the optimal paths the frog can take.\nThe cost of this path is 5, which is the maximum length of a jump.\nSince it is not possible to achieve a cost of less than 5, we return it.\n\n**Example 2:**\n\n**Input:** stones = \\[0,3,9\\]\n**Output:** 9\n**Explanation:** \nThe frog can jump directly to the last stone and come back to the first stone. \nIn this case, the length of each jump will be 9. The cost for the path will be max(9, 9) = 9.\nIt can be shown that this is the minimum achievable cost.\n\n**Constraints:**\n\n*   `2 <= stones.length <= 105`\n*   `0 <= stones[i] <= 109`\n*   `stones[0] == 0`\n*   `stones` is sorted in a strictly increasing order.",
+  "difficulty": "Medium",
+  "category": null,
+  "xpReward": 0,
+  "timeLimitMs": 5000,
+  "memoryLimitMb": 256,
+  "starterCode": [],
+  "solutionCode": "",
+  "hints": [],
+  "isPremium": false,
+  "createdBy": null,
+  "testCases": [
+    {
+      "input": [
+        [
+          0,
+          2,
+          5,
+          6,
+          7
+        ]
+      ],
+      "expectedOutput": 5
+    },
+    {
+      "input": [
+        [
+          0,
+          3,
+          9
+        ]
+      ],
+      "expectedOutput": 9
+    }
+  ],
+  "hiddenTestCases": [
+    {
+      "input": [
+        [
+          0,
+          2,
+          5,
+          6,
+          7
+        ]
+      ],
+      "expectedOutput": 5
+    },
+    {
+      "input": [
+        [
+          0,
+          3,
+          9
+        ]
+      ],
+      "expectedOutput": 9
+    }
+  ],
+  "tags": [],
+  "constraints": [],
+  "examples": [],
+  "createdAt": "2025-11-14T21:26:03.230037+00:00",
+  "updatedAt": "2025-12-04T04:35:26.557Z"
+}

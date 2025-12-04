@@ -1,0 +1,82 @@
+{
+  "id": "83b99a93-c244-4b1e-8caf-f97fda39555c",
+  "title": "Longest Palindrome by Concatenating Two Letter Words",
+  "slug": "longest-palindrome-by-concatenating-two-letter-words",
+  "description": "You are given an array of strings `words`. Each element of `words` consists of **two** lowercase English letters.\n\nCreate the **longest possible palindrome** by selecting some elements from `words` and concatenating them in **any order**. Each element can be selected **at most once**.\n\nReturn _the **length** of the longest palindrome that you can create_. If it is impossible to create any palindrome, return `0`.\n\nA **palindrome** is a string that reads the same forward and backward.\n\n**Example 1:**\n\n**Input:** words = \\[ \"lc \", \"cl \", \"gg \"\\]\n**Output:** 6\n**Explanation:** One longest palindrome is  \"lc \" +  \"gg \" +  \"cl \" =  \"lcggcl \", of length 6.\nNote that  \"clgglc \" is another longest palindrome that can be created.\n\n**Example 2:**\n\n**Input:** words = \\[ \"ab \", \"ty \", \"yt \", \"lc \", \"cl \", \"ab \"\\]\n**Output:** 8\n**Explanation:** One longest palindrome is  \"ty \" +  \"lc \" +  \"cl \" +  \"yt \" =  \"tylcclyt \", of length 8.\nNote that  \"lcyttycl \" is another longest palindrome that can be created.\n\n**Example 3:**\n\n**Input:** words = \\[ \"cc \", \"ll \", \"xx \"\\]\n**Output:** 2\n**Explanation:** One longest palindrome is  \"cc \", of length 2.\nNote that  \"ll \" is another longest palindrome that can be created, and so is  \"xx \".\n\n**Constraints:**\n\n*   `1 <= words.length <= 105`\n*   `words[i].length == 2`\n*   `words[i]` consists of lowercase English letters.",
+  "difficulty": "Medium",
+  "category": null,
+  "xpReward": 0,
+  "timeLimitMs": 5000,
+  "memoryLimitMb": 256,
+  "starterCode": {},
+  "solutionCode": "",
+  "hints": [],
+  "isPremium": false,
+  "createdBy": null,
+  "testCases": [
+    {
+      "input": [
+        [
+          "lc ",
+          "cl ",
+          "gg "
+        ]
+      ],
+      "expectedOutput": 6
+    },
+    {
+      "input": [
+        [
+          "ab ",
+          "ty ",
+          "yt ",
+          "lc ",
+          "cl ",
+          "ab "
+        ]
+      ],
+      "expectedOutput": 8
+    },
+    {
+      "input": [
+        [
+          "cc ",
+          "ll ",
+          "xx "
+        ]
+      ],
+      "expectedOutput": 2
+    }
+  ],
+  "hiddenTestCases": [
+    {
+      "input": [
+        [
+          "lc ",
+          "cl ",
+          "gg "
+        ]
+      ],
+      "expectedOutput": 6
+    },
+    {
+      "input": [
+        [
+          "ab ",
+          "ty ",
+          "yt ",
+          "lc ",
+          "cl ",
+          "ab "
+        ]
+      ],
+      "expectedOutput": 8
+    }
+  ],
+  "tags": [],
+  "constraints": [],
+  "examples": [],
+  "problemNumber": null,
+  "createdAt": "2025-11-14T21:24:31.564397+00:00",
+  "updatedAt": "2025-12-04T04:36:11.714Z"
+}

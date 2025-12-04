@@ -1,0 +1,77 @@
+{
+  "id": "02a065ab-6c55-4dda-96a3-95bafcc6ef19",
+  "title": "Count the Number of Vowel Strings in Range",
+  "slug": "count-the-number-of-vowel-strings-in-range",
+  "description": "You are given a **0-indexed** array of string `words` and two integers `left` and `right`.\n\nA string is called a **vowel string** if it starts with a vowel character and ends with a vowel character where vowel characters are `'a'`, `'e'`, `'i'`, `'o'`, and `'u'`.\n\nReturn _the number of vowel strings_ `words[i]` _where_ `i` _belongs to the inclusive range_ `[left, right]`.\n\n**Example 1:**\n\n**Input:** words = \\[ \"are \", \"amy \", \"u \"\\], left = 0, right = 2\n**Output:** 2\n**Explanation:** \n-  \"are \" is a vowel string because it starts with 'a' and ends with 'e'.\n-  \"amy \" is not a vowel string because it does not end with a vowel.\n-  \"u \" is a vowel string because it starts with 'u' and ends with 'u'.\nThe number of vowel strings in the mentioned range is 2.\n\n**Example 2:**\n\n**Input:** words = \\[ \"hey \", \"aeo \", \"mu \", \"ooo \", \"artro \"\\], left = 1, right = 4\n**Output:** 3\n**Explanation:** \n-  \"aeo \" is a vowel string because it starts with 'a' and ends with 'o'.\n-  \"mu \" is not a vowel string because it does not start with a vowel.\n-  \"ooo \" is a vowel string because it starts with 'o' and ends with 'o'.\n-  \"artro \" is a vowel string because it starts with 'a' and ends with 'o'.\nThe number of vowel strings in the mentioned range is 3.\n\n**Constraints:**\n\n*   `1 <= words.length <= 1000`\n*   `1 <= words[i].length <= 10`\n*   `words[i]` consists of only lowercase English letters.\n*   `0 <= left <= right < words.length`",
+  "difficulty": "Easy",
+  "category": null,
+  "xpReward": 0,
+  "timeLimitMs": 5000,
+  "memoryLimitMb": 256,
+  "starterCode": [],
+  "solutionCode": "",
+  "hints": [],
+  "isPremium": false,
+  "createdBy": null,
+  "testCases": [
+    {
+      "input": [
+        [
+          "are ",
+          "amy ",
+          "u "
+        ],
+        0,
+        2
+      ],
+      "expectedOutput": 2
+    },
+    {
+      "input": [
+        [
+          "hey ",
+          "aeo ",
+          "mu ",
+          "ooo ",
+          "artro "
+        ],
+        1,
+        4
+      ],
+      "expectedOutput": 3
+    }
+  ],
+  "hiddenTestCases": [
+    {
+      "input": [
+        [
+          "are ",
+          "amy ",
+          "u "
+        ],
+        0,
+        2
+      ],
+      "expectedOutput": 2
+    },
+    {
+      "input": [
+        [
+          "hey ",
+          "aeo ",
+          "mu ",
+          "ooo ",
+          "artro "
+        ],
+        1,
+        4
+      ],
+      "expectedOutput": 3
+    }
+  ],
+  "tags": [],
+  "constraints": [],
+  "examples": [],
+  "createdAt": "2025-11-14T21:26:29.285217+00:00",
+  "updatedAt": "2025-12-04T04:35:17.324Z"
+}

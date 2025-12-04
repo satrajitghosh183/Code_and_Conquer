@@ -1,0 +1,60 @@
+{
+  "id": "0193054e-c7af-412d-837a-486220a7fe16",
+  "title": "Make Number of Distinct Characters Equal",
+  "slug": "make-number-of-distinct-characters-equal",
+  "description": "You are given two **0-indexed** strings `word1` and `word2`.\n\nA **move** consists of choosing two indices `i` and `j` such that `0 <= i < word1.length` and `0 <= j < word2.length` and swapping `word1[i]` with `word2[j]`.\n\nReturn `true` _if it is possible to get the number of distinct characters in_ `word1` _and_ `word2` _to be equal with **exactly one** move._ Return `false` _otherwise_.\n\n**Example 1:**\n\n**Input:** word1 =  \"ac \", word2 =  \"b \"\n**Output:** false\n**Explanation:** Any pair of swaps would yield two distinct characters in the first string, and one in the second string.\n\n**Example 2:**\n\n**Input:** word1 =  \"abcc \", word2 =  \"aab \"\n**Output:** true\n**Explanation:** We swap index 2 of the first string with index 0 of the second string. The resulting strings are word1 =  \"abac \" and word2 =  \"cab \", which both have 3 distinct characters.\n\n**Example 3:**\n\n**Input:** word1 =  \"abcde \", word2 =  \"fghij \"\n**Output:** true\n**Explanation:** Both resulting strings will have 5 distinct characters, regardless of which indices we swap.\n\n**Constraints:**\n\n*   `1 <= word1.length, word2.length <= 105`\n*   `word1` and `word2` consist of only lowercase English letters.",
+  "difficulty": "Medium",
+  "category": null,
+  "xpReward": 0,
+  "timeLimitMs": 5000,
+  "memoryLimitMb": 256,
+  "starterCode": [],
+  "solutionCode": "",
+  "hints": [],
+  "isPremium": false,
+  "createdBy": null,
+  "testCases": [
+    {
+      "input": [
+        "ac ",
+        "b "
+      ],
+      "expectedOutput": false
+    },
+    {
+      "input": [
+        "abcc ",
+        "aab "
+      ],
+      "expectedOutput": true
+    },
+    {
+      "input": [
+        "abcde ",
+        "fghij "
+      ],
+      "expectedOutput": true
+    }
+  ],
+  "hiddenTestCases": [
+    {
+      "input": [
+        "ac ",
+        "b "
+      ],
+      "expectedOutput": false
+    },
+    {
+      "input": [
+        "abcc ",
+        "aab "
+      ],
+      "expectedOutput": true
+    }
+  ],
+  "tags": [],
+  "constraints": [],
+  "examples": [],
+  "createdAt": "2025-11-14T21:26:12.091377+00:00",
+  "updatedAt": "2025-12-04T04:35:23.358Z"
+}

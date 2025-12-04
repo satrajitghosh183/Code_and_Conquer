@@ -1,0 +1,88 @@
+{
+  "id": "8255d913-3906-4dbf-9386-d259d7ed09ed",
+  "title": "Minimum Common Value",
+  "slug": "minimum-common-value",
+  "description": "Given two integer arrays `nums1` and `nums2`, sorted in non-decreasing order, return _the **minimum integer common** to both arrays_. If there is no common integer amongst `nums1` and `nums2`, return `-1`.\n\nNote that an integer is said to be **common** to `nums1` and `nums2` if both arrays have **at least one** occurrence of that integer.\n\n**Example 1:**\n\n**Input:** nums1 = \\[1,2,3\\], nums2 = \\[2,4\\]\n**Output:** 2\n**Explanation:** The smallest element common to both arrays is 2, so we return 2.\n\n**Example 2:**\n\n**Input:** nums1 = \\[1,2,3,6\\], nums2 = \\[2,3,4,5\\]\n**Output:** 2\n**Explanation:** There are two common elements in the array 2 and 3 out of which 2 is the smallest, so 2 is returned.\n\n**Constraints:**\n\n*   `1 <= nums1.length, nums2.length <= 105`\n*   `1 <= nums1[i], nums2[j] <= 109`\n*   Both `nums1` and `nums2` are sorted in **non-decreasing** order.",
+  "difficulty": "Easy",
+  "category": null,
+  "xpReward": 0,
+  "timeLimitMs": 5000,
+  "memoryLimitMb": 256,
+  "starterCode": {},
+  "solutionCode": "",
+  "hints": [],
+  "isPremium": false,
+  "createdBy": null,
+  "testCases": [
+    {
+      "input": [
+        [
+          1,
+          2,
+          3
+        ],
+        [
+          2,
+          4
+        ]
+      ],
+      "expectedOutput": 2
+    },
+    {
+      "input": [
+        [
+          1,
+          2,
+          3,
+          6
+        ],
+        [
+          2,
+          3,
+          4,
+          5
+        ]
+      ],
+      "expectedOutput": 2
+    }
+  ],
+  "hiddenTestCases": [
+    {
+      "input": [
+        [
+          1,
+          2,
+          3
+        ],
+        [
+          2,
+          4
+        ]
+      ],
+      "expectedOutput": 2
+    },
+    {
+      "input": [
+        [
+          1,
+          2,
+          3,
+          6
+        ],
+        [
+          2,
+          3,
+          4,
+          5
+        ]
+      ],
+      "expectedOutput": 2
+    }
+  ],
+  "tags": [],
+  "constraints": [],
+  "examples": [],
+  "problemNumber": null,
+  "createdAt": "2025-11-14T21:26:14.549643+00:00",
+  "updatedAt": "2025-12-04T04:35:22.273Z"
+}

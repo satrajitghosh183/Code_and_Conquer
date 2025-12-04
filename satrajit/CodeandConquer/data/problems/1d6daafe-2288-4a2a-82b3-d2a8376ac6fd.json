@@ -1,0 +1,70 @@
+{
+  "id": "1d6daafe-2288-4a2a-82b3-d2a8376ac6fd",
+  "title": "Number of Different Subsequences GCDs",
+  "slug": "number-of-different-subsequences-gcds",
+  "description": "You are given an array `nums` that consists of positive integers.\n\nThe **GCD** of a sequence of numbers is defined as the greatest integer that divides **all** the numbers in the sequence evenly.\n\n*   For example, the GCD of the sequence `[4,6,16]` is `2`.\n\nA **subsequence** of an array is a sequence that can be formed by removing some elements (possibly none) of the array.\n\n*   For example, `[2,5,10]` is a subsequence of `[1,2,1,**2**,4,1,**5**,**10**]`.\n\nReturn _the **number** of **different** GCDs among all **non-empty** subsequences of_ `nums`.\n\n**Example 1:**\n\n**Input:** nums = \\[6,10,3\\]\n**Output:** 5\n**Explanation:** The figure shows all the non-empty subsequences and their GCDs.\nThe different GCDs are 6, 10, 3, 2, and 1.\n\n**Example 2:**\n\n**Input:** nums = \\[5,15,40,5,6\\]\n**Output:** 7\n\n**Constraints:**\n\n*   `1 <= nums.length <= 105`\n*   `1 <= nums[i] <= 2 * 105`",
+  "difficulty": "Hard",
+  "category": null,
+  "xpReward": 0,
+  "timeLimitMs": 5000,
+  "memoryLimitMb": 256,
+  "starterCode": {},
+  "solutionCode": "",
+  "hints": [],
+  "isPremium": false,
+  "createdBy": null,
+  "testCases": [
+    {
+      "input": [
+        [
+          6,
+          10,
+          3
+        ]
+      ],
+      "expectedOutput": 5
+    },
+    {
+      "input": [
+        [
+          5,
+          15,
+          40,
+          5,
+          6
+        ]
+      ],
+      "expectedOutput": "7\n\n**Constraints:**\n\n*   `1 <= nums.length <= 105`\n*   `1 <= nums[i] <= 2 * 105`"
+    }
+  ],
+  "hiddenTestCases": [
+    {
+      "input": [
+        [
+          6,
+          10,
+          3
+        ]
+      ],
+      "expectedOutput": 5
+    },
+    {
+      "input": [
+        [
+          5,
+          15,
+          40,
+          5,
+          6
+        ]
+      ],
+      "expectedOutput": "7\n\n**Constraints:**\n\n*   `1 <= nums.length <= 105`\n*   `1 <= nums[i] <= 2 * 105`"
+    }
+  ],
+  "tags": [],
+  "constraints": [],
+  "examples": [],
+  "problemNumber": null,
+  "createdAt": "2025-11-14T21:23:14.997766+00:00",
+  "updatedAt": "2025-12-04T04:36:43.365Z"
+}

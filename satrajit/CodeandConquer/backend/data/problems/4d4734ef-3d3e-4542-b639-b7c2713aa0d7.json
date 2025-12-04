@@ -1,0 +1,86 @@
+{
+  "id": "4d4734ef-3d3e-4542-b639-b7c2713aa0d7",
+  "title": "Largest Positive Integer That Exists With Its Negative",
+  "slug": "largest-positive-integer-that-exists-with-its-negative",
+  "description": "Given an integer array `nums` that **does not contain** any zeros, find **the largest positive** integer `k` such that `-k` also exists in the array.\n\nReturn _the positive integer_ `k`. If there is no such integer, return `-1`.\n\n**Example 1:**\n\n**Input:** nums = \\[-1,2,-3,3\\]\n**Output:** 3\n**Explanation:** 3 is the only valid k we can find in the array.\n\n**Example 2:**\n\n**Input:** nums = \\[-1,10,6,7,-7,1\\]\n**Output:** 7\n**Explanation:** Both 1 and 7 have their corresponding negative values in the array. 7 has a larger value.\n\n**Example 3:**\n\n**Input:** nums = \\[-10,8,6,7,-2,-3\\]\n**Output:** -1\n**Explanation:** There is no a single valid k, we return -1.\n\n**Constraints:**\n\n*   `1 <= nums.length <= 1000`\n*   `-1000 <= nums[i] <= 1000`\n*   `nums[i] != 0`",
+  "difficulty": "Easy",
+  "category": null,
+  "xpReward": 0,
+  "timeLimitMs": 5000,
+  "memoryLimitMb": 256,
+  "starterCode": [],
+  "solutionCode": "",
+  "hints": [],
+  "isPremium": false,
+  "createdBy": null,
+  "testCases": [
+    {
+      "input": [
+        [
+          -1,
+          2,
+          -3,
+          3
+        ]
+      ],
+      "expectedOutput": 3
+    },
+    {
+      "input": [
+        [
+          -1,
+          10,
+          6,
+          7,
+          -7,
+          1
+        ]
+      ],
+      "expectedOutput": 7
+    },
+    {
+      "input": [
+        [
+          -10,
+          8,
+          6,
+          7,
+          -2,
+          -3
+        ]
+      ],
+      "expectedOutput": -1
+    }
+  ],
+  "hiddenTestCases": [
+    {
+      "input": [
+        [
+          -1,
+          2,
+          -3,
+          3
+        ]
+      ],
+      "expectedOutput": 3
+    },
+    {
+      "input": [
+        [
+          -1,
+          10,
+          6,
+          7,
+          -7,
+          1
+        ]
+      ],
+      "expectedOutput": 7
+    }
+  ],
+  "tags": [],
+  "constraints": [],
+  "examples": [],
+  "createdAt": "2025-11-14T21:25:47.513707+00:00",
+  "updatedAt": "2025-12-04T04:35:36.307Z"
+}

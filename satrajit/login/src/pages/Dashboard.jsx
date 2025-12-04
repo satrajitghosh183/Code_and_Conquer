@@ -23,7 +23,7 @@
 //     <>
 //       <div className="dashboard">
 //         <nav className="dashboard-nav">
-//           <h1>⚔️ Code & Conquer</h1>
+//           <h1>Code & Conquer</h1>
 //           <div className="user-info">
 //             <div className="user-avatar" onClick={() => setShowSettings(true)}>
 //               {avatarUrl ? (
@@ -144,7 +144,7 @@ export default function Dashboard() {
     <>
       <div className="dashboard">
         <nav className="dashboard-nav">
-          <h1>⚔️ Code & Conquer</h1>
+          <h1>Code & Conquer</h1>
           <div className="user-info">
             <div className="user-avatar" onClick={() => setShowSettings(true)}>
               {avatarUrl ? (

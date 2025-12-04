@@ -41,8 +41,8 @@ export class Game {
 
   initScene() {
     this.scene = new THREE.Scene()
-    this.scene.background = new THREE.Color(0x000000)
-    this.scene.fog = new THREE.FogExp2(0x000000, 0.008)
+    this.scene.background = new THREE.Color(0x1a0000)
+    this.scene.fog = new THREE.FogExp2(0x1a0000, 0.01)
   }
 
   initCamera() {
@@ -109,12 +109,12 @@ export class Game {
     mainLight.shadow.mapSize.height = 2048
     this.scene.add(mainLight)
 
-    const pointLight1 = new THREE.PointLight(0x00aaff, 3, 60)
+    const pointLight1 = new THREE.PointLight(0xff0000, 3, 60)
     pointLight1.position.set(-25, 15, -25)
     pointLight1.castShadow = true
     this.scene.add(pointLight1)
 
-    const pointLight2 = new THREE.PointLight(0xff00aa, 3, 60)
+    const pointLight2 = new THREE.PointLight(0xaa0000, 3, 60)
     pointLight2.position.set(25, 15, -25)
     pointLight2.castShadow = true
     this.scene.add(pointLight2)
@@ -133,9 +133,9 @@ export class Game {
     // Floor
     const floorGeometry = new THREE.PlaneGeometry(100, 80)
     const floorMaterial = new THREE.MeshStandardMaterial({
-      color: 0x111111,
-      metalness: 0.95,
-      roughness: 0.05
+      color: 0x1a0505,
+      metalness: 0.3,
+      roughness: 0.8
     })
     const floor = new THREE.Mesh(floorGeometry, floorMaterial)
     floor.rotation.x = -Math.PI / 2
@@ -143,16 +143,16 @@ export class Game {
     this.scene.add(floor)
 
     // Grid
-    const gridHelper = new THREE.GridHelper(100, 50, 0xffffff, 0x222222)
-    gridHelper.material.opacity = 0.15
+    const gridHelper = new THREE.GridHelper(100, 50, 0x550000, 0x330000)
+    gridHelper.material.opacity = 0.4
     gridHelper.material.transparent = true
     this.scene.add(gridHelper)
 
     // Player 1 base (left side, z = -30)
     const base1Geometry = new THREE.CylinderGeometry(2.5, 3.5, 4, 16)
     const base1Material = new THREE.MeshStandardMaterial({
-      color: 0x00aaff,
-      emissive: 0x00aaff,
+      color: 0xff0000,
+      emissive: 0xaa0000,
       emissiveIntensity: 1.2,
       metalness: 0.9,
       roughness: 0.1
@@ -165,8 +165,8 @@ export class Game {
     // Player 2 base (right side, z = 30)
     const base2Geometry = new THREE.CylinderGeometry(2.5, 3.5, 4, 16)
     const base2Material = new THREE.MeshStandardMaterial({
-      color: 0xff00aa,
-      emissive: 0xff00aa,
+      color: 0xff6600,
+      emissive: 0xaa4400,
       emissiveIntensity: 1.2,
       metalness: 0.9,
       roughness: 0.1
@@ -266,7 +266,7 @@ export class Game {
     
     const baseGeo = new THREE.CylinderGeometry(1, 1.2, 0.3, 8)
     const baseMat = new THREE.MeshStandardMaterial({
-      color: playerIndex === 0 ? 0x00aaff : 0xff00aa,
+      color: playerIndex === 0 ? 0xff0000 : 0xff6600,
       metalness: 0.9,
       roughness: 0.3
     })
@@ -277,8 +277,8 @@ export class Game {
     
     const bodyGeo = new THREE.CylinderGeometry(0.6, 0.8, 1.8, 8)
     const bodyMat = new THREE.MeshStandardMaterial({
-      color: playerIndex === 0 ? 0x00aaff : 0xff00aa,
-      emissive: playerIndex === 0 ? 0x00aaff : 0xff00aa,
+      color: playerIndex === 0 ? 0xff0000 : 0xff6600,
+      emissive: playerIndex === 0 ? 0xaa0000 : 0xaa4400,
       emissiveIntensity: 0.5,
       metalness: 0.8,
       roughness: 0.2

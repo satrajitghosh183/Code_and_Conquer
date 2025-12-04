@@ -1,0 +1,109 @@
+{
+  "id": "6a146d50-1674-4f94-988f-426c9a405dbb",
+  "title": "Execution of All Suffix Instructions Staying in a Grid",
+  "slug": "execution-of-all-suffix-instructions-staying-in-a-grid",
+  "description": "There is an `n x n` grid, with the top-left cell at `(0, 0)` and the bottom-right cell at `(n - 1, n - 1)`. You are given the integer `n` and an integer array `startPos` where `startPos = [startrow, startcol]` indicates that a robot is initially at cell `(startrow, startcol)`.\n\nYou are also given a **0-indexed** string `s` of length `m` where `s[i]` is the `ith` instruction for the robot: `'L'` (move left), `'R'` (move right), `'U'` (move up), and `'D'` (move down).\n\nThe robot can begin executing from any `ith` instruction in `s`. It executes the instructions one by one towards the end of `s` but it stops if either of these conditions is met:\n\n*   The next instruction will move the robot off the grid.\n*   There are no more instructions left to execute.\n\nReturn _an array_ `answer` _of length_ `m` _where_ `answer[i]` _is **the number of instructions** the robot can execute if the robot **begins executing from** the_ `ith` _instruction in_ `s`.\n\n**Example 1:**\n\n**Input:** n = 3, startPos = \\[0,1\\], s =  \"RRDDLU \"\n**Output:** \\[1,5,4,3,1,0\\]\n**Explanation:** Starting from startPos and beginning execution from the ith instruction:\n- 0th:  \"**R**RDDLU \". Only one instruction  \"R \" can be executed before it moves off the grid.\n- 1st:   \"**RDDLU** \". All five instructions can be executed while it stays in the grid and ends at (1, 1).\n- 2nd:    \"**DDLU** \". All four instructions can be executed while it stays in the grid and ends at (1, 0).\n- 3rd:     \"**DLU** \". All three instructions can be executed while it stays in the grid and ends at (0, 0).\n- 4th:      \"**L**U \". Only one instruction  \"L \" can be executed before it moves off the grid.\n- 5th:       \"U \". If moving up, it would move off the grid.\n\n**Example 2:**\n\n**Input:** n = 2, startPos = \\[1,1\\], s =  \"LURD \"\n**Output:** \\[4,1,0,0\\]\n**Explanation:**\n- 0th:  \"**LURD** \".\n- 1st:   \"**U**RD \".\n- 2nd:    \"RD \".\n- 3rd:     \"D \".\n\n**Example 3:**\n\n**Input:** n = 1, startPos = \\[0,0\\], s =  \"LRUD \"\n**Output:** \\[0,0,0,0\\]\n**Explanation:** No matter which instruction the robot begins execution from, it would move off the grid.\n\n**Constraints:**\n\n*   `m == s.length`\n*   `1 <= n, m <= 500`\n*   `startPos.length == 2`\n*   `0 <= startrow, startcol < n`\n*   `s` consists of `'L'`, `'R'`, `'U'`, and `'D'`.",
+  "difficulty": "Medium",
+  "category": null,
+  "xpReward": 0,
+  "timeLimitMs": 5000,
+  "memoryLimitMb": 256,
+  "starterCode": [],
+  "solutionCode": "",
+  "hints": [],
+  "isPremium": false,
+  "createdBy": null,
+  "testCases": [
+    {
+      "input": [
+        3,
+        [
+          0,
+          1
+        ],
+        "RRDDLU "
+      ],
+      "expectedOutput": [
+        1,
+        5,
+        4,
+        3,
+        1,
+        0
+      ]
+    },
+    {
+      "input": [
+        2,
+        [
+          1,
+          1
+        ],
+        "LURD "
+      ],
+      "expectedOutput": [
+        4,
+        1,
+        0,
+        0
+      ]
+    },
+    {
+      "input": [
+        1,
+        [
+          0,
+          0
+        ],
+        "LRUD "
+      ],
+      "expectedOutput": [
+        0,
+        0,
+        0,
+        0
+      ]
+    }
+  ],
+  "hiddenTestCases": [
+    {
+      "input": [
+        3,
+        [
+          0,
+          1
+        ],
+        "RRDDLU "
+      ],
+      "expectedOutput": [
+        1,
+        5,
+        4,
+        3,
+        1,
+        0
+      ]
+    },
+    {
+      "input": [
+        2,
+        [
+          1,
+          1
+        ],
+        "LURD "
+      ],
+      "expectedOutput": [
+        4,
+        1,
+        0,
+        0
+      ]
+    }
+  ],
+  "tags": [],
+  "constraints": [],
+  "examples": [],
+  "createdAt": "2025-11-14T21:24:28.747296+00:00",
+  "updatedAt": "2025-12-04T04:36:12.945Z"
+}

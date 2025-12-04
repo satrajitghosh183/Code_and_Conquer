@@ -1,10 +1,11 @@
-/* Add these styles to your existing Dashboard.css */
+/* Additional Dashboard Styles - Red/Black Theme */
 
 /* Premium badge in nav */
 .premium-badge-nav {
   padding: 6px 12px;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  color: white;
+  background: linear-gradient(135deg, rgba(255, 0, 0, 0.3) 0%, rgba(170, 0, 0, 0.4) 100%);
+  border: 1px solid rgba(255, 0, 0, 0.4);
+  color: var(--text);
   border-radius: 20px;
   font-size: 12px;
   font-weight: 700;
@@ -14,27 +15,27 @@
 /* Upgrade button in nav */
 .upgrade-btn-nav {
   padding: 10px 20px;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  color: white;
+  background: linear-gradient(135deg, #ffd700 0%, #ffb700 100%);
+  color: #000;
   border: none;
   border-radius: 8px;
   cursor: pointer;
-  font-weight: 600;
+  font-weight: 700;
   transition: all 0.3s;
   font-family: inherit;
 }
 
 .upgrade-btn-nav:hover {
   transform: translateY(-2px);
-  box-shadow: 0 5px 15px rgba(102, 126, 234, 0.3);
+  box-shadow: 0 5px 15px rgba(255, 215, 0, 0.4);
 }
 
 /* Subscription button in nav */
 .subscription-btn {
   padding: 10px 20px;
-  background: #f5f5f5;
-  color: #667eea;
-  border: 2px solid #667eea;
+  background: transparent;
+  color: var(--primary);
+  border: 1px solid rgba(255, 0, 0, 0.4);
   border-radius: 8px;
   cursor: pointer;
   font-weight: 600;
@@ -43,10 +44,9 @@
 }
 
 .subscription-btn:hover {
-  background: #667eea;
-  color: white;
+  background: rgba(255, 0, 0, 0.2);
+  border-color: rgba(255, 0, 0, 0.6);
   transform: translateY(-2px);
-  box-shadow: 0 5px 15px rgba(102, 126, 234, 0.3);
 }
 
 /* Tier status display */
@@ -57,7 +57,8 @@
   gap: 15px;
   margin-top: 15px;
   padding: 12px 20px;
-  background: #f8f9fa;
+  background: rgba(0, 0, 0, 0.3);
+  border: 1px solid rgba(255, 0, 0, 0.2);
   border-radius: 25px;
   display: inline-flex;
 }
@@ -71,24 +72,26 @@
 }
 
 .tier-indicator.free {
-  background: #e0e0e0;
-  color: #666;
+  background: rgba(100, 100, 100, 0.3);
+  color: var(--textSecondary);
+  border: 1px solid rgba(100, 100, 100, 0.3);
 }
 
 .tier-indicator.premium {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  color: white;
+  background: linear-gradient(135deg, rgba(255, 0, 0, 0.3) 0%, rgba(170, 0, 0, 0.4) 100%);
+  border: 1px solid rgba(255, 0, 0, 0.4);
+  color: var(--text);
 }
 
 .tier-limit {
   font-size: 14px;
-  color: #666;
+  color: var(--textSecondary);
   font-weight: 600;
 }
 
 .tier-benefit {
   font-size: 14px;
-  color: #667eea;
+  color: var(--primary);
   font-weight: 600;
 }
 
@@ -96,7 +99,7 @@
 .xp-multiplier {
   display: block;
   font-size: 12px;
-  color: #667eea;
+  color: var(--primary);
   font-weight: 600;
   margin-top: 5px;
 }
@@ -111,8 +114,9 @@
   top: 15px;
   right: 15px;
   padding: 4px 10px;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  color: white;
+  background: linear-gradient(135deg, rgba(255, 0, 0, 0.3) 0%, rgba(170, 0, 0, 0.4) 100%);
+  border: 1px solid rgba(255, 0, 0, 0.4);
+  color: var(--text);
   border-radius: 12px;
   font-size: 11px;
   font-weight: 700;
@@ -122,25 +126,42 @@
 
 /* Locked challenge styling */
 .challenge-card.locked {
-  opacity: 0.6;
+  opacity: 0.5;
   position: relative;
   overflow: hidden;
 }
 
+.challenge-card.locked::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.4);
+  border-radius: 15px;
+  z-index: 1;
+  pointer-events: none;
+}
+
 .challenge-card.locked::after {
-  content: '🔒';
+  content: 'LOCKED';
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  font-size: 48px;
-  opacity: 0.3;
+  font-size: 16px;
+  font-weight: 700;
+  color: rgba(255, 255, 255, 0.5);
+  letter-spacing: 2px;
   pointer-events: none;
+  z-index: 2;
 }
 
 .challenge-card.locked .start-btn {
-  background: #e0e0e0;
-  color: #999;
+  background: rgba(100, 100, 100, 0.3);
+  border-color: rgba(100, 100, 100, 0.3);
+  color: var(--textSecondary);
   cursor: not-allowed;
 }
 
@@ -167,14 +188,15 @@
   }
 }
 
-/* Modal overlay base styles (if not already present) */
+/* Modal overlay base styles */
 .modal-overlay {
   position: fixed;
   top: 0;
   left: 0;
   right: 0;
   bottom: 0;
-  background: rgba(0, 0, 0, 0.7);
+  background: rgba(0, 0, 0, 0.8);
+  backdrop-filter: blur(5px);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -185,11 +207,12 @@
 /* Premium challenge card hover effect */
 .challenge-card:not(.locked):hover {
   transform: translateY(-5px);
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+  box-shadow: 0 10px 30px rgba(255, 0, 0, 0.15);
+  border-color: rgba(255, 0, 0, 0.4);
 }
 
 /* Premium user stats enhancement */
 .stat-card.premium-stat {
-  border: 2px solid #667eea;
-  background: linear-gradient(135deg, #667eea05 0%, #764ba205 100%);
+  border: 1px solid rgba(255, 0, 0, 0.4);
+  background: rgba(255, 0, 0, 0.1);
 }

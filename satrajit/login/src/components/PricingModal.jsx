@@ -18,7 +18,7 @@ export default function PricingModal({ onClose }) {
         <button className="close-btn" onClick={onClose}>✕</button>
         
         <div className="pricing-header">
-          <h2>⚔️ Choose Your Path</h2>
+          <h2>Choose Your Path</h2>
           <p>Upgrade to Premium and dominate the leaderboard!</p>
         </div>
 

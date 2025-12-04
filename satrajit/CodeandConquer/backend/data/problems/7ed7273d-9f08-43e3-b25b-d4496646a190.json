@@ -1,0 +1,77 @@
+{
+  "id": "7ed7273d-9f08-43e3-b25b-d4496646a190",
+  "title": "Maximum Product Difference Between Two Pairs",
+  "slug": "maximum-product-difference-between-two-pairs",
+  "description": "The **product difference** between two pairs `(a, b)` and `(c, d)` is defined as `(a * b) - (c * d)`.\n\n*   For example, the product difference between `(5, 6)` and `(2, 7)` is `(5 * 6) - (2 * 7) = 16`.\n\nGiven an integer array `nums`, choose four **distinct** indices `w`, `x`, `y`, and `z` such that the **product difference** between pairs `(nums[w], nums[x])` and `(nums[y], nums[z])` is **maximized**.\n\nReturn _the **maximum** such product difference_.\n\n**Example 1:**\n\n**Input:** nums = \\[5,6,2,7,4\\]\n**Output:** 34\n**Explanation:** We can choose indices 1 and 3 for the first pair (6, 7) and indices 2 and 4 for the second pair (2, 4).\nThe product difference is (6 \\* 7) - (2 \\* 4) = 34.\n\n**Example 2:**\n\n**Input:** nums = \\[4,2,5,9,7,4,8\\]\n**Output:** 64\n**Explanation:** We can choose indices 3 and 6 for the first pair (9, 8) and indices 1 and 5 for the second pair (2, 4).\nThe product difference is (9 \\* 8) - (2 \\* 4) = 64.\n\n**Constraints:**\n\n*   `4 <= nums.length <= 104`\n*   `1 <= nums[i] <= 104`",
+  "difficulty": "Easy",
+  "category": null,
+  "xpReward": 0,
+  "timeLimitMs": 5000,
+  "memoryLimitMb": 256,
+  "starterCode": [],
+  "solutionCode": "",
+  "hints": [],
+  "isPremium": false,
+  "createdBy": null,
+  "testCases": [
+    {
+      "input": [
+        [
+          5,
+          6,
+          2,
+          7,
+          4
+        ]
+      ],
+      "expectedOutput": 34
+    },
+    {
+      "input": [
+        [
+          4,
+          2,
+          5,
+          9,
+          7,
+          4,
+          8
+        ]
+      ],
+      "expectedOutput": 64
+    }
+  ],
+  "hiddenTestCases": [
+    {
+      "input": [
+        [
+          5,
+          6,
+          2,
+          7,
+          4
+        ]
+      ],
+      "expectedOutput": 34
+    },
+    {
+      "input": [
+        [
+          4,
+          2,
+          5,
+          9,
+          7,
+          4,
+          8
+        ]
+      ],
+      "expectedOutput": 64
+    }
+  ],
+  "tags": [],
+  "constraints": [],
+  "examples": [],
+  "createdAt": "2025-11-14T21:23:39.145999+00:00",
+  "updatedAt": "2025-12-04T04:36:34.231Z"
+}

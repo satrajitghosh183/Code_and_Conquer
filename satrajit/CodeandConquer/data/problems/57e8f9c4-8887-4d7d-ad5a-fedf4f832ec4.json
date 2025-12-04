@@ -1,0 +1,50 @@
+{
+  "id": "57e8f9c4-8887-4d7d-ad5a-fedf4f832ec4",
+  "title": "Largest Number After Digit Swaps by Parity",
+  "slug": "largest-number-after-digit-swaps-by-parity",
+  "description": "You are given a positive integer `num`. You may swap any two digits of `num` that have the same **parity** (i.e. both odd digits or both even digits).\n\nReturn _the **largest** possible value of_ `num` _after **any** number of swaps._\n\n**Example 1:**\n\n**Input:** num = 1234\n**Output:** 3412\n**Explanation:** Swap the digit 3 with the digit 1, this results in the number 3214.\nSwap the digit 2 with the digit 4, this results in the number 3412.\nNote that there may be other sequences of swaps but it can be shown that 3412 is the largest possible number.\nAlso note that we may not swap the digit 4 with the digit 1 since they are of different parities.\n\n**Example 2:**\n\n**Input:** num = 65875\n**Output:** 87655\n**Explanation:** Swap the digit 8 with the digit 6, this results in the number 85675.\nSwap the first digit 5 with the digit 7, this results in the number 87655.\nNote that there may be other sequences of swaps but it can be shown that 87655 is the largest possible number.\n\n**Constraints:**\n\n*   `1 <= num <= 109`",
+  "difficulty": "Easy",
+  "category": null,
+  "xpReward": 0,
+  "timeLimitMs": 5000,
+  "memoryLimitMb": 256,
+  "starterCode": {},
+  "solutionCode": "",
+  "hints": [],
+  "isPremium": false,
+  "createdBy": null,
+  "testCases": [
+    {
+      "input": [
+        1234
+      ],
+      "expectedOutput": 3412
+    },
+    {
+      "input": [
+        65875
+      ],
+      "expectedOutput": 87655
+    }
+  ],
+  "hiddenTestCases": [
+    {
+      "input": [
+        1234
+      ],
+      "expectedOutput": 3412
+    },
+    {
+      "input": [
+        65875
+      ],
+      "expectedOutput": 87655
+    }
+  ],
+  "tags": [],
+  "constraints": [],
+  "examples": [],
+  "problemNumber": null,
+  "createdAt": "2025-11-14T21:24:53.435373+00:00",
+  "updatedAt": "2025-12-04T04:36:01.954Z"
+}

@@ -1,0 +1,50 @@
+{
+  "id": "9ec99015-b18c-49ef-a795-7e44ce0468e0",
+  "title": "Minimum Number of Operations to Make String Sorted",
+  "slug": "minimum-number-of-operations-to-make-string-sorted",
+  "description": "You are given a string `s` (**0-indexed**)​​​​​​. You are asked to perform the following operation on `s`​​​​​​ until you get a sorted string:\n\n1.  Find **the largest index** `i` such that `1 <= i < s.length` and `s[i] < s[i - 1]`.\n2.  Find **the largest index** `j` such that `i <= j < s.length` and `s[k] < s[i - 1]` for all the possible values of `k` in the range `[i, j]` inclusive.\n3.  Swap the two characters at indices `i - 1`​​​​ and `j`​​​​​.\n4.  Reverse the suffix starting at index `i`​​​​​​.\n\nReturn _the number of operations needed to make the string sorted._ Since the answer can be too large, return it **modulo** `109 + 7`.\n\n**Example 1:**\n\n**Input:** s =  \"cba \"\n**Output:** 5\n**Explanation:** The simulation goes as follows:\nOperation 1: i=2, j=2. Swap s\\[1\\] and s\\[2\\] to get s= \"cab \", then reverse the suffix starting at 2. Now, s= \"cab \".\nOperation 2: i=1, j=2. Swap s\\[0\\] and s\\[2\\] to get s= \"bac \", then reverse the suffix starting at 1. Now, s= \"bca \".\nOperation 3: i=2, j=2. Swap s\\[1\\] and s\\[2\\] to get s= \"bac \", then reverse the suffix starting at 2. Now, s= \"bac \".\nOperation 4: i=1, j=1. Swap s\\[0\\] and s\\[1\\] to get s= \"abc \", then reverse the suffix starting at 1. Now, s= \"acb \".\nOperation 5: i=2, j=2. Swap s\\[1\\] and s\\[2\\] to get s= \"abc \", then reverse the suffix starting at 2. Now, s= \"abc \".\n\n**Example 2:**\n\n**Input:** s =  \"aabaa \"\n**Output:** 2\n**Explanation:** The simulation goes as follows:\nOperation 1: i=3, j=4. Swap s\\[2\\] and s\\[4\\] to get s= \"aaaab \", then reverse the substring starting at 3. Now, s= \"aaaba \".\nOperation 2: i=4, j=4. Swap s\\[3\\] and s\\[4\\] to get s= \"aaaab \", then reverse the substring starting at 4. Now, s= \"aaaab \".\n\n**Constraints:**\n\n*   `1 <= s.length <= 3000`\n*   `s`​​​​​​ consists only of lowercase English letters.",
+  "difficulty": "Hard",
+  "category": null,
+  "xpReward": 0,
+  "timeLimitMs": 5000,
+  "memoryLimitMb": 256,
+  "starterCode": {},
+  "solutionCode": "",
+  "hints": [],
+  "isPremium": false,
+  "createdBy": null,
+  "testCases": [
+    {
+      "input": [
+        "cba "
+      ],
+      "expectedOutput": 5
+    },
+    {
+      "input": [
+        "aabaa "
+      ],
+      "expectedOutput": 2
+    }
+  ],
+  "hiddenTestCases": [
+    {
+      "input": [
+        "cba "
+      ],
+      "expectedOutput": 5
+    },
+    {
+      "input": [
+        "aabaa "
+      ],
+      "expectedOutput": 2
+    }
+  ],
+  "tags": [],
+  "constraints": [],
+  "examples": [],
+  "problemNumber": null,
+  "createdAt": "2025-11-14T21:23:17.468399+00:00",
+  "updatedAt": "2025-12-04T04:36:42.313Z"
+}

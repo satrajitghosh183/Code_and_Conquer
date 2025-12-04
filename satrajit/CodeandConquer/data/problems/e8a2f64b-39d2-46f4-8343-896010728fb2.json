@@ -1,0 +1,56 @@
+{
+  "id": "e8a2f64b-39d2-46f4-8343-896010728fb2",
+  "title": "Count the Digits That Divide a Number",
+  "slug": "count-the-digits-that-divide-a-number",
+  "description": "Given an integer `num`, return _the number of digits in `num` that divide_ `num`.\n\nAn integer `val` divides `nums` if `nums % val == 0`.\n\n**Example 1:**\n\n**Input:** num = 7\n**Output:** 1\n**Explanation:** 7 divides itself, hence the answer is 1.\n\n**Example 2:**\n\n**Input:** num = 121\n**Output:** 2\n**Explanation:** 121 is divisible by 1, but not 2. Since 1 occurs twice as a digit, we return 2.\n\n**Example 3:**\n\n**Input:** num = 1248\n**Output:** 4\n**Explanation:** 1248 is divisible by all of its digits, hence the answer is 4.\n\n**Constraints:**\n\n*   `1 <= num <= 109`\n*   `num` does not contain `0` as one of its digits.",
+  "difficulty": "Easy",
+  "category": null,
+  "xpReward": 0,
+  "timeLimitMs": 5000,
+  "memoryLimitMb": 256,
+  "starterCode": {},
+  "solutionCode": "",
+  "hints": [],
+  "isPremium": false,
+  "createdBy": null,
+  "testCases": [
+    {
+      "input": [
+        7
+      ],
+      "expectedOutput": 1
+    },
+    {
+      "input": [
+        121
+      ],
+      "expectedOutput": 2
+    },
+    {
+      "input": [
+        1248
+      ],
+      "expectedOutput": 4
+    }
+  ],
+  "hiddenTestCases": [
+    {
+      "input": [
+        7
+      ],
+      "expectedOutput": 1
+    },
+    {
+      "input": [
+        121
+      ],
+      "expectedOutput": 2
+    }
+  ],
+  "tags": [],
+  "constraints": [],
+  "examples": [],
+  "problemNumber": null,
+  "createdAt": "2025-11-14T21:26:09.048078+00:00",
+  "updatedAt": "2025-12-04T04:35:24.361Z"
+}

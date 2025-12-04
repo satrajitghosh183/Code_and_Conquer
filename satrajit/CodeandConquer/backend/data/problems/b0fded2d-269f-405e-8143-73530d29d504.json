@@ -1,0 +1,60 @@
+{
+  "id": "b0fded2d-269f-405e-8143-73530d29d504",
+  "title": "Maximize Palindrome Length From Subsequences",
+  "slug": "maximize-palindrome-length-from-subsequences",
+  "description": "You are given two strings, `word1` and `word2`. You want to construct a string in the following manner:\n\n*   Choose some **non-empty** subsequence `subsequence1` from `word1`.\n*   Choose some **non-empty** subsequence `subsequence2` from `word2`.\n*   Concatenate the subsequences: `subsequence1 + subsequence2`, to make the string.\n\nReturn _the **length** of the longest **palindrome** that can be constructed in the described manner._ If no palindromes can be constructed, return `0`.\n\nA **subsequence** of a string `s` is a string that can be made by deleting some (possibly none) characters from `s` without changing the order of the remaining characters.\n\nA **palindrome** is a string that reads the same forward as well as backward.\n\n**Example 1:**\n\n**Input:** word1 =  \"cacb \", word2 =  \"cbba \"\n**Output:** 5\n**Explanation:** Choose  \"ab \" from word1 and  \"cba \" from word2 to make  \"abcba \", which is a palindrome.\n\n**Example 2:**\n\n**Input:** word1 =  \"ab \", word2 =  \"ab \"\n**Output:** 3\n**Explanation:** Choose  \"ab \" from word1 and  \"a \" from word2 to make  \"aba \", which is a palindrome.\n\n**Example 3:**\n\n**Input:** word1 =  \"aa \", word2 =  \"bb \"\n**Output:** 0\n**Explanation:** You cannot construct a palindrome from the described method, so return 0.\n\n**Constraints:**\n\n*   `1 <= word1.length, word2.length <= 1000`\n*   `word1` and `word2` consist of lowercase English letters.",
+  "difficulty": "Hard",
+  "category": null,
+  "xpReward": 0,
+  "timeLimitMs": 5000,
+  "memoryLimitMb": 256,
+  "starterCode": [],
+  "solutionCode": "",
+  "hints": [],
+  "isPremium": false,
+  "createdBy": null,
+  "testCases": [
+    {
+      "input": [
+        "cacb ",
+        "cbba "
+      ],
+      "expectedOutput": 5
+    },
+    {
+      "input": [
+        "ab ",
+        "ab "
+      ],
+      "expectedOutput": 3
+    },
+    {
+      "input": [
+        "aa ",
+        "bb "
+      ],
+      "expectedOutput": 0
+    }
+  ],
+  "hiddenTestCases": [
+    {
+      "input": [
+        "cacb ",
+        "cbba "
+      ],
+      "expectedOutput": 5
+    },
+    {
+      "input": [
+        "ab ",
+        "ab "
+      ],
+      "expectedOutput": 3
+    }
+  ],
+  "tags": [],
+  "constraints": [],
+  "examples": [],
+  "createdAt": "2025-11-14T21:23:02.942461+00:00",
+  "updatedAt": "2025-12-04T04:36:51.215Z"
+}

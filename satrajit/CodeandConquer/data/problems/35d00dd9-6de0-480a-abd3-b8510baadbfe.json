@@ -1,0 +1,54 @@
+{
+  "id": "35d00dd9-6de0-480a-abd3-b8510baadbfe",
+  "title": "Find Kth Bit in Nth Binary String",
+  "slug": "find-kth-bit-in-nth-binary-string",
+  "description": "Given two positive integers `n` and `k`, the binary string `Sn` is formed as follows:\n\n*   `S1 = \"0 \"`\n*   `Si = Si - 1 + \"1 \" + reverse(invert(Si - 1))` for `i > 1`\n\nWhere `+` denotes the concatenation operation, `reverse(x)` returns the reversed string `x`, and `invert(x)` inverts all the bits in `x` (`0` changes to `1` and `1` changes to `0`).\n\nFor example, the first four strings in the above sequence are:\n\n*   `S1 = \"0 \"`\n*   `S2 = \"0**1**1 \"`\n*   `S3 = \"011**1**001 \"`\n*   `S4 = \"0111001**1**0110001 \"`\n\nReturn _the_ `kth` _bit_ _in_ `Sn`. It is guaranteed that `k` is valid for the given `n`.\n\n**Example 1:**\n\n**Input:** n = 3, k = 1\n**Output:**  \"0 \"\n**Explanation:** S3 is  \"**0**111001 \".\nThe 1st bit is  \"0 \".\n\n**Example 2:**\n\n**Input:** n = 4, k = 11\n**Output:**  \"1 \"\n**Explanation:** S4 is  \"0111001101**1**0001 \".\nThe 11th bit is  \"1 \".\n\n**Constraints:**\n\n*   `1 <= n <= 20`\n*   `1 <= k <= 2n - 1`",
+  "difficulty": "Medium",
+  "category": null,
+  "xpReward": 0,
+  "timeLimitMs": 5000,
+  "memoryLimitMb": 256,
+  "starterCode": {},
+  "solutionCode": "",
+  "hints": [],
+  "isPremium": false,
+  "createdBy": null,
+  "testCases": [
+    {
+      "input": [
+        3,
+        1
+      ],
+      "expectedOutput": "0 "
+    },
+    {
+      "input": [
+        4,
+        11
+      ],
+      "expectedOutput": "1 "
+    }
+  ],
+  "hiddenTestCases": [
+    {
+      "input": [
+        3,
+        1
+      ],
+      "expectedOutput": "0 "
+    },
+    {
+      "input": [
+        4,
+        11
+      ],
+      "expectedOutput": "1 "
+    }
+  ],
+  "tags": [],
+  "constraints": [],
+  "examples": [],
+  "problemNumber": null,
+  "createdAt": "2025-11-14T21:21:56.848714+00:00",
+  "updatedAt": "2025-12-04T04:37:18.210Z"
+}

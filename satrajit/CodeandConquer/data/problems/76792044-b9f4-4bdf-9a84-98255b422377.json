@@ -1,0 +1,78 @@
+{
+  "id": "76792044-b9f4-4bdf-9a84-98255b422377",
+  "title": "Find Xor-Beauty of Array",
+  "slug": "find-xor-beauty-of-array",
+  "description": "You are given a **0-indexed** integer array `nums`.\n\nThe **effective value** of three indices `i`, `j`, and `k` is defined as `((nums[i] | nums[j]) & nums[k])`.\n\nThe **xor-beauty** of the array is the XORing of **the effective values of all the possible triplets** of indices `(i, j, k)` where `0 <= i, j, k < n`.\n\nReturn _the xor-beauty of_ `nums`.\n\n**Note** that:\n\n*   `val1 | val2` is bitwise OR of `val1` and `val2`.\n*   `val1 & val2` is bitwise AND of `val1` and `val2`.\n\n**Example 1:**\n\n**Input:** nums = \\[1,4\\]\n**Output:** 5\n**Explanation:** \nThe triplets and their corresponding effective values are listed below:\n- (0,0,0) with effective value ((1 | 1) & 1) = 1\n- (0,0,1) with effective value ((1 | 1) & 4) = 0\n- (0,1,0) with effective value ((1 | 4) & 1) = 1\n- (0,1,1) with effective value ((1 | 4) & 4) = 4\n- (1,0,0) with effective value ((4 | 1) & 1) = 1\n- (1,0,1) with effective value ((4 | 1) & 4) = 4\n- (1,1,0) with effective value ((4 | 4) & 1) = 0\n- (1,1,1) with effective value ((4 | 4) & 4) = 4 \nXor-beauty of array will be bitwise XOR of all beauties = 1 ^ 0 ^ 1 ^ 4 ^ 1 ^ 4 ^ 0 ^ 4 = 5.\n\n**Example 2:**\n\n**Input:** nums = \\[15,45,20,2,34,35,5,44,32,30\\]\n**Output:** 34\n**Explanation:** `The xor-beauty of the given array is 34.`\n\n**Constraints:**\n\n*   `1 <= nums.length <= 105`\n*   `1 <= nums[i] <= 109`",
+  "difficulty": "Medium",
+  "category": null,
+  "xpReward": 0,
+  "timeLimitMs": 5000,
+  "memoryLimitMb": 256,
+  "starterCode": {},
+  "solutionCode": "",
+  "hints": [],
+  "isPremium": false,
+  "createdBy": null,
+  "testCases": [
+    {
+      "input": [
+        [
+          1,
+          4
+        ]
+      ],
+      "expectedOutput": 5
+    },
+    {
+      "input": [
+        [
+          15,
+          45,
+          20,
+          2,
+          34,
+          35,
+          5,
+          44,
+          32,
+          30
+        ]
+      ],
+      "expectedOutput": 34
+    }
+  ],
+  "hiddenTestCases": [
+    {
+      "input": [
+        [
+          1,
+          4
+        ]
+      ],
+      "expectedOutput": 5
+    },
+    {
+      "input": [
+        [
+          15,
+          45,
+          20,
+          2,
+          34,
+          35,
+          5,
+          44,
+          32,
+          30
+        ]
+      ],
+      "expectedOutput": 34
+    }
+  ],
+  "tags": [],
+  "constraints": [],
+  "examples": [],
+  "problemNumber": null,
+  "createdAt": "2025-11-14T21:26:10.926961+00:00",
+  "updatedAt": "2025-12-04T04:35:23.723Z"
+}

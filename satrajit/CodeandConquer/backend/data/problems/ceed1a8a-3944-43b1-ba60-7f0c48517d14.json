@@ -1,0 +1,93 @@
+{
+  "id": "ceed1a8a-3944-43b1-ba60-7f0c48517d14",
+  "title": "Maximum Population Year",
+  "slug": "maximum-population-year",
+  "description": "You are given a 2D integer array `logs` where each `logs[i] = [birthi, deathi]` indicates the birth and death years of the `ith` person.\n\nThe **population** of some year `x` is the number of people alive during that year. The `ith` person is counted in year `x`'s population if `x` is in the **inclusive** range `[birthi, deathi - 1]`. Note that the person is **not** counted in the year that they die.\n\nReturn _the **earliest** year with the **maximum population**_.\n\n**Example 1:**\n\n**Input:** logs = \\[\\[1993,1999\\],\\[2000,2010\\]\\]\n**Output:** 1993\n**Explanation:** The maximum population is 1, and 1993 is the earliest year with this population.\n\n**Example 2:**\n\n**Input:** logs = \\[\\[1950,1961\\],\\[1960,1971\\],\\[1970,1981\\]\\]\n**Output:** 1960\n**Explanation:** \nThe maximum population is 2, and it had happened in years 1960 and 1970.\nThe earlier year between them is 1960.\n\n**Constraints:**\n\n*   `1 <= logs.length <= 100`\n*   `1950 <= birthi < deathi <= 2050`",
+  "difficulty": "Easy",
+  "category": null,
+  "xpReward": 0,
+  "timeLimitMs": 5000,
+  "memoryLimitMb": 256,
+  "starterCode": [],
+  "solutionCode": "",
+  "hints": [],
+  "isPremium": false,
+  "createdBy": null,
+  "testCases": [
+    {
+      "input": [
+        [
+          [
+            1993,
+            1999
+          ],
+          [
+            2000,
+            2010
+          ]
+        ]
+      ],
+      "expectedOutput": 1993
+    },
+    {
+      "input": [
+        [
+          [
+            1950,
+            1961
+          ],
+          [
+            1960,
+            1971
+          ],
+          [
+            1970,
+            1981
+          ]
+        ]
+      ],
+      "expectedOutput": 1960
+    }
+  ],
+  "hiddenTestCases": [
+    {
+      "input": [
+        [
+          [
+            1993,
+            1999
+          ],
+          [
+            2000,
+            2010
+          ]
+        ]
+      ],
+      "expectedOutput": 1993
+    },
+    {
+      "input": [
+        [
+          [
+            1950,
+            1961
+          ],
+          [
+            1960,
+            1971
+          ],
+          [
+            1970,
+            1981
+          ]
+        ]
+      ],
+      "expectedOutput": 1960
+    }
+  ],
+  "tags": [],
+  "constraints": [],
+  "examples": [],
+  "createdAt": "2025-11-14T21:23:23.786528+00:00",
+  "updatedAt": "2025-12-04T04:36:40.135Z"
+}

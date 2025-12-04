@@ -1,0 +1,169 @@
+{
+  "id": "5fc8b440-ecfc-4c0f-bc1f-8d01c383c5f5",
+  "title": "Process Restricted Friend Requests",
+  "slug": "process-restricted-friend-requests",
+  "description": "You are given an integer `n` indicating the number of people in a network. Each person is labeled from `0` to `n - 1`.\n\nYou are also given a **0-indexed** 2D integer array `restrictions`, where `restrictions[i] = [xi, yi]` means that person `xi` and person `yi` **cannot** become **friends**, either **directly** or **indirectly** through other people.\n\nInitially, no one is friends with each other. You are given a list of friend requests as a **0-indexed** 2D integer array `requests`, where `requests[j] = [uj, vj]` is a friend request between person `uj` and person `vj`.\n\nA friend request is **successful** if `uj` and `vj` can be **friends**. Each friend request is processed in the given order (i.e., `requests[j]` occurs before `requests[j + 1]`), and upon a successful request, `uj` and `vj` **become direct friends** for all future friend requests.\n\nReturn _a **boolean array**_ `result`, _where each_ `result[j]` _is_ `true` _if the_ `jth` _friend request is **successful** or_ `false` _if it is not_.\n\n**Note:** If `uj` and `vj` are already direct friends, the request is still **successful**.\n\n**Example 1:**\n\n**Input:** n = 3, restrictions = \\[\\[0,1\\]\\], requests = \\[\\[0,2\\],\\[2,1\\]\\]\n**Output:** \\[true,false\\]\n**Explanation:**\nRequest 0: Person 0 and person 2 can be friends, so they become direct friends. \nRequest 1: Person 2 and person 1 cannot be friends since person 0 and person 1 would be indirect friends (1--2--0).\n\n**Example 2:**\n\n**Input:** n = 3, restrictions = \\[\\[0,1\\]\\], requests = \\[\\[1,2\\],\\[0,2\\]\\]\n**Output:** \\[true,false\\]\n**Explanation:**\nRequest 0: Person 1 and person 2 can be friends, so they become direct friends.\nRequest 1: Person 0 and person 2 cannot be friends since person 0 and person 1 would be indirect friends (0--2--1).\n\n**Example 3:**\n\n**Input:** n = 5, restrictions = \\[\\[0,1\\],\\[1,2\\],\\[2,3\\]\\], requests = \\[\\[0,4\\],\\[1,2\\],\\[3,1\\],\\[3,4\\]\\]\n**Output:** \\[true,false,true,false\\]\n**Explanation:**\nRequest 0: Person 0 and person 4 can be friends, so they become direct friends.\nRequest 1: Person 1 and person 2 cannot be friends since they are directly restricted.\nRequest 2: Person 3 and person 1 can be friends, so they become direct friends.\nRequest 3: Person 3 and person 4 cannot be friends since person 0 and person 1 would be indirect friends (0--4--3--1).\n\n**Constraints:**\n\n*   `2 <= n <= 1000`\n*   `0 <= restrictions.length <= 1000`\n*   `restrictions[i].length == 2`\n*   `0 <= xi, yi <= n - 1`\n*   `xi != yi`\n*   `1 <= requests.length <= 1000`\n*   `requests[j].length == 2`\n*   `0 <= uj, vj <= n - 1`\n*   `uj != vj`",
+  "difficulty": "Hard",
+  "category": null,
+  "xpReward": 0,
+  "timeLimitMs": 5000,
+  "memoryLimitMb": 256,
+  "starterCode": {},
+  "solutionCode": "",
+  "hints": [],
+  "isPremium": false,
+  "createdBy": null,
+  "testCases": [
+    {
+      "input": [
+        3,
+        [
+          [
+            0,
+            1
+          ]
+        ],
+        [
+          [
+            0,
+            2
+          ],
+          [
+            2,
+            1
+          ]
+        ]
+      ],
+      "expectedOutput": [
+        true,
+        false
+      ]
+    },
+    {
+      "input": [
+        3,
+        [
+          [
+            0,
+            1
+          ]
+        ],
+        [
+          [
+            1,
+            2
+          ],
+          [
+            0,
+            2
+          ]
+        ]
+      ],
+      "expectedOutput": [
+        true,
+        false
+      ]
+    },
+    {
+      "input": [
+        5,
+        [
+          [
+            0,
+            1
+          ],
+          [
+            1,
+            2
+          ],
+          [
+            2,
+            3
+          ]
+        ],
+        [
+          [
+            0,
+            4
+          ],
+          [
+            1,
+            2
+          ],
+          [
+            3,
+            1
+          ],
+          [
+            3,
+            4
+          ]
+        ]
+      ],
+      "expectedOutput": [
+        true,
+        false,
+        true,
+        false
+      ]
+    }
+  ],
+  "hiddenTestCases": [
+    {
+      "input": [
+        3,
+        [
+          [
+            0,
+            1
+          ]
+        ],
+        [
+          [
+            0,
+            2
+          ],
+          [
+            2,
+            1
+          ]
+        ]
+      ],
+      "expectedOutput": [
+        true,
+        false
+      ]
+    },
+    {
+      "input": [
+        3,
+        [
+          [
+            0,
+            1
+          ]
+        ],
+        [
+          [
+            1,
+            2
+          ],
+          [
+            0,
+            2
+          ]
+        ]
+      ],
+      "expectedOutput": [
+        true,
+        false
+      ]
+    }
+  ],
+  "tags": [],
+  "constraints": [],
+  "examples": [],
+  "problemNumber": null,
+  "createdAt": "2025-11-14T21:24:17.345552+00:00",
+  "updatedAt": "2025-12-04T04:36:17.646Z"
+}

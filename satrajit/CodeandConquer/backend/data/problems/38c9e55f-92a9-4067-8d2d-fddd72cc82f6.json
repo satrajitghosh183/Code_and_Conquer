@@ -1,0 +1,61 @@
+{
+  "id": "38c9e55f-92a9-4067-8d2d-fddd72cc82f6",
+  "title": "Binary Searchable Numbers in an Unsorted Array",
+  "slug": "binary-searchable-numbers-in-an-unsorted-array",
+  "description": "Consider a function that implements an algorithm **similar** to [Binary Search](https://leetcode.com/explore/learn/card/binary-search/). The function has two input parameters: `sequence` is a sequence of integers, and `target` is an integer value. The purpose of the function is to find if the `target` exists in the `sequence`.\n\nThe pseudocode of the function is as follows:\n\nfunc(sequence, target)\n  while sequence is not empty\n    **randomly** choose an element from sequence as the pivot\n    if pivot = target, return **true**\n    else if pivot < target, remove pivot and all elements to its left from the sequence\n    else, remove pivot and all elements to its right from the sequence\n  end while\n  return **false**\n\nWhen the `sequence` is sorted, the function works correctly for **all** values. When the `sequence` is not sorted, the function does not work for all values, but may still work for **some** values.\n\nGiven an integer array `nums`, representing the `sequence`, that contains **unique** numbers and **may or may not be sorted**, return _the number of values that are **guaranteed** to be found using the function, for **every possible** pivot selection_.\n\n**Example 1:**\n\n**Input:** nums = \\[7\\]\n**Output:** 1\n**Explanation**: \nSearching for value 7 is guaranteed to be found.\nSince the sequence has only one element, 7 will be chosen as the pivot. Because the pivot equals the target, the function will return true.\n\n**Example 2:**\n\n**Input:** nums = \\[-1,5,2\\]\n**Output:** 1\n**Explanation**: \nSearching for value -1 is guaranteed to be found.\nIf -1 was chosen as the pivot, the function would return true.\nIf 5 was chosen as the pivot, 5 and 2 would be removed. In the next loop, the sequence would have only -1 and the function would return true.\nIf 2 was chosen as the pivot, 2 would be removed. In the next loop, the sequence would have -1 and 5. No matter which number was chosen as the next pivot, the function would find -1 and return true.\n\nSearching for value 5 is NOT guaranteed to be found.\nIf 2 was chosen as the pivot, -1, 5 and 2 would be removed. The sequence would be empty and the function would return false.\n\nSearching for value 2 is NOT guaranteed to be found.\nIf 5 was chosen as the pivot, 5 and 2 would be removed. In the next loop, the sequence would have only -1 and the function would return false.\n\nBecause only -1 is guaranteed to be found, you should return 1.\n\n**Constraints:**\n\n*   `1 <= nums.length <= 105`\n*   `-105 <= nums[i] <= 105`\n*   All the values of `nums` are **unique**.\n\n**Follow-up:** If `nums` has **duplicates**, would you modify your algorithm? If so, how?",
+  "difficulty": "Medium",
+  "category": null,
+  "xpReward": 0,
+  "timeLimitMs": 5000,
+  "memoryLimitMb": 256,
+  "starterCode": [],
+  "solutionCode": "",
+  "hints": [],
+  "isPremium": false,
+  "createdBy": null,
+  "testCases": [
+    {
+      "input": [
+        [
+          7
+        ]
+      ],
+      "expectedOutput": "1\n**Explanation**: \nSearching for value 7 is guaranteed to be found.\nSince the sequence has only one element, 7 will be chosen as the pivot. Because the pivot equals the target, the function will return true."
+    },
+    {
+      "input": [
+        [
+          -1,
+          5,
+          2
+        ]
+      ],
+      "expectedOutput": "1\n**Explanation**: \nSearching for value -1 is guaranteed to be found.\nIf -1 was chosen as the pivot, the function would return true.\nIf 5 was chosen as the pivot, 5 and 2 would be removed. In the next loop, the sequence would have only -1 and the function would return true.\nIf 2 was chosen as the pivot, 2 would be removed. In the next loop, the sequence would have -1 and 5. No matter which number was chosen as the next pivot, the function would find -1 and return true.\n\nSearching for value 5 is NOT guaranteed to be found.\nIf 2 was chosen as the pivot, -1, 5 and 2 would be removed. The sequence would be empty and the function would return false.\n\nSearching for value 2 is NOT guaranteed to be found.\nIf 5 was chosen as the pivot, 5 and 2 would be removed. In the next loop, the sequence would have only -1 and the function would return false.\n\nBecause only -1 is guaranteed to be found, you should return 1.\n\n**Constraints:**\n\n*   `1 <= nums.length <= 105`\n*   `-105 <= nums[i] <= 105`\n*   All the values of `nums` are **unique**.\n\n**Follow-up:** If `nums` has **duplicates**, would you modify your algorithm? If so, how?"
+    }
+  ],
+  "hiddenTestCases": [
+    {
+      "input": [
+        [
+          7
+        ]
+      ],
+      "expectedOutput": "1\n**Explanation**: \nSearching for value 7 is guaranteed to be found.\nSince the sequence has only one element, 7 will be chosen as the pivot. Because the pivot equals the target, the function will return true."
+    },
+    {
+      "input": [
+        [
+          -1,
+          5,
+          2
+        ]
+      ],
+      "expectedOutput": "1\n**Explanation**: \nSearching for value -1 is guaranteed to be found.\nIf -1 was chosen as the pivot, the function would return true.\nIf 5 was chosen as the pivot, 5 and 2 would be removed. In the next loop, the sequence would have only -1 and the function would return true.\nIf 2 was chosen as the pivot, 2 would be removed. In the next loop, the sequence would have -1 and 5. No matter which number was chosen as the next pivot, the function would find -1 and return true.\n\nSearching for value 5 is NOT guaranteed to be found.\nIf 2 was chosen as the pivot, -1, 5 and 2 would be removed. The sequence would be empty and the function would return false.\n\nSearching for value 2 is NOT guaranteed to be found.\nIf 5 was chosen as the pivot, 5 and 2 would be removed. In the next loop, the sequence would have only -1 and the function would return false.\n\nBecause only -1 is guaranteed to be found, you should return 1.\n\n**Constraints:**\n\n*   `1 <= nums.length <= 105`\n*   `-105 <= nums[i] <= 105`\n*   All the values of `nums` are **unique**.\n\n**Follow-up:** If `nums` has **duplicates**, would you modify your algorithm? If so, how?"
+    }
+  ],
+  "tags": [],
+  "constraints": [],
+  "examples": [],
+  "createdAt": "2025-11-14T21:23:49.90861+00:00",
+  "updatedAt": "2025-12-04T04:36:28.818Z"
+}

@@ -1,0 +1,129 @@
+{
+  "id": "d930b5d2-25f8-4ae4-85f9-1992cf19a8c4",
+  "title": "Remove All Ones With Row and Column Flips II",
+  "slug": "remove-all-ones-with-row-and-column-flips-ii",
+  "description": "You are given a **0-indexed** `m x n` **binary** matrix `grid`.\n\nIn one operation, you can choose any `i` and `j` that meet the following conditions:\n\n*   `0 <= i < m`\n*   `0 <= j < n`\n*   `grid[i][j] == 1`\n\nand change the values of **all** cells in row `i` and column `j` to zero.\n\nReturn _the **minimum** number of operations needed to remove all_ `1`_'s from_ `grid`_._\n\n**Example 1:**\n\n**Input:** grid = \\[\\[1,1,1\\],\\[1,1,1\\],\\[0,1,0\\]\\]\n**Output:** 2\n**Explanation:**\nIn the first operation, change all cell values of row 1 and column 1 to zero.\nIn the second operation, change all cell values of row 0 and column 0 to zero.\n\n**Example 2:**\n\n**Input:** grid = \\[\\[0,1,0\\],\\[1,0,1\\],\\[0,1,0\\]\\]\n**Output:** 2\n**Explanation:**\nIn the first operation, change all cell values of row 1 and column 0 to zero.\nIn the second operation, change all cell values of row 2 and column 1 to zero.\nNote that we cannot perform an operation using row 1 and column 1 because grid\\[1\\]\\[1\\] != 1.\n\n**Example 3:**\n\n**Input:** grid = \\[\\[0,0\\],\\[0,0\\]\\]\n**Output:** 0\n**Explanation:**\nThere are no 1's to remove so return 0.\n\n**Constraints:**\n\n*   `m == grid.length`\n*   `n == grid[i].length`\n*   `1 <= m, n <= 15`\n*   `1 <= m * n <= 15`\n*   `grid[i][j]` is either `0` or `1`.",
+  "difficulty": "Medium",
+  "category": null,
+  "xpReward": 0,
+  "timeLimitMs": 5000,
+  "memoryLimitMb": 256,
+  "starterCode": {},
+  "solutionCode": "",
+  "hints": [],
+  "isPremium": false,
+  "createdBy": null,
+  "testCases": [
+    {
+      "input": [
+        [
+          [
+            1,
+            1,
+            1
+          ],
+          [
+            1,
+            1,
+            1
+          ],
+          [
+            0,
+            1,
+            0
+          ]
+        ]
+      ],
+      "expectedOutput": 2
+    },
+    {
+      "input": [
+        [
+          [
+            0,
+            1,
+            0
+          ],
+          [
+            1,
+            0,
+            1
+          ],
+          [
+            0,
+            1,
+            0
+          ]
+        ]
+      ],
+      "expectedOutput": 2
+    },
+    {
+      "input": [
+        [
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ]
+        ]
+      ],
+      "expectedOutput": 0
+    }
+  ],
+  "hiddenTestCases": [
+    {
+      "input": [
+        [
+          [
+            1,
+            1,
+            1
+          ],
+          [
+            1,
+            1,
+            1
+          ],
+          [
+            0,
+            1,
+            0
+          ]
+        ]
+      ],
+      "expectedOutput": 2
+    },
+    {
+      "input": [
+        [
+          [
+            0,
+            1,
+            0
+          ],
+          [
+            1,
+            0,
+            1
+          ],
+          [
+            0,
+            1,
+            0
+          ]
+        ]
+      ],
+      "expectedOutput": 2
+    }
+  ],
+  "tags": [],
+  "constraints": [],
+  "examples": [],
+  "problemNumber": null,
+  "createdAt": "2025-11-14T21:24:40.615685+00:00",
+  "updatedAt": "2025-12-04T04:36:07.527Z"
+}

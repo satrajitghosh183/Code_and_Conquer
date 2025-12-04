@@ -1,0 +1,92 @@
+{
+  "id": "6528a784-34e5-407d-bae7-57b5507c5721",
+  "title": "Maximum Number of Integers to Choose From a Range I",
+  "slug": "maximum-number-of-integers-to-choose-from-a-range-i",
+  "description": "You are given an integer array `banned` and two integers `n` and `maxSum`. You are choosing some number of integers following the below rules:\n\n*   The chosen integers have to be in the range `[1, n]`.\n*   Each integer can be chosen **at most once**.\n*   The chosen integers should not be in the array `banned`.\n*   The sum of the chosen integers should not exceed `maxSum`.\n\nReturn _the **maximum** number of integers you can choose following the mentioned rules_.\n\n**Example 1:**\n\n**Input:** banned = \\[1,6,5\\], n = 5, maxSum = 6\n**Output:** 2\n**Explanation:** You can choose the integers 2 and 4.\n2 and 4 are from the range \\[1, 5\\], both did not appear in banned, and their sum is 6, which did not exceed maxSum.\n\n**Example 2:**\n\n**Input:** banned = \\[1,2,3,4,5,6,7\\], n = 8, maxSum = 1\n**Output:** 0\n**Explanation:** You cannot choose any integer while following the mentioned conditions.\n\n**Example 3:**\n\n**Input:** banned = \\[11\\], n = 7, maxSum = 50\n**Output:** 7\n**Explanation:** You can choose the integers 1, 2, 3, 4, 5, 6, and 7.\nThey are from the range \\[1, 7\\], all did not appear in banned, and their sum is 28, which did not exceed maxSum.\n\n**Constraints:**\n\n*   `1 <= banned.length <= 104`\n*   `1 <= banned[i], n <= 104`\n*   `1 <= maxSum <= 109`",
+  "difficulty": "Medium",
+  "category": null,
+  "xpReward": 0,
+  "timeLimitMs": 5000,
+  "memoryLimitMb": 256,
+  "starterCode": {},
+  "solutionCode": "",
+  "hints": [],
+  "isPremium": false,
+  "createdBy": null,
+  "testCases": [
+    {
+      "input": [
+        [
+          1,
+          6,
+          5
+        ],
+        5,
+        6
+      ],
+      "expectedOutput": 2
+    },
+    {
+      "input": [
+        [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7
+        ],
+        8,
+        1
+      ],
+      "expectedOutput": 0
+    },
+    {
+      "input": [
+        [
+          11
+        ],
+        7,
+        50
+      ],
+      "expectedOutput": 7
+    }
+  ],
+  "hiddenTestCases": [
+    {
+      "input": [
+        [
+          1,
+          6,
+          5
+        ],
+        5,
+        6
+      ],
+      "expectedOutput": 2
+    },
+    {
+      "input": [
+        [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7
+        ],
+        8,
+        1
+      ],
+      "expectedOutput": 0
+    }
+  ],
+  "tags": [],
+  "constraints": [],
+  "examples": [],
+  "problemNumber": null,
+  "createdAt": "2025-11-14T21:26:20.382267+00:00",
+  "updatedAt": "2025-12-04T04:35:20.732Z"
+}

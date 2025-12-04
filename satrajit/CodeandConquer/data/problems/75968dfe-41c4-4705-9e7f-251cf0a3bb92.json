@@ -1,0 +1,61 @@
+{
+  "id": "75968dfe-41c4-4705-9e7f-251cf0a3bb92",
+  "title": "Minimum Moves to Reach Target Score",
+  "slug": "minimum-moves-to-reach-target-score",
+  "description": "You are playing a game with integers. You start with the integer `1` and you want to reach the integer `target`.\n\nIn one move, you can either:\n\n*   **Increment** the current integer by one (i.e., `x = x + 1`).\n*   **Double** the current integer (i.e., `x = 2 * x`).\n\nYou can use the **increment** operation **any** number of times, however, you can only use the **double** operation **at most** `maxDoubles` times.\n\nGiven the two integers `target` and `maxDoubles`, return _the minimum number of moves needed to reach_ `target` _starting with_ `1`.\n\n**Example 1:**\n\n**Input:** target = 5, maxDoubles = 0\n**Output:** 4\n**Explanation:** Keep incrementing by 1 until you reach target.\n\n**Example 2:**\n\n**Input:** target = 19, maxDoubles = 2\n**Output:** 7\n**Explanation:** Initially, x = 1\nIncrement 3 times so x = 4\nDouble once so x = 8\nIncrement once so x = 9\nDouble again so x = 18\nIncrement once so x = 19\n\n**Example 3:**\n\n**Input:** target = 10, maxDoubles = 4\n**Output:** 4\n**Explanation:** Initially, x = 1\nIncrement once so x = 2\nDouble once so x = 4\nIncrement once so x = 5\nDouble again so x = 10\n\n**Constraints:**\n\n*   `1 <= target <= 109`\n*   `0 <= maxDoubles <= 100`",
+  "difficulty": "Medium",
+  "category": null,
+  "xpReward": 0,
+  "timeLimitMs": 5000,
+  "memoryLimitMb": 256,
+  "starterCode": {},
+  "solutionCode": "",
+  "hints": [],
+  "isPremium": false,
+  "createdBy": null,
+  "testCases": [
+    {
+      "input": [
+        5,
+        0
+      ],
+      "expectedOutput": 4
+    },
+    {
+      "input": [
+        19,
+        2
+      ],
+      "expectedOutput": 7
+    },
+    {
+      "input": [
+        10,
+        4
+      ],
+      "expectedOutput": 4
+    }
+  ],
+  "hiddenTestCases": [
+    {
+      "input": [
+        5,
+        0
+      ],
+      "expectedOutput": 4
+    },
+    {
+      "input": [
+        19,
+        2
+      ],
+      "expectedOutput": 7
+    }
+  ],
+  "tags": [],
+  "constraints": [],
+  "examples": [],
+  "problemNumber": null,
+  "createdAt": "2025-11-14T21:24:33.495408+00:00",
+  "updatedAt": "2025-12-04T04:36:10.787Z"
+}

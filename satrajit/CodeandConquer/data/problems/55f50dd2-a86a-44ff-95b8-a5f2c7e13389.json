@@ -1,0 +1,90 @@
+{
+  "id": "55f50dd2-a86a-44ff-95b8-a5f2c7e13389",
+  "title": "Mice and Cheese",
+  "slug": "mice-and-cheese",
+  "description": "There are two mice and `n` different types of cheese, each type of cheese should be eaten by exactly one mouse.\n\nA point of the cheese with index `i` (**0-indexed**) is:\n\n*   `reward1[i]` if the first mouse eats it.\n*   `reward2[i]` if the second mouse eats it.\n\nYou are given a positive integer array `reward1`, a positive integer array `reward2`, and a non-negative integer `k`.\n\nReturn _**the maximum** points the mice can achieve if the first mouse eats exactly_ `k` _types of cheese._\n\n**Example 1:**\n\n**Input:** reward1 = \\[1,1,3,4\\], reward2 = \\[4,4,1,1\\], k = 2\n**Output:** 15\n**Explanation:** In this example, the first mouse eats the 2nd (0-indexed) and the 3rd types of cheese, and the second mouse eats the 0th and the 1st types of cheese.\nThe total points are 4 + 4 + 3 + 4 = 15.\nIt can be proven that 15 is the maximum total points that the mice can achieve.\n\n**Example 2:**\n\n**Input:** reward1 = \\[1,1\\], reward2 = \\[1,1\\], k = 2\n**Output:** 2\n**Explanation:** In this example, the first mouse eats the 0th (0-indexed) and 1st types of cheese, and the second mouse does not eat any cheese.\nThe total points are 1 + 1 = 2.\nIt can be proven that 2 is the maximum total points that the mice can achieve.\n\n**Constraints:**\n\n*   `1 <= n == reward1.length == reward2.length <= 105`\n*   `1 <= reward1[i], reward2[i] <= 1000`\n*   `0 <= k <= n`",
+  "difficulty": "Medium",
+  "category": null,
+  "xpReward": 0,
+  "timeLimitMs": 5000,
+  "memoryLimitMb": 256,
+  "starterCode": {},
+  "solutionCode": "",
+  "hints": [],
+  "isPremium": false,
+  "createdBy": null,
+  "testCases": [
+    {
+      "input": [
+        [
+          1,
+          1,
+          3,
+          4
+        ],
+        [
+          4,
+          4,
+          1,
+          1
+        ],
+        2
+      ],
+      "expectedOutput": 15
+    },
+    {
+      "input": [
+        [
+          1,
+          1
+        ],
+        [
+          1,
+          1
+        ],
+        2
+      ],
+      "expectedOutput": 2
+    }
+  ],
+  "hiddenTestCases": [
+    {
+      "input": [
+        [
+          1,
+          1,
+          3,
+          4
+        ],
+        [
+          4,
+          4,
+          1,
+          1
+        ],
+        2
+      ],
+      "expectedOutput": 15
+    },
+    {
+      "input": [
+        [
+          1,
+          1
+        ],
+        [
+          1,
+          1
+        ],
+        2
+      ],
+      "expectedOutput": 2
+    }
+  ],
+  "tags": [],
+  "constraints": [],
+  "examples": [],
+  "problemNumber": null,
+  "createdAt": "2025-11-14T21:26:36.472261+00:00",
+  "updatedAt": "2025-12-04T04:35:14.431Z"
+}

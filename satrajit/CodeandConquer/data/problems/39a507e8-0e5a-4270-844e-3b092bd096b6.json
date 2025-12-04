@@ -1,0 +1,140 @@
+{
+  "id": "39a507e8-0e5a-4270-844e-3b092bd096b6",
+  "title": "Difference Between Maximum and Minimum Price Sum",
+  "slug": "difference-between-maximum-and-minimum-price-sum",
+  "description": "There exists an undirected and initially unrooted tree with `n` nodes indexed from `0` to `n - 1`. You are given the integer `n` and a 2D integer array `edges` of length `n - 1`, where `edges[i] = [ai, bi]` indicates that there is an edge between nodes `ai` and `bi` in the tree.\n\nEach node has an associated price. You are given an integer array `price`, where `price[i]` is the price of the `ith` node.\n\nThe **price sum** of a given path is the sum of the prices of all nodes lying on that path.\n\nThe tree can be rooted at any node `root` of your choice. The incurred **cost** after choosing `root` is the difference between the maximum and minimum **price sum** amongst all paths starting at `root`.\n\nReturn _the **maximum** possible **cost**_ _amongst all possible root choices_.\n\n**Example 1:**\n\n**Input:** n = 6, edges = \\[\\[0,1\\],\\[1,2\\],\\[1,3\\],\\[3,4\\],\\[3,5\\]\\], price = \\[9,8,7,6,10,5\\]\n**Output:** 24\n**Explanation:** The diagram above denotes the tree after rooting it at node 2. The first part (colored in red) shows the path with the maximum price sum. The second part (colored in blue) shows the path with the minimum price sum.\n- The first path contains nodes \\[2,1,3,4\\]: the prices are \\[7,8,6,10\\], and the sum of the prices is 31.\n- The second path contains the node \\[2\\] with the price \\[7\\].\nThe difference between the maximum and minimum price sum is 24. It can be proved that 24 is the maximum cost.\n\n**Example 2:**\n\n**Input:** n = 3, edges = \\[\\[0,1\\],\\[1,2\\]\\], price = \\[1,1,1\\]\n**Output:** 2\n**Explanation:** The diagram above denotes the tree after rooting it at node 0. The first part (colored in red) shows the path with the maximum price sum. The second part (colored in blue) shows the path with the minimum price sum.\n- The first path contains nodes \\[0,1,2\\]: the prices are \\[1,1,1\\], and the sum of the prices is 3.\n- The second path contains node \\[0\\] with a price \\[1\\].\nThe difference between the maximum and minimum price sum is 2. It can be proved that 2 is the maximum cost.\n\n**Constraints:**\n\n*   `1 <= n <= 105`\n*   `edges.length == n - 1`\n*   `0 <= ai, bi <= n - 1`\n*   `edges` represents a valid tree.\n*   `price.length == n`\n*   `1 <= price[i] <= 105`",
+  "difficulty": "Hard",
+  "category": null,
+  "xpReward": 0,
+  "timeLimitMs": 5000,
+  "memoryLimitMb": 256,
+  "starterCode": {},
+  "solutionCode": "",
+  "hints": [],
+  "isPremium": false,
+  "createdBy": null,
+  "testCases": [
+    {
+      "input": [
+        6,
+        [
+          [
+            0,
+            1
+          ],
+          [
+            1,
+            2
+          ],
+          [
+            1,
+            3
+          ],
+          [
+            3,
+            4
+          ],
+          [
+            3,
+            5
+          ]
+        ],
+        [
+          9,
+          8,
+          7,
+          6,
+          10,
+          5
+        ]
+      ],
+      "expectedOutput": 24
+    },
+    {
+      "input": [
+        3,
+        [
+          [
+            0,
+            1
+          ],
+          [
+            1,
+            2
+          ]
+        ],
+        [
+          1,
+          1,
+          1
+        ]
+      ],
+      "expectedOutput": 2
+    }
+  ],
+  "hiddenTestCases": [
+    {
+      "input": [
+        6,
+        [
+          [
+            0,
+            1
+          ],
+          [
+            1,
+            2
+          ],
+          [
+            1,
+            3
+          ],
+          [
+            3,
+            4
+          ],
+          [
+            3,
+            5
+          ]
+        ],
+        [
+          9,
+          8,
+          7,
+          6,
+          10,
+          5
+        ]
+      ],
+      "expectedOutput": 24
+    },
+    {
+      "input": [
+        3,
+        [
+          [
+            0,
+            1
+          ],
+          [
+            1,
+            2
+          ]
+        ],
+        [
+          1,
+          1,
+          1
+        ]
+      ],
+      "expectedOutput": 2
+    }
+  ],
+  "tags": [],
+  "constraints": [],
+  "examples": [],
+  "problemNumber": null,
+  "createdAt": "2025-11-14T21:26:14.005668+00:00",
+  "updatedAt": "2025-12-04T04:35:22.520Z"
+}

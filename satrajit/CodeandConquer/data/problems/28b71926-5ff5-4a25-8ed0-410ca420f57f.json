@@ -1,0 +1,150 @@
+{
+  "id": "28b71926-5ff5-4a25-8ed0-410ca420f57f",
+  "title": "Find All Groups of Farmland",
+  "slug": "find-all-groups-of-farmland",
+  "description": "You are given a **0-indexed** `m x n` binary matrix `land` where a `0` represents a hectare of forested land and a `1` represents a hectare of farmland.\n\nTo keep the land organized, there are designated rectangular areas of hectares that consist **entirely** of farmland. These rectangular areas are called **groups**. No two groups are adjacent, meaning farmland in one group is **not** four-directionally adjacent to another farmland in a different group.\n\n`land` can be represented by a coordinate system where the top left corner of `land` is `(0, 0)` and the bottom right corner of `land` is `(m-1, n-1)`. Find the coordinates of the top left and bottom right corner of each **group** of farmland. A **group** of farmland with a top left corner at `(r1, c1)` and a bottom right corner at `(r2, c2)` is represented by the 4-length array `[r1, c1, r2, c2].`\n\nReturn _a 2D array containing the 4-length arrays described above for each **group** of farmland in_ `land`_. If there are no groups of farmland, return an empty array. You may return the answer in **any order**_.\n\n**Example 1:**\n\n**Input:** land = \\[\\[1,0,0\\],\\[0,1,1\\],\\[0,1,1\\]\\]\n**Output:** \\[\\[0,0,0,0\\],\\[1,1,2,2\\]\\]\n**Explanation:**\nThe first group has a top left corner at land\\[0\\]\\[0\\] and a bottom right corner at land\\[0\\]\\[0\\].\nThe second group has a top left corner at land\\[1\\]\\[1\\] and a bottom right corner at land\\[2\\]\\[2\\].\n\n**Example 2:**\n\n**Input:** land = \\[\\[1,1\\],\\[1,1\\]\\]\n**Output:** \\[\\[0,0,1,1\\]\\]\n**Explanation:**\nThe first group has a top left corner at land\\[0\\]\\[0\\] and a bottom right corner at land\\[1\\]\\[1\\].\n\n**Example 3:**\n\n**Input:** land = \\[\\[0\\]\\]\n**Output:** \\[\\]\n**Explanation:**\nThere are no groups of farmland.\n\n**Constraints:**\n\n*   `m == land.length`\n*   `n == land[i].length`\n*   `1 <= m, n <= 300`\n*   `land` consists of only `0`'s and `1`'s.\n*   Groups of farmland are **rectangular** in shape.",
+  "difficulty": "Medium",
+  "category": null,
+  "xpReward": 0,
+  "timeLimitMs": 5000,
+  "memoryLimitMb": 256,
+  "starterCode": {},
+  "solutionCode": "",
+  "hints": [],
+  "isPremium": false,
+  "createdBy": null,
+  "testCases": [
+    {
+      "input": [
+        [
+          [
+            1,
+            0,
+            0
+          ],
+          [
+            0,
+            1,
+            1
+          ],
+          [
+            0,
+            1,
+            1
+          ]
+        ]
+      ],
+      "expectedOutput": [
+        [
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          1,
+          1,
+          2,
+          2
+        ]
+      ]
+    },
+    {
+      "input": [
+        [
+          [
+            1,
+            1
+          ],
+          [
+            1,
+            1
+          ]
+        ]
+      ],
+      "expectedOutput": [
+        [
+          0,
+          0,
+          1,
+          1
+        ]
+      ]
+    },
+    {
+      "input": [
+        [
+          [
+            0
+          ]
+        ]
+      ],
+      "expectedOutput": []
+    }
+  ],
+  "hiddenTestCases": [
+    {
+      "input": [
+        [
+          [
+            1,
+            0,
+            0
+          ],
+          [
+            0,
+            1,
+            1
+          ],
+          [
+            0,
+            1,
+            1
+          ]
+        ]
+      ],
+      "expectedOutput": [
+        [
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          1,
+          1,
+          2,
+          2
+        ]
+      ]
+    },
+    {
+      "input": [
+        [
+          [
+            1,
+            1
+          ],
+          [
+            1,
+            1
+          ]
+        ]
+      ],
+      "expectedOutput": [
+        [
+          0,
+          0,
+          1,
+          1
+        ]
+      ]
+    }
+  ],
+  "tags": [],
+  "constraints": [],
+  "examples": [],
+  "problemNumber": null,
+  "createdAt": "2025-11-14T21:23:54.76785+00:00",
+  "updatedAt": "2025-12-04T04:36:26.115Z"
+}

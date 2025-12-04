@@ -1,0 +1,141 @@
+{
+  "id": "9d138141-a216-4b1b-8d54-b10635eaf1e0",
+  "title": "Erect the Fence II",
+  "slug": "erect-the-fence-ii",
+  "description": "You are given a 2D integer array `trees` where `trees[i] = [xi, yi]` represents the location of the `ith` tree in the garden.\n\nYou are asked to fence the entire garden using the minimum length of rope possible. The garden is well-fenced only if **all the trees are enclosed** and the rope used **forms a perfect circle**. A tree is considered enclosed if it is inside or on the border of the circle.\n\nMore formally, you must form a circle using the rope with a center `(x, y)` and radius `r` where all trees lie inside or on the circle and `r` is **minimum**.\n\nReturn _the center and radius of the circle as a length 3 array_ `[x, y, r]`_._ Answers within `10-5` of the actual answer will be accepted.\n\n**Example 1:**\n\n**Input:** trees = \\[\\[1,1\\],\\[2,2\\],\\[2,0\\],\\[2,4\\],\\[3,3\\],\\[4,2\\]\\]\n**Output:** \\[2.00000,2.00000,2.00000\\]\n**Explanation:** The fence will have center = (2, 2) and radius = 2\n\n**Example 2:**\n\n**Input:** trees = \\[\\[1,2\\],\\[2,2\\],\\[4,2\\]\\]\n**Output:** \\[2.50000,2.00000,1.50000\\]\n**Explanation:** The fence will have center = (2.5, 2) and radius = 1.5\n\n**Constraints:**\n\n*   `1 <= trees.length <= 3000`\n*   `trees[i].length == 2`\n*   `0 <= xi, yi <= 3000`",
+  "difficulty": "Hard",
+  "category": null,
+  "xpReward": 0,
+  "timeLimitMs": 5000,
+  "memoryLimitMb": 256,
+  "starterCode": [],
+  "solutionCode": "",
+  "hints": [],
+  "isPremium": false,
+  "createdBy": null,
+  "testCases": [
+    {
+      "input": [
+        [
+          [
+            1,
+            1
+          ],
+          [
+            2,
+            2
+          ],
+          [
+            2,
+            0
+          ],
+          [
+            2,
+            4
+          ],
+          [
+            3,
+            3
+          ],
+          [
+            4,
+            2
+          ]
+        ]
+      ],
+      "expectedOutput": [
+        2,
+        2,
+        2
+      ]
+    },
+    {
+      "input": [
+        [
+          [
+            1,
+            2
+          ],
+          [
+            2,
+            2
+          ],
+          [
+            4,
+            2
+          ]
+        ]
+      ],
+      "expectedOutput": [
+        2.5,
+        2,
+        1.5
+      ]
+    }
+  ],
+  "hiddenTestCases": [
+    {
+      "input": [
+        [
+          [
+            1,
+            1
+          ],
+          [
+            2,
+            2
+          ],
+          [
+            2,
+            0
+          ],
+          [
+            2,
+            4
+          ],
+          [
+            3,
+            3
+          ],
+          [
+            4,
+            2
+          ]
+        ]
+      ],
+      "expectedOutput": [
+        2,
+        2,
+        2
+      ]
+    },
+    {
+      "input": [
+        [
+          [
+            1,
+            2
+          ],
+          [
+            2,
+            2
+          ],
+          [
+            4,
+            2
+          ]
+        ]
+      ],
+      "expectedOutput": [
+        2.5,
+        2,
+        1.5
+      ]
+    }
+  ],
+  "tags": [],
+  "constraints": [],
+  "examples": [],
+  "createdAt": "2025-11-14T21:23:41.434715+00:00",
+  "updatedAt": "2025-12-04T04:36:33.147Z"
+}

@@ -1,0 +1,132 @@
+{
+  "id": "ae010cbc-27d7-48a2-a879-fcf5b755a332",
+  "title": "Design Bitset",
+  "slug": "design-bitset",
+  "description": "A **Bitset** is a data structure that compactly stores bits.\n\nImplement the `Bitset` class:\n\n*   `Bitset(int size)` Initializes the Bitset with `size` bits, all of which are `0`.\n*   `void fix(int idx)` Updates the value of the bit at the index `idx` to `1`. If the value was already `1`, no change occurs.\n*   `void unfix(int idx)` Updates the value of the bit at the index `idx` to `0`. If the value was already `0`, no change occurs.\n*   `void flip()` Flips the values of each bit in the Bitset. In other words, all bits with value `0` will now have value `1` and vice versa.\n*   `boolean all()` Checks if the value of **each** bit in the Bitset is `1`. Returns `true` if it satisfies the condition, `false` otherwise.\n*   `boolean one()` Checks if there is **at least one** bit in the Bitset with value `1`. Returns `true` if it satisfies the condition, `false` otherwise.\n*   `int count()` Returns the **total number** of bits in the Bitset which have value `1`.\n*   `String toString()` Returns the current composition of the Bitset. Note that in the resultant string, the character at the `ith` index should coincide with the value at the `ith` bit of the Bitset.\n\n**Example 1:**\n\n**Input**\n\\[ \"Bitset \",  \"fix \",  \"fix \",  \"flip \",  \"all \",  \"unfix \",  \"flip \",  \"one \",  \"unfix \",  \"count \",  \"toString \"\\]\n\\[\\[5\\], \\[3\\], \\[1\\], \\[\\], \\[\\], \\[0\\], \\[\\], \\[\\], \\[0\\], \\[\\], \\[\\]\\]\n**Output**\n\\[null, null, null, null, false, null, null, true, null, 2,  \"01010 \"\\]\n\n**Explanation**\nBitset bs = new Bitset(5); // bitset =  \"00000 \".\nbs.fix(3);     // the value at idx = 3 is updated to 1, so bitset =  \"00010 \".\nbs.fix(1);     // the value at idx = 1 is updated to 1, so bitset =  \"01010 \". \nbs.flip();     // the value of each bit is flipped, so bitset =  \"10101 \". \nbs.all();      // return False, as not all values of the bitset are 1.\nbs.unfix(0);   // the value at idx = 0 is updated to 0, so bitset =  \"00101 \".\nbs.flip();     // the value of each bit is flipped, so bitset =  \"11010 \". \nbs.one();      // return True, as there is at least 1 index with value 1.\nbs.unfix(0);   // the value at idx = 0 is updated to 0, so bitset =  \"01010 \".\nbs.count();    // return 2, as there are 2 bits with value 1.\nbs.toString(); // return  \"01010 \", which is the composition of bitset.\n\n**Constraints:**\n\n*   `1 <= size <= 105`\n*   `0 <= idx <= size - 1`\n*   At most `105` calls will be made **in total** to `fix`, `unfix`, `flip`, `all`, `one`, `count`, and `toString`.\n*   At least one call will be made to `all`, `one`, `count`, or `toString`.\n*   At most `5` calls will be made to `toString`.",
+  "difficulty": "Medium",
+  "category": null,
+  "xpReward": 0,
+  "timeLimitMs": 5000,
+  "memoryLimitMb": 256,
+  "starterCode": {},
+  "solutionCode": "",
+  "hints": [],
+  "isPremium": false,
+  "createdBy": null,
+  "testCases": [
+    {
+      "input": {
+        "methods": [
+          "Bitset",
+          "fix",
+          "fix",
+          "flip",
+          "all",
+          "unfix",
+          "flip",
+          "one",
+          "unfix",
+          "count",
+          "toString"
+        ],
+        "args": [
+          [
+            5
+          ],
+          [
+            3
+          ],
+          [
+            1
+          ],
+          [],
+          [],
+          [
+            0
+          ],
+          [],
+          [],
+          [
+            0
+          ],
+          [],
+          []
+        ]
+      },
+      "expectedOutput": [
+        null,
+        null,
+        null,
+        null,
+        false,
+        null,
+        null,
+        true,
+        null,
+        2,
+        "01010 "
+      ]
+    }
+  ],
+  "hiddenTestCases": [
+    {
+      "input": {
+        "methods": [
+          "Bitset",
+          "fix",
+          "fix",
+          "flip",
+          "all",
+          "unfix",
+          "flip",
+          "one",
+          "unfix",
+          "count",
+          "toString"
+        ],
+        "args": [
+          [
+            5
+          ],
+          [
+            3
+          ],
+          [
+            1
+          ],
+          [],
+          [],
+          [
+            0
+          ],
+          [],
+          [],
+          [
+            0
+          ],
+          [],
+          []
+        ]
+      },
+      "expectedOutput": [
+        null,
+        null,
+        null,
+        null,
+        false,
+        null,
+        null,
+        true,
+        null,
+        2,
+        "01010 "
+      ]
+    }
+  ],
+  "tags": [],
+  "constraints": [],
+  "examples": [],
+  "problemNumber": null,
+  "createdAt": "2025-11-14T21:24:39.148836+00:00",
+  "updatedAt": "2025-12-04T04:38:01.077Z"
+}

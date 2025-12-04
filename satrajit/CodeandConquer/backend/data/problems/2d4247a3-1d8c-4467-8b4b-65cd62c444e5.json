@@ -1,0 +1,71 @@
+{
+  "id": "2d4247a3-1d8c-4467-8b4b-65cd62c444e5",
+  "title": "Time Needed to Buy Tickets",
+  "slug": "time-needed-to-buy-tickets",
+  "description": "There are `n` people in a line queuing to buy tickets, where the `0th` person is at the **front** of the line and the `(n - 1)th` person is at the **back** of the line.\n\nYou are given a **0-indexed** integer array `tickets` of length `n` where the number of tickets that the `ith` person would like to buy is `tickets[i]`.\n\nEach person takes **exactly 1 second** to buy a ticket. A person can only buy **1 ticket at a time** and has to go back to **the end** of the line (which happens **instantaneously**) in order to buy more tickets. If a person does not have any tickets left to buy, the person will **leave** the line.\n\nReturn _the **time taken** for the person at position_ `k` **_(0-indexed)_** _to finish buying tickets_.\n\n**Example 1:**\n\n**Input:** tickets = \\[2,3,2\\], k = 2\n**Output:** 6\n**Explanation:** \n- In the first pass, everyone in the line buys a ticket and the line becomes \\[1, 2, 1\\].\n- In the second pass, everyone in the line buys a ticket and the line becomes \\[0, 1, 0\\].\nThe person at position 2 has successfully bought 2 tickets and it took 3 + 3 = 6 seconds.\n\n**Example 2:**\n\n**Input:** tickets = \\[5,1,1,1\\], k = 0\n**Output:** 8\n**Explanation:**\n- In the first pass, everyone in the line buys a ticket and the line becomes \\[4, 0, 0, 0\\].\n- In the next 4 passes, only the person in position 0 is buying tickets.\nThe person at position 0 has successfully bought 5 tickets and it took 4 + 1 + 1 + 1 + 1 = 8 seconds.\n\n**Constraints:**\n\n*   `n == tickets.length`\n*   `1 <= n <= 100`\n*   `1 <= tickets[i] <= 100`\n*   `0 <= k < n`",
+  "difficulty": "Easy",
+  "category": null,
+  "xpReward": 0,
+  "timeLimitMs": 5000,
+  "memoryLimitMb": 256,
+  "starterCode": [],
+  "solutionCode": "",
+  "hints": [],
+  "isPremium": false,
+  "createdBy": null,
+  "testCases": [
+    {
+      "input": [
+        [
+          2,
+          3,
+          2
+        ],
+        2
+      ],
+      "expectedOutput": 6
+    },
+    {
+      "input": [
+        [
+          5,
+          1,
+          1,
+          1
+        ],
+        0
+      ],
+      "expectedOutput": 8
+    }
+  ],
+  "hiddenTestCases": [
+    {
+      "input": [
+        [
+          2,
+          3,
+          2
+        ],
+        2
+      ],
+      "expectedOutput": 6
+    },
+    {
+      "input": [
+        [
+          5,
+          1,
+          1,
+          1
+        ],
+        0
+      ],
+      "expectedOutput": 8
+    }
+  ],
+  "tags": [],
+  "constraints": [],
+  "examples": [],
+  "createdAt": "2025-11-14T21:24:16.377668+00:00",
+  "updatedAt": "2025-12-04T04:36:18.010Z"
+}

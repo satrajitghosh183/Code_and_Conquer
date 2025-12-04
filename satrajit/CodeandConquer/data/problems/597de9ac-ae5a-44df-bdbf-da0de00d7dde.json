@@ -1,0 +1,82 @@
+{
+  "id": "597de9ac-ae5a-44df-bdbf-da0de00d7dde",
+  "title": "Smallest Missing Non-negative Integer After Operations",
+  "slug": "smallest-missing-non-negative-integer-after-operations",
+  "description": "You are given a **0-indexed** integer array `nums` and an integer `value`.\n\nIn one operation, you can add or subtract `value` from any element of `nums`.\n\n*   For example, if `nums = [1,2,3]` and `value = 2`, you can choose to subtract `value` from `nums[0]` to make `nums = [-1,2,3]`.\n\nThe MEX (minimum excluded) of an array is the smallest missing **non-negative** integer in it.\n\n*   For example, the MEX of `[-1,2,3]` is `0` while the MEX of `[1,0,3]` is `2`.\n\nReturn _the maximum MEX of_ `nums` _after applying the mentioned operation **any number of times**_.\n\n**Example 1:**\n\n**Input:** nums = \\[1,-10,7,13,6,8\\], value = 5\n**Output:** 4\n**Explanation:** One can achieve this result by applying the following operations:\n- Add value to nums\\[1\\] twice to make nums = \\[1,**0**,7,13,6,8\\]\n- Subtract value from nums\\[2\\] once to make nums = \\[1,0,**2**,13,6,8\\]\n- Subtract value from nums\\[3\\] twice to make nums = \\[1,0,2,**3**,6,8\\]\nThe MEX of nums is 4. It can be shown that 4 is the maximum MEX we can achieve.\n\n**Example 2:**\n\n**Input:** nums = \\[1,-10,7,13,6,8\\], value = 7\n**Output:** 2\n**Explanation:** One can achieve this result by applying the following operation:\n- subtract value from nums\\[2\\] once to make nums = \\[1,-10,**0**,13,6,8\\]\nThe MEX of nums is 2. It can be shown that 2 is the maximum MEX we can achieve.\n\n**Constraints:**\n\n*   `1 <= nums.length, value <= 105`\n*   `-109 <= nums[i] <= 109`",
+  "difficulty": "Medium",
+  "category": null,
+  "xpReward": 0,
+  "timeLimitMs": 5000,
+  "memoryLimitMb": 256,
+  "starterCode": {},
+  "solutionCode": "",
+  "hints": [],
+  "isPremium": false,
+  "createdBy": null,
+  "testCases": [
+    {
+      "input": [
+        [
+          1,
+          -10,
+          7,
+          13,
+          6,
+          8
+        ],
+        5
+      ],
+      "expectedOutput": 4
+    },
+    {
+      "input": [
+        [
+          1,
+          -10,
+          7,
+          13,
+          6,
+          8
+        ],
+        7
+      ],
+      "expectedOutput": 2
+    }
+  ],
+  "hiddenTestCases": [
+    {
+      "input": [
+        [
+          1,
+          -10,
+          7,
+          13,
+          6,
+          8
+        ],
+        5
+      ],
+      "expectedOutput": 4
+    },
+    {
+      "input": [
+        [
+          1,
+          -10,
+          7,
+          13,
+          6,
+          8
+        ],
+        7
+      ],
+      "expectedOutput": 2
+    }
+  ],
+  "tags": [],
+  "constraints": [],
+  "examples": [],
+  "problemNumber": null,
+  "createdAt": "2025-11-14T21:26:33.098651+00:00",
+  "updatedAt": "2025-12-04T04:35:16.084Z"
+}

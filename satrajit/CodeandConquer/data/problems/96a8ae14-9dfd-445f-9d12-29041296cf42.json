@@ -1,0 +1,123 @@
+{
+  "id": "96a8ae14-9dfd-445f-9d12-29041296cf42",
+  "title": "Find Nearest Point That Has the Same X or Y Coordinate",
+  "slug": "find-nearest-point-that-has-the-same-x-or-y-coordinate",
+  "description": "You are given two integers, `x` and `y`, which represent your current location on a Cartesian grid: `(x, y)`. You are also given an array `points` where each `points[i] = [ai, bi]` represents that a point exists at `(ai, bi)`. A point is **valid** if it shares the same x-coordinate or the same y-coordinate as your location.\n\nReturn _the index **(0-indexed)** of the **valid** point with the smallest **Manhattan distance** from your current location_. If there are multiple, return _the valid point with the **smallest** index_. If there are no valid points, return `-1`.\n\nThe **Manhattan distance** between two points `(x1, y1)` and `(x2, y2)` is `abs(x1 - x2) + abs(y1 - y2)`.\n\n**Example 1:**\n\n**Input:** x = 3, y = 4, points = \\[\\[1,2\\],\\[3,1\\],\\[2,4\\],\\[2,3\\],\\[4,4\\]\\]\n**Output:** 2\n**Explanation:** Of all the points, only \\[3,1\\], \\[2,4\\] and \\[4,4\\] are valid. Of the valid points, \\[2,4\\] and \\[4,4\\] have the smallest Manhattan distance from your current location, with a distance of 1. \\[2,4\\] has the smallest index, so return 2.\n\n**Example 2:**\n\n**Input:** x = 3, y = 4, points = \\[\\[3,4\\]\\]\n**Output:** 0\n**Explanation:** The answer is allowed to be on the same location as your current location.\n\n**Example 3:**\n\n**Input:** x = 3, y = 4, points = \\[\\[2,3\\]\\]\n**Output:** -1\n**Explanation:** There are no valid points.\n\n**Constraints:**\n\n*   `1 <= points.length <= 104`\n*   `points[i].length == 2`\n*   `1 <= x, y, ai, bi <= 104`",
+  "difficulty": "Easy",
+  "category": null,
+  "xpReward": 0,
+  "timeLimitMs": 5000,
+  "memoryLimitMb": 256,
+  "starterCode": {},
+  "solutionCode": "",
+  "hints": [],
+  "isPremium": false,
+  "createdBy": null,
+  "testCases": [
+    {
+      "input": [
+        3,
+        4,
+        [
+          [
+            1,
+            2
+          ],
+          [
+            3,
+            1
+          ],
+          [
+            2,
+            4
+          ],
+          [
+            2,
+            3
+          ],
+          [
+            4,
+            4
+          ]
+        ]
+      ],
+      "expectedOutput": 2
+    },
+    {
+      "input": [
+        3,
+        4,
+        [
+          [
+            3,
+            4
+          ]
+        ]
+      ],
+      "expectedOutput": 0
+    },
+    {
+      "input": [
+        3,
+        4,
+        [
+          [
+            2,
+            3
+          ]
+        ]
+      ],
+      "expectedOutput": -1
+    }
+  ],
+  "hiddenTestCases": [
+    {
+      "input": [
+        3,
+        4,
+        [
+          [
+            1,
+            2
+          ],
+          [
+            3,
+            1
+          ],
+          [
+            2,
+            4
+          ],
+          [
+            2,
+            3
+          ],
+          [
+            4,
+            4
+          ]
+        ]
+      ],
+      "expectedOutput": 2
+    },
+    {
+      "input": [
+        3,
+        4,
+        [
+          [
+            3,
+            4
+          ]
+        ]
+      ],
+      "expectedOutput": 0
+    }
+  ],
+  "tags": [],
+  "constraints": [],
+  "examples": [],
+  "problemNumber": null,
+  "createdAt": "2025-11-14T21:23:05.444572+00:00",
+  "updatedAt": "2025-12-04T04:36:50.126Z"
+}

@@ -1,0 +1,76 @@
+{
+  "id": "b009b056-80d9-4eb7-a906-b1a306ffe730",
+  "title": "Maximum Number of Integers to Choose From a Range II",
+  "slug": "maximum-number-of-integers-to-choose-from-a-range-ii",
+  "description": "You are given an integer array `banned` and two integers `n` and `maxSum`. You are choosing some number of integers following the below rules:\n\n*   The chosen integers have to be in the range `[1, n]`.\n*   Each integer can be chosen **at most once**.\n*   The chosen integers should not be in the array `banned`.\n*   The sum of the chosen integers should not exceed `maxSum`.\n\nReturn _the **maximum** number of integers you can choose following the mentioned rules_.\n\n**Example 1:**\n\n**Input:** banned = \\[1,4,6\\], n = 6, maxSum = 4\n**Output:** 1\n**Explanation:** You can choose the integer 3.\n3 is in the range \\[1, 6\\], and do not appear in banned. The sum of the chosen integers is 3, which does not exceed maxSum.\n\n**Example 2:**\n\n**Input:** banned = \\[4,3,5,6\\], n = 7, maxSum = 18\n**Output:** 3\n**Explanation:** You can choose the integers 1, 2, and 7.\nAll these integers are in the range \\[1, 7\\], all do not appear in banned, and their sum is 18, which does not exceed maxSum.\n\n**Constraints:**\n\n*   `1 <= banned.length <= 105`\n*   `1 <= banned[i] <= n <= 109`\n*   `1 <= maxSum <= 1015`",
+  "difficulty": "Medium",
+  "category": null,
+  "xpReward": 0,
+  "timeLimitMs": 5000,
+  "memoryLimitMb": 256,
+  "starterCode": {},
+  "solutionCode": "",
+  "hints": [],
+  "isPremium": false,
+  "createdBy": null,
+  "testCases": [
+    {
+      "input": [
+        [
+          1,
+          4,
+          6
+        ],
+        6,
+        4
+      ],
+      "expectedOutput": 1
+    },
+    {
+      "input": [
+        [
+          4,
+          3,
+          5,
+          6
+        ],
+        7,
+        18
+      ],
+      "expectedOutput": 3
+    }
+  ],
+  "hiddenTestCases": [
+    {
+      "input": [
+        [
+          1,
+          4,
+          6
+        ],
+        6,
+        4
+      ],
+      "expectedOutput": 1
+    },
+    {
+      "input": [
+        [
+          4,
+          3,
+          5,
+          6
+        ],
+        7,
+        18
+      ],
+      "expectedOutput": 3
+    }
+  ],
+  "tags": [],
+  "constraints": [],
+  "examples": [],
+  "problemNumber": null,
+  "createdAt": "2025-11-14T21:26:21.220418+00:00",
+  "updatedAt": "2025-12-04T04:35:20.406Z"
+}

@@ -1,0 +1,103 @@
+{
+  "id": "6fbc88c5-be3c-4518-b9e6-91cf13b1e842",
+  "title": "Sort Linked List Already Sorted Using Absolute Values",
+  "slug": "sort-linked-list-already-sorted-using-absolute-values",
+  "description": "Given the `head` of a singly linked list that is sorted in **non-decreasing** order using the **absolute values** of its nodes, return _the list sorted in **non-decreasing** order using the **actual values** of its nodes_.\n\n**Example 1:**\n\n**Input:** head = \\[0,2,-5,5,10,-10\\]\n**Output:** \\[-10,-5,0,2,5,10\\]\n**Explanation:**\nThe list sorted in non-descending order using the absolute values of the nodes is \\[0,2,-5,5,10,-10\\].\nThe list sorted in non-descending order using the actual values is \\[-10,-5,0,2,5,10\\].\n\n**Example 2:**\n\n**Input:** head = \\[0,1,2\\]\n**Output:** \\[0,1,2\\]\n**Explanation:**\nThe linked list is already sorted in non-decreasing order.\n\n**Example 3:**\n\n**Input:** head = \\[1\\]\n**Output:** \\[1\\]\n**Explanation:**\nThe linked list is already sorted in non-decreasing order.\n\n**Constraints:**\n\n*   The number of nodes in the list is the range `[1, 105]`.\n*   `-5000 <= Node.val <= 5000`\n*   `head` is sorted in non-decreasing order using the absolute value of its nodes.\n\n**Follow up:**\n\n*   Can you think of a solution with `O(n)` time complexity?",
+  "difficulty": "Medium",
+  "category": null,
+  "xpReward": 0,
+  "timeLimitMs": 5000,
+  "memoryLimitMb": 256,
+  "starterCode": [],
+  "solutionCode": "",
+  "hints": [],
+  "isPremium": false,
+  "createdBy": null,
+  "testCases": [
+    {
+      "input": [
+        [
+          0,
+          2,
+          -5,
+          5,
+          10,
+          -10
+        ]
+      ],
+      "expectedOutput": [
+        -10,
+        -5,
+        0,
+        2,
+        5,
+        10
+      ]
+    },
+    {
+      "input": [
+        [
+          0,
+          1,
+          2
+        ]
+      ],
+      "expectedOutput": [
+        0,
+        1,
+        2
+      ]
+    },
+    {
+      "input": [
+        [
+          1
+        ]
+      ],
+      "expectedOutput": [
+        1
+      ]
+    }
+  ],
+  "hiddenTestCases": [
+    {
+      "input": [
+        [
+          0,
+          2,
+          -5,
+          5,
+          10,
+          -10
+        ]
+      ],
+      "expectedOutput": [
+        -10,
+        -5,
+        0,
+        2,
+        5,
+        10
+      ]
+    },
+    {
+      "input": [
+        [
+          0,
+          1,
+          2
+        ]
+      ],
+      "expectedOutput": [
+        0,
+        1,
+        2
+      ]
+    }
+  ],
+  "tags": [],
+  "constraints": [],
+  "examples": [],
+  "createdAt": "2025-11-14T21:24:08.179554+00:00",
+  "updatedAt": "2025-12-04T04:36:20.907Z"
+}

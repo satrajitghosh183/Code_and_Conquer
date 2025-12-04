@@ -1,0 +1,55 @@
+{
+  "id": "281db109-2c94-4ec6-87d6-12b5dc53fe5f",
+  "title": "Reformat Date",
+  "slug": "reformat-date",
+  "description": "Given a `date` string in the form `Day Month Year`, where:\n\n*   `Day` is in the set `{ \"1st \", \"2nd \", \"3rd \", \"4th \", ..., \"30th \", \"31st \"}`.\n*   `Month` is in the set `{ \"Jan \", \"Feb \", \"Mar \", \"Apr \", \"May \", \"Jun \", \"Jul \", \"Aug \", \"Sep \", \"Oct \", \"Nov \", \"Dec \"}`.\n*   `Year` is in the range `[1900, 2100]`.\n\nConvert the date string to the format `YYYY-MM-DD`, where:\n\n*   `YYYY` denotes the 4 digit year.\n*   `MM` denotes the 2 digit month.\n*   `DD` denotes the 2 digit day.\n\n**Example 1:**\n\n**Input:** date =  \"20th Oct 2052 \"\n**Output:**  \"2052-10-20 \"\n\n**Example 2:**\n\n**Input:** date =  \"6th Jun 1933 \"\n**Output:**  \"1933-06-06 \"\n\n**Example 3:**\n\n**Input:** date =  \"26th May 1960 \"\n**Output:**  \"1960-05-26 \"\n\n**Constraints:**\n\n*   The given dates are guaranteed to be valid, so no error handling is necessary.",
+  "difficulty": "Easy",
+  "category": null,
+  "xpReward": 0,
+  "timeLimitMs": 5000,
+  "memoryLimitMb": 256,
+  "starterCode": [],
+  "solutionCode": "",
+  "hints": [],
+  "isPremium": false,
+  "createdBy": null,
+  "testCases": [
+    {
+      "input": [
+        "20th Oct 2052 "
+      ],
+      "expectedOutput": "2052-10-20 "
+    },
+    {
+      "input": [
+        "6th Jun 1933 "
+      ],
+      "expectedOutput": "1933-06-06 "
+    },
+    {
+      "input": [
+        "26th May 1960 "
+      ],
+      "expectedOutput": "\"1960-05-26 \"\n\n**Constraints:**\n\n*   The given dates are guaranteed to be valid, so no error handling is necessary."
+    }
+  ],
+  "hiddenTestCases": [
+    {
+      "input": [
+        "20th Oct 2052 "
+      ],
+      "expectedOutput": "2052-10-20 "
+    },
+    {
+      "input": [
+        "6th Jun 1933 "
+      ],
+      "expectedOutput": "1933-06-06 "
+    }
+  ],
+  "tags": [],
+  "constraints": [],
+  "examples": [],
+  "createdAt": "2025-11-14T21:21:42.979976+00:00",
+  "updatedAt": "2025-12-04T04:37:21.561Z"
+}

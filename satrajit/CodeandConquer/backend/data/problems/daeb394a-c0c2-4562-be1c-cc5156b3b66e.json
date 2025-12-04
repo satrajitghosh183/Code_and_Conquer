@@ -1,0 +1,61 @@
+{
+  "id": "daeb394a-c0c2-4562-be1c-cc5156b3b66e",
+  "title": "Convert the Temperature",
+  "slug": "convert-the-temperature",
+  "description": "You are given a non-negative floating point number rounded to two decimal places `celsius`, that denotes the **temperature in Celsius**.\n\nYou should convert Celsius into **Kelvin** and **Fahrenheit** and return it as an array `ans = [kelvin, fahrenheit]`.\n\nReturn _the array `ans`._ Answers within `10-5` of the actual answer will be accepted.\n\n**Note that:**\n\n*   `Kelvin = Celsius + 273.15`\n*   `Fahrenheit = Celsius * 1.80 + 32.00`\n\n**Example 1:**\n\n**Input:** celsius = 36.50\n**Output:** \\[309.65000,97.70000\\]\n**Explanation:** Temperature at 36.50 Celsius converted in Kelvin is 309.65 and converted in Fahrenheit is 97.70.\n\n**Example 2:**\n\n**Input:** celsius = 122.11\n**Output:** \\[395.26000,251.79800\\]\n**Explanation:** Temperature at 122.11 Celsius converted in Kelvin is 395.26 and converted in Fahrenheit is 251.798.\n\n**Constraints:**\n\n*   `0 <= celsius <= 1000`",
+  "difficulty": "Easy",
+  "category": null,
+  "xpReward": 0,
+  "timeLimitMs": 5000,
+  "memoryLimitMb": 256,
+  "starterCode": [],
+  "solutionCode": "",
+  "hints": [],
+  "isPremium": false,
+  "createdBy": null,
+  "testCases": [
+    {
+      "input": [
+        36.5
+      ],
+      "expectedOutput": [
+        309.65,
+        97.7
+      ]
+    },
+    {
+      "input": [
+        122.11
+      ],
+      "expectedOutput": [
+        395.26,
+        251.798
+      ]
+    }
+  ],
+  "hiddenTestCases": [
+    {
+      "input": [
+        36.5
+      ],
+      "expectedOutput": [
+        309.65,
+        97.7
+      ]
+    },
+    {
+      "input": [
+        122.11
+      ],
+      "expectedOutput": [
+        395.26,
+        251.798
+      ]
+    }
+  ],
+  "tags": [],
+  "constraints": [],
+  "examples": [],
+  "createdAt": "2025-11-14T21:25:56.635344+00:00",
+  "updatedAt": "2025-12-04T04:35:31.843Z"
+}

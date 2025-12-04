@@ -1,0 +1,54 @@
+{
+  "id": "cc44c65e-7f6c-4336-a89f-295301433aff",
+  "title": "Longest Ideal Subsequence",
+  "slug": "longest-ideal-subsequence",
+  "description": "You are given a string `s` consisting of lowercase letters and an integer `k`. We call a string `t` **ideal** if the following conditions are satisfied:\n\n*   `t` is a **subsequence** of the string `s`.\n*   The absolute difference in the alphabet order of every two **adjacent** letters in `t` is less than or equal to `k`.\n\nReturn _the length of the **longest** ideal string_.\n\nA **subsequence** is a string that can be derived from another string by deleting some or no characters without changing the order of the remaining characters.\n\n**Note** that the alphabet order is not cyclic. For example, the absolute difference in the alphabet order of `'a'` and `'z'` is `25`, not `1`.\n\n**Example 1:**\n\n**Input:** s =  \"acfgbd \", k = 2\n**Output:** 4\n**Explanation:** The longest ideal string is  \"acbd \". The length of this string is 4, so 4 is returned.\nNote that  \"acfgbd \" is not ideal because 'c' and 'f' have a difference of 3 in alphabet order.\n\n**Example 2:**\n\n**Input:** s =  \"abcd \", k = 3\n**Output:** 4\n**Explanation:** The longest ideal string is  \"abcd \". The length of this string is 4, so 4 is returned.\n\n**Constraints:**\n\n*   `1 <= s.length <= 105`\n*   `0 <= k <= 25`\n*   `s` consists of lowercase English letters.",
+  "difficulty": "Medium",
+  "category": null,
+  "xpReward": 0,
+  "timeLimitMs": 5000,
+  "memoryLimitMb": 256,
+  "starterCode": {},
+  "solutionCode": "",
+  "hints": [],
+  "isPremium": false,
+  "createdBy": null,
+  "testCases": [
+    {
+      "input": [
+        "acfgbd ",
+        2
+      ],
+      "expectedOutput": 4
+    },
+    {
+      "input": [
+        "abcd ",
+        3
+      ],
+      "expectedOutput": 4
+    }
+  ],
+  "hiddenTestCases": [
+    {
+      "input": [
+        "acfgbd ",
+        2
+      ],
+      "expectedOutput": 4
+    },
+    {
+      "input": [
+        "abcd ",
+        3
+      ],
+      "expectedOutput": 4
+    }
+  ],
+  "tags": [],
+  "constraints": [],
+  "examples": [],
+  "problemNumber": null,
+  "createdAt": "2025-11-14T21:25:29.486391+00:00",
+  "updatedAt": "2025-12-04T04:35:45.383Z"
+}

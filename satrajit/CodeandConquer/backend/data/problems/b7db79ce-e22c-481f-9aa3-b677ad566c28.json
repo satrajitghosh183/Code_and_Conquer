@@ -1,0 +1,101 @@
+{
+  "id": "b7db79ce-e22c-481f-9aa3-b677ad566c28",
+  "title": "Check if All the Integers in a Range Are Covered",
+  "slug": "check-if-all-the-integers-in-a-range-are-covered",
+  "description": "You are given a 2D integer array `ranges` and two integers `left` and `right`. Each `ranges[i] = [starti, endi]` represents an **inclusive** interval between `starti` and `endi`.\n\nReturn `true` _if each integer in the inclusive range_ `[left, right]` _is covered by **at least one** interval in_ `ranges`. Return `false` _otherwise_.\n\nAn integer `x` is covered by an interval `ranges[i] = [starti, endi]` if `starti <= x <= endi`.\n\n**Example 1:**\n\n**Input:** ranges = \\[\\[1,2\\],\\[3,4\\],\\[5,6\\]\\], left = 2, right = 5\n**Output:** true\n**Explanation:** Every integer between 2 and 5 is covered:\n- 2 is covered by the first range.\n- 3 and 4 are covered by the second range.\n- 5 is covered by the third range.\n\n**Example 2:**\n\n**Input:** ranges = \\[\\[1,10\\],\\[10,20\\]\\], left = 21, right = 21\n**Output:** false\n**Explanation:** 21 is not covered by any range.\n\n**Constraints:**\n\n*   `1 <= ranges.length <= 50`\n*   `1 <= starti <= endi <= 50`\n*   `1 <= left <= right <= 50`",
+  "difficulty": "Easy",
+  "category": null,
+  "xpReward": 0,
+  "timeLimitMs": 5000,
+  "memoryLimitMb": 256,
+  "starterCode": [],
+  "solutionCode": "",
+  "hints": [],
+  "isPremium": false,
+  "createdBy": null,
+  "testCases": [
+    {
+      "input": [
+        [
+          [
+            1,
+            2
+          ],
+          [
+            3,
+            4
+          ],
+          [
+            5,
+            6
+          ]
+        ],
+        2,
+        5
+      ],
+      "expectedOutput": true
+    },
+    {
+      "input": [
+        [
+          [
+            1,
+            10
+          ],
+          [
+            10,
+            20
+          ]
+        ],
+        21,
+        21
+      ],
+      "expectedOutput": false
+    }
+  ],
+  "hiddenTestCases": [
+    {
+      "input": [
+        [
+          [
+            1,
+            2
+          ],
+          [
+            3,
+            4
+          ],
+          [
+            5,
+            6
+          ]
+        ],
+        2,
+        5
+      ],
+      "expectedOutput": true
+    },
+    {
+      "input": [
+        [
+          [
+            1,
+            10
+          ],
+          [
+            10,
+            20
+          ]
+        ],
+        21,
+        21
+      ],
+      "expectedOutput": false
+    }
+  ],
+  "tags": [],
+  "constraints": [],
+  "examples": [],
+  "createdAt": "2025-11-14T21:23:33.086153+00:00",
+  "updatedAt": "2025-12-04T04:36:36.355Z"
+}

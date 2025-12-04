@@ -1,0 +1,56 @@
+{
+  "id": "be07c11b-713d-4646-a47b-6df53afd7d2a",
+  "title": "Number of Valid Clock Times",
+  "slug": "number-of-valid-clock-times",
+  "description": "You are given a string of length `5` called `time`, representing the current time on a digital clock in the format `\"hh:mm \"`. The **earliest** possible time is `\"00:00 \"` and the **latest** possible time is `\"23:59 \"`.\n\nIn the string `time`, the digits represented by the `?` symbol are **unknown**, and must be **replaced** with a digit from `0` to `9`.\n\nReturn _an integer_ `answer`_, the number of valid clock times that can be created by replacing every_ `?` _with a digit from_ `0` _to_ `9`.\n\n**Example 1:**\n\n**Input:** time =  \"?5:00 \"\n**Output:** 2\n**Explanation:** We can replace the ? with either a 0 or 1, producing  \"05:00 \" or  \"15:00 \". Note that we cannot replace it with a 2, since the time  \"25:00 \" is invalid. In total, we have two choices.\n\n**Example 2:**\n\n**Input:** time =  \"0?:0? \"\n**Output:** 100\n**Explanation:** Each ? can be replaced by any digit from 0 to 9, so we have 100 total choices.\n\n**Example 3:**\n\n**Input:** time =  \"??:?? \"\n**Output:** 1440\n**Explanation:** There are 24 possible choices for the hours, and 60 possible choices for the minutes. In total, we have 24 \\* 60 = 1440 choices.\n\n**Constraints:**\n\n*   `time` is a valid string of length `5` in the format `\"hh:mm \"`.\n*   `\"00 \" <= hh <= \"23 \"`\n*   `\"00 \" <= mm <= \"59 \"`\n*   Some of the digits might be replaced with `'?'` and need to be replaced with digits from `0` to `9`.",
+  "difficulty": "Easy",
+  "category": null,
+  "xpReward": 0,
+  "timeLimitMs": 5000,
+  "memoryLimitMb": 256,
+  "starterCode": {},
+  "solutionCode": "",
+  "hints": [],
+  "isPremium": false,
+  "createdBy": null,
+  "testCases": [
+    {
+      "input": [
+        "?5:00 "
+      ],
+      "expectedOutput": 2
+    },
+    {
+      "input": [
+        "0?:0? "
+      ],
+      "expectedOutput": 100
+    },
+    {
+      "input": [
+        "??:?? "
+      ],
+      "expectedOutput": 1440
+    }
+  ],
+  "hiddenTestCases": [
+    {
+      "input": [
+        "?5:00 "
+      ],
+      "expectedOutput": 2
+    },
+    {
+      "input": [
+        "0?:0? "
+      ],
+      "expectedOutput": 100
+    }
+  ],
+  "tags": [],
+  "constraints": [],
+  "examples": [],
+  "problemNumber": null,
+  "createdAt": "2025-11-14T21:25:46.335942+00:00",
+  "updatedAt": "2025-12-04T04:35:36.713Z"
+}

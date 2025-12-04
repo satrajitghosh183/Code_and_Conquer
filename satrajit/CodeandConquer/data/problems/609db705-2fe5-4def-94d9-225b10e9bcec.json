@@ -1,0 +1,135 @@
+{
+  "id": "609db705-2fe5-4def-94d9-225b10e9bcec",
+  "title": "Minimum Path Cost in a Hidden Grid",
+  "slug": "minimum-path-cost-in-a-hidden-grid",
+  "description": "This is an **interactive problem**.\n\nThere is a robot in a hidden grid, and you are trying to get it from its starting cell to the target cell in this grid. The grid is of size `m x n`, and each cell in the grid is either empty or blocked. It is **guaranteed** that the starting cell and the target cell are different, and neither of them is blocked.\n\nEach cell has a **cost** that you need to pay each time you **move** to the cell. The starting cell's cost is **not** applied before the robot moves.\n\nYou want to find the minimum total cost to move the robot to the target cell. However, you **do not know** the grid's dimensions, the starting cell, nor the target cell. You are only allowed to ask queries to the `GridMaster` object.\n\nThe `GridMaster` class has the following functions:\n\n*   `boolean canMove(char direction)` Returns `true` if the robot can move in that direction. Otherwise, it returns `false`.\n*   `int move(char direction)` Moves the robot in that direction and returns the cost of moving to that cell. If this move would move the robot to a blocked cell or off the grid, the move will be **ignored**, the robot will remain in the same position, and the function will return `-1`.\n*   `boolean isTarget()` Returns `true` if the robot is currently on the target cell. Otherwise, it returns `false`.\n\nNote that `direction` in the above functions should be a character from `{'U','D','L','R'}`, representing the directions up, down, left, and right, respectively.\n\nReturn _the **minimum total cost** to get the robot from its initial starting cell to the target cell. If there is no valid path between the cells, return_ `-1`.\n\n**Custom testing:**\n\nThe test input is read as a 2D matrix `grid` of size `m x n` and four integers `r1`, `c1`, `r2`, and `c2` where:\n\n*   `grid[i][j] == 0` indicates that the cell `(i, j)` is blocked.\n*   `grid[i][j] >= 1` indicates that the cell `(i, j)` is empty and `grid[i][j]` is the **cost** to move to that cell.\n*   `(r1, c1)` is the starting cell of the robot.\n*   `(r2, c2)` is the target cell of the robot.\n\nRemember that you will **not** have this information in your code.\n\n**Example 1:**\n\n**Input:** grid = \\[\\[2,3\\],\\[1,1\\]\\], r1 = 0, c1 = 1, r2 = 1, c2 = 0\n**Output:** 2\n**Explanation:** One possible interaction is described below:\nThe robot is initially standing on cell (0, 1), denoted by the 3.\n- master.canMove('U') returns false.\n- master.canMove('D') returns true.\n- master.canMove('L') returns true.\n- master.canMove('R') returns false.\n- master.move('L') moves the robot to the cell (0, 0) and returns 2.\n- master.isTarget() returns false.\n- master.canMove('U') returns false.\n- master.canMove('D') returns true.\n- master.canMove('L') returns false.\n- master.canMove('R') returns true.\n- master.move('D') moves the robot to the cell (1, 0) and returns 1.\n- master.isTarget() returns true.\n- master.move('L') doesn't move the robot and returns -1.\n- master.move('R') moves the robot to the cell (1, 1) and returns 1.\nWe now know that the target is the cell (1, 0), and the minimum total cost to reach it is 2. \n\n**Example 2:**\n\n**Input:** grid = \\[\\[0,3,1\\],\\[3,4,2\\],\\[1,2,0\\]\\], r1 = 2, c1 = 0, r2 = 0, c2 = 2\n**Output:** 9\n**Explanation:** The minimum cost path is (2,0) -> (2,1) -> (1,1) -> (1,2) -> (0,2).\n\n**Example 3:**\n\n**Input:** grid = \\[\\[1,0\\],\\[0,1\\]\\], r1 = 0, c1 = 0, r2 = 1, c2 = 1\n**Output:** -1\n**Explanation:** There is no path from the robot to the target cell.\n\n**Constraints:**\n\n*   `1 <= n, m <= 100`\n*   `m == grid.length`\n*   `n == grid[i].length`\n*   `0 <= grid[i][j] <= 100`",
+  "difficulty": "Medium",
+  "category": null,
+  "xpReward": 0,
+  "timeLimitMs": 5000,
+  "memoryLimitMb": 256,
+  "starterCode": {},
+  "solutionCode": "",
+  "hints": [],
+  "isPremium": false,
+  "createdBy": null,
+  "testCases": [
+    {
+      "input": [
+        [
+          [
+            2,
+            3
+          ],
+          [
+            1,
+            1
+          ]
+        ],
+        0,
+        1,
+        1,
+        0
+      ],
+      "expectedOutput": 2
+    },
+    {
+      "input": [
+        [
+          [
+            0,
+            3,
+            1
+          ],
+          [
+            3,
+            4,
+            2
+          ],
+          [
+            1,
+            2,
+            0
+          ]
+        ],
+        2,
+        0,
+        0,
+        2
+      ],
+      "expectedOutput": 9
+    },
+    {
+      "input": [
+        [
+          [
+            1,
+            0
+          ],
+          [
+            0,
+            1
+          ]
+        ],
+        0,
+        0,
+        1,
+        1
+      ],
+      "expectedOutput": -1
+    }
+  ],
+  "hiddenTestCases": [
+    {
+      "input": [
+        [
+          [
+            2,
+            3
+          ],
+          [
+            1,
+            1
+          ]
+        ],
+        0,
+        1,
+        1,
+        0
+      ],
+      "expectedOutput": 2
+    },
+    {
+      "input": [
+        [
+          [
+            0,
+            3,
+            1
+          ],
+          [
+            3,
+            4,
+            2
+          ],
+          [
+            1,
+            2,
+            0
+          ]
+        ],
+        2,
+        0,
+        0,
+        2
+      ],
+      "expectedOutput": 9
+    }
+  ],
+  "tags": [],
+  "constraints": [],
+  "examples": [],
+  "problemNumber": null,
+  "createdAt": "2025-11-14T21:23:12.793326+00:00",
+  "updatedAt": "2025-12-04T04:36:44.260Z"
+}

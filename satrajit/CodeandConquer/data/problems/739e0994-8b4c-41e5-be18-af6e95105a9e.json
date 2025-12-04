@@ -1,0 +1,61 @@
+{
+  "id": "739e0994-8b4c-41e5-be18-af6e95105a9e",
+  "title": "Reverse Prefix of Word",
+  "slug": "reverse-prefix-of-word",
+  "description": "Given a **0-indexed** string `word` and a character `ch`, **reverse** the segment of `word` that starts at index `0` and ends at the index of the **first occurrence** of `ch` (**inclusive**). If the character `ch` does not exist in `word`, do nothing.\n\n*   For example, if `word = \"abcdefd \"` and `ch = \"d \"`, then you should **reverse** the segment that starts at `0` and ends at `3` (**inclusive**). The resulting string will be `\"dcbaefd \"`.\n\nReturn _the resulting string_.\n\n**Example 1:**\n\n**Input:** word =  \"abcdefd \", ch =  \"d \"\n**Output:**  \"dcbaefd \"\n**Explanation:** The first occurrence of  \"d \" is at index 3. \nReverse the part of word from 0 to 3 (inclusive), the resulting string is  \"dcbaefd \".\n\n**Example 2:**\n\n**Input:** word =  \"xyxzxe \", ch =  \"z \"\n**Output:**  \"zxyxxe \"\n**Explanation:** The first and only occurrence of  \"z \" is at index 3.\nReverse the part of word from 0 to 3 (inclusive), the resulting string is  \"zxyxxe \".\n\n**Example 3:**\n\n**Input:** word =  \"abcd \", ch =  \"z \"\n**Output:**  \"abcd \"\n**Explanation:**  \"z \" does not exist in word.\nYou should not do any reverse operation, the resulting string is  \"abcd \".\n\n**Constraints:**\n\n*   `1 <= word.length <= 250`\n*   `word` consists of lowercase English letters.\n*   `ch` is a lowercase English letter.",
+  "difficulty": "Easy",
+  "category": null,
+  "xpReward": 0,
+  "timeLimitMs": 5000,
+  "memoryLimitMb": 256,
+  "starterCode": {},
+  "solutionCode": "",
+  "hints": [],
+  "isPremium": false,
+  "createdBy": null,
+  "testCases": [
+    {
+      "input": [
+        "abcdefd ",
+        "d "
+      ],
+      "expectedOutput": "dcbaefd "
+    },
+    {
+      "input": [
+        "xyxzxe ",
+        "z "
+      ],
+      "expectedOutput": "zxyxxe "
+    },
+    {
+      "input": [
+        "abcd ",
+        "z "
+      ],
+      "expectedOutput": "abcd "
+    }
+  ],
+  "hiddenTestCases": [
+    {
+      "input": [
+        "abcdefd ",
+        "d "
+      ],
+      "expectedOutput": "dcbaefd "
+    },
+    {
+      "input": [
+        "xyxzxe ",
+        "z "
+      ],
+      "expectedOutput": "zxyxxe "
+    }
+  ],
+  "tags": [],
+  "constraints": [],
+  "examples": [],
+  "problemNumber": null,
+  "createdAt": "2025-11-14T21:23:56.427645+00:00",
+  "updatedAt": "2025-12-04T04:36:25.445Z"
+}

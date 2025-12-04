@@ -1,0 +1,49 @@
+{
+  "id": "3a1a9489-637c-4440-98af-35279cc721ff",
+  "title": "Substrings of Size Three with Distinct Characters",
+  "slug": "substrings-of-size-three-with-distinct-characters",
+  "description": "A string is **good** if there are no repeated characters.\n\nGiven a string `s`​​​​​, return _the number of **good substrings** of length **three** in_ `s`​​​​​​.\n\nNote that if there are multiple occurrences of the same substring, every occurrence should be counted.\n\nA **substring** is a contiguous sequence of characters in a string.\n\n**Example 1:**\n\n**Input:** s =  \"xyzzaz \"\n**Output:** 1\n**Explanation:** There are 4 substrings of size 3:  \"xyz \",  \"yzz \",  \"zza \", and  \"zaz \". \nThe only good substring of length 3 is  \"xyz \".\n\n**Example 2:**\n\n**Input:** s =  \"aababcabc \"\n**Output:** 4\n**Explanation:** There are 7 substrings of size 3:  \"aab \",  \"aba \",  \"bab \",  \"abc \",  \"bca \",  \"cab \", and  \"abc \".\nThe good substrings are  \"abc \",  \"bca \",  \"cab \", and  \"abc \".\n\n**Constraints:**\n\n*   `1 <= s.length <= 100`\n*   `s`​​​​​​ consists of lowercase English letters.",
+  "difficulty": "Easy",
+  "category": null,
+  "xpReward": 0,
+  "timeLimitMs": 5000,
+  "memoryLimitMb": 256,
+  "starterCode": [],
+  "solutionCode": "",
+  "hints": [],
+  "isPremium": false,
+  "createdBy": null,
+  "testCases": [
+    {
+      "input": [
+        "xyzzaz "
+      ],
+      "expectedOutput": 1
+    },
+    {
+      "input": [
+        "aababcabc "
+      ],
+      "expectedOutput": 4
+    }
+  ],
+  "hiddenTestCases": [
+    {
+      "input": [
+        "xyzzaz "
+      ],
+      "expectedOutput": 1
+    },
+    {
+      "input": [
+        "aababcabc "
+      ],
+      "expectedOutput": 4
+    }
+  ],
+  "tags": [],
+  "constraints": [],
+  "examples": [],
+  "createdAt": "2025-11-14T21:23:29.37801+00:00",
+  "updatedAt": "2025-12-04T04:36:37.958Z"
+}

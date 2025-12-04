@@ -1,0 +1,55 @@
+{
+  "id": "42b18a96-d156-4991-a740-131fa7471204",
+  "title": "Number of Wonderful Substrings",
+  "slug": "number-of-wonderful-substrings",
+  "description": "A **wonderful** string is a string where **at most one** letter appears an **odd** number of times.\n\n*   For example, `\"ccjjc \"` and `\"abab \"` are wonderful, but `\"ab \"` is not.\n\nGiven a string `word` that consists of the first ten lowercase English letters (`'a'` through `'j'`), return _the **number of wonderful non-empty substrings** in_ `word`_. If the same substring appears multiple times in_ `word`_, then count **each occurrence** separately._\n\nA **substring** is a contiguous sequence of characters in a string.\n\n**Example 1:**\n\n**Input:** word =  \"aba \"\n**Output:** 4\n**Explanation:** The four wonderful substrings are underlined below:\n-  \"**a**ba \" ->  \"a \"\n-  \"a**b**a \" ->  \"b \"\n-  \"ab**a** \" ->  \"a \"\n-  \"**aba** \" ->  \"aba \"\n\n**Example 2:**\n\n**Input:** word =  \"aabb \"\n**Output:** 9\n**Explanation:** The nine wonderful substrings are underlined below:\n-  \"**a**abb \" ->  \"a \"\n-  \"**aa**bb \" ->  \"aa \"\n-  \"**aab**b \" ->  \"aab \"\n-  \"**aabb** \" ->  \"aabb \"\n-  \"a**a**bb \" ->  \"a \"\n-  \"a**abb** \" ->  \"abb \"\n-  \"aa**b**b \" ->  \"b \"\n-  \"aa**bb** \" ->  \"bb \"\n-  \"aab**b** \" ->  \"b \"\n\n**Example 3:**\n\n**Input:** word =  \"he \"\n**Output:** 2\n**Explanation:** The two wonderful substrings are underlined below:\n-  \"**h**e \" ->  \"h \"\n-  \"h**e** \" ->  \"e \"\n\n**Constraints:**\n\n*   `1 <= word.length <= 105`\n*   `word` consists of lowercase English letters from `'a'` to `'j'`.",
+  "difficulty": "Medium",
+  "category": null,
+  "xpReward": 0,
+  "timeLimitMs": 5000,
+  "memoryLimitMb": 256,
+  "starterCode": [],
+  "solutionCode": "",
+  "hints": [],
+  "isPremium": false,
+  "createdBy": null,
+  "testCases": [
+    {
+      "input": [
+        "aba "
+      ],
+      "expectedOutput": 4
+    },
+    {
+      "input": [
+        "aabb "
+      ],
+      "expectedOutput": 9
+    },
+    {
+      "input": [
+        "he "
+      ],
+      "expectedOutput": 2
+    }
+  ],
+  "hiddenTestCases": [
+    {
+      "input": [
+        "aba "
+      ],
+      "expectedOutput": 4
+    },
+    {
+      "input": [
+        "aabb "
+      ],
+      "expectedOutput": 9
+    }
+  ],
+  "tags": [],
+  "constraints": [],
+  "examples": [],
+  "createdAt": "2025-11-14T21:23:39.850773+00:00",
+  "updatedAt": "2025-12-04T04:36:33.962Z"
+}

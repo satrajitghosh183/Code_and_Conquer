@@ -1,0 +1,54 @@
+{
+  "id": "78e411ac-92a2-4483-9829-6ca1ee24316f",
+  "title": "Minimum Recolors to Get K Consecutive Black Blocks",
+  "slug": "minimum-recolors-to-get-k-consecutive-black-blocks",
+  "description": "You are given a **0-indexed** string `blocks` of length `n`, where `blocks[i]` is either `'W'` or `'B'`, representing the color of the `ith` block. The characters `'W'` and `'B'` denote the colors white and black, respectively.\n\nYou are also given an integer `k`, which is the desired number of **consecutive** black blocks.\n\nIn one operation, you can **recolor** a white block such that it becomes a black block.\n\nReturn _the **minimum** number of operations needed such that there is at least **one** occurrence of_ `k` _consecutive black blocks._\n\n**Example 1:**\n\n**Input:** blocks =  \"WBBWWBBWBW \", k = 7\n**Output:** 3\n**Explanation:**\nOne way to achieve 7 consecutive black blocks is to recolor the 0th, 3rd, and 4th blocks\nso that blocks =  \"BBBBBBBWBW \". \nIt can be shown that there is no way to achieve 7 consecutive black blocks in less than 3 operations.\nTherefore, we return 3.\n\n**Example 2:**\n\n**Input:** blocks =  \"WBWBBBW \", k = 2\n**Output:** 0\n**Explanation:**\nNo changes need to be made, since 2 consecutive black blocks already exist.\nTherefore, we return 0.\n\n**Constraints:**\n\n*   `n == blocks.length`\n*   `1 <= n <= 100`\n*   `blocks[i]` is either `'W'` or `'B'`.\n*   `1 <= k <= n`",
+  "difficulty": "Easy",
+  "category": null,
+  "xpReward": 0,
+  "timeLimitMs": 5000,
+  "memoryLimitMb": 256,
+  "starterCode": {},
+  "solutionCode": "",
+  "hints": [],
+  "isPremium": false,
+  "createdBy": null,
+  "testCases": [
+    {
+      "input": [
+        "WBBWWBBWBW ",
+        7
+      ],
+      "expectedOutput": 3
+    },
+    {
+      "input": [
+        "WBWBBBW ",
+        2
+      ],
+      "expectedOutput": 0
+    }
+  ],
+  "hiddenTestCases": [
+    {
+      "input": [
+        "WBBWWBBWBW ",
+        7
+      ],
+      "expectedOutput": 3
+    },
+    {
+      "input": [
+        "WBWBBBW ",
+        2
+      ],
+      "expectedOutput": 0
+    }
+  ],
+  "tags": [],
+  "constraints": [],
+  "examples": [],
+  "problemNumber": null,
+  "createdAt": "2025-11-14T21:25:31.260034+00:00",
+  "updatedAt": "2025-12-04T04:35:44.376Z"
+}

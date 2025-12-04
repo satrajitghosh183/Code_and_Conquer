@@ -1,0 +1,56 @@
+{
+  "id": "e5d322e5-ec0a-4e6d-b7a2-8b56d6d7f6bc",
+  "title": "Next Greater Numerically Balanced Number",
+  "slug": "next-greater-numerically-balanced-number",
+  "description": "An integer `x` is **numerically balanced** if for every digit `d` in the number `x`, there are **exactly** `d` occurrences of that digit in `x`.\n\nGiven an integer `n`, return _the **smallest numerically balanced** number **strictly greater** than_ `n`_._\n\n**Example 1:**\n\n**Input:** n = 1\n**Output:** 22\n**Explanation:** \n22 is numerically balanced since:\n- The digit 2 occurs 2 times. \nIt is also the smallest numerically balanced number strictly greater than 1.\n\n**Example 2:**\n\n**Input:** n = 1000\n**Output:** 1333\n**Explanation:** \n1333 is numerically balanced since:\n- The digit 1 occurs 1 time.\n- The digit 3 occurs 3 times. \nIt is also the smallest numerically balanced number strictly greater than 1000.\nNote that 1022 cannot be the answer because 0 appeared more than 0 times.\n\n**Example 3:**\n\n**Input:** n = 3000\n**Output:** 3133\n**Explanation:** \n3133 is numerically balanced since:\n- The digit 1 occurs 1 time.\n- The digit 3 occurs 3 times.\nIt is also the smallest numerically balanced number strictly greater than 3000.\n\n**Constraints:**\n\n*   `0 <= n <= 106`",
+  "difficulty": "Medium",
+  "category": null,
+  "xpReward": 0,
+  "timeLimitMs": 5000,
+  "memoryLimitMb": 256,
+  "starterCode": {},
+  "solutionCode": "",
+  "hints": [],
+  "isPremium": false,
+  "createdBy": null,
+  "testCases": [
+    {
+      "input": [
+        1
+      ],
+      "expectedOutput": 22
+    },
+    {
+      "input": [
+        1000
+      ],
+      "expectedOutput": 1333
+    },
+    {
+      "input": [
+        3000
+      ],
+      "expectedOutput": 3133
+    }
+  ],
+  "hiddenTestCases": [
+    {
+      "input": [
+        1
+      ],
+      "expectedOutput": 22
+    },
+    {
+      "input": [
+        1000
+      ],
+      "expectedOutput": 1333
+    }
+  ],
+  "tags": [],
+  "constraints": [],
+  "examples": [],
+  "problemNumber": null,
+  "createdAt": "2025-11-14T21:24:08.763566+00:00",
+  "updatedAt": "2025-12-04T04:36:20.613Z"
+}

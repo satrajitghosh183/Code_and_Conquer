@@ -1,0 +1,61 @@
+{
+  "id": "297a0a6c-be9d-44ee-a5bc-a6014f967450",
+  "title": "Minimum Possible Integer After at Most K Adjacent Swaps On Digits",
+  "slug": "minimum-possible-integer-after-at-most-k-adjacent-swaps-on-digits",
+  "description": "You are given a string `num` representing **the digits** of a very large integer and an integer `k`. You are allowed to swap any two adjacent digits of the integer **at most** `k` times.\n\nReturn _the minimum integer you can obtain also as a string_.\n\n**Example 1:**\n\n**Input:** num =  \"4321 \", k = 4\n**Output:**  \"1342 \"\n**Explanation:** The steps to obtain the minimum integer from 4321 with 4 adjacent swaps are shown.\n\n**Example 2:**\n\n**Input:** num =  \"100 \", k = 1\n**Output:**  \"010 \"\n**Explanation:** It's ok for the output to have leading zeros, but the input is guaranteed not to have any leading zeros.\n\n**Example 3:**\n\n**Input:** num =  \"36789 \", k = 1000\n**Output:**  \"36789 \"\n**Explanation:** We can keep the number without any swaps.\n\n**Constraints:**\n\n*   `1 <= num.length <= 3 * 104`\n*   `num` consists of only **digits** and does not contain **leading zeros**.\n*   `1 <= k <= 109`",
+  "difficulty": "Hard",
+  "category": null,
+  "xpReward": 0,
+  "timeLimitMs": 5000,
+  "memoryLimitMb": 256,
+  "starterCode": {},
+  "solutionCode": "",
+  "hints": [],
+  "isPremium": false,
+  "createdBy": null,
+  "testCases": [
+    {
+      "input": [
+        "4321 ",
+        4
+      ],
+      "expectedOutput": "1342 "
+    },
+    {
+      "input": [
+        "100 ",
+        1
+      ],
+      "expectedOutput": "010 "
+    },
+    {
+      "input": [
+        "36789 ",
+        1000
+      ],
+      "expectedOutput": "36789 "
+    }
+  ],
+  "hiddenTestCases": [
+    {
+      "input": [
+        "4321 ",
+        4
+      ],
+      "expectedOutput": "1342 "
+    },
+    {
+      "input": [
+        "100 ",
+        1
+      ],
+      "expectedOutput": "010 "
+    }
+  ],
+  "tags": [],
+  "constraints": [],
+  "examples": [],
+  "problemNumber": null,
+  "createdAt": "2025-11-14T21:21:41.71203+00:00",
+  "updatedAt": "2025-12-04T04:37:21.702Z"
+}

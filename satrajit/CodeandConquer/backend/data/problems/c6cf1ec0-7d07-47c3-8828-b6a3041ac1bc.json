@@ -1,0 +1,49 @@
+{
+  "id": "c6cf1ec0-7d07-47c3-8828-b6a3041ac1bc",
+  "title": "Second Largest Digit in a String",
+  "slug": "second-largest-digit-in-a-string",
+  "description": "Given an alphanumeric string `s`, return _the **second largest** numerical digit that appears in_ `s`_, or_ `-1` _if it does not exist_.\n\nAn **alphanumeric** string is a string consisting of lowercase English letters and digits.\n\n**Example 1:**\n\n**Input:** s =  \"dfa12321afd \"\n**Output:** 2\n**Explanation:** The digits that appear in s are \\[1, 2, 3\\]. The second largest digit is 2.\n\n**Example 2:**\n\n**Input:** s =  \"abc1111 \"\n**Output:** -1\n**Explanation:** The digits that appear in s are \\[1\\]. There is no second largest digit. \n\n**Constraints:**\n\n*   `1 <= s.length <= 500`\n*   `s` consists of only lowercase English letters and/or digits.",
+  "difficulty": "Easy",
+  "category": null,
+  "xpReward": 0,
+  "timeLimitMs": 5000,
+  "memoryLimitMb": 256,
+  "starterCode": [],
+  "solutionCode": "",
+  "hints": [],
+  "isPremium": false,
+  "createdBy": null,
+  "testCases": [
+    {
+      "input": [
+        "dfa12321afd "
+      ],
+      "expectedOutput": 2
+    },
+    {
+      "input": [
+        "abc1111 "
+      ],
+      "expectedOutput": -1
+    }
+  ],
+  "hiddenTestCases": [
+    {
+      "input": [
+        "dfa12321afd "
+      ],
+      "expectedOutput": 2
+    },
+    {
+      "input": [
+        "abc1111 "
+      ],
+      "expectedOutput": -1
+    }
+  ],
+  "tags": [],
+  "constraints": [],
+  "examples": [],
+  "createdAt": "2025-11-14T21:23:09.222159+00:00",
+  "updatedAt": "2025-12-04T04:36:47.334Z"
+}

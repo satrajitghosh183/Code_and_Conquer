@@ -1,0 +1,49 @@
+{
+  "id": "ba6e96e5-7eab-40d6-b91a-5f30bf3cd2f0",
+  "title": "Unique Substrings With Equal Digit Frequency",
+  "slug": "unique-substrings-with-equal-digit-frequency",
+  "description": "Given a digit string `s`, return _the number of **unique substrings** of_ `s` _where every digit appears the same number of times._\n\n**Example 1:**\n\n**Input:** s =  \"1212 \"\n**Output:** 5\n**Explanation:** The substrings that meet the requirements are  \"1 \",  \"2 \",  \"12 \",  \"21 \",  \"1212 \".\nNote that although the substring  \"12 \" appears twice, it is only counted once.\n\n**Example 2:**\n\n**Input:** s =  \"12321 \"\n**Output:** 9\n**Explanation:** The substrings that meet the requirements are  \"1 \",  \"2 \",  \"3 \",  \"12 \",  \"23 \",  \"32 \",  \"21 \",  \"123 \",  \"321 \".\n\n**Constraints:**\n\n*   `1 <= s.length <= 1000`\n*   `s` consists of digits.",
+  "difficulty": "Medium",
+  "category": null,
+  "xpReward": 0,
+  "timeLimitMs": 5000,
+  "memoryLimitMb": 256,
+  "starterCode": [],
+  "solutionCode": "",
+  "hints": [],
+  "isPremium": false,
+  "createdBy": null,
+  "testCases": [
+    {
+      "input": [
+        "1212 "
+      ],
+      "expectedOutput": 5
+    },
+    {
+      "input": [
+        "12321 "
+      ],
+      "expectedOutput": 9
+    }
+  ],
+  "hiddenTestCases": [
+    {
+      "input": [
+        "1212 "
+      ],
+      "expectedOutput": 5
+    },
+    {
+      "input": [
+        "12321 "
+      ],
+      "expectedOutput": 9
+    }
+  ],
+  "tags": [],
+  "constraints": [],
+  "examples": [],
+  "createdAt": "2025-11-14T21:24:39.627183+00:00",
+  "updatedAt": "2025-12-04T04:36:08.057Z"
+}
