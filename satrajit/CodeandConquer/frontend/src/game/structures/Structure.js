@@ -21,17 +21,51 @@ export class Structure {
     
     const instance = modelLoader.createInstance(this.modelKey)
     if (!instance) {
-      console.error(`Failed to create instance of model: ${this.modelKey}`)
-      return null
+      console.warn(`Failed to create instance of model: ${this.modelKey}, creating fallback geometry`)
+      // Create fallback geometric representation
+      this.mesh = this.createFallbackMesh()
+    } else {
+      this.mesh = instance
     }
     
-    this.mesh = instance
     this.mesh.position.copy(this.position)
     this.applyRedTheme()
     this.createHealthBar()
     this.loaded = true
     
     return this.mesh
+  }
+  
+  createFallbackMesh() {
+    // Create a simple geometric representation based on structure type
+    let geometry, material
+    
+    if (this.type === 'tower') {
+      // Create a tower-like shape (cylinder with cone top)
+      const baseGeometry = new THREE.CylinderGeometry(0.8, 1.0, 3, 8)
+      const topGeometry = new THREE.ConeGeometry(0.6, 1.5, 8)
+      const baseMesh = new THREE.Mesh(baseGeometry, new THREE.MeshStandardMaterial({ color: 0x8B0000 }))
+      const topMesh = new THREE.Mesh(topGeometry, new THREE.MeshStandardMaterial({ color: 0x660000 }))
+      topMesh.position.y = 2.25
+      
+      const group = new THREE.Group()
+      group.add(baseMesh)
+      group.add(topMesh)
+      return group
+    } else if (this.type === 'wall') {
+      // Create a wall-like shape
+      geometry = new THREE.BoxGeometry(2, 1.5, 0.5)
+      material = new THREE.MeshStandardMaterial({ color: 0x8B0000 })
+    } else {
+      // Default structure
+      geometry = new THREE.BoxGeometry(1.5, 2, 1.5)
+      material = new THREE.MeshStandardMaterial({ color: 0x8B0000 })
+    }
+    
+    const mesh = new THREE.Mesh(geometry, material)
+    mesh.castShadow = true
+    mesh.receiveShadow = true
+    return mesh
   }
   
   applyRedTheme() {

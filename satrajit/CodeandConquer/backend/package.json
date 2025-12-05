@@ -15,8 +15,12 @@
     "lint": "echo 'Add ESLint configuration for linting'",
     "test": "echo 'Add test runner configuration'",
     "sync-tags": "node src/scripts/syncProblemTags.js",
-    "sync-problems": "node scripts/syncProblemsFromSupabase.js",
-    "generate-test-cases": "node scripts/generatePerfectTestCases.js",
+    "sync-problems": "node scripts/databaseOperations.js sync-problems",
+    "list-tables": "node scripts/databaseOperations.js list-tables",
+    "generate-test-cases": "node scripts/generateTestCases.js",
+    "upload-test-cases": "node scripts/manageTestCases.js upload",
+    "fix-test-format": "node scripts/manageTestCases.js fix-format",
+    "fix-design-tests": "node scripts/manageTestCases.js fix-design",
     "health-check": "curl -s http://localhost:5000/api/health | node -e \"process.stdin.on('data', d => { const h = JSON.parse(d); console.log('Status:', h.status); process.exit(h.status === 'ok' ? 0 : 1); })\""
   },
   "keywords": [

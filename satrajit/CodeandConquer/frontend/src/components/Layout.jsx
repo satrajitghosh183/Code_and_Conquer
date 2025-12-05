@@ -13,7 +13,8 @@ import {
   Settings,
   LogOut,
   Menu,
-  X
+  X,
+  BookOpen
 } from 'lucide-react'
 import PricingModal from './PricingModal'
 import ProfileSettings from './ProfileSettings'
@@ -49,6 +50,7 @@ export default function Layout({ children }) {
   const navItems = [
     { path: '/dashboard', label: 'Dashboard', icon: LineChart },
     { path: '/problems', label: 'Problems', icon: Code2 },
+    { path: '/learn', label: 'Learn', icon: BookOpen },
     { path: '/play', label: 'Play Game', icon: Gamepad2 },
     { path: '/leaderboard', label: 'Leaderboard', icon: Trophy },
   ]

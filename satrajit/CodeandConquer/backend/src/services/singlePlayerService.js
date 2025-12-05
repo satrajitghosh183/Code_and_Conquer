@@ -24,7 +24,12 @@ class SinglePlayerService {
           id: userId,
           hero: loadout.hero,
           gold: loadout.bonuses.startingGold,
-          goldPerSecond: loadout.bonuses.goldPerSecond,
+          energy: 50,
+          maxEnergy: 100,
+          goldPerSecond: loadout.bonuses.goldPerSecond || 0.5,
+          energyPerSecond: 0.2, // Base passive energy
+          problemsSolvedThisGame: 0,
+          tasksCompletedThisGame: 0,
           baseHp: 1000 * loadout.bonuses.baseHpMultiplier,
           maxBaseHp: 1000 * loadout.bonuses.baseHpMultiplier,
           towers: [],
@@ -37,7 +42,9 @@ class SinglePlayerService {
           codingScore: 0,
           wave: 0,
           score: 0,
-          enemiesKilled: 0
+          enemiesKilled: 0,
+          nextWaveTime: Date.now() + 30000, // 30 seconds until first wave
+          waveInterval: 30000
         },
         aiState: {
           phase: 'early', // early, mid, late
@@ -101,9 +108,35 @@ class SinglePlayerService {
     playerState.gold += goldReward
     playerState.score += scoreReward
 
+    // Energy rewards based on difficulty
+    const energyReward = submission.status === 'PASS' 
+      ? (submission.difficulty === 'hard' ? 20 : submission.difficulty === 'medium' ? 15 : 10)
+      : (submission.status === 'PARTIAL' ? 5 : 0)
+    
+    playerState.energy = Math.min(playerState.maxEnergy, playerState.energy + energyReward)
+    
+    // Increase passive energy generation (NO gold - coins only from problem rewards)
+    if (submission.status === 'PASS') {
+      playerState.problemsSolvedThisGame++
+      // Each problem solved increases passive energy income
+      playerState.energyPerSecond += 0.05 // +0.05 energy/sec
+    }
+    
+    // Time bonus for wave timer (5 seconds per problem, more for harder)
+    const timeBonus = submission.status === 'PASS'
+      ? (submission.difficulty === 'hard' ? 7.5 : submission.difficulty === 'medium' ? 5 : 2.5)
+      : 0
+    
+    // Add time bonus to next wave
+    if (timeBonus > 0) {
+      playerState.nextWaveTime += timeBonus * 1000
+    }
+
     const effects = {
       goldReward,
       scoreReward,
+      energyReward,
+      timeBonus,
       xpReward: Math.floor(codingScore * 1.5)
     }
 
@@ -247,13 +280,26 @@ class SinglePlayerService {
     const session = this.getSession(sessionId)
     if (!session || session.state !== 'playing') return null
 
-    session.elapsedTime += deltaTime
+    const playerState = session.playerState
     const now = Date.now()
 
-    // Passive gold generation
+    session.elapsedTime += deltaTime
+
+    // Passive gold and energy generation
     if (now - session.lastGoldTick >= 1000) {
-      session.playerState.gold += session.playerState.goldPerSecond
+      playerState.gold += playerState.goldPerSecond
+      playerState.energy = Math.min(
+        playerState.maxEnergy,
+        playerState.energy + playerState.energyPerSecond
+      )
       session.lastGoldTick = now
+    }
+
+    // Check for automatic wave spawn
+    if (now >= playerState.nextWaveTime) {
+      this.spawnWave(session)
+      playerState.nextWaveTime = now + playerState.waveInterval
+      playerState.wave++
     }
 
     // AI spawning

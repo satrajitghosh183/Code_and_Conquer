@@ -39,3 +39,7 @@ data/submissions/
 /data
 
 *.glb
+*.glb
+**/Models/
+**/models/
+**/dist/

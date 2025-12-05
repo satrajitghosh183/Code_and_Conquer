@@ -1,0 +1,146 @@
+.ad-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(5, 5, 15, 0.96);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 10000;
+  backdrop-filter: blur(8px);
+  animation: fadeIn 0.3s ease-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.ad-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  padding: 24px;
+  background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+  border-radius: 16px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 
+    0 0 60px rgba(0, 0, 0, 0.5),
+    0 0 100px rgba(99, 102, 241, 0.1);
+}
+
+.ad-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  padding-bottom: 12px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.ad-label {
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  color: #fbbf24;
+  background: rgba(251, 191, 36, 0.1);
+  padding: 4px 12px;
+  border-radius: 4px;
+}
+
+.ad-sponsor {
+  font-size: 0.875rem;
+  color: rgba(255, 255, 255, 0.6);
+  font-style: italic;
+}
+
+.ad-player {
+  width: 80vw;
+  height: 45vw;
+  max-width: 900px;
+  max-height: 506px;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.4);
+}
+
+.ad-player iframe {
+  width: 100%;
+  height: 100%;
+  border: none;
+}
+
+.skip-button {
+  padding: 14px 28px;
+  font-size: 1rem;
+  font-weight: 600;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  border: none;
+  min-width: 160px;
+}
+
+.skip-button.disabled {
+  background: linear-gradient(135deg, #374151 0%, #4b5563 100%);
+  color: rgba(255, 255, 255, 0.5);
+  cursor: not-allowed;
+}
+
+.skip-button.enabled {
+  background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+  color: white;
+  box-shadow: 0 4px 16px rgba(99, 102, 241, 0.4);
+}
+
+.skip-button.enabled:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 24px rgba(99, 102, 241, 0.5);
+}
+
+.skip-button.enabled:active {
+  transform: translateY(0);
+}
+
+.ad-tip {
+  font-size: 0.875rem;
+  color: rgba(255, 255, 255, 0.5);
+  text-align: center;
+  margin: 0;
+  padding-top: 8px;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .ad-container {
+    padding: 16px;
+    margin: 16px;
+  }
+
+  .ad-player {
+    width: 90vw;
+    height: 50.625vw; /* 16:9 aspect ratio */
+    max-width: 100%;
+    max-height: 56.25vw;
+  }
+
+  .skip-button {
+    padding: 12px 24px;
+    font-size: 0.9rem;
+  }
+
+  .ad-header {
+    flex-direction: column;
+    gap: 8px;
+    align-items: flex-start;
+  }
+}
+

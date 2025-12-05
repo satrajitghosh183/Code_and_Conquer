@@ -21,6 +21,7 @@ export class Tower extends Structure {
     this.fireRate = config.fireRate
     this.projectileSpeed = config.projectileSpeed || 20
     this.splashRadius = config.splashRadius || 0
+    this.attackType = config.attackType || 'gattling'
     this.lastShot = 0
     this.target = null
     this.turretMesh = null

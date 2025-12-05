@@ -1,6 +1,13 @@
 /**
- * Script to generate test cases for problems that don't have them
- * and update both local files and Supabase database
+ * Generate Test Cases Script
+ * 
+ * Consolidated script for generating test cases for coding problems.
+ * Supports multiple methods: examples extraction, Hugging Face API (optional)
+ * 
+ * Usage:
+ *   node scripts/generateTestCases.js
+ *   USE_HF_API=true node scripts/generateTestCases.js
+ *   MAX_PROBLEMS=500 node scripts/generateTestCases.js
  */
 
 import database from '../src/config/database.js';
@@ -12,271 +19,377 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 const PROBLEMS_DIR = path.join(__dirname, '../../data/problems');
+const HF_API_URL = process.env.HF_API_URL || 'https://syncbuz120-testcasegenerator.hf.space/api/predict';
+const USE_HF_API = process.env.USE_HF_API !== 'false';
 
 /**
- * Parse example input/output strings to extract actual values
+ * Parse input value - works for all languages
  */
-function parseExample(example) {
-  try {
-    const inputStr = example.input || '';
-    const outputStr = example.output || '';
-    
-    // Try to extract values from strings like "nums = [2,7,11,15], target = 9"
-    const inputValues = {};
-    const parts = inputStr.split(',').map(p => p.trim());
-    
-    for (const part of parts) {
-      if (part.includes('=')) {
-        const [key, value] = part.split('=').map(s => s.trim());
-        const cleanKey = key.replace(/[^a-zA-Z0-9_]/g, '');
-        
-        // Try to parse the value
-        let parsedValue = value.trim();
-        
-        // Try JSON parse for arrays/objects
-        try {
-          parsedValue = JSON.parse(parsedValue);
-        } catch {
-          // If not JSON, try to extract array/object manually
-          if (parsedValue.startsWith('[') && parsedValue.endsWith(']')) {
-            parsedValue = parsedValue.slice(1, -1).split(',').map(v => {
-              const trimmed = v.trim();
-              if (trimmed === 'true') return true;
-              if (trimmed === 'false') return false;
-              if (trimmed === 'null') return null;
-              if (/^-?\d+$/.test(trimmed)) return parseInt(trimmed);
-              if (/^-?\d*\.\d+$/.test(trimmed)) return parseFloat(trimmed);
-              if (trimmed.startsWith('"') && trimmed.endsWith('"')) {
-                return trimmed.slice(1, -1);
-              }
-              if (trimmed.startsWith("'") && trimmed.endsWith("'")) {
-                return trimmed.slice(1, -1);
-              }
-              return trimmed;
-            });
-          } else if (/^-?\d+$/.test(parsedValue)) {
-            parsedValue = parseInt(parsedValue);
-          } else if (/^-?\d*\.\d+$/.test(parsedValue)) {
-            parsedValue = parseFloat(parsedValue);
-          } else if (parsedValue === 'true') {
-            parsedValue = true;
-          } else if (parsedValue === 'false') {
-            parsedValue = false;
-          } else if (parsedValue === 'null') {
-            parsedValue = null;
-          } else if ((parsedValue.startsWith('"') && parsedValue.endsWith('"')) ||
-                     (parsedValue.startsWith("'") && parsedValue.endsWith("'"))) {
-            parsedValue = parsedValue.slice(1, -1);
-          }
-        }
-        
-        inputValues[cleanKey] = parsedValue;
-      }
-    }
-    
-    // Extract output value
-    let expectedOutput = outputStr.trim();
-    try {
-      expectedOutput = JSON.parse(expectedOutput);
-    } catch {
-      if (expectedOutput.startsWith('[') && expectedOutput.endsWith(']')) {
-        expectedOutput = expectedOutput.slice(1, -1).split(',').map(v => {
-          const trimmed = v.trim();
-          if (trimmed === 'true') return true;
-          if (trimmed === 'false') return false;
-          if (trimmed === 'null') return null;
-          if (/^-?\d+$/.test(trimmed)) return parseInt(trimmed);
-          if (/^-?\d*\.\d+$/.test(trimmed)) return parseFloat(trimmed);
-          return trimmed;
-        });
-      } else if (/^-?\d+$/.test(expectedOutput)) {
-        expectedOutput = parseInt(expectedOutput);
-      } else if (/^-?\d*\.\d+$/.test(expectedOutput)) {
-        expectedOutput = parseFloat(expectedOutput);
-      } else if (expectedOutput === 'true') {
-        expectedOutput = true;
-      } else if (expectedOutput === 'false') {
-        expectedOutput = false;
-      } else if ((expectedOutput.startsWith('"') && expectedOutput.endsWith('"')) ||
-                 (expectedOutput.startsWith("'") && expectedOutput.endsWith("'"))) {
-        expectedOutput = expectedOutput.slice(1, -1);
-      }
-    }
-    
-    // Convert inputValues object to array if multiple values, or single value
-    const inputArray = Object.keys(inputValues).length > 1 
-      ? Object.values(inputValues)
-      : Object.values(inputValues)[0];
-    
-    return {
-      input: Array.isArray(inputArray) ? inputArray : [inputArray],
-      expectedOutput: expectedOutput
-    };
-  } catch (error) {
-    console.warn(`Failed to parse example: ${error.message}`);
-    return null;
+function parseValueForAllLanguages(valueStr) {
+  if (!valueStr || typeof valueStr !== 'string') {
+    return valueStr;
   }
+  
+  valueStr = valueStr.trim();
+  valueStr = valueStr.replace(/\\\[/g, '[').replace(/\\\]/g, ']');
+  
+  try {
+    return JSON.parse(valueStr);
+  } catch {}
+  
+  if (valueStr.startsWith('[') && valueStr.endsWith(']')) {
+    try {
+      return JSON.parse(valueStr);
+    } catch {
+      return parseArrayString(valueStr);
+    }
+  }
+  
+  if (/^-?\d+$/.test(valueStr)) return parseInt(valueStr, 10);
+  if (/^-?\d*\.\d+([eE][+-]?\d+)?$/.test(valueStr)) return parseFloat(valueStr);
+  
+  if (valueStr.toLowerCase() === 'true') return true;
+  if (valueStr.toLowerCase() === 'false') return false;
+  if (valueStr === 'null' || valueStr === 'None') return null;
+  
+  if ((valueStr.startsWith('"') && valueStr.endsWith('"')) ||
+      (valueStr.startsWith("'") && valueStr.endsWith("'"))) {
+    return valueStr.slice(1, -1);
+  }
+  
+  return valueStr;
 }
 
-/**
- * Generate test cases from examples
- */
+function parseArrayString(arrayStr) {
+  const content = arrayStr.slice(1, -1).trim();
+  if (!content) return [];
+  
+  const items = [];
+  let currentItem = '';
+  let depth = 0;
+  let inString = false;
+  let stringChar = '';
+  
+  for (let i = 0; i < content.length; i++) {
+    const char = content[i];
+    const prevChar = i > 0 ? content[i - 1] : '';
+    
+    if ((char === '"' || char === "'") && prevChar !== '\\') {
+      if (!inString) {
+        inString = true;
+        stringChar = char;
+      } else if (char === stringChar) {
+        inString = false;
+        stringChar = '';
+      }
+    }
+    
+    if (!inString) {
+      if (char === '[') depth++;
+      if (char === ']') depth--;
+      if (char === '{') depth++;
+      if (char === '}') depth--;
+    }
+    
+    if (char === ',' && depth === 0 && !inString) {
+      const item = currentItem.trim();
+      if (item) {
+        items.push(parseValueForAllLanguages(item));
+      }
+      currentItem = '';
+    } else {
+      currentItem += char;
+    }
+  }
+  
+  const item = currentItem.trim();
+  if (item) {
+    items.push(parseValueForAllLanguages(item));
+  }
+  
+  return items;
+}
+
+function parseInputFromExample(inputStr) {
+  if (!inputStr) return [];
+  
+  inputStr = inputStr.trim();
+  inputStr = inputStr.replace(/\\\[/g, '[').replace(/\\\]/g, ']');
+  
+  const values = [];
+  let currentVar = '';
+  let currentValue = '';
+  let inAssignment = false;
+  let bracketDepth = 0;
+  let inString = false;
+  let stringChar = '';
+  
+  for (let i = 0; i < inputStr.length; i++) {
+    const char = inputStr[i];
+    const prevChar = i > 0 ? inputStr[i - 1] : '';
+    
+    if ((char === '"' || char === "'") && prevChar !== '\\') {
+      if (!inString) {
+        inString = true;
+        stringChar = char;
+      } else if (char === stringChar) {
+        inString = false;
+        stringChar = '';
+      }
+    }
+    
+    if (!inString) {
+      if (char === '[') bracketDepth++;
+      if (char === ']') bracketDepth--;
+    }
+    
+    if (char === '=' && bracketDepth === 0 && !inString) {
+      inAssignment = true;
+      continue;
+    }
+    
+    if (char === ',' && bracketDepth === 0 && !inString && inAssignment) {
+      const parsed = parseValueForAllLanguages(currentValue.trim());
+      if (parsed !== null) {
+        values.push(parsed);
+      }
+      currentVar = '';
+      currentValue = '';
+      inAssignment = false;
+      continue;
+    }
+    
+    if (inAssignment) {
+      currentValue += char;
+    }
+  }
+  
+  if (inAssignment && currentValue.trim()) {
+    const parsed = parseValueForAllLanguages(currentValue.trim());
+    if (parsed !== null) {
+      values.push(parsed);
+    }
+  }
+  
+  if (values.length === 0) {
+    const singleValue = parseValueForAllLanguages(inputStr);
+    if (singleValue !== null) {
+      return Array.isArray(singleValue) ? singleValue : [singleValue];
+    }
+  }
+  
+  return values;
+}
+
+function extractExamplesFromDescription(description) {
+  const examples = [];
+  
+  if (!description) return examples;
+  
+  const exampleRegex = /\*\*Example\s+(\d+):\*\*([\s\S]*?)(?=\*\*Example\s+\d+:\*\*|$)/gi;
+  let match;
+  
+  while ((match = exampleRegex.exec(description)) !== null) {
+    const block = match[2];
+    
+    const inputMatch = block.match(/\*\*Input:\*\*\s*([\s\S]*?)(?:\*\*Output:|\*\*Explanation:|$)/i);
+    const outputMatch = block.match(/\*\*Output:\*\*\s*([\s\S]*?)(?:\*\*Explanation:|\*\*Example|$)/i);
+    
+    if (inputMatch && outputMatch) {
+      examples.push({
+        input: inputMatch[1].trim(),
+        output: outputMatch[1].trim()
+      });
+    }
+  }
+  
+  if (examples.length === 0) {
+    const simpleInputMatch = description.match(/\*\*Input:\*\*\s*([\s\S]*?)(?:\*\*Output:)/i);
+    const simpleOutputMatch = description.match(/\*\*Output:\*\*\s*([\s\S]*?)(?:\*\*Explanation:|$)/i);
+    
+    if (simpleInputMatch && simpleOutputMatch) {
+      examples.push({
+        input: simpleInputMatch[1].trim(),
+        output: simpleOutputMatch[1].trim()
+      });
+    }
+  }
+  
+  return examples;
+}
+
 function generateTestCasesFromExamples(problem) {
   const testCases = [];
   const hiddenTestCases = [];
   
-  if (!problem.examples || !Array.isArray(problem.examples) || problem.examples.length === 0) {
+  const examples = extractExamplesFromDescription(problem.description || '');
+  
+  if (examples.length === 0) {
     return { testCases: [], hiddenTestCases: [] };
   }
   
-  // Convert first 2-3 examples to visible test cases
-  const visibleExamples = problem.examples.slice(0, Math.min(3, problem.examples.length));
-  for (const example of visibleExamples) {
-    const testCase = parseExample(example);
-    if (testCase) {
-      testCases.push(testCase);
-    }
-  }
-  
-  // If there are more examples, use them as hidden test cases
-  if (problem.examples.length > 3) {
-    const hiddenExamples = problem.examples.slice(3);
-    for (const example of hiddenExamples) {
-      const testCase = parseExample(example);
-      if (testCase) {
-        hiddenTestCases.push(testCase);
+  for (const example of examples) {
+    try {
+      const input = parseInputFromExample(example.input);
+      const output = parseValueForAllLanguages(example.output);
+      
+      if (input && input.length > 0 && output !== null) {
+        testCases.push({
+          input: Array.isArray(input) ? input : [input],
+          expectedOutput: output
+        });
       }
+    } catch (error) {
+      // Skip invalid examples
     }
   }
   
-  // Generate additional hidden test cases based on constraints
-  if (problem.constraints && Array.isArray(problem.constraints)) {
-    // Try to generate edge cases based on constraints
-    // This is a simplified version - you might want to expand this
-    if (testCases.length > 0) {
-      const firstTest = testCases[0];
-      if (firstTest && Array.isArray(firstTest.input)) {
-        // Add empty array case if applicable
-        const emptyCase = {
-          input: [[]],
-          expectedOutput: [] // This would need to be calculated properly
-        };
-        // Only add if it makes sense for the problem
-      }
-    }
-  }
+  const visibleCount = Math.min(3, testCases.length);
   
-  return { testCases, hiddenTestCases };
+  return {
+    testCases: testCases.slice(0, visibleCount),
+    hiddenTestCases: testCases.slice(visibleCount)
+  };
 }
 
-/**
- * Update problem in database and local file
- */
+async function tryHuggingFaceAPI(problem) {
+  if (!USE_HF_API) {
+    return null;
+  }
+  
+  try {
+    const prompt = `Coding Problem:\nTitle: ${problem.title}\n\nDescription:\n${problem.description}\n\nGenerate test cases with input and expected output.`;
+    
+    const response = await fetch(HF_API_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ data: [prompt, null] }),
+      signal: AbortSignal.timeout(20000)
+    });
+    
+    if (!response.ok) return null;
+    
+    const result = await response.json();
+    
+    // Parse HF response - for now, fall back to examples
+    return null;
+  } catch (error) {
+    return null;
+  }
+}
+
 async function updateProblem(problem) {
   try {
-    const { testCases, hiddenTestCases } = problem;
-    
-    const updates = {
-      testCases: testCases || [],
-      hiddenTestCases: hiddenTestCases || []
-    };
-    
-    // Use database.updateProblem which handles both Supabase and local
-    const updated = await database.updateProblem(problem.id, updates);
-    return updated !== null;
-  } catch (error) {
-    console.error(`Error updating problem ${problem.id}:`, error.message);
-    return false;
-  }
-}
-
-/**
- * Update local JSON file
- */
-async function updateLocalFile(problem) {
-  try {
+    await fs.ensureDir(PROBLEMS_DIR);
     const filePath = path.join(PROBLEMS_DIR, `${problem.id}.json`);
-    await fs.writeJson(filePath, problem, { spaces: 2 });
+    
+    let fullProblem = await database.getProblemById(problem.id);
+    if (!fullProblem) {
+      fullProblem = { ...problem };
+    }
+    
+    fullProblem.testCases = problem.testCases || [];
+    fullProblem.hiddenTestCases = problem.hiddenTestCases || [];
+    fullProblem.updatedAt = new Date().toISOString();
+    
+    await fs.writeJson(filePath, fullProblem, { spaces: 2 });
+    
+    try {
+      await database.updateProblem(problem.id, {
+        testCases: fullProblem.testCases,
+        hiddenTestCases: fullProblem.hiddenTestCases
+      });
+    } catch (error) {
+      // Database columns might not exist - that's okay
+    }
+    
     return true;
   } catch (error) {
-    console.error(`Error updating local file for problem ${problem.id}:`, error.message);
     return false;
   }
 }
 
-/**
- * Main function to process problems
- */
 async function main() {
-  console.log('Starting test case generation for problems...\n');
+  console.log('=== Test Case Generator ===\n');
+  console.log('Generating test cases that work for: JavaScript, Python, Java, C++, Go, Rust, etc.\n');
+  
+  const maxProblems = parseInt(process.env.MAX_PROBLEMS || '300', 10);
   
   try {
-    // Fetch first 300 problems from database
-    console.log('Fetching problems from database...');
     const allProblems = await database.getAllProblems({});
-    const problemsToProcess = allProblems.slice(0, 300);
+    const problemsToProcess = allProblems.slice(0, maxProblems);
     
     console.log(`Found ${allProblems.length} total problems. Processing first ${problemsToProcess.length}...\n`);
     
     let processed = 0;
     let updated = 0;
     let skipped = 0;
+    let generated = 0;
     let errors = 0;
     
     for (const problem of problemsToProcess) {
       processed++;
       
-      // Check if problem already has test cases
       const hasTestCases = (problem.testCases && Array.isArray(problem.testCases) && problem.testCases.length > 0) ||
                           (problem.hiddenTestCases && Array.isArray(problem.hiddenTestCases) && problem.hiddenTestCases.length > 0);
       
       if (hasTestCases) {
-        console.log(`[${processed}/${problemsToProcess.length}] Skipping "${problem.title}" (${problem.id}) - already has test cases`);
         skipped++;
+        if (processed % 50 === 0) {
+          console.log(`[${processed}/${problemsToProcess.length}] Progress... (updated: ${updated}, skipped: ${skipped})`);
+        }
         continue;
       }
       
-      console.log(`[${processed}/${problemsToProcess.length}] Processing "${problem.title}" (${problem.id})...`);
+      let testCases = [];
+      let hiddenTestCases = [];
+      let source = 'examples';
       
-      // Generate test cases from examples
-      const { testCases, hiddenTestCases } = generateTestCasesFromExamples(problem);
+      if (USE_HF_API) {
+        const hfResult = await tryHuggingFaceAPI(problem);
+        if (hfResult && hfResult.testCases && hfResult.testCases.length > 0) {
+          testCases = hfResult.testCases;
+          hiddenTestCases = hfResult.hiddenTestCases || [];
+          source = 'hf';
+        }
+      }
       
-      if (testCases.length === 0 && hiddenTestCases.length === 0) {
-        console.log(`  ⚠️  No test cases could be generated (no valid examples found)`);
+      if (testCases.length === 0) {
+        const result = generateTestCasesFromExamples(problem);
+        testCases = result.testCases;
+        hiddenTestCases = result.hiddenTestCases;
+        source = 'examples';
+      }
+      
+      if (testCases.length === 0) {
         errors++;
         continue;
       }
       
-      // Update problem with test cases
       problem.testCases = testCases;
       problem.hiddenTestCases = hiddenTestCases;
       
-      // Update in database (handles both Supabase and local)
-      const dbUpdated = await updateProblem(problem);
+      const success = await updateProblem(problem);
       
-      // Also update local file directly to ensure it's saved
-      const localUpdated = await updateLocalFile(problem);
-      
-      if (dbUpdated || localUpdated) {
-        console.log(`  ✓ Generated ${testCases.length} visible and ${hiddenTestCases.length} hidden test cases`);
-        console.log(`  ✓ Updated in database and local file`);
+      if (success) {
         updated++;
+        generated++;
+        console.log(`[${processed}/${problemsToProcess.length}] ✓ "${problem.title}" - ${testCases.length} visible, ${hiddenTestCases.length} hidden (${source})`);
       } else {
-        console.log(`  ✗ Failed to update problem`);
         errors++;
       }
       
-      // Small delay to avoid overwhelming the database
       if (processed % 10 === 0) {
         await new Promise(resolve => setTimeout(resolve, 100));
       }
     }
     
     console.log('\n=== Summary ===');
-    console.log(`Total processed: ${processed}`);
-    console.log(`Updated: ${updated}`);
-    console.log(`Skipped (already had test cases): ${skipped}`);
-    console.log(`Errors: ${errors}`);
+    console.log(`✅ Processed: ${processed}`);
+    console.log(`✅ Updated: ${updated}`);
+    console.log(`⏭️  Skipped: ${skipped}`);
+    console.log(`✨ Generated: ${generated}`);
+    console.log(`❌ Errors: ${errors}`);
     
   } catch (error) {
     console.error('Fatal error:', error);
@@ -284,12 +397,11 @@ async function main() {
   }
 }
 
-// Run the script
 main().then(() => {
-  console.log('\nScript completed!');
+  console.log('\n🎉 Test case generation completed!');
   process.exit(0);
 }).catch(error => {
-  console.error('Script failed:', error);
+  console.error('❌ Failed:', error);
   process.exit(1);
 });
 

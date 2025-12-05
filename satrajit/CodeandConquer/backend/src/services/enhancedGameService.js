@@ -26,7 +26,12 @@ class EnhancedGameService {
           id: player1Id,
           hero: loadout1.hero,
           gold: loadout1.bonuses.startingGold,
-          goldPerSecond: loadout1.bonuses.goldPerSecond,
+          energy: 50,
+          maxEnergy: 100,
+          goldPerSecond: loadout1.bonuses.goldPerSecond || 0.5,
+          energyPerSecond: 0.2, // Base passive energy
+          problemsSolvedThisGame: 0,
+          tasksCompletedThisGame: 0,
           baseHp: 1000 * loadout1.bonuses.baseHpMultiplier,
           maxBaseHp: 1000 * loadout1.bonuses.baseHpMultiplier,
           towers: [],
@@ -39,13 +44,20 @@ class EnhancedGameService {
           codingScore: 0,
           consecutivePassCount: 0,
           unitKills: 0,
-          towerKills: 0
+          towerKills: 0,
+          nextWaveTime: Date.now() + 30000,
+          waveInterval: 30000
         },
         player2: {
           id: player2Id,
           hero: loadout2.hero,
           gold: loadout2.bonuses.startingGold,
-          goldPerSecond: loadout2.bonuses.goldPerSecond,
+          energy: 50,
+          maxEnergy: 100,
+          goldPerSecond: loadout2.bonuses.goldPerSecond || 0.5,
+          energyPerSecond: 0.2, // Base passive energy
+          problemsSolvedThisGame: 0,
+          tasksCompletedThisGame: 0,
           baseHp: 1000 * loadout2.bonuses.baseHpMultiplier,
           maxBaseHp: 1000 * loadout2.bonuses.baseHpMultiplier,
           towers: [],
@@ -58,13 +70,17 @@ class EnhancedGameService {
           codingScore: 0,
           consecutivePassCount: 0,
           unitKills: 0,
-          towerKills: 0
+          towerKills: 0,
+          nextWaveTime: Date.now() + 30000,
+          waveInterval: 30000
         },
         projectiles: [],
         effects: [],
         wave: 0,
         elapsedTime: 0,
-        lastGoldTick: Date.now()
+        lastGoldTick: Date.now(),
+        nextWaveTime: Date.now() + 30000, // Shared wave timer for both players
+        waveInterval: 30000
       }
 
       await matchmakingService.updateMatch(matchId, match)
@@ -112,11 +128,36 @@ class EnhancedGameService {
     const goldReward = Math.floor(codingScore * 2)
     playerState.gold += goldReward
 
+    // Award energy based on difficulty and status
+    const energyReward = submission.status === 'PASS'
+      ? (submission.difficulty === 'hard' ? 20 : submission.difficulty === 'medium' ? 15 : 10)
+      : (submission.status === 'PARTIAL' ? 5 : 0)
+    playerState.energy = Math.min(playerState.maxEnergy, playerState.energy + energyReward)
+    
+    // Increase passive energy generation (NO gold - coins only from problem rewards)
+    if (submission.status === 'PASS') {
+      playerState.problemsSolvedThisGame++
+      // Each problem solved increases passive energy income
+      playerState.energyPerSecond += 0.05 // +0.05 energy/sec
+    }
+
+    // Time bonus for wave timer
+    const timeBonus = submission.status === 'PASS'
+      ? (submission.difficulty === 'hard' ? 7.5 : submission.difficulty === 'medium' ? 5 : 2.5)
+      : 0
+    
+    // Add time bonus to next wave (shared timer)
+    if (timeBonus > 0 && match.gameState.nextWaveTime) {
+      match.gameState.nextWaveTime += timeBonus * 1000
+    }
+
     // Award XP (tracked for post-match)
     const xpReward = Math.floor(codingScore * 1.5)
 
     const effects = {
       goldReward,
+      energyReward,
+      timeBonus,
       xpReward,
       specialAbility: null,
       debuff: null
@@ -484,22 +525,83 @@ class EnhancedGameService {
     }
   }
 
+  // Spawn automatic wave for both players
+  spawnWave(matchId) {
+    const match = matchmakingService.getMatch(matchId)
+    if (!match) return null
+
+    const { player1, player2, wave } = match.gameState
+    const waveNumber = wave + 1
+    const enemyCount = 5 + waveNumber * 2
+
+    // Spawn enemies for player 1 (attacking player 2)
+    const enemies1 = []
+    for (let i = 0; i < enemyCount; i++) {
+      enemies1.push({
+        id: `enemy_${Date.now()}_p1_${i}`,
+        hp: 100 + waveNumber * 20,
+        maxHp: 100 + waveNumber * 20,
+        speed: 2,
+        position: this.getSpawnPosition(0),
+        targetPlayer: player2.id,
+        targetBase: this.getOpponentBasePosition(0),
+        reachedEnd: false
+      })
+    }
+
+    // Spawn enemies for player 2 (attacking player 1)
+    const enemies2 = []
+    for (let i = 0; i < enemyCount; i++) {
+      enemies2.push({
+        id: `enemy_${Date.now()}_p2_${i}`,
+        hp: 100 + waveNumber * 20,
+        maxHp: 100 + waveNumber * 20,
+        speed: 2,
+        position: this.getSpawnPosition(1),
+        targetPlayer: player1.id,
+        targetBase: this.getOpponentBasePosition(1),
+        reachedEnd: false
+      })
+    }
+
+    match.gameState.enemies = match.gameState.enemies || []
+    match.gameState.enemies.push(...enemies1, ...enemies2)
+    match.gameState.wave = waveNumber
+
+    matchmakingService.updateMatch(matchId, match)
+
+    return { 
+      wave: waveNumber, 
+      enemies: [...enemies1, ...enemies2],
+      player1Enemies: enemies1.length,
+      player2Enemies: enemies2.length
+    }
+  }
+
   // Update game state (called every frame)
   updateGameState(matchId, deltaTime) {
     const match = matchmakingService.getMatch(matchId)
     if (!match || match.state !== 'running') return null
 
-    const { player1, player2, projectiles, elapsedTime, lastGoldTick } = match.gameState
+    const { player1, player2, projectiles, elapsedTime, lastGoldTick, nextWaveTime, waveInterval } = match.gameState
 
     // Update elapsed time
     match.gameState.elapsedTime += deltaTime
 
-    // Passive gold generation
+    // Passive energy generation only (NO passive gold - coins only from coding problems)
     const now = Date.now()
     if (now - lastGoldTick >= 1000) {
-      player1.gold += player1.goldPerSecond
-      player2.gold += player2.goldPerSecond
+      // Generate passive energy
+      player1.energy = Math.min(player1.maxEnergy, player1.energy + player1.energyPerSecond)
+      player2.energy = Math.min(player2.maxEnergy, player2.energy + player2.energyPerSecond)
       match.gameState.lastGoldTick = now
+    }
+
+    // Automatic wave spawning
+    if (nextWaveTime && now >= nextWaveTime) {
+      this.spawnWave(matchId)
+      match.gameState.nextWaveTime = now + waveInterval
+      match.gameState.wave++
     }
 
     // Update towers

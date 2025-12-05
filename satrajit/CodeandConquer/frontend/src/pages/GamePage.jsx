@@ -3,9 +3,12 @@ import { useNavigate } from 'react-router-dom'
 import { useGame } from '../contexts/GameContext'
 import { useAuth } from '../contexts/AuthContext'
 import { EnhancedGame } from '../game/EnhancedGame'
+import { SoundManager } from '../game/SoundManager'
 import BuildBar from '../components/BuildBar'
 import LearningModule from '../components/LearningModule'
 import CodingConsole from '../components/CodingConsole'
+import TaskPanel from '../components/TaskPanel'
+import ModelScaleSettings from '../components/ModelScaleSettings'
 import { Icon } from '../components/Icons'
 import './GamePage.css'
 
@@ -17,15 +20,23 @@ export default function GamePage() {
   const { user, profile } = useAuth()
   const [gameStarted, setGameStarted] = useState(false)
   const [gold, setGold] = useState(500)
+  const [energy, setEnergy] = useState(50)
+  const [maxEnergy, setMaxEnergy] = useState(100)
   const [health, setHealth] = useState(1000)
   const [maxHealth, setMaxHealth] = useState(1000)
   const [wave, setWave] = useState(0)
+  const [waveCountdown, setWaveCountdown] = useState(30)
+  const [waveCountdownTotal, setWaveCountdownTotal] = useState(30)
+  const [passiveGoldRate, setPassiveGoldRate] = useState(0.5)
+  const [passiveEnergyRate, setPassiveEnergyRate] = useState(0.2)
   const [kills, setKills] = useState(0)
   const [level, setLevel] = useState(1)
   const [score, setScore] = useState(0)
   const [selectedStructure, setSelectedStructure] = useState(null)
   const [showLearningModule, setShowLearningModule] = useState(false)
   const [showCodingConsole, setShowCodingConsole] = useState(false)
+  const [showTaskPanel, setShowTaskPanel] = useState(false)
+  const [showModelScaleSettings, setShowModelScaleSettings] = useState(false)
   const [problemCount, setProblemCount] = useState(0)
   const [availableTowers, setAvailableTowers] = useState(['basic'])
   const [gameState, setGameState] = useState('playing') // playing, paused, gameover
@@ -33,6 +44,7 @@ export default function GamePage() {
   const [upgradeLevel, setUpgradeLevel] = useState(1)
   const [isPaused, setIsPaused] = useState(false)
   const [showHeader, setShowHeader] = useState(true)
+  const [vignetteIntensity, setVignetteIntensity] = useState(0)
 
   useEffect(() => {
     if (!containerRef.current) return
@@ -62,6 +74,10 @@ export default function GamePage() {
       onGoldChange: (newGold) => {
         setGold(newGold)
       },
+      onEnergyChange: (newEnergy, max) => {
+        setEnergy(newEnergy)
+        setMaxEnergy(max)
+      },
       onHealthChange: (health, max) => {
         setHealth(health)
         setMaxHealth(max)
@@ -69,6 +85,23 @@ export default function GamePage() {
       onWaveChange: (waveNum) => {
         setWave(waveNum)
       },
+      onWaveCountdown: (countdown, total) => {
+        setWaveCountdown(countdown)
+        setWaveCountdownTotal(total)
+      },
+      onProblemReward: (rewards) => {
+        console.log('Problem solved! Rewards:', rewards)
+        // Could show notification here
+      },
+      onTaskReward: (rewards) => {
+        console.log('Task completed! Rewards:', rewards)
+        // Could show notification here
+      },
+      onPassiveRateChange: (rates) => {
+        setPassiveGoldRate(rates.goldPerSecond)
+        setPassiveEnergyRate(rates.energyPerSecond)
+      },
+      initialEnergy: 50,
       onEnemyKilled: (enemyType, goldReward, xpReward) => {
         setKills(prev => prev + 1)
         setScore(prev => prev + xpReward)
@@ -104,16 +137,67 @@ export default function GamePage() {
 
     gameRef.current = game
     
-    // Add keyboard listener for pause and header toggle
+    // Add keyboard listener for hotkeys
     const handleKeyDown = (e) => {
+      // Ignore if typing in console
+      if (showCodingConsole) return
+
+      // Pause (P)
       if (e.key === 'p' || e.key === 'P') {
         setIsPaused(prev => !prev)
         if (gameRef.current) {
           gameRef.current.isPaused = !gameRef.current.isPaused
         }
       }
+
+      // Toggle Header (H)
       if (e.key === 'h' || e.key === 'H') {
         setShowHeader(prev => !prev)
+      }
+
+      // Mute (M)
+      if (e.key === 'm' || e.key === 'M') {
+        SoundManager.toggleMute()
+      }
+
+      // Start Wave (Space or W)
+      if (e.key === ' ' || e.key === 'w' || e.key === 'W') {
+        e.preventDefault()
+        if (gameRef.current && gameRef.current.startNextWave) {
+          gameRef.current.startNextWave()
+        }
+      }
+
+      // Open Coding Console (C)
+      if (e.key === 'c' || e.key === 'C') {
+        setShowCodingConsole(prev => !prev)
+      }
+
+      // Cancel Selection (Escape)
+      if (e.key === 'Escape') {
+        setSelectedStructure(null)
+        if (gameRef.current && gameRef.current.cancelPlacement) {
+          gameRef.current.cancelPlacement()
+        }
+      }
+
+      // Tower Selection Hotkeys (1-7)
+      const towerHotkeys = {
+        '1': 'gattling',
+        '2': 'missile',
+        '3': 'laser',
+        '4': 'sniper',
+        '5': 'frost',
+        '6': 'fire',
+        '7': 'tesla'
+      }
+
+      if (towerHotkeys[e.key]) {
+        const towerType = towerHotkeys[e.key]
+        // Check if tower is available
+        if (availableTowers.includes(towerType) || availableTowers.includes('all')) {
+          handleStructureSelect(towerType)
+        }
       }
     }
     window.addEventListener('keydown', handleKeyDown)
@@ -129,6 +213,19 @@ export default function GamePage() {
         }
       }
     }
+  }, [])
+
+  // Poll vignette intensity from game visual effects
+  useEffect(() => {
+    const updateVignette = () => {
+      if (gameRef.current && gameRef.current.visualEffects) {
+        const intensity = gameRef.current.visualEffects.getDamageVignetteIntensity()
+        setVignetteIntensity(intensity)
+      }
+      requestAnimationFrame(updateVignette)
+    }
+    const animationId = requestAnimationFrame(updateVignette)
+    return () => cancelAnimationFrame(animationId)
   }, [])
 
   const healthPercent = (health / maxHealth) * 100
@@ -189,9 +286,27 @@ export default function GamePage() {
           </button>
           <div className="game-title">TOWER DEFENSE</div>
           <div className="game-stats">
-            <div className="stat-item gold">
+            <div className="stat-item gold" title="Coins only from solving coding problems">
               <span className="stat-icon"><Icon name="gold" size={14} color="#ffd700" /></span>
               <span className="stat-value">{gold}</span>
+            </div>
+            <div className="stat-item energy" title={`Passive: +${passiveEnergyRate.toFixed(2)}/sec`}>
+              <span className="stat-icon"><Icon name="bolt" size={14} color="#00ffff" /></span>
+              <div className="energy-container">
+                <div className="energy-bar">
+                  <div className="energy-fill" style={{ width: `${(energy / maxEnergy) * 100}%` }}></div>
+                  <span className="energy-text">{energy}/{maxEnergy}</span>
+                </div>
+                <span className="passive-rate">+{passiveEnergyRate.toFixed(1)}/s</span>
+              </div>
+            </div>
+            <div className="stat-item wave-countdown">
+              <span className="stat-icon"><Icon name="wave" size={14} color="#ff4444" /></span>
+              <span className="stat-value" style={{ 
+                color: waveCountdown < 10 ? '#ff0000' : waveCountdown < 20 ? '#ffaa00' : '#ffffff' 
+              }}>
+                {Math.ceil(waveCountdown)}s
+              </span>
             </div>
             <div className="stat-item health">
               <span className="stat-icon"><Icon name="heart" size={14} color="#ff0000" /></span>
@@ -215,6 +330,20 @@ export default function GamePage() {
               onClick={() => setShowCodingConsole(true)}
             >
               <Icon name="code" size={12} color="#ffffff" /> Code
+            </button>
+            <button 
+              className="task-btn"
+              onClick={() => setShowTaskPanel(true)}
+              title="Complete tasks for energy and time bonuses"
+            >
+              <Icon name="swords" size={12} color="#ffffff" /> Tasks
+            </button>
+            <button 
+              className="settings-btn"
+              onClick={() => setShowModelScaleSettings(true)}
+              title="Model Scale Settings"
+            >
+              <Icon name="settings" size={12} color="#ffffff" /> Scale
             </button>
           </div>
         </div>
@@ -241,11 +370,14 @@ export default function GamePage() {
       <div className="game-ui-overlay">
         <div className="game-controls">
           <div className="control-section">
-            <h3>Keys</h3>
-            <div className="control-item"><kbd>B</kbd> Build</div>
-            <div className="control-item"><kbd>H</kbd> Header</div>
+            <h3>Hotkeys</h3>
+            <div className="control-item"><kbd>1-7</kbd> Towers</div>
             <div className="control-item"><kbd>Space</kbd> Wave</div>
+            <div className="control-item"><kbd>C</kbd> Code</div>
             <div className="control-item"><kbd>P</kbd> Pause</div>
+            <div className="control-item"><kbd>H</kbd> Header</div>
+            <div className="control-item"><kbd>M</kbd> Mute</div>
+            <div className="control-item"><kbd>Esc</kbd> Cancel</div>
           </div>
         </div>
       </div>
@@ -302,6 +434,29 @@ export default function GamePage() {
         <CodingConsole
           onClose={() => setShowCodingConsole(false)}
           onSubmit={handleProblemSolved}
+        />
+      )}
+      
+      {showTaskPanel && (
+        <TaskPanel
+          onClose={() => setShowTaskPanel(false)}
+          onTaskComplete={handleTaskCompleted}
+        />
+      )}
+      
+      {showModelScaleSettings && (
+        <ModelScaleSettings
+          onClose={() => setShowModelScaleSettings(false)}
+        />
+      )}
+
+      {vignetteIntensity > 0 && (
+        <div
+          className="damage-vignette"
+          style={{
+            opacity: vignetteIntensity,
+            pointerEvents: 'none'
+          }}
         />
       )}
     </div>

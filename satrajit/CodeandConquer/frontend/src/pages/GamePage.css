@@ -99,6 +99,52 @@
   align-items: center;
   gap: 6px;
   padding: 4px 8px;
+  background: rgba(0, 0, 0, 0.3);
+  border-radius: 4px;
+  border: 1px solid rgba(255, 0, 0, 0.2);
+}
+
+.stat-item.energy {
+  min-width: 100px;
+}
+
+.stat-item.wave-countdown {
+  min-width: 50px;
+  font-weight: 700;
+}
+
+.energy-bar {
+  position: relative;
+  width: 80px;
+  height: 18px;
+  background: rgba(0, 0, 0, 0.5);
+  border: 1px solid rgba(0, 255, 255, 0.3);
+  border-radius: 3px;
+  overflow: hidden;
+}
+
+.energy-fill {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  background: linear-gradient(90deg, #00ffff 0%, #0088ff 100%);
+  transition: width 0.3s ease;
+  box-shadow: 0 0 8px rgba(0, 255, 255, 0.5);
+}
+
+.energy-text {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 10px;
+  font-weight: 700;
+  color: #ffffff;
+  text-shadow: 0 0 4px rgba(0, 0, 0, 0.8);
+  z-index: 1;
+}
+  padding: 4px 8px;
   background: rgba(0, 0, 0, 0.6);
   border: 1px solid #440000;
   border-radius: 6px;
@@ -122,6 +168,37 @@
 
 .stat-item.wave {
   border-color: #006688;
+}
+
+.stat-item.wave-countdown {
+  border-color: #ff4444;
+  font-weight: 700;
+  min-width: 50px;
+}
+
+.stat-item.energy {
+  border-color: #0088ff;
+  min-width: 120px;
+}
+
+.stat-with-rate {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.energy-container {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.passive-rate {
+  font-size: 9px;
+  color: #00ff00;
+  font-weight: 600;
+  opacity: 0.8;
+  line-height: 1;
 }
 
 .stat-item.kills {
@@ -823,4 +900,23 @@
     padding: 12px 28px;
     font-size: 14px;
   }
+}
+
+/* Damage Vignette Overlay */
+.damage-vignette {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  pointer-events: none;
+  z-index: 9999;
+  background: radial-gradient(
+    ellipse at center,
+    transparent 0%,
+    transparent 40%,
+    rgba(255, 0, 0, 0.4) 70%,
+    rgba(150, 0, 0, 0.6) 100%
+  );
+  transition: opacity 0.1s ease-out;
 }

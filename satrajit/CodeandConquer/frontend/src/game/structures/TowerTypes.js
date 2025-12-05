@@ -2,7 +2,7 @@ export const TOWER_TYPES = {
   // Basic fast-firing tower
   gattling: {
     name: 'Gatling Tower',
-    modelKey: 'watch_tower',
+    modelKey: 'combat_turret', // Using new combat turret model
     cost: 50,
     damage: 6,
     range: 18,
@@ -21,7 +21,7 @@ export const TOWER_TYPES = {
   // Missile tower with splash damage
   missile: {
     name: 'Missile Tower',
-    modelKey: 'heavy_cannon',
+    modelKey: 'aa_turret', // Using new AA turret model
     cost: 150,
     damage: 70,
     range: 30,
@@ -60,7 +60,7 @@ export const TOWER_TYPES = {
   // Sniper - long range precision
   sniper: {
     name: 'Sniper Tower',
-    modelKey: 'kickelhahn',
+    modelKey: 'gun_tower', // Using new gun tower model
     cost: 120,
     damage: 100,
     range: 50,

@@ -4,10 +4,12 @@ import { AuthProvider, useAuth } from './contexts/AuthContext'
 import { PaymentProvider } from './contexts/PaymentContext'
 import { GameProvider } from './contexts/GameContext'
 import { NotificationProvider } from './contexts/NotificationContext'
+import { AdBreakProvider } from './contexts/AdBreakContext'
 import ErrorBoundary from './components/ErrorBoundary'
 import { PageLoader } from './components/LoadingSpinner'
 import ProtectedRoute from './components/ProtectedRoute'
 import Layout from './components/Layout'
+import AdBreak from './components/AdBreak'
 import { supabase } from './config/supabaseClient'
 import './App.css'
 
@@ -20,6 +22,7 @@ const GamePage = lazy(() => import('./pages/GamePage'))
 const GameModeSelection = lazy(() => import('./pages/GameModeSelection'))
 const MatchPage = lazy(() => import('./pages/MatchPage'))
 const LeaderboardPage = lazy(() => import('./pages/LeaderboardPage'))
+const LearningModulesPage = lazy(() => import('./pages/LearningModulesPage'))
 
 // Component to handle OAuth callback - must be inside AuthProvider
 function OAuthCallbackHandler() {
@@ -234,6 +237,18 @@ function AppRoutes() {
           </ProtectedRoute>
         }
       />
+      <Route
+        path="/learn"
+        element={
+          <ProtectedRoute>
+            <Layout>
+              <SuspenseWrapper>
+                <LearningModulesPage />
+              </SuspenseWrapper>
+            </Layout>
+          </ProtectedRoute>
+        }
+      />
       <Route path="/" element={<RootHandler />} />
       {/* 404 fallback */}
       <Route path="*" element={<Navigate to="/dashboard" replace />} />
@@ -249,7 +264,10 @@ function App() {
           <PaymentProvider>
             <GameProvider>
               <NotificationProvider>
-                <AppRoutes />
+                <AdBreakProvider>
+                  <AppRoutes />
+                  <AdBreak />
+                </AdBreakProvider>
               </NotificationProvider>
             </GameProvider>
           </PaymentProvider>

@@ -33,16 +33,21 @@ import authDatabaseRoutes from './routes/authDatabaseRoutes.js';
 import storageRoutes from './routes/storageRoutes.js';
 import realtimeRoutes from './routes/realtimeRoutes.js';
 import publicDatabaseRoutes from './routes/publicDatabaseRoutes.js';
+import learningModuleRoutes from './routes/learningModuleRoutes.js';
+import adRoutes from './routes/adRoutes.js';
 import progressionRoutes from './routes/progressionRoutes.js';
 import singlePlayerRoutes from './routes/singlePlayerRoutes.js';
 
 // Import services
 import matchmakingService from './services/matchmakingService.js';
 import gameService from './services/gameService.js';
+import multiplayerService from './services/multiplayerService.js';
 import authDatabaseService from './services/authDatabaseService.js';
 import storageService from './services/storageService.js';
 import realtimeService from './services/realtimeService.js';
 import publicDatabaseService from './services/publicDatabaseService.js';
+import learningModuleService from './services/learningModuleService.js';
+import adService from './services/adService.js';
 
 // Validate environment
 validateEnvironment();
@@ -138,6 +143,8 @@ app.use('/api/realtime', realtimeRoutes);
 app.use('/api/public-db', publicDatabaseRoutes);
 app.use('/api/progression', progressionRoutes);
 app.use('/api/singleplayer', singlePlayerRoutes);
+app.use('/api/learning-modules', learningModuleRoutes);
+app.use('/api/ads', adRoutes);
 
 // Enhanced health check endpoint
 app.get('/api/health', (req, res) => {
@@ -152,6 +159,8 @@ app.get('/api/health', (req, res) => {
       storage: storageService.isAvailable(),
       realtime: realtimeService.isAvailable(),
       publicDatabase: publicDatabaseService.isAvailable(),
+      learningModules: learningModuleService.isAvailable(),
+      ads: adService.isAvailable(),
       matchmaking: true,
       game: true
     },
@@ -225,10 +234,24 @@ io.on('connection', (socket) => {
     matchmakingService.leaveQueue(playerId);
   });
 
-  socket.on('join_match', (matchId) => {
+  socket.on('join_match', async (matchId) => {
     socket.join(`match_${matchId}`);
     const match = matchmakingService.getMatch(matchId);
     if (match) {
+      const playerId = socket.handshake.auth?.userId || socket.id;
+      
+      // Initialize match in multiplayer service if not already done
+      if (match.state === 'waiting' && match.player1_id && match.player2_id) {
+        try {
+          await multiplayerService.initializeMatch(matchId, match.player1_id, match.player2_id);
+        } catch (error) {
+          logger.error(`Error initializing match in multiplayer service:`, error);
+        }
+      }
+      
+      // Handle player connection
+      multiplayerService.handlePlayerConnect(playerId, socket.id);
+      
       socket.emit('match_state', match);
     }
   });
@@ -249,6 +272,49 @@ io.on('connection', (socket) => {
         });
         io.to(`match_${matchId}`).emit('match_started', match);
       }, 30000);
+    }
+  });
+
+  socket.on('task_completed', async (data) => {
+    const { matchId, playerId, taskType } = data
+    
+    try {
+      // If in match, process task completion
+      if (matchId) {
+        const match = matchmakingService.getMatch(matchId)
+        if (match && match.gameState) {
+          const playerIndex = match.players.findIndex(p => p.id === playerId)
+          const playerState = match.gameState[`player${playerIndex + 1}`]
+          
+          if (playerState) {
+            // Add energy reward
+            const energyReward = taskType === 'weekly' ? 22 : 15
+            playerState.energy = Math.min(playerState.maxEnergy, playerState.energy + energyReward)
+            
+            // Increase passive energy generation (NO gold - coins only from coding problems)
+            playerState.tasksCompletedThisGame++
+            const energyIncrease = taskType === 'weekly' ? 0.12 : 0.08
+            
+            playerState.energyPerSecond += energyIncrease
+            
+            // Add time bonus to next wave
+            const timeBonus = 10
+            if (match.gameState.nextWaveTime) {
+              match.gameState.nextWaveTime += timeBonus * 1000
+            }
+            
+            // Broadcast update
+            io.to(`match_${matchId}`).emit('game_state_update', match.gameState)
+            socket.emit('task_reward', {
+              energyReward,
+              timeBonus
+            })
+          }
+        }
+      }
+    } catch (error) {
+      logger.error(`Error processing task completion:`, error)
+      socket.emit('task_error', { error: error.message })
     }
   });
 
@@ -308,17 +374,80 @@ io.on('connection', (socket) => {
     }
   });
 
-  socket.on('place_tower', (data) => {
+  socket.on('place_tower', async (data) => {
     const { matchId, playerId, position, towerType } = data;
-    const result = gameService.placeTower(matchId, playerId, position, towerType);
     
-    if (result) {
-      socket.emit('tower_placed', result);
-      const match = matchmakingService.getMatch(matchId);
-      if (match) {
-        io.to(`match_${matchId}`).emit('game_state_update', match.gameState);
+    try {
+      // Use multiplayer service for action validation and processing
+      const result = multiplayerService.processPlayerAction(matchId, playerId, {
+        type: 'place_tower',
+        data: { position, towerType }
+      });
+      
+      if (result.success) {
+        // Also update game service for compatibility
+        const gameResult = gameService.placeTower(matchId, playerId, position, towerType);
+        
+        socket.emit('tower_placed', { ...gameResult, sequence: result.sequence });
+        
+        // Broadcast state update
+        const matchState = multiplayerService.getMatchState(matchId, playerId);
+        if (matchState) {
+          io.to(`match_${matchId}`).emit('game_state_update', matchState);
+        }
+      } else {
+        socket.emit('action_error', { error: 'Invalid action' });
       }
+    } catch (error) {
+      logger.error(`Error placing tower:`, error);
+      socket.emit('action_error', { error: error.message });
     }
+  });
+  
+  // Player action handler (unified)
+  socket.on('player_action', async (data) => {
+    const { matchId, playerId, action } = data;
+    
+    try {
+      const result = multiplayerService.processPlayerAction(matchId, playerId, action);
+      
+      if (result.success) {
+        socket.emit('action_confirmed', { sequence: result.sequence });
+        
+        // Broadcast state update to all players in match
+        const matchState = multiplayerService.getMatchState(matchId, playerId);
+        if (matchState) {
+          io.to(`match_${matchId}`).emit('game_state_update', matchState);
+        }
+      }
+    } catch (error) {
+      logger.error(`Error processing player action:`, error);
+      socket.emit('action_error', { error: error.message });
+    }
+  });
+  
+  // State synchronization request
+  socket.on('sync_state', (data) => {
+    const { matchId, playerId, lastSequence } = data;
+    
+    try {
+      const matchState = multiplayerService.getMatchState(matchId, playerId, lastSequence);
+      if (matchState) {
+        socket.emit('state_sync', matchState);
+      }
+    } catch (error) {
+      logger.error(`Error syncing state:`, error);
+      socket.emit('sync_error', { error: error.message });
+    }
+  });
+  
+  // Ping handler for connection monitoring
+  socket.on('ping', (data) => {
+    const { matchId, playerId } = data;
+    if (playerId) {
+      multiplayerService.handlePlayerConnect(playerId, socket.id);
+    }
+    socket.emit('pong', { timestamp: Date.now() });
   });
 
   socket.on('spawn_wave', (data) => {
@@ -332,7 +461,13 @@ io.on('connection', (socket) => {
 
   socket.on('disconnect', () => {
     logger.info(`Client disconnected: ${socket.id}`);
-    matchmakingService.leaveQueue(socket.id);
+    const playerId = socket.handshake.auth?.userId || socket.id;
+    
+    // Handle disconnection in multiplayer service
+    multiplayerService.handlePlayerDisconnect(playerId);
+    
+    // Remove from queue
+    matchmakingService.leaveQueue(playerId);
   });
 });
 

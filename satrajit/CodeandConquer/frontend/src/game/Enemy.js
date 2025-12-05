@@ -3,12 +3,13 @@
 
 import * as THREE from 'three'
 import { ENEMY_TYPES } from './EnemyTypes.js'
+import { SoundManager } from './SoundManager.js'
 
 export class Enemy {
   constructor(type, args = {}) {
     // Get default values from enemy type
     const defaults = ENEMY_TYPES[type] || ENEMY_TYPES.spider
-    
+
     this.type = type
     this.name = defaults.name
     this.model = defaults.model
@@ -23,22 +24,30 @@ export class Enemy {
     this.scale = defaults.scale || 1.0
     this.description = defaults.description
     this.isBoss = defaults.isBoss || false
-    
+
     // Special abilities
     this.healRadius = defaults.healRadius
     this.healAmount = defaults.healAmount
     this.splitCount = defaults.splitCount
     this.splitType = defaults.splitType
-    
+
+    // Visual effects reference (for damage numbers, blood splatter, etc.)
+    this.visualEffects = args.visualEffects || null
+
     // Apply wave modifiers
     if (args.healthMultiplier) {
       this.health *= args.healthMultiplier
       this.maxHealth = this.health
     }
     
+    // Apply speed multiplier for progressive difficulty
+    if (args.speedMultiplier) {
+      this.speed *= args.speedMultiplier
+    }
+
     // Override with custom args
     Object.assign(this, args)
-    
+
     // State
     this.path = []
     this.next = null
@@ -46,11 +55,11 @@ export class Enemy {
     this.finished = false
     this.isDead = false
     this.id = `enemy_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`
-    
+
     // 3D representation
     this.mesh = null
     this.healthBar = null
-    
+
     // Animation
     this.animationTime = 0
   }
@@ -184,23 +193,64 @@ export class Enemy {
   kill() {
     this.health = 0
     this.isDead = true
+
+    // Play death sound with spatial audio
+    if (this.mesh && this.mesh.position) {
+      SoundManager.play3D('enemy_death.ogg', this.mesh.position)
+    }
   }
   
   // Deal damage to this enemy
   damage(amount) {
     // Apply armor reduction
     const effectiveDamage = amount * (1 - this.armor)
-    
+
+    // Show floating damage number
+    if (this.visualEffects && this.mesh && this.mesh.position) {
+      // Critical hit if damage is > 30% of max health
+      const isCritical = effectiveDamage > this.maxHealth * 0.3
+
+      const damageNumberPos = this.mesh.position.clone()
+      damageNumberPos.y += 1.5 * this.scale // Above enemy
+
+      this.visualEffects.createDamageNumber(damageNumberPos, Math.round(effectiveDamage), {
+        color: isCritical ? 0xffff00 : 0xff4444,
+        size: isCritical ? 1.5 : 1.0,
+        duration: isCritical ? 1200 : 1000,
+        isCritical
+      })
+    }
+
     if (this.health > effectiveDamage) {
       this.health -= effectiveDamage
+
+      // Play hit sound with spatial audio (only if still alive)
+      if (this.mesh && this.mesh.position) {
+        SoundManager.play3D('enemy_hit.ogg', this.mesh.position, { volume: 0.6 })
+      }
     } else {
       this.health = 0
       this.isDead = true
+
+      // Play death sound with spatial audio
+      if (this.mesh && this.mesh.position) {
+        SoundManager.play3D('enemy_death.ogg', this.mesh.position)
+      }
+
+      // Create blood splatter on death
+      if (this.visualEffects && this.mesh && this.mesh.position) {
+        this.visualEffects.createBloodSplatter(this.mesh.position, {
+          count: this.isBoss ? 50 : 30,
+          color: 0x8b0000,
+          size: this.isBoss ? 0.4 : 0.3,
+          duration: this.isBoss ? 800 : 600
+        })
+      }
     }
-    
+
     this.updateHealthBar()
-    
-    // Visual damage feedback
+
+    // Visual damage feedback (flash white)
     if (this.mesh) {
       const body = this.mesh.children[0]
       if (body && body.material) {
@@ -213,7 +263,7 @@ export class Enemy {
         }, 100)
       }
     }
-    
+
     return this.isDead
   }
   

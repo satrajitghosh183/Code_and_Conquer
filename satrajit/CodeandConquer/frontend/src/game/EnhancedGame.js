@@ -22,6 +22,7 @@ import { generateWave, ENEMY_TYPES } from './EnemyTypes.js'
 import { VisualEffects } from './VisualEffects.js'
 import { Arena } from './Arena.js'
 import { AIPlayer } from './AIPlayer.js'
+import { WaveTimer } from './WaveTimer.js'
 
 export class EnhancedGame {
   constructor(container, callbacks = {}, userProfile = {}, gameMode = 'single') {
@@ -32,6 +33,8 @@ export class EnhancedGame {
     
     // Game state
     this.gold = callbacks.initialGold || 500
+    this.energy = callbacks.initialEnergy || 50
+    this.maxEnergy = 100
     this.health = 1000
     this.maxHealth = 1000
     this.wave = 0
@@ -60,9 +63,7 @@ export class EnhancedGame {
     this.lodManager = new LODManager(null) // Will set camera later
     this.arena = new Arena() // Grid-based pathfinding
     
-    // Sound system
-    SoundManager.preloadSounds()
-    
+    // Sound system - will initialize after user interaction
     // Visual effects (will be initialized after scene)
     
     // Object pools
@@ -85,6 +86,59 @@ export class EnhancedGame {
     
     // Initialize coding rewards
     this.codingRewards.initialize(userProfile.totalProblemsSolved || 0)
+    
+    // Track problems solved and tasks completed during this game
+    this.problemsSolvedThisGame = 0
+    this.tasksCompletedThisGame = 0
+    
+    // Calculate passive energy generation rates based on lifetime progress
+    // Gold is ONLY awarded when solving coding problems (no passive gold)
+    // Each problem solved = +0.05 energy/sec
+    // Each task completed = +0.08 energy/sec
+    const lifetimeProblems = userProfile.totalProblemsSolved || 0
+    const lifetimeTasks = (userProfile.tasks?.allTimeCompleted || 0) + 
+                          (userProfile.tasks?.dailyCompleted || 0) * 0.1 + 
+                          (userProfile.tasks?.weeklyCompleted || 0) * 0.2
+    
+    const baseEnergyPerSecond = 0.2 // Base passive energy
+    
+    const passiveEnergyPerSecond = baseEnergyPerSecond + 
+                                   (lifetimeProblems * 0.05) + 
+                                   (lifetimeTasks * 0.08)
+    
+    this.passiveGoldPerSecond = 0 // NO passive gold - only from coding problems
+    this.passiveEnergyPerSecond = passiveEnergyPerSecond
+    this.lastPassiveTick = Date.now()
+    
+    // Initialize wave timer for automatic attacks
+    this.waveTimer = new WaveTimer(this, {
+      waveInterval: 30000, // 30 seconds between waves
+      problemSolvedBonus: 5, // +5 seconds per problem solved
+      taskCompletedBonus: 10, // +10 seconds per task completed
+      energyPerProblem: 10,
+      energyPerTask: 15,
+      energyPerSecond: passiveEnergyPerSecond, // Dynamic passive energy generation
+      onWaveStart: (waveNum) => {
+        if (this.callbacks.onWaveChange) {
+          this.callbacks.onWaveChange(waveNum)
+        }
+      },
+      onCountdownUpdate: (countdown, total) => {
+        if (this.callbacks.onWaveCountdown) {
+          this.callbacks.onWaveCountdown(countdown, total)
+        }
+      },
+      onProblemSolved: (rewards) => {
+        if (this.callbacks.onProblemReward) {
+          this.callbacks.onProblemReward(rewards)
+        }
+      },
+      onTaskCompleted: (rewards) => {
+        if (this.callbacks.onTaskReward) {
+          this.callbacks.onTaskReward(rewards)
+        }
+      }
+    })
 
     this.initScene()
     this.initCamera()
@@ -98,18 +152,21 @@ export class EnhancedGame {
     this.initPostProcessing()
     
     // Initialize visual effects (after scene is created)
-    this.visualEffects = new VisualEffects(this.scene)
-    
+    this.visualEffects = new VisualEffects(this.scene, this.camera)
+
     // Set LOD manager camera
     this.lodManager.camera = this.camera
-    
+
+    // Initialize sound system with camera for spatial audio
+    this.initializeSoundSystem()
+
     this.raycaster = new THREE.Raycaster()
     this.mouse = new THREE.Vector2()
     this.groundPlane = new THREE.Plane(new THREE.Vector3(0, 1, 0), 0)
 
     // Start performance monitoring
     this.performanceManager.startMonitoring()
-    
+
     // Preload essential models
     modelLoader.preloadEssentialModels().then(() => {
       this.modelsReady = true
@@ -120,6 +177,12 @@ export class EnhancedGame {
 
     this.setupEventListeners()
     this.clock = new THREE.Clock()
+    
+    // Start wave timer after a short delay (give player time to prepare)
+    setTimeout(() => {
+      this.waveTimer.start()
+    }, 5000) // 5 second grace period
+    
     this.animate()
   }
   
@@ -572,6 +635,21 @@ export class EnhancedGame {
     this.scene.add(this.particles)
   }
 
+  // Initialize sound system with Web Audio API
+  async initializeSoundSystem() {
+    try {
+      await SoundManager.initialize(this.camera)
+      await SoundManager.preloadSounds()
+
+      // Start menu/theme music
+      if (!this.gameStarted) {
+        SoundManager.playMusic('theme.ogg')
+      }
+    } catch (error) {
+      console.warn('Sound initialization failed:', error)
+    }
+  }
+
   initPostProcessing() {
     this.composer = new EffectComposer(this.renderer)
     
@@ -713,21 +791,37 @@ export class EnhancedGame {
 
   spawnEnemy() {
     // Legacy method - spawn basic spider
-    this.spawnEnemyOfType('spider', 1 + this.wave * 0.1)
+    this.spawnEnemyOfType('spider', 1 + this.wave * 0.1, null, 1)
   }
   
-  spawnEnemyOfType(type = 'spider', healthMultiplier = 1.0) {
-    // Create enemy using the Enemy class
-    const enemy = new Enemy(type, { healthMultiplier })
+  spawnEnemyOfType(type = 'spider', healthMultiplier = 1.0, spawnPoint = null, speedMultiplier = 1) {
+    // Create enemy using the Enemy class with visual effects reference
+    const enemy = new Enemy(type, {
+      healthMultiplier,
+      speedMultiplier,
+      visualEffects: this.visualEffects
+    })
     const mesh = enemy.createMesh()
+    if (!mesh) return
     
-    // Get spawn position from arena
-    const spawnWorld = this.arena.gridToWorld(this.arena.start)
-    mesh.position.set(spawnWorld.x, spawnWorld.y, spawnWorld.z)
-    enemy.position = mesh.position.clone()
+    // Set spawn position - use provided spawn point or default
+    let startPos
+    if (spawnPoint) {
+      startPos = new THREE.Vector3(spawnPoint.x, 0.5, spawnPoint.z)
+    } else {
+      // Get spawn position from arena
+      const spawnWorld = this.arena.gridToWorld(this.arena.start)
+      startPos = new THREE.Vector3(spawnWorld.x, spawnWorld.y, spawnWorld.z)
+    }
     
-    // Get path using A* pathfinding (respects walls)
-    const gridPath = this.arena.findPath()
+    mesh.position.copy(startPos)
+    enemy.position = startPos.clone()
+    
+    // Use A* pathfinding to find path to base from spawn point
+    const gridPath = this.arena.findPath(
+      this.arena.worldToGrid(startPos),
+      this.arena.worldToGrid(this.base.position)
+    )
     if (gridPath && gridPath.length > 0) {
       // Convert grid path to world path
       const worldPath = this.arena.getWorldPath(gridPath)
@@ -754,8 +848,8 @@ export class EnhancedGame {
     // Generate wave configuration with enemy variety
     const waveConfig = generateWave(this.wave)
     
-    // Play wave start sound
-    SoundManager.play('missile.ogg')
+    // Play wave start sound (UI sound, non-spatial)
+    SoundManager.play('wave_start.ogg')
     
     // Flatten enemy list for spawning
     const enemiesToSpawn = []
@@ -763,7 +857,8 @@ export class EnhancedGame {
       for (let i = 0; i < config.count; i++) {
         enemiesToSpawn.push({
           type: config.type,
-          healthMultiplier: waveConfig.healthMultiplier
+          healthMultiplier: waveConfig.healthMultiplier,
+          speedMultiplier: waveConfig.speedMultiplier || 1
         })
       }
     })
@@ -805,6 +900,18 @@ export class EnhancedGame {
     // Apply passive buffs
     if (this.passiveBuffs) {
       // Gold rate multiplier applied when enemies die
+    }
+    
+    // Update passive energy generation only (NO passive gold - coins only from coding problems)
+    const now = Date.now()
+    if (now - this.lastPassiveTick >= 1000) {
+      this.lastPassiveTick = now
+      // Energy generation is handled by WaveTimer
+    }
+    
+    // Update wave timer (handles passive energy generation)
+    if (this.waveTimer) {
+      this.waveTimer.update(deltaTime)
     }
     
     // Update AI player for single player mode
@@ -917,7 +1024,7 @@ export class EnhancedGame {
             const spawns = enemy.getSpawnOnDeath()
             spawns.forEach(spawnConfig => {
               setTimeout(() => {
-                this.spawnEnemyOfType(spawnConfig.type, 1.0)
+                this.spawnEnemyOfType(spawnConfig.type, 1.0, null, 1)
               }, 100)
             })
           }
@@ -1153,11 +1260,21 @@ export class EnhancedGame {
   }
 
   fireProjectile(from, target, damage, attackType = 'gattling', splashRadius = 0) {
-    // Play appropriate sound based on attack type
+    // Play appropriate sound based on attack type with 3D spatial audio
     if (attackType === 'missile') {
-      SoundManager.play('missile.ogg')
+      SoundManager.play3D('missile.ogg', from)
+    } else if (attackType === 'laser') {
+      SoundManager.play3D('laser.ogg', from)
+    } else if (attackType === 'sniper') {
+      SoundManager.play3D('sniper.ogg', from)
+    } else if (attackType === 'frost') {
+      SoundManager.play3D('frost.ogg', from)
+    } else if (attackType === 'fire') {
+      SoundManager.play3D('fire.ogg', from)
+    } else if (attackType === 'tesla') {
+      SoundManager.play3D('tesla.ogg', from)
     } else {
-      SoundManager.play('gattling.ogg')
+      SoundManager.play3D('gattling.ogg', from)
     }
     
     // Larger projectile for missiles
@@ -1223,15 +1340,40 @@ export class EnhancedGame {
   createHitEffect(position, isSplash = false) {
     // Use visual effects system for explosion (reduced particles for performance)
     if (this.visualEffects) {
+      // Main explosion
       this.visualEffects.createExplosion(position, {
-        numParticles: isSplash ? 20 : 10, // Reduced from 50
+        numParticles: isSplash ? 40 : 15, // More particles for splash
         color: isSplash ? 0xff4400 : 0xff6600,
         maxDist: isSplash ? 12 : 6,
-        duration: 300 // Reduced from 500
+        duration: 300
       })
-      
-      // Play explosion sound (rate limited)
-      SoundManager.play('explosion.ogg')
+
+      // Add shockwave for splash damage
+      if (isSplash) {
+        this.visualEffects.createShockwave(position, {
+          maxRadius: 15,
+          color: 0xff6600,
+          duration: 600
+        })
+
+        // Screen shake for big explosions
+        const distanceToCamera = position.distanceTo(this.camera.position)
+        if (distanceToCamera < 50) {
+          const intensity = Math.max(0.5, 2.0 - distanceToCamera / 25)
+          this.visualEffects.triggerScreenShake(intensity, 200)
+        }
+      }
+
+      // Impact sparks
+      const impactDirection = new THREE.Vector3(0, -1, 0)
+      this.visualEffects.createImpactSparks(position, impactDirection, {
+        count: isSplash ? 30 : 15,
+        color: 0xffaa00,
+        speed: isSplash ? 20 : 15
+      })
+
+      // Play explosion sound with 3D spatial audio (rate limited)
+      SoundManager.play3D('explosion.ogg', position)
     } else {
       // Fallback: simple explosion effect
       const explosionGeometry = new THREE.SphereGeometry(1, 8, 8)
@@ -1272,7 +1414,7 @@ export class EnhancedGame {
         segments: 15,
         displacement: 2
       })
-      SoundManager.play('laser.ogg')
+      // Laser sound already played in fireProjectile
     }
   }
   
@@ -1509,7 +1651,16 @@ export class EnhancedGame {
       await structure.load()
       this.scene.add(structure.mesh)
       this.structures.push(structure)
-      
+
+      // Create build effect
+      if (this.visualEffects && structure.mesh && structure.mesh.position) {
+        this.visualEffects.createBuildEffect(structure.mesh.position, {
+          particleCount: structureConfig.type === 'tower' ? 30 : 20,
+          glowColor: structureConfig.type === 'tower' ? 0x44ff44 : 0x4444ff
+        })
+        SoundManager.play3D('build.ogg', structure.mesh.position, { volume: 0.5 })
+      }
+
       if (structureConfig.type === 'tower') {
         this.towers.push(structure)
       } else if (structureConfig.type === 'wall') {
@@ -1578,11 +1729,23 @@ export class EnhancedGame {
     // Update towers
     this.towers.forEach(tower => {
       if (tower instanceof Tower) {
+        // Find target and aim
         const target = tower.findTarget(this.enemies)
-        if (target && tower.canFire(currentTime)) {
-          const projectile = tower.fire(currentTime, this.projectilePool)
-          if (projectile) {
-            this.fireProjectile(tower.position.clone(), target, tower.damage)
+        if (target) {
+          tower.aimAtTarget()
+          
+          // Fire if ready
+          if (tower.canFire(currentTime)) {
+            const attackType = tower.attackType || 'gattling'
+            const splashRadius = tower.splashRadius || 0
+            this.fireProjectile(
+              tower.position.clone(),
+              target,
+              tower.damage,
+              attackType,
+              splashRadius
+            )
+            tower.lastShot = currentTime
           }
         }
       } else {
@@ -1638,6 +1801,14 @@ export class EnhancedGame {
     }
   }
   
+  // Expose addEnergy for WaveTimer (arrow function to preserve 'this')
+  addEnergy(amount) {
+    this.energy = Math.min(this.maxEnergy, this.energy + amount)
+    if (this.callbacks.onEnergyChange) {
+      this.callbacks.onEnergyChange(this.energy, this.maxEnergy)
+    }
+  }
+  
   addAbilityCharge(amount) {
     // Store ability charge for hero abilities
     if (this.callbacks.onAbilityCharge) {
@@ -1652,7 +1823,91 @@ export class EnhancedGame {
       problemData.testsPassedRatio || 1.0
     )
     
-    return rewards
+    // Increment problems solved counter
+    this.problemsSolvedThisGame++
+    
+    // Increase passive energy generation (NO gold - coins only from problem rewards)
+    // Each problem solved increases passive energy income
+    this.passiveEnergyPerSecond += 0.05 // +0.05 energy/sec per problem
+    
+    // Update wave timer's passive generation
+    if (this.waveTimer) {
+      this.waveTimer.energyPerSecond = this.passiveEnergyPerSecond
+      this.waveTimer.onProblemSolved(problemData.difficulty || 'medium')
+    }
+    
+    // Add immediate energy reward from problem solving
+    const energyReward = this.waveTimer?.energyPerProblem || 10
+    const difficultyMultiplier = problemData.difficulty === 'hard' ? 2 : 
+                                 problemData.difficulty === 'medium' ? 1.5 : 1
+    this.addEnergy(Math.floor(energyReward * difficultyMultiplier))
+    
+    // Notify UI of passive rate change
+    if (this.callbacks.onPassiveRateChange) {
+      this.callbacks.onPassiveRateChange({
+        goldPerSecond: 0, // No passive gold
+        energyPerSecond: this.passiveEnergyPerSecond
+      })
+    }
+    
+    return {
+      ...rewards,
+      energy: Math.floor(energyReward * difficultyMultiplier),
+      passiveEnergyIncrease: 0.05
+    }
+  }
+  
+  // Handle task completion
+  onTaskCompleted(taskType = 'daily') {
+    // Increment tasks completed counter
+    this.tasksCompletedThisGame++
+    
+    // Increase passive energy generation (NO gold - coins only from coding problems)
+    // Each task completed increases passive energy income
+    const energyIncrease = taskType === 'weekly' ? 0.12 : 0.08
+    
+    this.passiveEnergyPerSecond += energyIncrease
+    
+    // Update wave timer's passive generation
+    if (this.waveTimer) {
+      this.waveTimer.energyPerSecond = this.passiveEnergyPerSecond
+      this.waveTimer.onTaskCompleted(taskType)
+    }
+    
+    // Add immediate energy reward
+    const energyReward = this.waveTimer?.energyPerTask || 15
+    const multiplier = taskType === 'weekly' ? 1.5 : 1
+    this.addEnergy(Math.floor(energyReward * multiplier))
+    
+    // Notify UI of passive rate change
+    if (this.callbacks.onPassiveRateChange) {
+      this.callbacks.onPassiveRateChange({
+        goldPerSecond: 0, // No passive gold
+        energyPerSecond: this.passiveEnergyPerSecond
+      })
+    }
+    
+    return {
+      timeBonus: this.waveTimer?.taskCompletedBonus || 10,
+      energy: Math.floor(energyReward * multiplier),
+      passiveEnergyIncrease: energyIncrease
+    }
+  }
+  
+  addEnergy(amount) {
+    this.energy = Math.min(this.maxEnergy, this.energy + amount)
+    if (this.callbacks.onEnergyChange) {
+      this.callbacks.onEnergyChange(this.energy, this.maxEnergy)
+    }
+  }
+  
+  spendEnergy(amount) {
+    if (this.energy < amount) return false
+    this.energy -= amount
+    if (this.callbacks.onEnergyChange) {
+      this.callbacks.onEnergyChange(this.energy, this.maxEnergy)
+    }
+    return true
   }
   
   showLearningModule(problemCount) {

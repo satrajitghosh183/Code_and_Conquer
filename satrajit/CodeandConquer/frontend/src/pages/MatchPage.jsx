@@ -257,9 +257,29 @@ export default function MatchPage() {
       {showTaskPanel && (
         <TaskPanel
           onClose={() => setShowTaskPanel(false)}
-          onTaskComplete={(taskId) => {
+          onTaskComplete={async (taskId) => {
             // Handle task completion during match
-            console.log('Task completed:', taskId)
+            try {
+              const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000/api'
+              const response = await fetch(`${API_URL}/tasks/${taskId}`)
+              if (response.ok) {
+                const task = await response.json()
+                const taskType = task.dueDate ? 'weekly' : 'daily'
+                
+                // Send to backend via socket if in multiplayer
+                if (socket && connected && matchState?.matchId) {
+                  socket.emit('task_completed', {
+                    matchId: matchState.matchId,
+                    playerId: playerId,
+                    taskType
+                  })
+                }
+                
+                console.log('Task completed:', taskId, 'Type:', taskType)
+              }
+            } catch (error) {
+              console.error('Error handling task completion:', error)
+            }
           }}
         />
       )}

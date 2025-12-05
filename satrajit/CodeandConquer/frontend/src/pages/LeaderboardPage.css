@@ -91,6 +91,18 @@
   color: #8e8e93;
   text-transform: uppercase;
   letter-spacing: 0.5px;
+  align-items: center;
+}
+
+.header-rank {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.header-player {
+  display: flex;
+  align-items: center;
 }
 
 .header-stats {
@@ -98,6 +110,13 @@
   grid-template-columns: repeat(4, 1fr);
   gap: 12px;
   text-align: center;
+  align-items: center;
+  justify-items: center;
+}
+
+.header-stats span {
+  display: block;
+  width: 100%;
 }
 
 .leaderboard-list {
@@ -113,6 +132,7 @@
   border-bottom: 1px solid #1a1a24;
   transition: all 0.2s;
   align-items: center;
+  min-height: 80px;
 }
 
 .leaderboard-item:hover {
@@ -134,6 +154,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  min-width: 80px;
 }
 
 .rank-icon {
@@ -163,6 +184,8 @@
   display: flex;
   align-items: center;
   gap: 16px;
+  min-width: 0;
+  overflow: hidden;
 }
 
 .player-avatar {
@@ -190,6 +213,8 @@
   display: flex;
   flex-direction: column;
   gap: 4px;
+  min-width: 0;
+  flex: 1;
 }
 
 .player-name {
@@ -200,6 +225,9 @@
   align-items: center;
   gap: 8px;
   font-family: -apple-system, BlinkMacSystemFont, 'Inter', 'SF Pro Display', sans-serif;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .you-badge {
@@ -222,6 +250,8 @@
   grid-template-columns: repeat(4, 1fr);
   gap: 12px;
   text-align: center;
+  align-items: center;
+  justify-items: center;
 }
 
 .stat {
@@ -232,10 +262,16 @@
   font-size: 14px;
   font-weight: 500;
   color: #ffffff;
+  width: 100%;
 }
 
 .stat svg {
   color: #ff0000;
+  flex-shrink: 0;
+}
+
+.stat span {
+  white-space: nowrap;
 }
 
 .loading-container {

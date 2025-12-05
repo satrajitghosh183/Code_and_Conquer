@@ -156,42 +156,57 @@ export const WAVE_TEMPLATES = {
 export function generateWave(waveNumber) {
   const enemies = []
   
-  // Base enemy count scales with wave
-  const baseCount = Math.floor(3 + waveNumber * 1.5)
+  // Base enemy count scales more aggressively with wave
+  const baseCount = Math.floor(4 + waveNumber * 2)
   
   // Every 5 waves is a boss wave
   if (waveNumber % 5 === 0 && waveNumber > 0) {
-    // Boss wave
-    enemies.push({ type: 'boss', count: 1 })
-    enemies.push({ type: 'armored', count: Math.floor(waveNumber / 5) })
+    // Boss wave - stronger and more varied
+    enemies.push({ type: 'boss', count: 1 + Math.floor(waveNumber / 10) })
+    enemies.push({ type: 'armored', count: Math.floor(waveNumber / 3) })
+    enemies.push({ type: 'brute', count: Math.floor(waveNumber / 4) })
+    enemies.push({ type: 'healer', count: Math.floor(waveNumber / 8) })
   } else if (waveNumber % 3 === 0) {
-    // Swarm wave
-    enemies.push({ type: 'swarm', count: baseCount * 3 })
-    enemies.push({ type: 'scout', count: Math.floor(baseCount / 2) })
+    // Swarm wave - lots of fast enemies
+    enemies.push({ type: 'swarm', count: baseCount * 4 })
+    enemies.push({ type: 'scout', count: baseCount })
+    enemies.push({ type: 'spider', count: Math.floor(baseCount / 2) })
+  } else if (waveNumber % 7 === 0) {
+    // Elite wave - strong enemies
+    enemies.push({ type: 'armored', count: baseCount })
+    enemies.push({ type: 'brute', count: Math.floor(baseCount / 2) })
+    enemies.push({ type: 'healer', count: Math.floor(baseCount / 3) })
   } else {
-    // Normal wave with variety
+    // Normal wave with progressive variety
     enemies.push({ type: 'spider', count: baseCount })
     
-    if (waveNumber >= 3) {
-      enemies.push({ type: 'scout', count: Math.floor(baseCount / 2) })
+    if (waveNumber >= 2) {
+      enemies.push({ type: 'scout', count: Math.floor(baseCount * 0.6) })
     }
-    if (waveNumber >= 5) {
-      enemies.push({ type: 'brute', count: Math.floor(waveNumber / 5) })
+    if (waveNumber >= 4) {
+      enemies.push({ type: 'brute', count: Math.floor(waveNumber / 3) })
     }
-    if (waveNumber >= 7) {
-      enemies.push({ type: 'armored', count: Math.floor(waveNumber / 7) })
+    if (waveNumber >= 6) {
+      enemies.push({ type: 'armored', count: Math.floor(waveNumber / 4) })
     }
-    if (waveNumber >= 10) {
-      enemies.push({ type: 'healer', count: Math.floor(waveNumber / 10) })
+    if (waveNumber >= 8) {
+      enemies.push({ type: 'healer', count: Math.floor(waveNumber / 6) })
+    }
+    if (waveNumber >= 12) {
+      enemies.push({ type: 'swarm', count: Math.floor(baseCount * 0.5) })
     }
   }
   
-  // Scale health with wave number
-  const healthMultiplier = 1 + (waveNumber - 1) * 0.15
+  // Scale health more aggressively with wave number
+  const healthMultiplier = 1 + (waveNumber - 1) * 0.2
+  
+  // Scale speed slightly for later waves
+  const speedMultiplier = 1 + (waveNumber - 1) * 0.05
   
   return {
     enemies,
     healthMultiplier,
+    speedMultiplier,
     waveNumber
   }
 }
