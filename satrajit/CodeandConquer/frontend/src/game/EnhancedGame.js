@@ -132,39 +132,7 @@ export class EnhancedGame {
     this.enemyPath = this.createEnemyPath()
     
     // ==========================================================================
-    // MAIN BOSS SHIP - Enemy mothership in camera view
-    // ==========================================================================
-    
-    this.bossShipPosition = new THREE.Vector3(0, 15, 55) // In view behind spawn area
-    this.mainBossShip = new MainBossShip(this.bossShipPosition, {
-      health: 50000,
-      onSpawnEnemy: (type, position) => {
-        // Boss ship spawns additional enemies
-        this.enemyManager.spawnEnemy(type, position)
-      },
-      onDamage: (health, maxHealth) => {
-        if (this.callbacks.onBossDamage) {
-          this.callbacks.onBossDamage(health, maxHealth)
-        }
-      },
-      onDestroyed: () => {
-        console.log('🏆 Boss ship destroyed!')
-        if (this.callbacks.onBossDestroyed) {
-          this.callbacks.onBossDestroyed()
-        }
-        // Major reward
-        this.addGold(5000)
-        this.score += 10000
-      }
-    })
-    
-    // Create boss ship (async)
-    this.mainBossShip.create(this.scene).then(() => {
-      console.log('👾 Main Boss Ship spawned!')
-    })
-    
-    // ==========================================================================
-    // INITIALIZE ENEMY MANAGER
+    // INITIALIZE ENEMY MANAGER (must be before boss ship)
     // ==========================================================================
     
     this.enemyManager = new EnemyManager(this, {
@@ -305,6 +273,9 @@ export class EnhancedGame {
       this.modelsReady = true
       console.log('✅ Models loaded')
       
+      // Create boss ship after models are loaded
+      this.createBossShip()
+      
       if (this.callbacks.onModelsReady) {
         this.callbacks.onModelsReady()
       }
@@ -349,6 +320,42 @@ export class EnhancedGame {
   // This method is kept for compatibility but does nothing
   createBase() {
     // Base is now created via MainBase class
+  }
+  
+  // Create the main boss ship (called after models are loaded)
+  createBossShip() {
+    try {
+      this.bossShipPosition = new THREE.Vector3(0, 15, 55)
+      this.mainBossShip = new MainBossShip(this.bossShipPosition, {
+        health: 50000,
+        onSpawnEnemy: (type, position) => {
+          if (this.enemyManager) {
+            this.enemyManager.spawnEnemy(type, position)
+          }
+        },
+        onDamage: (health, maxHealth) => {
+          if (this.callbacks.onBossDamage) {
+            this.callbacks.onBossDamage(health, maxHealth)
+          }
+        },
+        onDestroyed: () => {
+          console.log('🏆 Boss ship destroyed!')
+          if (this.callbacks.onBossDestroyed) {
+            this.callbacks.onBossDestroyed()
+          }
+          this.addGold(5000)
+          this.score += 10000
+        }
+      })
+      
+      this.mainBossShip.create(this.scene).then(() => {
+        console.log('👾 Main Boss Ship spawned!')
+      }).catch(err => {
+        console.warn('Boss ship creation failed:', err)
+      })
+    } catch (err) {
+      console.warn('Could not create boss ship:', err)
+    }
   }
   
   // Upgrade the main base
