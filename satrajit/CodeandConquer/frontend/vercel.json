@@ -6,7 +6,7 @@
   "rewrites": [
     {
       "source": "/api/:path*",
-      "destination": "https://your-backend-url.onrender.com/api/:path*"
+      "destination": "https://code-and-conquer.onrender.com/api/:path*"
     }
   ],
   "headers": [
