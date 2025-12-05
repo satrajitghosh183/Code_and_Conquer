@@ -1061,8 +1061,9 @@ export class EnhancedGame {
 
     // Find enemies in range
     const enemiesInRange = this.enemies.filter(enemy => {
-      if (enemy.isDead) return false
-      const dist = tower.position.distanceTo(enemy.position)
+      if (enemy.isDead || !enemy.mesh) return false
+      const enemyPos = enemy.position || enemy.mesh.position
+      const dist = tower.position.distanceTo(enemyPos)
       return dist <= tower.range
     })
 
@@ -1070,8 +1071,10 @@ export class EnhancedGame {
 
     // Target closest enemy
     const target = enemiesInRange.reduce((closest, enemy) => {
-      const distClosest = tower.position.distanceTo(closest.position)
-      const distEnemy = tower.position.distanceTo(enemy.position)
+      const closestPos = closest.position || closest.mesh.position
+      const enemyPos = enemy.position || enemy.mesh.position
+      const distClosest = tower.position.distanceTo(closestPos)
+      const distEnemy = tower.position.distanceTo(enemyPos)
       return distEnemy < distClosest ? enemy : closest
     })
 
