@@ -8,6 +8,7 @@
 import * as THREE from 'three'
 import { ENEMY_TYPES, ENEMY_BEHAVIORS, createEnemyMesh } from './EnemyTypes.js'
 import { SoundManager } from './SoundManager.js'
+import { EnemyShip } from './EnemyShip.js'
 
 export class Enemy {
   constructor(type, args = {}) {
@@ -143,14 +144,52 @@ export class Enemy {
   }
   
   // ==========================================================================
-  // MESH CREATION
+  // MESH CREATION - Uses EnemyShip for spaceship visuals
   // ==========================================================================
+  
+  async createMeshAsync() {
+    // Create EnemyShip visual
+    this.shipVisual = new EnemyShip(this.type, {
+      healthMultiplier: this.health / this.baseHealth,
+      speedMultiplier: this.speed / this.baseSpeed
+    })
+    
+    const group = new THREE.Group()
+    
+    try {
+      // Create the ship mesh (async loads model or creates procedural)
+      const shipMesh = await this.shipVisual.createMesh()
+      group.add(shipMesh)
+    } catch (e) {
+      // Fallback to original procedural creation
+      console.warn('Failed to create ship visual, using fallback')
+      this.createBodyFallback(group)
+    }
+    
+    // Create health bar
+    this.createHealthBar(group)
+    
+    // Position and scale
+    group.position.copy(this.position)
+    
+    // Store reference
+    this.mesh = group
+    this.mesh.userData.enemy = this
+    
+    // Spawn animation
+    this.mesh.scale.setScalar(0.01)
+    
+    return group
+  }
   
   createMesh() {
     const group = new THREE.Group()
     const config = ENEMY_TYPES[this.type] || ENEMY_TYPES.spider
     
-    // Create body
+    // Create EnemyShip visual synchronously (procedural version)
+    this.shipVisual = new EnemyShip(this.type)
+    
+    // Create body using ship-based design
     this.createBody(group, config)
     
     // Create eyes
@@ -183,6 +222,21 @@ export class Enemy {
     this.mesh.scale.setScalar(0.01)
     
     return group
+  }
+  
+  createBodyFallback(group) {
+    const s = this.scale
+    const bodyGeom = new THREE.SphereGeometry(0.8 * s, 16, 16)
+    const bodyMat = new THREE.MeshStandardMaterial({
+      color: this.color,
+      metalness: 0.4,
+      roughness: 0.6,
+      emissive: this.glowColor,
+      emissiveIntensity: 0.3
+    })
+    const body = new THREE.Mesh(bodyGeom, bodyMat)
+    body.castShadow = true
+    group.add(body)
   }
   
   createBody(group, config) {

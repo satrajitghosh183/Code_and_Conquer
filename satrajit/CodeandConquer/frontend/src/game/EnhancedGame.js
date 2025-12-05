@@ -27,6 +27,8 @@ import { AIPlayer } from './AIPlayer.js'
 import { WaveTimer } from './WaveTimer.js'
 import { CodingRewardSystem } from './CodingRewardSystem.js'
 import { TaskBuffSystem } from './TaskBuffSystem.js'
+import { MainBase, BASE_LEVELS } from './MainBase.js'
+import { MainBossShip } from './EnemyShip.js'
 
 export class EnhancedGame {
   constructor(container, callbacks = {}, userProfile = {}, gameMode = 'single') {
@@ -93,13 +95,73 @@ export class EnhancedGame {
     
     // Player base position
     this.basePosition = new THREE.Vector3(0, 0, -25)
-    this.base = { position: this.basePosition.clone() }
     
-    // Create base visual
-    this.createBase()
+    // Create upgradeable main base
+    this.mainBase = new MainBase(this.basePosition, {
+      level: 1,
+      onHealthChange: (health, maxHealth) => {
+        this.health = health
+        this.maxHealth = maxHealth
+        if (this.callbacks.onHealthChange) {
+          this.callbacks.onHealthChange(health, maxHealth)
+        }
+      },
+      onDestroyed: () => {
+        this.endGame(false)
+      },
+      onUpgrade: (level, config) => {
+        if (this.callbacks.onBaseUpgrade) {
+          this.callbacks.onBaseUpgrade(level, config)
+        }
+        // Upgrade effect
+        if (this.visualEffects) {
+          this.visualEffects.createUpgradeEffect(this.basePosition, {
+            color: 0xff4400,
+            particleCount: 60
+          })
+        }
+        SoundManager.play3D('upgrade.ogg', this.basePosition, { volume: 0.8 })
+      }
+    })
+    this.mainBase.create(this.scene)
+    this.base = this.mainBase
+    this.health = this.mainBase.health
+    this.maxHealth = this.mainBase.maxHealth
     
     // Enemy path (fallback for pathfinding)
     this.enemyPath = this.createEnemyPath()
+    
+    // ==========================================================================
+    // MAIN BOSS SHIP - Enemy mothership in camera view
+    // ==========================================================================
+    
+    this.bossShipPosition = new THREE.Vector3(0, 15, 55) // In view behind spawn area
+    this.mainBossShip = new MainBossShip(this.bossShipPosition, {
+      health: 50000,
+      onSpawnEnemy: (type, position) => {
+        // Boss ship spawns additional enemies
+        this.enemyManager.spawnEnemy(type, position)
+      },
+      onDamage: (health, maxHealth) => {
+        if (this.callbacks.onBossDamage) {
+          this.callbacks.onBossDamage(health, maxHealth)
+        }
+      },
+      onDestroyed: () => {
+        console.log('🏆 Boss ship destroyed!')
+        if (this.callbacks.onBossDestroyed) {
+          this.callbacks.onBossDestroyed()
+        }
+        // Major reward
+        this.addGold(5000)
+        this.score += 10000
+      }
+    })
+    
+    // Create boss ship (async)
+    this.mainBossShip.create(this.scene).then(() => {
+      console.log('👾 Main Boss Ship spawned!')
+    })
     
     // ==========================================================================
     // INITIALIZE ENEMY MANAGER
@@ -283,125 +345,39 @@ export class EnhancedGame {
     this.controls.target.set(0, 0, 0)
   }
   
+  // Main base is now created via MainBase class in constructor
+  // This method is kept for compatibility but does nothing
   createBase() {
-    const baseGroup = new THREE.Group()
+    // Base is now created via MainBase class
+  }
+  
+  // Upgrade the main base
+  upgradeBase() {
+    if (!this.mainBase) return { success: false, message: 'No base to upgrade' }
     
-    // Platform tiers
-    const tierMaterials = [
-      new THREE.MeshStandardMaterial({
-        color: 0x440000,
-        metalness: 0.7,
-        roughness: 0.3,
-        emissive: 0x220000,
-        emissiveIntensity: 0.2
-      }),
-      new THREE.MeshStandardMaterial({
-        color: 0x660000,
-        metalness: 0.6,
-        roughness: 0.4,
-        emissive: 0x330000,
-        emissiveIntensity: 0.3
-      })
-    ]
-    
-    // Bottom tier
-    const bottomTier = new THREE.Mesh(
-      new THREE.CylinderGeometry(9, 10, 2, 8),
-      tierMaterials[0]
-    )
-    bottomTier.position.y = 1
-    bottomTier.castShadow = true
-    bottomTier.receiveShadow = true
-    baseGroup.add(bottomTier)
-    
-    // Middle tier
-    const middleTier = new THREE.Mesh(
-      new THREE.CylinderGeometry(7, 8, 1.5, 8),
-      tierMaterials[1]
-    )
-    middleTier.position.y = 2.75
-    middleTier.castShadow = true
-    baseGroup.add(middleTier)
-    
-    // Main crystal
-    const crystalGeom = new THREE.OctahedronGeometry(3.5, 1)
-    const crystalMat = new THREE.MeshPhysicalMaterial({
-      color: 0xff0000,
-      emissive: 0xcc0000,
-      emissiveIntensity: 1.2,
-      metalness: 0.1,
-      roughness: 0.05,
-      transparent: true,
-      opacity: 0.9,
-      clearcoat: 1.0,
-      clearcoatRoughness: 0.1
-    })
-    this.crystal = new THREE.Mesh(crystalGeom, crystalMat)
-    this.crystal.position.y = 7
-    this.crystal.castShadow = true
-    baseGroup.add(this.crystal)
-    
-    // Energy rings
-    this.energyRings = []
-    const ringMat = new THREE.MeshStandardMaterial({
-      color: 0xff0000,
-      emissive: 0xff0000,
-      emissiveIntensity: 0.8,
-      metalness: 0.8,
-      roughness: 0.2
-    })
-    
-    for (let i = 0; i < 3; i++) {
-      const ring = new THREE.Mesh(
-        new THREE.TorusGeometry(5, 0.15, 8, 32),
-        ringMat.clone()
-      )
-      ring.position.y = 6
-      ring.rotation.x = Math.PI / 2 + (Math.random() - 0.5) * 0.3
-      ring.rotation.y = (Math.PI * 2 * i) / 3
-      this.energyRings.push(ring)
-      baseGroup.add(ring)
+    const cost = this.mainBase.getUpgradeCost()
+    if (cost === Infinity) {
+      return { success: false, message: 'Base is at maximum level' }
     }
     
-    // Pillars
-    const pillarGeom = new THREE.CylinderGeometry(0.6, 0.7, 5, 6)
-    const pillarMat = new THREE.MeshStandardMaterial({
-      color: 0x880000,
-      metalness: 0.7,
-      roughness: 0.3,
-      emissive: 0x440000,
-      emissiveIntensity: 0.3
-    })
+    if (this.gold < cost) {
+      return { success: false, message: `Not enough gold. Need ${cost}g` }
+    }
     
-    const pillarPositions = [
-      [6, 2.5, 0], [-6, 2.5, 0],
-      [0, 2.5, 6], [0, 2.5, -6],
-      [4.2, 2.5, 4.2], [-4.2, 2.5, 4.2],
-      [4.2, 2.5, -4.2], [-4.2, 2.5, -4.2]
-    ]
+    this.gold -= cost
+    if (this.callbacks.onGoldChange) {
+      this.callbacks.onGoldChange(this.gold)
+    }
     
-    pillarPositions.forEach(pos => {
-      const pillar = new THREE.Mesh(pillarGeom, pillarMat.clone())
-      pillar.position.set(...pos)
-      pillar.castShadow = true
-      baseGroup.add(pillar)
-      
-      // Glow orb
-      const orb = new THREE.Mesh(
-        new THREE.SphereGeometry(0.4, 8, 8),
-        new THREE.MeshBasicMaterial({
-          color: 0xff0000,
-          transparent: true,
-          opacity: 0.8
-        })
-      )
-      orb.position.set(pos[0], pos[1] + 2.8, pos[2])
-      baseGroup.add(orb)
-    })
+    this.mainBase.upgrade()
     
-    baseGroup.position.copy(this.basePosition)
-    this.scene.add(baseGroup)
-    this.baseMesh = baseGroup
+    return { success: true, message: `Base upgraded to level ${this.mainBase.level}!` }
+  }
+  
+  // Get base stats for UI
+  getBaseStats() {
+    if (!this.mainBase) return null
+    return this.mainBase.getStats()
   }
   
   createEnemyPath() {
@@ -796,6 +772,14 @@ export class EnhancedGame {
     // Animate base
     this.animateBase(deltaTime)
     
+    // Update main boss ship
+    if (this.mainBossShip && this.mainBossShip.isActive) {
+      this.mainBossShip.update(deltaTime, Date.now() / 1000)
+    }
+    
+    // Update elemental visual effects (frost auras, fire rings)
+    this.updateElementalEffects(deltaTime)
+    
     // Check win condition
     if (this.wave >= 50 && this.enemies.length === 0) {
       this.endGame(true)
@@ -864,23 +848,50 @@ export class EnhancedGame {
   }
   
   animateBase(deltaTime) {
-    // Animate crystal
-    if (this.crystal) {
-      this.crystal.rotation.y += deltaTime * 0.6
-      this.crystal.rotation.x += deltaTime * 0.4
-      this.crystal.position.y = 7 + Math.sin(Date.now() * 0.002) * 0.6
+    // Update main base (handles animations, regen, and defensive attacks)
+    if (this.mainBase) {
+      this.mainBase.update(deltaTime, this.enemies, this.visualEffects)
       
-      const pulse = (Math.sin(Date.now() * 0.003) + 1) / 2
-      this.crystal.material.emissiveIntensity = 0.8 + pulse * 0.6
+      // Face health bar to camera
+      if (this.mainBase.healthBarBg && this.camera) {
+        this.mainBase.healthBarBg.lookAt(this.camera.position)
+        if (this.mainBase.healthBarFill) {
+          this.mainBase.healthBarFill.lookAt(this.camera.position)
+        }
+        if (this.mainBase.levelSprite) {
+          // Sprites auto-face camera
+        }
+      }
+      
+      // Sync health state
+      this.health = this.mainBase.health
+      this.maxHealth = this.mainBase.maxHealth
     }
+  }
+  
+  // Update frost and fire visual effects on enemies and towers
+  updateElementalEffects(deltaTime) {
+    // Check enemies for slow status and add frost aura
+    this.enemies.forEach(enemy => {
+      if (enemy.isDead) return
+      
+      // Handle frost aura for slowed enemies
+      if (enemy.slowAmount > 0 && !this.visualEffects.frostAuras.has(enemy.id)) {
+        this.visualEffects.createFrostAura(enemy, enemy.slowAmount, 2000)
+      } else if (enemy.slowAmount <= 0 && this.visualEffects.frostAuras.has(enemy.id)) {
+        this.visualEffects.removeFrostAura(enemy)
+      }
+    })
     
-    // Animate energy rings
-    if (this.energyRings) {
-      this.energyRings.forEach((ring, i) => {
-        ring.rotation.z += deltaTime * (0.8 + i * 0.4)
-        ring.position.y = 6 + Math.sin(Date.now() * 0.001 + i * 2) * 0.5
-      })
-    }
+    // Handle fire rings for fire towers
+    this.towers.forEach(tower => {
+      const towerType = tower.towerType || tower.type
+      
+      if (towerType === 'fire' && !this.visualEffects.fireRings.has(tower.id || tower)) {
+        // Create fire ring for fire towers
+        this.visualEffects.createFireRing(tower, tower.range || 18)
+      }
+    })
   }
   
   // ==========================================================================
@@ -1020,6 +1031,21 @@ export class EnhancedGame {
       if (u.mesh) this.scene.remove(u.mesh)
       if (u.destroy) u.destroy()
     })
+    
+    // Clear main base
+    if (this.mainBase) {
+      this.mainBase.destroy()
+    }
+    
+    // Clear boss ship
+    if (this.mainBossShip) {
+      this.mainBossShip.destroy()
+    }
+    
+    // Clear visual effects
+    if (this.visualEffects) {
+      this.visualEffects.destroy()
+    }
     
     // Dispose graphics
     this.graphicsEngine.dispose()

@@ -1,8 +1,8 @@
 export const TOWER_TYPES = {
-  // Basic fast-firing tower
+  // Gatling Tower - Fast-firing basic tower
   gattling: {
     name: 'Gatling Tower',
-    modelKey: 'combat_turret', // Using new combat turret model
+    modelKey: 'gatling_tower',  // → gun_tower.glb
     cost: 50,
     damage: 6,
     range: 18,
@@ -11,17 +11,17 @@ export const TOWER_TYPES = {
     health: 250,
     description: 'Fast-firing basic tower',
     projectileSpeed: 25,
-    attackType: 'gattling',
+    attackType: 'bullet',
     upgrades: [
       { damage: 8, range: 20, cooldown: 900, cost: 30 },
       { damage: 12, range: 22, cooldown: 800, cost: 50 }
     ]
   },
   
-  // Missile tower with splash damage
+  // Missile Tower - Splash damage
   missile: {
     name: 'Missile Tower',
-    modelKey: 'aa_turret', // Using new AA turret model
+    modelKey: 'missile_tower',  // → aa_turret.glb
     cost: 150,
     damage: 70,
     range: 30,
@@ -38,10 +38,10 @@ export const TOWER_TYPES = {
     ]
   },
   
-  // Laser tower with beam attack
+  // Laser Tower - Sustained beam attack
   laser: {
     name: 'Laser Tower',
-    modelKey: 'medieval_towers',
+    modelKey: 'laser_tower',  // → hoth_defense_turret.glb
     cost: 200,
     damage: 200,
     range: 25,
@@ -57,10 +57,10 @@ export const TOWER_TYPES = {
     ]
   },
   
-  // Sniper - long range precision
+  // Sniper Tower - Long range precision
   sniper: {
     name: 'Sniper Tower',
-    modelKey: 'gun_tower', // Using new gun tower model
+    modelKey: 'sniper_tower',  // → combat_turret.glb
     cost: 120,
     damage: 100,
     range: 50,
@@ -76,10 +76,10 @@ export const TOWER_TYPES = {
     ]
   },
   
-  // Frost tower - slows enemies
+  // Frost Tower - Slows enemies with frost aura
   frost: {
     name: 'Frost Tower',
-    modelKey: 'watch_tower',
+    modelKey: 'frost_tower',  // → gun_tower.glb variant
     cost: 100,
     damage: 10,
     range: 20,
@@ -88,7 +88,7 @@ export const TOWER_TYPES = {
     health: 250,
     slowAmount: 0.3,
     slowDuration: 2000,
-    description: 'Slows enemies',
+    description: 'Slows enemies with icy blast',
     attackType: 'frost',
     upgrades: [
       { damage: 15, range: 22, cooldown: 1300, slowAmount: 0.4, aoeRadius: 5, cost: 75 },
@@ -96,10 +96,10 @@ export const TOWER_TYPES = {
     ]
   },
   
-  // Fire tower - DOT
+  // Fire Tower - DOT with fire ring aura
   fire: {
     name: 'Fire Tower',
-    modelKey: 'heavy_cannon',
+    modelKey: 'fire_tower',  // → aa_turret.glb variant
     cost: 100,
     damage: 20,
     range: 18,
@@ -108,7 +108,8 @@ export const TOWER_TYPES = {
     health: 300,
     burnDamage: 5,
     burnDuration: 3000,
-    description: 'Ignites enemies',
+    hasFireRing: true,  // Enables fire ring visual effect
+    description: 'Ignites enemies with ring of fire',
     attackType: 'fire',
     upgrades: [
       { damage: 30, range: 20, cooldown: 1800, burnDamage: 8, cost: 70 },
@@ -116,10 +117,10 @@ export const TOWER_TYPES = {
     ]
   },
   
-  // Tesla tower - chain lightning
+  // Tesla Tower - Chain lightning
   tesla: {
     name: 'Tesla Tower',
-    modelKey: 'medieval_towers',
+    modelKey: 'tesla_tower',  // → spaceship_clst_500.glb
     cost: 180,
     damage: 40,
     range: 20,
@@ -127,7 +128,7 @@ export const TOWER_TYPES = {
     fireRate: 0.4,
     health: 350,
     chainCount: 2,
-    description: 'Chain lightning',
+    description: 'Chain lightning attack',
     attackType: 'tesla',
     upgrades: [
       { damage: 60, range: 22, cooldown: 2200, chainCount: 3, cost: 120 },
@@ -135,10 +136,10 @@ export const TOWER_TYPES = {
     ]
   },
   
-  // Legacy basic tower for compatibility
+  // Legacy basic tower
   basic: {
     name: 'Watch Tower',
-    modelKey: 'watch_tower',
+    modelKey: 'gatling_tower',
     cost: 100,
     damage: 25,
     range: 12,
@@ -146,13 +147,13 @@ export const TOWER_TYPES = {
     health: 300,
     description: 'Basic defense tower',
     projectileSpeed: 20,
-    attackType: 'gattling'
+    attackType: 'bullet'
   },
   
-  // Legacy cannon for compatibility
+  // Legacy cannon
   cannon: {
     name: 'Heavy Cannon',
-    modelKey: 'heavy_cannon',
+    modelKey: 'missile_tower',
     cost: 200,
     damage: 100,
     range: 20,
@@ -164,10 +165,10 @@ export const TOWER_TYPES = {
     attackType: 'missile'
   },
   
-  // Legacy splash for compatibility
+  // Legacy splash
   splash: {
     name: 'Medieval Tower',
-    modelKey: 'medieval_towers',
+    modelKey: 'laser_tower',
     cost: 180,
     damage: 40,
     range: 10,
@@ -183,14 +184,14 @@ export const TOWER_TYPES = {
 export const WALL_TYPES = {
   maze: {
     name: 'Maze Wall',
-    modelKey: 'castle_walls',
+    modelKey: 'wall',  // → modular_wall.glb
     cost: 50,
-    health: Infinity, // Indestructible
+    health: Infinity,
     description: 'Guides enemy paths'
   },
   blocking: {
     name: 'Blocking Wall',
-    modelKey: 'castle_walls',
+    modelKey: 'wall',  // → modular_wall.glb
     cost: 100,
     health: 500,
     description: 'Blocks enemies, can be destroyed'
@@ -200,10 +201,10 @@ export const WALL_TYPES = {
 export const SPAWNER_TYPES = {
   barracks: {
     name: 'Barracks',
-    modelKey: 'mortar',
+    modelKey: 'barracks',  // → future_architectural.glb
     cost: 250,
     health: 600,
-    spawnRate: 10, // seconds
+    spawnRate: 10,
     maxUnits: 3,
     unitType: 'troop',
     description: 'Spawns defensive units'

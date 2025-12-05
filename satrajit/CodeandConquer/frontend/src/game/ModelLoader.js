@@ -40,10 +40,19 @@ const AVAILABLE_MODELS = {
 // MODEL MAPPING - Map game keys to available models or 'PROCEDURAL'
 // ============================================================
 const MODEL_MAPPING = {
-  // Towers - map to available turret models
-  'medieval_towers': 'gun_tower',
-  'heavy_cannon': 'combat_turret',
-  'watch_tower': 'aa_turret',
+  // TOWER MODELS - Updated mappings
+  'gatling_tower': 'gun_tower',       // Gatling → gun_tower.glb
+  'missile_tower': 'aa_turret',       // Missile → aa_turret.glb
+  'laser_tower': 'hoth_turret',       // Laser → hoth_defense_turret.glb
+  'sniper_tower': 'combat_turret',    // Sniper → combat_turret.glb
+  'tesla_tower': 'spaceship_clst',    // Tesla → spaceship_clst_500.glb
+  'frost_tower': 'gun_tower',         // Frost uses gun_tower variant
+  'fire_tower': 'aa_turret',          // Fire uses aa_turret variant
+  
+  // Legacy tower mappings for compatibility
+  'medieval_towers': 'hoth_turret',
+  'heavy_cannon': 'aa_turret',
+  'watch_tower': 'gun_tower',
   'kickelhahn': 'hoth_turret',
   'cannon': 'combat_turret',
   'aa_turret': 'aa_turret',
@@ -51,23 +60,34 @@ const MODEL_MAPPING = {
   'gun_tower': 'gun_tower',
   'hoth_turret': 'hoth_turret',
   
-  // Walls & Structures
-  'castle_walls': 'modular_wall',
+  // Walls & Structures  
+  'castle_walls': 'modular_wall',     // Wall → modular_wall.glb
   'modular_wall': 'modular_wall',
   'sci_fi_wall': 'sci_fi_wall',
-  'future_architectural': 'future_architectural',
+  'wall': 'modular_wall',
   
-  // Units - use spaceships or procedural
-  'troop': 'PROCEDURAL_TROOP',
+  // Barracks / Spawner
+  'barracks': 'future_architectural', // Barracks → future_architectural.glb
+  'future_architectural': 'future_architectural',
+  'mortar': 'future_architectural',
+  
+  // Enemy Ships - All enemies use spaceship.glb as base
+  'enemy_ship': 'spaceship',
   'spaceship': 'spaceship',
+  'boss_ship': 'spaceship',
+  'enemy_base': 'spaceship',
+  
+  // Tesla/special uses spaceship variant
   'spaceship_clst': 'spaceship_clst',
+  
+  // Units - procedural
+  'troop': 'PROCEDURAL_TROOP',
   
   // Heroes - procedural geometric representations
   'snake': 'PROCEDURAL_SNAKE',
   'dragon': 'PROCEDURAL_DRAGON',
   
   // Special
-  'mortar': 'PROCEDURAL_MORTAR',
   'astro_shedder': 'spaceship',
   'fighter_jet': 'spaceship_clst'
 }
