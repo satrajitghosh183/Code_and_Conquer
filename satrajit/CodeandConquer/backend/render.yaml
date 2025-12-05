@@ -1,0 +1,46 @@
+# Render.com Blueprint Configuration
+# Deploy the Code & Conquer backend
+
+services:
+  - type: web
+    name: code-and-conquer-api
+    runtime: node
+    region: oregon
+    plan: free
+    buildCommand: npm install
+    startCommand: npm start
+    healthCheckPath: /api/health
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: PORT
+        value: 5000
+      # Database - Supabase
+      - key: SUPABASE_URL
+        sync: false
+      - key: SUPABASE_ANON_KEY
+        sync: false
+      - key: SUPABASE_SERVICE_ROLE_KEY
+        sync: false
+      # JWT Secret
+      - key: JWT_SECRET
+        generateValue: true
+      # Frontend URL for CORS
+      - key: FRONTEND_URL
+        sync: false
+      # Optional: Judge0 for code execution
+      - key: JUDGE0_API_KEY
+        sync: false
+      - key: JUDGE0_API_URL
+        sync: false
+    autoDeploy: true
+    branch: master
+
+# Database can be added if needed (PostgreSQL)
+# databases:
+#   - name: code-conquer-db
+#     databaseName: codeconquer
+#     user: codeconquer
+#     plan: free
+#     region: oregon
+
