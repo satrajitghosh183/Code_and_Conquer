@@ -761,5 +761,5 @@ export class TowerCombatSystem {
   }
 }
 
-export { PROJECTILE_CONFIGS, TARGETING_MODES }
+export { PROJECTILE_CONFIGS }
 
