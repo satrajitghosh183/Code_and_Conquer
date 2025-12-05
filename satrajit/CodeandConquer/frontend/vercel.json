@@ -7,6 +7,10 @@
     {
       "source": "/api/:path*",
       "destination": "https://code-and-conquer.onrender.com/api/:path*"
+    },
+    {
+      "source": "/((?!assets|models|sounds|images).*)",
+      "destination": "/index.html"
     }
   ],
   "headers": [
