@@ -1,9 +1,9 @@
 // =============================================================================
-// ENHANCED ENEMY CLASS - With Rich Visuals and Behaviors
+// ENEMY CLASS - Beautiful Sci-Fi Invaders
 // =============================================================================
 
 import * as THREE from 'three'
-import { ENEMY_TYPES, createEnemyMesh } from './EnemyTypes.js'
+import { ENEMY_TYPES } from './EnemyTypes.js'
 
 export class Enemy {
   constructor(type, args = {}) {
@@ -30,50 +30,31 @@ export class Enemy {
     this.scale = config.scale || 1.0
     this.isBoss = config.isBoss || false
     
-    // Behavior
+    // Behavior & abilities
     this.behavior = config.behavior || 'standard'
-    
-    // Healer abilities
     this.healRadius = config.healRadius || 0
     this.healAmount = config.healAmount || 0
-    this.healInterval = config.healInterval || 1.0
-    this.lastHealTime = 0
-    this.hasAura = config.hasAura || false
-    
-    // Splitter abilities
     this.splitCount = config.splitCount || 0
     this.splitType = config.splitType || null
-    
-    // Special abilities
-    this.phaseInterval = config.phaseInterval || 0
-    this.phaseDuration = config.phaseDuration || 0
-    this.isPhasing = false
-    this.lastPhaseTime = 0
-    
-    // Berserker
-    this.rageThreshold = config.rageThreshold || 0
-    this.rageSpeedMult = config.rageSpeedMult || 1
-    this.isEnraged = false
-    
-    // Shield
+    this.hasAura = config.hasAura || false
     this.hasShield = config.hasShield || false
     this.shieldHealth = config.shieldHealth || 0
     this.maxShieldHealth = this.shieldHealth
-    this.shieldRegen = config.shieldRegen || 0
     
     // Status effects
     this.slowAmount = 0
     this.burnDamage = 0
     this.burnEndTime = 0
     this.isStunned = false
-    this.stunEndTime = 0
+    this.isEnraged = false
+    this.isPhasing = false
     
     // State
     this.isDead = false
     this.finished = false
     this.reachedEnd = false
     
-    // Path following
+    // Path
     this.path = []
     this.next = null
     this.position = args.position ? args.position.clone() : new THREE.Vector3(0, 0.5, 45)
@@ -81,63 +62,315 @@ export class Enemy {
     // Mesh references
     this.mesh = null
     this.bodyMesh = null
+    this.coreMesh = null
     this.healthBarFill = null
-    this.healthBarBg = null
-    this.shieldBarFill = null
-    this.auraMesh = null
     this.shieldMesh = null
+    this.auraMesh = null
+    this.particles = []
     
     this.id = `enemy_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`
-    this.animationTime = 0
+    this.animationTime = Math.random() * Math.PI * 2
   }
   
   createMesh() {
-    // Use the enhanced mesh generator from EnemyTypes
-    const group = createEnemyMesh({ type: this.type }, this.scale)
+    const group = new THREE.Group()
     
-    // Find body mesh for effects
-    group.traverse((child) => {
-      if (child.isMesh && !this.bodyMesh) {
-        this.bodyMesh = child
-      }
-      if (child.name === 'shield') {
-        this.shieldMesh = child
-      }
-      if (child.name === 'healAura') {
-        this.auraMesh = child
-      }
-    })
+    // Create body based on tier and type
+    this.createBody(group)
+    
+    // Add decorations
+    this.createDecorations(group)
+    
+    // Add glow effects
+    this.createGlowEffects(group)
+    
+    // Add shield if applicable
+    if (this.hasShield && this.shieldHealth > 0) {
+      this.createShield(group)
+    }
+    
+    // Add healer aura if applicable
+    if (this.hasAura) {
+      this.createHealerAura(group)
+    }
     
     // Create health bar
     this.createHealthBar(group)
     
-    // Position the group
     group.position.copy(this.position)
-    
     this.mesh = group
     this.mesh.userData.enemy = this
     
     return group
   }
   
-  createHealthBar(group) {
-    const barWidth = 1.2 * this.scale
-    const barHeight = 0.12
-    const barY = 1.8 * this.scale
+  createBody(group) {
+    const s = this.scale
+    let bodyGeom, bodyMat
     
-    // Background
-    const bgGeom = new THREE.PlaneGeometry(barWidth, barHeight)
-    const bgMat = new THREE.MeshBasicMaterial({
-      color: 0x222222,
+    // Different shapes based on enemy type/tier
+    if (this.isBoss) {
+      // Boss - large complex shape
+      bodyGeom = new THREE.IcosahedronGeometry(1.8 * s, 1)
+      bodyMat = new THREE.MeshStandardMaterial({
+        color: this.color,
+        metalness: 0.6,
+        roughness: 0.3,
+        emissive: this.glowColor,
+        emissiveIntensity: 0.5
+      })
+    } else if (this.tier >= 3) {
+      // Elite - dodecahedron
+      bodyGeom = new THREE.DodecahedronGeometry(1 * s, 0)
+      bodyMat = new THREE.MeshStandardMaterial({
+        color: this.color,
+        metalness: 0.5,
+        roughness: 0.4,
+        emissive: this.glowColor,
+        emissiveIntensity: 0.4
+      })
+    } else if (this.tier === 2) {
+      // Advanced - octahedron
+      bodyGeom = new THREE.OctahedronGeometry(0.9 * s, 0)
+      bodyMat = new THREE.MeshStandardMaterial({
+        color: this.color,
+        metalness: 0.4,
+        roughness: 0.5,
+        emissive: this.glowColor,
+        emissiveIntensity: 0.3
+      })
+    } else {
+      // Basic - sphere with segments
+      bodyGeom = new THREE.SphereGeometry(0.7 * s, 12, 12)
+      bodyMat = new THREE.MeshStandardMaterial({
+        color: this.color,
+        metalness: 0.3,
+        roughness: 0.6,
+        emissive: this.glowColor,
+        emissiveIntensity: 0.25
+      })
+    }
+    
+    this.bodyMesh = new THREE.Mesh(bodyGeom, bodyMat)
+    this.bodyMesh.position.y = 1.2 * s
+    group.add(this.bodyMesh)
+    
+    // Inner core (glowing)
+    const coreSize = this.isBoss ? 1 : this.tier >= 2 ? 0.5 : 0.35
+    const coreGeom = new THREE.SphereGeometry(coreSize * s, 12, 12)
+    const coreMat = new THREE.MeshBasicMaterial({
+      color: this.glowColor,
+      transparent: true,
+      opacity: 0.9
+    })
+    this.coreMesh = new THREE.Mesh(coreGeom, coreMat)
+    this.coreMesh.position.y = 1.2 * s
+    group.add(this.coreMesh)
+  }
+  
+  createDecorations(group) {
+    const s = this.scale
+    
+    // Eyes (for all enemies)
+    const eyeCount = this.isBoss ? 4 : this.tier >= 2 ? 3 : 2
+    const eyeRadius = this.isBoss ? 0.25 : 0.15
+    
+    for (let i = 0; i < eyeCount; i++) {
+      const angle = (i / eyeCount) * Math.PI * 2 - Math.PI / 2
+      const eyeDistance = this.isBoss ? 1 : 0.5
+      
+      // Eye white
+      const eyeGeom = new THREE.SphereGeometry(eyeRadius * s, 8, 8)
+      const eyeMat = new THREE.MeshBasicMaterial({ color: 0xffffff })
+      const eye = new THREE.Mesh(eyeGeom, eyeMat)
+      eye.position.set(
+        Math.sin(angle) * eyeDistance * s,
+        1.3 * s,
+        Math.cos(angle) * eyeDistance * s + 0.3 * s
+      )
+      group.add(eye)
+      
+      // Pupil
+      const pupilGeom = new THREE.SphereGeometry(eyeRadius * 0.5 * s, 6, 6)
+      const pupilMat = new THREE.MeshBasicMaterial({ color: 0x000000 })
+      const pupil = new THREE.Mesh(pupilGeom, pupilMat)
+      pupil.position.copy(eye.position)
+      pupil.position.z += eyeRadius * 0.6 * s
+      group.add(pupil)
+    }
+    
+    // Spikes/horns for tier 2+ and bosses
+    if (this.tier >= 2 || this.isBoss) {
+      const spikeCount = this.isBoss ? 8 : 4
+      for (let i = 0; i < spikeCount; i++) {
+        const angle = (i / spikeCount) * Math.PI * 2
+        const spikeGeom = new THREE.ConeGeometry(0.15 * s, 0.6 * s, 4)
+        const spikeMat = new THREE.MeshStandardMaterial({
+          color: this.color,
+          metalness: 0.7,
+          roughness: 0.3
+        })
+        const spike = new THREE.Mesh(spikeGeom, spikeMat)
+        spike.position.set(
+          Math.cos(angle) * 0.8 * s,
+          1.2 * s,
+          Math.sin(angle) * 0.8 * s
+        )
+        spike.rotation.z = Math.cos(angle) * 0.5
+        spike.rotation.x = Math.sin(angle) * 0.5
+        group.add(spike)
+      }
+    }
+    
+    // Crown for bosses
+    if (this.isBoss) {
+      const crownGeom = new THREE.ConeGeometry(0.5 * s, 1 * s, 6)
+      const crownMat = new THREE.MeshStandardMaterial({
+        color: 0xffd700,
+        metalness: 0.9,
+        roughness: 0.1,
+        emissive: 0xffd700,
+        emissiveIntensity: 0.5
+      })
+      const crown = new THREE.Mesh(crownGeom, crownMat)
+      crown.position.y = 2.8 * s
+      group.add(crown)
+    }
+    
+    // Legs/tentacles for spider-type enemies
+    if (this.type === 'spider' || this.type === 'scout') {
+      const legCount = 6
+      for (let i = 0; i < legCount; i++) {
+        const angle = (i / legCount) * Math.PI * 2
+        const legGeom = new THREE.CylinderGeometry(0.05 * s, 0.08 * s, 0.8 * s, 6)
+        const legMat = new THREE.MeshStandardMaterial({
+          color: this.color,
+          metalness: 0.3,
+          roughness: 0.7
+        })
+        const leg = new THREE.Mesh(legGeom, legMat)
+        leg.position.set(
+          Math.cos(angle) * 0.5 * s,
+          0.4 * s,
+          Math.sin(angle) * 0.5 * s
+        )
+        leg.rotation.z = Math.cos(angle) * 0.8
+        leg.rotation.x = Math.sin(angle) * 0.8
+        group.add(leg)
+      }
+    }
+  }
+  
+  createGlowEffects(group) {
+    const s = this.scale
+    
+    // Outer glow sphere
+    const glowSize = this.isBoss ? 2.5 : this.tier >= 2 ? 1.4 : 1
+    const glowGeom = new THREE.SphereGeometry(glowSize * s, 16, 16)
+    const glowMat = new THREE.MeshBasicMaterial({
+      color: this.glowColor,
+      transparent: true,
+      opacity: 0.15
+    })
+    const glow = new THREE.Mesh(glowGeom, glowMat)
+    glow.position.y = 1.2 * s
+    group.add(glow)
+    this.glowMesh = glow
+    
+    // Floating particles around enemy
+    const particleCount = this.isBoss ? 12 : this.tier >= 2 ? 6 : 3
+    const particleGeom = new THREE.SphereGeometry(0.08 * s, 6, 6)
+    const particleMat = new THREE.MeshBasicMaterial({
+      color: this.glowColor,
+      transparent: true,
+      opacity: 0.7
+    })
+    
+    for (let i = 0; i < particleCount; i++) {
+      const particle = new THREE.Mesh(particleGeom.clone(), particleMat.clone())
+      this.particles.push({
+        mesh: particle,
+        angle: (i / particleCount) * Math.PI * 2,
+        radius: 1 + Math.random() * 0.5,
+        speed: 1 + Math.random() * 0.5,
+        yOffset: Math.random() * 0.5
+      })
+      group.add(particle)
+    }
+    
+    // Point light
+    const lightIntensity = this.isBoss ? 2 : this.tier >= 2 ? 1 : 0.5
+    const light = new THREE.PointLight(this.glowColor, lightIntensity, 10 * s)
+    light.position.y = 1.2 * s
+    group.add(light)
+    this.enemyLight = light
+  }
+  
+  createShield(group) {
+    const s = this.scale
+    const shieldSize = this.isBoss ? 3 : 1.5
+    
+    const shieldGeom = new THREE.SphereGeometry(shieldSize * s, 24, 18)
+    const shieldMat = new THREE.MeshBasicMaterial({
+      color: 0x4488ff,
+      transparent: true,
+      opacity: 0.25,
       side: THREE.DoubleSide
     })
-    this.healthBarBg = new THREE.Mesh(bgGeom, bgMat)
-    this.healthBarBg.position.y = barY
-    this.healthBarBg.name = 'healthBarBg'
-    group.add(this.healthBarBg)
+    this.shieldMesh = new THREE.Mesh(shieldGeom, shieldMat)
+    this.shieldMesh.position.y = 1.2 * s
+    group.add(this.shieldMesh)
+    
+    // Shield wireframe
+    const wireGeom = new THREE.SphereGeometry(shieldSize * s * 1.02, 12, 8)
+    const wireMat = new THREE.MeshBasicMaterial({
+      color: 0x4488ff,
+      wireframe: true,
+      transparent: true,
+      opacity: 0.4
+    })
+    const wireShield = new THREE.Mesh(wireGeom, wireMat)
+    wireShield.position.y = 1.2 * s
+    group.add(wireShield)
+    this.shieldWire = wireShield
+  }
+  
+  createHealerAura(group) {
+    const s = this.scale
+    const healRadius = this.healRadius / 2
+    
+    const auraGeom = new THREE.TorusGeometry(healRadius, 0.15, 8, 32)
+    const auraMat = new THREE.MeshBasicMaterial({
+      color: 0x00ff88,
+      transparent: true,
+      opacity: 0.4
+    })
+    this.auraMesh = new THREE.Mesh(auraGeom, auraMat)
+    this.auraMesh.rotation.x = Math.PI / 2
+    this.auraMesh.position.y = 0.2
+    group.add(this.auraMesh)
+  }
+  
+  createHealthBar(group) {
+    const s = this.scale
+    const barWidth = 1.5 * s
+    const barHeight = 0.15
+    const barY = (this.isBoss ? 4 : 2.2) * s
+    
+    // Background
+    const bgGeom = new THREE.PlaneGeometry(barWidth + 0.1, barHeight + 0.05)
+    const bgMat = new THREE.MeshBasicMaterial({
+      color: 0x000000,
+      transparent: true,
+      opacity: 0.8,
+      side: THREE.DoubleSide
+    })
+    const bg = new THREE.Mesh(bgGeom, bgMat)
+    bg.position.y = barY
+    group.add(bg)
     
     // Health fill
-    const fillGeom = new THREE.PlaneGeometry(barWidth - 0.06, barHeight - 0.03)
+    const fillGeom = new THREE.PlaneGeometry(barWidth, barHeight)
     const fillMat = new THREE.MeshBasicMaterial({
       color: 0x00ff00,
       side: THREE.DoubleSide
@@ -145,12 +378,11 @@ export class Enemy {
     this.healthBarFill = new THREE.Mesh(fillGeom, fillMat)
     this.healthBarFill.position.y = barY
     this.healthBarFill.position.z = 0.01
-    this.healthBarFill.name = 'healthBarFill'
     group.add(this.healthBarFill)
     
-    // Shield bar (if has shield)
+    // Shield bar if applicable
     if (this.hasShield && this.shieldHealth > 0) {
-      const shieldFillGeom = new THREE.PlaneGeometry(barWidth - 0.06, barHeight * 0.5)
+      const shieldFillGeom = new THREE.PlaneGeometry(barWidth, barHeight * 0.5)
       const shieldFillMat = new THREE.MeshBasicMaterial({
         color: 0x4488ff,
         side: THREE.DoubleSide
@@ -158,18 +390,12 @@ export class Enemy {
       this.shieldBarFill = new THREE.Mesh(shieldFillGeom, shieldFillMat)
       this.shieldBarFill.position.y = barY + barHeight * 0.6
       this.shieldBarFill.position.z = 0.01
-      this.shieldBarFill.name = 'shieldBarFill'
       group.add(this.shieldBarFill)
     }
   }
   
   damage(amount, source = null, damageType = 'physical') {
-    if (this.isDead) return false
-    
-    // Phasing immunity
-    if (this.isPhasing) {
-      return false
-    }
+    if (this.isDead || this.isPhasing) return false
     
     // Shield absorbs damage first
     if (this.shieldHealth > 0) {
@@ -178,31 +404,18 @@ export class Enemy {
       amount -= shieldDamage
       this.updateShieldBar()
       
-      // Shield break flash
       if (this.shieldHealth <= 0 && this.shieldMesh) {
         this.shieldMesh.visible = false
+        if (this.shieldWire) this.shieldWire.visible = false
       }
     }
     
-    // Apply armor reduction
     const effectiveDamage = amount * (1 - this.armor)
     this.health -= effectiveDamage
     
-    // Flash damage effect
     this.flashDamage()
-    
-    // Update health bar
     this.updateHealthBar()
     
-    // Check berserker rage
-    if (this.rageThreshold > 0 && !this.isEnraged) {
-      const healthRatio = this.health / this.maxHealth
-      if (healthRatio <= this.rageThreshold) {
-        this.activateRage()
-      }
-    }
-    
-    // Check death
     if (this.health <= 0) {
       this.health = 0
       this.isDead = true
@@ -215,61 +428,39 @@ export class Enemy {
   flashDamage() {
     if (!this.bodyMesh || !this.bodyMesh.material) return
     
-    const originalColor = this.color
-    this.bodyMesh.material.color.setHex(0xffffff)
-    this.bodyMesh.material.emissive?.setHex(0xffffff)
-    this.bodyMesh.material.emissiveIntensity = 1.0
+    const original = this.color
+    this.bodyMesh.material.emissive.setHex(0xffffff)
+    this.bodyMesh.material.emissiveIntensity = 1.5
     
     setTimeout(() => {
       if (this.bodyMesh && this.bodyMesh.material) {
-        this.bodyMesh.material.color.setHex(originalColor)
-        this.bodyMesh.material.emissive?.setHex(this.glowColor)
-        this.bodyMesh.material.emissiveIntensity = 0.4
+        this.bodyMesh.material.emissive.setHex(this.glowColor)
+        this.bodyMesh.material.emissiveIntensity = this.isBoss ? 0.5 : 0.3
       }
-    }, 80)
+    }, 100)
   }
   
   heal(amount) {
     if (this.isDead) return
-    
-    const oldHealth = this.health
     this.health = Math.min(this.maxHealth, this.health + amount)
     this.updateHealthBar()
-    
-    // Green flash for healing
-    if (this.health > oldHealth && this.bodyMesh) {
-      const original = this.bodyMesh.material.emissiveIntensity
-      this.bodyMesh.material.emissive?.setHex(0x00ff00)
-      this.bodyMesh.material.emissiveIntensity = 0.8
-      
-      setTimeout(() => {
-        if (this.bodyMesh && this.bodyMesh.material) {
-          this.bodyMesh.material.emissive?.setHex(this.glowColor)
-          this.bodyMesh.material.emissiveIntensity = original
-        }
-      }, 200)
-    }
   }
   
   updateHealthBar() {
     if (!this.healthBarFill) return
     
     const ratio = Math.max(0, this.health / this.maxHealth)
-    this.healthBarFill.scale.x = ratio
-    this.healthBarFill.position.x = (1 - ratio) * -0.55 * this.scale
+    const barWidth = 1.5 * this.scale
     
-    // Color based on health
+    this.healthBarFill.scale.x = ratio
+    this.healthBarFill.position.x = (1 - ratio) * -barWidth / 2
+    
     if (ratio > 0.6) {
-      this.healthBarFill.material.color.setHex(0x00ff00)
+      this.healthBarFill.material.color.setHex(0x00ff44)
     } else if (ratio > 0.3) {
       this.healthBarFill.material.color.setHex(0xffff00)
     } else {
-      this.healthBarFill.material.color.setHex(0xff0000)
-    }
-    
-    // Enraged color
-    if (this.isEnraged) {
-      this.healthBarFill.material.color.setHex(0xff4400)
+      this.healthBarFill.material.color.setHex(0xff2200)
     }
   }
   
@@ -277,29 +468,11 @@ export class Enemy {
     if (!this.shieldBarFill) return
     
     const ratio = Math.max(0, this.shieldHealth / this.maxShieldHealth)
+    const barWidth = 1.5 * this.scale
+    
     this.shieldBarFill.scale.x = ratio
-    this.shieldBarFill.position.x = (1 - ratio) * -0.55 * this.scale
-    
-    // Hide if depleted
+    this.shieldBarFill.position.x = (1 - ratio) * -barWidth / 2
     this.shieldBarFill.visible = ratio > 0
-  }
-  
-  activateRage() {
-    if (this.isEnraged) return
-    
-    this.isEnraged = true
-    this.speed = this.originalSpeed * this.rageSpeedMult
-    
-    // Visual rage effect
-    if (this.bodyMesh && this.bodyMesh.material) {
-      this.bodyMesh.material.emissive?.setHex(0xff0000)
-      this.bodyMesh.material.emissiveIntensity = 0.8
-    }
-    
-    // Scale up slightly
-    if (this.mesh) {
-      this.mesh.scale.multiplyScalar(1.15)
-    }
   }
   
   setPath(path) {
@@ -333,19 +506,14 @@ export class Enemy {
     this.slowAmount = Math.max(this.slowAmount, amount)
     this.speed = this.originalSpeed * (1 - this.slowAmount)
     
-    // Apply rage speed if enraged
-    if (this.isEnraged) {
-      this.speed *= this.rageSpeedMult
-    }
-    
     if (this.slowTimer) clearTimeout(this.slowTimer)
     
     this.slowTimer = setTimeout(() => {
       this.slowAmount = 0
-      this.speed = this.originalSpeed * (this.isEnraged ? this.rageSpeedMult : 1)
+      this.speed = this.originalSpeed
     }, duration)
     
-    // Blue tint for frozen
+    // Blue tint
     if (this.bodyMesh && this.bodyMesh.material) {
       this.bodyMesh.material.color.lerp(new THREE.Color(0x88ccff), 0.5)
     }
@@ -354,138 +522,75 @@ export class Enemy {
   applyBurn(damagePerSecond, duration) {
     this.burnDamage = damagePerSecond
     this.burnEndTime = Date.now() + duration
-    
-    // Orange tint for burning
-    if (this.bodyMesh && this.bodyMesh.material) {
-      this.bodyMesh.material.emissive?.setHex(0xff6600)
-    }
-  }
-  
-  applyStun(duration) {
-    this.isStunned = true
-    this.stunEndTime = Date.now() + duration
-    this.speed = 0
-  }
-  
-  updateStatusEffects(deltaTime) {
-    const now = Date.now()
-    
-    // Burn damage
-    if (this.burnDamage > 0 && now < this.burnEndTime) {
-      this.health -= this.burnDamage * deltaTime
-      this.updateHealthBar()
-      
-      if (this.health <= 0) {
-        this.health = 0
-        this.isDead = true
-      }
-    } else if (now >= this.burnEndTime) {
-      this.burnDamage = 0
-      if (this.bodyMesh && this.bodyMesh.material) {
-        this.bodyMesh.material.emissive?.setHex(this.glowColor)
-      }
-    }
-    
-    // Stun recovery
-    if (this.isStunned && now >= this.stunEndTime) {
-      this.isStunned = false
-      this.speed = this.originalSpeed * (1 - this.slowAmount) * (this.isEnraged ? this.rageSpeedMult : 1)
-    }
-    
-    // Shield regen
-    if (this.shieldRegen > 0 && this.shieldHealth < this.maxShieldHealth) {
-      this.shieldHealth = Math.min(this.maxShieldHealth, this.shieldHealth + this.shieldRegen * deltaTime)
-      this.updateShieldBar()
-      
-      if (this.shieldHealth > 0 && this.shieldMesh) {
-        this.shieldMesh.visible = true
-      }
-    }
-  }
-  
-  updatePhasing(currentTime) {
-    if (this.phaseInterval <= 0) return
-    
-    const timeSincePhase = currentTime - this.lastPhaseTime
-    
-    if (this.isPhasing) {
-      // End phasing
-      if (timeSincePhase >= this.phaseDuration) {
-        this.isPhasing = false
-        this.lastPhaseTime = currentTime
-        
-        // Restore visibility
-        if (this.mesh) {
-          this.mesh.traverse((child) => {
-            if (child.material) {
-              child.material.opacity = 1.0
-              child.material.transparent = false
-            }
-          })
-        }
-      }
-    } else {
-      // Start phasing
-      if (timeSincePhase >= this.phaseInterval) {
-        this.isPhasing = true
-        this.lastPhaseTime = currentTime
-        
-        // Make semi-transparent
-        if (this.mesh) {
-          this.mesh.traverse((child) => {
-            if (child.material) {
-              child.material.transparent = true
-              child.material.opacity = 0.3
-            }
-          })
-        }
-      }
-    }
   }
   
   update(deltaTime) {
     if (this.isDead) return
     
-    const currentTime = Date.now() / 1000
     this.animationTime += deltaTime
     
-    // Update status effects
-    this.updateStatusEffects(deltaTime)
+    // Animate body (floating/bobbing)
+    if (this.bodyMesh) {
+      this.bodyMesh.position.y = 1.2 * this.scale + Math.sin(this.animationTime * 2) * 0.15
+      this.bodyMesh.rotation.y += deltaTime * 0.5
+    }
     
-    // Update phasing
-    this.updatePhasing(currentTime)
+    // Animate core
+    if (this.coreMesh) {
+      this.coreMesh.position.y = 1.2 * this.scale + Math.sin(this.animationTime * 2) * 0.15
+      const pulse = 0.8 + Math.sin(this.animationTime * 4) * 0.2
+      this.coreMesh.scale.setScalar(pulse)
+    }
     
-    // Animate body
-    this.updateAnimation(deltaTime)
+    // Animate glow
+    if (this.glowMesh) {
+      const glowPulse = 1 + Math.sin(this.animationTime * 3) * 0.15
+      this.glowMesh.scale.setScalar(glowPulse)
+    }
+    
+    // Animate particles
+    this.particles.forEach((p, i) => {
+      p.angle += deltaTime * p.speed
+      p.mesh.position.set(
+        Math.cos(p.angle) * p.radius * this.scale,
+        1.2 * this.scale + Math.sin(this.animationTime * 2 + p.yOffset) * 0.3 + p.yOffset,
+        Math.sin(p.angle) * p.radius * this.scale
+      )
+    })
+    
+    // Animate shield
+    if (this.shieldMesh && this.shieldMesh.visible) {
+      const shieldPulse = 1 + Math.sin(this.animationTime * 2) * 0.03
+      this.shieldMesh.scale.setScalar(shieldPulse)
+    }
+    if (this.shieldWire && this.shieldWire.visible) {
+      this.shieldWire.rotation.y += deltaTime * 0.5
+    }
+    
+    // Animate healer aura
+    if (this.auraMesh) {
+      this.auraMesh.rotation.z += deltaTime * 1.5
+      const auraPulse = 1 + Math.sin(this.animationTime * 2) * 0.1
+      this.auraMesh.scale.setScalar(auraPulse)
+    }
+    
+    // Burn damage
+    if (this.burnDamage > 0 && Date.now() < this.burnEndTime) {
+      this.health -= this.burnDamage * deltaTime
+      this.updateHealthBar()
+      if (this.health <= 0) {
+        this.health = 0
+        this.isDead = true
+      }
+    } else if (Date.now() >= this.burnEndTime) {
+      this.burnDamage = 0
+    }
   }
   
   updateAnimation(deltaTime) {
-    if (!this.mesh) return
-    
-    // Bob animation
-    if (this.bodyMesh) {
-      this.bodyMesh.position.y = 1 * this.scale + Math.sin(this.animationTime * 4) * 0.08
-    }
-    
-    // Rotate aura
-    if (this.auraMesh) {
-      this.auraMesh.rotation.z += deltaTime * 1.5
-    }
-    
-    // Shield pulse
-    if (this.shieldMesh && this.shieldMesh.visible) {
-      const pulse = 0.95 + Math.sin(this.animationTime * 3) * 0.05
-      this.shieldMesh.scale.setScalar(pulse)
-    }
-    
-    // Boss pulse effect
-    if (this.isBoss && this.mesh) {
-      const pulse = 1 + Math.sin(this.animationTime * 2) * 0.02
-      this.mesh.scale.setScalar(this.scale * pulse)
-    }
+    this.update(deltaTime)
   }
   
-  // Get split enemies on death
   getSpawnOnDeath() {
     if (this.splitCount > 0 && this.splitType) {
       const spawns = []
@@ -525,7 +630,6 @@ export class Enemy {
     this.reachedEnd = false
     this.slowAmount = 0
     this.burnDamage = 0
-    this.isStunned = false
     this.isEnraged = false
     this.isPhasing = false
     this.path = []
@@ -534,28 +638,12 @@ export class Enemy {
     this.updateHealthBar()
     this.updateShieldBar()
     
-    // Reset visuals
-    if (this.bodyMesh && this.bodyMesh.material) {
-      this.bodyMesh.material.color.setHex(this.color)
-      this.bodyMesh.material.emissive?.setHex(this.glowColor)
-      this.bodyMesh.material.emissiveIntensity = 0.4
-      this.bodyMesh.material.transparent = false
-      this.bodyMesh.material.opacity = 1.0
-    }
-    
-    if (this.mesh) {
-      this.mesh.scale.setScalar(this.scale)
-    }
-    
-    if (this.shieldMesh) {
-      this.shieldMesh.visible = this.shieldHealth > 0
-    }
+    if (this.shieldMesh) this.shieldMesh.visible = this.shieldHealth > 0
+    if (this.shieldWire) this.shieldWire.visible = this.shieldHealth > 0
   }
   
   destroy() {
-    if (this.slowTimer) {
-      clearTimeout(this.slowTimer)
-    }
+    if (this.slowTimer) clearTimeout(this.slowTimer)
     
     if (this.mesh) {
       this.mesh.traverse((child) => {
