@@ -38,8 +38,9 @@ export const getAllProblems = async (req, res) => {
       return { ...p, ...testCaseInfo };
     });
     
-    // Filter to only runnable problems if requested (default: true for production-ready)
-    if (runnableOnly !== 'false') {
+    // Filter to only runnable problems if requested (default: false to show all problems)
+    // Only filter if explicitly requested with runnableOnly=true
+    if (runnableOnly === 'true') {
       problems = problems.filter(p => p.hasTestCases);
     }
     

@@ -1,0 +1,15 @@
+{
+  "id": "eaf9b46b-00eb-460a-a81d-3e7296985656",
+  "problem_id": "449f87d1-3d41-4406-bee2-19993beaf36a",
+  "user_id": "29f2229a-7640-4328-9d01-ed405e4dec47",
+  "code": "function solution() { return 42; }",
+  "language": "javascript",
+  "verdict": "accepted",
+  "test_results": "[]",
+  "execution_time_ms": 100,
+  "memory_used_mb": 10,
+  "test_cases_passed": 5,
+  "test_cases_total": 5,
+  "score": 100,
+  "submitted_at": "2025-12-05T17:01:01.206Z"
+}

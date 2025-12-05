@@ -14,7 +14,8 @@ import {
   LogOut,
   Menu,
   X,
-  BookOpen
+  BookOpen,
+  Briefcase
 } from 'lucide-react'
 import PricingModal from './PricingModal'
 import ProfileSettings from './ProfileSettings'
@@ -51,6 +52,7 @@ export default function Layout({ children }) {
     { path: '/dashboard', label: 'Dashboard', icon: LineChart },
     { path: '/problems', label: 'Problems', icon: Code2 },
     { path: '/learn', label: 'Learn', icon: BookOpen },
+    { path: '/jobs', label: 'Jobs', icon: Briefcase },
     { path: '/play', label: 'Play Game', icon: Gamepad2 },
     { path: '/leaderboard', label: 'Leaderboard', icon: Trophy },
   ]

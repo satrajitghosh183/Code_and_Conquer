@@ -38,8 +38,11 @@ judge/sandbox/
 data/submissions/
 /data
 
-*.glb
-*.glb
-**/Models/
-**/models/
+# Build outputs (dist is generated)
 **/dist/
+
+# 3D Models - hosted on Supabase Storage (too large for GitHub)
+*.glb
+*.gltf
+frontend/Models/
+frontend/public/models/

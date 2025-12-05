@@ -1,5 +1,9 @@
-FROM python:3.11-alpine
+FROM python:3.12-alpine
 
+# Install common libraries for competitive programming (as root)
+RUN pip install --no-cache-dir numpy scipy
+
+# Security: Run as non-root user
 RUN addgroup -g 1001 -S executor && \
     adduser -u 1001 -S executor -G executor
 
@@ -8,6 +12,6 @@ RUN chown executor:executor /sandbox
 
 USER executor
 
-# Install common libraries for competitive programming
-RUN pip install --no-cache-dir numpy
-
+# Environment
+ENV PYTHONDONTWRITEBYTECODE=1
+ENV PYTHONUNBUFFERED=1

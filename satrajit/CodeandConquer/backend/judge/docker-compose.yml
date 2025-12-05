@@ -1,0 +1,55 @@
+# Code & Conquer - Judge Images Docker Compose
+# This file is used to build all judge images at once
+# Run: docker-compose build
+
+version: '3.8'
+
+services:
+  judge-node:
+    build:
+      context: .
+      dockerfile: dockerfiles/Dockerfile.node
+    image: leetcode-judge-node:latest
+    
+  judge-python:
+    build:
+      context: .
+      dockerfile: dockerfiles/Dockerfile.python
+    image: leetcode-judge-python:latest
+    
+  judge-java:
+    build:
+      context: .
+      dockerfile: dockerfiles/Dockerfile.java
+    image: leetcode-judge-java:latest
+    
+  judge-cpp:
+    build:
+      context: .
+      dockerfile: dockerfiles/Dockerfile.cpp
+    image: leetcode-judge-cpp:latest
+    
+  judge-go:
+    build:
+      context: .
+      dockerfile: dockerfiles/Dockerfile.go
+    image: leetcode-judge-go:latest
+    
+  judge-rust:
+    build:
+      context: .
+      dockerfile: dockerfiles/Dockerfile.rust
+    image: leetcode-judge-rust:latest
+    
+  judge-ruby:
+    build:
+      context: .
+      dockerfile: dockerfiles/Dockerfile.ruby
+    image: leetcode-judge-ruby:latest
+    
+  judge-php:
+    build:
+      context: .
+      dockerfile: dockerfiles/Dockerfile.php
+    image: leetcode-judge-php:latest
+

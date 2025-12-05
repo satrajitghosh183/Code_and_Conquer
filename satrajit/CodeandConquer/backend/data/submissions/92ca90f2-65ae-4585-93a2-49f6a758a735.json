@@ -1,0 +1,61 @@
+{
+  "id": "92ca90f2-65ae-4585-93a2-49f6a758a735",
+  "problemId": "2e061f29-fb59-4b4b-8634-f2d7e17dc377",
+  "userId": "2e105d5c-c2ca-4c90-8b1e-fc3f2321c989",
+  "language": "javascript",
+  "code": "function solution(path) {\n    let x = 0, y = 0;\n    let visited = new Set();\n    visited.add('0,0');\n    let crosses = false;\n\n    for (const ch of path) {\n        if (ch === 'N') {\n            y += 1;\n        } else if (ch === 'S') {\n            y -= 1;\n        } else if (ch === 'E') {\n            x += 1;\n        } else if (ch === 'W') {\n            x -= 1;\n        } else {\n            continue;\n        }\n\n        const key = `${x},${y}`;\n        if (visited.has(key)) {\n            crosses = true;\n            break;\n        }\n        visited.add(key);\n    }\n\n    return crosses;  // ✅ Return the result\n}",
+  "status": "accepted",
+  "testResults": [
+    {
+      "testCase": 1,
+      "input": [
+        "NES "
+      ],
+      "expectedOutput": false,
+      "actualOutput": false,
+      "passed": true,
+      "executionTime": 281.02,
+      "memory": 0,
+      "error": null
+    },
+    {
+      "testCase": 2,
+      "input": [
+        "NESWW "
+      ],
+      "expectedOutput": true,
+      "actualOutput": true,
+      "passed": true,
+      "executionTime": 262.91,
+      "memory": 0,
+      "error": null
+    },
+    {
+      "testCase": 3,
+      "input": [
+        "NES "
+      ],
+      "expectedOutput": false,
+      "actualOutput": false,
+      "passed": true,
+      "executionTime": 269.59,
+      "memory": 0,
+      "error": null
+    },
+    {
+      "testCase": 4,
+      "input": [
+        "NESWW "
+      ],
+      "expectedOutput": true,
+      "actualOutput": true,
+      "passed": true,
+      "executionTime": 294.82,
+      "memory": 0,
+      "error": null
+    }
+  ],
+  "executionTime": 1108.34,
+  "memory": 0,
+  "timestamp": "2025-12-05T08:07:00.542Z"
+}

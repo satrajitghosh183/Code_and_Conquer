@@ -12,6 +12,7 @@ const __dirname = path.dirname(__filename);
 
 let docker = null;
 let dockerAvailable = false;
+let dockerImagesAvailable = false;
 
 // Try to initialize Docker
 try {
@@ -19,9 +20,36 @@ try {
   // Test Docker connection
   await docker.ping();
   dockerAvailable = true;
-  console.log('✅ Docker is available - using Docker executor');
+  console.log('✅ Docker daemon is available');
+  
+  // Check if required images exist
+  try {
+    const images = await docker.listImages();
+    const imageNames = images
+      .map(img => img.RepoTags || [])
+      .flat()
+      .filter(name => name && name !== '<none>:<none>');
+    
+    // Check for our judge images
+    const judgeImages = imageNames.filter(name => name.includes('leetcode-judge-'));
+    
+    if (judgeImages.length > 0) {
+      dockerImagesAvailable = true;
+      console.log(`✅ Docker images found (${judgeImages.length} judge images) - using Docker executor`);
+      console.log('   Available:', judgeImages.map(n => n.split(':')[0]).join(', '));
+    } else {
+      dockerImagesAvailable = false;
+      console.log('⚠️ Docker images not built. Run: cd backend/judge && .\\build-images.ps1');
+      console.log('   Falling back to JavaScript/Python executor');
+    }
+  } catch (imgError) {
+    dockerImagesAvailable = false;
+    console.log('⚠️ Could not check Docker images:', imgError.message);
+    console.log('   Falling back to JavaScript/Python executor');
+  }
 } catch (error) {
   dockerAvailable = false;
+  dockerImagesAvailable = false;
   console.log('⚠️ Docker is not available - using fallback executor (JavaScript/Python only)');
 }
 
@@ -46,7 +74,7 @@ const LANGUAGE_CONFIGS = {
     extension: 'ts',
     dockerImage: 'leetcode-judge-node:latest',
     compileCmd: null,
-    runCmd: 'npx tsx solution.ts',
+    runCmd: 'tsx solution.ts',
     memoryLimit: 256 * 1024 * 1024,
     timeout: 10000,
   },
@@ -61,8 +89,8 @@ const LANGUAGE_CONFIGS = {
   java: {
     extension: 'java',
     dockerImage: 'leetcode-judge-java:latest',
-    compileCmd: 'javac Solution.java',
-    runCmd: 'java Solution',
+    compileCmd: 'javac -cp /usr/share/java/gson.jar:. Solution.java',
+    runCmd: 'java -cp /usr/share/java/gson.jar:. Solution',
     memoryLimit: 512 * 1024 * 1024,
     timeout: 15000,
   },
@@ -100,7 +128,7 @@ const LANGUAGE_CONFIGS = {
   },
   ruby: {
     extension: 'rb',
-    dockerImage: 'ruby:3.2-alpine',
+    dockerImage: 'leetcode-judge-ruby:latest',
     compileCmd: null,
     runCmd: 'ruby solution.rb',
     memoryLimit: 256 * 1024 * 1024,
@@ -108,7 +136,7 @@ const LANGUAGE_CONFIGS = {
   },
   php: {
     extension: 'php',
-    dockerImage: 'php:8.2-alpine',
+    dockerImage: 'leetcode-judge-php:latest',
     compileCmd: null,
     runCmd: 'php solution.php',
     memoryLimit: 256 * 1024 * 1024,
@@ -259,9 +287,14 @@ class AdvancedExecutorService {
         };
       }
 
+      // Extract only the last line of output (the JSON result)
+      // This handles cases where user code might have console.log statements
+      const outputLines = output.trim().split('\n').filter(line => line.trim());
+      const lastLine = outputLines.length > 0 ? outputLines[outputLines.length - 1] : output.trim();
+      
       return {
         success: true,
-        output: output.trim(),
+        output: lastLine.trim(),
         executionTime: Math.round(executionTime * 100) / 100,
         memory: Math.round(memoryUsed * 100) / 100,
         error: null
@@ -333,8 +366,8 @@ class AdvancedExecutorService {
   }
 
   async executeCode(code, language, testCase, timeLimit) {
-    // Check if Docker is available
-    if (!dockerAvailable) {
+    // Check if Docker and images are available
+    if (!dockerAvailable || !dockerImagesAvailable) {
       // Use fallback executor
       if (!fallbackExecutor.isSupported(language)) {
         return {
@@ -342,7 +375,7 @@ class AdvancedExecutorService {
           output: null,
           executionTime: 0,
           memory: 0,
-          error: `Docker is not available. Supported languages without Docker: ${fallbackExecutor.getSupportedLanguages().join(', ')}`
+          error: `Docker is not available or images not built. Supported languages without Docker: ${fallbackExecutor.getSupportedLanguages().join(', ')}. To enable all languages, run: cd backend/judge && ./build-images.ps1`
         };
       }
       return await fallbackExecutor.executeCode(code, language, testCase, timeLimit);
@@ -370,14 +403,14 @@ class AdvancedExecutorService {
     });
   }
 
-  // Check if Docker is available
+  // Check if Docker is available and images are built
   isDockerAvailable() {
-    return dockerAvailable;
+    return dockerAvailable && dockerImagesAvailable;
   }
 
   // Get list of available languages
   getAvailableLanguages() {
-    if (dockerAvailable) {
+    if (dockerAvailable && dockerImagesAvailable) {
       return Object.keys(LANGUAGE_CONFIGS);
     }
     return fallbackExecutor.getSupportedLanguages();
@@ -394,6 +427,7 @@ ${code}
 
 const input = ${JSON.stringify(input)};
 const result = solution(...input);
+// Output only the result as the last line
 console.log(JSON.stringify(result));
 `;
 
@@ -531,8 +565,8 @@ echo json_encode($result);
   }
 
   async runTestCases(code, language, testCases) {
-    // Use fallback executor if Docker is not available
-    if (!dockerAvailable) {
+    // Use fallback executor if Docker is not available or images not built
+    if (!dockerAvailable || !dockerImagesAvailable) {
       return await fallbackExecutor.runTestCases(code, language, testCases);
     }
 
@@ -564,17 +598,29 @@ echo json_encode($result);
         this.compareOutput(result.output, testCase.expectedOutput);
 
       // Parse actual output for display
-      let actualOutputParsed = result.output;
+      // Extract only the last line to handle cases where user code has console.log statements
+      let outputToParse = result.output;
+      if (typeof outputToParse === 'string') {
+        const lines = outputToParse.trim().split('\n').filter(line => line.trim());
+        outputToParse = lines.length > 0 ? lines[lines.length - 1] : outputToParse.trim();
+      }
+      
+      let actualOutputParsed = outputToParse;
       try {
-        if (typeof result.output === 'string') {
+        if (typeof outputToParse === 'string') {
           try {
-            actualOutputParsed = JSON.parse(result.output.trim());
+            actualOutputParsed = JSON.parse(outputToParse);
           } catch {
-            actualOutputParsed = result.output.trim();
+            // If not JSON, try to parse as boolean/number
+            const trimmed = outputToParse.trim().toLowerCase();
+            if (trimmed === 'true') actualOutputParsed = true;
+            else if (trimmed === 'false') actualOutputParsed = false;
+            else if (!isNaN(trimmed)) actualOutputParsed = Number(trimmed);
+            else actualOutputParsed = outputToParse.trim();
           }
         }
       } catch (e) {
-        actualOutputParsed = result.output;
+        actualOutputParsed = outputToParse;
       }
 
       results.push({
@@ -670,8 +716,8 @@ echo json_encode($result);
   }
 
   async analyzeTimeComplexity(code, language, testCases) {
-    // Use fallback if Docker is not available
-    if (!dockerAvailable) {
+    // Use fallback if Docker is not available or images not built
+    if (!dockerAvailable || !dockerImagesAvailable) {
       return await fallbackExecutor.analyzeTimeComplexity(code, language, testCases);
     }
 

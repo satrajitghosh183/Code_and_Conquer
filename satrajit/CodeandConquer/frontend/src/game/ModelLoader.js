@@ -1,39 +1,67 @@
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js'
 import * as THREE from 'three'
 
+// ============================================================
+// MODEL STORAGE CONFIGURATION
+// ============================================================
+// In production, models are loaded from Supabase Storage
+// Set VITE_MODELS_BASE_URL in .env to your Supabase Storage URL:
+// Example: https://cbekdaqtdqqwzyexmfgp.supabase.co/storage/v1/object/public/models
+// 
+// For local development, leave it empty to load from public folder
+// ============================================================
+
+const MODELS_BASE_URL = import.meta.env.VITE_MODELS_BASE_URL || ''
+
+// Helper to get full model path (local or Supabase Storage)
+const getModelPath = (filename) => {
+  if (MODELS_BASE_URL) {
+    // For Supabase Storage, just use the filename directly
+    return `${MODELS_BASE_URL}/${filename}`
+  }
+  // For local development, check if it's from Models or models folder
+  if (filename.includes('aa_turret') || filename.includes('combat_turret') || 
+      filename.includes('gun_tower') || filename.includes('hoth_defense') ||
+      filename.includes('modular_wall') || filename.includes('sci-fi_wall') ||
+      filename.includes('spaceship') || filename.includes('future_architectural')) {
+    return `/Models/${filename}`
+  }
+  return `/models/${filename}`
+}
+
 const MODEL_PATHS = {
   // Towers - from public/models
-  'medieval_towers': '/models/3_medieval_towers.glb',
-  'heavy_cannon': '/models/heavy_cannon_tower.glb',
-  'watch_tower': '/models/watch_tower.glb',
-  'kickelhahn': '/models/kickelhahn_tower.glb',
-  'cannon': '/models/shedders_cannon.glb',
+  'medieval_towers': getModelPath('3_medieval_towers.glb'),
+  'heavy_cannon': getModelPath('heavy_cannon_tower.glb'),
+  'watch_tower': getModelPath('watch_tower.glb'),
+  'kickelhahn': getModelPath('kickelhahn_tower.glb'),
+  'cannon': getModelPath('shedders_cannon.glb'),
   
   // New Towers - from Models directory
-  'aa_turret': '/Models/aa_turret.glb',
-  'combat_turret': '/Models/combat_turret.glb',
-  'gun_tower': '/Models/gun_tower.glb',
-  'hoth_turret': '/Models/hoth_defense_turret_-_star_wars.glb',
+  'aa_turret': getModelPath('aa_turret.glb'),
+  'combat_turret': getModelPath('combat_turret.glb'),
+  'gun_tower': getModelPath('gun_tower.glb'),
+  'hoth_turret': getModelPath('hoth_defense_turret_-_star_wars.glb'),
   
   // Walls & Structures
-  'castle_walls': '/models/tower_and_castle_walls.glb',
-  'modular_wall': '/Models/modular_wall.glb',
-  'sci_fi_wall': '/Models/sci-fi_wall.glb',
+  'castle_walls': getModelPath('tower_and_castle_walls.glb'),
+  'modular_wall': getModelPath('modular_wall.glb'),
+  'sci_fi_wall': getModelPath('sci-fi_wall.glb'),
   
   // Units
-  'troop': '/models/troop_astro_mega_v2.glb',
-  'spaceship': '/Models/spaceship.glb',
-  'spaceship_clst': '/Models/spaceship_clst_500.glb',
+  'troop': getModelPath('troop_astro_mega_v2.glb'),
+  'spaceship': getModelPath('spaceship.glb'),
+  'spaceship_clst': getModelPath('spaceship_clst_500.glb'),
   
   // Heroes
-  'snake': '/models/snake_model.glb',
-  'dragon': '/models/wooden_dragon.glb',
+  'snake': getModelPath('snake_model.glb'),
+  'dragon': getModelPath('wooden_dragon.glb'),
   
   // Special
-  'mortar': '/models/m1064a3_mortar_carrier.glb',
-  'astro_shedder': '/models/astro_shedder_toilet.glb',
-  'future_architectural': '/Models/future_architectural.glb',
-  'fighter_jet': '/models/mwt_shenyang_j-35.glb'
+  'mortar': getModelPath('m1064a3_mortar_carrier.glb'),
+  'astro_shedder': getModelPath('astro_shedder_toilet.glb'),
+  'future_architectural': getModelPath('future_architectural.glb'),
+  'fighter_jet': getModelPath('mwt_shenyang_j-35.glb')
 }
 
 // Model scales - ensures all models are properly sized relative to game world

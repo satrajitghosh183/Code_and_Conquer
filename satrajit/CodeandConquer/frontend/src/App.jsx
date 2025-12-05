@@ -23,6 +23,7 @@ const GameModeSelection = lazy(() => import('./pages/GameModeSelection'))
 const MatchPage = lazy(() => import('./pages/MatchPage'))
 const LeaderboardPage = lazy(() => import('./pages/LeaderboardPage'))
 const LearningModulesPage = lazy(() => import('./pages/LearningModulesPage'))
+const JobRecommendationsPage = lazy(() => import('./pages/JobRecommendationsPage'))
 
 // Component to handle OAuth callback - must be inside AuthProvider
 function OAuthCallbackHandler() {
@@ -244,6 +245,18 @@ function AppRoutes() {
             <Layout>
               <SuspenseWrapper>
                 <LearningModulesPage />
+              </SuspenseWrapper>
+            </Layout>
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/jobs"
+        element={
+          <ProtectedRoute>
+            <Layout>
+              <SuspenseWrapper>
+                <JobRecommendationsPage />
               </SuspenseWrapper>
             </Layout>
           </ProtectedRoute>

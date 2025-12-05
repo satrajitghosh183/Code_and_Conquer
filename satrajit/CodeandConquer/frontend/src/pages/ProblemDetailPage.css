@@ -466,6 +466,20 @@
   flex-shrink: 0;
 }
 
+.run-success-hint {
+  margin-top: 12px;
+  padding: 8px 12px;
+  background: rgba(81, 207, 102, 0.1);
+  border: 1px solid rgba(81, 207, 102, 0.3);
+  border-radius: 8px;
+  color: #8e8e93;
+  font-size: 0.9rem;
+}
+
+.run-success-hint strong {
+  color: #51cf66;
+}
+
 .error-message {
   padding: 16px;
   background: rgba(255, 107, 107, 0.15);
@@ -696,12 +710,35 @@
 }
 
 .complexity-analysis .complexity-item code {
-  color: #b794f6;
   font-family: 'Fira Code', 'Courier New', monospace;
   font-size: 13px;
+  padding: 4px 10px;
+  border-radius: 6px;
+}
+
+.complexity-analysis .complexity-item code.complexity-badge {
+  color: #b794f6;
   background: rgba(138, 43, 226, 0.2);
-  padding: 2px 6px;
-  border-radius: 4px;
+}
+
+.complexity-analysis .complexity-item code.complexity-badge.constant {
+  color: #51cf66;
+  background: rgba(81, 207, 102, 0.15);
+}
+
+.complexity-analysis .complexity-item code.complexity-badge.logarithmic {
+  color: #22c55e;
+  background: rgba(34, 197, 94, 0.15);
+}
+
+.complexity-analysis .complexity-item code.complexity-badge.linear {
+  color: #3b82f6;
+  background: rgba(59, 130, 246, 0.15);
+}
+
+.complexity-analysis .complexity-item code.complexity-badge.quadratic {
+  color: #f59e0b;
+  background: rgba(245, 158, 11, 0.15);
 }
 
 .complexity-analysis .complexity-item .confidence-badge {

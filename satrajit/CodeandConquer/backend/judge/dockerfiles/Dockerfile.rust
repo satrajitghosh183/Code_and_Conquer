@@ -1,5 +1,9 @@
-FROM rust:1.75-alpine
+FROM rust:1.77-alpine
 
+# Install build dependencies
+RUN apk add --no-cache musl-dev
+
+# Security: Run as non-root user
 RUN addgroup -g 1001 -S executor && \
     adduser -u 1001 -S executor -G executor
 
@@ -8,3 +12,5 @@ RUN chown executor:executor /sandbox
 
 USER executor
 
+# Environment for faster compilation
+ENV CARGO_HOME=/sandbox/.cargo

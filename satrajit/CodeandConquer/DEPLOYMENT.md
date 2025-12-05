@@ -1,150 +1,252 @@
 # 🚀 Code and Conquer - Deployment Guide
 
-Complete guide for deploying Code and Conquer to production environments.
+Complete guide for deploying Code and Conquer to production with **Vercel** (frontend) and **Render** (backend), with 3D models hosted on **GitHub CDN**.
 
 ## 📋 Table of Contents
 
-- [Prerequisites](#prerequisites)
-- [Environment Setup](#environment-setup)
-- [Local Development](#local-development)
-- [Docker Deployment](#docker-deployment)
-- [Cloud Deployment Options](#cloud-deployment-options)
-- [Database Setup](#database-setup)
-- [Monitoring & Logging](#monitoring--logging)
+- [Quick Start (Recommended)](#quick-start-recommended)
+- [Step 1: Push to GitHub](#step-1-push-to-github)
+- [Step 2: Deploy Backend to Render](#step-2-deploy-backend-to-render)
+- [Step 3: Deploy Frontend to Vercel](#step-3-deploy-frontend-to-vercel)
+- [Step 4: Configure 3D Models CDN](#step-4-configure-3d-models-cdn)
+- [Step 5: Update OAuth & Supabase](#step-5-update-oauth--supabase)
+- [Alternative Deployment Options](#alternative-deployment-options)
 - [Troubleshooting](#troubleshooting)
 
-## Prerequisites
+---
 
-### Required Services
+## Quick Start (Recommended)
 
-1. **Supabase Account** - For authentication and database
-   - Sign up at [supabase.com](https://supabase.com)
-   - Create a new project
-   - Note your project URL and keys
+```bash
+# 1. Push your code to GitHub
+git init
+git add .
+git commit -m "Initial commit"
+git remote add origin https://github.com/YOUR_USERNAME/CodeandConquer.git
+git push -u origin main
 
-2. **Node.js 20+** - For local development
-   - Download from [nodejs.org](https://nodejs.org)
+# 2. Deploy Backend: Go to render.com → New → Blueprint → Connect GitHub repo
+# 3. Deploy Frontend: Go to vercel.com → Import → Select GitHub repo → Set root to 'frontend'
+# 4. Set environment variables in both platforms (see sections below)
+```
 
-3. **Docker & Docker Compose** - For containerized deployment
-   - Download from [docker.com](https://docker.com)
+---
 
-### Optional Services
+## Step 1: Push to GitHub
 
-- **Stripe** - For payment processing (premium features)
-- **Redis** - For caching and session storage
+### Create a new GitHub repository
 
-## Environment Setup
+1. Go to [github.com/new](https://github.com/new)
+2. Create a repository named `CodeandConquer` (or your preferred name)
+3. Keep it **Public** (required for free jsDelivr CDN) or **Private** with paid CDN
+4. Don't initialize with README (you already have one)
 
-### Backend Environment Variables
+### Push your code
 
-Create `backend/.env` from `backend/env.example`:
+```bash
+# Initialize git if not already done
+git init
+
+# Add all files
+git add .
+
+# Commit
+git commit -m "Initial commit - Code and Conquer"
+
+# Add your remote
+git remote add origin https://github.com/YOUR_USERNAME/CodeandConquer.git
+
+# Push
+git push -u origin main
+```
+
+---
+
+## Step 2: Deploy Backend to Render
+
+### Option A: Using Render Blueprint (Easiest)
+
+1. Go to [render.com](https://render.com) and sign up/login
+2. Click **New** → **Blueprint**
+3. Connect your GitHub account and select your repository
+4. Render will auto-detect the `render.yaml` configuration
+5. Set the required environment variables:
+
+| Variable | Value |
+|----------|-------|
+| `SUPABASE_URL` | `https://cbekdaqtdqqwzyexmfgp.supabase.co` |
+| `SUPABASE_SERVICE_ROLE_KEY` | Your Supabase service role key |
+| `CLIENT_URL` | `https://your-app.vercel.app` (update after frontend deploys) |
+| `STRIPE_SECRET_KEY` | (Optional) Your Stripe secret key |
+| `STRIPE_WEBHOOK_SECRET` | (Optional) Your Stripe webhook secret |
+
+6. Click **Apply** and wait for deployment
+
+### Option B: Manual Web Service
+
+1. Go to [render.com](https://render.com) → **New** → **Web Service**
+2. Connect your GitHub repo
+3. Configure:
+   - **Name**: `code-and-conquer-backend`
+   - **Root Directory**: `backend`
+   - **Runtime**: Node
+   - **Build Command**: `npm ci --only=production`
+   - **Start Command**: `npm start`
+4. Add environment variables as shown above
+5. Deploy
+
+### Get your Backend URL
+
+After deployment, your backend will be available at:
+```
+https://code-and-conquer-backend.onrender.com
+```
+
+Save this URL for the frontend configuration.
+
+---
+
+## Step 3: Deploy Frontend to Vercel
+
+### Deploy via Vercel Dashboard
+
+1. Go to [vercel.com](https://vercel.com) and sign up/login with GitHub
+2. Click **Add New** → **Project**
+3. Import your `CodeandConquer` repository
+4. Configure the project:
+   - **Framework Preset**: Vite
+   - **Root Directory**: `frontend`
+   - **Build Command**: `npm run build`
+   - **Output Directory**: `dist`
+
+5. Add Environment Variables:
+
+| Variable | Value |
+|----------|-------|
+| `VITE_API_URL` | `https://code-and-conquer-backend.onrender.com/api` |
+| `VITE_SUPABASE_URL` | `https://cbekdaqtdqqwzyexmfgp.supabase.co` |
+| `VITE_SUPABASE_ANON_KEY` | Your Supabase anon key |
+| `VITE_MODELS_CDN_URL` | `https://cdn.jsdelivr.net/gh/YOUR_USERNAME/CodeandConquer@main/frontend` |
+| `VITE_STRIPE_PUBLISHABLE_KEY` | (Optional) Your Stripe publishable key |
+| `VITE_STRIPE_PRICE_ID` | (Optional) Your Stripe price ID |
+
+6. Click **Deploy**
+
+### Get your Frontend URL
+
+After deployment, your frontend will be available at:
+```
+https://your-project.vercel.app
+```
+
+---
+
+## Step 4: Configure 3D Models CDN
+
+Your 3D models are automatically served via **jsDelivr CDN** from your GitHub repository.
+
+### How it works
+
+jsDelivr is a free CDN that serves files directly from GitHub. The URL format is:
+```
+https://cdn.jsdelivr.net/gh/USERNAME/REPO@BRANCH/PATH
+```
+
+For your models:
+```
+https://cdn.jsdelivr.net/gh/YOUR_USERNAME/CodeandConquer@main/frontend/models/watch_tower.glb
+https://cdn.jsdelivr.net/gh/YOUR_USERNAME/CodeandConquer@main/frontend/Models/aa_turret.glb
+```
+
+### Set the Environment Variable
+
+In **Vercel** (frontend):
+```
+VITE_MODELS_CDN_URL=https://cdn.jsdelivr.net/gh/YOUR_USERNAME/CodeandConquer@main/frontend
+```
+
+### Verify Models are Loading
+
+After deployment, open browser DevTools (F12) → Network tab and check that model files are loading from `cdn.jsdelivr.net`.
+
+### Alternative: Use Supabase Storage
+
+If you prefer to host models in Supabase Storage:
+
+1. Go to Supabase Dashboard → Storage → Create bucket named `models`
+2. Set bucket to **Public**
+3. Upload all `.glb` files from `frontend/public/models/` and `frontend/Models/`
+4. Use this as your CDN URL:
+   ```
+   VITE_MODELS_CDN_URL=https://cbekdaqtdqqwzyexmfgp.supabase.co/storage/v1/object/public/models
+   ```
+
+---
+
+## Step 5: Update OAuth & Supabase
+
+### Update Supabase Auth Settings
+
+1. Go to [Supabase Dashboard](https://supabase.com/dashboard)
+2. Select your project
+3. Go to **Authentication** → **URL Configuration**
+4. Update:
+   - **Site URL**: `https://your-project.vercel.app`
+   - **Redirect URLs**: Add `https://your-project.vercel.app/*`
+
+### Update Backend CORS
+
+Go to Render Dashboard and update the `CLIENT_URL` environment variable:
+```
+CLIENT_URL=https://your-project.vercel.app
+```
+
+Trigger a redeploy in Render.
+
+---
+
+## Environment Variables Summary
+
+### Backend (Render)
 
 ```bash
 # Required
-SUPABASE_URL=https://your-project.supabase.co
-SUPABASE_SERVICE_ROLE_KEY=your-service-role-key
-
-# Server Configuration
+NODE_ENV=production
 PORT=5000
 HOST=0.0.0.0
-NODE_ENV=production
-CLIENT_URL=https://your-frontend-domain.com
+DATABASE_TYPE=supabase
+SUPABASE_URL=https://cbekdaqtdqqwzyexmfgp.supabase.co
+SUPABASE_SERVICE_ROLE_KEY=your-service-role-key
+CLIENT_URL=https://your-app.vercel.app
 
-# Optional: Payments
+# Optional
 STRIPE_SECRET_KEY=sk_live_xxx
 STRIPE_WEBHOOK_SECRET=whsec_xxx
-
-# Optional: Rate Limiting
+LOG_LEVEL=info
 RATE_LIMIT_WINDOW_MS=60000
 RATE_LIMIT_MAX_REQUESTS=100
 EXECUTION_TIMEOUT=10000
-LOG_LEVEL=info
 ```
 
-### Frontend Environment Variables
-
-Create `frontend/.env` from `frontend/env.example`:
+### Frontend (Vercel)
 
 ```bash
-VITE_API_URL=https://your-api-domain.com/api
-VITE_SUPABASE_URL=https://your-project.supabase.co
+# Required
+VITE_API_URL=https://your-backend.onrender.com/api
+VITE_SUPABASE_URL=https://cbekdaqtdqqwzyexmfgp.supabase.co
 VITE_SUPABASE_ANON_KEY=your-anon-key
+VITE_MODELS_CDN_URL=https://cdn.jsdelivr.net/gh/username/repo@main/frontend
 
-# Optional: Payments
+# Optional
 VITE_STRIPE_PUBLISHABLE_KEY=pk_live_xxx
 VITE_STRIPE_PRICE_ID=price_xxx
 ```
 
-## Local Development
+---
 
-### Quick Start
+## Alternative Deployment Options
 
-```bash
-# Clone repository
-git clone https://github.com/your-repo/code-and-conquer.git
-cd code-and-conquer
-
-# Install dependencies
-cd backend && npm install && cd ..
-cd frontend && npm install && cd ..
-
-# Start development servers
-# Terminal 1 - Backend
-cd backend && npm run dev
-
-# Terminal 2 - Frontend
-cd frontend && npm run dev
-```
-
-### With Docker (Development)
-
-```bash
-# Build and run with Docker Compose
-docker-compose -f docker-compose.yml up --build
-
-# Or run with Redis for caching
-docker-compose --profile with-redis up --build
-```
-
-## Docker Deployment
-
-### Production Build
-
-```bash
-# Create .env file in root directory
-cp .env.example .env
-# Edit .env with your production values
-
-# Build and run
-docker-compose up -d --build
-
-# View logs
-docker-compose logs -f
-
-# Check health
-curl http://localhost:5000/api/health
-```
-
-### Docker Commands Reference
-
-```bash
-# Stop services
-docker-compose down
-
-# Rebuild a specific service
-docker-compose build backend
-docker-compose up -d backend
-
-# View container stats
-docker stats
-
-# Access container shell
-docker exec -it cac-backend sh
-```
-
-## Cloud Deployment Options
-
-### 1. Fly.io (Recommended)
+### Fly.io (Backend)
 
 ```bash
 # Install Fly CLI
@@ -155,246 +257,117 @@ fly auth login
 
 # Deploy backend
 cd backend
-fly launch --name your-app-backend
-fly secrets set SUPABASE_URL=xxx SUPABASE_SERVICE_ROLE_KEY=xxx
-fly deploy
-
-# Deploy frontend
-cd ../frontend
-fly launch --name your-app-frontend
+fly launch --name code-and-conquer-backend
+fly secrets set SUPABASE_URL=xxx SUPABASE_SERVICE_ROLE_KEY=xxx CLIENT_URL=xxx
 fly deploy
 ```
 
-### 2. Railway
+### Railway
 
 ```bash
 # Install Railway CLI
 npm install -g @railway/cli
 
-# Login
+# Login & deploy
 railway login
-
-# Deploy from render.yaml blueprint
 railway up
 ```
 
-Or use the web interface:
-1. Go to [railway.app](https://railway.app)
-2. Connect your GitHub repository
-3. Railway will auto-detect the `render.yaml` configuration
-
-### 3. Render
-
-1. Go to [render.com](https://render.com)
-2. Create a new "Blueprint" instance
-3. Connect your GitHub repository
-4. Render will use the `render.yaml` configuration
-
-### 4. DigitalOcean App Platform
-
-```yaml
-# app.yaml for DigitalOcean
-spec:
-  name: code-and-conquer
-  services:
-    - name: backend
-      source:
-        repo: your-repo
-        branch: main
-        root: backend
-      run_command: npm start
-      environment_slug: node-js
-      envs:
-        - key: NODE_ENV
-          value: production
-    - name: frontend
-      source:
-        repo: your-repo
-        branch: main
-        root: frontend
-      build_command: npm ci && npm run build
-      environment_slug: static
-```
-
-## Database Setup
-
-### Supabase Schema
-
-Run these SQL commands in Supabase SQL Editor:
-
-```sql
--- Enable required extensions
-CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
-
--- Profiles table
-CREATE TABLE IF NOT EXISTS profiles (
-  id UUID PRIMARY KEY REFERENCES auth.users(id) ON DELETE CASCADE,
-  username TEXT UNIQUE,
-  avatar_url TEXT,
-  xp INTEGER DEFAULT 0,
-  level INTEGER DEFAULT 1,
-  coins INTEGER DEFAULT 0,
-  created_at TIMESTAMPTZ DEFAULT NOW(),
-  updated_at TIMESTAMPTZ DEFAULT NOW()
-);
-
--- Problems table
-CREATE TABLE IF NOT EXISTS problems (
-  id TEXT PRIMARY KEY,
-  title TEXT NOT NULL,
-  slug TEXT UNIQUE,
-  description TEXT,
-  difficulty TEXT CHECK (difficulty IN ('easy', 'medium', 'hard')),
-  category TEXT,
-  xp_reward INTEGER DEFAULT 10,
-  time_limit_ms INTEGER DEFAULT 5000,
-  memory_limit_mb INTEGER DEFAULT 256,
-  starter_code JSONB DEFAULT '{}',
-  solution_code TEXT,
-  test_cases JSONB DEFAULT '[]',
-  hidden_test_cases JSONB DEFAULT '[]',
-  tags JSONB DEFAULT '[]',
-  constraints JSONB DEFAULT '[]',
-  hints JSONB DEFAULT '[]',
-  is_premium BOOLEAN DEFAULT false,
-  created_by UUID REFERENCES auth.users(id),
-  created_at TIMESTAMPTZ DEFAULT NOW(),
-  updated_at TIMESTAMPTZ DEFAULT NOW()
-);
-
--- Submissions table
-CREATE TABLE IF NOT EXISTS submissions (
-  id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
-  problem_id TEXT REFERENCES problems(id),
-  user_id UUID REFERENCES auth.users(id),
-  code TEXT NOT NULL,
-  language TEXT NOT NULL,
-  verdict TEXT DEFAULT 'pending',
-  test_results JSONB DEFAULT '[]',
-  execution_time_ms INTEGER DEFAULT 0,
-  memory_used_mb NUMERIC DEFAULT 0,
-  test_cases_passed INTEGER DEFAULT 0,
-  test_cases_total INTEGER DEFAULT 0,
-  score INTEGER,
-  submitted_at TIMESTAMPTZ DEFAULT NOW()
-);
-
--- RLS Policies
-ALTER TABLE profiles ENABLE ROW LEVEL SECURITY;
-ALTER TABLE problems ENABLE ROW LEVEL SECURITY;
-ALTER TABLE submissions ENABLE ROW LEVEL SECURITY;
-
--- Profiles: Users can read all, update own
-CREATE POLICY "Public profiles are viewable by everyone"
-  ON profiles FOR SELECT USING (true);
-
-CREATE POLICY "Users can update own profile"
-  ON profiles FOR UPDATE USING (auth.uid() = id);
-
--- Problems: Everyone can read
-CREATE POLICY "Problems are viewable by everyone"
-  ON problems FOR SELECT USING (true);
-
--- Submissions: Users can read own, insert own
-CREATE POLICY "Users can view own submissions"
-  ON submissions FOR SELECT USING (auth.uid() = user_id);
-
-CREATE POLICY "Users can insert own submissions"
-  ON submissions FOR INSERT WITH CHECK (auth.uid() = user_id);
-
--- Create indexes for performance
-CREATE INDEX idx_problems_difficulty ON problems(difficulty);
-CREATE INDEX idx_problems_category ON problems(category);
-CREATE INDEX idx_submissions_user_id ON submissions(user_id);
-CREATE INDEX idx_submissions_problem_id ON submissions(problem_id);
-```
-
-## Monitoring & Logging
-
-### Health Checks
-
-The backend provides these health endpoints:
-
-- `GET /api/health` - Detailed health status
-- `GET /api/ready` - Readiness probe
-
-Example response:
-```json
-{
-  "status": "ok",
-  "timestamp": "2024-12-04T10:00:00.000Z",
-  "uptime": 3600,
-  "services": {
-    "authDatabase": true,
-    "storage": true,
-    "publicDatabase": true
-  },
-  "memory": {
-    "used": 128,
-    "total": 256,
-    "unit": "MB"
-  }
-}
-```
-
-### Log Levels
-
-Set `LOG_LEVEL` environment variable:
-- `error` - Only errors
-- `warn` - Warnings and errors
-- `info` - General info (recommended for production)
-- `debug` - Detailed debugging (development)
-
-### Container Logs
+### Docker Compose (Self-hosted)
 
 ```bash
-# View all logs
+# Create .env file in root
+cp .env.example .env
+# Edit .env with your values
+
+# Build and run
+docker-compose up -d --build
+
+# View logs
 docker-compose logs -f
-
-# View specific service
-docker-compose logs -f backend
-
-# Last 100 lines
-docker-compose logs --tail=100 backend
 ```
+
+---
 
 ## Troubleshooting
 
-### Common Issues
+### Models not loading in production
 
-#### 1. CORS Errors
-Ensure `CLIENT_URL` in backend matches your frontend domain exactly.
+1. Check browser DevTools → Network tab for 404 errors
+2. Verify `VITE_MODELS_CDN_URL` is set correctly
+3. Make sure your GitHub repo is **public** for jsDelivr
+4. Try accessing a model URL directly in browser
 
-#### 2. Supabase Connection Failed
-- Verify `SUPABASE_URL` and `SUPABASE_SERVICE_ROLE_KEY`
-- Check if your IP is allowlisted in Supabase settings
+### CORS Errors
 
-#### 3. Container Won't Start
+1. Verify `CLIENT_URL` in backend matches your frontend URL exactly
+2. Check for trailing slashes (shouldn't have one)
+3. Redeploy backend after updating environment variables
+
+### Supabase Connection Failed
+
+1. Verify `SUPABASE_URL` and `SUPABASE_SERVICE_ROLE_KEY`
+2. Check Supabase dashboard for any IP restrictions
+3. Ensure your Supabase project is active (not paused)
+
+### Build Failures
+
+**Backend on Render:**
 ```bash
 # Check logs
-docker-compose logs backend
-
-# Verify environment variables
-docker-compose config
+# Render Dashboard → Your Service → Logs
 ```
 
-#### 4. High Memory Usage
-- Reduce `RATE_LIMIT_MAX_REQUESTS`
-- Lower `EXECUTION_TIMEOUT`
-- Consider adding Redis for caching
+**Frontend on Vercel:**
+```bash
+# Check build logs
+# Vercel Dashboard → Your Project → Deployments → Click latest → Build Logs
+```
 
-### Support
+### Health Check
 
-For issues, please:
-1. Check the logs: `docker-compose logs -f`
-2. Verify environment variables
-3. Check health endpoint: `curl /api/health`
+Test your backend is running:
+```bash
+curl https://your-backend.onrender.com/api/health
+```
+
+Expected response:
+```json
+{
+  "status": "ok",
+  "timestamp": "2024-12-05T10:00:00.000Z",
+  "uptime": 3600
+}
+```
+
+---
+
+## Production Checklist
+
+- [ ] Code pushed to GitHub
+- [ ] Backend deployed to Render
+- [ ] Frontend deployed to Vercel
+- [ ] Environment variables set in both platforms
+- [ ] `CLIENT_URL` updated to Vercel URL
+- [ ] Supabase auth redirect URLs updated
+- [ ] 3D models loading from CDN
+- [ ] Health check endpoint responding
+- [ ] Can login/register users
+- [ ] Can load and play games
+
+---
+
+## Support
+
+If you encounter issues:
+1. Check deployment logs
+2. Verify all environment variables
+3. Test health endpoint
 4. Create a GitHub issue with:
    - Error message
-   - Environment (local/docker/cloud)
+   - Deployment platform
    - Steps to reproduce
 
 ---
 
-Happy deploying! 🎮
-
+Happy deploying! 🎮🚀

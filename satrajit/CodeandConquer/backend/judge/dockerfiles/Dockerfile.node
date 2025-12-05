@@ -1,17 +1,17 @@
-FROM node:18-alpine
+FROM node:20-alpine
 
 # Security: Run as non-root user
 RUN addgroup -g 1001 -S executor && \
     adduser -u 1001 -S executor -G executor
 
-# Set resource limits
-RUN ulimit -n 1024
+# Install TypeScript support globally
+RUN npm install -g tsx typescript
 
 WORKDIR /sandbox
 RUN chown executor:executor /sandbox
 
 USER executor
 
-# Prevent network access
+# Environment
 ENV NODE_ENV=production
-
+ENV NO_COLOR=1

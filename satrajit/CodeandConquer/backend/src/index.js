@@ -37,6 +37,7 @@ import learningModuleRoutes from './routes/learningModuleRoutes.js';
 import adRoutes from './routes/adRoutes.js';
 import progressionRoutes from './routes/progressionRoutes.js';
 import singlePlayerRoutes from './routes/singlePlayerRoutes.js';
+import jobRoutes from './routes/jobRoutes.js';
 
 // Import services
 import matchmakingService from './services/matchmakingService.js';
@@ -48,6 +49,8 @@ import realtimeService from './services/realtimeService.js';
 import publicDatabaseService from './services/publicDatabaseService.js';
 import learningModuleService from './services/learningModuleService.js';
 import adService from './services/adService.js';
+import jobRecommendationService from './services/jobRecommendationService.js';
+import jobScraperService from './services/jobScraperService.js';
 
 // Validate environment
 validateEnvironment();
@@ -145,6 +148,7 @@ app.use('/api/progression', progressionRoutes);
 app.use('/api/singleplayer', singlePlayerRoutes);
 app.use('/api/learning-modules', learningModuleRoutes);
 app.use('/api/ads', adRoutes);
+app.use('/api/jobs', jobRoutes);
 
 // Enhanced health check endpoint
 app.get('/api/health', (req, res) => {
@@ -161,6 +165,8 @@ app.get('/api/health', (req, res) => {
       publicDatabase: publicDatabaseService.isAvailable(),
       learningModules: learningModuleService.isAvailable(),
       ads: adService.isAvailable(),
+      jobRecommendations: jobRecommendationService.isAvailable(),
+      jobScraper: jobScraperService.isAvailable(),
       matchmaking: true,
       game: true
     },

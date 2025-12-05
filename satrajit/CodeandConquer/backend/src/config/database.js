@@ -207,11 +207,37 @@ class Database {
       const visible = [];
       const hidden = [];
       
+      // Helper function to parse JSON fields that might be stored as strings
+      const parseJsonField = (field) => {
+        if (field === null || field === undefined) return null;
+        if (typeof field === 'string') {
+          try {
+            return JSON.parse(field);
+          } catch {
+            // If it's not valid JSON, return as-is (might be a simple string value)
+            return field;
+          }
+        }
+        return field; // Already parsed (object/array/number/boolean)
+      };
+      
       for (const tc of data) {
+        // Parse input and expected_output - they might be JSON strings in the database
+        const parsedInput = parseJsonField(tc.input);
+        const parsedExpectedOutput = parseJsonField(tc.expected_output);
+        
+        // Ensure input is always an array (for spreading into function call)
+        // If it's already an array, use it; otherwise wrap it
+        let inputArray = parsedInput;
+        if (!Array.isArray(parsedInput)) {
+          // If it's a single value, wrap it in an array
+          inputArray = parsedInput !== null ? [parsedInput] : [];
+        }
+        
         const testCase = {
-          input: tc.input,
-          expectedOutput: tc.expected_output,
-          explanation: tc.explanation
+          input: inputArray,
+          expectedOutput: parsedExpectedOutput,
+          explanation: tc.explanation || null
         };
         
         if (tc.is_hidden) {
@@ -402,10 +428,45 @@ class Database {
   }
 
   mapSupabaseProblem(data) {
+    // Helper function to deeply parse JSON that might be double-stringified
+    const deepParseJson = (value) => {
+      if (value === null || value === undefined) return value;
+      if (typeof value !== 'string') return value;
+      
+      try {
+        const parsed = JSON.parse(value);
+        // Recursively parse if the result is still a string that looks like JSON
+        if (typeof parsed === 'string' && (parsed.startsWith('[') || parsed.startsWith('{'))) {
+          return deepParseJson(parsed);
+        }
+        return parsed;
+      } catch {
+        return value; // Return as-is if not valid JSON
+      }
+    };
+    
     // Helper function to parse JSON fields
     const parseJsonField = (field, fieldName = 'unknown') => {
       if (!field) return [];
-      if (Array.isArray(field)) return field;
+      if (Array.isArray(field)) {
+        // If it's already an array, ensure nested values are parsed
+        return field.map(item => {
+          if (typeof item === 'object' && item !== null) {
+            // Parse input and expectedOutput within test cases
+            if ('input' in item) {
+              item.input = deepParseJson(item.input);
+              // Ensure input is always an array
+              if (!Array.isArray(item.input)) {
+                item.input = item.input !== null && item.input !== undefined ? [item.input] : [];
+              }
+            }
+            if ('expectedOutput' in item) {
+              item.expectedOutput = deepParseJson(item.expectedOutput);
+            }
+          }
+          return item;
+        });
+      }
       if (typeof field === 'string') {
         // Check if it's an empty string or just whitespace
         if (field.trim() === '' || field.trim() === 'null' || field.trim() === '[]') {
@@ -415,12 +476,23 @@ class Database {
           const parsed = JSON.parse(field);
           // Ensure we return an array if it's an array, or wrap in array if it's a single object
           if (Array.isArray(parsed)) {
-            return parsed.length > 0 ? parsed : [];
+            // Recursively process array items
+            return parseJsonField(parsed, fieldName);
           }
           // If it's an object but not an array, check if it's a single test case
           if (typeof parsed === 'object' && parsed !== null) {
             // Check if it has 'input' and 'expectedOutput' properties (test case structure)
-            if ('input' in parsed && 'expectedOutput' in parsed) {
+            if ('input' in parsed || 'expectedOutput' in parsed) {
+              // Parse nested input/expectedOutput
+              if ('input' in parsed) {
+                parsed.input = deepParseJson(parsed.input);
+                if (!Array.isArray(parsed.input)) {
+                  parsed.input = parsed.input !== null && parsed.input !== undefined ? [parsed.input] : [];
+                }
+              }
+              if ('expectedOutput' in parsed) {
+                parsed.expectedOutput = deepParseJson(parsed.expectedOutput);
+              }
               return [parsed]; // Wrap single test case in array
             }
             // Check if it's an object with numeric keys (like {0: {...}, 1: {...}})

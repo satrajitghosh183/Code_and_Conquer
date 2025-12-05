@@ -35,5 +35,28 @@ export const updateUserStats = (userId, updates) =>
 export const getDashboardStats = (userId) => api.get(`/dashboard/stats/${userId}`);
 export const getDailyChallenge = () => api.get('/dashboard/daily-challenge');
 
+// Jobs API
+export const getAllJobs = (params = {}) => api.get('/jobs', { params });
+export const getJobById = (jobId) => api.get(`/jobs/${jobId}`);
+export const getJobRecommendations = (userId, params = {}) => 
+  api.get(`/jobs/recommendations/${userId}`, { params });
+export const getUserRecommendations = (userId, params = {}) => 
+  api.get(`/jobs/user/${userId}/recommendations`, { params });
+export const getJobStatistics = () => api.get('/jobs/statistics');
+export const getTrendingJobs = (limit = 10) => 
+  api.get('/jobs/trending', { params: { limit } });
+export const getUserSkillProfile = (userId) => api.get(`/jobs/profile/${userId}`);
+export const getJobMatchScore = (jobId, userId) => 
+  api.get(`/jobs/${jobId}/match/${userId}`);
+export const markJobViewed = (jobId, userId) => 
+  api.post(`/jobs/${jobId}/view`, { userId });
+export const markJobApplied = (jobId, userId) => 
+  api.post(`/jobs/${jobId}/apply`, { userId });
+export const saveJob = (jobId, userId) => 
+  api.post(`/jobs/${jobId}/save`, { userId });
+export const unsaveJob = (jobId, userId) => 
+  api.delete(`/jobs/${jobId}/save`, { params: { userId } });
+export const seedJobs = () => api.post('/jobs/seed');
+
 export default api;
 

@@ -129,14 +129,14 @@ export default function ProblemDetailPage() {
       // Initialize code for all languages from starter code
       const initialCodeByLanguage = {}
       if (problemData.starterCode) {
-        LANGUAGES.forEach(lang => {
+        DEFAULT_LANGUAGES.forEach(lang => {
           initialCodeByLanguage[lang.value] = problemData.starterCode[lang.value] || 
                                               problemData.starterCode.javascript || 
                                               getDefaultStarterCode(lang.value)
         })
       } else {
         // If no starter code, use defaults
-        LANGUAGES.forEach(lang => {
+        DEFAULT_LANGUAGES.forEach(lang => {
           initialCodeByLanguage[lang.value] = getDefaultStarterCode(lang.value)
         })
       }
@@ -393,9 +393,12 @@ export default function ProblemDetailPage() {
 
           {activeTab === 'result' && result && (
             <div className="result-tab">
-              <div className={`result-status status-${result.status === 'accepted' ? 'accepted' : result.status === 'error' ? 'error' : 'failed'}`}>
+              <div className={`result-status status-${
+                (result.status === 'accepted' || result.status === 'run_success') ? 'accepted' : 
+                result.status === 'error' ? 'error' : 'failed'
+              }`}>
                 <div className="status-icon">
-                  {result.status === 'accepted' ? (
+                  {(result.status === 'accepted' || result.status === 'run_success') ? (
                     <CheckCircle size={32} color="#51cf66" />
                   ) : (
                     <XCircle size={32} color="#ff6b6b" />
@@ -404,6 +407,8 @@ export default function ProblemDetailPage() {
                 <div className="status-text">
                   <h2>
                     {result.status === 'accepted' ? 'Accepted!' : 
+                     result.status === 'run_success' ? 'All Tests Passed!' :
+                     result.status === 'run_failed' ? 'Tests Failed' :
                      result.status === 'error' ? 'Error' : 
                      result.status === 'wrong_answer' ? 'Wrong Answer' :
                      'Failed'}
@@ -418,6 +423,11 @@ export default function ProblemDetailPage() {
                         <Database size={18} />
                         <span>+{result.rewards.coins} coins</span>
                       </div>
+                    </div>
+                  )}
+                  {result.status === 'run_success' && (
+                    <div className="run-success-hint">
+                      <span>Click <strong>Submit</strong> to run against all test cases</span>
                     </div>
                   )}
                   {result.executionTime !== undefined && (
@@ -440,7 +450,7 @@ export default function ProblemDetailPage() {
                   <div className="test-results-header">
                     <h3>Test Cases</h3>
                     <div className="test-summary">
-                      <span className={`test-summary-text ${result.status === 'accepted' ? 'passed' : 'failed'}`}>
+                      <span className={`test-summary-text ${(result.status === 'accepted' || result.status === 'run_success') ? 'passed' : 'failed'}`}>
                         {result.passedTests || 0}/{result.totalTests || result.testResults.length} passed
                       </span>
                     </div>
@@ -495,23 +505,31 @@ export default function ProblemDetailPage() {
                 </div>
               )}
 
-              {result.complexityAnalysis && (
+              {result.complexityAnalysis && 
+               result.complexityAnalysis.confidence > 0 && 
+               result.complexityAnalysis.timeComplexity !== 'Unknown' && (
                 <div className="complexity-analysis">
                   <h3>Complexity Analysis</h3>
                   <div className="complexity-content">
                     {(result.complexityAnalysis.timeComplexity || result.complexityAnalysis.complexity) && (
                       <div className="complexity-item">
-                        <strong>Time:</strong> <code>{result.complexityAnalysis.timeComplexity || result.complexityAnalysis.complexity}</code>
-                        {result.complexityAnalysis.confidence !== undefined && (
+                        <strong>Time:</strong> <code className={`complexity-badge ${
+                          result.complexityAnalysis.timeComplexity?.includes('n²') ? 'quadratic' :
+                          result.complexityAnalysis.timeComplexity?.includes('log') ? 'logarithmic' :
+                          result.complexityAnalysis.timeComplexity === 'O(1)' ? 'constant' :
+                          result.complexityAnalysis.timeComplexity === 'O(n)' ? 'linear' : ''
+                        }`}>{result.complexityAnalysis.timeComplexity || result.complexityAnalysis.complexity}</code>
+                        {result.complexityAnalysis.confidence !== undefined && result.complexityAnalysis.confidence > 0 && (
                           <span className="confidence-badge">
-                            (confidence: {Math.round(result.complexityAnalysis.confidence * 100)}%)
+                            ({Math.round(result.complexityAnalysis.confidence * 100)}% confidence)
                           </span>
                         )}
                       </div>
                     )}
-                    {result.complexityAnalysis.spaceComplexity && (
+                    {result.complexityAnalysis.spaceComplexity && 
+                     result.complexityAnalysis.spaceComplexity !== 'Unknown' && (
                       <div className="complexity-item">
-                        <strong>Space:</strong> <code>{result.complexityAnalysis.spaceComplexity}</code>
+                        <strong>Space:</strong> <code className="complexity-badge">{result.complexityAnalysis.spaceComplexity}</code>
                       </div>
                     )}
                     {result.complexityAnalysis.details && (
