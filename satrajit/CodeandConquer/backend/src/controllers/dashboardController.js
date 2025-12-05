@@ -289,7 +289,8 @@ export const getXPHistory = async (req, res) => {
 
 export const getDailyChallenge = async (req, res) => {
   try {
-    const { userId } = req.query; // Optional: to check if user has completed it
+    // Support both route param and query param for userId
+    const userId = req.params.userId || req.query.userId; // Optional: to check if user has completed it
     
     // Get today's challenge using the service
     let challenge = await dailyChallengeService.getTodaysChallenge();

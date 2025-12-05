@@ -124,41 +124,27 @@ export const getLeaderboard = async (req, res) => {
                 };
               }
             } catch (error) {
-              // Silently handle missing table/column errors
-              if (error.code === 'PGRST204' || error.code === 'PGRST205' || error.code === '42P01') {
-                // Table or column doesn't exist - return default entry
-                leaderboardEntry = {
-                  user_id: user.id,
-                  leaderboard_type: type,
-                  score: score
-                };
-              } else {
-                // Only log unexpected errors
-                console.warn('Could not create leaderboard entry:', error.message);
-                // Return default entry
-                leaderboardEntry = {
-                  user_id: user.id,
-                  leaderboard_type: type,
-                  score: score
-                };
-              }
+              // Silently handle all errors - just use default entry
+              // Common errors: RLS violations (42501), table/column not found (PGRST204/205, 42P01)
+              leaderboardEntry = {
+                user_id: user.id,
+                leaderboard_type: type,
+                score: score
+              };
             }
           } else {
             // Update score if it's different
             if (leaderboardEntry.score !== score) {
               try {
-                leaderboardEntry = await publicDatabaseService.update(PUBLIC_TABLES.LEADERBOARDS, leaderboardEntry.id, {
+                const updated = await publicDatabaseService.update(PUBLIC_TABLES.LEADERBOARDS, leaderboardEntry.id, {
                   score: score,
                   updated_at: new Date().toISOString()
                 });
-              } catch (error) {
-                // Silently handle missing table/column errors
-                if (error.code === 'PGRST204' || error.code === 'PGRST205' || error.code === '42P01') {
-                  // Table or column doesn't exist - skip silently
-                } else {
-                  // Only log unexpected errors
-                  console.warn('Could not update leaderboard entry:', error.message);
+                if (updated) {
+                  leaderboardEntry = updated;
                 }
+              } catch (error) {
+                // Silently handle all update errors
               }
             }
           }

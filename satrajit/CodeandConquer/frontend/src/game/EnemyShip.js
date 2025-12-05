@@ -342,34 +342,20 @@ export class EnemyShip {
   }
   
   createHullGeometry(wingStyle, s) {
+    // Simple, optimized geometries - no cones
     switch (wingStyle) {
       case 'delta':
-        return new THREE.ConeGeometry(0.8 * s, 2.5 * s, 3)
+        return new THREE.BoxGeometry(0.8 * s, 0.3 * s, 2 * s)
       case 'heavy':
       case 'capital':
-        return new THREE.BoxGeometry(1.5 * s, 0.6 * s, 3 * s)
+        return new THREE.BoxGeometry(1.5 * s, 0.5 * s, 2.5 * s)
       case 'stealth':
-        return new THREE.ConeGeometry(0.6 * s, 2 * s, 4)
+        return new THREE.BoxGeometry(0.6 * s, 0.25 * s, 1.8 * s)
       case 'mothership':
-        return new THREE.CylinderGeometry(1.2 * s, 2 * s, 4 * s, 8)
+        return new THREE.BoxGeometry(2.5 * s, 0.8 * s, 4 * s)
       default:
-        // Standard sleek hull
-        const shape = new THREE.Shape()
-        shape.moveTo(0, -1.2 * s)
-        shape.quadraticCurveTo(0.8 * s, -0.8 * s, 0.6 * s, 0)
-        shape.quadraticCurveTo(0.5 * s, 0.8 * s, 0, 1.2 * s)
-        shape.quadraticCurveTo(-0.5 * s, 0.8 * s, -0.6 * s, 0)
-        shape.quadraticCurveTo(-0.8 * s, -0.8 * s, 0, -1.2 * s)
-        
-        const extrudeSettings = {
-          depth: 0.5 * s,
-          bevelEnabled: true,
-          bevelThickness: 0.1 * s,
-          bevelSize: 0.1 * s,
-          bevelSegments: 3
-        }
-        
-        return new THREE.ExtrudeGeometry(shape, extrudeSettings)
+        // Simple box hull - performant
+        return new THREE.BoxGeometry(1 * s, 0.4 * s, 1.8 * s)
     }
   }
   
@@ -679,7 +665,7 @@ export class EnemyShip {
 }
 
 // =============================================================================
-// MAIN BOSS SHIP - The mothership in camera view
+// MAIN BOSS SHIP - Just loads spaceship.glb model directly
 // =============================================================================
 
 export class MainBossShip {
@@ -689,17 +675,13 @@ export class MainBossShip {
     this.maxHealth = this.health
     
     this.mesh = null
+    this.shipModel = null
     this.scene = null
-    
-    // Ship components
-    this.shipVisual = new EnemyShip('megaBoss')
-    this.spawnPorts = []
-    this.healthBar = null
     
     // State
     this.isActive = true
     this.lastSpawnTime = 0
-    this.spawnCooldown = 5 // seconds
+    this.spawnCooldown = 5
     this.animationTime = 0
     
     // Events
@@ -713,19 +695,40 @@ export class MainBossShip {
     
     const group = new THREE.Group()
     
-    // Create the main ship mesh
-    const shipMesh = await this.shipVisual.createMesh()
-    shipMesh.scale.setScalar(3) // Make it huge
-    group.add(shipMesh)
-    
-    // Add spawn ports (hangars)
-    this.createSpawnPorts(group)
+    // Load the spaceship model directly
+    try {
+      const loadedModel = await modelLoader.loadModel('spaceship')
+      if (loadedModel) {
+        this.shipModel = loadedModel.clone()
+        this.shipModel.scale.setScalar(4) // Make it big
+        
+        // Apply red emissive color to make it glow
+        this.shipModel.traverse((child) => {
+          if (child.isMesh && child.material) {
+            child.material = child.material.clone()
+            child.material.emissive = new THREE.Color(0xff0000)
+            child.material.emissiveIntensity = 0.5
+            child.castShadow = true
+          }
+        })
+        
+        group.add(this.shipModel)
+      }
+    } catch (e) {
+      console.warn('Could not load boss ship model:', e)
+      // Simple fallback box
+      const fallbackGeom = new THREE.BoxGeometry(8, 2, 12)
+      const fallbackMat = new THREE.MeshBasicMaterial({ color: 0xff0000 })
+      const fallback = new THREE.Mesh(fallbackGeom, fallbackMat)
+      group.add(fallback)
+    }
     
     // Add health bar
     this.createHealthBar(group)
     
-    // Add dramatic lighting
-    this.addBossLighting(group)
+    // Add lighting
+    const mainLight = new THREE.PointLight(0xff0000, 4, 40)
+    group.add(mainLight)
     
     group.position.copy(this.position)
     
@@ -735,35 +738,12 @@ export class MainBossShip {
     return group
   }
   
-  createSpawnPorts(group) {
-    const portMat = new THREE.MeshBasicMaterial({
-      color: 0xff0000,
-      transparent: true,
-      opacity: 0.6
-    })
-    
-    const portPositions = [
-      [-4, -1, 2],
-      [4, -1, 2],
-      [0, -2, 3]
-    ]
-    
-    portPositions.forEach(pos => {
-      const portGeom = new THREE.CircleGeometry(0.8, 16)
-      const port = new THREE.Mesh(portGeom, portMat.clone())
-      port.position.set(...pos)
-      port.rotation.x = -Math.PI / 2
-      this.spawnPorts.push(port)
-      group.add(port)
-    })
-  }
-  
   createHealthBar(group) {
-    const barWidth = 15
-    const barHeight = 1
+    const barWidth = 12
+    const barHeight = 0.8
     
     // Background
-    const bgGeom = new THREE.PlaneGeometry(barWidth + 0.5, barHeight + 0.3)
+    const bgGeom = new THREE.PlaneGeometry(barWidth + 0.4, barHeight + 0.2)
     const bgMat = new THREE.MeshBasicMaterial({
       color: 0x000000,
       transparent: true,
@@ -771,8 +751,7 @@ export class MainBossShip {
       side: THREE.DoubleSide
     })
     const bg = new THREE.Mesh(bgGeom, bgMat)
-    bg.position.y = 8
-    bg.name = 'healthBarBg'
+    bg.position.y = 6
     group.add(bg)
     
     // Health fill
@@ -782,38 +761,26 @@ export class MainBossShip {
       side: THREE.DoubleSide
     })
     this.healthBarFill = new THREE.Mesh(fillGeom, fillMat)
-    this.healthBarFill.position.y = 8
+    this.healthBarFill.position.y = 6
     this.healthBarFill.position.z = 0.01
     group.add(this.healthBarFill)
     
     // Boss name
     const nameCanvas = document.createElement('canvas')
-    nameCanvas.width = 512
-    nameCanvas.height = 64
+    nameCanvas.width = 256
+    nameCanvas.height = 32
     const ctx = nameCanvas.getContext('2d')
-    ctx.font = 'bold 48px Arial'
+    ctx.font = 'bold 24px Arial'
     ctx.fillStyle = '#ff4444'
     ctx.textAlign = 'center'
-    ctx.fillText('MOTHERSHIP', 256, 48)
+    ctx.fillText('MOTHERSHIP', 128, 24)
     
     const nameTexture = new THREE.CanvasTexture(nameCanvas)
     const nameMat = new THREE.SpriteMaterial({ map: nameTexture, transparent: true })
     const nameSprite = new THREE.Sprite(nameMat)
-    nameSprite.position.y = 10
-    nameSprite.scale.set(10, 1.5, 1)
+    nameSprite.position.y = 7.5
+    nameSprite.scale.set(8, 1, 1)
     group.add(nameSprite)
-  }
-  
-  addBossLighting(group) {
-    // Dramatic red lighting
-    const mainLight = new THREE.PointLight(0xff0000, 5, 50)
-    mainLight.position.set(0, 0, 0)
-    group.add(mainLight)
-    
-    // Engine glow
-    const engineLight = new THREE.PointLight(0xff4400, 3, 30)
-    engineLight.position.set(0, 0, -5)
-    group.add(engineLight)
   }
   
   damage(amount) {
@@ -825,7 +792,16 @@ export class MainBossShip {
     }
     
     // Flash effect
-    this.shipVisual.flashDamage()
+    if (this.shipModel) {
+      this.shipModel.traverse((child) => {
+        if (child.isMesh && child.material) {
+          child.material.emissiveIntensity = 1.5
+          setTimeout(() => {
+            if (child.material) child.material.emissiveIntensity = 0.5
+          }, 100)
+        }
+      })
+    }
     
     if (this.health <= 0) {
       this.isActive = false
@@ -840,16 +816,7 @@ export class MainBossShip {
     
     const ratio = this.health / this.maxHealth
     this.healthBarFill.scale.x = ratio
-    this.healthBarFill.position.x = (1 - ratio) * -7.5
-    
-    // Color gradient
-    if (ratio > 0.6) {
-      this.healthBarFill.material.color.setHex(0xff0000)
-    } else if (ratio > 0.3) {
-      this.healthBarFill.material.color.setHex(0xff6600)
-    } else {
-      this.healthBarFill.material.color.setHex(0xffff00)
-    }
+    this.healthBarFill.position.x = (1 - ratio) * -6
   }
   
   update(deltaTime, currentTime) {
@@ -857,20 +824,16 @@ export class MainBossShip {
     
     this.animationTime += deltaTime
     
-    // Update ship visual animation
-    this.shipVisual.updateAnimation(deltaTime, this.animationTime)
-    
     // Hover animation
     if (this.mesh) {
-      this.mesh.position.y = this.position.y + Math.sin(this.animationTime * 0.5) * 1.5
-      this.mesh.rotation.z = Math.sin(this.animationTime * 0.3) * 0.02
+      this.mesh.position.y = this.position.y + Math.sin(this.animationTime * 0.5) * 1
+      this.mesh.rotation.z = Math.sin(this.animationTime * 0.3) * 0.01
     }
     
-    // Spawn ports animation
-    this.spawnPorts.forEach((port, i) => {
-      port.material.opacity = 0.4 + Math.sin(this.animationTime * 2 + i) * 0.3
-      port.scale.setScalar(1 + Math.sin(this.animationTime * 3 + i) * 0.1)
-    })
+    // Rotate ship slowly
+    if (this.shipModel) {
+      this.shipModel.rotation.y += deltaTime * 0.1
+    }
     
     // Spawn enemies periodically
     if (this.onSpawnEnemy && currentTime - this.lastSpawnTime > this.spawnCooldown) {
@@ -880,23 +843,13 @@ export class MainBossShip {
   }
   
   spawnEnemy() {
-    if (!this.onSpawnEnemy || this.spawnPorts.length === 0) return
+    if (!this.onSpawnEnemy) return
     
-    // Pick a random spawn port
-    const portIndex = Math.floor(Math.random() * this.spawnPorts.length)
-    const port = this.spawnPorts[portIndex]
+    // Spawn from ship position
+    const spawnPos = this.mesh.position.clone()
+    spawnPos.y = 0.5
+    spawnPos.z -= 5
     
-    // Get world position of port
-    const spawnPos = new THREE.Vector3()
-    port.getWorldPosition(spawnPos)
-    
-    // Spawn effect on port
-    port.material.opacity = 1.0
-    setTimeout(() => {
-      port.material.opacity = 0.6
-    }, 200)
-    
-    // Call spawn callback with position and random enemy type
     const enemyTypes = ['spider', 'scout', 'swarm', 'brute']
     const type = enemyTypes[Math.floor(Math.random() * enemyTypes.length)]
     
@@ -906,8 +859,17 @@ export class MainBossShip {
   destroy() {
     if (this.mesh && this.scene) {
       this.scene.remove(this.mesh)
+      this.mesh.traverse((child) => {
+        if (child.geometry) child.geometry.dispose()
+        if (child.material) {
+          if (Array.isArray(child.material)) {
+            child.material.forEach(m => m.dispose())
+          } else {
+            child.material.dispose()
+          }
+        }
+      })
     }
-    this.shipVisual.destroy()
   }
 }
 

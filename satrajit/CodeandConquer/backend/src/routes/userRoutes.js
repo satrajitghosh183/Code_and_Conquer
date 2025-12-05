@@ -60,6 +60,82 @@ router.get('/:userId/stats', async (req, res) => {
   }
 });
 
+// Get user subscription status
+router.get('/:userId/subscription', async (req, res) => {
+  try {
+    if (!supabase) {
+      // Return default free subscription status if no database
+      return res.json({
+        status: 'inactive',
+        plan: 'free',
+        features: {
+          dailyChallenges: true,
+          basicProblems: true,
+          leaderboard: true,
+          premiumProblems: false,
+          advancedAnalytics: false,
+          prioritySupport: false
+        }
+      });
+    }
+
+    const { data, error } = await supabase
+      .from('subscriptions')
+      .select('*')
+      .eq('user_id', req.params.userId)
+      .order('created_at', { ascending: false })
+      .limit(1)
+      .single();
+
+    if (error && error.code !== 'PGRST116') {
+      // PGRST116 = row not found, which is OK (user has no subscription)
+      console.error('Error fetching subscription:', error);
+      throw error;
+    }
+
+    if (!data) {
+      // No subscription found - return free tier
+      return res.json({
+        status: 'inactive',
+        plan: 'free',
+        features: {
+          dailyChallenges: true,
+          basicProblems: true,
+          leaderboard: true,
+          premiumProblems: false,
+          advancedAnalytics: false,
+          prioritySupport: false
+        }
+      });
+    }
+
+    // Check if subscription is active
+    const isActive = data.status === 'active' && 
+      new Date(data.current_period_end) > new Date();
+
+    res.json({
+      id: data.id,
+      status: isActive ? 'active' : 'inactive',
+      plan: isActive ? 'premium' : 'free',
+      stripeSubscriptionId: data.stripe_subscription_id,
+      currentPeriodStart: data.current_period_start,
+      currentPeriodEnd: data.current_period_end,
+      cancelAtPeriodEnd: data.cancel_at_period_end || false,
+      features: {
+        dailyChallenges: true,
+        basicProblems: true,
+        leaderboard: true,
+        premiumProblems: isActive,
+        advancedAnalytics: isActive,
+        prioritySupport: isActive
+      }
+    });
+  } catch (error) {
+    console.error('Error in GET user subscription:', error);
+    res.status(500).json({ error: error.message });
+  }
+});
+
 // Update user stats (add coins, XP, etc.)
 router.post('/:userId/stats/update', async (req, res) => {
   try {

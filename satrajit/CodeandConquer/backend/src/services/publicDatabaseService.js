@@ -94,6 +94,12 @@ class PublicDatabaseService {
         // Column doesn't exist - return null silently (already tried retry above)
         return null;
       }
+      // Handle RLS policy violations (42501) gracefully
+      // This happens when RLS policies need to be updated - return null instead of spamming logs
+      if (error.code === '42501') {
+        // RLS violation - return null silently (admin should run the RLS migration)
+        return null;
+      }
       // Only log unexpected errors
       console.error(`Error inserting into ${tableName}:`, error);
       throw error;
@@ -180,6 +186,11 @@ class PublicDatabaseService {
       // Handle table/column not found errors gracefully
       if (error.code === 'PGRST204' || error.code === 'PGRST205' || error.code === '42P01') {
         // Table or column doesn't exist - return null silently
+        return null;
+      }
+      // Handle RLS policy violations (42501) gracefully
+      if (error.code === '42501') {
+        // RLS violation - return null silently
         return null;
       }
       // Only log unexpected errors

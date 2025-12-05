@@ -203,18 +203,12 @@ export class MainBase {
   createCrystal() {
     const crystalSize = this.config.crystalSize
     
-    // Main crystal
-    const crystalGeom = new THREE.OctahedronGeometry(crystalSize, 2)
-    const crystalMat = new THREE.MeshPhysicalMaterial({
+    // Main crystal - simple octahedron
+    const crystalGeom = new THREE.OctahedronGeometry(crystalSize, 0)
+    const crystalMat = new THREE.MeshBasicMaterial({
       color: 0xff0000,
-      emissive: 0xcc0000,
-      emissiveIntensity: 1.0 + this.level * 0.2,
-      metalness: 0.1,
-      roughness: 0.05,
       transparent: true,
-      opacity: 0.9,
-      clearcoat: 1.0,
-      clearcoatRoughness: 0.1
+      opacity: 0.9
     })
     
     this.crystal = new THREE.Mesh(crystalGeom, crystalMat)
@@ -222,18 +216,8 @@ export class MainBase {
     this.crystal.castShadow = true
     this.mesh.add(this.crystal)
     
-    // Inner crystal glow
-    const innerCrystalGeom = new THREE.OctahedronGeometry(crystalSize * 0.6, 1)
-    const innerCrystalMat = new THREE.MeshBasicMaterial({
-      color: 0xff4400,
-      transparent: true,
-      opacity: 0.6
-    })
-    const innerCrystal = new THREE.Mesh(innerCrystalGeom, innerCrystalMat)
-    this.crystal.add(innerCrystal)
-    
-    // Crystal light
-    this.crystalLight = new THREE.PointLight(0xff2200, 4 + this.level, 30 + this.level * 5)
+    // Crystal light - makes it glow in dark environment
+    this.crystalLight = new THREE.PointLight(0xff2200, 3 + this.level, 25)
     this.crystalLight.position.y = this.platformHeight + crystalSize + 2
     this.mesh.add(this.crystalLight)
   }

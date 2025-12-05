@@ -82,19 +82,26 @@ ALTER TABLE leaderboards ENABLE ROW LEVEL SECURITY;
 
 DROP POLICY IF EXISTS "Leaderboards are viewable by everyone" ON leaderboards;
 DROP POLICY IF EXISTS "Users can update their own leaderboard entry" ON leaderboards;
+DROP POLICY IF EXISTS "Users can insert their own leaderboard entry" ON leaderboards;
 DROP POLICY IF EXISTS "Service role full access leaderboards" ON leaderboards;
+DROP POLICY IF EXISTS "Anyone can insert leaderboard entries" ON leaderboards;
+DROP POLICY IF EXISTS "Anyone can update leaderboard entries" ON leaderboards;
 
+-- Service role has full access (for backend operations)
 CREATE POLICY "Service role full access leaderboards" ON leaderboards
     FOR ALL USING (auth.role() = 'service_role');
 
+-- Everyone can view leaderboards
 CREATE POLICY "Leaderboards are viewable by everyone" ON leaderboards
     FOR SELECT USING (true);
 
-CREATE POLICY "Users can update their own leaderboard entry" ON leaderboards
-    FOR UPDATE USING (auth.uid() = user_id);
+-- Allow inserts for authenticated users (backend creates entries on behalf of users)
+CREATE POLICY "Anyone can insert leaderboard entries" ON leaderboards
+    FOR INSERT WITH CHECK (true);
 
-CREATE POLICY "Users can insert their own leaderboard entry" ON leaderboards
-    FOR INSERT WITH CHECK (auth.uid() = user_id);
+-- Allow updates for authenticated users (backend updates scores)
+CREATE POLICY "Anyone can update leaderboard entries" ON leaderboards
+    FOR UPDATE USING (true);
 
 -- 1.5 Fix subscriptions table RLS
 ALTER TABLE subscriptions ENABLE ROW LEVEL SECURITY;

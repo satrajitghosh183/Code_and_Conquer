@@ -14,6 +14,8 @@ router.get('/stats/:userId', getDashboardStats);
 router.get('/xp-history/:userId', getXPHistory);
 
 // Get daily challenge/problem of the day
+// Supports both /daily-challenge and /daily-challenge/:userId for backward compatibility
+router.get('/daily-challenge/:userId', getDailyChallenge);
 router.get('/daily-challenge', getDailyChallenge);
 
 export default router;

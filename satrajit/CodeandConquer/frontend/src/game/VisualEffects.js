@@ -63,78 +63,37 @@ export class VisualEffects {
     const auraGroup = new THREE.Group()
     const enemyScale = enemy.scale || 1
     
-    // Ice crystal ring around enemy
-    const crystalCount = 8
+    // Simple ice ring - optimized (fewer crystals)
+    const crystalCount = 4
     const crystals = []
     
+    // Reusable geometry and material
+    const crystalGeom = new THREE.OctahedronGeometry(0.2 * enemyScale, 0)
+    const crystalMat = new THREE.MeshBasicMaterial({
+      color: 0x88ddff,
+      transparent: true,
+      opacity: 0.8
+    })
+    
     for (let i = 0; i < crystalCount; i++) {
-      const crystalGeom = new THREE.OctahedronGeometry(0.15 * enemyScale, 0)
-      const crystalMat = new THREE.MeshPhysicalMaterial({
-        color: 0x88ddff,
-        emissive: 0x44aaff,
-        emissiveIntensity: 0.5,
-        metalness: 0.1,
-        roughness: 0.1,
-        transparent: true,
-        opacity: 0.8,
-        clearcoat: 1.0
-      })
-      
-      const crystal = new THREE.Mesh(crystalGeom, crystalMat)
+      const crystal = new THREE.Mesh(crystalGeom, crystalMat.clone())
       const angle = (i / crystalCount) * Math.PI * 2
       crystal.position.set(
-        Math.cos(angle) * 1.2 * enemyScale,
-        0.5 * enemyScale + Math.random() * 0.5,
-        Math.sin(angle) * 1.2 * enemyScale
+        Math.cos(angle) * 1 * enemyScale,
+        0.5 * enemyScale,
+        Math.sin(angle) * 1 * enemyScale
       )
-      crystal.rotation.set(Math.random(), Math.random(), Math.random())
       crystals.push(crystal)
       auraGroup.add(crystal)
     }
     
-    // Frost particles floating around
-    const particleCount = 30
-    const particleGeom = new THREE.BufferGeometry()
-    const positions = new Float32Array(particleCount * 3)
-    const velocities = []
-    
-    for (let i = 0; i < particleCount; i++) {
-      const angle = Math.random() * Math.PI * 2
-      const radius = 0.8 + Math.random() * 0.8
-      positions[i * 3] = Math.cos(angle) * radius * enemyScale
-      positions[i * 3 + 1] = Math.random() * 2 * enemyScale
-      positions[i * 3 + 2] = Math.sin(angle) * radius * enemyScale
-      
-      velocities.push({
-        angle: angle,
-        ySpeed: 0.3 + Math.random() * 0.5,
-        radius: radius,
-        rotSpeed: 0.5 + Math.random() * 0.5
-      })
-    }
-    
-    particleGeom.setAttribute('position', new THREE.BufferAttribute(positions, 3))
-    
-    const particleMat = new THREE.PointsMaterial({
-      color: 0xaaeeff,
-      size: 0.15 * enemyScale,
-      transparent: true,
-      opacity: 0.7,
-      blending: THREE.AdditiveBlending,
-      depthWrite: false
-    })
-    
-    const particles = new THREE.Points(particleGeom, particleMat)
-    auraGroup.add(particles)
-    
-    // Frost ground ring
-    const groundRingGeom = new THREE.RingGeometry(0.8 * enemyScale, 1.5 * enemyScale, 32)
+    // Simple ground ring
+    const groundRingGeom = new THREE.RingGeometry(0.8 * enemyScale, 1.2 * enemyScale, 16)
     const groundRingMat = new THREE.MeshBasicMaterial({
-      color: 0x88ddff,
+      color: 0x44aaff,
       transparent: true,
-      opacity: 0.4,
-      side: THREE.DoubleSide,
-      blending: THREE.AdditiveBlending
+      opacity: 0.5,
+      side: THREE.DoubleSide
     })
     const groundRing = new THREE.Mesh(groundRingGeom, groundRingMat)
     groundRing.rotation.x = -Math.PI / 2
@@ -148,9 +107,6 @@ export class VisualEffects {
     const auraData = {
       group: auraGroup,
       crystals,
-      particles,
-      particleGeom,
-      velocities,
       groundRing,
       enemy,
       startTime,
@@ -158,35 +114,15 @@ export class VisualEffects {
       update: (deltaTime) => {
         const elapsed = Date.now() - startTime
         
-        // Check if enemy still exists and effect should continue
         if (!enemy.mesh || enemy.isDead || elapsed >= duration) {
-          return false // Signal to remove
+          return false
         }
         
         // Follow enemy
         auraGroup.position.copy(enemy.mesh.position)
         
-        // Rotate crystals
-        crystals.forEach((crystal, i) => {
-          crystal.rotation.y += deltaTime * (1 + i * 0.1)
-          crystal.rotation.x += deltaTime * 0.5
-          crystal.position.y = 0.5 * enemyScale + Math.sin(elapsed * 0.003 + i) * 0.2
-        })
-        
-        // Animate particles
-        const posArray = particleGeom.attributes.position.array
-        for (let i = 0; i < particleCount; i++) {
-          velocities[i].angle += velocities[i].rotSpeed * deltaTime
-          posArray[i * 3] = Math.cos(velocities[i].angle) * velocities[i].radius * enemyScale
-          posArray[i * 3 + 1] = (posArray[i * 3 + 1] + velocities[i].ySpeed * deltaTime) % (2 * enemyScale)
-          posArray[i * 3 + 2] = Math.sin(velocities[i].angle) * velocities[i].radius * enemyScale
-        }
-        particleGeom.attributes.position.needsUpdate = true
-        
-        // Pulse ground ring
-        const pulse = 1 + Math.sin(elapsed * 0.005) * 0.1
-        groundRing.scale.set(pulse, pulse, 1)
-        groundRingMat.opacity = 0.3 + Math.sin(elapsed * 0.008) * 0.1
+        // Simple rotation
+        auraGroup.rotation.y += deltaTime * 2
         
         return true
       }
@@ -223,15 +159,12 @@ export class VisualEffects {
     
     const fireGroup = new THREE.Group()
     
-    // Animated fire ring on ground
-    const ringSegments = 64
-    const ringGeom = new THREE.TorusGeometry(radius, 0.3, 8, ringSegments)
+    // Simple fire ring - optimized
+    const ringGeom = new THREE.TorusGeometry(radius, 0.2, 8, 24)
     const ringMat = new THREE.MeshBasicMaterial({
       color: 0xff4400,
       transparent: true,
-      opacity: 0.6,
-      blending: THREE.AdditiveBlending,
-      side: THREE.DoubleSide
+      opacity: 0.7
     })
     const ring = new THREE.Mesh(ringGeom, ringMat)
     ring.rotation.x = Math.PI / 2
@@ -239,61 +172,45 @@ export class VisualEffects {
     fireGroup.add(ring)
     
     // Inner glow ring
-    const innerRingGeom = new THREE.TorusGeometry(radius - 0.5, 0.2, 8, ringSegments)
+    const innerRingGeom = new THREE.TorusGeometry(radius - 0.4, 0.15, 8, 24)
     const innerRingMat = new THREE.MeshBasicMaterial({
       color: 0xffaa00,
       transparent: true,
-      opacity: 0.4,
-      blending: THREE.AdditiveBlending
+      opacity: 0.5
     })
     const innerRing = new THREE.Mesh(innerRingGeom, innerRingMat)
     innerRing.rotation.x = Math.PI / 2
     innerRing.position.y = 0.15
     fireGroup.add(innerRing)
     
-    // Fire particle system
-    const particleCount = 100
+    // Simplified fire particles - fewer for performance
+    const particleCount = 30
     const particleGeom = new THREE.BufferGeometry()
     const positions = new Float32Array(particleCount * 3)
-    const colors = new Float32Array(particleCount * 3)
-    const sizes = new Float32Array(particleCount)
     const velocities = []
     
     for (let i = 0; i < particleCount; i++) {
-      const angle = Math.random() * Math.PI * 2
-      const r = radius - 0.5 + Math.random() * 1
+      const angle = (i / particleCount) * Math.PI * 2
+      const r = radius - 0.3
       positions[i * 3] = Math.cos(angle) * r
-      positions[i * 3 + 1] = Math.random() * 3
+      positions[i * 3 + 1] = Math.random() * 2
       positions[i * 3 + 2] = Math.sin(angle) * r
       
-      // Color gradient orange to yellow
-      const t = Math.random()
-      colors[i * 3] = 1.0
-      colors[i * 3 + 1] = 0.3 + t * 0.5
-      colors[i * 3 + 2] = t * 0.2
-      
-      sizes[i] = 0.3 + Math.random() * 0.4
-      
       velocities.push({
-        y: 2 + Math.random() * 3,
-        angle: angle,
-        angleSpeed: (Math.random() - 0.5) * 0.5,
-        life: Math.random()
+        y: 2 + Math.random() * 2,
+        angle: angle
       })
     }
     
     particleGeom.setAttribute('position', new THREE.BufferAttribute(positions, 3))
-    particleGeom.setAttribute('color', new THREE.BufferAttribute(colors, 3))
-    particleGeom.setAttribute('size', new THREE.BufferAttribute(sizes, 1))
     
     const particleMat = new THREE.PointsMaterial({
-      size: 0.5,
-      vertexColors: true,
+      color: 0xff6600,
+      size: 0.4,
       transparent: true,
       opacity: 0.8,
       blending: THREE.AdditiveBlending,
-      depthWrite: false,
-      sizeAttenuation: true
+      depthWrite: false
     })
     
     const particles = new THREE.Points(particleGeom, particleMat)
@@ -301,8 +218,6 @@ export class VisualEffects {
     
     fireGroup.position.copy(tower.position)
     this.scene.add(fireGroup)
-    
-    const startTime = Date.now()
     
     const fireData = {
       group: fireGroup,
@@ -316,38 +231,17 @@ export class VisualEffects {
       update: (deltaTime) => {
         if (!tower.mesh) return false
         
-        const elapsed = Date.now() - startTime
-        
         // Rotate rings
-        ring.rotation.z += deltaTime * 0.3
-        innerRing.rotation.z -= deltaTime * 0.5
+        ring.rotation.z += deltaTime * 0.5
+        innerRing.rotation.z -= deltaTime * 0.3
         
-        // Pulse opacity
-        ringMat.opacity = 0.4 + Math.sin(elapsed * 0.004) * 0.2
-        innerRingMat.opacity = 0.3 + Math.sin(elapsed * 0.006) * 0.15
-        
-        // Animate fire particles
+        // Simple particle animation
         const posArray = particleGeom.attributes.position.array
         for (let i = 0; i < particleCount; i++) {
-          velocities[i].life += deltaTime
-          velocities[i].angle += velocities[i].angleSpeed * deltaTime
-          
-          // Rise and reset
           posArray[i * 3 + 1] += velocities[i].y * deltaTime
           
-          if (posArray[i * 3 + 1] > 4 || velocities[i].life > 2) {
-            // Reset particle
-            const angle = velocities[i].angle
-            const r = radius - 0.5 + Math.random() * 1
-            posArray[i * 3] = Math.cos(angle) * r
+          if (posArray[i * 3 + 1] > 3) {
             posArray[i * 3 + 1] = 0
-            posArray[i * 3 + 2] = Math.sin(angle) * r
-            velocities[i].life = 0
-          } else {
-            // Slight horizontal movement
-            const r = radius - 0.5 + Math.random() * 1
-            posArray[i * 3] = Math.cos(velocities[i].angle) * r
-            posArray[i * 3 + 2] = Math.sin(velocities[i].angle) * r
           }
         }
         particleGeom.attributes.position.needsUpdate = true
