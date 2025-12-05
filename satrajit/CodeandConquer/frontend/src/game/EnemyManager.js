@@ -853,6 +853,11 @@ export class EnemyManager {
     }
   }
   
+  // Check if wave is currently active
+  isWaveActive() {
+    return this.waveInProgress || this.pendingSpawns.length > 0 || this.enemies.length > 0
+  }
+  
   // Add spawn point
   addSpawnPoint(position) {
     this.spawnPoints.push(position.clone())

@@ -157,3 +157,61 @@
   text-shadow: 0 0 10px rgba(255, 0, 0, 0.5);
 }
 
+/* Error styles */
+.matchmaking-error {
+  background: rgba(255, 50, 50, 0.15);
+  border: 1px solid rgba(255, 50, 50, 0.5);
+  border-radius: 12px;
+  padding: 16px;
+  margin-bottom: 24px;
+  text-align: center;
+}
+
+.matchmaking-error p {
+  color: #ff6b6b;
+  font-size: 14px;
+  margin-bottom: 12px;
+}
+
+.matchmaking-error button {
+  padding: 8px 16px;
+  background: transparent;
+  border: 1px solid rgba(255, 100, 100, 0.5);
+  border-radius: 8px;
+  color: #ff6b6b;
+  font-size: 13px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.matchmaking-error button:hover {
+  background: rgba(255, 50, 50, 0.2);
+  border-color: #ff6b6b;
+}
+
+/* Cancel button */
+.cancel-search-btn {
+  margin-top: 20px;
+  padding: 10px 24px;
+  background: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 8px;
+  color: var(--text-secondary);
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.cancel-search-btn:hover {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: rgba(255, 255, 255, 0.5);
+  color: var(--text-primary);
+}
+
+/* Queue position */
+.queue-position {
+  font-size: 13px;
+  color: var(--text-muted);
+  margin-top: 8px;
+}
+

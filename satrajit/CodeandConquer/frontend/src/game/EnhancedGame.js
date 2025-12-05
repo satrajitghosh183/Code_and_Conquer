@@ -83,6 +83,9 @@ export class EnhancedGame {
     this.health = this.mainBase.health
     this.maxHealth = this.mainBase.maxHealth
     
+    // AI Director (needs to be created before PathManager reference)
+    this.waveDirector = new AIDirector(this, null)
+    
     // Paths / lanes
     this.pathManager = new PathManager(this.scene, this.basePosition)
     this.waveDirector.pathManager = this.pathManager
@@ -171,7 +174,6 @@ export class EnhancedGame {
     if (gameMode === 'vs_ai' || gameMode === 'challenge') {
       this.aiPlayer = new AIPlayer(this, userProfile.aiDifficulty || 'medium')
     }
-    this.waveDirector = new AIDirector(this, null)
     
     // Build system
     this.selectedStructureType = null
