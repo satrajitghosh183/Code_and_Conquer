@@ -35,7 +35,7 @@ export function NotificationProvider({ children }) {
     const dailyChallengeKey = `daily_challenge_${today}`
     if (!dismissed[dailyChallengeKey]) {
       try {
-        const response = await api.get(`/api/dashboard/daily-challenge/${user.id}`)
+        const response = await api.get(`/dashboard/daily-challenge/${user.id}`)
         if (response.data && !response.data.completed) {
           newNotifications.push({
             id: dailyChallengeKey,
@@ -79,7 +79,7 @@ export function NotificationProvider({ children }) {
     try {
       const leaderboardKey = `leaderboard_check_${today}`
       if (!dismissed[leaderboardKey]) {
-        const response = await api.get('/api/leaderboard')
+        const response = await api.get('/leaderboard')
         if (response.data && response.data.length > 0) {
           const userRank = response.data.findIndex(entry => entry.user_id === user.id)
           const lastRank = parseInt(localStorage.getItem(`last_rank_${user.id}`) || '-1')

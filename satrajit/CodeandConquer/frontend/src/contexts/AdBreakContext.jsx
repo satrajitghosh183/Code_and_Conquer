@@ -21,7 +21,7 @@ export function AdBreakProvider({ children }) {
       // Check premium status from user metadata or subscription
       const checkPremium = async () => {
         try {
-          const response = await fetch(`${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/api/users/${user.id}/subscription`);
+          const response = await fetch(`${import.meta.env.VITE_API_URL || 'http://localhost:5000/api'}/users/${user.id}/subscription`);
           if (response.ok) {
             const data = await response.json();
             setIsPremium(data.isPremium || data.status === 'active');
@@ -38,7 +38,7 @@ export function AdBreakProvider({ children }) {
   // Fetch a random ad video
   const fetchAdVideo = useCallback(async () => {
     try {
-      const response = await fetch(`${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/api/ads/video`);
+      const response = await fetch(`${import.meta.env.VITE_API_URL || 'http://localhost:5000/api'}/ads/video`);
       if (response.ok) {
         const data = await response.json();
         return data;
