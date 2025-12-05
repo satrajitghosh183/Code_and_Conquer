@@ -11,15 +11,49 @@ class MatchmakingService {
     this.playerToMatch = new Map() // playerId -> matchId
   }
 
+  // Validate that a user exists in the database
+  async validateUser(userId) {
+    if (!publicDatabaseService.isAvailable()) {
+      console.warn('Database not available, skipping user validation')
+      return true
+    }
+    
+    try {
+      // Use getProfile to check if user exists
+      const profile = await publicDatabaseService.getProfile(userId)
+      if (!profile) {
+        console.warn(`User profile ${userId} not found in database`)
+        return false
+      }
+      return true
+    } catch (error) {
+      console.error(`Error validating user ${userId}:`, error)
+      // If error is "not found", user doesn't exist
+      if (error.message?.includes('not found') || error.code === 'PGRST116') {
+        return false
+      }
+      // For other errors, allow the match to proceed
+      return true
+    }
+  }
+
   // Add player to queue
   async joinQueue(playerId, playerData) {
+    // Validate user exists in database
+    const isValidUser = await this.validateUser(playerId)
+    if (!isValidUser) {
+      console.warn(`Rejected queue join - user ${playerId} not found in database`)
+      return { matched: false, error: 'User not found in database' }
+    }
+    
     // Remove from queue if already there
     this.queue = this.queue.filter(p => p.id !== playerId)
     
     this.queue.push({
       id: playerId,
       ...playerData,
-      queuedAt: Date.now()
+      queuedAt: Date.now(),
+      validated: true
     })
 
     console.log(`Player ${playerId} joined queue. Queue size: ${this.queue.length}`)

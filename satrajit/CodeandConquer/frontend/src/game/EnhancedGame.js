@@ -140,6 +140,11 @@ export class EnhancedGame {
       }
     })
 
+    // Define base position (used for enemy pathfinding)
+    this.base = {
+      position: new THREE.Vector3(0, 0, -20) // Base is at end of path
+    }
+    
     this.initScene()
     this.initCamera()
     this.initRenderer()
@@ -182,6 +187,14 @@ export class EnhancedGame {
     setTimeout(() => {
       this.waveTimer.start()
     }, 5000) // 5 second grace period
+    
+    // Initialize AI opponent for single player mode
+    if (this.gameMode === 'single') {
+      // Get AI difficulty from user profile or default to medium
+      const aiDifficulty = userProfile.aiDifficulty || 'medium'
+      this.aiPlayer = new AIPlayer(this, aiDifficulty)
+      console.log(`🤖 AI Player initialized in ${aiDifficulty} mode`)
+    }
     
     this.animate()
   }

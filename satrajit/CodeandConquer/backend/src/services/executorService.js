@@ -6,6 +6,7 @@ import { fileURLToPath } from 'url';
 import tar from 'tar-stream';
 import regression from 'regression';
 import fallbackExecutor from './fallbackExecutor.js';
+import judge0Service from './judge0Service.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -368,17 +369,33 @@ class AdvancedExecutorService {
   async executeCode(code, language, testCase, timeLimit) {
     // Check if Docker and images are available
     if (!dockerAvailable || !dockerImagesAvailable) {
-      // Use fallback executor
-      if (!fallbackExecutor.isSupported(language)) {
-        return {
-          success: false,
-          output: null,
-          executionTime: 0,
-          memory: 0,
-          error: `Docker is not available or images not built. Supported languages without Docker: ${fallbackExecutor.getSupportedLanguages().join(', ')}. To enable all languages, run: cd backend/judge && ./build-images.ps1`
-        };
+      // Try Judge0 API first (supports more languages)
+      if (judge0Service.isAvailable() && judge0Service.isSupported(language)) {
+        console.log(`Using Judge0 API for ${language} execution`);
+        return await judge0Service.executeCode(code, language, testCase, timeLimit);
       }
-      return await fallbackExecutor.executeCode(code, language, testCase, timeLimit);
+      
+      // Fall back to local executor for JS/Python
+      if (fallbackExecutor.isSupported(language)) {
+        console.log(`Using fallback executor for ${language}`);
+        return await fallbackExecutor.executeCode(code, language, testCase, timeLimit);
+      }
+      
+      // No executor available for this language
+      const supportedLangs = [
+        ...new Set([
+          ...fallbackExecutor.getSupportedLanguages(),
+          ...(judge0Service.isAvailable() ? judge0Service.getSupportedLanguages() : [])
+        ])
+      ];
+      
+      return {
+        success: false,
+        output: null,
+        executionTime: 0,
+        memory: 0,
+        error: `Language "${language}" requires Docker or Judge0 API. Supported languages: ${supportedLangs.join(', ')}. Set JUDGE0_API_KEY for multi-language support.`
+      };
     }
 
     const config = LANGUAGE_CONFIGS[language];
@@ -413,7 +430,13 @@ class AdvancedExecutorService {
     if (dockerAvailable && dockerImagesAvailable) {
       return Object.keys(LANGUAGE_CONFIGS);
     }
-    return fallbackExecutor.getSupportedLanguages();
+    
+    // Combine Judge0 and fallback executor languages
+    const languages = new Set(fallbackExecutor.getSupportedLanguages());
+    if (judge0Service.isAvailable()) {
+      judge0Service.getSupportedLanguages().forEach(lang => languages.add(lang));
+    }
+    return Array.from(languages);
   }
 
   prepareCode(code, testCase, language) {
@@ -567,6 +590,11 @@ echo json_encode($result);
   async runTestCases(code, language, testCases) {
     // Use fallback executor if Docker is not available or images not built
     if (!dockerAvailable || !dockerImagesAvailable) {
+      // Try Judge0 API first
+      if (judge0Service.isAvailable() && judge0Service.isSupported(language)) {
+        return await judge0Service.runTestCases(code, language, testCases);
+      }
+      // Fall back to local executor
       return await fallbackExecutor.runTestCases(code, language, testCases);
     }
 
