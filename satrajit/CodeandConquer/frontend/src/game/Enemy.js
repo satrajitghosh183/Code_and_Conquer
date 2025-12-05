@@ -56,6 +56,9 @@ export class Enemy {
     
     // Path
     this.path = []
+    this.pathId = args.pathId || null
+    this.totalPathLength = 0
+    this.pathProgress = 0
     this.next = null
     this.position = args.position ? args.position.clone() : new THREE.Vector3(0, 0.5, 45)
     
@@ -475,17 +478,21 @@ export class Enemy {
     this.shieldBarFill.visible = ratio > 0
   }
   
-  setPath(path) {
+  setPath(path, pathId = null) {
     if (!path || path.length === 0) {
       this.finished = true
       return
     }
     
+    this.pathId = pathId || this.pathId
     this.path = path.map(p => ({
       x: p.x !== undefined ? p.x : 0,
       y: p.y !== undefined ? p.y : 0.5,
       z: p.z !== undefined ? p.z : 0
     }))
+    
+    this.totalPathLength = this.path.length
+    this.pathProgress = 0
     
     this.finished = false
     this.advance()
@@ -499,6 +506,10 @@ export class Enemy {
     }
     
     this.next = this.path.shift()
+    if (this.totalPathLength > 0) {
+      const remaining = this.path.length
+      this.pathProgress = 1 - (remaining / this.totalPathLength)
+    }
     return this.next !== null
   }
   

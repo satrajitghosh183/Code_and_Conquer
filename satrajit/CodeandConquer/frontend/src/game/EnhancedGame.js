@@ -17,6 +17,8 @@ import { modelLoader } from './ModelLoader.js'
 import { TowerCombatSystem } from './TowerCombatSystem.js'
 import { CodingRewardSystem } from './CodingRewardSystem.js'
 import { AIPlayer } from './AIPlayer.js'
+import PathManager from './PathManager.js'
+import AIDirector from './AIDirector.js'
 
 export class EnhancedGame {
   constructor(container, callbacks = {}, userProfile = {}, gameMode = 'single') {
@@ -29,6 +31,9 @@ export class EnhancedGame {
     this.gold = callbacks.initialGold || 600
     this.energy = callbacks.initialEnergy || 50
     this.maxEnergy = 100
+    this.energyRegenTick = 0.2
+    this.energyRegenPerTick = callbacks.energyPerTick || 2
+    this.energyTickAccumulator = 0
     this.health = 1000
     this.maxHealth = 1000
     this.wave = 0
@@ -78,28 +83,32 @@ export class EnhancedGame {
     this.health = this.mainBase.health
     this.maxHealth = this.mainBase.maxHealth
     
-    // Enemy path
-    this.enemyPath = [
-      new THREE.Vector3(0, 0.5, 45),
-      new THREE.Vector3(18, 0.5, 35),
-      new THREE.Vector3(18, 0.5, 15),
-      new THREE.Vector3(-12, 0.5, 8),
-      new THREE.Vector3(-12, 0.5, -8),
-      new THREE.Vector3(8, 0.5, -15),
-      new THREE.Vector3(0, 0.5, this.basePosition.z)
-    ]
-    
-    // Create path visual
-    this.createPathVisual()
+    // Paths / lanes
+    this.pathManager = new PathManager(this.scene, this.basePosition)
+    this.waveDirector.pathManager = this.pathManager
+    this.enemyPath = this.pathManager.getPath('center')?.waypoints || []
     
     // Enemy Manager
     this.enemyManager = new EnemyManager(this, {
       difficulty: 'normal',
-      spawnPoints: [new THREE.Vector3(0, 0.5, 45)],
+      pathManager: this.pathManager,
       targetPoint: this.basePosition,
       maxActiveEnemies: 50,
       
       onWaveComplete: (waveNum, waveTime, bonus) => {
+        this.waveActive = false
+        this.phase = 'build'
+        this.buildCountdown = this.buildDuration
+        this.lastWaveTime = Date.now()
+        
+        const livesLost = Math.max(0, Math.floor((this.waveStartHealth - this.health) / 50))
+        if (this.waveDirector) {
+          this.waveDirector.recordWaveOutcome({ livesLost, completionTime: waveTime / 1000 })
+        }
+        
+        if (this.callbacks.onWaveCountdown) {
+          this.callbacks.onWaveCountdown(Math.ceil(this.buildCountdown), this.buildDuration)
+        }
         this.addGold(bonus || 50)
         if (this.callbacks.onWaveComplete) {
           this.callbacks.onWaveComplete(waveNum, bonus)
@@ -108,6 +117,8 @@ export class EnhancedGame {
       
       onWaveStart: (waveNum) => {
         this.wave = waveNum
+        this.phase = 'combat'
+        this.waveActive = true
         if (this.callbacks.onWaveChange) {
           this.callbacks.onWaveChange(waveNum)
         }
@@ -160,6 +171,7 @@ export class EnhancedGame {
     if (gameMode === 'vs_ai' || gameMode === 'challenge') {
       this.aiPlayer = new AIPlayer(this, userProfile.aiDifficulty || 'medium')
     }
+    this.waveDirector = new AIDirector(this, null)
     
     // Build system
     this.selectedStructureType = null
@@ -167,11 +179,15 @@ export class EnhancedGame {
     this.availableTowers = Object.keys(TOWER_TYPES)
     
     // Wave timer
-    this.waveCountdown = 30
+    this.waveCountdown = 15
+    this.waveCountdownTotal = 15
+    this.buildDuration = 15
+    this.phase = 'build' // build | combat
     this.waveInterval = 30000
     this.lastWaveTime = Date.now()
     this.passiveEnergyPerSecond = 0.2
     this.waveTimerActive = false
+    this.waveActive = false
     
     // Input
     this.raycaster = new THREE.Raycaster()
@@ -275,8 +291,12 @@ export class EnhancedGame {
   
   startWaveTimer() {
     this.waveTimerActive = true
+    this.phase = 'build'
+    this.waveActive = false
     this.lastWaveTime = Date.now()
-    this.waveCountdown = 30
+    this.buildCountdown = this.buildDuration
+    this.waveCountdown = this.buildCountdown
+    this.waveCountdownTotal = this.buildDuration
     
     // Initial UI update
     if (this.callbacks.onEnergyChange) {
@@ -285,12 +305,26 @@ export class EnhancedGame {
     if (this.callbacks.onGoldChange) {
       this.callbacks.onGoldChange(this.gold)
     }
+    if (this.callbacks.onPassiveRateChange) {
+      this.callbacks.onPassiveRateChange({
+        energyPerSecond: this.energyRegenPerTick / this.energyRegenTick,
+        goldPerSecond: 0
+      })
+    }
   }
   
   startNextWave() {
-    this.enemyManager.startWave()
-    this.waveCountdown = 30
+    if (this.waveActive) return
+    const nextWaveNumber = this.wave + 1
+    const wavePlan = this.waveDirector.planWave(nextWaveNumber)
+    
+    this.waveActive = true
+    this.phase = 'combat'
+    this.waveCountdown = 0
     this.lastWaveTime = Date.now()
+    this.waveStartHealth = this.health
+    
+    this.enemyManager.startWave(wavePlan)
   }
   
   setupEventListeners() {
@@ -460,9 +494,13 @@ export class EnhancedGame {
     if (position.distanceTo(this.basePosition) < 12) return false
     
     // Not on path
-    for (let i = 0; i < this.enemyPath.length - 1; i++) {
-      const dist = this.distanceToLineSegment(position, this.enemyPath[i], this.enemyPath[i + 1])
-      if (dist < 4) return false
+    if (this.pathManager && this.pathManager.isPointNearAnyPath(position, 3.5)) {
+      return false
+    } else {
+      for (let i = 0; i < this.enemyPath.length - 1; i++) {
+        const dist = this.distanceToLineSegment(position, this.enemyPath[i], this.enemyPath[i + 1])
+        if (dist < 4) return false
+      }
     }
     
     // Not too close to other structures
@@ -620,25 +658,26 @@ export class EnhancedGame {
     // Update visual effects
     this.visualEffects.update(deltaTime)
     
-    // Wave timer
-    if (this.waveTimerActive) {
-      const elapsed = Date.now() - this.lastWaveTime
-      this.waveCountdown = Math.max(0, 30 - elapsed / 1000)
+    // Build/combat pacing
+    if (this.waveTimerActive && this.phase === 'build' && !this.waveActive) {
+      this.buildCountdown = Math.max(0, this.buildCountdown - deltaTime)
+      this.waveCountdown = this.buildCountdown
+      this.waveCountdownTotal = this.buildDuration
       
       if (this.callbacks.onWaveCountdown) {
-        this.callbacks.onWaveCountdown(Math.ceil(this.waveCountdown), 30)
+        this.callbacks.onWaveCountdown(Math.ceil(this.waveCountdown), this.buildDuration)
       }
       
-      if (this.waveCountdown <= 0) {
+      if (this.buildCountdown <= 0) {
         this.startNextWave()
       }
-      
-      // Passive energy regeneration
-      this.energy = Math.min(this.maxEnergy, this.energy + this.passiveEnergyPerSecond * deltaTime)
-      if (this.callbacks.onEnergyChange) {
-        // FIX: Use Math.floor to prevent floating point display issues
-        this.callbacks.onEnergyChange(Math.floor(this.energy), this.maxEnergy)
-      }
+    }
+    
+    // Energy regeneration in ticks
+    this.energyTickAccumulator += deltaTime
+    while (this.energyTickAccumulator >= this.energyRegenTick) {
+      this.energyTickAccumulator -= this.energyRegenTick
+      this.addEnergy(this.energyRegenPerTick)
     }
     
     // Update enemies
@@ -703,6 +742,15 @@ export class EnhancedGame {
     }
   }
   
+  consumeEnergy(amount) {
+    if (this.energy < amount) return false
+    this.energy = Math.max(0, this.energy - amount)
+    if (this.callbacks.onEnergyChange) {
+      this.callbacks.onEnergyChange(Math.floor(this.energy), this.maxEnergy)
+    }
+    return true
+  }
+  
   // XP management
   addXP(amount) {
     this.xp += amount
@@ -719,9 +767,11 @@ export class EnhancedGame {
       problemData.testsPassedRatio || 1.0
     )
     
-    // Add extra wave countdown time
-    this.waveCountdown = Math.min(60, this.waveCountdown + 15)
-    this.lastWaveTime = Date.now() - (30 - this.waveCountdown) * 1000
+    // Add extra build/planning time
+    if (this.phase === 'build') {
+      this.buildCountdown = Math.min(this.buildDuration + 20, this.buildCountdown + 15)
+      this.waveCountdown = this.buildCountdown
+    }
     
     // Notification
     if (this.callbacks.onNotification) {
@@ -744,8 +794,10 @@ export class EnhancedGame {
     
     this.addEnergy(rewards.energy)
     this.addGold(rewards.gold)
-    this.waveCountdown = Math.min(60, this.waveCountdown + rewards.timeBonus)
-    this.lastWaveTime = Date.now() - (30 - this.waveCountdown) * 1000
+    if (this.phase === 'build') {
+      this.buildCountdown = Math.min(this.buildDuration + 20, this.buildCountdown + rewards.timeBonus)
+      this.waveCountdown = this.buildCountdown
+    }
     
     if (this.callbacks.onNotification) {
       this.callbacks.onNotification(
@@ -786,6 +838,16 @@ export class EnhancedGame {
     }
     
     return false
+  }
+  
+  getTowerStats(towerId) {
+    const tower = this.towers.find(t => t.id === towerId)
+    return tower ? tower.getStats() : null
+  }
+  
+  getTowerUpgradeCost(towerId) {
+    const tower = this.towers.find(t => t.id === towerId)
+    return tower ? tower.getUpgradeCost() : null
   }
   
   // Sell tower

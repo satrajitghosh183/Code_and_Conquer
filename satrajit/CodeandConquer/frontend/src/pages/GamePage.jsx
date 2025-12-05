@@ -9,6 +9,7 @@ import LearningModule from '../components/LearningModule'
 import CodingConsole from '../components/CodingConsole'
 import TaskPanel from '../components/TaskPanel'
 import ModelScaleSettings from '../components/ModelScaleSettings'
+import TowerPanel from '../components/TowerPanel'
 import { Icon } from '../components/Icons'
 import './GamePage.css'
 
@@ -45,6 +46,7 @@ export default function GamePage() {
   const [isPaused, setIsPaused] = useState(false)
   const [showHeader, setShowHeader] = useState(true)
   const [vignetteIntensity, setVignetteIntensity] = useState(0)
+  const [selectedTower, setSelectedTower] = useState(null)
 
   useEffect(() => {
     if (!containerRef.current) return
@@ -88,6 +90,9 @@ export default function GamePage() {
       onWaveCountdown: (countdown, total) => {
         setWaveCountdown(countdown)
         setWaveCountdownTotal(total)
+      },
+      onTowerSelected: (towerStats) => {
+        setSelectedTower(towerStats)
       },
       onProblemReward: (rewards) => {
         console.log('Problem solved! Rewards:', rewards)
@@ -236,6 +241,24 @@ export default function GamePage() {
       gameRef.current.selectStructureType(structureId)
     }
   }
+
+  const handleTowerUpgrade = useCallback(() => {
+    if (!selectedTower || !gameRef.current) return
+    const upgraded = gameRef.current.upgradeTower(selectedTower.id)
+    if (upgraded) {
+      const refreshed = gameRef.current.getTowerStats(selectedTower.id)
+      if (refreshed) {
+        setSelectedTower(refreshed)
+      }
+    }
+  }, [selectedTower])
+
+  const handleTowerSell = useCallback(() => {
+    if (!selectedTower || !gameRef.current) return
+    if (gameRef.current.sellTower(selectedTower.id)) {
+      setSelectedTower(null)
+    }
+  }, [selectedTower])
   
   const handleProblemSolved = (problemData) => {
     if (gameRef.current) {
@@ -276,6 +299,9 @@ export default function GamePage() {
   }, [navigate])
 
   const upgradeCost = 500 * Math.pow(2, upgradeLevel - 1)
+  const selectedTowerUpgradeCost = selectedTower && gameRef.current
+    ? gameRef.current.getTowerUpgradeCost(selectedTower.id)
+    : null
 
   return (
     <div className="game-page">
@@ -365,6 +391,14 @@ export default function GamePage() {
         selectedStructure={selectedStructure}
         onSelect={handleStructureSelect}
         availableStructures={availableTowers}
+      />
+      
+      <TowerPanel 
+        tower={selectedTower}
+        upgradeCost={selectedTowerUpgradeCost}
+        gold={gold}
+        onUpgrade={handleTowerUpgrade}
+        onSell={handleTowerSell}
       />
       
       <div className="game-ui-overlay">

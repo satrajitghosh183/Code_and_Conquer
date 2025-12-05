@@ -223,6 +223,14 @@ export class TowerCombatSystem {
     // Check cooldown
     const cooldownTime = 1.0 / tower.fireRate
     if (currentTime - tower.lastShot < cooldownTime) return false
+
+    const energyCost = tower.energyCost || 0
+    if (energyCost > 0 && this.game.consumeEnergy) {
+      const paid = this.game.consumeEnergy(energyCost)
+      if (!paid) {
+        return false
+      }
+    }
     
     tower.lastShot = currentTime
     this.totalShots++

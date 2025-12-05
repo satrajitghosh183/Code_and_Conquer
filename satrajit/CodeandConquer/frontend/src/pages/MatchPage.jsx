@@ -65,6 +65,9 @@ export default function MatchPage() {
           matchId: match.id,
           socket,
           gameState: match.gameState,
+          callbacks: {
+            onStateUpdate: setGameState
+          },
           onTowerPlace: (position, towerType) => {
             socket.emit('place_tower', {
               matchId: match.id,
@@ -211,6 +214,8 @@ export default function MatchPage() {
 
   const playerIndex = matchState.players.findIndex(p => p.id === playerId)
   const playerState = gameState?.[`player${playerIndex + 1}`]
+  const opponentIndex = playerIndex === 0 ? 1 : 0
+  const opponentState = gameState?.[`player${opponentIndex + 1}`]
 
   return (
     <div className="match-page">
@@ -219,11 +224,25 @@ export default function MatchPage() {
           <div className="player-stats">
             <div className="stat">
               <span className="stat-label">HP</span>
-              <span className="stat-value">{Math.max(0, Math.floor(playerState?.baseHp || 0))}</span>
+              <span className="stat-value">{Math.max(0, Math.floor(playerState?.health || 0))}</span>
             </div>
             <div className="stat">
               <span className="stat-label">Energy</span>
               <span className="stat-value">{Math.floor(playerState?.energy || 0)}</span>
+            </div>
+            <div className="stat">
+              <span className="stat-label">Wave</span>
+              <span className="stat-value">{gameState?.wave || 0}</span>
+            </div>
+          </div>
+          <div className="player-stats opponent">
+            <div className="stat">
+              <span className="stat-label">Opponent HP</span>
+              <span className="stat-value">{Math.max(0, Math.floor(opponentState?.health || 0))}</span>
+            </div>
+            <div className="stat">
+              <span className="stat-label">Opponent Gold</span>
+              <span className="stat-value">{Math.floor(opponentState?.gold || 0)}</span>
             </div>
             <div className="stat">
               <span className="stat-label">Wave</span>

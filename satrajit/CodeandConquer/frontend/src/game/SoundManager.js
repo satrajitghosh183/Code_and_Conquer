@@ -1,5 +1,6 @@
 // Enhanced Sound Manager with Web Audio API
 // Features: Spatial 3D audio, multiple channels, dynamic music, sound pooling
+// ENHANCED: Reverb, better spatial audio, audio compression, enhanced immersion
 
 import * as THREE from 'three'
 
@@ -11,6 +12,11 @@ class SoundManagerClass {
     this.sfxGain = null
     this.musicGain = null
     this.listener = null
+
+    // Enhanced audio nodes
+    this.compressor = null
+    this.convolver = null // For reverb
+    this.reverbGain = null
 
     // Sound library and buffers
     this.sounds = {}
@@ -27,6 +33,7 @@ class SoundManagerClass {
     this.masterVolume = 0.7
     this.sfxVolume = 0.8
     this.musicVolume = 0.4
+    this.reverbAmount = 0.3 // New: reverb wet/dry mix
     this.speed = 1.0
 
     // Rate limiting
@@ -56,9 +63,24 @@ class SoundManagerClass {
       this.sfxGain = this.audioContext.createGain()
       this.musicGain = this.audioContext.createGain()
 
-      // Connect gain nodes
-      this.sfxGain.connect(this.masterGain)
-      this.musicGain.connect(this.masterGain)
+      // Create compressor for better dynamic range
+      this.compressor = this.audioContext.createDynamicsCompressor()
+      this.compressor.threshold.value = -24
+      this.compressor.knee.value = 30
+      this.compressor.ratio.value = 12
+      this.compressor.attack.value = 0.003
+      this.compressor.release.value = 0.25
+
+      // Create reverb (convolver)
+      await this.createReverb()
+
+      // Connect audio graph
+      // SFX: sfxGain -> reverb -> compressor -> master
+      // Music: musicGain -> compressor -> master
+      this.sfxGain.connect(this.reverbGain)
+      this.reverbGain.connect(this.compressor)
+      this.musicGain.connect(this.compressor)
+      this.compressor.connect(this.masterGain)
       this.masterGain.connect(this.audioContext.destination)
 
       // Set initial volumes
@@ -69,9 +91,55 @@ class SoundManagerClass {
         this.setCamera(camera)
       }
 
-      console.log('SoundManager: Web Audio API initialized')
+      console.log('[SoundManager] Web Audio API initialized with reverb and compression')
     } catch (error) {
       console.error('Failed to initialize Web Audio API:', error)
+    }
+  }
+
+  // Create reverb effect using convolver
+  async createReverb() {
+    this.convolver = this.audioContext.createConvolver()
+    this.reverbGain = this.audioContext.createGain()
+    
+    // Create impulse response (simple algorithmic reverb)
+    const sampleRate = this.audioContext.sampleRate
+    const length = sampleRate * 2 // 2 seconds reverb
+    const impulse = this.audioContext.createBuffer(2, length, sampleRate)
+    
+    for (let channel = 0; channel < 2; channel++) {
+      const channelData = impulse.getChannelData(channel)
+      for (let i = 0; i < length; i++) {
+        // Exponential decay for natural reverb
+        const decay = Math.exp(-i / (sampleRate * 0.5))
+        channelData[i] = (Math.random() * 2 - 1) * decay
+      }
+    }
+    
+    this.convolver.buffer = impulse
+    
+    // Dry/wet mix
+    const dryGain = this.audioContext.createGain()
+    const wetGain = this.audioContext.createGain()
+    
+    dryGain.gain.value = 1 - this.reverbAmount
+    wetGain.gain.value = this.reverbAmount
+    
+    // Connect reverb chain
+    this.reverbGain.connect(dryGain)
+    this.reverbGain.connect(this.convolver)
+    this.convolver.connect(wetGain)
+    
+    // Both paths merge before compressor
+    this.reverbDryGain = dryGain
+    this.reverbWetGain = wetGain
+  }
+
+  setReverbAmount(amount) {
+    this.reverbAmount = Math.max(0, Math.min(1, amount))
+    if (this.reverbDryGain && this.reverbWetGain) {
+      this.reverbDryGain.gain.value = 1 - this.reverbAmount
+      this.reverbWetGain.gain.value = this.reverbAmount
     }
   }
 

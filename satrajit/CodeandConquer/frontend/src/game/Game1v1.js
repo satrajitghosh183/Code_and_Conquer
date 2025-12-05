@@ -20,6 +20,7 @@ import { modelLoader } from './ModelLoader.js'
 import { Tower } from './structures/Tower.js'
 import { TOWER_TYPES } from './structures/TowerTypes.js'
 import { SpatialHashGrid } from './SpatialHashGrid.js'
+import PathManager from './PathManager.js'
 
 // =============================================================================
 // MULTIPLAYER GAME CONFIGURATION
@@ -122,6 +123,7 @@ export class Game1v1 {
     
     this.isPaused = false
     this.gameOver = false
+    this.lastStateBroadcast = 0
     
     // ==========================================================================
     // INITIALIZE GRAPHICS
@@ -157,6 +159,16 @@ export class Game1v1 {
     
     this.createBattlefield()
     
+    // Lane managers for each defender
+    this.pathManagerP1 = new PathManager(this.scene, new THREE.Vector3(0, 0, GAME_CONFIG.player1BaseZ), {
+      spawnZ: GAME_CONFIG.player2BaseZ,
+      visualize: true
+    })
+    this.pathManagerP2 = new PathManager(this.scene, new THREE.Vector3(0, 0, GAME_CONFIG.player2BaseZ), {
+      spawnZ: GAME_CONFIG.player1BaseZ,
+      visualize: false
+    })
+    
     // ==========================================================================
     // INITIALIZE ENEMY MANAGERS (one per player's attack lane)
     // ==========================================================================
@@ -164,7 +176,7 @@ export class Game1v1 {
     // Enemy manager for enemies attacking player 1 (moving toward -Z)
     this.enemyManagerP1 = new EnemyManager(this, {
       difficulty: 'normal',
-      spawnPoints: [new THREE.Vector3(0, 0.5, GAME_CONFIG.player2BaseZ - 5)],
+      pathManager: this.pathManagerP1,
       targetPoint: new THREE.Vector3(0, 0, GAME_CONFIG.player1BaseZ),
       maxActiveEnemies: 75,
       onEnemyKilled: (enemy, gold) => this.onEnemyKilled(enemy, gold, 1),
@@ -174,7 +186,7 @@ export class Game1v1 {
     // Enemy manager for enemies attacking player 2 (moving toward +Z)
     this.enemyManagerP2 = new EnemyManager(this, {
       difficulty: 'normal',
-      spawnPoints: [new THREE.Vector3(0, 0.5, GAME_CONFIG.player1BaseZ + 5)],
+      pathManager: this.pathManagerP2,
       targetPoint: new THREE.Vector3(0, 0, GAME_CONFIG.player2BaseZ),
       maxActiveEnemies: 75,
       onEnemyKilled: (enemy, gold) => this.onEnemyKilled(enemy, gold, 2),
@@ -619,17 +631,27 @@ export class Game1v1 {
   
   spawnWaveForPlayer(waveType, count, targetPlayer) {
     const enemyManager = targetPlayer === 1 ? this.enemyManagerP1 : this.enemyManagerP2
+    const pathManager = targetPlayer === 1 ? this.pathManagerP1 : this.pathManagerP2
     
     // Queue the spawns
     for (let i = 0; i < count; i++) {
       setTimeout(() => {
-        const spawnPoint = targetPlayer === 1
-          ? new THREE.Vector3((Math.random() - 0.5) * 10, 0.5, GAME_CONFIG.player2BaseZ - 5)
-          : new THREE.Vector3((Math.random() - 0.5) * 10, 0.5, GAME_CONFIG.player1BaseZ + 5)
+        let chosenPath = pathManager ? pathManager.getRandomPath() : null
+        let spawnPoint
+        if (chosenPath) {
+          spawnPoint = chosenPath.spawn.clone()
+          spawnPoint.x += (Math.random() - 0.5) * 3
+          spawnPoint.z += (Math.random() - 0.5) * 3
+        } else {
+          spawnPoint = targetPlayer === 1
+            ? new THREE.Vector3((Math.random() - 0.5) * 10, 0.5, GAME_CONFIG.player2BaseZ - 5)
+            : new THREE.Vector3((Math.random() - 0.5) * 10, 0.5, GAME_CONFIG.player1BaseZ + 5)
+        }
         
         enemyManager.spawnEnemy({
           type: waveType,
           position: spawnPoint,
+          pathId: chosenPath?.id,
           healthMultiplier: 1 + this.gameState.wave * 0.1,
           speedMultiplier: 1
         })
@@ -954,6 +976,14 @@ export class Game1v1 {
     
     // Update game time
     this.gameState.time += deltaTime
+    
+    if (this.callbacks.onStateUpdate) {
+      const nowMs = Date.now()
+      if (nowMs - this.lastStateBroadcast > 300) {
+        this.callbacks.onStateUpdate(this.gameState)
+        this.lastStateBroadcast = nowMs
+      }
+    }
   }
   
   updateTowerCombat(deltaTime) {

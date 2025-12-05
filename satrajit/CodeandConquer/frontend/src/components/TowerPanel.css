@@ -1,0 +1,93 @@
+.tower-panel {
+  position: absolute;
+  right: 16px;
+  bottom: 120px;
+  width: 240px;
+  background: rgba(12, 12, 18, 0.88);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 10px;
+  padding: 12px;
+  backdrop-filter: blur(6px);
+  color: #e8ecf5;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.35);
+  z-index: 8;
+}
+
+.tower-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+  font-weight: 700;
+  letter-spacing: 0.3px;
+}
+
+.tower-level {
+  padding: 2px 8px;
+  background: rgba(255, 90, 0, 0.18);
+  border: 1px solid rgba(255, 140, 0, 0.45);
+  border-radius: 6px;
+  color: #ffb266;
+  font-size: 12px;
+}
+
+.tower-stats {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 6px;
+  margin-bottom: 10px;
+}
+
+.tower-stats .stat {
+  display: flex;
+  justify-content: space-between;
+  background: rgba(255, 255, 255, 0.03);
+  padding: 6px 8px;
+  border-radius: 6px;
+  font-size: 13px;
+}
+
+.tower-stats .stat span:first-child {
+  opacity: 0.65;
+}
+
+.tower-stats .stat.energy {
+  color: #7de3ff;
+}
+
+.tower-actions {
+  display: flex;
+  gap: 8px;
+}
+
+.tower-actions button {
+  flex: 1;
+  padding: 8px 10px;
+  border: none;
+  border-radius: 6px;
+  color: #fff;
+  font-weight: 600;
+  cursor: pointer;
+  transition: transform 0.08s ease, opacity 0.12s ease;
+}
+
+.tower-actions button:active {
+  transform: translateY(1px);
+}
+
+.upgrade-btn {
+  background: linear-gradient(135deg, #1b8fff, #6ad1ff);
+  box-shadow: 0 6px 20px rgba(26, 140, 255, 0.25);
+}
+
+.upgrade-btn.disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  box-shadow: none;
+}
+
+.sell-btn {
+  background: linear-gradient(135deg, #ff5f5f, #ff8f70);
+  box-shadow: 0 6px 18px rgba(255, 110, 110, 0.25);
+}
+

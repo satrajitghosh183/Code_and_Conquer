@@ -69,6 +69,8 @@ export class Tower {
     this.cooldown = config.cooldown || 1000
     this.projectileSpeed = config.projectileSpeed || 20
     this.attackType = config.attackType || 'bullet'
+    this.energyCost = config.energyCost || 0
+    this.maxEnergy = config.maxEnergy || null
     
     // Special effects
     this.splashRadius = config.splashRadius || 0
@@ -78,6 +80,7 @@ export class Tower {
     this.burnDuration = config.burnDuration || 3000
     this.chainCount = config.chainCount || 0
     this.beamDuration = config.beamDuration || 500
+    this.energyRegenBonus = config.energyRegenBonus || 0
     
     // State
     this.target = null
@@ -480,9 +483,13 @@ export class Tower {
     if (upgradeConfig.damage) this.damage = upgradeConfig.damage
     if (upgradeConfig.range) this.range = upgradeConfig.range
     if (upgradeConfig.cooldown) this.cooldown = upgradeConfig.cooldown
+    if (upgradeConfig.fireRate) this.fireRate = upgradeConfig.fireRate
     if (upgradeConfig.splashRadius) this.splashRadius = upgradeConfig.splashRadius
     if (upgradeConfig.slowAmount) this.slowAmount = upgradeConfig.slowAmount
     if (upgradeConfig.chainCount) this.chainCount = upgradeConfig.chainCount
+    if (upgradeConfig.energyCost !== undefined) this.energyCost = upgradeConfig.energyCost
+    if (upgradeConfig.maxEnergy) this.maxEnergy = upgradeConfig.maxEnergy
+    if (upgradeConfig.energyRegenBonus) this.energyRegenBonus = upgradeConfig.energyRegenBonus
     
     // Visual upgrade
     if (this.mesh) {
@@ -492,9 +499,13 @@ export class Tower {
     // Increase glow
     if (this.energyRing) {
       this.energyRing.material.opacity = 0.5 + this.level * 0.15
+      this.energyRing.scale.multiplyScalar(1.05)
     }
     if (this.towerLight) {
       this.towerLight.intensity += 0.5
+    }
+    if (this.muzzleGlow) {
+      this.muzzleGlow.material.opacity = Math.min(1, this.muzzleGlow.material.opacity + 0.15)
     }
     
     return true
@@ -552,12 +563,14 @@ export class Tower {
   
   getStats() {
     return {
+      id: this.id,
       type: this.towerType,
       name: this.config.name,
       level: this.level,
       damage: this.damage,
       range: this.range,
       fireRate: this.fireRate,
+      energyCost: this.energyCost || 0,
       kills: this.kills,
       totalDamage: Math.floor(this.totalDamage),
       attackType: this.attackType,

@@ -1,5 +1,6 @@
 // =============================================================================
 // GRAPHICS ENGINE - Beautiful Sci-Fi Tower Defense Environment
+// ENHANCED: Optimized rendering, instancing, LOD, and stunning visuals
 // =============================================================================
 
 import * as THREE from 'three'
@@ -9,8 +10,9 @@ export class GraphicsEngine {
     this.container = container
     this.options = {
       quality: options.quality || 'medium',
-      enablePostProcessing: false,
-      enableShadows: false,
+      enablePostProcessing: options.enablePostProcessing !== undefined ? options.enablePostProcessing : true,
+      enableShadows: options.enableShadows !== undefined ? options.enableShadows : true,
+      theme: options.theme || 'default',
       ...options
     }
     
@@ -21,33 +23,115 @@ export class GraphicsEngine {
     this.environmentObjects = []
     this.terrain = null
     this.animatedObjects = []
+    this.instancedMeshes = new Map() // For instancing optimization
+    this.textureLoader = new THREE.TextureLoader()
+    this.loadedTextures = new Map()
     
     this.clock = new THREE.Clock()
     this.animationTime = 0
+    this.composer = null
+    this.skybox = null
   }
 
   initialize() {
     this.createScene()
     this.createCamera()
     this.createRenderer()
+    this.createSkybox()
     this.createLights()
     this.createTerrain()
     this.createEnvironment()
     this.createAtmosphere()
     
+    if (this.options.enablePostProcessing) {
+      this.setupPostProcessing()
+    }
+    
     return {
       scene: this.scene,
       camera: this.camera,
       renderer: this.renderer,
-      composer: null
+      composer: this.composer
     }
   }
   
   createScene() {
     this.scene = new THREE.Scene()
-    // Deep space blue-purple gradient effect via fog
+    // Background will be replaced by skybox
     this.scene.background = new THREE.Color(0x050510)
-    this.scene.fog = new THREE.FogExp2(0x050510, 0.008)
+    // Enhanced fog for depth perception
+    this.scene.fog = new THREE.FogExp2(0x050520, 0.006)
+  }
+  
+  createSkybox() {
+    // Create stunning procedural space skybox
+    const skyboxGeometry = new THREE.SphereGeometry(400, 32, 32)
+    
+    // Create star field texture programmatically
+    const canvas = document.createElement('canvas')
+    canvas.width = 2048
+    canvas.height = 1024
+    const ctx = canvas.getContext('2d')
+    
+    // Deep space gradient
+    const gradient = ctx.createLinearGradient(0, 0, 0, canvas.height)
+    gradient.addColorStop(0, '#000510')
+    gradient.addColorStop(0.3, '#0a0a20')
+    gradient.addColorStop(0.6, '#110820')
+    gradient.addColorStop(1, '#150515')
+    ctx.fillStyle = gradient
+    ctx.fillRect(0, 0, canvas.width, canvas.height)
+    
+    // Add stars
+    for (let i = 0; i < 3000; i++) {
+      const x = Math.random() * canvas.width
+      const y = Math.random() * canvas.height
+      const size = Math.random() * 2
+      const brightness = Math.random()
+      
+      ctx.fillStyle = `rgba(255, 255, 255, ${brightness})`
+      ctx.beginPath()
+      ctx.arc(x, y, size, 0, Math.PI * 2)
+      ctx.fill()
+      
+      // Add some colored stars
+      if (Math.random() > 0.95) {
+        const hue = Math.random() * 60 + 180 // Blue/cyan range
+        ctx.fillStyle = `hsla(${hue}, 100%, 70%, ${brightness * 0.5})`
+        ctx.beginPath()
+        ctx.arc(x, y, size * 1.5, 0, Math.PI * 2)
+        ctx.fill()
+      }
+    }
+    
+    // Add nebula clouds
+    for (let i = 0; i < 8; i++) {
+      const x = Math.random() * canvas.width
+      const y = Math.random() * canvas.height
+      const radius = 100 + Math.random() * 200
+      
+      const nebulaGradient = ctx.createRadialGradient(x, y, 0, x, y, radius)
+      const hue = Math.random() * 60 + 200 // Purple/blue range
+      nebulaGradient.addColorStop(0, `hsla(${hue}, 80%, 50%, 0.15)`)
+      nebulaGradient.addColorStop(0.5, `hsla(${hue}, 70%, 40%, 0.08)`)
+      nebulaGradient.addColorStop(1, 'rgba(0, 0, 0, 0)')
+      
+      ctx.fillStyle = nebulaGradient
+      ctx.fillRect(x - radius, y - radius, radius * 2, radius * 2)
+    }
+    
+    const texture = new THREE.CanvasTexture(canvas)
+    texture.mapping = THREE.EquirectangularReflectionMapping
+    
+    const skyboxMaterial = new THREE.MeshBasicMaterial({
+      map: texture,
+      side: THREE.BackSide,
+      fog: false
+    })
+    
+    this.skybox = new THREE.Mesh(skyboxGeometry, skyboxMaterial)
+    this.scene.add(this.skybox)
+    this.environmentObjects.push(this.skybox)
   }
   
   createCamera() {
@@ -66,87 +150,181 @@ export class GraphicsEngine {
       antialias: true,
       powerPreference: 'high-performance',
       stencil: false,
-      depth: true
+      depth: true,
+      logarithmicDepthBuffer: false
     })
     
     this.renderer.setSize(this.container.clientWidth, this.container.clientHeight)
     this.renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
+    
+    // Enhanced tone mapping for sci-fi look
     this.renderer.toneMapping = THREE.ACESFilmicToneMapping
-    this.renderer.toneMappingExposure = 1.2
+    this.renderer.toneMappingExposure = 1.3
     this.renderer.outputColorSpace = THREE.SRGBColorSpace
+    
+    // Enable shadows if quality allows
+    if (this.options.enableShadows) {
+      this.renderer.shadowMap.enabled = true
+      this.renderer.shadowMap.type = THREE.PCFSoftShadowMap
+    }
     
     this.container.appendChild(this.renderer.domElement)
   }
 
+  setupPostProcessing() {
+    const { EffectComposer } = require('three/examples/jsm/postprocessing/EffectComposer.js')
+    const { RenderPass } = require('three/examples/jsm/postprocessing/RenderPass.js')
+    const { UnrealBloomPass } = require('three/examples/jsm/postprocessing/UnrealBloomPass.js')
+    const { OutputPass } = require('three/examples/jsm/postprocessing/OutputPass.js')
+    const { ShaderPass } = require('three/examples/jsm/postprocessing/ShaderPass.js')
+    const { FXAAShader } = require('three/examples/jsm/shaders/FXAAShader.js')
+    
+    this.composer = new EffectComposer(this.renderer)
+    
+    // Render pass
+    const renderPass = new RenderPass(this.scene, this.camera)
+    this.composer.addPass(renderPass)
+    
+    // Bloom for glowing effects
+    const bloomPass = new UnrealBloomPass(
+      new THREE.Vector2(this.container.clientWidth, this.container.clientHeight),
+      1.5, // strength
+      0.4, // radius
+      0.85 // threshold
+    )
+    this.composer.addPass(bloomPass)
+    
+    // FXAA for anti-aliasing
+    const fxaaPass = new ShaderPass(FXAAShader)
+    const pixelRatio = this.renderer.getPixelRatio()
+    fxaaPass.uniforms['resolution'].value.set(
+      1 / (this.container.clientWidth * pixelRatio),
+      1 / (this.container.clientHeight * pixelRatio)
+    )
+    this.composer.addPass(fxaaPass)
+    
+    // Output pass
+    const outputPass = new OutputPass()
+    this.composer.addPass(outputPass)
+  }
+
   createLights() {
     // Ambient - cool blue tint
-    this.lights.ambient = new THREE.AmbientLight(0x334466, 0.4)
+    this.lights.ambient = new THREE.AmbientLight(0x334466, 0.5)
     this.scene.add(this.lights.ambient)
     
-    // Main sun - warm white
-    this.lights.sun = new THREE.DirectionalLight(0xffeedd, 0.8)
+    // Main sun - warm white with shadows
+    this.lights.sun = new THREE.DirectionalLight(0xffeedd, 1.0)
     this.lights.sun.position.set(50, 80, 30)
+    this.lights.sun.castShadow = this.options.enableShadows
+    if (this.lights.sun.castShadow) {
+      this.lights.sun.shadow.mapSize.width = 2048
+      this.lights.sun.shadow.mapSize.height = 2048
+      this.lights.sun.shadow.camera.left = -60
+      this.lights.sun.shadow.camera.right = 60
+      this.lights.sun.shadow.camera.top = 60
+      this.lights.sun.shadow.camera.bottom = -60
+      this.lights.sun.shadow.camera.near = 0.5
+      this.lights.sun.shadow.camera.far = 200
+      this.lights.sun.shadow.bias = -0.0001
+      this.lights.sun.shadow.normalBias = 0.02
+    }
     this.scene.add(this.lights.sun)
     
-    // Fill light - cool
-    this.lights.fill = new THREE.DirectionalLight(0x4466aa, 0.3)
+    // Fill light - cool with subtle shadows
+    this.lights.fill = new THREE.DirectionalLight(0x4466aa, 0.4)
     this.lights.fill.position.set(-30, 40, -20)
+    this.lights.fill.castShadow = this.options.enableShadows
+    if (this.lights.fill.castShadow) {
+      this.lights.fill.shadow.mapSize.width = 1024
+      this.lights.fill.shadow.mapSize.height = 1024
+      this.lights.fill.shadow.camera.left = -40
+      this.lights.fill.shadow.camera.right = 40
+      this.lights.fill.shadow.camera.top = 40
+      this.lights.fill.shadow.camera.bottom = -40
+    }
     this.scene.add(this.lights.fill)
     
     // Base glow - pulsing red/orange
-    this.lights.baseGlow = new THREE.PointLight(0xff4400, 4, 60)
+    this.lights.baseGlow = new THREE.PointLight(0xff4400, 6, 70)
     this.lights.baseGlow.position.set(0, 15, -25)
+    this.lights.baseGlow.castShadow = false // Performance optimization
     this.scene.add(this.lights.baseGlow)
     
     // Secondary base glow
-    this.lights.baseGlow2 = new THREE.PointLight(0xff2200, 2, 40)
+    this.lights.baseGlow2 = new THREE.PointLight(0xff2200, 3, 45)
     this.lights.baseGlow2.position.set(0, 5, -25)
     this.scene.add(this.lights.baseGlow2)
     
     // Spawn portal glow - green
-    this.lights.spawnGlow = new THREE.PointLight(0x00ff44, 3, 40)
+    this.lights.spawnGlow = new THREE.PointLight(0x00ff44, 5, 50)
     this.lights.spawnGlow.position.set(0, 8, 45)
     this.scene.add(this.lights.spawnGlow)
     
     // Path accent lights
     const pathLightPositions = [
-      { x: 18, z: 25, color: 0x4488ff },
-      { x: -12, z: 0, color: 0x4488ff },
-      { x: 8, z: -10, color: 0xff4444 }
+      { x: 18, z: 25, color: 0x4488ff, intensity: 2.5 },
+      { x: -12, z: 0, color: 0x4488ff, intensity: 2.5 },
+      { x: 8, z: -10, color: 0xff4444, intensity: 2.5 }
     ]
     
     pathLightPositions.forEach((pos, i) => {
-      const light = new THREE.PointLight(pos.color, 1.5, 25)
+      const light = new THREE.PointLight(pos.color, pos.intensity, 30)
       light.position.set(pos.x, 4, pos.z)
       this.scene.add(light)
       this.lights[`path${i}`] = light
     })
+    
+    // Add hemisphere light for better ambient lighting
+    this.lights.hemisphere = new THREE.HemisphereLight(0x4466ff, 0x221133, 0.3)
+    this.scene.add(this.lights.hemisphere)
   }
 
   createTerrain() {
-    // Main ground - hexagonal pattern look
-    const groundGeometry = new THREE.PlaneGeometry(180, 150, 60, 50)
+    // Main ground - hexagonal pattern with procedural textures
+    const groundGeometry = new THREE.PlaneGeometry(180, 150, 80, 65)
     
-    // Add subtle height variation
+    // Add more varied height variation
     const positions = groundGeometry.attributes.position
     for (let i = 0; i < positions.count; i++) {
       const x = positions.getX(i)
       const y = positions.getY(i)
-      const noise = Math.sin(x * 0.1) * Math.cos(y * 0.1) * 0.3
-      positions.setZ(i, noise)
+      
+      // Multiple octaves of noise for realistic terrain
+      const noise1 = Math.sin(x * 0.08) * Math.cos(y * 0.08) * 0.4
+      const noise2 = Math.sin(x * 0.2) * Math.cos(y * 0.2) * 0.15
+      const noise3 = Math.sin(x * 0.4) * Math.cos(y * 0.4) * 0.08
+      
+      positions.setZ(i, noise1 + noise2 + noise3)
     }
     groundGeometry.computeVertexNormals()
     
+    // Enhanced material with better visuals
     const groundMaterial = new THREE.MeshStandardMaterial({
       color: 0x1a1a2e,
-      metalness: 0.3,
-      roughness: 0.8,
-      flatShading: true
+      metalness: 0.4,
+      roughness: 0.85,
+      flatShading: false,
+      envMapIntensity: 0.5
     })
+    
+    // Try to load texture if available
+    try {
+      const metalTexture = this.textureLoader.load('/images/textures/metal.jpg', (texture) => {
+        texture.wrapS = THREE.RepeatWrapping
+        texture.wrapT = THREE.RepeatWrapping
+        texture.repeat.set(20, 15)
+        groundMaterial.map = texture
+        groundMaterial.needsUpdate = true
+      })
+    } catch (e) {
+      console.log('Texture not available, using procedural material')
+    }
     
     this.terrain = new THREE.Mesh(groundGeometry, groundMaterial)
     this.terrain.rotation.x = -Math.PI / 2
     this.terrain.position.y = -0.5
+    this.terrain.receiveShadow = this.options.enableShadows
     this.scene.add(this.terrain)
     this.environmentObjects.push(this.terrain)
     
@@ -155,6 +333,29 @@ export class GraphicsEngine {
     
     // Hex platform areas
     this.createHexPlatforms()
+    
+    // Add volumetric fog planes for depth
+    this.createVolumetricFog()
+  }
+  
+  createVolumetricFog() {
+    // Add floating fog planes for atmospheric depth
+    for (let i = 0; i < 3; i++) {
+      const fogGeometry = new THREE.PlaneGeometry(200, 180)
+      const fogMaterial = new THREE.MeshBasicMaterial({
+        color: 0x0a0a20,
+        transparent: true,
+        opacity: 0.05 + i * 0.03,
+        side: THREE.DoubleSide,
+        depthWrite: false
+      })
+      
+      const fogPlane = new THREE.Mesh(fogGeometry, fogMaterial)
+      fogPlane.rotation.x = -Math.PI / 2
+      fogPlane.position.y = 10 + i * 15
+      this.scene.add(fogPlane)
+      this.environmentObjects.push(fogPlane)
+    }
   }
   
   createGlowingGrid() {
@@ -500,32 +701,48 @@ export class GraphicsEngine {
   update(deltaTime) {
     this.animationTime += deltaTime
     
-    // Animate lights
+    // Animate skybox rotation for subtle motion
+    if (this.skybox) {
+      this.skybox.rotation.y += deltaTime * 0.005
+    }
+    
+    // Animate lights with variation
     if (this.lights.baseGlow) {
-      this.lights.baseGlow.intensity = 4 + Math.sin(this.animationTime * 2) * 1.5
+      this.lights.baseGlow.intensity = 6 + Math.sin(this.animationTime * 2) * 2
     }
     if (this.lights.baseGlow2) {
-      this.lights.baseGlow2.intensity = 2 + Math.sin(this.animationTime * 3) * 0.8
+      this.lights.baseGlow2.intensity = 3 + Math.sin(this.animationTime * 3) * 1.2
     }
     if (this.lights.spawnGlow) {
-      this.lights.spawnGlow.intensity = 3 + Math.sin(this.animationTime * 2.5) * 1
+      this.lights.spawnGlow.intensity = 5 + Math.sin(this.animationTime * 2.5) * 1.5
     }
+    
+    // Pulse path lights
+    Object.keys(this.lights).forEach(key => {
+      if (key.startsWith('path')) {
+        const light = this.lights[key]
+        light.intensity = 2.5 + Math.sin(this.animationTime * 1.5 + parseInt(key.replace('path', ''))) * 0.8
+      }
+    })
     
     // Animate objects
     this.animatedObjects.forEach(obj => {
       switch (obj.type) {
         case 'rotate':
-          obj.mesh.rotation.z += deltaTime * 0.5
+          obj.mesh.rotation.z += deltaTime * 0.6
           break
         case 'rotate_slow':
-          obj.mesh.rotation.z += deltaTime * 0.2
+          obj.mesh.rotation.z += deltaTime * 0.25
           break
         case 'rotate_reverse':
-          obj.mesh.rotation.z -= deltaTime * 0.3
+          obj.mesh.rotation.z -= deltaTime * 0.35
           break
         case 'pulse':
-          const scale = 1 + Math.sin(this.animationTime * 2) * 0.05
+          const scale = 1 + Math.sin(this.animationTime * 2) * 0.08
           obj.mesh.scale.setScalar(scale)
+          break
+        case 'float':
+          obj.mesh.position.y = obj.baseY + Math.sin(this.animationTime * 1.5 + obj.offset) * 0.5
           break
       }
     })
@@ -534,15 +751,19 @@ export class GraphicsEngine {
     if (this.particles) {
       const positions = this.particles.geometry.attributes.position.array
       for (let i = 0; i < positions.length; i += 3) {
-        positions[i + 1] += Math.sin(this.animationTime + i) * 0.02
+        positions[i + 1] += Math.sin(this.animationTime + i) * 0.025
       }
       this.particles.geometry.attributes.position.needsUpdate = true
-      this.particles.rotation.y += deltaTime * 0.02
+      this.particles.rotation.y += deltaTime * 0.03
     }
   }
   
   render() {
-    this.renderer.render(this.scene, this.camera)
+    if (this.composer) {
+      this.composer.render()
+    } else {
+      this.renderer.render(this.scene, this.camera)
+    }
   }
 
   triggerDamageEffect(intensity = 0.5) {
@@ -565,6 +786,20 @@ export class GraphicsEngine {
     this.camera.aspect = width / height
     this.camera.updateProjectionMatrix()
     this.renderer.setSize(width, height)
+    
+    if (this.composer) {
+      this.composer.setSize(width, height)
+      
+      // Update FXAA resolution
+      const fxaaPass = this.composer.passes.find(pass => pass.uniforms && pass.uniforms['resolution'])
+      if (fxaaPass) {
+        const pixelRatio = this.renderer.getPixelRatio()
+        fxaaPass.uniforms['resolution'].value.set(
+          1 / (width * pixelRatio),
+          1 / (height * pixelRatio)
+        )
+      }
+    }
   }
   
   dispose() {

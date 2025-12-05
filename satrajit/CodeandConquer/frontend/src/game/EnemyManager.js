@@ -138,9 +138,10 @@ export class EnemyManager {
     this.scene = game.scene
     this.difficulty = options.difficulty || 'normal'
     this.difficultyScale = DIFFICULTY_SCALING[this.difficulty]
+    this.pathManager = options.pathManager || null
     
     // Spawn configuration
-    this.spawnPoints = options.spawnPoints || [new THREE.Vector3(0, 0.5, 40)]
+    this.spawnPoints = options.spawnPoints || this._getDefaultSpawnPoints()
     this.targetPoint = options.targetPoint || new THREE.Vector3(0, 0, -20)
     
     // Enemy management
@@ -174,6 +175,13 @@ export class EnemyManager {
     // Object pool for performance
     this.enemyPool = new Map()
     this.preloadEnemyPool()
+  }
+
+  _getDefaultSpawnPoints() {
+    if (this.pathManager) {
+      return this.pathManager.getAllPathIds().map(id => this.pathManager.getPath(id).spawn.clone())
+    }
+    return [new THREE.Vector3(0, 0.5, 40)]
   }
   
   // Preload enemy pool for instant spawning
@@ -324,21 +332,28 @@ export class EnemyManager {
   }
   
   // Start a new wave
-  startWave(waveNumber = null) {
+  startWave(waveInput = null) {
     if (this.waveInProgress && this.pendingSpawns.length > 0) {
       console.warn('Wave already in progress')
       return false
     }
     
-    this.currentWave = waveNumber || this.currentWave + 1
+    let wave
+    if (waveInput && typeof waveInput === 'object') {
+      wave = { ...waveInput }
+      this.currentWave = wave.number || this.currentWave + 1
+    } else {
+      const waveNumber = waveInput
+      this.currentWave = waveNumber || this.currentWave + 1
+      wave = this.generateWave(this.currentWave)
+    }
+    
     this.waveInProgress = true
     this.waveStartTime = Date.now()
     
-    // Generate wave configuration
-    const wave = this.generateWave(this.currentWave)
-    
     // Schedule all spawns
     this.scheduleWaveSpawns(wave)
+    const totalEnemies = wave.totalEnemies || wave.groups.reduce((sum, g) => sum + g.count, 0)
     
     // Increase difficulty ramp
     this.difficultyRamp = 1 + (this.currentWave - 1) * this.difficultyRampRate
@@ -348,7 +363,7 @@ export class EnemyManager {
       this.onWaveStart(this.currentWave, wave.totalEnemies)
     }
     
-    console.log(`🌊 Wave ${this.currentWave} started - ${wave.totalEnemies} enemies`)
+    console.log(`🌊 Wave ${this.currentWave} started - ${totalEnemies} enemies`)
     return true
   }
   
@@ -358,8 +373,12 @@ export class EnemyManager {
     let totalDelay = 0
     
     wave.groups.forEach(group => {
+      const chosenPath = this.choosePath(group)
+      const spawnPoint = chosenPath?.spawn ? chosenPath.spawn.clone() : this.getRandomSpawnPoint()
+      const pathId = chosenPath?.id || null
+      
       // Get spawn positions based on formation
-      const spawnCenter = this.getRandomSpawnPoint()
+      const spawnCenter = spawnPoint
       const positions = SPAWN_FORMATIONS[group.formation](
         spawnCenter, 
         group.count, 
@@ -373,6 +392,7 @@ export class EnemyManager {
         this.pendingSpawns.push({
           type: group.type,
           position: pos,
+          pathId,
           spawnTime,
           healthMultiplier: this.difficultyRamp * this.difficultyScale.healthMult,
           speedMultiplier: this.difficultyScale.speedMult
@@ -397,6 +417,24 @@ export class EnemyManager {
     return this.spawnPoints[index].clone()
   }
   
+  choosePath(group) {
+    if (this.pathManager) {
+      if (group.pathId && this.pathManager.getPath(group.pathId)) {
+        return this.pathManager.getPath(group.pathId)
+      }
+      const preferred = group.pathChoices || group.preferredPaths || null
+      return this.pathManager.getRandomPath(preferred)
+    }
+    return null
+  }
+
+  getSpawnForPath(pathId) {
+    if (!this.pathManager) return null
+    const path = this.pathManager.getPath(pathId)
+    if (!path) return null
+    return path.spawn.clone()
+  }
+
   // Spawn a single enemy
   spawnEnemy(config) {
     if (this.activeEnemyCount >= this.maxActiveEnemies) {
@@ -408,6 +446,7 @@ export class EnemyManager {
     const enemy = this.getEnemy(config.type, {
       healthMultiplier: config.healthMultiplier,
       speedMultiplier: config.speedMultiplier,
+      pathId: config.pathId,
       visualEffects: this.game.visualEffects
     })
     
@@ -421,9 +460,10 @@ export class EnemyManager {
     // Position at spawn point
     mesh.position.copy(config.position)
     enemy.position = config.position.clone()
+    enemy.pathId = config.pathId || enemy.pathId
     
     // Set up path to target
-    this.setupEnemyPath(enemy)
+    this.setupEnemyPath(enemy, config.pathId)
     
     // Add to scene and tracking
     this.scene.add(mesh)
@@ -447,7 +487,7 @@ export class EnemyManager {
   }
   
   // Set up enemy pathfinding
-  setupEnemyPath(enemy) {
+  setupEnemyPath(enemy, pathId = null) {
     // Use A* pathfinding if available
     if (this.game.arena) {
       const startGrid = this.game.arena.worldToGrid(enemy.position)
@@ -463,12 +503,20 @@ export class EnemyManager {
     }
     
     // Fallback: direct path with waypoints
+    if (this.pathManager) {
+      const chosenPath = pathId ? this.pathManager.getPath(pathId) : this.pathManager.getRandomPath()
+      if (chosenPath) {
+        enemy.setPath(chosenPath.waypoints, chosenPath.id)
+        return
+      }
+    }
+    
     if (this.game.enemyPath) {
       enemy.setPath(this.game.enemyPath.map(p => ({
         x: p.x,
         y: p.y || 0.5,
         z: p.z
-      })))
+      })), pathId)
     } else {
       // Simple direct path
       enemy.setPath([

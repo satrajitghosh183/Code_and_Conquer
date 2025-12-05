@@ -8,13 +8,14 @@ export const TOWER_TYPES = {
     range: 18,
     cooldown: 1000,
     fireRate: 1.0,
+    energyCost: 3,
     health: 250,
     description: 'Fast-firing basic tower',
     projectileSpeed: 25,
     attackType: 'bullet',
     upgrades: [
-      { damage: 8, range: 20, cooldown: 900, cost: 30 },
-      { damage: 12, range: 22, cooldown: 800, cost: 50 }
+      { damage: 8, range: 20, cooldown: 900, fireRate: 1.2, energyCost: 2, cost: 30 },
+      { damage: 12, range: 22, cooldown: 800, fireRate: 1.4, energyCost: 2, cost: 50 }
     ]
   },
   

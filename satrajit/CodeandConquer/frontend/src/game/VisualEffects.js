@@ -1,5 +1,6 @@
 // =============================================================================
 // VISUAL EFFECTS - Optimized for Performance with Immersive Effects
+// ENHANCED: Object pooling, better particles, advanced effects
 // =============================================================================
 
 import * as THREE from 'three'
@@ -17,11 +18,98 @@ export class VisualEffects {
     this.screenShake = { active: false, intensity: 0, duration: 0, startTime: 0 }
     this.damageVignette = { active: false, intensity: 0, fadeSpeed: 2.0 }
     
+    // Object pooling for performance
+    this.particlePool = []
+    this.meshPool = {
+      spheres: [],
+      rings: [],
+      sparks: []
+    }
+    this.poolMaxSize = 100
+    
     // Shared geometries for performance
     this.sharedGeometries = {
-      particle: new THREE.SphereGeometry(0.1, 4, 4),
-      ring: new THREE.RingGeometry(1, 1.2, 16),
-      spark: new THREE.SphereGeometry(0.05, 3, 3)
+      particle: new THREE.SphereGeometry(0.1, 6, 6),
+      ring: new THREE.RingGeometry(1, 1.2, 24),
+      spark: new THREE.SphereGeometry(0.05, 4, 4),
+      cone: new THREE.ConeGeometry(0.15, 0.4, 6)
+    }
+    
+    // Shared materials (reusable)
+    this.sharedMaterials = {
+      explosion: new THREE.PointsMaterial({
+        size: 0.5,
+        vertexColors: true,
+        transparent: true,
+        opacity: 1.0,
+        sizeAttenuation: true,
+        blending: THREE.AdditiveBlending
+      }),
+      glow: new THREE.MeshBasicMaterial({
+        transparent: true,
+        depthWrite: false,
+        blending: THREE.AdditiveBlending
+      })
+    }
+    
+    this.initializePools()
+  }
+  
+  initializePools() {
+    // Pre-create some pooled objects
+    for (let i = 0; i < 20; i++) {
+      this.createPooledSphere()
+      this.createPooledRing()
+    }
+  }
+  
+  createPooledSphere() {
+    const mesh = new THREE.Mesh(
+      this.sharedGeometries.particle,
+      new THREE.MeshBasicMaterial({ transparent: true })
+    )
+    mesh.visible = false
+    mesh.pooled = true
+    this.scene.add(mesh)
+    this.meshPool.spheres.push(mesh)
+    return mesh
+  }
+  
+  createPooledRing() {
+    const mesh = new THREE.Mesh(
+      this.sharedGeometries.ring,
+      new THREE.MeshBasicMaterial({ transparent: true, side: THREE.DoubleSide })
+    )
+    mesh.visible = false
+    mesh.pooled = true
+    this.scene.add(mesh)
+    this.meshPool.rings.push(mesh)
+    return mesh
+  }
+  
+  getPooledMesh(type) {
+    const pool = this.meshPool[type]
+    if (!pool) return null
+    
+    let mesh = pool.find(m => !m.visible)
+    if (!mesh && pool.length < this.poolMaxSize) {
+      if (type === 'spheres') mesh = this.createPooledSphere()
+      else if (type === 'rings') mesh = this.createPooledRing()
+    }
+    
+    if (mesh) {
+      mesh.visible = true
+      mesh.scale.set(1, 1, 1)
+      mesh.rotation.set(0, 0, 0)
+    }
+    
+    return mesh
+  }
+  
+  returnPooledMesh(mesh) {
+    if (mesh && mesh.pooled) {
+      mesh.visible = false
+      mesh.material.opacity = 1.0
     }
   }
 
@@ -30,20 +118,22 @@ export class VisualEffects {
   }
 
   // =========================================================================
-  // EXPLOSION EFFECT
+  // EXPLOSION EFFECT - Enhanced with better particles
   // =========================================================================
   createExplosion(position, options = {}) {
     const { 
-      numParticles = 25, 
+      numParticles = 35, 
       color = 0xff6600, 
-      duration = 600,
-      maxDist = 4,
-      gravity = true
+      duration = 700,
+      maxDist = 5,
+      gravity = true,
+      shockwave = true
     } = options
     
     const geometry = new THREE.BufferGeometry()
     const positions = new Float32Array(numParticles * 3)
     const colors = new Float32Array(numParticles * 3)
+    const sizes = new Float32Array(numParticles)
     const velocities = []
     const colorObj = new THREE.Color(color)
     
@@ -52,56 +142,81 @@ export class VisualEffects {
       positions[i * 3 + 1] = position.y + 0.5
       positions[i * 3 + 2] = position.z
       
-      // Slightly vary colors
-      const variation = 0.8 + Math.random() * 0.4
-      colors[i * 3] = colorObj.r * variation
-      colors[i * 3 + 1] = colorObj.g * variation
-      colors[i * 3 + 2] = colorObj.b * variation
+      // Vary colors for more dynamic effect
+      const variation = 0.7 + Math.random() * 0.6
+      const hueShift = (Math.random() - 0.5) * 0.1
       
-      // Random velocity
+      const shiftedColor = colorObj.clone()
+      shiftedColor.offsetHSL(hueShift, 0, (variation - 1) * 0.3)
+      
+      colors[i * 3] = shiftedColor.r
+      colors[i * 3 + 1] = shiftedColor.g
+      colors[i * 3 + 2] = shiftedColor.b
+      
+      // Vary particle sizes
+      sizes[i] = 0.3 + Math.random() * 0.5
+      
+      // Random velocity with radial bias
       const angle = Math.random() * Math.PI * 2
-      const upAngle = Math.random() * Math.PI * 0.6
-      const speed = 3 + Math.random() * maxDist
+      const upAngle = Math.random() * Math.PI * 0.7
+      const speed = 4 + Math.random() * maxDist
       
       velocities.push({
         x: Math.cos(angle) * Math.sin(upAngle) * speed,
-        y: Math.cos(upAngle) * speed * 1.5,
+        y: Math.cos(upAngle) * speed * 1.8,
         z: Math.sin(angle) * Math.sin(upAngle) * speed
       })
     }
     
     geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3))
     geometry.setAttribute('color', new THREE.BufferAttribute(colors, 3))
+    geometry.setAttribute('size', new THREE.BufferAttribute(sizes, 1))
     
     const material = new THREE.PointsMaterial({
       size: 0.5,
       vertexColors: true,
       transparent: true,
       opacity: 1.0,
-      sizeAttenuation: true
+      sizeAttenuation: true,
+      blending: THREE.AdditiveBlending,
+      depthWrite: false
     })
     
     const particles = new THREE.Points(geometry, material)
     this.scene.add(particles)
     
-    // Core flash
-    const flashGeom = new THREE.SphereGeometry(0.8, 8, 8)
+    // Core flash with better visuals
+    const flashGeom = new THREE.SphereGeometry(1.0, 12, 12)
     const flashMat = new THREE.MeshBasicMaterial({
       color,
       transparent: true,
-      opacity: 0.8
+      opacity: 1.0,
+      blending: THREE.AdditiveBlending,
+      depthWrite: false
     })
     const flash = new THREE.Mesh(flashGeom, flashMat)
     flash.position.copy(position)
     flash.position.y += 0.5
     this.scene.add(flash)
     
+    // Add bright core light
+    const light = new THREE.PointLight(color, 8, 15)
+    light.position.copy(position)
+    light.position.y += 0.5
+    this.scene.add(light)
+    
     const startTime = Date.now()
+    
+    // Create shockwave if enabled
+    if (shockwave) {
+      this.createShockwave(position, { maxRadius: maxDist * 1.5, color, duration: duration * 0.6 })
+    }
     
     const effect = {
       type: 'explosion',
       particles,
       flash,
+      light,
       velocities,
       startTime,
       duration,
@@ -113,6 +228,7 @@ export class VisualEffects {
         if (progress >= 1) {
           this.scene.remove(particles)
           this.scene.remove(flash)
+          this.scene.remove(light)
           geometry.dispose()
           material.dispose()
           flashGeom.dispose()
@@ -122,25 +238,33 @@ export class VisualEffects {
         
         // Update particles
         const posArray = geometry.attributes.position.array
+        const sizeArray = geometry.attributes.size.array
+        
         for (let i = 0; i < numParticles; i++) {
           posArray[i * 3] += velocities[i].x * deltaTime
           posArray[i * 3 + 1] += velocities[i].y * deltaTime
           posArray[i * 3 + 2] += velocities[i].z * deltaTime
           
           if (gravity) {
-            velocities[i].y -= 18 * deltaTime
+            velocities[i].y -= 20 * deltaTime
           }
+          
+          // Shrink particles over time
+          sizeArray[i] *= 0.98
         }
         geometry.attributes.position.needsUpdate = true
+        geometry.attributes.size.needsUpdate = true
         
         // Fade out
-        material.opacity = 1.0 - progress
+        material.opacity = 1.0 - Math.pow(progress, 1.5)
         
-        // Flash shrinks and fades
-        const flashScale = 1 + progress * 2
+        // Flash expands and fades quickly
+        const flashScale = 1 + progress * 3
         flash.scale.setScalar(flashScale)
-        flashMat.opacity = 0.8 * (1 - progress * 2)
-        if (flashMat.opacity < 0) flash.visible = false
+        flashMat.opacity = Math.max(0, 1.0 - progress * 3)
+        
+        // Light fades
+        light.intensity = 8 * (1 - progress * progress)
         
         return false
       }
