@@ -1,209 +1,222 @@
+// =============================================================================
+// PATH MANAGER - Enemy Movement Path System
+// =============================================================================
+
 import * as THREE from 'three'
 
-/**
- * Centralizes enemy lanes and waypoint management.
- * Supports multiple spline/waypoint paths, visualizes lanes,
- * and exposes helpers for AI to reason about path coverage.
- */
-export class PathManager {
-  constructor(scene, basePosition, options = {}) {
+export default class PathManager {
+  constructor(scene, basePosition = new THREE.Vector3(0, 0, -25)) {
     this.scene = scene
-    this.basePosition = basePosition
-    this.customSpawnZ = options.spawnZ
+    this.basePosition = basePosition.clone()
     this.paths = new Map()
-    this.pathVisuals = []
-    this.defaultColors = [0x5be7a9, 0x5bb2e7, 0xff8844, 0xffdd55]
-
-    const customPaths = options.paths || null
-    if (customPaths && Array.isArray(customPaths)) {
-      customPaths.forEach((p, i) => this.registerPath({ ...p, color: p.color || this.defaultColors[i % this.defaultColors.length] }))
-    } else {
-      this._registerDefaultPaths()
-    }
-
-    if (options.visualize !== false) {
-      this.createVisuals()
-    }
-  }
-
-  _registerDefaultPaths() {
-    const zStart = this.customSpawnZ !== undefined ? this.customSpawnZ : 45
-    const zBase = this.basePosition?.z ?? -25
-
-    const defaults = [
-      {
-        id: 'center',
-        spawn: new THREE.Vector3(0, 0.5, zStart),
-        waypoints: [
-          new THREE.Vector3(0, 0.5, zStart),
-          new THREE.Vector3(10, 0.5, 28),
-          new THREE.Vector3(0, 0.5, 8),
-          new THREE.Vector3(0, 0.5, zBase)
-        ],
-        color: this.defaultColors[0]
-      },
-      {
-        id: 'left',
-        spawn: new THREE.Vector3(-16, 0.5, zStart),
-        waypoints: [
-          new THREE.Vector3(-16, 0.5, zStart),
-          new THREE.Vector3(-22, 0.5, 24),
-          new THREE.Vector3(-12, 0.5, 6),
-          new THREE.Vector3(-4, 0.5, zBase)
-        ],
-        color: this.defaultColors[1]
-      },
-      {
-        id: 'right',
-        spawn: new THREE.Vector3(16, 0.5, zStart),
-        waypoints: [
-          new THREE.Vector3(16, 0.5, zStart),
-          new THREE.Vector3(22, 0.5, 18),
-          new THREE.Vector3(12, 0.5, -2),
-          new THREE.Vector3(4, 0.5, zBase)
-        ],
-        color: this.defaultColors[2]
-      }
+    this.visualGroup = new THREE.Group()
+    this.visualGroup.name = 'pathVisuals'
+    this.scene.add(this.visualGroup)
+    
+    // Default colors
+    this.defaultColors = [
+      0x00ff88,  // Green
+      0xff4488,  // Pink
+      0x4488ff,  // Blue
     ]
-
-    defaults.forEach(p => this.registerPath(p))
+    
+    // Spawn Z position
+    this.customSpawnZ = 50
+    
+    // Register default path
+    this._registerDefaultPaths()
+    
+    // Create visual representation
+    this.createVisuals()
+    
+    console.log('📍 PathManager initialized with', this.paths.size, 'paths')
   }
-
-  registerPath({ id, waypoints, spawn, color = 0xffffff }) {
-    if (!id || !waypoints || waypoints.length === 0) return
-    const safeWaypoints = waypoints.map(p => new THREE.Vector3(p.x, p.y ?? 0.5, p.z))
-    const spawnPoint = spawn ? new THREE.Vector3(spawn.x, spawn.y ?? 0.5, spawn.z) : safeWaypoints[0].clone()
-
+  
+  _registerDefaultPaths() {
+    const zStart = this.customSpawnZ
+    const zBase = this.basePosition.z
+    
+    // Main serpentine path
+    const mainPath = {
+      id: 'main',
+      spawn: new THREE.Vector3(0, 0.5, zStart),
+      waypoints: [
+        new THREE.Vector3(0, 0.5, zStart),          // Spawn
+        new THREE.Vector3(20, 0.5, 40),             // Curve right
+        new THREE.Vector3(25, 0.5, 28),             // Continue right
+        new THREE.Vector3(10, 0.5, 15),             // Back toward center
+        new THREE.Vector3(-15, 0.5, 8),             // Curve left
+        new THREE.Vector3(-20, 0.5, -5),            // Continue left
+        new THREE.Vector3(-8, 0.5, -12),            // Back toward center
+        new THREE.Vector3(5, 0.5, -18),             // Slight right
+        new THREE.Vector3(0, 0.5, zBase)            // End at base
+      ],
+      color: this.defaultColors[0]
+    }
+    
+    this.registerPath(mainPath)
+    
+    // Alias 'center' to 'main'
+    this.paths.set('center', mainPath)
+  }
+  
+  registerPath(pathData) {
+    const { id, spawn, waypoints, color } = pathData
+    
     this.paths.set(id, {
       id,
-      waypoints: safeWaypoints,
-      spawn: spawnPoint,
-      color
+      spawn: spawn.clone(),
+      waypoints: waypoints.map(wp => 
+        wp instanceof THREE.Vector3 ? wp.clone() : new THREE.Vector3(wp.x, wp.y || 0.5, wp.z)
+      ),
+      color: color || this.defaultColors[0]
     })
+    
+    console.log(`📍 Path '${id}' registered with ${waypoints.length} waypoints`)
   }
-
+  
   getPath(id) {
-    return this.paths.get(id) || null
+    return this.paths.get(id) || this.paths.get('main')
   }
-
-  getAllPathIds() {
-    return Array.from(this.paths.keys())
+  
+  getRandomPath() {
+    const pathIds = Array.from(this.paths.keys()).filter(id => id !== 'center')
+    if (pathIds.length === 0) return null
+    const randomId = pathIds[Math.floor(Math.random() * pathIds.length)]
+    return this.paths.get(randomId)
   }
-
-  getRandomPath(preferredIds = null) {
-    const ids = this.getAllPathIds()
-    if (preferredIds && preferredIds.length > 0) {
-      const filtered = ids.filter(id => preferredIds.includes(id))
-      if (filtered.length > 0) return this.paths.get(filtered[Math.floor(Math.random() * filtered.length)])
-    }
-    return this.paths.get(ids[Math.floor(Math.random() * ids.length)])
+  
+  getAllPaths() {
+    return Array.from(this.paths.values())
   }
-
-  /**
-   * Estimate coverage for each path based on nearby towers.
-   * Returns lower score for weaker (less covered) lanes.
-   */
-  getCoverageScores(towers = []) {
-    const scores = {}
-    this.paths.forEach((path, id) => { scores[id] = 0 })
-
-    towers.forEach(tower => {
-      this.paths.forEach((path, id) => {
-        const dist = this._distanceToPath(tower.position, path.waypoints)
-        if (dist <= (tower.range || 0)) {
-          const contribution = Math.max(0.1, (tower.range - dist))
-          scores[id] += contribution
-        }
-      })
-    })
-    return scores
-  }
-
-  getWeakestPaths(towers = []) {
-    const scores = this.getCoverageScores(towers)
-    const minScore = Math.min(...Object.values(scores))
-    return Object.keys(scores).filter(id => scores[id] === minScore)
-  }
-
-  isPointNearAnyPath(point, buffer = 3) {
-    for (const path of this.paths.values()) {
-      if (this._distanceToPath(point, path.waypoints) <= buffer) {
-        return true
-      }
-    }
-    return false
-  }
-
+  
   createVisuals() {
-    if (!this.scene) return
-
-    // Clear old visuals
-    this.pathVisuals.forEach(obj => this.scene.remove(obj))
-    this.pathVisuals = []
-
-    this.paths.forEach((path) => {
-      const points = path.waypoints.map(p => new THREE.Vector3(p.x, 0.12, p.z))
-      const geometry = new THREE.BufferGeometry().setFromPoints(points)
-      const material = new THREE.LineBasicMaterial({
-        color: path.color,
-        linewidth: 2,
+    // Clear existing visuals
+    while (this.visualGroup.children.length > 0) {
+      const child = this.visualGroup.children[0]
+      if (child.geometry) child.geometry.dispose()
+      if (child.material) child.material.dispose()
+      this.visualGroup.remove(child)
+    }
+    
+    const mainPath = this.paths.get('main')
+    if (!mainPath) return
+    
+    const waypoints = mainPath.waypoints
+    const color = mainPath.color
+    
+    // Create visible path line
+    const points = waypoints.map(wp => new THREE.Vector3(wp.x, 0.2, wp.z))
+    
+    // Main path line - glowing tube
+    const curve = new THREE.CatmullRomCurve3(points, false, 'catmullrom', 0.5)
+    const tubeGeom = new THREE.TubeGeometry(curve, waypoints.length * 10, 0.4, 8, false)
+    const tubeMat = new THREE.MeshBasicMaterial({
+      color: color,
+      transparent: true,
+      opacity: 0.4
+    })
+    const tube = new THREE.Mesh(tubeGeom, tubeMat)
+    this.visualGroup.add(tube)
+    
+    // Inner bright line
+    const innerTubeGeom = new THREE.TubeGeometry(curve, waypoints.length * 10, 0.15, 8, false)
+    const innerTubeMat = new THREE.MeshBasicMaterial({
+      color: 0xffffff,
+      transparent: true,
+      opacity: 0.6
+    })
+    const innerTube = new THREE.Mesh(innerTubeGeom, innerTubeMat)
+    this.visualGroup.add(innerTube)
+    
+    // Waypoint markers
+    waypoints.forEach((wp, index) => {
+      const isSpawn = index === 0
+      const isEnd = index === waypoints.length - 1
+      const markerSize = isSpawn || isEnd ? 1.5 : 0.6
+      const markerColor = isSpawn ? 0x00ff44 : (isEnd ? 0xff4400 : color)
+      
+      // Ring marker
+      const ringGeom = new THREE.RingGeometry(markerSize * 0.6, markerSize, 16)
+      const ringMat = new THREE.MeshBasicMaterial({
+        color: markerColor,
         transparent: true,
-        opacity: 0.7
-      })
-      const line = new THREE.Line(geometry, material)
-      this.scene.add(line)
-      this.pathVisuals.push(line)
-
-      // Spawn ring
-      const spawnGeom = new THREE.RingGeometry(2.6, 3.4, 24)
-      const spawnMat = new THREE.MeshBasicMaterial({
-        color: path.color,
-        transparent: true,
-        opacity: 0.35,
+        opacity: 0.6,
         side: THREE.DoubleSide
       })
-      const spawnRing = new THREE.Mesh(spawnGeom, spawnMat)
-      spawnRing.rotation.x = -Math.PI / 2
-      spawnRing.position.copy(path.spawn)
-      spawnRing.position.y = 0.08
-      this.scene.add(spawnRing)
-      this.pathVisuals.push(spawnRing)
-
-      // Waypoint markers
-      path.waypoints.forEach((wp, i) => {
-        const markerGeom = new THREE.SphereGeometry(i === path.waypoints.length - 1 ? 0.45 : 0.32, 10, 10)
-        const markerMat = new THREE.MeshBasicMaterial({
-          color: i === path.waypoints.length - 1 ? 0xff3344 : path.color,
+      const ring = new THREE.Mesh(ringGeom, ringMat)
+      ring.rotation.x = -Math.PI / 2
+      ring.position.set(wp.x, 0.15, wp.z)
+      this.visualGroup.add(ring)
+      
+      // Vertical glow pillar for spawn/end
+      if (isSpawn || isEnd) {
+        const pillarGeom = new THREE.CylinderGeometry(markerSize * 0.3, markerSize * 0.5, 3, 16)
+        const pillarMat = new THREE.MeshBasicMaterial({
+          color: markerColor,
           transparent: true,
-          opacity: 0.55
+          opacity: 0.3
         })
-        const marker = new THREE.Mesh(markerGeom, markerMat)
-        marker.position.set(wp.x, 0.18, wp.z)
-        this.scene.add(marker)
-        this.pathVisuals.push(marker)
-      })
+        const pillar = new THREE.Mesh(pillarGeom, pillarMat)
+        pillar.position.set(wp.x, 1.5, wp.z)
+        this.visualGroup.add(pillar)
+      }
+    })
+    
+    // Animated energy flow (stored for update)
+    this.energyFlowParticles = []
+    const numFlowParticles = 15
+    const particleGeom = new THREE.SphereGeometry(0.3, 8, 8)
+    const particleMat = new THREE.MeshBasicMaterial({
+      color: 0xffffff,
+      transparent: true,
+      opacity: 0.9
+    })
+    
+    for (let i = 0; i < numFlowParticles; i++) {
+      const particle = new THREE.Mesh(particleGeom.clone(), particleMat.clone())
+      particle.userData.progress = i / numFlowParticles
+      particle.userData.speed = 0.05 + Math.random() * 0.03
+      this.visualGroup.add(particle)
+      this.energyFlowParticles.push({ mesh: particle, curve })
+    }
+  }
+  
+  update(deltaTime) {
+    // Animate energy flow particles along path
+    this.energyFlowParticles.forEach(particle => {
+      particle.mesh.userData.progress += particle.mesh.userData.speed * deltaTime
+      
+      if (particle.mesh.userData.progress > 1) {
+        particle.mesh.userData.progress = 0
+      }
+      
+      if (particle.curve) {
+        const point = particle.curve.getPointAt(particle.mesh.userData.progress)
+        particle.mesh.position.copy(point)
+        particle.mesh.position.y += 0.3 + Math.sin(Date.now() * 0.005) * 0.2
+        
+        // Pulse size
+        const scale = 0.8 + Math.sin(Date.now() * 0.01 + particle.mesh.userData.progress * 10) * 0.3
+        particle.mesh.scale.setScalar(scale)
+      }
     })
   }
-
-  _distanceToPath(point, waypoints) {
-    let minDist = Infinity
-    for (let i = 0; i < waypoints.length - 1; i++) {
-      const start = waypoints[i]
-      const end = waypoints[i + 1]
-      const dist = this._distanceToSegment(point, start, end)
-      minDist = Math.min(minDist, dist)
+  
+  setPathColor(pathId, color) {
+    const path = this.paths.get(pathId)
+    if (path) {
+      path.color = color
     }
-    return minDist
   }
-
-  _distanceToSegment(p, a, b) {
-    const ab = new THREE.Vector3().subVectors(b, a)
-    const ap = new THREE.Vector3().subVectors(p, a)
-    const t = Math.max(0, Math.min(1, ap.dot(ab) / ab.lengthSq()))
-    const projection = new THREE.Vector3().copy(a).add(ab.multiplyScalar(t))
-    return p.distanceTo(projection)
+  
+  destroy() {
+    this.visualGroup.traverse(child => {
+      if (child.geometry) child.geometry.dispose()
+      if (child.material) child.material.dispose()
+    })
+    this.scene.remove(this.visualGroup)
+    this.paths.clear()
+    this.energyFlowParticles = []
   }
 }
-
-export default PathManager
-

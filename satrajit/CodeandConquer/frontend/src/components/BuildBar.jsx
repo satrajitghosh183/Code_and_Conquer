@@ -64,7 +64,7 @@ export default function BuildBar({ gold, selectedStructure, onSelect, availableS
         onClick={() => setIsExpanded(!isExpanded)}
         title="Press B to toggle"
       >
-        <Icon name={isExpanded ? 'close' : 'tower'} size={16} color="#ff0000" />
+        <Icon name={isExpanded ? 'close' : 'tower'} size={16} color="#00ddff" />
         <span>{isExpanded ? 'Close' : 'Build [B]'}</span>
       </button>
       
@@ -89,7 +89,7 @@ export default function BuildBar({ gold, selectedStructure, onSelect, availableS
                   disabled={!canAfford || !available}
                   title={`${item.name} - ${item.desc} (${item.cost}g)`}
                 >
-                  <div className="build-icon"><Icon name={item.iconName} size={20} color={isSelected ? "#ffff00" : "#ff0000"} /></div>
+                  <div className="build-icon"><Icon name={item.iconName} size={20} color={isSelected ? "#ffff00" : "#00ddff"} /></div>
                   <div className="build-info">
                     <div className="build-name">{item.name}</div>
                     <div className="build-cost">{item.cost}g</div>

@@ -181,6 +181,31 @@ export const Icon = ({ name, size = 24, color = 'currentColor', className = '' }
         <path fill={color} d="M8 5v14l11-7z"/>
       </svg>
     ),
+    castle: (
+      <svg viewBox="0 0 24 24" width={size} height={size} className={className}>
+        <path fill={color} d="M21 9V7l-2 1V5h-2v2l-2-1v3h-2V7l-2 1V5H9v2L7 6v3H5V7L3 9v12h8v-5c0-1.1.9-2 2-2s2 .9 2 2v5h8V9h-2zm-8 7h-2v-3h2v3z"/>
+      </svg>
+    ),
+    star: (
+      <svg viewBox="0 0 24 24" width={size} height={size} className={className}>
+        <path fill={color} d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/>
+      </svg>
+    ),
+    info: (
+      <svg viewBox="0 0 24 24" width={size} height={size} className={className}>
+        <path fill={color} d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/>
+      </svg>
+    ),
+    arrow_up: (
+      <svg viewBox="0 0 24 24" width={size} height={size} className={className}>
+        <path fill={color} d="M7.41 15.41L12 10.83l4.59 4.58L18 14l-6-6-6 6z"/>
+      </svg>
+    ),
+    trash: (
+      <svg viewBox="0 0 24 24" width={size} height={size} className={className}>
+        <path fill={color} d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"/>
+      </svg>
+    ),
   }
 
   return icons[name] || null

@@ -4,6 +4,12 @@
 // =============================================================================
 
 import * as THREE from 'three'
+import { EffectComposer } from 'three/examples/jsm/postprocessing/EffectComposer.js'
+import { RenderPass } from 'three/examples/jsm/postprocessing/RenderPass.js'
+import { UnrealBloomPass } from 'three/examples/jsm/postprocessing/UnrealBloomPass.js'
+import { OutputPass } from 'three/examples/jsm/postprocessing/OutputPass.js'
+import { ShaderPass } from 'three/examples/jsm/postprocessing/ShaderPass.js'
+import { FXAAShader } from 'three/examples/jsm/shaders/FXAAShader.js'
 
 export class GraphicsEngine {
   constructor(container, options = {}) {
@@ -64,60 +70,139 @@ export class GraphicsEngine {
   }
   
   createSkybox() {
-    // Create stunning procedural space skybox
-    const skyboxGeometry = new THREE.SphereGeometry(400, 32, 32)
+    // Create EPIC procedural space skybox - stunning cosmic vista
+    const skyboxGeometry = new THREE.SphereGeometry(450, 64, 64)
     
-    // Create star field texture programmatically
+    // Create high-res star field texture
     const canvas = document.createElement('canvas')
-    canvas.width = 2048
-    canvas.height = 1024
+    canvas.width = 4096
+    canvas.height = 2048
     const ctx = canvas.getContext('2d')
     
-    // Deep space gradient
-    const gradient = ctx.createLinearGradient(0, 0, 0, canvas.height)
-    gradient.addColorStop(0, '#000510')
-    gradient.addColorStop(0.3, '#0a0a20')
-    gradient.addColorStop(0.6, '#110820')
-    gradient.addColorStop(1, '#150515')
+    // Deep space gradient - rich colors
+    const gradient = ctx.createLinearGradient(0, 0, canvas.width, canvas.height)
+    gradient.addColorStop(0, '#000208')
+    gradient.addColorStop(0.2, '#050818')
+    gradient.addColorStop(0.4, '#0a0520')
+    gradient.addColorStop(0.6, '#080315')
+    gradient.addColorStop(0.8, '#0d0420')
+    gradient.addColorStop(1, '#020108')
     ctx.fillStyle = gradient
     ctx.fillRect(0, 0, canvas.width, canvas.height)
     
-    // Add stars
-    for (let i = 0; i < 3000; i++) {
+    // Add distant galaxies first (before stars)
+    for (let i = 0; i < 15; i++) {
       const x = Math.random() * canvas.width
       const y = Math.random() * canvas.height
-      const size = Math.random() * 2
-      const brightness = Math.random()
+      const radius = 40 + Math.random() * 80
       
+      const galaxyGradient = ctx.createRadialGradient(x, y, 0, x, y, radius)
+      const hue = Math.random() * 360
+      galaxyGradient.addColorStop(0, `hsla(${hue}, 60%, 70%, 0.08)`)
+      galaxyGradient.addColorStop(0.3, `hsla(${hue}, 50%, 50%, 0.04)`)
+      galaxyGradient.addColorStop(1, 'rgba(0, 0, 0, 0)')
+      
+      ctx.fillStyle = galaxyGradient
+      ctx.beginPath()
+      ctx.ellipse(x, y, radius * 1.5, radius * 0.6, Math.random() * Math.PI, 0, Math.PI * 2)
+      ctx.fill()
+    }
+    
+    // Add 5000+ stars with varied sizes and colors
+    for (let i = 0; i < 6000; i++) {
+      const x = Math.random() * canvas.width
+      const y = Math.random() * canvas.height
+      const size = Math.random() * 2.5
+      const brightness = 0.3 + Math.random() * 0.7
+      
+      // White/blue stars
       ctx.fillStyle = `rgba(255, 255, 255, ${brightness})`
       ctx.beginPath()
       ctx.arc(x, y, size, 0, Math.PI * 2)
       ctx.fill()
       
-      // Add some colored stars
+      // Star glow for brighter stars
+      if (brightness > 0.7 && size > 1) {
+        ctx.fillStyle = `rgba(180, 200, 255, ${brightness * 0.3})`
+        ctx.beginPath()
+        ctx.arc(x, y, size * 3, 0, Math.PI * 2)
+        ctx.fill()
+      }
+      
+      // Colored stars (5%)
       if (Math.random() > 0.95) {
-        const hue = Math.random() * 60 + 180 // Blue/cyan range
-        ctx.fillStyle = `hsla(${hue}, 100%, 70%, ${brightness * 0.5})`
+        // Blue, cyan, orange, or red stars
+        const colors = [
+          { h: 210, s: 100, l: 75 }, // Blue
+          { h: 185, s: 100, l: 70 }, // Cyan
+          { h: 30, s: 100, l: 60 },  // Orange
+          { h: 0, s: 100, l: 55 },   // Red
+          { h: 280, s: 80, l: 65 },  // Purple
+        ]
+        const color = colors[Math.floor(Math.random() * colors.length)]
+        ctx.fillStyle = `hsla(${color.h}, ${color.s}%, ${color.l}%, ${brightness})`
         ctx.beginPath()
         ctx.arc(x, y, size * 1.5, 0, Math.PI * 2)
         ctx.fill()
       }
     }
     
-    // Add nebula clouds
-    for (let i = 0; i < 8; i++) {
+    // Add dramatic nebula clouds
+    const nebulaColors = [
+      { h: 280, name: 'purple' },   // Purple nebula
+      { h: 200, name: 'blue' },     // Blue nebula
+      { h: 340, name: 'pink' },     // Pink nebula
+      { h: 180, name: 'cyan' },     // Cyan nebula
+      { h: 30, name: 'orange' },    // Orange/red nebula
+    ]
+    
+    for (let i = 0; i < 12; i++) {
       const x = Math.random() * canvas.width
       const y = Math.random() * canvas.height
-      const radius = 100 + Math.random() * 200
+      const radius = 150 + Math.random() * 350
+      const nebulaColor = nebulaColors[Math.floor(Math.random() * nebulaColors.length)]
       
-      const nebulaGradient = ctx.createRadialGradient(x, y, 0, x, y, radius)
-      const hue = Math.random() * 60 + 200 // Purple/blue range
-      nebulaGradient.addColorStop(0, `hsla(${hue}, 80%, 50%, 0.15)`)
-      nebulaGradient.addColorStop(0.5, `hsla(${hue}, 70%, 40%, 0.08)`)
-      nebulaGradient.addColorStop(1, 'rgba(0, 0, 0, 0)')
+      // Multi-layer nebula for depth
+      for (let layer = 0; layer < 3; layer++) {
+        const layerRadius = radius * (1 - layer * 0.2)
+        const nebulaGradient = ctx.createRadialGradient(x, y, 0, x, y, layerRadius)
+        const opacity = 0.12 - layer * 0.03
+        
+        nebulaGradient.addColorStop(0, `hsla(${nebulaColor.h}, 80%, 55%, ${opacity})`)
+        nebulaGradient.addColorStop(0.4, `hsla(${nebulaColor.h + 20}, 70%, 45%, ${opacity * 0.7})`)
+        nebulaGradient.addColorStop(0.7, `hsla(${nebulaColor.h - 10}, 60%, 35%, ${opacity * 0.3})`)
+        nebulaGradient.addColorStop(1, 'rgba(0, 0, 0, 0)')
+        
+        ctx.fillStyle = nebulaGradient
+        ctx.fillRect(x - layerRadius, y - layerRadius, layerRadius * 2, layerRadius * 2)
+      }
+    }
+    
+    // Add some bright foreground stars with lens flare effect
+    for (let i = 0; i < 30; i++) {
+      const x = Math.random() * canvas.width
+      const y = Math.random() * canvas.height
       
-      ctx.fillStyle = nebulaGradient
-      ctx.fillRect(x - radius, y - radius, radius * 2, radius * 2)
+      // Star core
+      const coreGradient = ctx.createRadialGradient(x, y, 0, x, y, 8)
+      coreGradient.addColorStop(0, 'rgba(255, 255, 255, 1)')
+      coreGradient.addColorStop(0.3, 'rgba(200, 220, 255, 0.8)')
+      coreGradient.addColorStop(1, 'rgba(100, 150, 255, 0)')
+      ctx.fillStyle = coreGradient
+      ctx.beginPath()
+      ctx.arc(x, y, 8, 0, Math.PI * 2)
+      ctx.fill()
+      
+      // Light rays
+      ctx.strokeStyle = 'rgba(200, 220, 255, 0.3)'
+      ctx.lineWidth = 1
+      for (let r = 0; r < 4; r++) {
+        const angle = r * Math.PI / 2 + Math.PI / 4
+        ctx.beginPath()
+        ctx.moveTo(x + Math.cos(angle) * 3, y + Math.sin(angle) * 3)
+        ctx.lineTo(x + Math.cos(angle) * 20, y + Math.sin(angle) * 20)
+        ctx.stroke()
+      }
     }
     
     const texture = new THREE.CanvasTexture(canvas)
@@ -132,6 +217,48 @@ export class GraphicsEngine {
     this.skybox = new THREE.Mesh(skyboxGeometry, skyboxMaterial)
     this.scene.add(this.skybox)
     this.environmentObjects.push(this.skybox)
+    
+    // Add floating asteroids/debris for depth
+    this.createSpaceDebris()
+  }
+  
+  createSpaceDebris() {
+    // Add floating asteroids and space debris
+    const asteroidGeom = new THREE.IcosahedronGeometry(1, 0)
+    const asteroidMat = new THREE.MeshStandardMaterial({
+      color: 0x444455,
+      metalness: 0.3,
+      roughness: 0.9,
+      emissive: 0x111122,
+      emissiveIntensity: 0.1
+    })
+    
+    for (let i = 0; i < 25; i++) {
+      const asteroid = new THREE.Mesh(asteroidGeom.clone(), asteroidMat.clone())
+      const angle = Math.random() * Math.PI * 2
+      const distance = 100 + Math.random() * 150
+      const height = -20 + Math.random() * 80
+      
+      asteroid.position.set(
+        Math.cos(angle) * distance,
+        height,
+        Math.sin(angle) * distance
+      )
+      
+      const scale = 0.5 + Math.random() * 2.5
+      asteroid.scale.set(scale, scale * (0.7 + Math.random() * 0.6), scale)
+      asteroid.rotation.set(Math.random() * Math.PI, Math.random() * Math.PI, Math.random() * Math.PI)
+      
+      this.scene.add(asteroid)
+      this.environmentObjects.push(asteroid)
+      
+      // Add subtle rotation animation
+      this.animatedObjects.push({
+        mesh: asteroid,
+        type: 'asteroid',
+        rotationSpeed: { x: Math.random() * 0.1, y: Math.random() * 0.1, z: Math.random() * 0.1 }
+      })
+    }
   }
   
   createCamera() {
@@ -172,27 +299,21 @@ export class GraphicsEngine {
   }
 
   setupPostProcessing() {
-    const { EffectComposer } = require('three/examples/jsm/postprocessing/EffectComposer.js')
-    const { RenderPass } = require('three/examples/jsm/postprocessing/RenderPass.js')
-    const { UnrealBloomPass } = require('three/examples/jsm/postprocessing/UnrealBloomPass.js')
-    const { OutputPass } = require('three/examples/jsm/postprocessing/OutputPass.js')
-    const { ShaderPass } = require('three/examples/jsm/postprocessing/ShaderPass.js')
-    const { FXAAShader } = require('three/examples/jsm/shaders/FXAAShader.js')
-    
     this.composer = new EffectComposer(this.renderer)
     
     // Render pass
     const renderPass = new RenderPass(this.scene, this.camera)
     this.composer.addPass(renderPass)
     
-    // Bloom for glowing effects
+    // Bloom for glowing effects - INTENSE GLOW
     const bloomPass = new UnrealBloomPass(
       new THREE.Vector2(this.container.clientWidth, this.container.clientHeight),
-      1.5, // strength
-      0.4, // radius
-      0.85 // threshold
+      2.0, // strength - stronger bloom
+      0.6, // radius - wider glow spread
+      0.3  // threshold - lower threshold = more things glow
     )
     this.composer.addPass(bloomPass)
+    this.bloomPass = bloomPass
     
     // FXAA for anti-aliasing
     const fxaaPass = new ShaderPass(FXAAShader)
@@ -550,63 +671,162 @@ export class GraphicsEngine {
   
   createSpawnPortal() {
     const portalGroup = new THREE.Group()
-    portalGroup.position.set(0, 0, 45)
+    portalGroup.position.set(0, 0, 50)
     
-    // Outer ring
-    const outerRingGeom = new THREE.TorusGeometry(10, 0.5, 16, 48)
+    // Create a dramatic wormhole/hyperspace portal
+    
+    // Outer unstable energy ring
+    const outerRingGeom = new THREE.TorusGeometry(12, 0.8, 24, 64)
     const outerRingMat = new THREE.MeshStandardMaterial({
-      color: 0x00ff44,
-      emissive: 0x00ff44,
-      emissiveIntensity: 0.5,
-      metalness: 0.8,
-      roughness: 0.2
+      color: 0xff2266,
+      emissive: 0xff0044,
+      emissiveIntensity: 1.0,
+      metalness: 0.9,
+      roughness: 0.1
     })
     const outerRing = new THREE.Mesh(outerRingGeom, outerRingMat)
     outerRing.rotation.x = Math.PI / 2
-    outerRing.position.y = 5
+    outerRing.position.y = 8
     portalGroup.add(outerRing)
     this.animatedObjects.push({ mesh: outerRing, type: 'rotate_slow' })
     
-    // Inner ring
-    const innerRingGeom = new THREE.TorusGeometry(7, 0.3, 16, 48)
-    const innerRingMat = new THREE.MeshBasicMaterial({
-      color: 0x00ff88,
+    // Middle energy ring
+    const middleRingGeom = new THREE.TorusGeometry(9, 0.5, 16, 48)
+    const middleRingMat = new THREE.MeshBasicMaterial({
+      color: 0xff4488,
       transparent: true,
-      opacity: 0.7
+      opacity: 0.8
+    })
+    const middleRing = new THREE.Mesh(middleRingGeom, middleRingMat)
+    middleRing.rotation.x = Math.PI / 2
+    middleRing.position.y = 8
+    portalGroup.add(middleRing)
+    this.animatedObjects.push({ mesh: middleRing, type: 'rotate_reverse' })
+    
+    // Inner spinning ring
+    const innerRingGeom = new THREE.TorusGeometry(6, 0.3, 12, 36)
+    const innerRingMat = new THREE.MeshBasicMaterial({
+      color: 0xff88cc,
+      transparent: true,
+      opacity: 0.9
     })
     const innerRing = new THREE.Mesh(innerRingGeom, innerRingMat)
     innerRing.rotation.x = Math.PI / 2
-    innerRing.position.y = 5
+    innerRing.position.y = 8
     portalGroup.add(innerRing)
-    this.animatedObjects.push({ mesh: innerRing, type: 'rotate_reverse' })
+    this.animatedObjects.push({ mesh: innerRing, type: 'rotate' })
     
-    // Portal surface
-    const portalGeom = new THREE.CircleGeometry(6.5, 32)
-    const portalMat = new THREE.MeshBasicMaterial({
-      color: 0x00ff66,
-      transparent: true,
-      opacity: 0.3,
-      side: THREE.DoubleSide
-    })
-    const portal = new THREE.Mesh(portalGeom, portalMat)
-    portal.rotation.x = Math.PI / 2
-    portal.position.y = 5
-    portalGroup.add(portal)
-    this.animatedObjects.push({ mesh: portal, type: 'pulse' })
-    
-    // Vertical energy beams
-    for (let i = 0; i < 4; i++) {
-      const angle = (i / 4) * Math.PI * 2
-      const beamGeom = new THREE.CylinderGeometry(0.2, 0.2, 12, 8)
-      const beamMat = new THREE.MeshBasicMaterial({
-        color: 0x00ff44,
+    // Portal vortex - multiple layers for depth
+    for (let i = 0; i < 5; i++) {
+      const vortexGeom = new THREE.CircleGeometry(5 - i * 0.8, 32)
+      const vortexMat = new THREE.MeshBasicMaterial({
+        color: i % 2 === 0 ? 0xff0066 : 0x8800ff,
         transparent: true,
-        opacity: 0.6
+        opacity: 0.3 - i * 0.05,
+        side: THREE.DoubleSide
       })
-      const beam = new THREE.Mesh(beamGeom, beamMat)
-      beam.position.set(Math.cos(angle) * 9, 6, Math.sin(angle) * 9)
-      portalGroup.add(beam)
+      const vortex = new THREE.Mesh(vortexGeom, vortexMat)
+      vortex.rotation.x = -Math.PI / 2
+      vortex.position.y = 8 + i * 0.3
+      portalGroup.add(vortex)
     }
+    
+    // Center black hole effect
+    const coreGeom = new THREE.SphereGeometry(2, 24, 24)
+    const coreMat = new THREE.MeshBasicMaterial({
+      color: 0x000000,
+      transparent: true,
+      opacity: 0.9
+    })
+    const core = new THREE.Mesh(coreGeom, coreMat)
+    core.position.y = 8
+    portalGroup.add(core)
+    
+    // Event horizon glow
+    const horizonGeom = new THREE.SphereGeometry(2.5, 24, 24)
+    const horizonMat = new THREE.MeshBasicMaterial({
+      color: 0xff0088,
+      transparent: true,
+      opacity: 0.4
+    })
+    const horizon = new THREE.Mesh(horizonGeom, horizonMat)
+    horizon.position.y = 8
+    portalGroup.add(horizon)
+    this.animatedObjects.push({ mesh: horizon, type: 'pulse' })
+    
+    // Energy pillars around portal
+    for (let i = 0; i < 6; i++) {
+      const angle = (i / 6) * Math.PI * 2
+      
+      // Main pillar
+      const pillarGeom = new THREE.CylinderGeometry(0.3, 0.5, 16, 6)
+      const pillarMat = new THREE.MeshStandardMaterial({
+        color: 0x221133,
+        metalness: 0.8,
+        roughness: 0.2,
+        emissive: 0xff0066,
+        emissiveIntensity: 0.2
+      })
+      const pillar = new THREE.Mesh(pillarGeom, pillarMat)
+      pillar.position.set(Math.cos(angle) * 14, 8, Math.sin(angle) * 14)
+      portalGroup.add(pillar)
+      
+      // Energy orb on top
+      const orbGeom = new THREE.OctahedronGeometry(0.8, 0)
+      const orbMat = new THREE.MeshBasicMaterial({
+        color: 0xff0088,
+        transparent: true,
+        opacity: 0.9
+      })
+      const orb = new THREE.Mesh(orbGeom, orbMat)
+      orb.position.set(Math.cos(angle) * 14, 17, Math.sin(angle) * 14)
+      portalGroup.add(orb)
+      this.animatedObjects.push({ 
+        mesh: orb, 
+        type: 'float', 
+        baseY: 17, 
+        offset: i * 0.5,
+        amplitude: 0.5
+      })
+    }
+    
+    // Dramatic portal light
+    const portalLight = new THREE.PointLight(0xff0066, 8, 80)
+    portalLight.position.y = 8
+    portalGroup.add(portalLight)
+    this.lights.portalGlow = portalLight
+    
+    // Secondary accent light
+    const accentLight = new THREE.PointLight(0x8800ff, 4, 50)
+    accentLight.position.y = 12
+    portalGroup.add(accentLight)
+    
+    // Add particle ring around portal
+    const particleCount = 100
+    const particleGeom = new THREE.BufferGeometry()
+    const positions = new Float32Array(particleCount * 3)
+    
+    for (let i = 0; i < particleCount; i++) {
+      const angle = (i / particleCount) * Math.PI * 2
+      const radius = 10 + Math.random() * 5
+      positions[i * 3] = Math.cos(angle) * radius
+      positions[i * 3 + 1] = 6 + Math.random() * 4
+      positions[i * 3 + 2] = Math.sin(angle) * radius
+    }
+    
+    particleGeom.setAttribute('position', new THREE.BufferAttribute(positions, 3))
+    
+    const particleMat = new THREE.PointsMaterial({
+      color: 0xff4488,
+      size: 0.5,
+      transparent: true,
+      opacity: 0.7,
+      blending: THREE.AdditiveBlending
+    })
+    
+    const portalParticles = new THREE.Points(particleGeom, particleMat)
+    portalGroup.add(portalParticles)
+    this.portalParticles = portalParticles
     
     this.scene.add(portalGroup)
     this.spawnPortal = portalGroup
@@ -717,6 +937,16 @@ export class GraphicsEngine {
       this.lights.spawnGlow.intensity = 5 + Math.sin(this.animationTime * 2.5) * 1.5
     }
     
+    // Animate portal effects
+    if (this.lights.portalGlow) {
+      this.lights.portalGlow.intensity = 8 + Math.sin(this.animationTime * 3) * 3
+    }
+    
+    // Rotate portal particles
+    if (this.portalParticles) {
+      this.portalParticles.rotation.y += deltaTime * 0.3
+    }
+    
     // Pulse path lights
     Object.keys(this.lights).forEach(key => {
       if (key.startsWith('path')) {
@@ -743,6 +973,11 @@ export class GraphicsEngine {
           break
         case 'float':
           obj.mesh.position.y = obj.baseY + Math.sin(this.animationTime * 1.5 + obj.offset) * 0.5
+          break
+        case 'asteroid':
+          obj.mesh.rotation.x += deltaTime * obj.rotationSpeed.x
+          obj.mesh.rotation.y += deltaTime * obj.rotationSpeed.y
+          obj.mesh.rotation.z += deltaTime * obj.rotationSpeed.z
           break
       }
     })

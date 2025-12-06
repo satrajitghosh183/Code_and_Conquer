@@ -10,6 +10,7 @@ import CodingConsole from '../components/CodingConsole'
 import TaskPanel from '../components/TaskPanel'
 import ModelScaleSettings from '../components/ModelScaleSettings'
 import TowerPanel from '../components/TowerPanel'
+import BasePanel from '../components/BasePanel'
 import { Icon } from '../components/Icons'
 import './GamePage.css'
 
@@ -47,6 +48,7 @@ export default function GamePage() {
   const [showHeader, setShowHeader] = useState(true)
   const [vignetteIntensity, setVignetteIntensity] = useState(0)
   const [selectedTower, setSelectedTower] = useState(null)
+  const [baseStats, setBaseStats] = useState(null)
 
   useEffect(() => {
     if (!containerRef.current) return
@@ -83,6 +85,9 @@ export default function GamePage() {
       onHealthChange: (health, max) => {
         setHealth(health)
         setMaxHealth(max)
+      },
+      onBaseUpgrade: (stats) => {
+        setBaseStats(stats)
       },
       onWaveChange: (waveNum) => {
         setWave(waveNum)
@@ -141,6 +146,11 @@ export default function GamePage() {
     }
 
     gameRef.current = game
+    
+    // Get initial base stats
+    if (game.getBaseStats) {
+      setBaseStats(game.getBaseStats())
+    }
     
     // Add keyboard listener for hotkeys
     const handleKeyDown = (e) => {
@@ -267,6 +277,23 @@ export default function GamePage() {
     }
     setShowCodingConsole(false)
   }
+  
+  const handleTaskCompleted = useCallback((taskData) => {
+    if (gameRef.current && gameRef.current.onTaskCompleted) {
+      const rewards = gameRef.current.onTaskCompleted(taskData?.type || 'daily')
+      console.log('Task completed! Rewards:', rewards)
+    }
+    setShowTaskPanel(false)
+  }, [])
+  
+  const handleBaseUpgrade = useCallback(() => {
+    if (gameRef.current && gameRef.current.upgradeBase) {
+      const success = gameRef.current.upgradeBase()
+      if (success && gameRef.current.getBaseStats) {
+        setBaseStats(gameRef.current.getBaseStats())
+      }
+    }
+  }, [])
 
   const handleUpgrade = useCallback(() => {
     const upgradeCost = 500 * Math.pow(2, upgradeLevel - 1)
@@ -399,6 +426,12 @@ export default function GamePage() {
         gold={gold}
         onUpgrade={handleTowerUpgrade}
         onSell={handleTowerSell}
+      />
+      
+      <BasePanel
+        baseStats={baseStats}
+        gold={gold}
+        onUpgrade={handleBaseUpgrade}
       />
       
       <div className="game-ui-overlay">

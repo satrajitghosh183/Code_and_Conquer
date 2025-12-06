@@ -46,9 +46,9 @@ export class EnhancedGame {
     
     // Initialize Graphics
     this.graphicsEngine = new GraphicsEngine(container, {
-      quality: 'medium',
-      enablePostProcessing: false,
-      enableShadows: false
+      quality: 'high',
+      enablePostProcessing: true,
+      enableShadows: true
     })
     
     const { scene, camera, renderer } = this.graphicsEngine.initialize()
@@ -180,12 +180,12 @@ export class EnhancedGame {
     this.ghostPreview = null
     this.availableTowers = Object.keys(TOWER_TYPES)
     
-    // Wave timer
-    this.waveCountdown = 15
-    this.waveCountdownTotal = 15
-    this.buildDuration = 15
+    // Wave timer - shorter build phase for faster action
+    this.waveCountdown = 10
+    this.waveCountdownTotal = 10
+    this.buildDuration = 10
     this.phase = 'build' // build | combat
-    this.waveInterval = 30000
+    this.waveInterval = 20000
     this.lastWaveTime = Date.now()
     this.passiveEnergyPerSecond = 0.2
     this.waveTimerActive = false
@@ -660,6 +660,11 @@ export class EnhancedGame {
     // Update visual effects
     this.visualEffects.update(deltaTime)
     
+    // Update path animations
+    if (this.pathManager && this.pathManager.update) {
+      this.pathManager.update(deltaTime)
+    }
+    
     // Build/combat pacing
     if (this.waveTimerActive && this.phase === 'build' && !this.waveActive) {
       this.buildCountdown = Math.max(0, this.buildCountdown - deltaTime)
@@ -850,6 +855,70 @@ export class EnhancedGame {
   getTowerUpgradeCost(towerId) {
     const tower = this.towers.find(t => t.id === towerId)
     return tower ? tower.getUpgradeCost() : null
+  }
+  
+  // Upgrade main base
+  upgradeBase() {
+    if (!this.mainBase) return false
+    
+    const cost = this.mainBase.getUpgradeCost()
+    if (cost === Infinity) {
+      if (this.callbacks.onNotification) {
+        this.callbacks.onNotification('Base is already at max level!', 'warning')
+      }
+      return false
+    }
+    
+    if (this.gold < cost) {
+      if (this.callbacks.onNotification) {
+        this.callbacks.onNotification('Not enough gold for base upgrade!', 'error')
+      }
+      return false
+    }
+    
+    if (this.mainBase.upgrade()) {
+      this.gold -= cost
+      
+      // Update health values
+      this.health = this.mainBase.health
+      this.maxHealth = this.mainBase.maxHealth
+      
+      // Visual effect
+      this.visualEffects.createUpgradeEffect(this.basePosition, { color: 0xffaa00 })
+      
+      if (this.callbacks.onGoldChange) {
+        this.callbacks.onGoldChange(this.gold)
+      }
+      if (this.callbacks.onHealthChange) {
+        this.callbacks.onHealthChange(this.health, this.maxHealth)
+      }
+      if (this.callbacks.onBaseUpgrade) {
+        this.callbacks.onBaseUpgrade(this.mainBase.getStats())
+      }
+      if (this.callbacks.onNotification) {
+        this.callbacks.onNotification(
+          `Base upgraded to ${this.mainBase.config.name}!`,
+          'success'
+        )
+      }
+      
+      console.log(`⬆️ Base upgraded to Level ${this.mainBase.level}: ${this.mainBase.config.name}`)
+      return true
+    }
+    
+    return false
+  }
+  
+  // Get base stats for UI
+  getBaseStats() {
+    if (!this.mainBase) return null
+    return this.mainBase.getStats()
+  }
+  
+  // Check if base can be upgraded
+  canUpgradeBase() {
+    if (!this.mainBase) return false
+    return this.mainBase.canUpgrade(this.gold)
   }
   
   // Sell tower

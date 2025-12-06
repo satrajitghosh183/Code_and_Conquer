@@ -1,0 +1,183 @@
+.base-panel {
+  position: fixed;
+  bottom: 100px; /* Above the BuildBar */
+  left: 20px;
+  z-index: 90;
+  font-family: 'Space Grotesk', 'Inter', sans-serif;
+}
+
+.base-panel-toggle {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 14px;
+  background: linear-gradient(135deg, rgba(255, 100, 0, 0.3), rgba(255, 50, 0, 0.5));
+  border: 2px solid rgba(255, 100, 0, 0.8);
+  border-radius: 10px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 0 20px rgba(255, 100, 0, 0.4), inset 0 0 10px rgba(255, 100, 0, 0.2);
+}
+
+.base-panel-toggle:hover {
+  background: linear-gradient(135deg, rgba(255, 100, 0, 0.4), rgba(255, 50, 0, 0.6));
+  box-shadow: 0 0 30px rgba(255, 100, 0, 0.6), inset 0 0 15px rgba(255, 100, 0, 0.3);
+  transform: translateY(-2px);
+}
+
+.base-name {
+  color: #ffcc88;
+  font-weight: 600;
+  font-size: 14px;
+  text-shadow: 0 0 10px rgba(255, 170, 0, 0.5);
+}
+
+.base-level {
+  color: #ff8844;
+  font-weight: 700;
+  font-size: 12px;
+  background: rgba(0, 0, 0, 0.5);
+  padding: 3px 8px;
+  border-radius: 5px;
+  border: 1px solid rgba(255, 100, 0, 0.5);
+}
+
+.base-panel.expanded .base-panel-toggle {
+  border-radius: 10px 10px 0 0;
+  border-bottom: none;
+}
+
+.base-details {
+  background: linear-gradient(180deg, rgba(30, 20, 10, 0.95), rgba(20, 10, 5, 0.98));
+  border: 2px solid rgba(255, 100, 0, 0.6);
+  border-top: none;
+  border-radius: 0 0 10px 10px;
+  padding: 12px;
+  min-width: 240px;
+  max-width: 260px;
+  backdrop-filter: blur(10px);
+  animation: slideDown 0.3s ease;
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.base-stats {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
+.base-stat {
+  display: flex;
+  flex-direction: column;
+  padding: 8px;
+  background: rgba(255, 100, 0, 0.1);
+  border: 1px solid rgba(255, 100, 0, 0.3);
+  border-radius: 6px;
+}
+
+.base-stat .stat-label {
+  color: #aa8866;
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 3px;
+}
+
+.base-stat .stat-value {
+  color: #ffcc88;
+  font-size: 14px;
+  font-weight: 700;
+  text-shadow: 0 0 8px rgba(255, 170, 0, 0.4);
+}
+
+.base-upgrade-section {
+  margin-bottom: 10px;
+}
+
+.base-upgrade-btn {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 10px 14px;
+  background: linear-gradient(135deg, rgba(255, 170, 0, 0.3), rgba(255, 100, 0, 0.4));
+  border: 2px solid rgba(255, 170, 0, 0.8);
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  color: #ffffff;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.base-upgrade-btn.available:hover {
+  background: linear-gradient(135deg, rgba(255, 170, 0, 0.5), rgba(255, 100, 0, 0.6));
+  box-shadow: 0 0 25px rgba(255, 170, 0, 0.5);
+  transform: translateY(-2px);
+}
+
+.base-upgrade-btn.disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  border-color: rgba(255, 100, 0, 0.3);
+}
+
+.upgrade-cost {
+  background: rgba(0, 0, 0, 0.5);
+  padding: 3px 8px;
+  border-radius: 5px;
+  color: #ffd700;
+  font-weight: 700;
+  font-size: 12px;
+}
+
+.max-level-badge {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 10px 14px;
+  background: linear-gradient(135deg, rgba(255, 215, 0, 0.2), rgba(255, 150, 0, 0.3));
+  border: 2px solid rgba(255, 215, 0, 0.6);
+  border-radius: 8px;
+  color: #ffd700;
+  font-weight: 700;
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  animation: glow 2s ease-in-out infinite;
+}
+
+@keyframes glow {
+  0%, 100% {
+    box-shadow: 0 0 10px rgba(255, 215, 0, 0.3);
+  }
+  50% {
+    box-shadow: 0 0 25px rgba(255, 215, 0, 0.6);
+  }
+}
+
+.base-upgrade-preview {
+  padding-top: 8px;
+  border-top: 1px solid rgba(255, 100, 0, 0.2);
+}
+
+.preview-text {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: #88aaff;
+  font-size: 11px;
+}

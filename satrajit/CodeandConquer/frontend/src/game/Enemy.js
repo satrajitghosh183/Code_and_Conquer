@@ -1,9 +1,10 @@
 // =============================================================================
-// ENEMY CLASS - Beautiful Sci-Fi Invaders
+// ENEMY CLASS - Space Invader Ships
 // =============================================================================
 
 import * as THREE from 'three'
 import { ENEMY_TYPES } from './EnemyTypes.js'
+import { modelLoader } from './ModelLoader.js'
 
 export class Enemy {
   constructor(type, args = {}) {
@@ -78,14 +79,11 @@ export class Enemy {
   createMesh() {
     const group = new THREE.Group()
     
-    // Create body based on tier and type
-    this.createBody(group)
+    // Create spaceship body
+    this.createSpaceshipBody(group)
     
-    // Add decorations
-    this.createDecorations(group)
-    
-    // Add glow effects
-    this.createGlowEffects(group)
+    // Add engine glow effects
+    this.createEngineGlow(group)
     
     // Add shield if applicable
     if (this.hasShield && this.shieldHealth > 0) {
@@ -107,207 +105,291 @@ export class Enemy {
     return group
   }
   
-  createBody(group) {
+  createSpaceshipBody(group) {
     const s = this.scale
-    let bodyGeom, bodyMat
     
-    // Different shapes based on enemy type/tier
+    // Create different spaceship designs based on tier
     if (this.isBoss) {
-      // Boss - large complex shape
-      bodyGeom = new THREE.IcosahedronGeometry(1.8 * s, 1)
-      bodyMat = new THREE.MeshStandardMaterial({
-        color: this.color,
-        metalness: 0.6,
-        roughness: 0.3,
-        emissive: this.glowColor,
-        emissiveIntensity: 0.5
-      })
+      this.createBossShip(group, s)
     } else if (this.tier >= 3) {
-      // Elite - dodecahedron
-      bodyGeom = new THREE.DodecahedronGeometry(1 * s, 0)
-      bodyMat = new THREE.MeshStandardMaterial({
-        color: this.color,
-        metalness: 0.5,
-        roughness: 0.4,
-        emissive: this.glowColor,
-        emissiveIntensity: 0.4
-      })
+      this.createEliteShip(group, s)
     } else if (this.tier === 2) {
-      // Advanced - octahedron
-      bodyGeom = new THREE.OctahedronGeometry(0.9 * s, 0)
-      bodyMat = new THREE.MeshStandardMaterial({
-        color: this.color,
-        metalness: 0.4,
-        roughness: 0.5,
-        emissive: this.glowColor,
-        emissiveIntensity: 0.3
-      })
+      this.createAdvancedShip(group, s)
     } else {
-      // Basic - sphere with segments
-      bodyGeom = new THREE.SphereGeometry(0.7 * s, 12, 12)
-      bodyMat = new THREE.MeshStandardMaterial({
-        color: this.color,
-        metalness: 0.3,
-        roughness: 0.6,
-        emissive: this.glowColor,
-        emissiveIntensity: 0.25
-      })
+      this.createBasicShip(group, s)
     }
+  }
+  
+  createBasicShip(group, s) {
+    // Sleek fighter ship design
+    const bodyMat = new THREE.MeshStandardMaterial({
+      color: this.color,
+      metalness: 0.7,
+      roughness: 0.2,
+      emissive: this.glowColor,
+      emissiveIntensity: 0.3
+    })
     
+    // Main fuselage - cone shape
+    const bodyGeom = new THREE.ConeGeometry(0.6 * s, 2 * s, 6)
     this.bodyMesh = new THREE.Mesh(bodyGeom, bodyMat)
+    this.bodyMesh.rotation.x = Math.PI / 2
     this.bodyMesh.position.y = 1.2 * s
     group.add(this.bodyMesh)
     
-    // Inner core (glowing)
-    const coreSize = this.isBoss ? 1 : this.tier >= 2 ? 0.5 : 0.35
-    const coreGeom = new THREE.SphereGeometry(coreSize * s, 12, 12)
+    // Wings - flat triangular
+    const wingGeom = new THREE.BufferGeometry()
+    const wingVertices = new Float32Array([
+      0, 0, 0,           // center
+      -1.5 * s, 0, 0.5 * s, // left back
+      -0.2 * s, 0, -0.3 * s, // left front
+    ])
+    wingGeom.setAttribute('position', new THREE.BufferAttribute(wingVertices, 3))
+    wingGeom.computeVertexNormals()
+    
+    const wingMat = new THREE.MeshStandardMaterial({
+      color: this.color,
+      metalness: 0.8,
+      roughness: 0.3,
+      emissive: this.glowColor,
+      emissiveIntensity: 0.2,
+      side: THREE.DoubleSide
+    })
+    
+    const leftWing = new THREE.Mesh(wingGeom, wingMat)
+    leftWing.position.set(0, 1.2 * s, 0)
+    group.add(leftWing)
+    
+    const rightWing = leftWing.clone()
+    rightWing.scale.x = -1
+    group.add(rightWing)
+    
+    // Cockpit (glowing)
+    const cockpitGeom = new THREE.SphereGeometry(0.3 * s, 8, 8)
+    const cockpitMat = new THREE.MeshBasicMaterial({
+      color: this.glowColor,
+      transparent: true,
+      opacity: 0.9
+    })
+    this.coreMesh = new THREE.Mesh(cockpitGeom, cockpitMat)
+    this.coreMesh.position.set(0, 1.2 * s, -0.4 * s)
+    group.add(this.coreMesh)
+  }
+  
+  createAdvancedShip(group, s) {
+    const bodyMat = new THREE.MeshStandardMaterial({
+      color: this.color,
+      metalness: 0.75,
+      roughness: 0.2,
+      emissive: this.glowColor,
+      emissiveIntensity: 0.4
+    })
+    
+    // Main hull - elongated octahedron
+    const hullGeom = new THREE.OctahedronGeometry(0.8 * s, 0)
+    this.bodyMesh = new THREE.Mesh(hullGeom, bodyMat)
+    this.bodyMesh.scale.set(1, 0.5, 2)
+    this.bodyMesh.position.y = 1.5 * s
+    group.add(this.bodyMesh)
+    
+    // Side pods
+    const podGeom = new THREE.CylinderGeometry(0.2 * s, 0.3 * s, 1.2 * s, 6)
+    const podMat = bodyMat.clone()
+    
+    const leftPod = new THREE.Mesh(podGeom, podMat)
+    leftPod.rotation.x = Math.PI / 2
+    leftPod.position.set(-0.8 * s, 1.5 * s, 0)
+    group.add(leftPod)
+    
+    const rightPod = leftPod.clone()
+    rightPod.position.x = 0.8 * s
+    group.add(rightPod)
+    
+    // Core (glowing)
+    const coreGeom = new THREE.SphereGeometry(0.35 * s, 12, 12)
     const coreMat = new THREE.MeshBasicMaterial({
       color: this.glowColor,
       transparent: true,
       opacity: 0.9
     })
     this.coreMesh = new THREE.Mesh(coreGeom, coreMat)
-    this.coreMesh.position.y = 1.2 * s
+    this.coreMesh.position.y = 1.5 * s
     group.add(this.coreMesh)
   }
   
-  createDecorations(group) {
-    const s = this.scale
+  createEliteShip(group, s) {
+    const bodyMat = new THREE.MeshStandardMaterial({
+      color: this.color,
+      metalness: 0.85,
+      roughness: 0.15,
+      emissive: this.glowColor,
+      emissiveIntensity: 0.5
+    })
     
-    // Eyes (for all enemies)
-    const eyeCount = this.isBoss ? 4 : this.tier >= 2 ? 3 : 2
-    const eyeRadius = this.isBoss ? 0.25 : 0.15
+    // Main body - complex angular shape
+    const bodyGeom = new THREE.DodecahedronGeometry(0.9 * s, 0)
+    this.bodyMesh = new THREE.Mesh(bodyGeom, bodyMat)
+    this.bodyMesh.scale.set(1.2, 0.6, 1.8)
+    this.bodyMesh.position.y = 1.8 * s
+    group.add(this.bodyMesh)
     
-    for (let i = 0; i < eyeCount; i++) {
-      const angle = (i / eyeCount) * Math.PI * 2 - Math.PI / 2
-      const eyeDistance = this.isBoss ? 1 : 0.5
-      
-      // Eye white
-      const eyeGeom = new THREE.SphereGeometry(eyeRadius * s, 8, 8)
-      const eyeMat = new THREE.MeshBasicMaterial({ color: 0xffffff })
-      const eye = new THREE.Mesh(eyeGeom, eyeMat)
-      eye.position.set(
-        Math.sin(angle) * eyeDistance * s,
-        1.3 * s,
-        Math.cos(angle) * eyeDistance * s + 0.3 * s
-      )
-      group.add(eye)
-      
-      // Pupil
-      const pupilGeom = new THREE.SphereGeometry(eyeRadius * 0.5 * s, 6, 6)
-      const pupilMat = new THREE.MeshBasicMaterial({ color: 0x000000 })
-      const pupil = new THREE.Mesh(pupilGeom, pupilMat)
-      pupil.position.copy(eye.position)
-      pupil.position.z += eyeRadius * 0.6 * s
-      group.add(pupil)
+    // Forward prong
+    const prongGeom = new THREE.ConeGeometry(0.3 * s, 1.5 * s, 4)
+    const prong = new THREE.Mesh(prongGeom, bodyMat)
+    prong.rotation.x = Math.PI / 2
+    prong.position.set(0, 1.8 * s, -1.2 * s)
+    group.add(prong)
+    
+    // Weapons arrays (side mounted)
+    const weaponGeom = new THREE.BoxGeometry(0.15 * s, 0.15 * s, 0.8 * s)
+    const weaponMat = new THREE.MeshStandardMaterial({
+      color: 0x333344,
+      metalness: 0.9,
+      roughness: 0.1
+    })
+    
+    for (let i = -1; i <= 1; i += 2) {
+      const weapon = new THREE.Mesh(weaponGeom, weaponMat)
+      weapon.position.set(i * 0.9 * s, 1.8 * s, -0.3 * s)
+      group.add(weapon)
     }
     
-    // Spikes/horns for tier 2+ and bosses
-    if (this.tier >= 2 || this.isBoss) {
-      const spikeCount = this.isBoss ? 8 : 4
-      for (let i = 0; i < spikeCount; i++) {
-        const angle = (i / spikeCount) * Math.PI * 2
-        const spikeGeom = new THREE.ConeGeometry(0.15 * s, 0.6 * s, 4)
-        const spikeMat = new THREE.MeshStandardMaterial({
-          color: this.color,
-          metalness: 0.7,
-          roughness: 0.3
-        })
-        const spike = new THREE.Mesh(spikeGeom, spikeMat)
-        spike.position.set(
-          Math.cos(angle) * 0.8 * s,
-          1.2 * s,
-          Math.sin(angle) * 0.8 * s
-        )
-        spike.rotation.z = Math.cos(angle) * 0.5
-        spike.rotation.x = Math.sin(angle) * 0.5
-        group.add(spike)
-      }
-    }
-    
-    // Crown for bosses
-    if (this.isBoss) {
-      const crownGeom = new THREE.ConeGeometry(0.5 * s, 1 * s, 6)
-      const crownMat = new THREE.MeshStandardMaterial({
-        color: 0xffd700,
-        metalness: 0.9,
-        roughness: 0.1,
-        emissive: 0xffd700,
-        emissiveIntensity: 0.5
-      })
-      const crown = new THREE.Mesh(crownGeom, crownMat)
-      crown.position.y = 2.8 * s
-      group.add(crown)
-    }
-    
-    // Legs/tentacles for spider-type enemies
-    if (this.type === 'spider' || this.type === 'scout') {
-      const legCount = 6
-      for (let i = 0; i < legCount; i++) {
-        const angle = (i / legCount) * Math.PI * 2
-        const legGeom = new THREE.CylinderGeometry(0.05 * s, 0.08 * s, 0.8 * s, 6)
-        const legMat = new THREE.MeshStandardMaterial({
-          color: this.color,
-          metalness: 0.3,
-          roughness: 0.7
-        })
-        const leg = new THREE.Mesh(legGeom, legMat)
-        leg.position.set(
-          Math.cos(angle) * 0.5 * s,
-          0.4 * s,
-          Math.sin(angle) * 0.5 * s
-        )
-        leg.rotation.z = Math.cos(angle) * 0.8
-        leg.rotation.x = Math.sin(angle) * 0.8
-        group.add(leg)
-      }
-    }
+    // Core
+    const coreGeom = new THREE.IcosahedronGeometry(0.4 * s, 1)
+    const coreMat = new THREE.MeshBasicMaterial({
+      color: this.glowColor,
+      transparent: true,
+      opacity: 0.95
+    })
+    this.coreMesh = new THREE.Mesh(coreGeom, coreMat)
+    this.coreMesh.position.y = 1.8 * s
+    group.add(this.coreMesh)
   }
   
-  createGlowEffects(group) {
-    const s = this.scale
+  createBossShip(group, s) {
+    const bodyMat = new THREE.MeshStandardMaterial({
+      color: this.color,
+      metalness: 0.9,
+      roughness: 0.1,
+      emissive: this.glowColor,
+      emissiveIntensity: 0.6
+    })
     
-    // Outer glow sphere
-    const glowSize = this.isBoss ? 2.5 : this.tier >= 2 ? 1.4 : 1
-    const glowGeom = new THREE.SphereGeometry(glowSize * s, 16, 16)
+    // Main capital ship hull
+    const hullGeom = new THREE.BoxGeometry(2.5 * s, 0.8 * s, 4 * s)
+    this.bodyMesh = new THREE.Mesh(hullGeom, bodyMat)
+    this.bodyMesh.position.y = 2.5 * s
+    group.add(this.bodyMesh)
+    
+    // Bridge tower
+    const bridgeGeom = new THREE.BoxGeometry(0.8 * s, 1.2 * s, 1 * s)
+    const bridge = new THREE.Mesh(bridgeGeom, bodyMat)
+    bridge.position.set(0, 3.4 * s, 0.5 * s)
+    group.add(bridge)
+    
+    // Forward weapons platform
+    const weaponPlatformGeom = new THREE.CylinderGeometry(0.6 * s, 0.8 * s, 0.5 * s, 8)
+    const weaponPlatform = new THREE.Mesh(weaponPlatformGeom, bodyMat)
+    weaponPlatform.position.set(0, 2.5 * s, -1.8 * s)
+    group.add(weaponPlatform)
+    
+    // Engine nacelles
+    const nacelleGeom = new THREE.CylinderGeometry(0.4 * s, 0.5 * s, 2 * s, 8)
+    for (let i = -1; i <= 1; i += 2) {
+      const nacelle = new THREE.Mesh(nacelleGeom, bodyMat)
+      nacelle.rotation.x = Math.PI / 2
+      nacelle.position.set(i * 1.2 * s, 2.2 * s, 1.8 * s)
+      group.add(nacelle)
+    }
+    
+    // Crown/command spire
+    const crownGeom = new THREE.ConeGeometry(0.5 * s, 1.5 * s, 6)
+    const crownMat = new THREE.MeshStandardMaterial({
+      color: 0xffd700,
+      metalness: 0.95,
+      roughness: 0.05,
+      emissive: 0xffaa00,
+      emissiveIntensity: 0.8
+    })
+    const crown = new THREE.Mesh(crownGeom, crownMat)
+    crown.position.set(0, 4.5 * s, 0.5 * s)
+    group.add(crown)
+    
+    // Core reactor (massive glowing)
+    const coreGeom = new THREE.SphereGeometry(0.8 * s, 16, 16)
+    const coreMat = new THREE.MeshBasicMaterial({
+      color: this.glowColor,
+      transparent: true,
+      opacity: 0.9
+    })
+    this.coreMesh = new THREE.Mesh(coreGeom, coreMat)
+    this.coreMesh.position.y = 2.5 * s
+    group.add(this.coreMesh)
+  }
+  
+  createEngineGlow(group) {
+    const s = this.scale
+    const engineCount = this.isBoss ? 4 : this.tier >= 2 ? 2 : 1
+    
+    // Engine glow particles
+    const glowSize = this.isBoss ? 0.6 : this.tier >= 2 ? 0.35 : 0.25
+    const glowGeom = new THREE.SphereGeometry(glowSize * s, 8, 8)
     const glowMat = new THREE.MeshBasicMaterial({
       color: this.glowColor,
       transparent: true,
-      opacity: 0.15
+      opacity: 0.8
     })
-    const glow = new THREE.Mesh(glowGeom, glowMat)
-    glow.position.y = 1.2 * s
-    group.add(glow)
-    this.glowMesh = glow
     
-    // Floating particles around enemy
-    const particleCount = this.isBoss ? 12 : this.tier >= 2 ? 6 : 3
-    const particleGeom = new THREE.SphereGeometry(0.08 * s, 6, 6)
-    const particleMat = new THREE.MeshBasicMaterial({
+    // Position engines at the back of the ship
+    const engineY = this.isBoss ? 2.2 : 1.2
+    const engineZ = this.isBoss ? 2.2 : 0.8
+    
+    if (engineCount === 1) {
+      const engine = new THREE.Mesh(glowGeom, glowMat.clone())
+      engine.position.set(0, engineY * s, engineZ * s)
+      group.add(engine)
+      this.particles.push({ mesh: engine, type: 'engine', angle: 0 })
+    } else {
+      for (let i = 0; i < engineCount; i++) {
+        const xOffset = (i - (engineCount - 1) / 2) * (this.isBoss ? 1.2 : 0.6)
+        const engine = new THREE.Mesh(glowGeom.clone(), glowMat.clone())
+        engine.position.set(xOffset * s, engineY * s, engineZ * s)
+        group.add(engine)
+        this.particles.push({ mesh: engine, type: 'engine', angle: i, xOffset })
+      }
+    }
+    
+    // Engine trail effect
+    const trailGeom = new THREE.ConeGeometry(glowSize * 0.5 * s, glowSize * 3 * s, 6)
+    const trailMat = new THREE.MeshBasicMaterial({
       color: this.glowColor,
       transparent: true,
-      opacity: 0.7
+      opacity: 0.4
     })
     
-    for (let i = 0; i < particleCount; i++) {
-      const particle = new THREE.Mesh(particleGeom.clone(), particleMat.clone())
-      this.particles.push({
-        mesh: particle,
-        angle: (i / particleCount) * Math.PI * 2,
-        radius: 1 + Math.random() * 0.5,
-        speed: 1 + Math.random() * 0.5,
-        yOffset: Math.random() * 0.5
-      })
-      group.add(particle)
+    if (engineCount === 1) {
+      const trail = new THREE.Mesh(trailGeom, trailMat)
+      trail.rotation.x = -Math.PI / 2
+      trail.position.set(0, engineY * s, (engineZ + glowSize * 1.5) * s)
+      group.add(trail)
+    } else {
+      for (let i = 0; i < engineCount; i++) {
+        const xOffset = (i - (engineCount - 1) / 2) * (this.isBoss ? 1.2 : 0.6)
+        const trail = new THREE.Mesh(trailGeom.clone(), trailMat.clone())
+        trail.rotation.x = -Math.PI / 2
+        trail.position.set(xOffset * s, engineY * s, (engineZ + glowSize * 1.5) * s)
+        group.add(trail)
+      }
     }
     
     // Point light
-    const lightIntensity = this.isBoss ? 2 : this.tier >= 2 ? 1 : 0.5
-    const light = new THREE.PointLight(this.glowColor, lightIntensity, 10 * s)
-    light.position.y = 1.2 * s
+    const lightIntensity = this.isBoss ? 8 : this.tier >= 2 ? 4 : 2
+    const light = new THREE.PointLight(this.glowColor, lightIntensity, 15 * s)
+    light.position.set(0, engineY * s, 0)
     group.add(light)
     this.enemyLight = light
   }
+  
   
   createShield(group) {
     const s = this.scale
@@ -539,49 +621,64 @@ export class Enemy {
     if (this.isDead) return
     
     this.animationTime += deltaTime
+    const s = this.scale
     
-    // Animate body (floating/bobbing)
+    // Subtle ship hover animation
     if (this.bodyMesh) {
-      this.bodyMesh.position.y = 1.2 * this.scale + Math.sin(this.animationTime * 2) * 0.15
-      this.bodyMesh.rotation.y += deltaTime * 0.5
+      // Gentle floating motion
+      const hoverOffset = Math.sin(this.animationTime * 2) * 0.15
+      
+      // Banking effect based on movement
+      if (this.mesh) {
+        // Ships should tilt slightly forward
+        this.mesh.rotation.x = 0.1 + Math.sin(this.animationTime * 1.5) * 0.03
+      }
+      
+      // Pulse emissive intensity
+      if (this.bodyMesh.material && this.bodyMesh.material.emissiveIntensity !== undefined) {
+        const emissivePulse = 0.3 + Math.sin(this.animationTime * 3) * 0.15
+        this.bodyMesh.material.emissiveIntensity = emissivePulse
+      }
     }
     
-    // Animate core
+    // Animate core/cockpit glow - pulsing
     if (this.coreMesh) {
-      this.coreMesh.position.y = 1.2 * this.scale + Math.sin(this.animationTime * 2) * 0.15
       const pulse = 0.8 + Math.sin(this.animationTime * 4) * 0.2
       this.coreMesh.scale.setScalar(pulse)
+      this.coreMesh.material.opacity = 0.7 + Math.sin(this.animationTime * 3) * 0.25
     }
     
-    // Animate glow
-    if (this.glowMesh) {
-      const glowPulse = 1 + Math.sin(this.animationTime * 3) * 0.15
-      this.glowMesh.scale.setScalar(glowPulse)
+    // Animate engine effects
+    if (this.enemyLight) {
+      const baseLightIntensity = this.isBoss ? 8 : this.tier >= 2 ? 4 : 2
+      this.enemyLight.intensity = baseLightIntensity + Math.sin(this.animationTime * 5) * (baseLightIntensity * 0.4)
     }
     
-    // Animate particles
+    // Animate engine particles (flicker effect)
     this.particles.forEach((p, i) => {
-      p.angle += deltaTime * p.speed
-      p.mesh.position.set(
-        Math.cos(p.angle) * p.radius * this.scale,
-        1.2 * this.scale + Math.sin(this.animationTime * 2 + p.yOffset) * 0.3 + p.yOffset,
-        Math.sin(p.angle) * p.radius * this.scale
-      )
+      if (p.type === 'engine' && p.mesh) {
+        const flicker = 0.7 + Math.sin(this.animationTime * 8 + i * 2) * 0.3
+        p.mesh.scale.setScalar(flicker)
+        if (p.mesh.material) {
+          p.mesh.material.opacity = 0.6 + Math.sin(this.animationTime * 6 + i) * 0.35
+        }
+      }
     })
     
     // Animate shield
     if (this.shieldMesh && this.shieldMesh.visible) {
-      const shieldPulse = 1 + Math.sin(this.animationTime * 2) * 0.03
+      const shieldPulse = 1 + Math.sin(this.animationTime * 2) * 0.05
       this.shieldMesh.scale.setScalar(shieldPulse)
+      this.shieldMesh.material.opacity = 0.2 + Math.sin(this.animationTime * 3) * 0.1
     }
     if (this.shieldWire && this.shieldWire.visible) {
-      this.shieldWire.rotation.y += deltaTime * 0.5
+      this.shieldWire.rotation.y += deltaTime * 0.8
     }
     
     // Animate healer aura
     if (this.auraMesh) {
-      this.auraMesh.rotation.z += deltaTime * 1.5
-      const auraPulse = 1 + Math.sin(this.animationTime * 2) * 0.1
+      this.auraMesh.rotation.z += deltaTime * 2
+      const auraPulse = 1 + Math.sin(this.animationTime * 2.5) * 0.15
       this.auraMesh.scale.setScalar(auraPulse)
     }
     
