@@ -118,16 +118,16 @@ export class VisualEffects {
   }
 
   // =========================================================================
-  // EXPLOSION EFFECT - Enhanced with better particles
+  // EXPLOSION EFFECT - Optimized with reduced particles
   // =========================================================================
   createExplosion(position, options = {}) {
     const { 
-      numParticles = 35, 
+      numParticles = 20, // Reduced from 35
       color = 0xff6600, 
-      duration = 700,
-      maxDist = 5,
+      duration = 500, // Reduced from 700
+      maxDist = 4,    // Reduced from 5
       gravity = true,
-      shockwave = true
+      shockwave = false // Disabled by default for performance
     } = options
     
     const geometry = new THREE.BufferGeometry()
@@ -185,12 +185,12 @@ export class VisualEffects {
     const particles = new THREE.Points(geometry, material)
     this.scene.add(particles)
     
-    // Core flash with better visuals
-    const flashGeom = new THREE.SphereGeometry(1.0, 12, 12)
+    // Core flash - reduced
+    const flashGeom = new THREE.SphereGeometry(0.6, 8, 8)
     const flashMat = new THREE.MeshBasicMaterial({
       color,
       transparent: true,
-      opacity: 1.0,
+      opacity: 0.8,
       blending: THREE.AdditiveBlending,
       depthWrite: false
     })
@@ -199,8 +199,8 @@ export class VisualEffects {
     flash.position.y += 0.5
     this.scene.add(flash)
     
-    // Add bright core light
-    const light = new THREE.PointLight(color, 8, 15)
+    // Core light - reduced intensity
+    const light = new THREE.PointLight(color, 3, 10)
     light.position.copy(position)
     light.position.y += 0.5
     this.scene.add(light)
@@ -264,7 +264,7 @@ export class VisualEffects {
         flashMat.opacity = Math.max(0, 1.0 - progress * 3)
         
         // Light fades
-        light.intensity = 8 * (1 - progress * progress)
+        light.intensity = 3 * (1 - progress * progress)
         
         return false
       }
@@ -748,39 +748,127 @@ export class VisualEffects {
   }
 
   // =========================================================================
-  // FIRE RING
+  // FIRE RING - Enhanced with animated flames
   // =========================================================================
   createFireRing(tower, radius = 5) {
     this.removeFireRing(tower)
     
-    const geometry = new THREE.RingGeometry(radius - 0.4, radius, 32)
-    const material = new THREE.MeshBasicMaterial({
-      color: 0xff4400,
+    const group = new THREE.Group()
+    group.position.copy(tower.position)
+    group.position.y = 0.1
+    
+    // Inner glow ring
+    const innerRingGeom = new THREE.RingGeometry(radius * 0.7, radius * 0.8, 32)
+    const innerRingMat = new THREE.MeshBasicMaterial({
+      color: 0xff6600,
       transparent: true,
-      opacity: 0.4,
+      opacity: 0.3,
       side: THREE.DoubleSide
     })
+    const innerRing = new THREE.Mesh(innerRingGeom, innerRingMat)
+    innerRing.rotation.x = -Math.PI / 2
+    group.add(innerRing)
     
-    const ring = new THREE.Mesh(geometry, material)
-    ring.position.copy(tower.position)
-    ring.position.y = 0.15
-    ring.rotation.x = -Math.PI / 2
+    // Outer fire ring
+    const outerRingGeom = new THREE.RingGeometry(radius - 0.3, radius, 32)
+    const outerRingMat = new THREE.MeshBasicMaterial({
+      color: 0xff4400,
+      transparent: true,
+      opacity: 0.5,
+      side: THREE.DoubleSide
+    })
+    const outerRing = new THREE.Mesh(outerRingGeom, outerRingMat)
+    outerRing.rotation.x = -Math.PI / 2
+    group.add(outerRing)
     
-    this.scene.add(ring)
+    // Animated flame pillars around the ring
+    const flameCount = 16
+    const flames = []
+    for (let i = 0; i < flameCount; i++) {
+      const angle = (i / flameCount) * Math.PI * 2
+      const flameGeom = new THREE.ConeGeometry(0.25, 1.2, 6)
+      const flameMat = new THREE.MeshBasicMaterial({
+        color: i % 2 === 0 ? 0xff4400 : 0xff8800,
+        transparent: true,
+        opacity: 0.7
+      })
+      const flame = new THREE.Mesh(flameGeom, flameMat)
+      flame.position.set(
+        Math.cos(angle) * radius,
+        0.6,
+        Math.sin(angle) * radius
+      )
+      flame.userData.baseY = 0.6
+      flame.userData.angle = angle
+      flame.userData.phaseOffset = i * 0.4
+      flames.push(flame)
+      group.add(flame)
+    }
+    
+    // Embers/particles
+    const emberCount = 24
+    const emberGeom = new THREE.BufferGeometry()
+    const emberPositions = new Float32Array(emberCount * 3)
+    for (let i = 0; i < emberCount; i++) {
+      const angle = (i / emberCount) * Math.PI * 2
+      emberPositions[i * 3] = Math.cos(angle) * radius
+      emberPositions[i * 3 + 1] = 0.5 + Math.random() * 0.5
+      emberPositions[i * 3 + 2] = Math.sin(angle) * radius
+    }
+    emberGeom.setAttribute('position', new THREE.BufferAttribute(emberPositions, 3))
+    const emberMat = new THREE.PointsMaterial({
+      color: 0xffaa00,
+      size: 0.15,
+      transparent: true,
+      opacity: 0.8,
+      blending: THREE.AdditiveBlending
+    })
+    const embers = new THREE.Points(emberGeom, emberMat)
+    group.add(embers)
+    
+    this.scene.add(group)
     
     const fireData = {
-      mesh: ring,
+      group,
+      mesh: group,
       tower,
+      flames,
+      embers,
+      emberGeom,
+      innerRing,
+      outerRing,
       animTime: 0,
       update: (deltaTime) => {
         if (!tower.mesh) return false
         
         fireData.animTime += deltaTime
-        ring.rotation.z += deltaTime * 0.5
         
-        // Pulse effect
-        const pulse = 0.3 + Math.sin(fireData.animTime * 3) * 0.15
-        material.opacity = pulse
+        // Rotate rings in opposite directions
+        innerRing.rotation.z += deltaTime * 0.3
+        outerRing.rotation.z -= deltaTime * 0.5
+        
+        // Animate flames
+        flames.forEach((flame, i) => {
+          const phase = fireData.animTime * 4 + flame.userData.phaseOffset
+          flame.position.y = flame.userData.baseY + Math.sin(phase) * 0.3
+          flame.scale.y = 1 + Math.sin(phase * 1.5) * 0.3
+          flame.material.opacity = 0.5 + Math.sin(phase) * 0.2
+        })
+        
+        // Animate embers rising
+        const posArray = emberGeom.attributes.position.array
+        for (let i = 0; i < emberCount; i++) {
+          posArray[i * 3 + 1] += deltaTime * 1.5
+          if (posArray[i * 3 + 1] > 2) {
+            posArray[i * 3 + 1] = 0.3
+          }
+        }
+        emberGeom.attributes.position.needsUpdate = true
+        
+        // Pulse opacity
+        const pulse = 0.4 + Math.sin(fireData.animTime * 3) * 0.1
+        outerRingMat.opacity = pulse
+        innerRingMat.opacity = pulse * 0.6
         
         return true
       }
@@ -796,11 +884,149 @@ export class VisualEffects {
     const id = tower.id || tower
     const fire = this.fireRings.get(id)
     if (fire) {
-      this.scene.remove(fire.mesh)
-      fire.mesh.geometry.dispose()
-      fire.mesh.material.dispose()
+      this.scene.remove(fire.group || fire.mesh)
+      if (fire.group) {
+        fire.group.traverse(child => {
+          if (child.geometry) child.geometry.dispose()
+          if (child.material) child.material.dispose()
+        })
+      } else {
+        fire.mesh.geometry?.dispose()
+        fire.mesh.material?.dispose()
+      }
       this.fireRings.delete(id)
     }
+  }
+
+  // =========================================================================
+  // FREEZE EFFECT - Visually freezes enemy with ice crystals
+  // =========================================================================
+  createFreezeEffect(enemy, duration = 3000) {
+    if (!enemy || !enemy.mesh) return null
+    
+    const group = new THREE.Group()
+    
+    // Ice encasement - semi-transparent ice shell around enemy
+    const iceShellGeom = new THREE.IcosahedronGeometry(enemy.scale * 1.2, 1)
+    const iceShellMat = new THREE.MeshStandardMaterial({
+      color: 0x88ddff,
+      transparent: true,
+      opacity: 0.4,
+      metalness: 0.9,
+      roughness: 0.1,
+      emissive: 0x2288cc,
+      emissiveIntensity: 0.3
+    })
+    const iceShell = new THREE.Mesh(iceShellGeom, iceShellMat)
+    group.add(iceShell)
+    
+    // Ice crystals protruding from the enemy
+    const crystalCount = 8
+    for (let i = 0; i < crystalCount; i++) {
+      const crystalGeom = new THREE.ConeGeometry(0.1 + Math.random() * 0.1, 0.5 + Math.random() * 0.5, 6)
+      const crystalMat = new THREE.MeshStandardMaterial({
+        color: 0xaaeeff,
+        transparent: true,
+        opacity: 0.8,
+        metalness: 0.95,
+        roughness: 0.05,
+        emissive: 0x4488ff,
+        emissiveIntensity: 0.5
+      })
+      const crystal = new THREE.Mesh(crystalGeom, crystalMat)
+      
+      const angle = (i / crystalCount) * Math.PI * 2
+      const tilt = Math.PI / 4 + Math.random() * Math.PI / 4
+      crystal.position.set(
+        Math.cos(angle) * enemy.scale * 0.8,
+        Math.sin(tilt) * enemy.scale * 0.5,
+        Math.sin(angle) * enemy.scale * 0.8
+      )
+      crystal.rotation.set(
+        Math.random() * Math.PI,
+        Math.random() * Math.PI,
+        Math.random() * Math.PI
+      )
+      group.add(crystal)
+    }
+    
+    // Frost particles swirling around
+    const frostParticleCount = 20
+    const frostGeom = new THREE.BufferGeometry()
+    const frostPositions = new Float32Array(frostParticleCount * 3)
+    for (let i = 0; i < frostParticleCount; i++) {
+      const angle = (i / frostParticleCount) * Math.PI * 2
+      const radius = enemy.scale * 1.0
+      frostPositions[i * 3] = Math.cos(angle) * radius
+      frostPositions[i * 3 + 1] = Math.random() * enemy.scale
+      frostPositions[i * 3 + 2] = Math.sin(angle) * radius
+    }
+    frostGeom.setAttribute('position', new THREE.BufferAttribute(frostPositions, 3))
+    const frostMat = new THREE.PointsMaterial({
+      color: 0xccffff,
+      size: 0.1,
+      transparent: true,
+      opacity: 0.7,
+      blending: THREE.AdditiveBlending
+    })
+    const frostParticles = new THREE.Points(frostGeom, frostMat)
+    group.add(frostParticles)
+    
+    this.scene.add(group)
+    
+    const startTime = Date.now()
+    
+    const effect = {
+      type: 'freeze_effect',
+      group,
+      enemy,
+      frostGeom,
+      iceShell,
+      startTime,
+      duration,
+      animTime: 0,
+      update: (deltaTime) => {
+        if (!enemy.mesh || enemy.isDead || (Date.now() - startTime >= duration)) {
+          this.scene.remove(group)
+          group.traverse(child => {
+            if (child.geometry) child.geometry.dispose()
+            if (child.material) child.material.dispose()
+          })
+          return true
+        }
+        
+        effect.animTime += deltaTime
+        
+        // Follow enemy
+        group.position.copy(enemy.mesh.position)
+        
+        // Rotate ice shell slowly
+        iceShell.rotation.y += deltaTime * 0.5
+        iceShell.rotation.x += deltaTime * 0.2
+        
+        // Swirl frost particles
+        const posArray = frostGeom.attributes.position.array
+        for (let i = 0; i < frostParticleCount; i++) {
+          const baseAngle = (i / frostParticleCount) * Math.PI * 2
+          const currentAngle = baseAngle + effect.animTime * 2
+          const radius = enemy.scale * (0.8 + Math.sin(effect.animTime * 3 + i) * 0.2)
+          posArray[i * 3] = Math.cos(currentAngle) * radius
+          posArray[i * 3 + 1] = (posArray[i * 3 + 1] + deltaTime * 0.5) % (enemy.scale * 1.5)
+          posArray[i * 3 + 2] = Math.sin(currentAngle) * radius
+        }
+        frostGeom.attributes.position.needsUpdate = true
+        
+        // Pulse ice shell
+        const pulse = 1 + Math.sin(effect.animTime * 4) * 0.05
+        iceShell.scale.setScalar(pulse)
+        iceShellMat.opacity = 0.3 + Math.sin(effect.animTime * 3) * 0.1
+        
+        return false
+      }
+    }
+    
+    this.activeEffects.push(effect)
+    return effect
   }
 
   // =========================================================================

@@ -556,6 +556,11 @@ export class EnhancedGame {
         glowColor: tower.getTowerColor()
       })
       
+      // Special effects for fire tower - create fire ring
+      if (structureConfig.towerType === 'fire' && tower.config?.hasFireRing) {
+        this.visualEffects.createFireRing(tower, tower.range || 18)
+      }
+      
       // Deduct gold
       this.gold -= cost
       if (this.callbacks.onGoldChange) {

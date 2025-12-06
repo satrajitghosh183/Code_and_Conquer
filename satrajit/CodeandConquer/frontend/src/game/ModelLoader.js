@@ -818,99 +818,99 @@ const PROCEDURAL_GENERATORS = {
 }
 
 // ============================================================
-// MODEL SCALES - Perfectly balanced for gameplay
+// MODEL SCALES - Reduced for better gameplay visibility
 // ============================================================
 const MODEL_SCALES = {
-  // Towers - optimized for visibility and gameplay
-  'medieval_towers': 0.18,
-  'heavy_cannon': 0.18,
-  'watch_tower': 0.22,
-  'kickelhahn': 0.18,
-  'cannon': 0.18,
-  'aa_turret': 0.22,
-  'combat_turret': 0.20,
-  'gun_tower': 0.22,
-  'hoth_turret': 0.18,
-  'gatling_tower': 0.22,
-  'missile_tower': 0.22,
-  'laser_tower': 0.18,
-  'sniper_tower': 0.20,
-  'tesla_tower': 0.28,
-  'frost_tower': 0.22,
-  'fire_tower': 0.22,
+  // Towers - REDUCED scales for better placement
+  'medieval_towers': 0.08,
+  'heavy_cannon': 0.08,
+  'watch_tower': 0.10,
+  'kickelhahn': 0.08,
+  'cannon': 0.08,
+  'aa_turret': 0.10,
+  'combat_turret': 0.09,
+  'gun_tower': 0.10,
+  'hoth_turret': 0.08,
+  'gatling_tower': 0.10,
+  'missile_tower': 0.10,
+  'laser_tower': 0.08,
+  'sniper_tower': 0.09,
+  'tesla_tower': 0.12,
+  'frost_tower': 0.10,
+  'fire_tower': 0.10,
   
-  // Walls - consistent and defensive
-  'castle_walls': 0.28,
-  'modular_wall': 0.28,
-  'sci_fi_wall': 0.28,
-  'wall': 0.28,
+  // Walls - reduced
+  'castle_walls': 0.15,
+  'modular_wall': 0.15,
+  'sci_fi_wall': 0.15,
+  'wall': 0.15,
   
-  // Units - perfectly sized for ground combat
-  'troop': 1.2,
+  // Units - sized for ground combat
+  'troop': 0.8,
   
-  // Enemies - imposing but not overwhelming
-  'spaceship': 0.35,
-  'spaceship_clst': 0.30,
-  'enemy_ship': 0.35,
-  'boss_ship': 0.50,
+  // Enemies - reduced for better visibility
+  'spaceship': 0.18,
+  'spaceship_clst': 0.15,
+  'enemy_ship': 0.18,
+  'boss_ship': 0.30,
   
   // Heroes - larger than regular units
-  'snake': 1.3,
-  'dragon': 1.4,
+  'snake': 1.0,
+  'dragon': 1.2,
   
-  // Structures
-  'barracks': 0.22,
-  'future_architectural': 0.22,
-  'mortar': 1.2,
-  'astro_shedder': 0.35,
-  'fighter_jet': 0.30
+  // Structures - reduced
+  'barracks': 0.12,
+  'future_architectural': 0.12,
+  'mortar': 0.8,
+  'astro_shedder': 0.18,
+  'fighter_jet': 0.15
 }
 
-// Target sizes for auto-scaling (in world units)
+// Target sizes for auto-scaling (in world units) - REDUCED
 const TARGET_SIZES = {
-  // Towers should be prominent but not too large
-  'medieval_towers': 4.5,
-  'heavy_cannon': 5.0,
-  'watch_tower': 4.0,
-  'kickelhahn': 4.0,
-  'cannon': 4.5,
-  'aa_turret': 4.2,
-  'combat_turret': 4.5,
-  'gun_tower': 4.5,
-  'hoth_turret': 4.8,
-  'gatling_tower': 4.5,
-  'missile_tower': 4.2,
-  'laser_tower': 4.8,
-  'sniper_tower': 4.5,
-  'tesla_tower': 4.0,
-  'frost_tower': 4.5,
-  'fire_tower': 4.2,
+  // Towers - reduced for better gameplay
+  'medieval_towers': 2.5,
+  'heavy_cannon': 2.8,
+  'watch_tower': 2.2,
+  'kickelhahn': 2.2,
+  'cannon': 2.5,
+  'aa_turret': 2.5,
+  'combat_turret': 2.5,
+  'gun_tower': 2.5,
+  'hoth_turret': 2.8,
+  'gatling_tower': 2.5,
+  'missile_tower': 2.5,
+  'laser_tower': 2.8,
+  'sniper_tower': 2.5,
+  'tesla_tower': 2.2,
+  'frost_tower': 2.5,
+  'fire_tower': 2.5,
   
-  // Walls should be defensive height
-  'castle_walls': 2.0,
-  'modular_wall': 2.0,
-  'sci_fi_wall': 2.0,
-  'wall': 2.0,
+  // Walls - reduced
+  'castle_walls': 1.2,
+  'modular_wall': 1.2,
+  'sci_fi_wall': 1.2,
+  'wall': 1.2,
   
-  // Units  - soldier height
-  'troop': 1.8,
+  // Units - soldier height
+  'troop': 1.2,
   
-  // Enemies - intimidating but fair
-  'spaceship': 2.5,
-  'spaceship_clst': 2.2,
-  'enemy_ship': 2.5,
-  'boss_ship': 4.0,
+  // Enemies - reduced for better visibility
+  'spaceship': 1.5,
+  'spaceship_clst': 1.3,
+  'enemy_ship': 1.5,
+  'boss_ship': 2.5,
   
-  // Heroes - larger than life
-  'snake': 3.0,
-  'dragon': 3.8,
+  // Heroes - reduced
+  'snake': 2.0,
+  'dragon': 2.5,
   
-  // Structures
-  'barracks': 3.5,
-  'future_architectural': 3.5,
-  'mortar': 2.5,
-  'astro_shedder': 2.5,
-  'fighter_jet': 3.0
+  // Structures - reduced
+  'barracks': 2.0,
+  'future_architectural': 2.0,
+  'mortar': 1.5,
+  'astro_shedder': 1.5,
+  'fighter_jet': 1.8
 }
 
 // Load user scale preferences from localStorage

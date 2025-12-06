@@ -1,0 +1,34 @@
+[33mcommit 4d05def9a8a6ee58a3c26e3bc9f3f73ff2466e12[m
+Author: Satrajit Ghosh <satrajitghosh183@gmail.com>
+Date:   Fri Dec 5 14:38:01 2025 -0500
+
+    Major game engine overhaul - Professional studio-quality tower defense
+    
+    NEW FILES:
+    - EnemyManager.js: Sophisticated wave spawning with formations (line, V, swarm, pincer)
+    - GraphicsEngine.js: PBR rendering, 4 themes (hellfire/frost/nature/void), bloom, vignette shaders
+    - TowerCombatSystem.js: Advanced targeting AI (8 modes), 7 projectile types, chain lightning
+    
+    REWRITES:
+    - Enemy.js: 20+ enemy types with abilities (phasing, teleport, rage, shields, healing aura)
+    - EnemyTypes.js: 4-tier enemy system with unique behaviors and visual configs
+    - EnhancedGame.js: Integrated all new systems, professional base with animated crystal
+    - Game1v1.js: Full multiplayer with income system, wave sending, territory control
+    - Tower.js: Turret aiming, 3-level upgrades, targeting modes, range indicators
+    
+    FEATURES:
+    - Proper enemy spawning with wave templates (tutorial, boss, swarm, elite)
+    - Difficulty scaling: easy/normal/hard/nightmare presets
+    - Quality presets: low/medium/high/ultra graphics
+    - Enemy abilities: shields, splitting, healing, EMP, berserker rage
+    - Tower projectiles: homing missiles, instant lasers, chain tesla
+    - Post-processing: bloom, SMAA, custom damage vignette shader
+
+satrajit/CodeandConquer/frontend/src/game/Enemy.js
+satrajit/CodeandConquer/frontend/src/game/EnemyManager.js
+satrajit/CodeandConquer/frontend/src/game/EnemyTypes.js
+satrajit/CodeandConquer/frontend/src/game/EnhancedGame.js
+satrajit/CodeandConquer/frontend/src/game/Game1v1.js
+satrajit/CodeandConquer/frontend/src/game/GraphicsEngine.js
+satrajit/CodeandConquer/frontend/src/game/TowerCombatSystem.js
+satrajit/CodeandConquer/frontend/src/game/structures/Tower.js

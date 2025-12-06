@@ -589,12 +589,15 @@ export class TowerCombatSystem {
       this.applySplashDamage(proj.position, proj.splashRadius, proj.damage * 0.5, proj.tower)
     }
     
-    // Slow effect
+    // Slow effect (frost)
     if (proj.slowAmount > 0) {
       target.applySlow(proj.slowAmount, proj.slowDuration)
       
-      // Frost visual
+      // Freeze visual effect - ice crystals around enemy
       if (this.game.visualEffects) {
+        this.game.visualEffects.createFreezeEffect(target, proj.slowDuration || 2000)
+        
+        // Also create frost ground effect
         this.game.visualEffects.createFrostEffect(target.position, 3, {
           color: 0x88ddff,
           duration: 500

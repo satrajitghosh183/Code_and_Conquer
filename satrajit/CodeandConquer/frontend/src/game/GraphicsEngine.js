@@ -233,7 +233,7 @@ export class GraphicsEngine {
       emissiveIntensity: 0.1
     })
     
-    for (let i = 0; i < 25; i++) {
+    for (let i = 0; i < 12; i++) {
       const asteroid = new THREE.Mesh(asteroidGeom.clone(), asteroidMat.clone())
       const angle = Math.random() * Math.PI * 2
       const distance = 100 + Math.random() * 150
@@ -284,9 +284,9 @@ export class GraphicsEngine {
     this.renderer.setSize(this.container.clientWidth, this.container.clientHeight)
     this.renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
     
-    // Enhanced tone mapping for sci-fi look
+    // Enhanced tone mapping for sci-fi look - reduced exposure
     this.renderer.toneMapping = THREE.ACESFilmicToneMapping
-    this.renderer.toneMappingExposure = 1.3
+    this.renderer.toneMappingExposure = 0.9
     this.renderer.outputColorSpace = THREE.SRGBColorSpace
     
     // Enable shadows if quality allows
@@ -305,12 +305,12 @@ export class GraphicsEngine {
     const renderPass = new RenderPass(this.scene, this.camera)
     this.composer.addPass(renderPass)
     
-    // Bloom for glowing effects - INTENSE GLOW
+    // Bloom for glowing effects - REDUCED for less brightness
     const bloomPass = new UnrealBloomPass(
       new THREE.Vector2(this.container.clientWidth, this.container.clientHeight),
-      2.0, // strength - stronger bloom
-      0.6, // radius - wider glow spread
-      0.3  // threshold - lower threshold = more things glow
+      0.8, // strength - reduced from 2.0
+      0.4, // radius - reduced from 0.6
+      0.5  // threshold - raised from 0.3 = fewer things glow
     )
     this.composer.addPass(bloomPass)
     this.bloomPass = bloomPass
@@ -330,12 +330,12 @@ export class GraphicsEngine {
   }
 
   createLights() {
-    // Ambient - cool blue tint
-    this.lights.ambient = new THREE.AmbientLight(0x334466, 0.5)
+    // Ambient - cool blue tint - reduced intensity
+    this.lights.ambient = new THREE.AmbientLight(0x223344, 0.35)
     this.scene.add(this.lights.ambient)
     
-    // Main sun - warm white with shadows
-    this.lights.sun = new THREE.DirectionalLight(0xffeedd, 1.0)
+    // Main sun - warm white with shadows - reduced intensity
+    this.lights.sun = new THREE.DirectionalLight(0xffeedd, 0.7)
     this.lights.sun.position.set(50, 80, 30)
     this.lights.sun.castShadow = this.options.enableShadows
     if (this.lights.sun.castShadow) {
@@ -352,8 +352,8 @@ export class GraphicsEngine {
     }
     this.scene.add(this.lights.sun)
     
-    // Fill light - cool with subtle shadows
-    this.lights.fill = new THREE.DirectionalLight(0x4466aa, 0.4)
+    // Fill light - cool with subtle shadows - reduced
+    this.lights.fill = new THREE.DirectionalLight(0x334488, 0.25)
     this.lights.fill.position.set(-30, 40, -20)
     this.lights.fill.castShadow = this.options.enableShadows
     if (this.lights.fill.castShadow) {
@@ -366,38 +366,38 @@ export class GraphicsEngine {
     }
     this.scene.add(this.lights.fill)
     
-    // Base glow - pulsing red/orange
-    this.lights.baseGlow = new THREE.PointLight(0xff4400, 6, 70)
+    // Base glow - pulsing red/orange - reduced
+    this.lights.baseGlow = new THREE.PointLight(0xff4400, 2.5, 50)
     this.lights.baseGlow.position.set(0, 15, -25)
     this.lights.baseGlow.castShadow = false // Performance optimization
     this.scene.add(this.lights.baseGlow)
     
-    // Secondary base glow
-    this.lights.baseGlow2 = new THREE.PointLight(0xff2200, 3, 45)
+    // Secondary base glow - reduced
+    this.lights.baseGlow2 = new THREE.PointLight(0xff2200, 1.5, 35)
     this.lights.baseGlow2.position.set(0, 5, -25)
     this.scene.add(this.lights.baseGlow2)
     
-    // Spawn portal glow - green
-    this.lights.spawnGlow = new THREE.PointLight(0x00ff44, 5, 50)
+    // Spawn portal glow - reduced
+    this.lights.spawnGlow = new THREE.PointLight(0x00ff44, 2, 40)
     this.lights.spawnGlow.position.set(0, 8, 45)
     this.scene.add(this.lights.spawnGlow)
     
-    // Path accent lights
+    // Path accent lights - reduced
     const pathLightPositions = [
-      { x: 18, z: 25, color: 0x4488ff, intensity: 2.5 },
-      { x: -12, z: 0, color: 0x4488ff, intensity: 2.5 },
-      { x: 8, z: -10, color: 0xff4444, intensity: 2.5 }
+      { x: 18, z: 25, color: 0x4488ff, intensity: 1.2 },
+      { x: -12, z: 0, color: 0x4488ff, intensity: 1.2 },
+      { x: 8, z: -10, color: 0xff4444, intensity: 1.2 }
     ]
     
     pathLightPositions.forEach((pos, i) => {
-      const light = new THREE.PointLight(pos.color, pos.intensity, 30)
+      const light = new THREE.PointLight(pos.color, pos.intensity, 25)
       light.position.set(pos.x, 4, pos.z)
       this.scene.add(light)
       this.lights[`path${i}`] = light
     })
     
-    // Add hemisphere light for better ambient lighting
-    this.lights.hemisphere = new THREE.HemisphereLight(0x4466ff, 0x221133, 0.3)
+    // Add hemisphere light for better ambient lighting - reduced
+    this.lights.hemisphere = new THREE.HemisphereLight(0x334466, 0x110822, 0.2)
     this.scene.add(this.lights.hemisphere)
   }
 
@@ -790,19 +790,19 @@ export class GraphicsEngine {
       })
     }
     
-    // Dramatic portal light
-    const portalLight = new THREE.PointLight(0xff0066, 8, 80)
+    // Dramatic portal light - reduced
+    const portalLight = new THREE.PointLight(0xff0066, 3, 60)
     portalLight.position.y = 8
     portalGroup.add(portalLight)
     this.lights.portalGlow = portalLight
     
-    // Secondary accent light
-    const accentLight = new THREE.PointLight(0x8800ff, 4, 50)
+    // Secondary accent light - reduced
+    const accentLight = new THREE.PointLight(0x8800ff, 1.5, 40)
     accentLight.position.y = 12
     portalGroup.add(accentLight)
     
-    // Add particle ring around portal
-    const particleCount = 100
+    // Add particle ring around portal - reduced count
+    const particleCount = 50
     const particleGeom = new THREE.BufferGeometry()
     const positions = new Float32Array(particleCount * 3)
     
@@ -833,7 +833,8 @@ export class GraphicsEngine {
   }
   
   createAmbientParticles() {
-    const particleCount = 200
+    // Reduced particle count for performance
+    const particleCount = 80
     const geometry = new THREE.BufferGeometry()
     const positions = new Float32Array(particleCount * 3)
     const colors = new Float32Array(particleCount * 3)
@@ -853,10 +854,10 @@ export class GraphicsEngine {
     geometry.setAttribute('color', new THREE.BufferAttribute(colors, 3))
     
     const material = new THREE.PointsMaterial({
-      size: 0.5,
+      size: 0.35,
       vertexColors: true,
       transparent: true,
-      opacity: 0.6,
+      opacity: 0.4,
       blending: THREE.AdditiveBlending
     })
     
@@ -923,23 +924,23 @@ export class GraphicsEngine {
     
     // Animate skybox rotation for subtle motion
     if (this.skybox) {
-      this.skybox.rotation.y += deltaTime * 0.005
+      this.skybox.rotation.y += deltaTime * 0.003
     }
     
-    // Animate lights with variation
+    // Animate lights with variation - reduced intensities
     if (this.lights.baseGlow) {
-      this.lights.baseGlow.intensity = 6 + Math.sin(this.animationTime * 2) * 2
+      this.lights.baseGlow.intensity = 2.5 + Math.sin(this.animationTime * 2) * 0.5
     }
     if (this.lights.baseGlow2) {
-      this.lights.baseGlow2.intensity = 3 + Math.sin(this.animationTime * 3) * 1.2
+      this.lights.baseGlow2.intensity = 1.5 + Math.sin(this.animationTime * 3) * 0.3
     }
     if (this.lights.spawnGlow) {
-      this.lights.spawnGlow.intensity = 5 + Math.sin(this.animationTime * 2.5) * 1.5
+      this.lights.spawnGlow.intensity = 2 + Math.sin(this.animationTime * 2.5) * 0.5
     }
     
-    // Animate portal effects
+    // Animate portal effects - reduced
     if (this.lights.portalGlow) {
-      this.lights.portalGlow.intensity = 8 + Math.sin(this.animationTime * 3) * 3
+      this.lights.portalGlow.intensity = 3 + Math.sin(this.animationTime * 3) * 0.8
     }
     
     // Rotate portal particles
@@ -947,11 +948,11 @@ export class GraphicsEngine {
       this.portalParticles.rotation.y += deltaTime * 0.3
     }
     
-    // Pulse path lights
+    // Pulse path lights - reduced
     Object.keys(this.lights).forEach(key => {
       if (key.startsWith('path')) {
         const light = this.lights[key]
-        light.intensity = 2.5 + Math.sin(this.animationTime * 1.5 + parseInt(key.replace('path', ''))) * 0.8
+        light.intensity = 1.2 + Math.sin(this.animationTime * 1.5 + parseInt(key.replace('path', ''))) * 0.3
       }
     })
     
