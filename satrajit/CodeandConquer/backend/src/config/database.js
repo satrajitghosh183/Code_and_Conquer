@@ -59,8 +59,9 @@ class Database {
         
         // Map problems and load test cases from local files or Supabase test_cases table
         const mappedProblems = await Promise.all((data || []).map(async (p) => {
-          // Get tags for this problem from the tags map
-          const tagsFromJunction = tagsMap.get(p.id) || [];
+          // Get tags for this problem from the tags map (normalize UUID to lowercase for matching)
+          const normalizedId = String(p.id).toLowerCase();
+          const tagsFromJunction = tagsMap.get(normalizedId) || [];
           const mapped = this.mapSupabaseProblem(p, tagsFromJunction);
           let hasTestCases = mapped.testCases && mapped.testCases.length > 0;
           
@@ -75,6 +76,7 @@ class Database {
               if (localProblem.hiddenTestCases && Array.isArray(localProblem.hiddenTestCases) && localProblem.hiddenTestCases.length > 0) {
                 mapped.hiddenTestCases = localProblem.hiddenTestCases;
               }
+              // DO NOT use local tags - tags only come from problem_tags table
             }
           } catch (error) {
             // Silently ignore errors when trying to load local file
@@ -101,7 +103,7 @@ class Database {
         return mappedProblems;
       } catch (error) {
         console.error('Error fetching problems from Supabase:', error);
-        // Fallback to local
+        // Fallback to local for test cases only, but tags must come from Supabase
         return this.getAllProblemsLocal();
       }
     }
@@ -157,13 +159,16 @@ class Database {
       
       console.log(`Fetched ${(data || []).length} tags from problem_tags table`);
       
-      // Group tags by problem_id
+      // Group tags by problem_id (normalize UUIDs to lowercase for consistent matching)
       for (const row of (data || [])) {
-        if (!tagsMap.has(row.problem_id)) {
-          tagsMap.set(row.problem_id, []);
+        if (!row.problem_id) continue;
+        // Normalize UUID to lowercase for consistent matching
+        const normalizedId = String(row.problem_id).toLowerCase();
+        if (!tagsMap.has(normalizedId)) {
+          tagsMap.set(normalizedId, []);
         }
         if (row.tag) {
-          tagsMap.get(row.problem_id).push(row.tag);
+          tagsMap.get(normalizedId).push(row.tag);
         }
       }
       
@@ -209,10 +214,6 @@ class Database {
           .single();
 
         if (error) {
-          if (error.code === 'PGRST116') {
-            // Problem not found in Supabase, try local fallback
-            return this.getProblemByIdLocal(id);
-          }
           throw error;
         }
         
@@ -226,20 +227,21 @@ class Database {
         
         let hasTestCases = problem.testCases && problem.testCases.length > 0;
         
-        // 1. Try local files first
-        const localProblem = await this.getProblemByIdLocal(id);
-        if (localProblem) {
-          if (localProblem.testCases && Array.isArray(localProblem.testCases) && localProblem.testCases.length > 0) {
-            problem.testCases = localProblem.testCases;
-            hasTestCases = true;
+        // 1. Try local files first for test cases
+        try {
+          const localProblem = await this.getProblemByIdLocal(id);
+          if (localProblem) {
+            if (localProblem.testCases && Array.isArray(localProblem.testCases) && localProblem.testCases.length > 0) {
+              problem.testCases = localProblem.testCases;
+              hasTestCases = true;
+            }
+            if (localProblem.hiddenTestCases && Array.isArray(localProblem.hiddenTestCases) && localProblem.hiddenTestCases.length > 0) {
+              problem.hiddenTestCases = localProblem.hiddenTestCases;
+            }
+            // DO NOT use local tags - tags only come from problem_tags table
           }
-          if (localProblem.hiddenTestCases && Array.isArray(localProblem.hiddenTestCases) && localProblem.hiddenTestCases.length > 0) {
-            problem.hiddenTestCases = localProblem.hiddenTestCases;
-          }
-          // Only use local tags if we don't have tags from the junction table
-          if ((!problem.tags || problem.tags.length === 0) && localProblem.tags && localProblem.tags.length > 0) {
-            problem.tags = localProblem.tags;
-          }
+        } catch (error) {
+          // Silently ignore errors when trying to load local file
         }
         
         // 2. If still no test cases, try Supabase test_cases table
@@ -256,8 +258,11 @@ class Database {
         return problem;
       } catch (error) {
         console.error('Error fetching problem from Supabase:', error);
-        // Fallback to local
-        return this.getProblemByIdLocal(id);
+        // Fallback to local for test cases only, but tags must come from Supabase
+        if (error.code === 'PGRST116') {
+          return this.getProblemByIdLocal(id);
+        }
+        throw error;
       }
     }
 
