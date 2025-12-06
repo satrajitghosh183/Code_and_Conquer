@@ -64,8 +64,12 @@ export default defineConfig(({ mode }) => {
             // Supabase
             'supabase': ['@supabase/supabase-js']
           },
-          // Asset naming
+          // Asset naming (exclude favicon files - they should stay in root)
           assetFileNames: (assetInfo) => {
+            // Keep favicon files in root, don't hash them
+            if (/^favicon\./i.test(assetInfo.name) || /^icon\./i.test(assetInfo.name)) {
+              return '[name][extname]'
+            }
             const info = assetInfo.name.split('.')
             const ext = info[info.length - 1]
             if (/png|jpe?g|svg|gif|tiff|bmp|ico|webp/i.test(ext)) {
