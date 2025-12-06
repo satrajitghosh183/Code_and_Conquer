@@ -5,6 +5,7 @@ import { CheckCircle, XCircle, Clock, Database, Zap, AlertCircle, Lightbulb } fr
 import { getProblem, submitCode, runCode, getAvailableLanguages } from '../services/api'
 import { useAuth } from '../contexts/AuthContext'
 import { useGame } from '../contexts/GameContext'
+import { useAdBreak } from '../contexts/AdBreakContext'
 import { Icon } from '../components/Icons'
 import { formatMarkdown } from '../utils/markdown'
 import './ProblemDetailPage.css'
@@ -28,6 +29,7 @@ export default function ProblemDetailPage() {
   const navigate = useNavigate()
   const { user } = useAuth()
   const { addRewards } = useGame()
+  const { recordProblemSolved, shouldRedirectToLearning, learningModuleTag, clearLearningRedirect } = useAdBreak()
   const [problem, setProblem] = useState(null)
   const [loading, setLoading] = useState(true)
   const [language, setLanguage] = useState('javascript')
@@ -175,6 +177,23 @@ export default function ProblemDetailPage() {
       // Add rewards if accepted
       if (response.data.status === 'accepted' && response.data.rewards) {
         await addRewards(response.data.rewards)
+        
+        // Record problem solved and check for learning module redirect or ad break
+        const problemTags = problem?.tags || []
+        const result = recordProblemSolved(problemTags)
+        
+        // If learning module redirect is triggered, navigate after a short delay
+        if (result.shouldShowLearning) {
+          setTimeout(() => {
+            navigate('/learn', { 
+              state: { 
+                suggestedCategory: result.moduleCategory,
+                fromProblem: true 
+              } 
+            })
+          }, 2000) // Give user time to see their result first
+        }
+        // Note: Ad break is handled by the AdBreakContext automatically
       }
     } catch (error) {
       console.error('Submission error:', error)

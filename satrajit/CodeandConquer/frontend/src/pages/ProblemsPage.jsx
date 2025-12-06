@@ -170,15 +170,11 @@ export default function ProblemsPage() {
                   </div>
                   
                   <div className="col-tags">
-                    {problem.tags && problem.tags.length > 0 ? (
-                      problem.tags.slice(0, 2).map((tag, idx) => (
-                        <span key={idx} className="topic-tag">
-                          {typeof tag === 'string' ? tag : tag?.name || tag}
-                        </span>
-                      ))
-                    ) : (
-                      <span className="topic-tag empty">—</span>
-                    )}
+                    <span className="topic-tag">
+                      {problem.tags && problem.tags.length > 0
+                        ? (typeof problem.tags[0] === 'string' ? problem.tags[0] : problem.tags[0]?.name || 'Miscellaneous')
+                        : 'Miscellaneous'}
+                    </span>
                   </div>
                 </Link>
               )

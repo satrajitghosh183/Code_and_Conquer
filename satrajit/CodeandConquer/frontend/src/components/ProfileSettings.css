@@ -190,16 +190,18 @@
 }
 
 .save-btn {
-  padding: 15px;
+  padding: 18px 30px;
   background: #ff0000;
   color: #000000;
   border: none;
   border-radius: 10px;
-  font-size: 16px;
+  font-size: 17px;
   font-weight: 600;
   cursor: pointer;
   transition: all 0.2s;
   font-family: -apple-system, BlinkMacSystemFont, 'Inter', 'SF Pro Display', sans-serif;
+  white-space: nowrap;
+  width: 100%;
 }
 
 .save-btn:hover {

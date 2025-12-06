@@ -1,8 +1,10 @@
 import { useState, useEffect, useRef } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { supabase } from '../config/supabaseClient';
 import './LearningModule.css';
 
 export default function LearningModule({ moduleId, onComplete, onBack }) {
+  const navigate = useNavigate();
   const [module, setModule] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -253,10 +255,30 @@ export default function LearningModule({ moduleId, onComplete, onBack }) {
     return `${mins}:${secs.toString().padStart(2, '0')}`;
   };
 
+  const [isCompleting, setIsCompleting] = useState(false);
+  const [showSuccessMessage, setShowSuccessMessage] = useState(false);
+
   const handleComplete = async () => {
+    setIsCompleting(true);
+    
     if (onComplete) {
       await onComplete(moduleId);
     }
+    
+    // Show success message
+    setShowSuccessMessage(true);
+    
+    // Redirect to problems page after a short delay
+    setTimeout(() => {
+      // Navigate to problems page, optionally filtered by category
+      const category = module?.category?.toLowerCase().replace(/\s+/g, '-');
+      navigate('/problems', { 
+        state: { 
+          fromLearning: true,
+          suggestedCategory: category
+        }
+      });
+    }, 1500);
   };
 
   if (loading) {
@@ -444,12 +466,30 @@ export default function LearningModule({ moduleId, onComplete, onBack }) {
 
       {/* Complete Button */}
       <div className="module-footer">
-        <button 
-          onClick={handleComplete}
-          className="complete-button"
-        >
-          Mark as Complete ✓
-        </button>
+        {showSuccessMessage ? (
+          <div className="success-message">
+            <span className="success-icon">🎉</span>
+            <div className="success-text">
+              <strong>Module Completed!</strong>
+              <p>Redirecting to practice problems...</p>
+            </div>
+          </div>
+        ) : (
+          <button 
+            onClick={handleComplete}
+            className="complete-button"
+            disabled={isCompleting}
+          >
+            {isCompleting ? (
+              <>
+                <span className="button-spinner"></span>
+                Completing...
+              </>
+            ) : (
+              <>Continue to Practice →</>
+            )}
+          </button>
+        )}
       </div>
     </div>
   );

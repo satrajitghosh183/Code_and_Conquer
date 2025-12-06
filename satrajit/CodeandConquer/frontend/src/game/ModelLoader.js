@@ -40,19 +40,10 @@ const AVAILABLE_MODELS = {
 // MODEL MAPPING - Map game keys to available models or 'PROCEDURAL'
 // ============================================================
 const MODEL_MAPPING = {
-  // TOWER MODELS - Updated mappings
-  'gatling_tower': 'gun_tower',       // Gatling → gun_tower.glb
-  'missile_tower': 'aa_turret',       // Missile → aa_turret.glb
-  'laser_tower': 'hoth_turret',       // Laser → hoth_defense_turret.glb
-  'sniper_tower': 'combat_turret',    // Sniper → combat_turret.glb
-  'tesla_tower': 'spaceship_clst',    // Tesla → spaceship_clst_500.glb
-  'frost_tower': 'gun_tower',         // Frost uses gun_tower variant
-  'fire_tower': 'aa_turret',          // Fire uses aa_turret variant
-  
-  // Legacy tower mappings for compatibility
-  'medieval_towers': 'hoth_turret',
-  'heavy_cannon': 'aa_turret',
-  'watch_tower': 'gun_tower',
+  // Towers - map to available turret models
+  'medieval_towers': 'gun_tower',
+  'heavy_cannon': 'combat_turret',
+  'watch_tower': 'aa_turret',
   'kickelhahn': 'hoth_turret',
   'cannon': 'combat_turret',
   'aa_turret': 'aa_turret',
@@ -60,34 +51,23 @@ const MODEL_MAPPING = {
   'gun_tower': 'gun_tower',
   'hoth_turret': 'hoth_turret',
   
-  // Walls & Structures  
-  'castle_walls': 'modular_wall',     // Wall → modular_wall.glb
+  // Walls & Structures
+  'castle_walls': 'modular_wall',
   'modular_wall': 'modular_wall',
   'sci_fi_wall': 'sci_fi_wall',
-  'wall': 'modular_wall',
-  
-  // Barracks / Spawner
-  'barracks': 'future_architectural', // Barracks → future_architectural.glb
   'future_architectural': 'future_architectural',
-  'mortar': 'future_architectural',
   
-  // Enemy Ships - All enemies use spaceship.glb as base
-  'enemy_ship': 'spaceship',
-  'spaceship': 'spaceship',
-  'boss_ship': 'spaceship',
-  'enemy_base': 'spaceship',
-  
-  // Tesla/special uses spaceship variant
-  'spaceship_clst': 'spaceship_clst',
-  
-  // Units - procedural
+  // Units - use spaceships or procedural
   'troop': 'PROCEDURAL_TROOP',
+  'spaceship': 'spaceship',
+  'spaceship_clst': 'spaceship_clst',
   
   // Heroes - procedural geometric representations
   'snake': 'PROCEDURAL_SNAKE',
   'dragon': 'PROCEDURAL_DRAGON',
   
   // Special
+  'mortar': 'PROCEDURAL_MORTAR',
   'astro_shedder': 'spaceship',
   'fighter_jet': 'spaceship_clst'
 }
@@ -100,173 +80,79 @@ const MODEL_MAPPING = {
 function createProceduralTroop() {
   const group = new THREE.Group()
   
-  // Body (capsule-like with better materials)
-  const bodyGeom = new THREE.CapsuleGeometry(0.35, 0.9, 8, 16)
+  // Body (capsule-like)
+  const bodyGeom = new THREE.CapsuleGeometry(0.3, 0.8, 4, 8)
   const bodyMat = new THREE.MeshStandardMaterial({ 
     color: 0x4a90d9,
-    metalness: 0.6,
-    roughness: 0.4,
-    emissive: 0x1a3050,
-    emissiveIntensity: 0.2
+    metalness: 0.3,
+    roughness: 0.7
   })
   const body = new THREE.Mesh(bodyGeom, bodyMat)
-  body.position.y = 0.8
+  body.position.y = 0.7
   body.castShadow = true
-  body.receiveShadow = true
   group.add(body)
   
-  // Armor plates (chest)
-  const chestGeom = new THREE.BoxGeometry(0.45, 0.4, 0.25)
-  const armorMat = new THREE.MeshStandardMaterial({ 
-    color: 0x2d5a87,
-    metalness: 0.9,
-    roughness: 0.2
-  })
-  const chest = new THREE.Mesh(chestGeom, armorMat)
-  chest.position.y = 0.95
-  chest.position.z = 0.05
-  chest.castShadow = true
-  group.add(chest)
-  
   // Head (sphere)
-  const headGeom = new THREE.SphereGeometry(0.28, 24, 24)
+  const headGeom = new THREE.SphereGeometry(0.25, 16, 16)
   const headMat = new THREE.MeshStandardMaterial({ 
     color: 0xffcc99,
     metalness: 0.1,
-    roughness: 0.9
+    roughness: 0.8
   })
   const head = new THREE.Mesh(headGeom, headMat)
-  head.position.y = 1.5
+  head.position.y = 1.4
   head.castShadow = true
   group.add(head)
   
-  // Helmet (half sphere with more detail)
-  const helmetGeom = new THREE.SphereGeometry(0.32, 24, 16, 0, Math.PI * 2, 0, Math.PI / 2)
+  // Helmet (half sphere)
+  const helmetGeom = new THREE.SphereGeometry(0.28, 16, 8, 0, Math.PI * 2, 0, Math.PI / 2)
   const helmetMat = new THREE.MeshStandardMaterial({ 
     color: 0x2d5a87,
-    metalness: 0.8,
-    roughness: 0.25,
-    emissive: 0x0a1020,
-    emissiveIntensity: 0.3
+    metalness: 0.6,
+    roughness: 0.3
   })
   const helmet = new THREE.Mesh(helmetGeom, helmetMat)
-  helmet.position.y = 1.52
+  helmet.position.y = 1.45
   helmet.castShadow = true
   group.add(helmet)
   
-  // Visor (glowing with more detail)
-  const visorGeom = new THREE.BoxGeometry(0.4, 0.1, 0.15)
+  // Visor (glowing)
+  const visorGeom = new THREE.BoxGeometry(0.35, 0.08, 0.1)
   const visorMat = new THREE.MeshStandardMaterial({ 
     color: 0x00ffff,
     emissive: 0x00ffff,
-    emissiveIntensity: 1.5,
-    metalness: 1.0,
-    roughness: 0.1
+    emissiveIntensity: 0.5
   })
   const visor = new THREE.Mesh(visorGeom, visorMat)
-  visor.position.set(0, 1.48, 0.22)
+  visor.position.set(0, 1.4, 0.2)
   group.add(visor)
   
-  // Visor glow effect
-  const visorGlowGeom = new THREE.BoxGeometry(0.45, 0.12, 0.05)
-  const visorGlowMat = new THREE.MeshBasicMaterial({
-    color: 0x00ffff,
-    transparent: true,
-    opacity: 0.5
-  })
-  const visorGlow = new THREE.Mesh(visorGlowGeom, visorGlowMat)
-  visorGlow.position.set(0, 1.48, 0.25)
-  group.add(visorGlow)
-  
-  // Shoulder pads
-  const shoulderGeom = new THREE.BoxGeometry(0.25, 0.2, 0.2)
-  const leftShoulder = new THREE.Mesh(shoulderGeom, armorMat)
-  leftShoulder.position.set(-0.35, 1.15, 0)
-  leftShoulder.castShadow = true
-  group.add(leftShoulder)
-  
-  const rightShoulder = new THREE.Mesh(shoulderGeom, armorMat)
-  rightShoulder.position.set(0.35, 1.15, 0)
-  rightShoulder.castShadow = true
-  group.add(rightShoulder)
-  
-  // Legs with better geometry
-  const legGeom = new THREE.CylinderGeometry(0.1, 0.12, 0.6, 12)
-  const legMat = new THREE.MeshStandardMaterial({ 
-    color: 0x333333,
-    metalness: 0.4,
-    roughness: 0.6
-  })
+  // Legs
+  const legGeom = new THREE.CylinderGeometry(0.08, 0.1, 0.5, 8)
+  const legMat = new THREE.MeshStandardMaterial({ color: 0x333333 })
   
   const leftLeg = new THREE.Mesh(legGeom, legMat)
-  leftLeg.position.set(-0.18, 0.3, 0)
+  leftLeg.position.set(-0.15, 0.25, 0)
   leftLeg.castShadow = true
   group.add(leftLeg)
   
   const rightLeg = new THREE.Mesh(legGeom, legMat)
-  rightLeg.position.set(0.18, 0.3, 0)
+  rightLeg.position.set(0.15, 0.25, 0)
   rightLeg.castShadow = true
   group.add(rightLeg)
   
-  // Boots
-  const bootGeom = new THREE.BoxGeometry(0.15, 0.1, 0.22)
-  const bootMat = new THREE.MeshStandardMaterial({ 
-    color: 0x222222,
-    metalness: 0.3,
-    roughness: 0.8
-  })
-  
-  const leftBoot = new THREE.Mesh(bootGeom, bootMat)
-  leftBoot.position.set(-0.18, 0.05, 0.03)
-  leftBoot.castShadow = true
-  group.add(leftBoot)
-  
-  const rightBoot = new THREE.Mesh(bootGeom, bootMat)
-  rightBoot.position.set(0.18, 0.05, 0.03)
-  rightBoot.castShadow = true
-  group.add(rightBoot)
-  
-  // Weapon (rifle) with more detail
-  const weaponBodyGeom = new THREE.BoxGeometry(0.1, 0.1, 0.7)
+  // Weapon (rifle)
+  const weaponGeom = new THREE.BoxGeometry(0.08, 0.08, 0.6)
   const weaponMat = new THREE.MeshStandardMaterial({ 
-    color: 0x1a1a1a,
-    metalness: 0.9,
-    roughness: 0.2
-  })
-  const weaponBody = new THREE.Mesh(weaponBodyGeom, weaponMat)
-  weaponBody.position.set(0.4, 0.85, 0.25)
-  weaponBody.rotation.x = -0.3
-  weaponBody.castShadow = true
-  group.add(weaponBody)
-  
-  // Weapon barrel
-  const barrelGeom = new THREE.CylinderGeometry(0.03, 0.03, 0.3, 8)
-  const barrel = new THREE.Mesh(barrelGeom, weaponMat)
-  barrel.position.set(0.4, 0.9, 0.55)
-  barrel.rotation.x = Math.PI / 2
-  barrel.castShadow = true
-  group.add(barrel)
-  
-  // Weapon scope (glowing)
-  const scopeGeom = new THREE.CylinderGeometry(0.04, 0.04, 0.15, 8)
-  const scopeMat = new THREE.MeshStandardMaterial({
-    color: 0xff4400,
-    emissive: 0xff2200,
-    emissiveIntensity: 0.5,
+    color: 0x222222,
     metalness: 0.8,
     roughness: 0.2
   })
-  const scope = new THREE.Mesh(scopeGeom, scopeMat)
-  scope.position.set(0.4, 1.0, 0.3)
-  scope.rotation.z = Math.PI / 2
-  group.add(scope)
-  
-  // Backpack
-  const backpackGeom = new THREE.BoxGeometry(0.3, 0.35, 0.15)
-  const backpack = new THREE.Mesh(backpackGeom, bodyMat)
-  backpack.position.set(0, 0.9, -0.25)
-  backpack.castShadow = true
-  group.add(backpack)
+  const weapon = new THREE.Mesh(weaponGeom, weaponMat)
+  weapon.position.set(0.35, 0.8, 0.2)
+  weapon.rotation.x = -0.3
+  weapon.castShadow = true
+  group.add(weapon)
   
   return group
 }
@@ -274,213 +160,63 @@ function createProceduralTroop() {
 function createProceduralSnake() {
   const group = new THREE.Group()
   
-  // Snake body segments (curved path with better detail)
-  const segments = 10
+  // Snake body segments (curved path)
+  const segments = 8
   const segmentMat = new THREE.MeshStandardMaterial({ 
     color: 0x2ecc71,
-    metalness: 0.4,
-    roughness: 0.5,
-    emissive: 0x1a6a3a,
-    emissiveIntensity: 0.2
-  })
-  
-  const scalesMat = new THREE.MeshStandardMaterial({
-    color: 0x27ae60,
-    metalness: 0.6,
-    roughness: 0.4
+    metalness: 0.2,
+    roughness: 0.6
   })
   
   for (let i = 0; i < segments; i++) {
-    const size = 0.35 - (i * 0.02)
-    const segGeom = new THREE.SphereGeometry(size, 16, 16)
+    const size = 0.3 - (i * 0.02)
+    const segGeom = new THREE.SphereGeometry(size, 12, 12)
     const seg = new THREE.Mesh(segGeom, segmentMat)
     
     // Create S-curve
     const t = i / segments
-    seg.position.x = Math.sin(t * Math.PI * 2.5) * 0.6
+    seg.position.x = Math.sin(t * Math.PI * 2) * 0.5
     seg.position.y = size
-    seg.position.z = -i * 0.4
+    seg.position.z = -i * 0.35
     seg.castShadow = true
-    seg.receiveShadow = true
     group.add(seg)
-    
-    // Add scale details
-    if (i > 0 && i < segments - 1) {
-      const numScales = 6
-      for (let j = 0; j < numScales; j++) {
-        const angle = (j / numScales) * Math.PI * 2
-        const scaleGeom = new THREE.ConeGeometry(size * 0.15, size * 0.25, 4)
-        const scale = new THREE.Mesh(scaleGeom, scalesMat)
-        
-        scale.position.x = seg.position.x + Math.cos(angle) * size * 0.8
-        scale.position.y = seg.position.y + Math.sin(angle) * size * 0.8
-        scale.position.z = seg.position.z
-        scale.rotation.set(0, 0, angle - Math.PI / 2)
-        scale.castShadow = true
-        group.add(scale)
-      }
-    }
   }
   
-  // Head (larger, more detailed with hood)
-  const headGeom = new THREE.SphereGeometry(0.4, 20, 20)
+  // Head (larger, with eyes)
+  const headGeom = new THREE.SphereGeometry(0.35, 16, 16)
   const headMat = new THREE.MeshStandardMaterial({ 
     color: 0x27ae60,
-    metalness: 0.5,
-    roughness: 0.4,
-    emissive: 0x1a5030,
-    emissiveIntensity: 0.3
+    metalness: 0.2,
+    roughness: 0.5
   })
   const head = new THREE.Mesh(headGeom, headMat)
-  head.position.set(0, 0.4, 0.4)
-  head.scale.set(1, 1, 1.4)
+  head.position.set(0, 0.35, 0.3)
+  head.scale.z = 1.3
   head.castShadow = true
   group.add(head)
   
-  // Hood (cobra-like)
-  const hoodGeom = new THREE.ConeGeometry(0.6, 0.3, 6)
-  const hoodMat = new THREE.MeshStandardMaterial({
-    color: 0x229955,
-    metalness: 0.3,
-    roughness: 0.6,
-    side: THREE.DoubleSide,
-    emissive: 0x114422,
-    emissiveIntensity: 0.2
-  })
-  const hood = new THREE.Mesh(hoodGeom, hoodMat)
-  hood.position.set(0, 0.5, 0.3)
-  hood.rotation.x = Math.PI / 2
-  hood.castShadow = true
-  group.add(hood)
-  
-  // Hood pattern
-  const patternGeom = new THREE.CircleGeometry(0.15, 8)
-  const patternMat = new THREE.MeshStandardMaterial({
-    color: 0xffcc00,
-    emissive: 0xaa8800,
-    emissiveIntensity: 0.5
-  })
-  
-  const leftPattern = new THREE.Mesh(patternGeom, patternMat)
-  leftPattern.position.set(-0.25, 0.5, 0.35)
-  leftPattern.rotation.y = Math.PI / 2
-  group.add(leftPattern)
-  
-  const rightPattern = new THREE.Mesh(patternGeom, patternMat)
-  rightPattern.position.set(0.25, 0.5, 0.35)
-  rightPattern.rotation.y = -Math.PI / 2
-  group.add(rightPattern)
-  
-  // Eyes (menacing red glow)
-  const eyeGeom = new THREE.SphereGeometry(0.1, 12, 12)
+  // Eyes
+  const eyeGeom = new THREE.SphereGeometry(0.08, 8, 8)
   const eyeMat = new THREE.MeshStandardMaterial({ 
     color: 0xff0000,
     emissive: 0xff0000,
-    emissiveIntensity: 2.0,
-    metalness: 1.0,
-    roughness: 0.1
+    emissiveIntensity: 0.3
   })
   
   const leftEye = new THREE.Mesh(eyeGeom, eyeMat)
-  leftEye.position.set(-0.18, 0.5, 0.6)
+  leftEye.position.set(-0.15, 0.45, 0.5)
   group.add(leftEye)
   
   const rightEye = new THREE.Mesh(eyeGeom, eyeMat)
-  rightEye.position.set(0.18, 0.5, 0.6)
+  rightEye.position.set(0.15, 0.45, 0.5)
   group.add(rightEye)
   
-  // Eye glow
-  const eyeGlowGeom = new THREE.SphereGeometry(0.13, 12, 12)
-  const eyeGlowMat = new THREE.MeshBasicMaterial({
-    color: 0xff0000,
-    transparent: true,
-    opacity: 0.5
-  })
-  
-  const leftEyeGlow = new THREE.Mesh(eyeGlowGeom, eyeGlowMat)
-  leftEyeGlow.position.copy(leftEye.position)
-  group.add(leftEyeGlow)
-  
-  const rightEyeGlow = new THREE.Mesh(eyeGlowGeom, eyeGlowMat)
-  rightEyeGlow.position.copy(rightEye.position)
-  group.add(rightEyeGlow)
-  
-  // Pupil slits
-  const pupilGeom = new THREE.BoxGeometry(0.03, 0.15, 0.05)
-  const pupilMat = new THREE.MeshBasicMaterial({ color: 0x000000 })
-  
-  const leftPupil = new THREE.Mesh(pupilGeom, pupilMat)
-  leftPupil.position.copy(leftEye.position)
-  leftPupil.position.z += 0.08
-  group.add(leftPupil)
-  
-  const rightPupil = new THREE.Mesh(pupilGeom, pupilMat)
-  rightPupil.position.copy(rightEye.position)
-  rightPupil.position.z += 0.08
-  group.add(rightPupil)
-  
-  // Tongue (forked)
-  const tongueBaseGeom = new THREE.CylinderGeometry(0.02, 0.02, 0.3, 6)
-  const tongueMat = new THREE.MeshStandardMaterial({ 
-    color: 0xff0066,
-    metalness: 0.5,
-    roughness: 0.5
-  })
-  const tongueBase = new THREE.Mesh(tongueBaseGeom, tongueMat)
-  tongueBase.position.set(0, 0.35, 0.65)
-  tongueBase.rotation.x = Math.PI / 2
-  group.add(tongueBase)
-  
-  // Forked tips
-  const tipGeom = new THREE.CylinderGeometry(0.015, 0.005, 0.15, 4)
-  
-  const leftTip = new THREE.Mesh(tipGeom, tongueMat)
-  leftTip.position.set(-0.04, 0.35, 0.77)
-  leftTip.rotation.set(0.3, 0, -0.3)
-  group.add(leftTip)
-  
-  const rightTip = new THREE.Mesh(tipGeom, tongueMat)
-  rightTip.position.set(0.04, 0.35, 0.77)
-  rightTip.rotation.set(0.3, 0, 0.3)
-  group.add(rightTip)
-  
-  // Fangs
-  const fangGeom = new THREE.ConeGeometry(0.04, 0.15, 6)
-  const fangMat = new THREE.MeshStandardMaterial({
-    color: 0xffffff,
-    metalness: 0.8,
-    roughness: 0.2
-  })
-  
-  const leftFang = new THREE.Mesh(fangGeom, fangMat)
-  leftFang.position.set(-0.15, 0.35, 0.55)
-  leftFang.rotation.x = Math.PI
-  leftFang.castShadow = true
-  group.add(leftFang)
-  
-  const rightFang = new THREE.Mesh(fangGeom, fangMat)
-  rightFang.position.set(0.15, 0.35, 0.55)
-  rightFang.rotation.x = Math.PI
-  rightFang.castShadow = true
-  group.add(rightFang)
-  
-  // Venom drip effect
-  const venomGeom = new THREE.SphereGeometry(0.03, 8, 8)
-  const venomMat = new THREE.MeshStandardMaterial({
-    color: 0x00ff00,
-    emissive: 0x00aa00,
-    emissiveIntensity: 1.0,
-    transparent: true,
-    opacity: 0.8
-  })
-  
-  const leftVenom = new THREE.Mesh(venomGeom, venomMat)
-  leftVenom.position.set(-0.15, 0.22, 0.55)
-  group.add(leftVenom)
-  
-  const rightVenom = new THREE.Mesh(venomGeom, venomMat)
-  rightVenom.position.set(0.15, 0.22, 0.55)
-  group.add(rightVenom)
+  // Tongue
+  const tongueGeom = new THREE.BoxGeometry(0.02, 0.02, 0.3)
+  const tongueMat = new THREE.MeshStandardMaterial({ color: 0xff0066 })
+  const tongue = new THREE.Mesh(tongueGeom, tongueMat)
+  tongue.position.set(0, 0.3, 0.6)
+  group.add(tongue)
   
   return group
 }
@@ -488,258 +224,114 @@ function createProceduralSnake() {
 function createProceduralDragon() {
   const group = new THREE.Group()
   
-  // Body (elongated with better geometry)
-  const bodyGeom = new THREE.CapsuleGeometry(0.6, 1.8, 12, 24)
+  // Body (elongated)
+  const bodyGeom = new THREE.CapsuleGeometry(0.5, 1.5, 8, 16)
   const bodyMat = new THREE.MeshStandardMaterial({ 
     color: 0x8e44ad,
-    metalness: 0.5,
-    roughness: 0.4,
-    emissive: 0x4a1a5a,
-    emissiveIntensity: 0.3
+    metalness: 0.3,
+    roughness: 0.5
   })
   const body = new THREE.Mesh(bodyGeom, bodyMat)
-  body.position.y = 1.2
-  body.rotation.z = Math.PI / 5
+  body.position.y = 1
+  body.rotation.z = Math.PI / 6
   body.castShadow = true
-  body.receiveShadow = true
   group.add(body)
   
-  // Head (more detailed)
-  const headGeom = new THREE.ConeGeometry(0.5, 1.0, 8)
+  // Head
+  const headGeom = new THREE.ConeGeometry(0.4, 0.8, 6)
   const headMat = new THREE.MeshStandardMaterial({ 
     color: 0x9b59b6,
-    metalness: 0.6,
-    roughness: 0.3,
-    emissive: 0x5a2a6a,
-    emissiveIntensity: 0.2
+    metalness: 0.3,
+    roughness: 0.5
   })
   const head = new THREE.Mesh(headGeom, headMat)
-  head.position.set(0.7, 2.0, 0)
+  head.position.set(0.6, 1.8, 0)
   head.rotation.z = -Math.PI / 2
   head.castShadow = true
   group.add(head)
   
-  // Snout detail
-  const snoutGeom = new THREE.ConeGeometry(0.25, 0.4, 8)
-  const snout = new THREE.Mesh(snoutGeom, headMat)
-  snout.position.set(1.1, 2.0, 0)
-  snout.rotation.z = -Math.PI / 2
-  snout.castShadow = true
-  group.add(snout)
-  
-  // Horn
-  const hornGeom = new THREE.ConeGeometry(0.08, 0.4, 8)
-  const hornMat = new THREE.MeshStandardMaterial({
-    color: 0xffd700,
-    metalness: 0.9,
-    roughness: 0.1,
-    emissive: 0x886600,
-    emissiveIntensity: 0.5
-  })
-  
-  for (let i = 0; i < 3; i++) {
-    const horn = new THREE.Mesh(hornGeom, hornMat)
-    horn.position.set(0.5 + i * 0.15, 2.3, -0.2 + i * 0.15)
-    horn.rotation.set(0.5, 0, -0.3 + i * 0.2)
-    horn.castShadow = true
-    group.add(horn)
-  }
-  
-  // Eyes (glowing with more detail)
-  const eyeGeom = new THREE.SphereGeometry(0.12, 16, 16)
+  // Eyes (glowing)
+  const eyeGeom = new THREE.SphereGeometry(0.1, 8, 8)
   const eyeMat = new THREE.MeshStandardMaterial({ 
     color: 0xf1c40f,
     emissive: 0xf1c40f,
-    emissiveIntensity: 2.0,
-    metalness: 1.0,
-    roughness: 0.1
+    emissiveIntensity: 0.8
   })
   
   const leftEye = new THREE.Mesh(eyeGeom, eyeMat)
-  leftEye.position.set(1.0, 2.1, 0.2)
+  leftEye.position.set(0.9, 1.9, 0.15)
   group.add(leftEye)
   
   const rightEye = new THREE.Mesh(eyeGeom, eyeMat)
-  rightEye.position.set(1.0, 2.1, -0.2)
+  rightEye.position.set(0.9, 1.9, -0.15)
   group.add(rightEye)
   
-  // Eye glow
-  const eyeGlowGeom = new THREE.SphereGeometry(0.15, 16, 16)
-  const eyeGlowMat = new THREE.MeshBasicMaterial({
-    color: 0xf1c40f,
-    transparent: true,
-    opacity: 0.4
-  })
-  
-  const leftEyeGlow = new THREE.Mesh(eyeGlowGeom, eyeGlowMat)
-  leftEyeGlow.position.copy(leftEye.position)
-  group.add(leftEyeGlow)
-  
-  const rightEyeGlow = new THREE.Mesh(eyeGlowGeom, eyeGlowMat)
-  rightEyeGlow.position.copy(rightEye.position)
-  group.add(rightEyeGlow)
-  
-  // Wings (more detailed and larger)
-  const wingGeom = new THREE.ConeGeometry(1.2, 2.0, 3)
+  // Wings
+  const wingGeom = new THREE.ConeGeometry(0.8, 1.5, 3)
   const wingMat = new THREE.MeshStandardMaterial({ 
     color: 0x6c3483,
-    metalness: 0.3,
-    roughness: 0.6,
-    emissive: 0x3a1a4a,
-    emissiveIntensity: 0.2,
-    side: THREE.DoubleSide,
-    transparent: true,
-    opacity: 0.9
-  })
-  
-  const leftWing = new THREE.Mesh(wingGeom, wingMat)
-  leftWing.position.set(0, 1.4, 1.2)
-  leftWing.rotation.set(0, 0, Math.PI / 3.5)
-  leftWing.castShadow = true
-  group.add(leftWing)
-  
-  // Wing membrane details
-  const membraneGeom = new THREE.ConeGeometry(1.0, 1.7, 3)
-  const membraneMat = new THREE.MeshBasicMaterial({
-    color: 0x8e44ad,
-    transparent: true,
-    opacity: 0.3,
+    metalness: 0.2,
+    roughness: 0.7,
     side: THREE.DoubleSide
   })
   
-  const leftMembrane = new THREE.Mesh(membraneGeom, membraneMat)
-  leftMembrane.position.copy(leftWing.position)
-  leftMembrane.rotation.copy(leftWing.rotation)
-  leftMembrane.position.z += 0.1
-  group.add(leftMembrane)
+  const leftWing = new THREE.Mesh(wingGeom, wingMat)
+  leftWing.position.set(0, 1.2, 0.8)
+  leftWing.rotation.set(0, 0, Math.PI / 4)
+  leftWing.castShadow = true
+  group.add(leftWing)
   
   const rightWing = new THREE.Mesh(wingGeom, wingMat)
-  rightWing.position.set(0, 1.4, -1.2)
-  rightWing.rotation.set(0, 0, Math.PI / 3.5)
+  rightWing.position.set(0, 1.2, -0.8)
+  rightWing.rotation.set(0, 0, Math.PI / 4)
   rightWing.castShadow = true
   group.add(rightWing)
   
-  const rightMembrane = new THREE.Mesh(membraneGeom, membraneMat)
-  rightMembrane.position.copy(rightWing.position)
-  rightMembrane.rotation.copy(rightWing.rotation)
-  rightMembrane.position.z -= 0.1
-  group.add(rightMembrane)
+  // Tail
+  const tailGeom = new THREE.ConeGeometry(0.2, 1.2, 8)
+  const tail = new THREE.Mesh(tailGeom, bodyMat)
+  tail.position.set(-0.8, 0.5, 0)
+  tail.rotation.z = Math.PI / 2.5
+  tail.castShadow = true
+  group.add(tail)
   
-  // Tail (segmented for better look)
-  const tailSegments = 5
-  for (let i = 0; i < tailSegments; i++) {
-    const size = 0.25 - i * 0.03
-    const tailSegGeom = new THREE.ConeGeometry(size, 0.5, 8)
-    const tailSeg = new THREE.Mesh(tailSegGeom, bodyMat)
-    tailSeg.position.set(-1.0 - i * 0.4, 0.6 - i * 0.15, 0)
-    tailSeg.rotation.z = Math.PI / 2.2 + i * 0.15
-    tailSeg.castShadow = true
-    group.add(tailSeg)
-  }
+  // Legs
+  const legGeom = new THREE.CylinderGeometry(0.1, 0.15, 0.6, 8)
+  const legMat = new THREE.MeshStandardMaterial({ color: 0x5b2c6f })
   
-  // Tail spikes
-  for (let i = 0; i < 3; i++) {
-    const spike = new THREE.Mesh(hornGeom.clone(), hornMat)
-    spike.position.set(-1.2 - i * 0.5, 0.8 - i * 0.1, 0)
-    spike.rotation.set(0, 0, -Math.PI / 4)
-    spike.scale.setScalar(0.8)
-    group.add(spike)
-  }
-  
-  // Legs with more detail
-  const legGeom = new THREE.CylinderGeometry(0.12, 0.18, 0.7, 12)
-  const legMat = new THREE.MeshStandardMaterial({ 
-    color: 0x5b2c6f,
-    metalness: 0.4,
-    roughness: 0.6
-  })
-  
-  const clawGeom = new THREE.ConeGeometry(0.08, 0.15, 4)
-  const clawMat = new THREE.MeshStandardMaterial({
-    color: 0x2a1a3a,
-    metalness: 0.7,
-    roughness: 0.3
-  })
-  
-  // Front legs
   const frontLeftLeg = new THREE.Mesh(legGeom, legMat)
-  frontLeftLeg.position.set(0.4, 0.35, 0.5)
+  frontLeftLeg.position.set(0.3, 0.3, 0.4)
   frontLeftLeg.castShadow = true
   group.add(frontLeftLeg)
   
-  const frontLeftClaw = new THREE.Mesh(clawGeom, clawMat)
-  frontLeftClaw.position.set(0.4, 0, 0.5)
-  frontLeftClaw.rotation.x = Math.PI
-  group.add(frontLeftClaw)
-  
   const frontRightLeg = new THREE.Mesh(legGeom, legMat)
-  frontRightLeg.position.set(0.4, 0.35, -0.5)
+  frontRightLeg.position.set(0.3, 0.3, -0.4)
   frontRightLeg.castShadow = true
   group.add(frontRightLeg)
   
-  const frontRightClaw = new THREE.Mesh(clawGeom, clawMat)
-  frontRightClaw.position.set(0.4, 0, -0.5)
-  frontRightClaw.rotation.x = Math.PI
-  group.add(frontRightClaw)
-  
-  // Back legs
   const backLeftLeg = new THREE.Mesh(legGeom, legMat)
-  backLeftLeg.position.set(-0.4, 0.35, 0.5)
+  backLeftLeg.position.set(-0.3, 0.3, 0.4)
   backLeftLeg.castShadow = true
   group.add(backLeftLeg)
   
-  const backLeftClaw = new THREE.Mesh(clawGeom, clawMat)
-  backLeftClaw.position.set(-0.4, 0, 0.5)
-  backLeftClaw.rotation.x = Math.PI
-  group.add(backLeftClaw)
-  
   const backRightLeg = new THREE.Mesh(legGeom, legMat)
-  backRightLeg.position.set(-0.4, 0.35, -0.5)
+  backRightLeg.position.set(-0.3, 0.3, -0.4)
   backRightLeg.castShadow = true
   group.add(backRightLeg)
   
-  const backRightClaw = new THREE.Mesh(clawGeom, clawMat)
-  backRightClaw.position.set(-0.4, 0, -0.5)
-  backRightClaw.rotation.x = Math.PI
-  group.add(backRightClaw)
-  
-  // Fire breath particles indicator (enhanced)
-  const fireGeom = new THREE.ConeGeometry(0.2, 0.6, 8)
+  // Fire breath particles indicator
+  const fireGeom = new THREE.ConeGeometry(0.15, 0.4, 8)
   const fireMat = new THREE.MeshStandardMaterial({ 
     color: 0xff6600,
     emissive: 0xff3300,
-    emissiveIntensity: 2.0,
+    emissiveIntensity: 1,
     transparent: true,
-    opacity: 0.9
+    opacity: 0.8
   })
   const fire = new THREE.Mesh(fireGeom, fireMat)
-  fire.position.set(1.4, 2.0, 0)
+  fire.position.set(1.2, 1.8, 0)
   fire.rotation.z = -Math.PI / 2
   group.add(fire)
-  
-  // Fire glow
-  const fireGlowGeom = new THREE.SphereGeometry(0.3, 16, 16)
-  const fireGlowMat = new THREE.MeshBasicMaterial({
-    color: 0xff4400,
-    transparent: true,
-    opacity: 0.5
-  })
-  const fireGlow = new THREE.Mesh(fireGlowGeom, fireGlowMat)
-  fireGlow.position.set(1.5, 2.0, 0)
-  group.add(fireGlow)
-  
-  // Chest glow (weak spot indicator)
-  const chestGlowGeom = new THREE.SphereGeometry(0.25, 16, 16)
-  const chestGlowMat = new THREE.MeshStandardMaterial({
-    color: 0xff6600,
-    emissive: 0xff3300,
-    emissiveIntensity: 1.0,
-    transparent: true,
-    opacity: 0.6
-  })
-  const chestGlow = new THREE.Mesh(chestGlowGeom, chestGlowMat)
-  chestGlow.position.set(0.3, 1.2, 0)
-  group.add(chestGlow)
   
   return group
 }
@@ -818,99 +410,54 @@ const PROCEDURAL_GENERATORS = {
 }
 
 // ============================================================
-// MODEL SCALES - Reduced for better gameplay visibility
+// MODEL SCALES
 // ============================================================
 const MODEL_SCALES = {
-  // Towers - REDUCED scales for better placement
-  'medieval_towers': 0.08,
-  'heavy_cannon': 0.08,
-  'watch_tower': 0.10,
-  'kickelhahn': 0.08,
-  'cannon': 0.08,
-  'aa_turret': 0.10,
-  'combat_turret': 0.09,
-  'gun_tower': 0.10,
-  'hoth_turret': 0.08,
-  'gatling_tower': 0.10,
-  'missile_tower': 0.10,
-  'laser_tower': 0.08,
-  'sniper_tower': 0.09,
-  'tesla_tower': 0.12,
-  'frost_tower': 0.10,
-  'fire_tower': 0.10,
-  
-  // Walls - reduced
-  'castle_walls': 0.15,
-  'modular_wall': 0.15,
-  'sci_fi_wall': 0.15,
-  'wall': 0.15,
-  
-  // Units - sized for ground combat
-  'troop': 0.8,
-  
-  // Enemies - reduced for better visibility
-  'spaceship': 0.18,
-  'spaceship_clst': 0.15,
-  'enemy_ship': 0.18,
-  'boss_ship': 0.30,
-  
-  // Heroes - larger than regular units
+  'medieval_towers': 0.15,
+  'heavy_cannon': 0.15,
+  'watch_tower': 0.2,
+  'kickelhahn': 0.15,
+  'cannon': 0.15,
+  'aa_turret': 0.2,
+  'combat_turret': 0.18,
+  'gun_tower': 0.2,
+  'hoth_turret': 0.15,
+  'castle_walls': 0.25,
+  'modular_wall': 0.25,
+  'sci_fi_wall': 0.25,
+  'troop': 1.0,
+  'spaceship': 0.3,
+  'spaceship_clst': 0.25,
   'snake': 1.0,
-  'dragon': 1.2,
-  
-  // Structures - reduced
-  'barracks': 0.12,
-  'future_architectural': 0.12,
-  'mortar': 0.8,
-  'astro_shedder': 0.18,
-  'fighter_jet': 0.15
+  'dragon': 1.0,
+  'mortar': 1.0,
+  'astro_shedder': 0.3,
+  'future_architectural': 0.2,
+  'fighter_jet': 0.25
 }
 
-// Target sizes for auto-scaling (in world units) - REDUCED
 const TARGET_SIZES = {
-  // Towers - reduced for better gameplay
-  'medieval_towers': 2.5,
-  'heavy_cannon': 2.8,
-  'watch_tower': 2.2,
-  'kickelhahn': 2.2,
-  'cannon': 2.5,
-  'aa_turret': 2.5,
-  'combat_turret': 2.5,
-  'gun_tower': 2.5,
-  'hoth_turret': 2.8,
-  'gatling_tower': 2.5,
-  'missile_tower': 2.5,
-  'laser_tower': 2.8,
-  'sniper_tower': 2.5,
-  'tesla_tower': 2.2,
-  'frost_tower': 2.5,
-  'fire_tower': 2.5,
-  
-  // Walls - reduced
-  'castle_walls': 1.2,
-  'modular_wall': 1.2,
-  'sci_fi_wall': 1.2,
-  'wall': 1.2,
-  
-  // Units - soldier height
-  'troop': 1.2,
-  
-  // Enemies - reduced for better visibility
-  'spaceship': 1.5,
-  'spaceship_clst': 1.3,
-  'enemy_ship': 1.5,
-  'boss_ship': 2.5,
-  
-  // Heroes - reduced
-  'snake': 2.0,
-  'dragon': 2.5,
-  
-  // Structures - reduced
-  'barracks': 2.0,
-  'future_architectural': 2.0,
-  'mortar': 1.5,
-  'astro_shedder': 1.5,
-  'fighter_jet': 1.8
+  'medieval_towers': 4.0,
+  'heavy_cannon': 4.5,
+  'watch_tower': 3.5,
+  'kickelhahn': 3.5,
+  'cannon': 4.0,
+  'aa_turret': 3.5,
+  'combat_turret': 3.8,
+  'gun_tower': 4.0,
+  'hoth_turret': 4.2,
+  'castle_walls': 1.5,
+  'modular_wall': 1.5,
+  'sci_fi_wall': 1.5,
+  'troop': 1.5,
+  'spaceship': 2.0,
+  'spaceship_clst': 1.8,
+  'snake': 2.5,
+  'dragon': 3.0,
+  'mortar': 2.0,
+  'astro_shedder': 2.0,
+  'future_architectural': 3.0,
+  'fighter_jet': 2.5
 }
 
 // Load user scale preferences from localStorage

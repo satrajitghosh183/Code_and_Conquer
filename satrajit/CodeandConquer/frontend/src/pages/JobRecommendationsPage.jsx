@@ -57,6 +57,24 @@ const ExternalLinkIcon = () => (
   </svg>
 );
 
+// Company careers page URLs
+const COMPANY_CAREERS_URLS = {
+  'Google': 'https://careers.google.com/',
+  'Meta': 'https://www.metacareers.com/',
+  'Amazon': 'https://www.amazon.jobs/',
+  'Microsoft': 'https://careers.microsoft.com/',
+  'Apple': 'https://jobs.apple.com/',
+  'Netflix': 'https://jobs.netflix.com/',
+  'Stripe': 'https://stripe.com/jobs',
+  'Airbnb': 'https://careers.airbnb.com/',
+  'Uber': 'https://www.uber.com/careers/',
+  'Discord': 'https://discord.com/careers',
+  'Coinbase': 'https://www.coinbase.com/careers',
+  'Spotify': 'https://www.lifeatspotify.com/',
+  // Default fallback for other companies
+  'default': 'https://www.linkedin.com/jobs/'
+};
+
 const RemoteIcon = () => (
   <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
     <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
@@ -94,6 +112,12 @@ const BookmarkIcon = ({ filled }) => (
 const JobCard = ({ job, matchScore, onView, onApply, onSave, isSaved, isRecommendation }) => {
   const company = job.company || {};
   const [expanded, setExpanded] = useState(false);
+  
+  // Get the careers URL for this company
+  const getCareerUrl = () => {
+    const companyName = company.name || '';
+    return COMPANY_CAREERS_URLS[companyName] || COMPANY_CAREERS_URLS['default'];
+  };
 
   const formatSalary = (min, max, currency = 'USD') => {
     if (!min && !max) return null;
@@ -210,12 +234,18 @@ const JobCard = ({ job, matchScore, onView, onApply, onSave, isSaved, isRecommen
           )}
 
           <div className="job-cta">
-            <button 
+            <a 
+              href={getCareerUrl()}
+              target="_blank"
+              rel="noopener noreferrer"
               className="apply-btn"
-              onClick={(e) => { e.stopPropagation(); onApply && onApply(job.id); }}
+              onClick={(e) => { 
+                e.stopPropagation(); 
+                onApply && onApply(job.id); 
+              }}
             >
               Apply Now <ExternalLinkIcon />
-            </button>
+            </a>
             {company.website && (
               <a 
                 href={company.website} 

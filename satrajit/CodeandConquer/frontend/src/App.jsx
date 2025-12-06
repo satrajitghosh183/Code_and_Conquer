@@ -5,6 +5,7 @@ import { PaymentProvider } from './contexts/PaymentContext'
 import { GameProvider } from './contexts/GameContext'
 import { NotificationProvider } from './contexts/NotificationContext'
 import { AdBreakProvider } from './contexts/AdBreakContext'
+import { SocketProvider } from './contexts/SocketContext'
 import ErrorBoundary from './components/ErrorBoundary'
 import { PageLoader } from './components/LoadingSpinner'
 import ProtectedRoute from './components/ProtectedRoute'
@@ -274,16 +275,18 @@ function App() {
     <ErrorBoundary>
       <Router>
         <AuthProvider>
-          <PaymentProvider>
-            <GameProvider>
-              <NotificationProvider>
-                <AdBreakProvider>
-                  <AppRoutes />
-                  <AdBreak />
-                </AdBreakProvider>
-              </NotificationProvider>
-            </GameProvider>
-          </PaymentProvider>
+          <SocketProvider>
+            <PaymentProvider>
+              <GameProvider>
+                <NotificationProvider>
+                  <AdBreakProvider>
+                    <AppRoutes />
+                    <AdBreak />
+                  </AdBreakProvider>
+                </NotificationProvider>
+              </GameProvider>
+            </PaymentProvider>
+          </SocketProvider>
         </AuthProvider>
       </Router>
     </ErrorBoundary>

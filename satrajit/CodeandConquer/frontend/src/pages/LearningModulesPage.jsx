@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { useLocation } from 'react-router-dom';
 import { supabase } from '../config/supabaseClient';
 import { useAuth } from '../contexts/AuthContext';
 import LearningModule from '../components/LearningModule';
@@ -6,6 +7,7 @@ import './LearningModulesPage.css';
 
 export default function LearningModulesPage() {
   const { user } = useAuth();
+  const location = useLocation();
   const [modules, setModules] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -13,6 +15,18 @@ export default function LearningModulesPage() {
   const [completedModules, setCompletedModules] = useState(new Set());
   const [filter, setFilter] = useState('all');
   const [searchQuery, setSearchQuery] = useState('');
+  const [showSuggestionBanner, setShowSuggestionBanner] = useState(false);
+  const [suggestedCategory, setSuggestedCategory] = useState(null);
+
+  // Handle navigation state from problem page
+  useEffect(() => {
+    if (location.state?.fromProblem && location.state?.suggestedCategory) {
+      setSuggestedCategory(location.state.suggestedCategory);
+      setShowSuggestionBanner(true);
+      // Auto-search for the suggested category
+      setSearchQuery(location.state.suggestedCategory);
+    }
+  }, [location.state]);
 
   // Fetch all modules
   useEffect(() => {
@@ -129,6 +143,25 @@ export default function LearningModulesPage() {
 
   return (
     <div className="learning-modules-page">
+      {/* Suggestion Banner when redirected from problem solving */}
+      {showSuggestionBanner && (
+        <div className="suggestion-banner">
+          <div className="suggestion-content">
+            <span className="suggestion-icon">🎉</span>
+            <div className="suggestion-text">
+              <strong>Great work solving those problems!</strong>
+              <p>Based on your recent work, we recommend learning more about <span className="highlight">{suggestedCategory}</span>.</p>
+            </div>
+            <button 
+              className="dismiss-btn"
+              onClick={() => setShowSuggestionBanner(false)}
+            >
+              ✕
+            </button>
+          </div>
+        </div>
+      )}
+
       <header className="page-header">
         <div className="header-content">
           <h1>Learning Modules</h1>
@@ -194,24 +227,6 @@ export default function LearningModulesPage() {
           >
             Completed
           </button>
-          <button 
-            className={filter === 'easy' ? 'active' : ''} 
-            onClick={() => setFilter('easy')}
-          >
-            Beginner
-          </button>
-          <button 
-            className={filter === 'medium' ? 'active' : ''} 
-            onClick={() => setFilter('medium')}
-          >
-            Intermediate
-          </button>
-          <button 
-            className={filter === 'hard' ? 'active' : ''} 
-            onClick={() => setFilter('hard')}
-          >
-            Advanced
-          </button>
         </div>
       </div>
 
@@ -259,17 +274,6 @@ export default function LearningModulesPage() {
                 )}
 
                 <div className="module-info">
-                  <div className="module-tags">
-                    {module.category && (
-                      <span className="tag category">{module.category}</span>
-                    )}
-                    {module.difficulty && (
-                      <span className={`tag difficulty ${module.difficulty.toLowerCase()}`}>
-                        {module.difficulty}
-                      </span>
-                    )}
-                  </div>
-
                   <h3 className="module-title">{module.title}</h3>
                   
                   {module.description && (

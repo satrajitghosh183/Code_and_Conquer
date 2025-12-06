@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom'
 import { useGame } from '../contexts/GameContext'
 import { useAuth } from '../contexts/AuthContext'
 import { EnhancedGame } from '../game/EnhancedGame'
-import { SoundManager } from '../game/SoundManager'
+import { SoundManager } from '../game/SoundManager.js'
 import BuildBar from '../components/BuildBar'
 import LearningModule from '../components/LearningModule'
 import CodingConsole from '../components/CodingConsole'
@@ -49,6 +49,15 @@ export default function GamePage() {
   const [vignetteIntensity, setVignetteIntensity] = useState(0)
   const [selectedTower, setSelectedTower] = useState(null)
   const [baseStats, setBaseStats] = useState(null)
+  
+  // Economy system state (NEW)
+  const [comboKills, setComboKills] = useState(0)
+  const [comboMultiplier, setComboMultiplier] = useState(1.0)
+  const [projectedInterest, setProjectedInterest] = useState(0)
+  const [goldAnimClass, setGoldAnimClass] = useState('')
+  const [lastGold, setLastGold] = useState(500)
+  const [resourceChanges, setResourceChanges] = useState([])
+  const [showWaveWarning, setShowWaveWarning] = useState(false)
 
   useEffect(() => {
     if (!containerRef.current) return
@@ -76,7 +85,36 @@ export default function GamePage() {
         }
       },
       onGoldChange: (newGold) => {
-        setGold(newGold)
+        // Animate gold changes
+        setGold(prevGold => {
+          const diff = newGold - prevGold
+          if (diff !== 0) {
+            // Add animation class
+            setGoldAnimClass(diff > 0 ? 'gold-increase' : 'gold-decrease')
+            setTimeout(() => setGoldAnimClass(''), 500)
+            
+            // Show floating text for significant changes
+            if (Math.abs(diff) >= 10) {
+              const id = Date.now()
+              setResourceChanges(prev => [...prev, {
+                id,
+                value: diff,
+                type: 'gold',
+                x: 100 + Math.random() * 50,
+                y: 10
+              }])
+              setTimeout(() => {
+                setResourceChanges(prev => prev.filter(r => r.id !== id))
+              }, 1200)
+            }
+            
+            // Update projected interest
+            if (gameRef.current && gameRef.current.getProjectedInterest) {
+              setProjectedInterest(gameRef.current.getProjectedInterest())
+            }
+          }
+          return newGold
+        })
       },
       onEnergyChange: (newEnergy, max) => {
         setEnergy(newEnergy)
@@ -136,6 +174,38 @@ export default function GamePage() {
       },
       onXPChange: (xp) => {
         setScore(xp)
+      },
+      // Economy callbacks (NEW)
+      onComboChange: (kills, multiplier) => {
+        setComboKills(kills)
+        setComboMultiplier(multiplier)
+      },
+      onInterestEarned: (interest, totalGold) => {
+        // Show floating interest earned text
+        const id = Date.now()
+        setResourceChanges(prev => [...prev, {
+          id,
+          value: interest,
+          type: 'interest',
+          x: 100,
+          y: 30
+        }])
+        setTimeout(() => {
+          setResourceChanges(prev => prev.filter(r => r.id !== id))
+        }, 1500)
+      },
+      onEarlyWaveBonus: (bonus, timeRemaining) => {
+        const id = Date.now()
+        setResourceChanges(prev => [...prev, {
+          id,
+          value: bonus,
+          type: 'gold',
+          x: window.innerWidth / 2,
+          y: 100
+        }])
+        setTimeout(() => {
+          setResourceChanges(prev => prev.filter(r => r.id !== id))
+        }, 1200)
       },
       initialGold: stats.coins || 500
     }, userProfile)
@@ -329,6 +399,21 @@ export default function GamePage() {
   const selectedTowerUpgradeCost = selectedTower && gameRef.current
     ? gameRef.current.getTowerUpgradeCost(selectedTower.id)
     : null
+    
+  // Call wave early handler
+  const handleCallEarlyWave = useCallback(() => {
+    if (gameRef.current && gameRef.current.callWaveEarly) {
+      gameRef.current.callWaveEarly()
+    }
+  }, [])
+  
+  // Get early wave bonus preview
+  const earlyWaveBonus = Math.floor(waveCountdown) * 5
+  const isInBuildPhase = gameRef.current && gameRef.current.phase === 'build'
+  
+  // Check if health is critical
+  const isLowHealth = healthPercent < 25
+  const isLowGold = gold < 50
 
   return (
     <div className="game-page">
@@ -339,9 +424,20 @@ export default function GamePage() {
           </button>
           <div className="game-title">TOWER DEFENSE</div>
           <div className="game-stats">
-            <div className="stat-item gold" title="Coins only from solving coding problems">
+            <div className={`stat-item gold ${goldAnimClass} ${isLowGold ? 'low-gold' : ''}`} title="Gold - Hover for economy info">
               <span className="stat-icon"><Icon name="gold" size={14} color="#ffd700" /></span>
               <span className="stat-value">{gold}</span>
+              {projectedInterest > 0 && (
+                <div className="interest-preview">
+                  Wave end interest: +{projectedInterest}
+                </div>
+              )}
+              {passiveGoldRate > 0 && (
+                <div className="generator-indicator">
+                  <span className="generator-icon">⚡</span>
+                  +{passiveGoldRate.toFixed(1)}/s
+                </div>
+              )}
             </div>
             <div className="stat-item energy" title={`Passive: +${passiveEnergyRate.toFixed(2)}/sec`}>
               <span className="stat-icon"><Icon name="bolt" size={14} color="#00ffff" /></span>
@@ -361,10 +457,10 @@ export default function GamePage() {
                 {Math.ceil(waveCountdown)}s
               </span>
             </div>
-            <div className="stat-item health">
+            <div className={`stat-item health ${isLowHealth ? 'low-health' : ''}`}>
               <span className="stat-icon"><Icon name="heart" size={14} color="#ff0000" /></span>
               <div className="health-bar">
-                <div className="health-fill" style={{ width: `${healthPercent}%` }}></div>
+                <div className={`health-fill ${healthPercent < 25 ? 'critical' : ''}`} style={{ width: `${healthPercent}%` }}></div>
                 <span className="health-text">{health}</span>
               </div>
             </div>
@@ -378,6 +474,17 @@ export default function GamePage() {
             </div>
           </div>
           <div className="header-buttons">
+            {/* Call Early Wave Button */}
+            {waveCountdown > 2 && !gameRef.current?.waveActive && (
+              <button 
+                className="early-wave-btn"
+                onClick={handleCallEarlyWave}
+                title={`Start wave early for +${earlyWaveBonus} gold bonus`}
+              >
+                ⚡ Call Wave
+                <span className="early-bonus-preview">+{earlyWaveBonus}g</span>
+              </button>
+            )}
             <button 
               className="coding-challenge-btn"
               onClick={() => setShowCodingConsole(true)}
@@ -412,6 +519,28 @@ export default function GamePage() {
         </button>
       )}
       <div ref={containerRef} className="game-container" id="game-container"></div>
+      
+      {/* Combo Display */}
+      {comboKills >= 3 && (
+        <div className={`combo-display active ${comboMultiplier >= 2.5 ? 'max-combo' : comboMultiplier >= 2.0 ? 'high-combo' : ''}`}>
+          <div className="combo-kills">{comboKills}</div>
+          <div className="combo-label">COMBO</div>
+          <div className="combo-multiplier">{comboMultiplier.toFixed(1)}x</div>
+        </div>
+      )}
+      
+      {/* Floating Resource Changes */}
+      {resourceChanges.map(change => (
+        <div
+          key={change.id}
+          className={`resource-change ${change.value > 0 ? 'positive' : 'negative'} ${change.type}`}
+          style={{ left: change.x, top: change.y }}
+        >
+          {change.value > 0 ? '+' : ''}{change.value}
+          {change.type === 'gold' && ' 🪙'}
+          {change.type === 'interest' && ' 📈'}
+        </div>
+      ))}
       
       <BuildBar 
         gold={gold}

@@ -1,7 +1,6 @@
-// =============================================================================
-// VISUAL EFFECTS - Optimized for Performance with Immersive Effects
-// ENHANCED: Object pooling, better particles, advanced effects
-// =============================================================================
+// Enhanced Visual Effects System
+// Particle explosions, lightning, projectile trails, combat feedback
+// Phase 2 enhancements: Screen shake, impact effects, element particles
 
 import * as THREE from 'three'
 
@@ -10,261 +9,99 @@ export class VisualEffects {
     this.scene = scene
     this.camera = camera
     this.activeEffects = []
-    this.frostAuras = new Map()
-    this.fireRings = new Map()
-    this.projectileTrails = new Map()
-    
-    // Screen effects
-    this.screenShake = { active: false, intensity: 0, duration: 0, startTime: 0 }
-    this.damageVignette = { active: false, intensity: 0, fadeSpeed: 2.0 }
-    
-    // Object pooling for performance
-    this.particlePool = []
-    this.meshPool = {
-      spheres: [],
-      rings: [],
-      sparks: []
+
+    // Screen shake state
+    this.screenShake = {
+      active: false,
+      intensity: 0,
+      duration: 0,
+      elapsed: 0,
+      originalPosition: new THREE.Vector3(),
+      originalRotation: new THREE.Euler()
     }
-    this.poolMaxSize = 100
-    
-    // Shared geometries for performance
-    this.sharedGeometries = {
-      particle: new THREE.SphereGeometry(0.1, 6, 6),
-      ring: new THREE.RingGeometry(1, 1.2, 24),
-      spark: new THREE.SphereGeometry(0.05, 4, 4),
-      cone: new THREE.ConeGeometry(0.15, 0.4, 6)
-    }
-    
-    // Shared materials (reusable)
-    this.sharedMaterials = {
-      explosion: new THREE.PointsMaterial({
-        size: 0.5,
-        vertexColors: true,
-        transparent: true,
-        opacity: 1.0,
-        sizeAttenuation: true,
-        blending: THREE.AdditiveBlending
-      }),
-      glow: new THREE.MeshBasicMaterial({
-        transparent: true,
-        depthWrite: false,
-        blending: THREE.AdditiveBlending
-      })
-    }
-    
-    this.initializePools()
-  }
-  
-  initializePools() {
-    // Pre-create some pooled objects
-    for (let i = 0; i < 20; i++) {
-      this.createPooledSphere()
-      this.createPooledRing()
-    }
-  }
-  
-  createPooledSphere() {
-    const mesh = new THREE.Mesh(
-      this.sharedGeometries.particle,
-      new THREE.MeshBasicMaterial({ transparent: true })
-    )
-    mesh.visible = false
-    mesh.pooled = true
-    this.scene.add(mesh)
-    this.meshPool.spheres.push(mesh)
-    return mesh
-  }
-  
-  createPooledRing() {
-    const mesh = new THREE.Mesh(
-      this.sharedGeometries.ring,
-      new THREE.MeshBasicMaterial({ transparent: true, side: THREE.DoubleSide })
-    )
-    mesh.visible = false
-    mesh.pooled = true
-    this.scene.add(mesh)
-    this.meshPool.rings.push(mesh)
-    return mesh
-  }
-  
-  getPooledMesh(type) {
-    const pool = this.meshPool[type]
-    if (!pool) return null
-    
-    let mesh = pool.find(m => !m.visible)
-    if (!mesh && pool.length < this.poolMaxSize) {
-      if (type === 'spheres') mesh = this.createPooledSphere()
-      else if (type === 'rings') mesh = this.createPooledRing()
-    }
-    
-    if (mesh) {
-      mesh.visible = true
-      mesh.scale.set(1, 1, 1)
-      mesh.rotation.set(0, 0, 0)
-    }
-    
-    return mesh
-  }
-  
-  returnPooledMesh(mesh) {
-    if (mesh && mesh.pooled) {
-      mesh.visible = false
-      mesh.material.opacity = 1.0
+
+    // Damage vignette state
+    this.damageVignette = {
+      active: false,
+      intensity: 0,
+      fadeSpeed: 2.0
     }
   }
 
+  // Set camera for screen effects
   setCamera(camera) {
     this.camera = camera
   }
-
-  // =========================================================================
-  // EXPLOSION EFFECT - Optimized with reduced particles
-  // =========================================================================
+  
+  // Create particle explosion
   createExplosion(position, options = {}) {
-    const { 
-      numParticles = 20, // Reduced from 35
-      color = 0xff6600, 
-      duration = 500, // Reduced from 700
-      maxDist = 4,    // Reduced from 5
-      gravity = true,
-      shockwave = false // Disabled by default for performance
+    const {
+      numParticles = 100,
+      color = 0xff6600,
+      maxDist = 12,
+      size = 0.5,
+      duration = 1000
     } = options
     
-    const geometry = new THREE.BufferGeometry()
+    const particlesGeometry = new THREE.BufferGeometry()
     const positions = new Float32Array(numParticles * 3)
-    const colors = new Float32Array(numParticles * 3)
-    const sizes = new Float32Array(numParticles)
     const velocities = []
-    const colorObj = new THREE.Color(color)
     
-    for (let i = 0; i < numParticles; i++) {
-      positions[i * 3] = position.x
-      positions[i * 3 + 1] = position.y + 0.5
-      positions[i * 3 + 2] = position.z
-      
-      // Vary colors for more dynamic effect
-      const variation = 0.7 + Math.random() * 0.6
-      const hueShift = (Math.random() - 0.5) * 0.1
-      
-      const shiftedColor = colorObj.clone()
-      shiftedColor.offsetHSL(hueShift, 0, (variation - 1) * 0.3)
-      
-      colors[i * 3] = shiftedColor.r
-      colors[i * 3 + 1] = shiftedColor.g
-      colors[i * 3 + 2] = shiftedColor.b
-      
-      // Vary particle sizes
-      sizes[i] = 0.3 + Math.random() * 0.5
-      
-      // Random velocity with radial bias
-      const angle = Math.random() * Math.PI * 2
-      const upAngle = Math.random() * Math.PI * 0.7
-      const speed = 4 + Math.random() * maxDist
+    for (let i = 0; i < numParticles * 3; i += 3) {
+      positions[i] = position.x
+      positions[i + 1] = position.y
+      positions[i + 2] = position.z
       
       velocities.push({
-        x: Math.cos(angle) * Math.sin(upAngle) * speed,
-        y: Math.cos(upAngle) * speed * 1.8,
-        z: Math.sin(angle) * Math.sin(upAngle) * speed
+        x: (Math.random() - 0.5) * 2,
+        y: (Math.random() - 0.5) * 2,
+        z: (Math.random() - 0.5) * 2
       })
     }
     
-    geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3))
-    geometry.setAttribute('color', new THREE.BufferAttribute(colors, 3))
-    geometry.setAttribute('size', new THREE.BufferAttribute(sizes, 1))
+    particlesGeometry.setAttribute('position', new THREE.BufferAttribute(positions, 3))
     
-    const material = new THREE.PointsMaterial({
-      size: 0.5,
-      vertexColors: true,
-      transparent: true,
-      opacity: 1.0,
-      sizeAttenuation: true,
-      blending: THREE.AdditiveBlending,
-      depthWrite: false
-    })
-    
-    const particles = new THREE.Points(geometry, material)
-    this.scene.add(particles)
-    
-    // Core flash - reduced
-    const flashGeom = new THREE.SphereGeometry(0.6, 8, 8)
-    const flashMat = new THREE.MeshBasicMaterial({
+    const particleMaterial = new THREE.PointsMaterial({
       color,
+      size,
       transparent: true,
       opacity: 0.8,
       blending: THREE.AdditiveBlending,
       depthWrite: false
     })
-    const flash = new THREE.Mesh(flashGeom, flashMat)
-    flash.position.copy(position)
-    flash.position.y += 0.5
-    this.scene.add(flash)
     
-    // Core light - reduced intensity
-    const light = new THREE.PointLight(color, 3, 10)
-    light.position.copy(position)
-    light.position.y += 0.5
-    this.scene.add(light)
+    const particleSystem = new THREE.Points(particlesGeometry, particleMaterial)
+    this.scene.add(particleSystem)
     
     const startTime = Date.now()
     
-    // Create shockwave if enabled
-    if (shockwave) {
-      this.createShockwave(position, { maxRadius: maxDist * 1.5, color, duration: duration * 0.6 })
-    }
-    
     const effect = {
       type: 'explosion',
-      particles,
-      flash,
-      light,
+      particles: particleSystem,
       velocities,
       startTime,
       duration,
-      gravity,
+      maxDist,
       update: (deltaTime) => {
         const elapsed = Date.now() - startTime
         const progress = elapsed / duration
         
         if (progress >= 1) {
-          this.scene.remove(particles)
-          this.scene.remove(flash)
-          this.scene.remove(light)
-          geometry.dispose()
-          material.dispose()
-          flashGeom.dispose()
-          flashMat.dispose()
-          return true
+          this.scene.remove(particleSystem)
+          particlesGeometry.dispose()
+          particleMaterial.dispose()
+          return true // Remove effect
         }
         
-        // Update particles
-        const posArray = geometry.attributes.position.array
-        const sizeArray = geometry.attributes.size.array
-        
+        const posArray = particlesGeometry.attributes.position.array
         for (let i = 0; i < numParticles; i++) {
-          posArray[i * 3] += velocities[i].x * deltaTime
-          posArray[i * 3 + 1] += velocities[i].y * deltaTime
-          posArray[i * 3 + 2] += velocities[i].z * deltaTime
-          
-          if (gravity) {
-            velocities[i].y -= 20 * deltaTime
-          }
-          
-          // Shrink particles over time
-          sizeArray[i] *= 0.98
+          posArray[i * 3] += velocities[i].x * deltaTime * 20
+          posArray[i * 3 + 1] += velocities[i].y * deltaTime * 20
+          posArray[i * 3 + 2] += velocities[i].z * deltaTime * 20
         }
-        geometry.attributes.position.needsUpdate = true
-        geometry.attributes.size.needsUpdate = true
+        particlesGeometry.attributes.position.needsUpdate = true
         
-        // Fade out
-        material.opacity = 1.0 - Math.pow(progress, 1.5)
-        
-        // Flash expands and fades quickly
-        const flashScale = 1 + progress * 3
-        flash.scale.setScalar(flashScale)
-        flashMat.opacity = Math.max(0, 1.0 - progress * 3)
-        
-        // Light fades
-        light.intensity = 3 * (1 - progress * progress)
+        particleMaterial.opacity = 0.8 * (1 - progress)
         
         return false
       }
@@ -273,136 +110,126 @@ export class VisualEffects {
     this.activeEffects.push(effect)
     return effect
   }
-
-  // =========================================================================
-  // SHOCKWAVE EFFECT
-  // =========================================================================
-  createShockwave(position, options = {}) {
-    const { maxRadius = 8, color = 0xff6600, duration = 400, thickness = 0.3 } = options
+  
+  // Create lightning effect
+  createLightning(source, target, options = {}) {
+    const {
+      color = 0xaaaaff,
+      duration = 200,
+      segments = 20,
+      displacement = 3
+    } = options
     
-    const geometry = new THREE.RingGeometry(1, 1 + thickness, 24)
-    const material = new THREE.MeshBasicMaterial({
-      color,
-      transparent: true,
-      opacity: 0.7,
-      side: THREE.DoubleSide
+    const geometry = new THREE.BufferGeometry()
+    const points = this.generateLightningPoints(source, target, segments, displacement)
+    
+    const positions = new Float32Array(points.length * 3)
+    points.forEach((point, i) => {
+      positions[i * 3] = point.x
+      positions[i * 3 + 1] = point.y
+      positions[i * 3 + 2] = point.z
     })
     
-    const ring = new THREE.Mesh(geometry, material)
-    ring.position.copy(position)
-    ring.position.y = 0.15
-    ring.rotation.x = -Math.PI / 2
-    this.scene.add(ring)
+    geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3))
+    
+    const material = new THREE.LineBasicMaterial({
+      color,
+      transparent: true,
+      opacity: 1,
+      linewidth: 2
+    })
+    
+    const lightning = new THREE.Line(geometry, material)
+    this.scene.add(lightning)
     
     const startTime = Date.now()
     
     const effect = {
-      type: 'shockwave',
-      mesh: ring,
+      type: 'lightning',
+      mesh: lightning,
       startTime,
       duration,
+      source,
+      target,
       update: () => {
         const elapsed = Date.now() - startTime
         const progress = elapsed / duration
         
         if (progress >= 1) {
-          this.scene.remove(ring)
+          this.scene.remove(lightning)
           geometry.dispose()
           material.dispose()
           return true
         }
         
-        const scale = 1 + (maxRadius - 1) * progress
-        ring.scale.set(scale, scale, 1)
-        material.opacity = 0.7 * (1 - progress)
-        
-        return false
-      }
-    }
-    
-    this.activeEffects.push(effect)
-    return effect
-  }
-
-  // =========================================================================
-  // MUZZLE FLASH
-  // =========================================================================
-  createMuzzleFlash(position, direction, options = {}) {
-    const { color = 0xffff00, size = 0.6, duration = 80 } = options
-    
-    // Flash core
-    const flashGeom = new THREE.SphereGeometry(size, 6, 6)
-    const flashMat = new THREE.MeshBasicMaterial({
-      color,
-      transparent: true,
-      opacity: 1.0
-    })
-    const flash = new THREE.Mesh(flashGeom, flashMat)
-    flash.position.copy(position)
-    this.scene.add(flash)
-    
-    // Flash rays
-    const rayGeom = new THREE.ConeGeometry(size * 0.3, size * 2, 4)
-    const rayMat = new THREE.MeshBasicMaterial({
-      color,
-      transparent: true,
-      opacity: 0.8
-    })
-    const ray = new THREE.Mesh(rayGeom, rayMat)
-    ray.position.copy(position)
-    ray.lookAt(position.clone().add(direction))
-    ray.rotation.x += Math.PI / 2
-    this.scene.add(ray)
-    
-    const startTime = Date.now()
-    
-    const effect = {
-      type: 'muzzle_flash',
-      flash,
-      ray,
-      startTime,
-      duration,
-      update: () => {
-        const elapsed = Date.now() - startTime
-        
-        if (elapsed >= duration) {
-          this.scene.remove(flash)
-          this.scene.remove(ray)
-          flashGeom.dispose()
-          flashMat.dispose()
-          rayGeom.dispose()
-          rayMat.dispose()
-          return true
+        // Flicker and regenerate points
+        if (Math.random() > 0.7) {
+          const newPoints = this.generateLightningPoints(source, target, segments, displacement)
+          const posArray = geometry.attributes.position.array
+          newPoints.forEach((point, i) => {
+            posArray[i * 3] = point.x
+            posArray[i * 3 + 1] = point.y
+            posArray[i * 3 + 2] = point.z
+          })
+          geometry.attributes.position.needsUpdate = true
         }
         
-        const progress = elapsed / duration
-        flashMat.opacity = 1.0 - progress
-        rayMat.opacity = 0.8 - progress * 0.8
+        material.opacity = 1 - progress
         
         return false
       }
     }
     
     this.activeEffects.push(effect)
-    return effect
+    return lightning
   }
-
-  // =========================================================================
-  // PROJECTILE TRAIL
-  // =========================================================================
+  
+  generateLightningPoints(source, target, segments, displacement) {
+    const points = []
+    const direction = new THREE.Vector3().subVectors(target, source)
+    const length = direction.length()
+    direction.normalize()
+    
+    // Get perpendicular vectors for displacement
+    const up = new THREE.Vector3(0, 1, 0)
+    const right = new THREE.Vector3().crossVectors(direction, up).normalize()
+    const perpUp = new THREE.Vector3().crossVectors(right, direction).normalize()
+    
+    for (let i = 0; i <= segments; i++) {
+      const t = i / segments
+      const point = new THREE.Vector3().lerpVectors(source, target, t)
+      
+      // Add random displacement (less at start and end)
+      const displaceFactor = Math.sin(t * Math.PI) // Max in middle
+      if (i > 0 && i < segments) {
+        const randX = (Math.random() - 0.5) * displacement * displaceFactor
+        const randY = (Math.random() - 0.5) * displacement * displaceFactor
+        point.add(right.clone().multiplyScalar(randX))
+        point.add(perpUp.clone().multiplyScalar(randY))
+      }
+      
+      points.push(point)
+    }
+    
+    return points
+  }
+  
+  // Create projectile trail
   createProjectileTrail(projectileMesh, options = {}) {
-    const { color = 0xffff00, length = 8 } = options
+    const {
+      color = 0xff3333,
+      length = 10,
+      width = 0.1
+    } = options
     
-    const trailId = Math.random().toString(36).substr(2, 9)
-    const positions = []
-    
+    const trailPositions = []
     for (let i = 0; i < length; i++) {
-      positions.push(projectileMesh.position.clone())
+      trailPositions.push(projectileMesh.position.clone())
     }
     
     const geometry = new THREE.BufferGeometry()
-    const posArray = new Float32Array(length * 3)
-    geometry.setAttribute('position', new THREE.BufferAttribute(posArray, 3))
+    const positions = new Float32Array(length * 3)
+    geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3))
     
     const material = new THREE.LineBasicMaterial({
       color,
@@ -413,118 +240,81 @@ export class VisualEffects {
     const trail = new THREE.Line(geometry, material)
     this.scene.add(trail)
     
-    const trailData = {
-      id: trailId,
-      trail,
-      geometry,
-      material,
-      positions,
-      mesh: projectileMesh,
+    const effect = {
+      type: 'trail',
+      mesh: trail,
+      trailPositions,
+      projectileMesh,
       update: () => {
-        // Shift positions
-        for (let i = positions.length - 1; i > 0; i--) {
-          positions[i].copy(positions[i - 1])
-        }
-        positions[0].copy(projectileMesh.position)
+        // Shift positions and add new one
+        trailPositions.pop()
+        trailPositions.unshift(projectileMesh.position.clone())
         
-        // Update geometry
         const posArray = geometry.attributes.position.array
-        for (let i = 0; i < positions.length; i++) {
-          posArray[i * 3] = positions[i].x
-          posArray[i * 3 + 1] = positions[i].y
-          posArray[i * 3 + 2] = positions[i].z
-        }
+        trailPositions.forEach((pos, i) => {
+          posArray[i * 3] = pos.x
+          posArray[i * 3 + 1] = pos.y
+          posArray[i * 3 + 2] = pos.z
+        })
         geometry.attributes.position.needsUpdate = true
         
-        return true
+        return false
       },
       destroy: () => {
         this.scene.remove(trail)
         geometry.dispose()
         material.dispose()
-        this.projectileTrails.delete(trailId)
       }
     }
     
-    this.projectileTrails.set(trailId, trailData)
-    return trailData
+    this.activeEffects.push(effect)
+    return effect
   }
-
-  // =========================================================================
-  // LIGHTNING EFFECT
-  // =========================================================================
-  createLightning(source, target, options = {}) {
-    const { 
-      color = 0x8888ff, 
-      duration = 200, 
-      segments = 12,
-      displacement = 1.5 
+  
+  // Create muzzle flash
+  createMuzzleFlash(position, direction, options = {}) {
+    const {
+      color = 0xff6600,
+      size = 1,
+      duration = 100
     } = options
     
-    const points = []
-    const direction = new THREE.Vector3().subVectors(target, source)
-    const length = direction.length()
-    direction.normalize()
-    
-    // Create jagged lightning path
-    for (let i = 0; i <= segments; i++) {
-      const t = i / segments
-      const point = source.clone().add(direction.clone().multiplyScalar(length * t))
-      
-      // Add random displacement (less at endpoints)
-      if (i > 0 && i < segments) {
-        const perpendicular = new THREE.Vector3(-direction.z, 0, direction.x)
-        const offset = (Math.random() - 0.5) * displacement * Math.sin(t * Math.PI)
-        point.add(perpendicular.multiplyScalar(offset))
-        point.y += (Math.random() - 0.5) * displacement * 0.5
-      }
-      
-      points.push(point)
-    }
-    
-    const geometry = new THREE.BufferGeometry().setFromPoints(points)
-    const material = new THREE.LineBasicMaterial({ 
-      color,
-      linewidth: 2
-    })
-    const line = new THREE.Line(geometry, material)
-    this.scene.add(line)
-    
-    // Glow line (thicker, more transparent)
-    const glowMat = new THREE.LineBasicMaterial({
+    const flashGeometry = new THREE.ConeGeometry(size * 0.3, size, 6)
+    const flashMaterial = new THREE.MeshBasicMaterial({
       color,
       transparent: true,
-      opacity: 0.4,
-      linewidth: 4
+      opacity: 0.9
     })
-    const glowLine = new THREE.Line(geometry.clone(), glowMat)
-    this.scene.add(glowLine)
+    
+    const flash = new THREE.Mesh(flashGeometry, flashMaterial)
+    flash.position.copy(position)
+    
+    // Point flash in direction
+    flash.lookAt(position.clone().add(direction))
+    flash.rotation.x += Math.PI / 2
+    
+    this.scene.add(flash)
     
     const startTime = Date.now()
     
     const effect = {
-      type: 'lightning',
-      mesh: line,
-      glow: glowLine,
+      type: 'muzzleFlash',
+      mesh: flash,
       startTime,
       duration,
       update: () => {
         const elapsed = Date.now() - startTime
+        const progress = elapsed / duration
         
-        if (elapsed >= duration) {
-          this.scene.remove(line)
-          this.scene.remove(glowLine)
-          geometry.dispose()
-          material.dispose()
-          glowMat.dispose()
-          glowLine.geometry.dispose()
+        if (progress >= 1) {
+          this.scene.remove(flash)
+          flashGeometry.dispose()
+          flashMaterial.dispose()
           return true
         }
         
-        // Flicker
-        const flicker = Math.random() > 0.3
-        line.visible = flicker
-        glowLine.visible = flicker
+        flashMaterial.opacity = 0.9 * (1 - progress)
+        flash.scale.setScalar(1 + progress)
         
         return false
       }
@@ -533,852 +323,474 @@ export class VisualEffects {
     this.activeEffects.push(effect)
     return effect
   }
-
-  // =========================================================================
-  // DAMAGE NUMBER
-  // =========================================================================
-  createDamageNumber(position, damage, options = {}) {
-    const { color = 0xffffff, duration = 1000, isCritical = false } = options
+  
+  // Create frost effect
+  createFrostEffect(position, radius, options = {}) {
+    const {
+      color = 0x88ddff,
+      duration = 500
+    } = options
     
-    const canvas = document.createElement('canvas')
-    canvas.width = 128
-    canvas.height = 64
-    const ctx = canvas.getContext('2d')
-    
-    ctx.font = isCritical ? 'bold 40px Arial' : 'bold 28px Arial'
-    const colorHex = `#${color.toString(16).padStart(6, '0')}`
-    ctx.fillStyle = colorHex
-    ctx.strokeStyle = '#000000'
-    ctx.lineWidth = 3
-    ctx.textAlign = 'center'
-    ctx.strokeText(String(Math.round(damage)), 64, 45)
-    ctx.fillText(String(Math.round(damage)), 64, 45)
-    
-    const texture = new THREE.CanvasTexture(canvas)
-    const material = new THREE.SpriteMaterial({ 
-      map: texture, 
+    const ringGeometry = new THREE.TorusGeometry(radius, 0.1, 8, 32)
+    const ringMaterial = new THREE.MeshBasicMaterial({
+      color,
       transparent: true,
-      depthWrite: false
+      opacity: 0.6
     })
-    const sprite = new THREE.Sprite(material)
-    sprite.position.copy(position)
-    sprite.position.y += 1.5
-    sprite.scale.set(isCritical ? 3 : 2, isCritical ? 1.5 : 1, 1)
     
-    this.scene.add(sprite)
+    const ring = new THREE.Mesh(ringGeometry, ringMaterial)
+    ring.position.copy(position)
+    ring.rotation.x = Math.PI / 2
+    
+    this.scene.add(ring)
     
     const startTime = Date.now()
-    const startY = sprite.position.y
     
     const effect = {
-      type: 'damage_number',
-      mesh: sprite,
+      type: 'frost',
+      mesh: ring,
       startTime,
       duration,
       update: () => {
         const elapsed = Date.now() - startTime
         const progress = elapsed / duration
         
+        if (progress >= 1) {
+          this.scene.remove(ring)
+          ringGeometry.dispose()
+          ringMaterial.dispose()
+          return true
+        }
+        
+        ring.scale.setScalar(1 + progress * 0.5)
+        ringMaterial.opacity = 0.6 * (1 - progress)
+        
+        return false
+      }
+    }
+    
+    this.activeEffects.push(effect)
+    return effect
+  }
+  
+  // Create fire effect (DOT visual)
+  createFireEffect(enemy, duration) {
+    const particleCount = 20
+    const particlesGeometry = new THREE.BufferGeometry()
+    const positions = new Float32Array(particleCount * 3)
+    
+    particlesGeometry.setAttribute('position', new THREE.BufferAttribute(positions, 3))
+    
+    const material = new THREE.PointsMaterial({
+      color: 0xff6600,
+      size: 0.3,
+      transparent: true,
+      opacity: 0.8,
+      blending: THREE.AdditiveBlending
+    })
+    
+    const particles = new THREE.Points(particlesGeometry, material)
+    this.scene.add(particles)
+    
+    const startTime = Date.now()
+    
+    const effect = {
+      type: 'fire',
+      mesh: particles,
+      enemy,
+      startTime,
+      duration,
+      update: () => {
+        const elapsed = Date.now() - startTime
+        if (elapsed >= duration || !enemy.mesh) {
+          this.scene.remove(particles)
+          particlesGeometry.dispose()
+          material.dispose()
+          return true
+        }
+        
+        // Update particle positions around enemy
+        const posArray = particlesGeometry.attributes.position.array
+        for (let i = 0; i < particleCount * 3; i += 3) {
+          posArray[i] = enemy.mesh.position.x + (Math.random() - 0.5) * 2
+          posArray[i + 1] = enemy.mesh.position.y + Math.random() * 2
+          posArray[i + 2] = enemy.mesh.position.z + (Math.random() - 0.5) * 2
+        }
+        particlesGeometry.attributes.position.needsUpdate = true
+        
+        return false
+      }
+    }
+    
+    this.activeEffects.push(effect)
+    return effect
+  }
+  
+  // Screen shake effect
+  triggerScreenShake(intensity = 1.0, duration = 300) {
+    if (!this.camera) return
+
+    this.screenShake.active = true
+    this.screenShake.intensity = intensity
+    this.screenShake.duration = duration
+    this.screenShake.elapsed = 0
+
+    // Store original camera transform
+    this.screenShake.originalPosition.copy(this.camera.position)
+    this.screenShake.originalRotation.copy(this.camera.rotation)
+  }
+
+  // Damage vignette effect (red edges when taking damage)
+  triggerDamageVignette(intensity = 0.5) {
+    this.damageVignette.active = true
+    this.damageVignette.intensity = Math.min(1.0, this.damageVignette.intensity + intensity)
+  }
+
+  // Create impact sparks
+  createImpactSparks(position, direction, options = {}) {
+    const {
+      count = 20,
+      color = 0xffaa00,
+      speed = 15,
+      size = 0.2,
+      duration = 400
+    } = options
+
+    const particlesGeometry = new THREE.BufferGeometry()
+    const positions = new Float32Array(count * 3)
+    const velocities = []
+
+    // Normalize direction
+    const dir = new THREE.Vector3(direction.x, direction.y, direction.z).normalize()
+
+    for (let i = 0; i < count; i++) {
+      positions[i * 3] = position.x
+      positions[i * 3 + 1] = position.y
+      positions[i * 3 + 2] = position.z
+
+      // Spread sparks in hemisphere opposite to impact direction
+      const theta = Math.random() * Math.PI
+      const phi = Math.random() * Math.PI * 2
+      const spreadX = Math.sin(theta) * Math.cos(phi)
+      const spreadY = Math.abs(Math.sin(theta) * Math.sin(phi)) // Always upward
+      const spreadZ = Math.cos(theta)
+
+      velocities.push({
+        x: (-dir.x + spreadX * 0.5) * speed,
+        y: (-dir.y + spreadY * 0.5) * speed + 5, // Add upward bias
+        z: (-dir.z + spreadZ * 0.5) * speed
+      })
+    }
+
+    particlesGeometry.setAttribute('position', new THREE.BufferAttribute(positions, 3))
+
+    const material = new THREE.PointsMaterial({
+      color,
+      size,
+      transparent: true,
+      opacity: 1.0,
+      blending: THREE.AdditiveBlending,
+      depthWrite: false
+    })
+
+    const particles = new THREE.Points(particlesGeometry, material)
+    this.scene.add(particles)
+
+    const startTime = Date.now()
+    const gravity = -20
+
+    const effect = {
+      type: 'impact_sparks',
+      particles,
+      velocities,
+      startTime,
+      duration,
+      update: (deltaTime) => {
+        const elapsed = Date.now() - startTime
+        const progress = elapsed / duration
+
+        if (progress >= 1) {
+          this.scene.remove(particles)
+          particlesGeometry.dispose()
+          material.dispose()
+          return true
+        }
+
+        const posArray = particlesGeometry.attributes.position.array
+        for (let i = 0; i < count; i++) {
+          // Update velocity with gravity
+          velocities[i].y += gravity * deltaTime
+
+          // Update positions
+          posArray[i * 3] += velocities[i].x * deltaTime
+          posArray[i * 3 + 1] += velocities[i].y * deltaTime
+          posArray[i * 3 + 2] += velocities[i].z * deltaTime
+        }
+        particlesGeometry.attributes.position.needsUpdate = true
+
+        material.opacity = 1.0 * (1 - progress)
+
+        return false
+      }
+    }
+
+    this.activeEffects.push(effect)
+    return effect
+  }
+
+  // Create shockwave ring
+  createShockwave(position, options = {}) {
+    const {
+      maxRadius = 15,
+      color = 0xff6600,
+      duration = 800,
+      thickness = 0.3
+    } = options
+
+    const ringGeometry = new THREE.TorusGeometry(1, thickness, 8, 32)
+    const ringMaterial = new THREE.MeshBasicMaterial({
+      color,
+      transparent: true,
+      opacity: 0.8,
+      side: THREE.DoubleSide
+    })
+
+    const ring = new THREE.Mesh(ringGeometry, ringMaterial)
+    ring.position.copy(position)
+    ring.position.y = 0.5 // Slightly above ground
+    ring.rotation.x = Math.PI / 2
+
+    this.scene.add(ring)
+
+    const startTime = Date.now()
+
+    const effect = {
+      type: 'shockwave',
+      mesh: ring,
+      startTime,
+      duration,
+      maxRadius,
+      update: () => {
+        const elapsed = Date.now() - startTime
+        const progress = elapsed / duration
+
+        if (progress >= 1) {
+          this.scene.remove(ring)
+          ringGeometry.dispose()
+          ringMaterial.dispose()
+          return true
+        }
+
+        // Expand ring
+        const currentRadius = 1 + (maxRadius - 1) * progress
+        ring.scale.set(currentRadius, currentRadius, 1)
+
+        // Fade out
+        ringMaterial.opacity = 0.8 * (1 - progress)
+
+        return false
+      }
+    }
+
+    this.activeEffects.push(effect)
+    return effect
+  }
+
+  // Create damage number (floating text effect)
+  createDamageNumber(position, damage, options = {}) {
+    const {
+      color = 0xff0000,
+      size = 1.0,
+      duration = 1000,
+      isCritical = false
+    } = options
+
+    // Create sprite for number
+    const canvas = document.createElement('canvas')
+    const context = canvas.getContext('2d')
+    canvas.width = 128
+    canvas.height = 64
+
+    // Draw text
+    context.font = isCritical ? 'bold 48px Arial' : 'bold 32px Arial'
+    context.fillStyle = isCritical ? '#ffff00' : `#${color.toString(16).padStart(6, '0')}`
+    context.textAlign = 'center'
+    context.textBaseline = 'middle'
+    context.fillText(Math.round(damage).toString(), 64, 32)
+
+    // Add outline
+    context.strokeStyle = '#000000'
+    context.lineWidth = 3
+    context.strokeText(Math.round(damage).toString(), 64, 32)
+
+    const texture = new THREE.CanvasTexture(canvas)
+    const material = new THREE.SpriteMaterial({
+      map: texture,
+      transparent: true,
+      opacity: 1.0,
+      depthWrite: false
+    })
+
+    const sprite = new THREE.Sprite(material)
+    sprite.position.copy(position)
+    sprite.position.y += 2
+    sprite.scale.set(size * 2, size, 1)
+
+    this.scene.add(sprite)
+
+    const startTime = Date.now()
+    const startY = sprite.position.y
+
+    const effect = {
+      type: 'damage_number',
+      mesh: sprite,
+      startTime,
+      duration,
+      startY,
+      update: () => {
+        const elapsed = Date.now() - startTime
+        const progress = elapsed / duration
+
         if (progress >= 1) {
           this.scene.remove(sprite)
           material.dispose()
           texture.dispose()
           return true
         }
-        
-        sprite.position.y = startY + progress * 2.5
-        material.opacity = 1.0 - Math.pow(progress, 2)
-        
+
+        // Float upward
+        sprite.position.y = startY + progress * 3
+
+        // Fade out
+        material.opacity = 1.0 * (1 - progress)
+
         return false
       }
     }
-    
+
     this.activeEffects.push(effect)
     return effect
   }
 
-  // =========================================================================
-  // FROST AURA
-  // =========================================================================
-  createFrostAura(enemy, slowAmount = 0.3, duration = 2000) {
-    this.removeFrostAura(enemy)
-    
-    const geometry = new THREE.RingGeometry(0.6, 1.0, 16)
-    const material = new THREE.MeshBasicMaterial({
-      color: 0x88ddff,
-      transparent: true,
-      opacity: 0.5,
-      side: THREE.DoubleSide
-    })
-    
-    const ring = new THREE.Mesh(geometry, material)
-    ring.rotation.x = -Math.PI / 2
-    ring.position.y = 0.1
-    
-    // Ice particles
-    const particlesGeom = new THREE.BufferGeometry()
-    const particleCount = 12
-    const positions = new Float32Array(particleCount * 3)
-    
-    for (let i = 0; i < particleCount; i++) {
-      const angle = (i / particleCount) * Math.PI * 2
-      positions[i * 3] = Math.cos(angle) * 0.8
-      positions[i * 3 + 1] = 0.2 + Math.random() * 0.5
-      positions[i * 3 + 2] = Math.sin(angle) * 0.8
-    }
-    particlesGeom.setAttribute('position', new THREE.BufferAttribute(positions, 3))
-    
-    const particlesMat = new THREE.PointsMaterial({
-      color: 0xaaeeff,
-      size: 0.15,
-      transparent: true,
-      opacity: 0.7
-    })
-    const particles = new THREE.Points(particlesGeom, particlesMat)
-    
-    const group = new THREE.Group()
-    group.add(ring)
-    group.add(particles)
-    this.scene.add(group)
-    
-    const startTime = Date.now()
-    
-    const auraData = {
-      group,
-      enemy,
-      startTime,
-      duration,
-      ring,
-      particles,
-      particlesGeom,
-      update: (deltaTime) => {
-        if (!enemy.mesh || enemy.isDead || (Date.now() - startTime >= duration)) {
-          return false
-        }
-        group.position.copy(enemy.mesh.position)
-        group.rotation.y += deltaTime * 2
-        
-        // Animate particles up
-        const posArray = particlesGeom.attributes.position.array
-        for (let i = 0; i < particleCount; i++) {
-          posArray[i * 3 + 1] += deltaTime * 0.5
-          if (posArray[i * 3 + 1] > 1.2) {
-            posArray[i * 3 + 1] = 0.2
-          }
-        }
-        particlesGeom.attributes.position.needsUpdate = true
-        
-        return true
-      }
-    }
-    
-    this.frostAuras.set(enemy.id, auraData)
-    this.activeEffects.push(auraData)
-    
-    return auraData
-  }
-  
-  removeFrostAura(enemy) {
-    const aura = this.frostAuras.get(enemy.id)
-    if (aura) {
-      this.scene.remove(aura.group)
-      aura.group.traverse(child => {
-        if (child.geometry) child.geometry.dispose()
-        if (child.material) child.material.dispose()
-      })
-      this.frostAuras.delete(enemy.id)
-    }
-  }
+  // Create blood splatter particles (for enemy death)
+  createBloodSplatter(position, options = {}) {
+    const {
+      count = 30,
+      color = 0x8b0000,
+      size = 0.3,
+      duration = 600
+    } = options
 
-  // =========================================================================
-  // FROST EFFECT (Area of Effect)
-  // =========================================================================
-  createFrostEffect(position, radius = 3, options = {}) {
-    const { color = 0x88ddff, duration = 500 } = options
-    
-    // Frost ring
-    const ringGeom = new THREE.RingGeometry(0.5, radius, 24)
-    const ringMat = new THREE.MeshBasicMaterial({
-      color,
-      transparent: true,
-      opacity: 0.5,
-      side: THREE.DoubleSide
-    })
-    const ring = new THREE.Mesh(ringGeom, ringMat)
-    ring.position.copy(position)
-    ring.position.y = 0.15
-    ring.rotation.x = -Math.PI / 2
-    this.scene.add(ring)
-    
-    // Ice particles burst
-    this.createExplosion(position, {
-      numParticles: 15,
-      color,
-      duration: duration * 0.8,
-      maxDist: radius,
-      gravity: false
-    })
-    
-    const startTime = Date.now()
-    
-    const effect = {
-      type: 'frost_effect',
-      mesh: ring,
-      startTime,
-      duration,
-      update: () => {
-        const elapsed = Date.now() - startTime
-        const progress = elapsed / duration
-        
-        if (progress >= 1) {
-          this.scene.remove(ring)
-          ringGeom.dispose()
-          ringMat.dispose()
-          return true
-        }
-        
-        ringMat.opacity = 0.5 * (1 - progress)
-        
-        return false
-      }
-    }
-    
-    this.activeEffects.push(effect)
-    return effect
-  }
-
-  // =========================================================================
-  // FIRE RING - Enhanced with animated flames
-  // =========================================================================
-  createFireRing(tower, radius = 5) {
-    this.removeFireRing(tower)
-    
-    const group = new THREE.Group()
-    group.position.copy(tower.position)
-    group.position.y = 0.1
-    
-    // Inner glow ring
-    const innerRingGeom = new THREE.RingGeometry(radius * 0.7, radius * 0.8, 32)
-    const innerRingMat = new THREE.MeshBasicMaterial({
-      color: 0xff6600,
-      transparent: true,
-      opacity: 0.3,
-      side: THREE.DoubleSide
-    })
-    const innerRing = new THREE.Mesh(innerRingGeom, innerRingMat)
-    innerRing.rotation.x = -Math.PI / 2
-    group.add(innerRing)
-    
-    // Outer fire ring
-    const outerRingGeom = new THREE.RingGeometry(radius - 0.3, radius, 32)
-    const outerRingMat = new THREE.MeshBasicMaterial({
-      color: 0xff4400,
-      transparent: true,
-      opacity: 0.5,
-      side: THREE.DoubleSide
-    })
-    const outerRing = new THREE.Mesh(outerRingGeom, outerRingMat)
-    outerRing.rotation.x = -Math.PI / 2
-    group.add(outerRing)
-    
-    // Animated flame pillars around the ring
-    const flameCount = 16
-    const flames = []
-    for (let i = 0; i < flameCount; i++) {
-      const angle = (i / flameCount) * Math.PI * 2
-      const flameGeom = new THREE.ConeGeometry(0.25, 1.2, 6)
-      const flameMat = new THREE.MeshBasicMaterial({
-        color: i % 2 === 0 ? 0xff4400 : 0xff8800,
-        transparent: true,
-        opacity: 0.7
-      })
-      const flame = new THREE.Mesh(flameGeom, flameMat)
-      flame.position.set(
-        Math.cos(angle) * radius,
-        0.6,
-        Math.sin(angle) * radius
-      )
-      flame.userData.baseY = 0.6
-      flame.userData.angle = angle
-      flame.userData.phaseOffset = i * 0.4
-      flames.push(flame)
-      group.add(flame)
-    }
-    
-    // Embers/particles
-    const emberCount = 24
-    const emberGeom = new THREE.BufferGeometry()
-    const emberPositions = new Float32Array(emberCount * 3)
-    for (let i = 0; i < emberCount; i++) {
-      const angle = (i / emberCount) * Math.PI * 2
-      emberPositions[i * 3] = Math.cos(angle) * radius
-      emberPositions[i * 3 + 1] = 0.5 + Math.random() * 0.5
-      emberPositions[i * 3 + 2] = Math.sin(angle) * radius
-    }
-    emberGeom.setAttribute('position', new THREE.BufferAttribute(emberPositions, 3))
-    const emberMat = new THREE.PointsMaterial({
-      color: 0xffaa00,
-      size: 0.15,
-      transparent: true,
-      opacity: 0.8,
-      blending: THREE.AdditiveBlending
-    })
-    const embers = new THREE.Points(emberGeom, emberMat)
-    group.add(embers)
-    
-    this.scene.add(group)
-    
-    const fireData = {
-      group,
-      mesh: group,
-      tower,
-      flames,
-      embers,
-      emberGeom,
-      innerRing,
-      outerRing,
-      animTime: 0,
-      update: (deltaTime) => {
-        if (!tower.mesh) return false
-        
-        fireData.animTime += deltaTime
-        
-        // Rotate rings in opposite directions
-        innerRing.rotation.z += deltaTime * 0.3
-        outerRing.rotation.z -= deltaTime * 0.5
-        
-        // Animate flames
-        flames.forEach((flame, i) => {
-          const phase = fireData.animTime * 4 + flame.userData.phaseOffset
-          flame.position.y = flame.userData.baseY + Math.sin(phase) * 0.3
-          flame.scale.y = 1 + Math.sin(phase * 1.5) * 0.3
-          flame.material.opacity = 0.5 + Math.sin(phase) * 0.2
-        })
-        
-        // Animate embers rising
-        const posArray = emberGeom.attributes.position.array
-        for (let i = 0; i < emberCount; i++) {
-          posArray[i * 3 + 1] += deltaTime * 1.5
-          if (posArray[i * 3 + 1] > 2) {
-            posArray[i * 3 + 1] = 0.3
-          }
-        }
-        emberGeom.attributes.position.needsUpdate = true
-        
-        // Pulse opacity
-        const pulse = 0.4 + Math.sin(fireData.animTime * 3) * 0.1
-        outerRingMat.opacity = pulse
-        innerRingMat.opacity = pulse * 0.6
-        
-        return true
-      }
-    }
-    
-    this.fireRings.set(tower.id || tower, fireData)
-    this.activeEffects.push(fireData)
-    
-    return fireData
-  }
-  
-  removeFireRing(tower) {
-    const id = tower.id || tower
-    const fire = this.fireRings.get(id)
-    if (fire) {
-      this.scene.remove(fire.group || fire.mesh)
-      if (fire.group) {
-        fire.group.traverse(child => {
-          if (child.geometry) child.geometry.dispose()
-          if (child.material) child.material.dispose()
-        })
-      } else {
-        fire.mesh.geometry?.dispose()
-        fire.mesh.material?.dispose()
-      }
-      this.fireRings.delete(id)
-    }
-  }
-
-  // =========================================================================
-  // FREEZE EFFECT - Visually freezes enemy with ice crystals
-  // =========================================================================
-  createFreezeEffect(enemy, duration = 3000) {
-    if (!enemy || !enemy.mesh) return null
-    
-    const group = new THREE.Group()
-    
-    // Ice encasement - semi-transparent ice shell around enemy
-    const iceShellGeom = new THREE.IcosahedronGeometry(enemy.scale * 1.2, 1)
-    const iceShellMat = new THREE.MeshStandardMaterial({
-      color: 0x88ddff,
-      transparent: true,
-      opacity: 0.4,
-      metalness: 0.9,
-      roughness: 0.1,
-      emissive: 0x2288cc,
-      emissiveIntensity: 0.3
-    })
-    const iceShell = new THREE.Mesh(iceShellGeom, iceShellMat)
-    group.add(iceShell)
-    
-    // Ice crystals protruding from the enemy
-    const crystalCount = 8
-    for (let i = 0; i < crystalCount; i++) {
-      const crystalGeom = new THREE.ConeGeometry(0.1 + Math.random() * 0.1, 0.5 + Math.random() * 0.5, 6)
-      const crystalMat = new THREE.MeshStandardMaterial({
-        color: 0xaaeeff,
-        transparent: true,
-        opacity: 0.8,
-        metalness: 0.95,
-        roughness: 0.05,
-        emissive: 0x4488ff,
-        emissiveIntensity: 0.5
-      })
-      const crystal = new THREE.Mesh(crystalGeom, crystalMat)
-      
-      const angle = (i / crystalCount) * Math.PI * 2
-      const tilt = Math.PI / 4 + Math.random() * Math.PI / 4
-      crystal.position.set(
-        Math.cos(angle) * enemy.scale * 0.8,
-        Math.sin(tilt) * enemy.scale * 0.5,
-        Math.sin(angle) * enemy.scale * 0.8
-      )
-      crystal.rotation.set(
-        Math.random() * Math.PI,
-        Math.random() * Math.PI,
-        Math.random() * Math.PI
-      )
-      group.add(crystal)
-    }
-    
-    // Frost particles swirling around
-    const frostParticleCount = 20
-    const frostGeom = new THREE.BufferGeometry()
-    const frostPositions = new Float32Array(frostParticleCount * 3)
-    for (let i = 0; i < frostParticleCount; i++) {
-      const angle = (i / frostParticleCount) * Math.PI * 2
-      const radius = enemy.scale * 1.0
-      frostPositions[i * 3] = Math.cos(angle) * radius
-      frostPositions[i * 3 + 1] = Math.random() * enemy.scale
-      frostPositions[i * 3 + 2] = Math.sin(angle) * radius
-    }
-    frostGeom.setAttribute('position', new THREE.BufferAttribute(frostPositions, 3))
-    const frostMat = new THREE.PointsMaterial({
-      color: 0xccffff,
-      size: 0.1,
-      transparent: true,
-      opacity: 0.7,
-      blending: THREE.AdditiveBlending
-    })
-    const frostParticles = new THREE.Points(frostGeom, frostMat)
-    group.add(frostParticles)
-    
-    this.scene.add(group)
-    
-    const startTime = Date.now()
-    
-    const effect = {
-      type: 'freeze_effect',
-      group,
-      enemy,
-      frostGeom,
-      iceShell,
-      startTime,
-      duration,
-      animTime: 0,
-      update: (deltaTime) => {
-        if (!enemy.mesh || enemy.isDead || (Date.now() - startTime >= duration)) {
-          this.scene.remove(group)
-          group.traverse(child => {
-            if (child.geometry) child.geometry.dispose()
-            if (child.material) child.material.dispose()
-          })
-          return true
-        }
-        
-        effect.animTime += deltaTime
-        
-        // Follow enemy
-        group.position.copy(enemy.mesh.position)
-        
-        // Rotate ice shell slowly
-        iceShell.rotation.y += deltaTime * 0.5
-        iceShell.rotation.x += deltaTime * 0.2
-        
-        // Swirl frost particles
-        const posArray = frostGeom.attributes.position.array
-        for (let i = 0; i < frostParticleCount; i++) {
-          const baseAngle = (i / frostParticleCount) * Math.PI * 2
-          const currentAngle = baseAngle + effect.animTime * 2
-          const radius = enemy.scale * (0.8 + Math.sin(effect.animTime * 3 + i) * 0.2)
-          posArray[i * 3] = Math.cos(currentAngle) * radius
-          posArray[i * 3 + 1] = (posArray[i * 3 + 1] + deltaTime * 0.5) % (enemy.scale * 1.5)
-          posArray[i * 3 + 2] = Math.sin(currentAngle) * radius
-        }
-        frostGeom.attributes.position.needsUpdate = true
-        
-        // Pulse ice shell
-        const pulse = 1 + Math.sin(effect.animTime * 4) * 0.05
-        iceShell.scale.setScalar(pulse)
-        iceShellMat.opacity = 0.3 + Math.sin(effect.animTime * 3) * 0.1
-        
-        return false
-      }
-    }
-    
-    this.activeEffects.push(effect)
-    return effect
-  }
-
-  // =========================================================================
-  // FIRE EFFECT (On enemy)
-  // =========================================================================
-  createFireEffect(enemy, duration = 3000) {
-    // Simple fire particles around enemy
-    const group = new THREE.Group()
-    const fireColor = 0xff4400
-    
-    // Flames
-    for (let i = 0; i < 5; i++) {
-      const flameGeom = new THREE.ConeGeometry(0.15, 0.4, 4)
-      const flameMat = new THREE.MeshBasicMaterial({
-        color: fireColor,
-        transparent: true,
-        opacity: 0.7
-      })
-      const flame = new THREE.Mesh(flameGeom, flameMat)
-      
-      const angle = (i / 5) * Math.PI * 2
-      flame.position.set(
-        Math.cos(angle) * 0.4,
-        0.5,
-        Math.sin(angle) * 0.4
-      )
-      group.add(flame)
-    }
-    
-    this.scene.add(group)
-    
-    const startTime = Date.now()
-    
-    const effect = {
-      type: 'fire_effect',
-      group,
-      enemy,
-      startTime,
-      duration,
-      update: (deltaTime) => {
-        if (!enemy.mesh || enemy.isDead || (Date.now() - startTime >= duration)) {
-          this.scene.remove(group)
-          group.traverse(child => {
-            if (child.geometry) child.geometry.dispose()
-            if (child.material) child.material.dispose()
-          })
-          return true
-        }
-        
-        group.position.copy(enemy.mesh.position)
-        
-        // Animate flames
-        group.children.forEach((flame, i) => {
-          flame.position.y = 0.5 + Math.sin((Date.now() / 100) + i) * 0.2
-          flame.rotation.y += deltaTime * 3
-        })
-        
-        return false
-      }
-    }
-    
-    this.activeEffects.push(effect)
-    return effect
-  }
-
-  // =========================================================================
-  // BUILD EFFECT
-  // =========================================================================
-  createBuildEffect(position, options = {}) {
-    const { glowColor = 0x44ff44 } = options
-    
-    // Rising ring
-    const geometry = new THREE.RingGeometry(0.5, 2, 20)
-    const material = new THREE.MeshBasicMaterial({
-      color: glowColor,
-      transparent: true,
-      opacity: 0.7,
-      side: THREE.DoubleSide
-    })
-    
-    const ring = new THREE.Mesh(geometry, material)
-    ring.position.copy(position)
-    ring.position.y = 0.1
-    ring.rotation.x = -Math.PI / 2
-    
-    this.scene.add(ring)
-    
-    // Particles
-    this.createExplosion(position, {
-      numParticles: 20,
-      color: glowColor,
-      duration: 600,
-      maxDist: 2,
-      gravity: false
-    })
-    
-    const startTime = Date.now()
-    const duration = 600
-    
-    const effect = {
-      type: 'build',
-      mesh: ring,
-      startTime,
-      update: () => {
-        const elapsed = Date.now() - startTime
-        const progress = elapsed / duration
-        
-        if (progress >= 1) {
-          this.scene.remove(ring)
-          geometry.dispose()
-          material.dispose()
-          return true
-        }
-        
-        ring.position.y = 0.1 + progress * 3
-        ring.scale.setScalar(1 + progress * 1.5)
-        material.opacity = 0.7 * (1 - progress)
-        
-        return false
-      }
-    }
-    
-    this.activeEffects.push(effect)
-    return effect
-  }
-
-  // =========================================================================
-  // UPGRADE EFFECT
-  // =========================================================================
-  createUpgradeEffect(position, options = {}) {
-    const { color = 0xffdd00 } = options
-    
-    this.createBuildEffect(position, { glowColor: color })
-    
-    // Star burst
-    for (let i = 0; i < 8; i++) {
-      const angle = (i / 8) * Math.PI * 2
-      const starGeom = new THREE.ConeGeometry(0.1, 0.5, 3)
-      const starMat = new THREE.MeshBasicMaterial({
-        color,
-        transparent: true,
-        opacity: 0.9
-      })
-      const star = new THREE.Mesh(starGeom, starMat)
-      
-      star.position.copy(position)
-      star.position.y = 2
-      star.rotation.z = angle
-      
-      this.scene.add(star)
-      
-      const startTime = Date.now()
-      const duration = 500
-      
-      const starEffect = {
-        type: 'upgrade_star',
-        mesh: star,
-        angle,
-        startTime,
-        update: () => {
-          const elapsed = Date.now() - startTime
-          const progress = elapsed / duration
-          
-          if (progress >= 1) {
-            this.scene.remove(star)
-            starGeom.dispose()
-            starMat.dispose()
-            return true
-          }
-          
-          const dist = progress * 5
-          star.position.x = position.x + Math.cos(angle) * dist
-          star.position.z = position.z + Math.sin(angle) * dist
-          star.position.y = 2 + Math.sin(progress * Math.PI) * 2
-          starMat.opacity = 0.9 * (1 - progress)
-          
-          return false
-        }
-      }
-      
-      this.activeEffects.push(starEffect)
-    }
-  }
-
-  // =========================================================================
-  // IMPACT SPARKS
-  // =========================================================================
-  createImpactSparks(position, direction, options = {}) {
-    const { color = 0xffff00, count = 10 } = options
-    
-    const geometry = new THREE.BufferGeometry()
+    const particlesGeometry = new THREE.BufferGeometry()
     const positions = new Float32Array(count * 3)
     const velocities = []
-    
+
     for (let i = 0; i < count; i++) {
       positions[i * 3] = position.x
       positions[i * 3 + 1] = position.y
       positions[i * 3 + 2] = position.z
-      
-      // Sparks fly in direction of impact
-      const spread = 0.5
+
+      // Random spray pattern
       velocities.push({
-        x: -direction.x * 8 + (Math.random() - 0.5) * spread * 10,
-        y: Math.random() * 6,
-        z: -direction.z * 8 + (Math.random() - 0.5) * spread * 10
+        x: (Math.random() - 0.5) * 15,
+        y: Math.random() * 10,
+        z: (Math.random() - 0.5) * 15
       })
     }
-    
-    geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3))
-    
+
+    particlesGeometry.setAttribute('position', new THREE.BufferAttribute(positions, 3))
+
     const material = new THREE.PointsMaterial({
       color,
-      size: 0.2,
+      size,
       transparent: true,
-      opacity: 1.0
+      opacity: 0.8
     })
-    
-    const sparks = new THREE.Points(geometry, material)
-    this.scene.add(sparks)
-    
+
+    const particles = new THREE.Points(particlesGeometry, material)
+    this.scene.add(particles)
+
     const startTime = Date.now()
-    const duration = 300
-    
+    const gravity = -25
+
     const effect = {
-      type: 'sparks',
-      mesh: sparks,
+      type: 'blood_splatter',
+      particles,
       velocities,
       startTime,
+      duration,
       update: (deltaTime) => {
         const elapsed = Date.now() - startTime
         const progress = elapsed / duration
-        
+
         if (progress >= 1) {
-          this.scene.remove(sparks)
-          geometry.dispose()
+          this.scene.remove(particles)
+          particlesGeometry.dispose()
           material.dispose()
           return true
         }
-        
-        const posArray = geometry.attributes.position.array
+
+        const posArray = particlesGeometry.attributes.position.array
         for (let i = 0; i < count; i++) {
+          velocities[i].y += gravity * deltaTime
+
           posArray[i * 3] += velocities[i].x * deltaTime
           posArray[i * 3 + 1] += velocities[i].y * deltaTime
           posArray[i * 3 + 2] += velocities[i].z * deltaTime
-          velocities[i].y -= 25 * deltaTime
+
+          // Stop at ground
+          if (posArray[i * 3 + 1] < 0) {
+            posArray[i * 3 + 1] = 0
+            velocities[i].x *= 0.5
+            velocities[i].y = 0
+            velocities[i].z *= 0.5
+          }
         }
-        geometry.attributes.position.needsUpdate = true
-        material.opacity = 1.0 - progress
-        
+        particlesGeometry.attributes.position.needsUpdate = true
+
+        material.opacity = 0.8 * (1 - progress * 0.5)
+
         return false
       }
     }
-    
+
     this.activeEffects.push(effect)
     return effect
   }
 
-  // =========================================================================
-  // BLOOD SPLATTER
-  // =========================================================================
-  createBloodSplatter(position, options = {}) {
-    this.createExplosion(position, { 
-      ...options, 
-      color: options.color || 0x880000,
-      numParticles: 15,
-      duration: 400
-    })
-  }
-
-  // =========================================================================
-  // SCREEN EFFECTS
-  // =========================================================================
-  triggerScreenShake(intensity = 0.5, duration = 200) {
-    if (!this.camera) return
-    
-    this.screenShake = {
-      active: true,
-      intensity,
-      duration,
-      startTime: Date.now(),
-      originalPosition: this.camera.position.clone()
-    }
-  }
-  
-  updateScreenShake() {
-    if (!this.screenShake.active || !this.camera) return
-    
-    const elapsed = Date.now() - this.screenShake.startTime
-    if (elapsed >= this.screenShake.duration) {
-      this.screenShake.active = false
-      return
-    }
-    
-    const progress = elapsed / this.screenShake.duration
-    const decay = 1 - progress
-    const intensity = this.screenShake.intensity * decay
-    
-    this.camera.position.x += (Math.random() - 0.5) * intensity
-    this.camera.position.y += (Math.random() - 0.5) * intensity * 0.5
-  }
-
-  triggerDamageVignette(intensity = 0.5) {
-    this.damageVignette.active = true
-    this.damageVignette.intensity = Math.min(1.0, this.damageVignette.intensity + intensity)
-  }
-
-  getDamageVignetteIntensity() {
-    return this.damageVignette.intensity
-  }
-
-  // =========================================================================
-  // TOWER AURA (visual range indicator)
-  // =========================================================================
-  createTowerAura(tower, color = 0x4488ff) {
-    this.removeTowerAura(tower)
-    
-    const range = tower.range || 15
-    const geometry = new THREE.RingGeometry(range - 0.3, range, 32)
-    const material = new THREE.MeshBasicMaterial({
-      color,
-      transparent: true,
-      opacity: 0.1,
-      side: THREE.DoubleSide
-    })
-    
-    const ring = new THREE.Mesh(geometry, material)
-    ring.position.copy(tower.position)
-    ring.position.y = 0.1
-    ring.rotation.x = -Math.PI / 2
-    
-    this.scene.add(ring)
-    
-    tower._auraRing = ring
-  }
-  
-  removeTowerAura(tower) {
-    if (tower._auraRing) {
-      this.scene.remove(tower._auraRing)
-      tower._auraRing.geometry.dispose()
-      tower._auraRing.material.dispose()
-      tower._auraRing = null
-    }
-  }
-
-  // =========================================================================
-  // UPDATE
-  // =========================================================================
+  // Update all active effects and screen shake
   update(deltaTime) {
-    // Screen shake
-    this.updateScreenShake()
-    
-    // Fade vignette
+    // Update screen shake
+    if (this.screenShake.active && this.camera) {
+      this.screenShake.elapsed += deltaTime * 1000
+
+      if (this.screenShake.elapsed >= this.screenShake.duration) {
+        // Reset camera to original position
+        this.camera.position.copy(this.screenShake.originalPosition)
+        this.camera.rotation.copy(this.screenShake.originalRotation)
+        this.screenShake.active = false
+      } else {
+        // Apply shake
+        const progress = this.screenShake.elapsed / this.screenShake.duration
+        const intensity = this.screenShake.intensity * (1 - progress) // Decay over time
+
+        const shakeX = (Math.random() - 0.5) * intensity * 2
+        const shakeY = (Math.random() - 0.5) * intensity * 2
+        const shakeZ = (Math.random() - 0.5) * intensity * 2
+
+        this.camera.position.copy(this.screenShake.originalPosition)
+        this.camera.position.x += shakeX
+        this.camera.position.y += shakeY
+        this.camera.position.z += shakeZ
+
+        // Slight rotation shake
+        const shakeRotation = (Math.random() - 0.5) * intensity * 0.02
+        this.camera.rotation.copy(this.screenShake.originalRotation)
+        this.camera.rotation.z += shakeRotation
+      }
+    }
+
+    // Update damage vignette (fade out)
     if (this.damageVignette.active) {
       this.damageVignette.intensity -= this.damageVignette.fadeSpeed * deltaTime
       if (this.damageVignette.intensity <= 0) {
@@ -1386,87 +798,249 @@ export class VisualEffects {
         this.damageVignette.active = false
       }
     }
-    
-    // Update projectile trails
-    this.projectileTrails.forEach(trail => {
-      trail.update()
-    })
-    
-    // Update all effects
+
+    // Update particle effects
     for (let i = this.activeEffects.length - 1; i >= 0; i--) {
       const effect = this.activeEffects[i]
-      const result = effect.update(deltaTime)
-      
-      if (result === true) {
-        this.activeEffects.splice(i, 1)
-      } else if (result === false) {
-        // Persistent effect that should stop
-        if (effect.type === 'frostAura') {
-          this.removeFrostAura(effect.enemy)
-        }
+      const shouldRemove = effect.update(deltaTime)
+
+      if (shouldRemove) {
         this.activeEffects.splice(i, 1)
       }
     }
   }
+
+  // Get damage vignette intensity (for renderer overlay)
+  getDamageVignetteIntensity() {
+    return this.damageVignette.intensity
+  }
   
-  // =========================================================================
-  // CLEANUP
-  // =========================================================================
+  // Clean up all effects
   destroy() {
-    // Clear all effects
     this.activeEffects.forEach(effect => {
       if (effect.mesh) {
         this.scene.remove(effect.mesh)
         if (effect.mesh.geometry) effect.mesh.geometry.dispose()
-        if (effect.mesh.material) effect.mesh.material.dispose()
-      }
-      if (effect.group) {
-        this.scene.remove(effect.group)
-        effect.group.traverse(child => {
-          if (child.geometry) child.geometry.dispose()
-          if (child.material) child.material.dispose()
-        })
-      }
-      if (effect.particles) {
-        this.scene.remove(effect.particles)
-      }
-      if (effect.flash) {
-        this.scene.remove(effect.flash)
-      }
-      if (effect.glow) {
-        this.scene.remove(effect.glow)
+        if (effect.mesh.material) {
+          if (Array.isArray(effect.mesh.material)) {
+            effect.mesh.material.forEach(m => m.dispose())
+          } else {
+            effect.mesh.material.dispose()
+          }
+        }
       }
     })
-    
-    // Clear trails
-    this.projectileTrails.forEach(trail => {
-      trail.destroy()
-    })
-    
-    // Clear frost auras
-    this.frostAuras.forEach((aura, id) => {
-      this.scene.remove(aura.group)
-      aura.group.traverse(child => {
-        if (child.geometry) child.geometry.dispose()
-        if (child.material) child.material.dispose()
-      })
-    })
-    
-    // Clear fire rings
-    this.fireRings.forEach((fire, id) => {
-      this.scene.remove(fire.mesh)
-      fire.mesh.geometry.dispose()
-      fire.mesh.material.dispose()
-    })
-    
-    // Clear shared geometries
-    Object.values(this.sharedGeometries).forEach(geom => {
-      geom.dispose()
-    })
-    
     this.activeEffects = []
-    this.projectileTrails.clear()
-    this.frostAuras.clear()
-    this.fireRings.clear()
+  }
+
+  /**
+   * Create tower build effect (rising tower with dust particles)
+   * @param {THREE.Vector3} position - Tower build position
+   * @param {Object} options - Effect options
+   */
+  createBuildEffect(position, options = {}) {
+    const {
+      particleCount = 30,
+      dustColor = 0x8b7355,
+      glowColor = 0x44ff44,
+      duration = 800
+    } = options
+
+    // Dust cloud particles
+    const particlesGeometry = new THREE.BufferGeometry()
+    const positions = new Float32Array(particleCount * 3)
+    const velocities = []
+    const lifetimes = []
+
+    for (let i = 0; i < particleCount; i++) {
+      // Start at ground level, spread horizontally
+      const angle = (i / particleCount) * Math.PI * 2
+      const radius = Math.random() * 2
+      positions[i * 3] = position.x + Math.cos(angle) * radius
+      positions[i * 3 + 1] = position.y + 0.1
+      positions[i * 3 + 2] = position.z + Math.sin(angle) * radius
+
+      // Upward and outward velocity
+      velocities.push({
+        x: Math.cos(angle) * 3,
+        y: 5 + Math.random() * 3,
+        z: Math.sin(angle) * 3
+      })
+      lifetimes.push(Math.random() * 0.5 + 0.5) // 0.5-1.0
+    }
+
+    particlesGeometry.setAttribute('position', new THREE.BufferAttribute(positions, 3))
+
+    const particlesMaterial = new THREE.PointsMaterial({
+      color: dustColor,
+      size: 0.4,
+      transparent: true,
+      opacity: 0.8,
+      blending: THREE.AdditiveBlending,
+      depthWrite: false
+    })
+
+    const particles = new THREE.Points(particlesGeometry, particlesMaterial)
+    this.scene.add(particles)
+
+    // Glow ring at base
+    const ringGeometry = new THREE.RingGeometry(1, 2, 32)
+    const ringMaterial = new THREE.MeshBasicMaterial({
+      color: glowColor,
+      side: THREE.DoubleSide,
+      transparent: true,
+      opacity: 0.6,
+      blending: THREE.AdditiveBlending
+    })
+    const ring = new THREE.Mesh(ringGeometry, ringMaterial)
+    ring.position.copy(position)
+    ring.position.y += 0.1
+    ring.rotation.x = -Math.PI / 2
+    this.scene.add(ring)
+
+    const startTime = Date.now()
+    const gravity = -9.8
+
+    this.activeEffects.push({
+      mesh: particles,
+      update: (deltaTime) => {
+        const elapsed = Date.now() - startTime
+        const progress = elapsed / duration
+
+        if (progress >= 1) {
+          this.scene.remove(particles)
+          this.scene.remove(ring)
+          particlesGeometry.dispose()
+          particlesMaterial.dispose()
+          ringGeometry.dispose()
+          ringMaterial.dispose()
+          return false
+        }
+
+        // Update particles
+        const posArray = particlesGeometry.attributes.position.array
+        for (let i = 0; i < particleCount; i++) {
+          if (progress < lifetimes[i]) {
+            velocities[i].y += gravity * deltaTime
+            posArray[i * 3] += velocities[i].x * deltaTime
+            posArray[i * 3 + 1] += velocities[i].y * deltaTime
+            posArray[i * 3 + 2] += velocities[i].z * deltaTime
+          }
+        }
+        particlesGeometry.attributes.position.needsUpdate = true
+
+        // Fade out particles
+        particlesMaterial.opacity = 0.8 * (1 - progress)
+
+        // Expand and fade ring
+        ring.scale.setScalar(1 + progress * 2)
+        ringMaterial.opacity = 0.6 * (1 - progress)
+
+        return true
+      }
+    })
+  }
+
+  /**
+   * Create tower upgrade effect (flash and particle burst)
+   * @param {THREE.Vector3} position - Tower position
+   * @param {Object} options - Effect options
+   */
+  createUpgradeEffect(position, options = {}) {
+    const {
+      particleCount = 40,
+      color = 0xffdd00,
+      burstSpeed = 10,
+      duration = 1000
+    } = options
+
+    // Particle burst
+    const particlesGeometry = new THREE.BufferGeometry()
+    const positions = new Float32Array(particleCount * 3)
+    const velocities = []
+
+    for (let i = 0; i < particleCount; i++) {
+      // Start at tower center
+      positions[i * 3] = position.x
+      positions[i * 3 + 1] = position.y + 2
+      positions[i * 3 + 2] = position.z
+
+      // Spherical burst pattern
+      const theta = Math.random() * Math.PI * 2
+      const phi = Math.random() * Math.PI
+      velocities.push({
+        x: Math.sin(phi) * Math.cos(theta) * burstSpeed,
+        y: Math.sin(phi) * Math.sin(theta) * burstSpeed,
+        z: Math.cos(phi) * burstSpeed
+      })
+    }
+
+    particlesGeometry.setAttribute('position', new THREE.BufferAttribute(positions, 3))
+
+    const particlesMaterial = new THREE.PointsMaterial({
+      color: color,
+      size: 0.5,
+      transparent: true,
+      opacity: 1.0,
+      blending: THREE.AdditiveBlending,
+      depthWrite: false
+    })
+
+    const particles = new THREE.Points(particlesGeometry, particlesMaterial)
+    this.scene.add(particles)
+
+    // Expanding flash ring
+    const flashGeometry = new THREE.RingGeometry(0.5, 1.5, 32)
+    const flashMaterial = new THREE.MeshBasicMaterial({
+      color: color,
+      side: THREE.DoubleSide,
+      transparent: true,
+      opacity: 1.0,
+      blending: THREE.AdditiveBlending
+    })
+    const flash = new THREE.Mesh(flashGeometry, flashMaterial)
+    flash.position.copy(position)
+    flash.position.y += 2
+    flash.rotation.x = -Math.PI / 2
+    this.scene.add(flash)
+
+    const startTime = Date.now()
+
+    this.activeEffects.push({
+      mesh: particles,
+      update: (deltaTime) => {
+        const elapsed = Date.now() - startTime
+        const progress = elapsed / duration
+
+        if (progress >= 1) {
+          this.scene.remove(particles)
+          this.scene.remove(flash)
+          particlesGeometry.dispose()
+          particlesMaterial.dispose()
+          flashGeometry.dispose()
+          flashMaterial.dispose()
+          return false
+        }
+
+        // Update particle positions
+        const posArray = particlesGeometry.attributes.position.array
+        for (let i = 0; i < particleCount; i++) {
+          posArray[i * 3] += velocities[i].x * deltaTime
+          posArray[i * 3 + 1] += velocities[i].y * deltaTime
+          posArray[i * 3 + 2] += velocities[i].z * deltaTime
+        }
+        particlesGeometry.attributes.position.needsUpdate = true
+
+        // Fade particles
+        particlesMaterial.opacity = 1.0 - progress
+
+        // Expand and fade flash
+        flash.scale.setScalar(1 + progress * 3)
+        flashMaterial.opacity = 1.0 - progress
+
+        return true
+      }
+    })
   }
 }
+

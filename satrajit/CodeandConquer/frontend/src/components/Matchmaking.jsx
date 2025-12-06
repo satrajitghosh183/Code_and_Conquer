@@ -1,81 +1,60 @@
-import { useState, useEffect, useRef, useCallback } from 'react'
+import { useState, useEffect, useCallback } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useAuth } from '../contexts/AuthContext'
-import { io } from 'socket.io-client'
+import { useSocket } from '../contexts/SocketContext'
 import './Matchmaking.css'
 
 export default function Matchmaking({ onClose, onMatchFound }) {
   const [isSearching, setIsSearching] = useState(false)
-  const [matchFound, setMatchFound] = useState(false)
-  const [opponent, setOpponent] = useState(null)
   const [error, setError] = useState(null)
   const [queuePosition, setQueuePosition] = useState(null)
-  const [matchId, setMatchId] = useState(null)
+  const [countdown, setCountdown] = useState(null)
   const { user, profile } = useAuth()
+  const { 
+    socket, 
+    connected, 
+    matchData, 
+    joinQueue, 
+    leaveQueue, 
+    joinMatch, 
+    startMatch,
+    clearMatchData 
+  } = useSocket()
   const navigate = useNavigate()
-  const socketRef = useRef(null)
 
-  // Initialize socket connection
+  // Listen for queue updates
   useEffect(() => {
-    const API_URL = import.meta.env.VITE_API_URL?.replace('/api', '') || 'http://localhost:5000'
-    
-    const socket = io(API_URL, {
-      auth: { userId: user?.id },
-      transports: ['websocket', 'polling'],
-      reconnection: true,
-      reconnectionDelay: 1000
-    })
+    if (!socket) return
 
-    socketRef.current = socket
-
-    socket.on('connect', () => {
-      console.log('Matchmaking socket connected:', socket.id)
-      setError(null)
-    })
-
-    socket.on('connect_error', (err) => {
-      console.error('Matchmaking connection error:', err)
-      setError('Unable to connect to matchmaking server. Please try again.')
-      setIsSearching(false)
-    })
-
-    socket.on('queue_update', (data) => {
+    const handleQueueUpdate = (data) => {
       console.log('Queue update:', data)
       setQueuePosition(data.position || data.queueSize)
-    })
+    }
 
-    socket.on('match_found', (data) => {
-      console.log('Match found:', data)
-      setOpponent(data.opponent)
-      setMatchId(data.matchId)
-      setMatchFound(true)
-      setIsSearching(false)
-    })
-
-    socket.on('queue_error', (err) => {
+    const handleQueueError = (err) => {
       console.error('Queue error:', err)
       setError(err.message || 'Failed to join matchmaking queue')
       setIsSearching(false)
-    })
+    }
 
-    socket.on('match_cancelled', () => {
-      setMatchFound(false)
-      setOpponent(null)
-      setMatchId(null)
-      setIsSearching(false)
-      setError('Match was cancelled')
-    })
+    socket.on('queue_update', handleQueueUpdate)
+    socket.on('queue_error', handleQueueError)
 
     return () => {
-      if (socket.connected) {
-        socket.emit('leave_queue', { id: user?.id })
-      }
-      socket.close()
+      socket.off('queue_update', handleQueueUpdate)
+      socket.off('queue_error', handleQueueError)
     }
-  }, [user?.id])
+  }, [socket])
+
+  // Handle match found - stop searching
+  useEffect(() => {
+    if (matchData?.status === 'found') {
+      setIsSearching(false)
+    }
+  }, [matchData])
 
   const startMatchmaking = useCallback(async () => {
-    if (!socketRef.current?.connected) {
+    if (!connected) {
       setError('Not connected to server. Please try again.')
       return
     }
@@ -88,9 +67,8 @@ export default function Matchmaking({ onClose, onMatchFound }) {
     setIsSearching(true)
     setError(null)
     
-    // Join matchmaking queue via socket
-    socketRef.current.emit('join_queue', {
-      id: user.id,
+    // Join matchmaking queue via shared socket
+    const success = joinQueue({
       username: profile?.username || user.email?.split('@')[0] || 'Player',
       level: profile?.level || 1,
       stats: {
@@ -98,36 +76,92 @@ export default function Matchmaking({ onClose, onMatchFound }) {
         gamesPlayed: profile?.games_played || 0
       }
     })
-  }, [user, profile])
+    
+    if (!success) {
+      setError('Failed to join queue. Please try again.')
+      setIsSearching(false)
+    }
+  }, [connected, user, profile, joinQueue])
 
   const cancelMatchmaking = useCallback(() => {
-    if (socketRef.current?.connected && user?.id) {
-      socketRef.current.emit('leave_queue', { id: user.id })
-    }
+    leaveQueue()
     setIsSearching(false)
     setQueuePosition(null)
-  }, [user?.id])
+  }, [leaveQueue])
 
-  const startGame = useCallback(() => {
-    if (onMatchFound) {
-      onMatchFound({ opponent, matchId })
+  // Start the battle - join room and trigger countdown
+  const handleStartBattle = useCallback(() => {
+    if (!matchData?.matchId) {
+      setError('Match not ready')
+      return
     }
-    navigate('/match', { 
-      state: { 
-        mode: '1v1', 
-        opponent, 
-        matchId,
-        fromMatchmaking: true 
-      } 
-    })
-  }, [onMatchFound, opponent, matchId, navigate])
+    
+    // Join the match room first
+    joinMatch(matchData.matchId)
+    
+    // Start the countdown
+    setCountdown(3)
+  }, [matchData, joinMatch])
+
+  // Countdown effect
+  useEffect(() => {
+    if (countdown === null) return
+    
+    if (countdown === 0) {
+      // Countdown finished - emit start_match and navigate
+      if (matchData?.matchId) {
+        startMatch(matchData.matchId)
+      }
+      
+      // Notify parent
+      if (onMatchFound) {
+        onMatchFound({ opponent: matchData?.opponent, matchId: matchData?.matchId })
+      }
+      
+      // Navigate to match page
+      navigate('/match', { 
+        state: { 
+          mode: '1v1', 
+          opponent: matchData?.opponent, 
+          matchId: matchData?.matchId,
+          fromMatchmaking: true 
+        } 
+      })
+      return
+    }
+    
+    const timer = setTimeout(() => {
+      setCountdown(prev => prev - 1)
+    }, 1000)
+    
+    return () => clearTimeout(timer)
+  }, [countdown, matchData, startMatch, onMatchFound, navigate])
 
   const handleClose = useCallback(() => {
     if (isSearching) {
       cancelMatchmaking()
     }
+    if (countdown === null && !matchData) {
+      // Only clear match data if not in countdown
+      clearMatchData()
+    }
     onClose()
-  }, [isSearching, cancelMatchmaking, onClose])
+  }, [isSearching, countdown, matchData, cancelMatchmaking, clearMatchData, onClose])
+
+  // Countdown overlay
+  if (countdown !== null) {
+    return (
+      <div className="matchmaking-overlay">
+        <div className="matchmaking-modal countdown-modal">
+          <div className="countdown-display">
+            <h2>Battle Starting</h2>
+            <div className="countdown-number">{countdown === 0 ? 'GO!' : countdown}</div>
+            <p>Get ready to defend!</p>
+          </div>
+        </div>
+      </div>
+    )
+  }
 
   return (
     <div className="matchmaking-overlay" onClick={handleClose}>
@@ -141,7 +175,15 @@ export default function Matchmaking({ onClose, onMatchFound }) {
           </div>
         )}
         
-        {!isSearching && !matchFound && !error && (
+        {!connected && !error && (
+          <div className="matchmaking-connecting">
+            <div className="connecting-spinner"></div>
+            <h2>Connecting...</h2>
+            <p>Establishing connection to matchmaking server</p>
+          </div>
+        )}
+        
+        {connected && !isSearching && !matchData && !error && (
           <div className="matchmaking-start">
             <h2>Find Opponent</h2>
             <p>Match with players of similar skill level in real-time</p>
@@ -165,7 +207,7 @@ export default function Matchmaking({ onClose, onMatchFound }) {
           </div>
         )}
 
-        {matchFound && opponent && (
+        {matchData?.status === 'found' && matchData.opponent && (
           <div className="matchmaking-found">
             <h2>Match Found!</h2>
             <div className="opponent-info">
@@ -179,13 +221,13 @@ export default function Matchmaking({ onClose, onMatchFound }) {
               <div className="vs-divider">VS</div>
               <div className="player-card">
                 <div className="player-avatar">
-                  {opponent.username?.[0]?.toUpperCase() || 'O'}
+                  {matchData.opponent.username?.[0]?.toUpperCase() || 'O'}
                 </div>
-                <div className="player-name">{opponent.username || 'Opponent'}</div>
-                <div className="player-level">Level {opponent.level || 1}</div>
+                <div className="player-name">{matchData.opponent.username || 'Opponent'}</div>
+                <div className="player-level">Level {matchData.opponent.level || 1}</div>
               </div>
             </div>
-            <button className="start-game-btn" onClick={startGame}>
+            <button className="start-game-btn" onClick={handleStartBattle}>
               Start Battle
             </button>
           </div>
@@ -194,4 +236,3 @@ export default function Matchmaking({ onClose, onMatchFound }) {
     </div>
   )
 }
-

@@ -1,421 +1,1512 @@
-// =============================================================================
-// ENHANCED GAME - Immersive Tower Defense Engine
-// =============================================================================
-// Features: 3D models, visual effects, coding rewards, AI player, 
-// advanced combat system, optimized for web deployment
-// =============================================================================
-
 import * as THREE from 'three'
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js'
-import { GraphicsEngine } from './GraphicsEngine.js'
-import { EnemyManager } from './EnemyManager.js'
-import { VisualEffects } from './VisualEffects.js'
-import { Tower } from './structures/Tower.js'
-import { TOWER_TYPES, WALL_TYPES } from './structures/TowerTypes.js'
-import { MainBase } from './MainBase.js'
-import { modelLoader } from './ModelLoader.js'
-import { TowerCombatSystem } from './TowerCombatSystem.js'
+import { EffectComposer } from 'three/examples/jsm/postprocessing/EffectComposer.js'
+import { RenderPass } from 'three/examples/jsm/postprocessing/RenderPass.js'
+import { UnrealBloomPass } from 'three/examples/jsm/postprocessing/UnrealBloomPass.js'
+import { OutputPass } from 'three/examples/jsm/postprocessing/OutputPass.js'
+import { PerformanceManager } from './PerformanceManager.js'
 import { CodingRewardSystem } from './CodingRewardSystem.js'
+import { TaskBuffSystem } from './TaskBuffSystem.js'
+import { modelLoader } from './ModelLoader.js'
+import { ObjectPool } from './ObjectPool.js'
+import { SpatialHashGrid } from './SpatialHashGrid.js'
+import { LODManager } from './LODManager.js'
+import { Tower } from './structures/Tower.js'
+import { Wall } from './structures/Wall.js'
+import { UnitSpawner } from './structures/UnitSpawner.js'
+import { DefensiveUnit } from './units/DefensiveUnit.js'
+import { TOWER_TYPES } from './structures/TowerTypes.js'
+import { SoundManager } from './SoundManager.js'
+import { Enemy } from './Enemy.js'
+import { generateWave, ENEMY_TYPES } from './EnemyTypes.js'
+import { VisualEffects } from './VisualEffects.js'
+import { Arena } from './Arena.js'
 import { AIPlayer } from './AIPlayer.js'
-import PathManager from './PathManager.js'
-import AIDirector from './AIDirector.js'
+import { WaveTimer } from './WaveTimer.js'
 
 export class EnhancedGame {
   constructor(container, callbacks = {}, userProfile = {}, gameMode = 'single') {
     this.container = container
     this.callbacks = callbacks
     this.userProfile = userProfile
-    this.gameMode = gameMode
+    this.gameMode = gameMode // 'single' or 'multiplayer'
     
-    // Game State
-    this.gold = callbacks.initialGold || 600
+    // Game state
+    this.gold = callbacks.initialGold || 500
     this.energy = callbacks.initialEnergy || 50
     this.maxEnergy = 100
-    this.energyRegenTick = 0.2
-    this.energyRegenPerTick = callbacks.energyPerTick || 2
-    this.energyTickAccumulator = 0
     this.health = 1000
     this.maxHealth = 1000
     this.wave = 0
-    this.score = 0
-    this.xp = 0
-    
+    this.enemies = []
+    this.structures = [] // All structures (towers, walls, spawners)
+    this.towers = [] // Just towers for compatibility
+    this.walls = []
+    this.spawners = []
+    this.defensiveUnits = []
+    this.projectiles = []
     this.isPaused = false
     this.gameOver = false
-    this.modelsReady = false
-    
-    // Initialize Graphics
-    this.graphicsEngine = new GraphicsEngine(container, {
-      quality: 'high',
-      enablePostProcessing: true,
-      enableShadows: true
-    })
-    
-    const { scene, camera, renderer } = this.graphicsEngine.initialize()
-    this.scene = scene
-    this.camera = camera
-    this.renderer = renderer
-    
-    // Controls
-    this.initControls()
-    
-    // Visual Effects
-    this.visualEffects = new VisualEffects(this.scene, this.camera)
-    
-    // Player base position
-    this.basePosition = new THREE.Vector3(0, 0, -25)
-    
-    // Create Main Base
-    this.mainBase = new MainBase(this.basePosition, {
-      level: 1,
-      onHealthChange: (health, maxHealth) => {
-        this.health = health
-        this.maxHealth = maxHealth
-        if (this.callbacks.onHealthChange) {
-          this.callbacks.onHealthChange(health, maxHealth)
-        }
-      },
-      onDestroyed: () => {
-        this.endGame(false)
-      }
-    })
-    this.mainBase.create(this.scene)
-    this.health = this.mainBase.health
-    this.maxHealth = this.mainBase.maxHealth
-    
-    // AI Director (needs to be created before PathManager reference)
-    this.waveDirector = new AIDirector(this, null)
-    
-    // Paths / lanes
-    this.pathManager = new PathManager(this.scene, this.basePosition)
-    this.waveDirector.pathManager = this.pathManager
-    this.enemyPath = this.pathManager.getPath('center')?.waypoints || []
-    
-    // Enemy Manager
-    this.enemyManager = new EnemyManager(this, {
-      difficulty: 'normal',
-      pathManager: this.pathManager,
-      targetPoint: this.basePosition,
-      maxActiveEnemies: 50,
-      
-      onWaveComplete: (waveNum, waveTime, bonus) => {
-        this.waveActive = false
-        this.phase = 'build'
-        this.buildCountdown = this.buildDuration
-        this.lastWaveTime = Date.now()
-        
-        const livesLost = Math.max(0, Math.floor((this.waveStartHealth - this.health) / 50))
-        if (this.waveDirector) {
-          this.waveDirector.recordWaveOutcome({ livesLost, completionTime: waveTime / 1000 })
-        }
-        
-        if (this.callbacks.onWaveCountdown) {
-          this.callbacks.onWaveCountdown(Math.ceil(this.buildCountdown), this.buildDuration)
-        }
-        this.addGold(bonus || 50)
-        if (this.callbacks.onWaveComplete) {
-          this.callbacks.onWaveComplete(waveNum, bonus)
-        }
-      },
-      
-      onWaveStart: (waveNum) => {
-        this.wave = waveNum
-        this.phase = 'combat'
-        this.waveActive = true
-        if (this.callbacks.onWaveChange) {
-          this.callbacks.onWaveChange(waveNum)
-        }
-      },
-      
-      onEnemyDeath: (enemy) => {
-        this.addGold(enemy.goldReward || 10)
-        this.addXP(enemy.xpReward || 5)
-        this.score += (enemy.goldReward || 10) * 10
-        
-        // Death effect
-        if (enemy.position) {
-          this.visualEffects.createExplosion(enemy.position.clone(), {
-            numParticles: enemy.isBoss ? 40 : 20,
-            color: enemy.color || 0xff6600,
-            duration: 600
-          })
-        }
-        
-        if (this.callbacks.onScoreChange) {
-          this.callbacks.onScoreChange(this.score)
-        }
-      },
-      
-      onEnemyReachEnd: (enemy) => {
-        const damage = enemy.lives || 1
-        this.mainBase.takeDamage(damage * 50)
-        
-        // Screen shake for damage
-        this.visualEffects.triggerScreenShake(0.3, 200)
-        this.visualEffects.triggerDamageVignette(0.3)
-      }
-    })
-    
-    this.enemies = this.enemyManager.enemies
-    
-    // Structures
-    this.structures = []
-    this.towers = []
-    
-    // Combat System
-    this.combatSystem = new TowerCombatSystem(this)
-    
-    // Coding Reward System
-    this.codingRewardSystem = new CodingRewardSystem(this)
-    this.codingRewardSystem.initialize(userProfile.totalProblemsSolved || 0)
-    
-    // AI Player (for single player challenge mode)
-    this.aiPlayer = null
-    if (gameMode === 'vs_ai' || gameMode === 'challenge') {
-      this.aiPlayer = new AIPlayer(this, userProfile.aiDifficulty || 'medium')
-    }
+    this.score = 0
+    this.xp = 0
     
     // Build system
     this.selectedStructureType = null
     this.ghostPreview = null
-    this.availableTowers = Object.keys(TOWER_TYPES)
+    this.placementRotation = 0
     
-    // Wave timer - shorter build phase for faster action
-    this.waveCountdown = 10
-    this.waveCountdownTotal = 10
-    this.buildDuration = 10
-    this.phase = 'build' // build | combat
-    this.waveInterval = 20000
-    this.lastWaveTime = Date.now()
-    this.passiveEnergyPerSecond = 0.2
-    this.waveTimerActive = false
-    this.waveActive = false
+    // Initialize systems
+    this.performanceManager = new PerformanceManager(this)
+    this.codingRewards = new CodingRewardSystem(this)
+    this.taskBuffs = new TaskBuffSystem()
+    this.spatialGrid = new SpatialHashGrid(10)
+    this.lodManager = new LODManager(null) // Will set camera later
+    this.arena = new Arena() // Grid-based pathfinding
     
-    // Input
+    // Sound system - will initialize after user interaction
+    // Visual effects (will be initialized after scene)
+    
+    // Object pools
+    this.projectilePool = new ObjectPool(
+      () => this.createProjectileMesh(),
+      (obj) => {
+        obj.visible = false
+        obj.position.set(0, 0, 0)
+      },
+      100
+    )
+    
+    // Apply task buffs
+    const preGameBuffs = this.taskBuffs.calculatePreGameBuffs(userProfile.tasks || {})
+    this.gold = preGameBuffs.startingGold
+    this.maxHealth = 1000 * preGameBuffs.baseHealthMultiplier
+    this.health = this.maxHealth
+    this.availableTowers = preGameBuffs.availableTowerTypes || ['basic']
+    this.passiveBuffs = this.taskBuffs.calculateInGamePassiveBuffs(userProfile.tasks || {})
+    
+    // Initialize coding rewards
+    this.codingRewards.initialize(userProfile.totalProblemsSolved || 0)
+    
+    // Track problems solved and tasks completed during this game
+    this.problemsSolvedThisGame = 0
+    this.tasksCompletedThisGame = 0
+    
+    // Calculate passive energy generation rates based on lifetime progress
+    // Gold is ONLY awarded when solving coding problems (no passive gold)
+    // Each problem solved = +0.05 energy/sec
+    // Each task completed = +0.08 energy/sec
+    const lifetimeProblems = userProfile.totalProblemsSolved || 0
+    const lifetimeTasks = (userProfile.tasks?.allTimeCompleted || 0) + 
+                          (userProfile.tasks?.dailyCompleted || 0) * 0.1 + 
+                          (userProfile.tasks?.weeklyCompleted || 0) * 0.2
+    
+    const baseEnergyPerSecond = 0.2 // Base passive energy
+    
+    const passiveEnergyPerSecond = baseEnergyPerSecond + 
+                                   (lifetimeProblems * 0.05) + 
+                                   (lifetimeTasks * 0.08)
+    
+    this.passiveGoldPerSecond = 0 // NO passive gold - only from coding problems
+    this.passiveEnergyPerSecond = passiveEnergyPerSecond
+    this.lastPassiveTick = Date.now()
+    
+    // Initialize wave timer for automatic attacks
+    this.waveTimer = new WaveTimer(this, {
+      waveInterval: 30000, // 30 seconds between waves
+      problemSolvedBonus: 5, // +5 seconds per problem solved
+      taskCompletedBonus: 10, // +10 seconds per task completed
+      energyPerProblem: 10,
+      energyPerTask: 15,
+      energyPerSecond: passiveEnergyPerSecond, // Dynamic passive energy generation
+      onWaveStart: (waveNum) => {
+        if (this.callbacks.onWaveChange) {
+          this.callbacks.onWaveChange(waveNum)
+        }
+      },
+      onCountdownUpdate: (countdown, total) => {
+        if (this.callbacks.onWaveCountdown) {
+          this.callbacks.onWaveCountdown(countdown, total)
+        }
+      },
+      onProblemSolved: (rewards) => {
+        if (this.callbacks.onProblemReward) {
+          this.callbacks.onProblemReward(rewards)
+        }
+      },
+      onTaskCompleted: (rewards) => {
+        if (this.callbacks.onTaskReward) {
+          this.callbacks.onTaskReward(rewards)
+        }
+      }
+    })
+
+    // Define base position (used for enemy pathfinding)
+    this.base = {
+      position: new THREE.Vector3(0, 0, -20) // Base is at end of path
+    }
+    
+    this.initScene()
+    this.initCamera()
+    this.initRenderer()
+    this.initLights()
+    this.initControls()
+    this.createTerrain()
+    this.createPath()
+    this.createBase()
+    this.createDecorations()
+    this.initPostProcessing()
+    
+    // Initialize visual effects (after scene is created)
+    this.visualEffects = new VisualEffects(this.scene, this.camera)
+
+    // Set LOD manager camera
+    this.lodManager.camera = this.camera
+
+    // Initialize sound system with camera for spatial audio
+    this.initializeSoundSystem()
+
     this.raycaster = new THREE.Raycaster()
     this.mouse = new THREE.Vector2()
-    
+    this.groundPlane = new THREE.Plane(new THREE.Vector3(0, 1, 0), 0)
+
+    // Start performance monitoring
+    this.performanceManager.startMonitoring()
+
+    // Preload essential models
+    modelLoader.preloadEssentialModels().then(() => {
+      this.modelsReady = true
+      if (this.callbacks.onModelsReady) {
+        this.callbacks.onModelsReady()
+      }
+    })
+
     this.setupEventListeners()
-    
-    // Start game loop
     this.clock = new THREE.Clock()
     
-    // Load models, then start game
-    this.initializeModels()
+    // Start wave timer after a short delay (give player time to prepare)
+    setTimeout(() => {
+      this.waveTimer.start()
+    }, 5000) // 5 second grace period
+    
+    // Initialize AI opponent for single player mode
+    if (this.gameMode === 'single') {
+      // Get AI difficulty from user profile or default to medium
+      const aiDifficulty = userProfile.aiDifficulty || 'medium'
+      this.aiPlayer = new AIPlayer(this, aiDifficulty)
+      console.log(`🤖 AI Player initialized in ${aiDifficulty} mode`)
+    }
     
     this.animate()
   }
   
-  async initializeModels() {
-    console.log('🔄 Loading game models...')
-    
-    try {
-      // Preload essential models
-      await modelLoader.preloadEssentialModels()
-      
-      this.modelsReady = true
-      console.log('✅ Models loaded successfully')
-      
-      // Notify UI
-      if (this.callbacks.onModelsReady) {
-        this.callbacks.onModelsReady()
-      }
-      
-      // Start game after short delay
-      setTimeout(() => {
-        this.startWaveTimer()
-        console.log('🎮 Game started!')
-      }, 2000)
-      
-    } catch (error) {
-      console.warn('⚠️ Some models failed to load, using fallbacks:', error)
-      this.modelsReady = true
-      
-      if (this.callbacks.onModelsReady) {
-        this.callbacks.onModelsReady()
-      }
-      
-      setTimeout(() => {
-        this.startWaveTimer()
-      }, 2000)
-    }
-  }
-  
-  createPathVisual() {
-    // Draw path line
-    const points = this.enemyPath.map(p => new THREE.Vector3(p.x, 0.15, p.z))
-    const geometry = new THREE.BufferGeometry().setFromPoints(points)
-    const material = new THREE.LineBasicMaterial({ 
-      color: 0x444466,
-      linewidth: 2,
+  createProjectileMesh() {
+    const geometry = new THREE.SphereGeometry(0.3, 8, 8)
+    const material = new THREE.MeshBasicMaterial({
+      color: 0xff0000,
       transparent: true,
-      opacity: 0.6
+      opacity: 0.9
     })
-    const pathLine = new THREE.Line(geometry, material)
-    this.scene.add(pathLine)
-    
-    // Path waypoint markers
-    this.enemyPath.forEach((point, index) => {
-      const markerGeom = new THREE.SphereGeometry(0.4, 8, 8)
-      const markerMat = new THREE.MeshBasicMaterial({ 
-        color: index === 0 ? 0x00ff00 : (index === this.enemyPath.length - 1 ? 0xff0000 : 0x4466ff),
-        transparent: true,
-        opacity: 0.5
-      })
-      const marker = new THREE.Mesh(markerGeom, markerMat)
-      marker.position.set(point.x, 0.2, point.z)
-      this.scene.add(marker)
-    })
-    
-    // Spawn area indicator
-    const spawnGeom = new THREE.RingGeometry(3, 4, 24)
-    const spawnMat = new THREE.MeshBasicMaterial({ 
-      color: 0x00ff44,
-      transparent: true,
-      opacity: 0.3,
-      side: THREE.DoubleSide
-    })
-    const spawnRing = new THREE.Mesh(spawnGeom, spawnMat)
-    spawnRing.rotation.x = -Math.PI / 2
-    spawnRing.position.set(0, 0.1, 45)
-    this.scene.add(spawnRing)
+    return new THREE.Mesh(geometry, material)
   }
-  
+
+  initScene() {
+    this.scene = new THREE.Scene()
+    // Pure black background for performance
+    this.scene.background = new THREE.Color(0x000000)
+    this.scene.fog = new THREE.FogExp2(0x000000, 0.005) // Reduced fog density
+  }
+
+  initCamera() {
+    this.camera = new THREE.PerspectiveCamera(
+      55,
+      this.container.clientWidth / this.container.clientHeight,
+      0.1,
+      1000
+    )
+    // Isometric-style view like Age of Arms
+    this.camera.position.set(0, 45, 50)
+    this.camera.lookAt(0, 0, 0)
+  }
+
+  initRenderer() {
+    this.renderer = new THREE.WebGLRenderer({ 
+      antialias: true,
+      powerPreference: 'high-performance'
+    })
+    this.renderer.setSize(this.container.clientWidth, this.container.clientHeight)
+    this.renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
+    this.renderer.shadowMap.enabled = true
+    this.renderer.shadowMap.type = THREE.PCFSoftShadowMap
+    this.renderer.toneMapping = THREE.ACESFilmicToneMapping
+    this.renderer.toneMappingExposure = 1.3
+    this.container.appendChild(this.renderer.domElement)
+  }
+
+  initLights() {
+    // Bright ambient for visibility
+    const ambientLight = new THREE.AmbientLight(0xffffff, 0.7)
+    this.scene.add(ambientLight)
+
+    // Main sun light
+    const sunLight = new THREE.DirectionalLight(0xffddaa, 1.5)
+    sunLight.position.set(20, 40, 20)
+    sunLight.castShadow = true
+    sunLight.shadow.mapSize.width = 2048
+    sunLight.shadow.mapSize.height = 2048
+    sunLight.shadow.camera.left = -60
+    sunLight.shadow.camera.right = 60
+    sunLight.shadow.camera.top = 60
+    sunLight.shadow.camera.bottom = -60
+    sunLight.shadow.camera.near = 0.5
+    sunLight.shadow.camera.far = 200
+    sunLight.shadow.bias = -0.0001
+    this.scene.add(sunLight)
+
+    // Red dramatic light from base
+    this.baseLight = new THREE.PointLight(0xff0000, 2, 40)
+    this.baseLight.position.set(0, 8, 0)
+    this.baseLight.castShadow = true
+    this.scene.add(this.baseLight)
+
+    // Hemisphere light for natural look
+    const hemiLight = new THREE.HemisphereLight(0xff6666, 0x330000, 0.6)
+    this.scene.add(hemiLight)
+
+    // Rim light for definition
+    const rimLight = new THREE.DirectionalLight(0xff3333, 0.5)
+    rimLight.position.set(-20, 10, -20)
+    this.scene.add(rimLight)
+  }
+
   initControls() {
     this.controls = new OrbitControls(this.camera, this.renderer.domElement)
     this.controls.enableDamping = true
     this.controls.dampingFactor = 0.08
-    this.controls.minDistance = 25
+    this.controls.minDistance = 20
     this.controls.maxDistance = 80
-    this.controls.maxPolarAngle = Math.PI / 2.2
+    this.controls.maxPolarAngle = Math.PI / 2.3
     this.controls.target.set(0, 0, 0)
   }
-  
-  startWaveTimer() {
-    this.waveTimerActive = true
-    this.phase = 'build'
-    this.waveActive = false
-    this.lastWaveTime = Date.now()
-    this.buildCountdown = this.buildDuration
-    this.waveCountdown = this.buildCountdown
-    this.waveCountdownTotal = this.buildDuration
+
+  createTerrain() {
+    // Main ground - textured terrain
+    const groundGeometry = new THREE.PlaneGeometry(120, 120, 30, 30)
     
-    // Initial UI update
-    if (this.callbacks.onEnergyChange) {
-      this.callbacks.onEnergyChange(Math.floor(this.energy), this.maxEnergy)
+    // Add height variation for terrain feel
+    const positions = groundGeometry.attributes.position.array
+    for (let i = 0; i < positions.length; i += 3) {
+      const x = positions[i]
+      const z = positions[i + 1]
+      // Add some organic height variation
+      positions[i + 2] = Math.sin(x * 0.1) * Math.cos(z * 0.1) * 0.5 + Math.random() * 0.2
     }
+    groundGeometry.computeVertexNormals()
+    
+    const groundMaterial = new THREE.MeshStandardMaterial({ 
+      color: 0x2a0808, // Dark red terrain
+      roughness: 0.95,
+      metalness: 0,
+      flatShading: true
+    })
+    this.ground = new THREE.Mesh(groundGeometry, groundMaterial)
+    this.ground.rotation.x = -Math.PI / 2
+    this.ground.receiveShadow = true
+    this.scene.add(this.ground)
+
+    // Grid for tower placement
+    const gridHelper = new THREE.GridHelper(100, 20, 0x550000, 0x330000)
+    gridHelper.position.y = 0.05
+    gridHelper.material.opacity = 0.4
+    gridHelper.material.transparent = true
+    this.scene.add(gridHelper)
+
+    // Border walls
+    this.createBorderWalls()
+  }
+
+  createBorderWalls() {
+    const wallMaterial = new THREE.MeshStandardMaterial({
+      color: 0x440000,
+      roughness: 0.8,
+      metalness: 0.2
+    })
+
+    // Create walls around the perimeter
+    const wallHeight = 3
+    const wallThickness = 1
+    const mapSize = 50
+
+    // North wall
+    const northWall = new THREE.Mesh(
+      new THREE.BoxGeometry(mapSize * 2, wallHeight, wallThickness),
+      wallMaterial
+    )
+    northWall.position.set(0, wallHeight / 2, -mapSize)
+    northWall.castShadow = true
+    northWall.receiveShadow = true
+    this.scene.add(northWall)
+
+    // South wall
+    const southWall = northWall.clone()
+    southWall.position.z = mapSize
+    this.scene.add(southWall)
+
+    // East wall
+    const eastWall = new THREE.Mesh(
+      new THREE.BoxGeometry(wallThickness, wallHeight, mapSize * 2),
+      wallMaterial
+    )
+    eastWall.position.set(mapSize, wallHeight / 2, 0)
+    eastWall.castShadow = true
+    eastWall.receiveShadow = true
+    this.scene.add(eastWall)
+
+    // West wall
+    const westWall = eastWall.clone()
+    westWall.position.x = -mapSize
+    this.scene.add(westWall)
+  }
+
+  createPath() {
+    // Create a winding path from spawn to base
+    const pathPoints = [
+      new THREE.Vector3(0, 0.15, 40),
+      new THREE.Vector3(15, 0.15, 30),
+      new THREE.Vector3(15, 0.15, 10),
+      new THREE.Vector3(-10, 0.15, 5),
+      new THREE.Vector3(-10, 0.15, -10),
+      new THREE.Vector3(5, 0.15, -15),
+      new THREE.Vector3(0, 0.15, -20),
+    ]
+
+    this.enemyPath = pathPoints
+
+    // Visual path - glowing red path
+    const pathMaterial = new THREE.MeshStandardMaterial({
+      color: 0x660000,
+      roughness: 0.6,
+      emissive: 0x330000,
+      emissiveIntensity: 0.5
+    })
+
+    for (let i = 0; i < pathPoints.length - 1; i++) {
+      const start = pathPoints[i]
+      const end = pathPoints[i + 1]
+      const distance = start.distanceTo(end)
+      
+      const pathSegment = new THREE.Mesh(
+        new THREE.BoxGeometry(6, 0.2, distance),
+        pathMaterial
+      )
+      
+      pathSegment.position.set(
+        (start.x + end.x) / 2,
+        0.15,
+        (start.z + end.z) / 2
+      )
+      
+      pathSegment.lookAt(end.x, 0.15, end.z)
+      pathSegment.rotation.x = -Math.PI / 2
+      pathSegment.receiveShadow = true
+      
+      this.scene.add(pathSegment)
+    }
+
+    // Path markers/arrows
+    this.createPathMarkers(pathPoints)
+  }
+
+  createPathMarkers(pathPoints) {
+    const arrowMaterial = new THREE.MeshStandardMaterial({
+      color: 0xff0000,
+      emissive: 0xaa0000,
+      emissiveIntensity: 0.7
+    })
+
+    pathPoints.forEach((point, index) => {
+      if (index < pathPoints.length - 1) {
+        const nextPoint = pathPoints[index + 1]
+        const arrow = new THREE.Mesh(
+          new THREE.ConeGeometry(0.5, 1, 3),
+          arrowMaterial
+        )
+        arrow.position.copy(point)
+        arrow.position.y = 0.5
+        arrow.lookAt(nextPoint)
+        arrow.rotation.x = Math.PI / 2
+        this.scene.add(arrow)
+      }
+    })
+  }
+
+  createBase() {
+    // Multi-tiered platform
+    const basePlatform = new THREE.Group()
+
+    // Bottom tier
+    const bottomTier = new THREE.Mesh(
+      new THREE.CylinderGeometry(8, 9, 2, 8),
+      new THREE.MeshStandardMaterial({
+        color: 0x440000,
+        metalness: 0.7,
+        roughness: 0.3,
+        emissive: 0x220000,
+        emissiveIntensity: 0.2
+      })
+    )
+    bottomTier.position.y = 1
+    bottomTier.castShadow = true
+    bottomTier.receiveShadow = true
+    basePlatform.add(bottomTier)
+
+    // Middle tier
+    const middleTier = new THREE.Mesh(
+      new THREE.CylinderGeometry(6, 7, 1.5, 8),
+      new THREE.MeshStandardMaterial({
+        color: 0x660000,
+        metalness: 0.6,
+        roughness: 0.4,
+        emissive: 0x330000,
+        emissiveIntensity: 0.3
+      })
+    )
+    middleTier.position.y = 2.75
+    middleTier.castShadow = true
+    basePlatform.add(middleTier)
+
+    this.scene.add(basePlatform)
+
+    // Main crystal - dramatic and glowing
+    const crystalGeometry = new THREE.OctahedronGeometry(3, 1)
+    const crystalMaterial = new THREE.MeshPhysicalMaterial({
+      color: 0xff0000,
+      emissive: 0xcc0000,
+      emissiveIntensity: 1.2,
+      metalness: 0.1,
+      roughness: 0.05,
+      transparent: true,
+      opacity: 0.9,
+      clearcoat: 1.0,
+      clearcoatRoughness: 0.1,
+      transmission: 0.3
+    })
+    this.crystal = new THREE.Mesh(crystalGeometry, crystalMaterial)
+    this.crystal.position.set(0, 6, 0)
+    this.crystal.castShadow = true
+    this.scene.add(this.crystal)
+
+    // Energy rings orbiting the crystal
+    this.createEnergyRings()
+
+    // Pillars around the base
+    this.createPillars()
+  }
+
+  createEnergyRings() {
+    const ringGeometry = new THREE.TorusGeometry(4.5, 0.15, 8, 32)
+    const ringMaterial = new THREE.MeshStandardMaterial({
+      color: 0xff0000,
+      emissive: 0xff0000,
+      emissiveIntensity: 0.8,
+      metalness: 0.8,
+      roughness: 0.2
+    })
+    
+    this.energyRings = []
+    for (let i = 0; i < 3; i++) {
+      const ring = new THREE.Mesh(ringGeometry, ringMaterial.clone())
+      ring.position.set(0, 5, 0)
+      ring.rotation.x = Math.PI / 2 + (Math.random() - 0.5) * 0.3
+      ring.rotation.y = (Math.PI * 2 * i) / 3
+      this.energyRings.push(ring)
+      this.scene.add(ring)
+    }
+  }
+
+  createPillars() {
+    const pillarGeometry = new THREE.CylinderGeometry(0.6, 0.7, 5, 6)
+    const pillarMaterial = new THREE.MeshStandardMaterial({
+      color: 0x880000,
+      metalness: 0.7,
+      roughness: 0.3,
+      emissive: 0x440000,
+      emissiveIntensity: 0.3
+    })
+    
+    const pillarPositions = [
+      [5, 2.5, 0],
+      [-5, 2.5, 0],
+      [0, 2.5, 5],
+      [0, 2.5, -5],
+      [3.5, 2.5, 3.5],
+      [-3.5, 2.5, 3.5],
+      [3.5, 2.5, -3.5],
+      [-3.5, 2.5, -3.5]
+    ]
+    
+    pillarPositions.forEach(pos => {
+      const pillar = new THREE.Mesh(pillarGeometry, pillarMaterial.clone())
+      pillar.position.set(...pos)
+      pillar.castShadow = true
+      pillar.receiveShadow = true
+      this.scene.add(pillar)
+
+      // Glow on top of pillars
+      const glowGeometry = new THREE.SphereGeometry(0.4, 8, 8)
+      const glowMaterial = new THREE.MeshBasicMaterial({
+        color: 0xff0000,
+        transparent: true,
+        opacity: 0.8
+      })
+      const glow = new THREE.Mesh(glowGeometry, glowMaterial)
+      glow.position.set(pos[0], pos[1] + 2.5, pos[2])
+      this.scene.add(glow)
+    })
+  }
+
+  createDecorations() {
+    // Rocks scattered around
+    const rockGeometry = new THREE.DodecahedronGeometry(1, 0)
+    const rockMaterial = new THREE.MeshStandardMaterial({ 
+      color: 0x3a1a1a,
+      roughness: 0.95,
+      flatShading: true
+    })
+
+    for (let i = 0; i < 25; i++) {
+      const rock = new THREE.Mesh(rockGeometry, rockMaterial.clone())
+      
+      // Place away from path
+      let x, z
+      do {
+        x = (Math.random() - 0.5) * 80
+        z = (Math.random() - 0.5) * 80
+      } while (Math.abs(x) < 15 && Math.abs(z) < 25) // Avoid center path
+      
+      rock.position.set(x, Math.random() * 0.8, z)
+      rock.rotation.set(
+        Math.random() * Math.PI,
+        Math.random() * Math.PI,
+        Math.random() * Math.PI
+      )
+      rock.scale.set(
+        0.8 + Math.random() * 1.5,
+        0.8 + Math.random() * 1.2,
+        0.8 + Math.random() * 1.5
+      )
+      rock.castShadow = true
+      rock.receiveShadow = true
+      this.scene.add(rock)
+    }
+
+    // Floating particles
+    this.createParticles()
+  }
+
+  createParticles() {
+    // Reduced particles for performance (200 instead of 2000)
+    const particlesGeometry = new THREE.BufferGeometry()
+    const particlesCount = 200
+    const positions = new Float32Array(particlesCount * 3)
+    const colors = new Float32Array(particlesCount * 3)
+
+    for (let i = 0; i < particlesCount * 3; i += 3) {
+      positions[i] = (Math.random() - 0.5) * 120
+      positions[i + 1] = Math.random() * 50 + 5
+      positions[i + 2] = (Math.random() - 0.5) * 120
+      
+      // Red/orange/black particles
+      const colorChoice = Math.random()
+      if (colorChoice < 0.6) {
+        colors[i] = 1.0
+        colors[i + 1] = 0.0
+        colors[i + 2] = 0.0
+      } else if (colorChoice < 0.85) {
+        colors[i] = 1.0
+        colors[i + 1] = 0.3
+        colors[i + 2] = 0.0
+      } else {
+        colors[i] = 0.5
+        colors[i + 1] = 0.0
+        colors[i + 2] = 0.0
+      }
+    }
+
+    particlesGeometry.setAttribute('position', new THREE.BufferAttribute(positions, 3))
+    particlesGeometry.setAttribute('color', new THREE.BufferAttribute(colors, 3))
+
+    const particlesMaterial = new THREE.PointsMaterial({
+      size: 0.4,
+      transparent: true,
+      opacity: 0.4,
+      vertexColors: true,
+      blending: THREE.AdditiveBlending,
+      depthWrite: false
+    })
+
+    this.particles = new THREE.Points(particlesGeometry, particlesMaterial)
+    this.scene.add(this.particles)
+  }
+
+  // Initialize sound system with Web Audio API
+  async initializeSoundSystem() {
+    try {
+      await SoundManager.initialize(this.camera)
+      await SoundManager.preloadSounds()
+
+      // Start menu/theme music
+      if (!this.gameStarted) {
+        SoundManager.playMusic('theme.ogg')
+      }
+    } catch (error) {
+      console.warn('Sound initialization failed:', error)
+    }
+  }
+
+  initPostProcessing() {
+    this.composer = new EffectComposer(this.renderer)
+    
+    const renderPass = new RenderPass(this.scene, this.camera)
+    this.composer.addPass(renderPass)
+    
+    // Stronger bloom for dramatic glow
+    const bloomPass = new UnrealBloomPass(
+      new THREE.Vector2(this.container.clientWidth, this.container.clientHeight),
+      2.0, // strength
+      0.6, // radius
+      0.3 // threshold
+    )
+    this.composer.addPass(bloomPass)
+    
+    const outputPass = new OutputPass()
+    this.composer.addPass(outputPass)
+  }
+
+  // Create better tower visual
+  createTowerModel(type = 'basic') {
+    const towerGroup = new THREE.Group()
+
+    // Base
+    const baseGeometry = new THREE.CylinderGeometry(1.5, 2, 1, 8)
+    const baseMaterial = new THREE.MeshStandardMaterial({
+      color: 0x660000,
+      metalness: 0.6,
+      roughness: 0.4
+    })
+    const base = new THREE.Mesh(baseGeometry, baseMaterial)
+    base.position.y = 0.5
+    base.castShadow = true
+    base.receiveShadow = true
+    towerGroup.add(base)
+
+    // Main body
+    const bodyGeometry = new THREE.CylinderGeometry(1.2, 1.5, 3, 6)
+    const bodyMaterial = new THREE.MeshStandardMaterial({
+      color: 0x880000,
+      metalness: 0.5,
+      roughness: 0.5
+    })
+    const body = new THREE.Mesh(bodyGeometry, bodyMaterial)
+    body.position.y = 2.5
+    body.castShadow = true
+    towerGroup.add(body)
+
+    // Top turret
+    const turretGeometry = new THREE.ConeGeometry(1, 2, 6)
+    const turretMaterial = new THREE.MeshStandardMaterial({
+      color: 0xaa0000,
+      metalness: 0.7,
+      roughness: 0.3,
+      emissive: 0x440000,
+      emissiveIntensity: 0.4
+    })
+    const turret = new THREE.Mesh(turretGeometry, turretMaterial)
+    turret.position.y = 4.5
+    turret.castShadow = true
+    towerGroup.add(turret)
+
+    // Glowing tip
+    const tipGeometry = new THREE.SphereGeometry(0.3, 8, 8)
+    const tipMaterial = new THREE.MeshBasicMaterial({
+      color: 0xff0000,
+      transparent: true,
+      opacity: 0.9
+    })
+    const tip = new THREE.Mesh(tipGeometry, tipMaterial)
+    tip.position.y = 5.5
+    towerGroup.add(tip)
+
+    return towerGroup
+  }
+
+  // Create better enemy visual
+  createEnemyModel() {
+    const enemyGroup = new THREE.Group()
+
+    // Body
+    const bodyGeometry = new THREE.SphereGeometry(0.8, 12, 12)
+    const bodyMaterial = new THREE.MeshStandardMaterial({
+      color: 0x00ff00,
+      metalness: 0.3,
+      roughness: 0.7,
+      emissive: 0x00aa00,
+      emissiveIntensity: 0.3
+    })
+    const body = new THREE.Mesh(bodyGeometry, bodyMaterial)
+    body.position.y = 1
+    body.castShadow = true
+    enemyGroup.add(body)
+
+    // Eye glow
+    const eyeGeometry = new THREE.SphereGeometry(0.2, 8, 8)
+    const eyeMaterial = new THREE.MeshBasicMaterial({
+      color: 0xffff00,
+      transparent: true,
+      opacity: 0.9
+    })
+    const eye = new THREE.Mesh(eyeGeometry, eyeMaterial)
+    eye.position.set(0, 1.2, 0.6)
+    enemyGroup.add(eye)
+
+    return enemyGroup
+  }
+
+  placeTower(position) {
+    if (this.gold < 100) {
+      console.log('Not enough gold!')
+      return false
+    }
+
+    const towerModel = this.createTowerModel('basic')
+    towerModel.position.copy(position)
+    this.scene.add(towerModel)
+
+    const tower = {
+      mesh: towerModel,
+      position: position.clone(),
+      damage: 25,
+      range: 12,
+      fireRate: 1.0,
+      lastShot: 0,
+      health: 300,
+      maxHealth: 300
+    }
+
+    this.towers.push(tower)
+    this.gold -= 100
+
     if (this.callbacks.onGoldChange) {
       this.callbacks.onGoldChange(this.gold)
     }
-    if (this.callbacks.onPassiveRateChange) {
-      this.callbacks.onPassiveRateChange({
-        energyPerSecond: this.energyRegenPerTick / this.energyRegenTick,
-        goldPerSecond: 0
+
+    return true
+  }
+
+  spawnEnemy() {
+    // Legacy method - spawn basic spider
+    this.spawnEnemyOfType('spider', 1 + this.wave * 0.1, null, 1)
+  }
+  
+  spawnEnemyOfType(type = 'spider', healthMultiplier = 1.0, spawnPoint = null, speedMultiplier = 1) {
+    // Create enemy using the Enemy class with visual effects reference
+    const enemy = new Enemy(type, {
+      healthMultiplier,
+      speedMultiplier,
+      visualEffects: this.visualEffects
+    })
+    const mesh = enemy.createMesh()
+    if (!mesh) return
+    
+    // Set spawn position - use provided spawn point or default
+    let startPos
+    if (spawnPoint) {
+      startPos = new THREE.Vector3(spawnPoint.x, 0.5, spawnPoint.z)
+    } else {
+      // Get spawn position from arena
+      const spawnWorld = this.arena.gridToWorld(this.arena.start)
+      startPos = new THREE.Vector3(spawnWorld.x, spawnWorld.y, spawnWorld.z)
+    }
+    
+    mesh.position.copy(startPos)
+    enemy.position = startPos.clone()
+    
+    // Use A* pathfinding to find path to base from spawn point
+    const gridPath = this.arena.findPath(
+      this.arena.worldToGrid(startPos),
+      this.arena.worldToGrid(this.base.position)
+    )
+    if (gridPath && gridPath.length > 0) {
+      // Convert grid path to world path
+      const worldPath = this.arena.getWorldPath(gridPath)
+      enemy.setPath(worldPath)
+      enemy.pathIndex = 0
+    } else {
+      // Fallback to old path if A* fails
+      if (this.enemyPath && this.enemyPath.length > 0) {
+        enemy.setPath(this.enemyPath)
+        enemy.pathIndex = 0
+      }
+    }
+    
+    this.scene.add(mesh)
+    this.enemies.push(enemy)
+    
+    // Add to spatial grid for collision
+    this.spatialGrid.insert(enemy)
+  }
+
+  startWave() {
+    this.wave++
+    
+    // Generate wave configuration with enemy variety
+    const waveConfig = generateWave(this.wave)
+    
+    // Play wave start sound (UI sound, non-spatial)
+    SoundManager.play('wave_start.ogg')
+    
+    // Flatten enemy list for spawning
+    const enemiesToSpawn = []
+    waveConfig.enemies.forEach(config => {
+      for (let i = 0; i < config.count; i++) {
+        enemiesToSpawn.push({
+          type: config.type,
+          healthMultiplier: waveConfig.healthMultiplier,
+          speedMultiplier: waveConfig.speedMultiplier || 1
+        })
+      }
+    })
+    
+    // Shuffle for variety
+    enemiesToSpawn.sort(() => Math.random() - 0.5)
+    
+    // Spawn enemies with delay
+    enemiesToSpawn.forEach((config, i) => {
+      setTimeout(() => {
+        if (!this.gameOver) {
+          this.spawnEnemyOfType(config.type, config.healthMultiplier)
+        }
+      }, i * 1000) // 1 second between each spawn
+    })
+    
+    if (this.callbacks.onWaveChange) {
+      this.callbacks.onWaveChange(this.wave)
+    }
+  }
+
+  update(deltaTime) {
+    if (this.gameOver || this.isPaused) return
+    
+    // Cap delta time to prevent physics explosions
+    deltaTime = Math.min(deltaTime, 0.033) // Max 30ms
+    
+    // Performance monitoring
+    this.performanceManager.update(deltaTime)
+    
+    // Update sound manager
+    SoundManager.update(deltaTime * 1000) // Convert to milliseconds
+    
+    // Update visual effects
+    if (this.visualEffects) {
+      this.visualEffects.update(deltaTime)
+    }
+    
+    // Apply passive buffs
+    if (this.passiveBuffs) {
+      // Gold rate multiplier applied when enemies die
+    }
+    
+    // Update passive energy generation only (NO passive gold - coins only from coding problems)
+    const now = Date.now()
+    if (now - this.lastPassiveTick >= 1000) {
+      this.lastPassiveTick = now
+      // Energy generation is handled by WaveTimer
+    }
+    
+    // Update wave timer (handles passive energy generation)
+    if (this.waveTimer) {
+      this.waveTimer.update(deltaTime)
+    }
+    
+    // Update AI player for single player mode
+    if (this.aiPlayer && !this.isPaused && !this.gameOver) {
+      this.aiPlayer.update(deltaTime, Date.now())
+    }
+
+    this.controls.update()
+    
+    // Update spatial grid
+    this.updateSpatialGrid()
+    
+    // Update LOD
+    this.lodManager.update()
+
+    // Animate crystal
+    if (this.crystal) {
+      this.crystal.rotation.y += deltaTime * 0.6
+      this.crystal.rotation.x += deltaTime * 0.4
+      this.crystal.position.y = 6 + Math.sin(Date.now() * 0.002) * 0.6
+      
+      // Pulse the glow
+      const pulse = (Math.sin(Date.now() * 0.003) + 1) / 2
+      this.crystal.material.emissiveIntensity = 0.8 + pulse * 0.6
+    }
+
+    // Animate energy rings
+    if (this.energyRings) {
+      this.energyRings.forEach((ring, i) => {
+        ring.rotation.z += deltaTime * (0.8 + i * 0.4)
+        ring.position.y = 5 + Math.sin(Date.now() * 0.001 + i * 2) * 0.5
       })
+    }
+
+    // Animate base light intensity
+    if (this.baseLight) {
+      const pulse = (Math.sin(Date.now() * 0.002) + 1) / 2
+      this.baseLight.intensity = 1.5 + pulse * 0.8
+    }
+
+    // Animate particles
+    if (this.particles) {
+      this.particles.rotation.y += deltaTime * 0.05
+      
+      // Drift particles
+      const positions = this.particles.geometry.attributes.position.array
+      for (let i = 0; i < positions.length; i += 3) {
+        positions[i + 1] += Math.sin(Date.now() * 0.001 + i) * 0.01
+      }
+      this.particles.geometry.attributes.position.needsUpdate = true
+    }
+
+    // Update structures
+    this.updateStructures(deltaTime)
+    
+    // Update defensive units
+    for (let i = this.defensiveUnits.length - 1; i >= 0; i--) {
+      const unit = this.defensiveUnits[i]
+      if (unit.isDead) {
+        if (unit.mesh && unit.mesh.parent) {
+          unit.mesh.parent.remove(unit.mesh)
+        }
+        unit.destroy()
+        this.defensiveUnits.splice(i, 1)
+      } else {
+        unit.update(deltaTime, this.enemies, this.spatialGrid)
+      }
+    }
+
+    // Update enemies
+    for (let i = this.enemies.length - 1; i >= 0; i--) {
+      const enemy = this.enemies[i]
+      this.updateEnemy(enemy, deltaTime)
+
+      if (enemy.reachedEnd || enemy.finished) {
+        const livesLost = enemy.lives || 1
+        this.health -= 50 * livesLost
+        
+        if (enemy.mesh) {
+          this.scene.remove(enemy.mesh)
+        }
+        if (enemy.destroy) {
+          enemy.destroy()
+        }
+        this.enemies.splice(i, 1)
+
+        if (this.health <= 0) {
+          this.endGame(false)
+        }
+        
+        if (this.callbacks.onHealthChange) {
+          this.callbacks.onHealthChange(this.health, this.maxHealth)
+        }
+      } else if (enemy.isDead) {
+        // Calculate rewards
+        const goldReward = enemy.goldReward || 25
+        const xpReward = enemy.xpReward || 10
+        
+        // Apply passive buffs
+        const goldMultiplier = this.passiveBuffs?.goldRateMultiplier || 1
+        this.gold += Math.floor(goldReward * goldMultiplier)
+        this.score += xpReward
+        
+        // Create death explosion
+        if (enemy.mesh) {
+          this.createHitEffect(enemy.mesh.position)
+          
+          // Handle splitter enemies
+          if (enemy.getSpawnOnDeath) {
+            const spawns = enemy.getSpawnOnDeath()
+            spawns.forEach(spawnConfig => {
+              setTimeout(() => {
+                this.spawnEnemyOfType(spawnConfig.type, 1.0, null, 1)
+              }, 100)
+            })
+          }
+          
+          this.scene.remove(enemy.mesh)
+        }
+        if (enemy.destroy) {
+          enemy.destroy()
+        }
+        this.enemies.splice(i, 1)
+        
+        if (this.callbacks.onGoldChange) {
+          this.callbacks.onGoldChange(this.gold)
+        }
+      }
+    }
+
+    // Update projectiles
+    for (let i = this.projectiles.length - 1; i >= 0; i--) {
+      const proj = this.projectiles[i]
+      this.updateProjectile(proj, deltaTime)
+
+      if (proj.shouldRemove) {
+        this.scene.remove(proj.mesh)
+        this.projectiles.splice(i, 1)
+      }
+    }
+  }
+
+  updateTower(tower, deltaTime) {
+    const now = Date.now() / 1000
+
+    if (now - tower.lastShot < 1 / tower.fireRate) return
+
+    // Find enemies in range
+    const enemiesInRange = this.enemies.filter(enemy => {
+      if (enemy.isDead || !enemy.mesh) return false
+      const enemyPos = enemy.position || enemy.mesh.position
+      const dist = tower.position.distanceTo(enemyPos)
+      return dist <= tower.range
+    })
+
+    if (enemiesInRange.length === 0) return
+
+    // Target closest enemy
+    const target = enemiesInRange.reduce((closest, enemy) => {
+      const closestPos = closest.position || closest.mesh.position
+      const enemyPos = enemy.position || enemy.mesh.position
+      const distClosest = tower.position.distanceTo(closestPos)
+      const distEnemy = tower.position.distanceTo(enemyPos)
+      return distEnemy < distClosest ? enemy : closest
+    })
+
+    // Fire projectile with attack type and splash radius
+    const attackType = tower.attackType || 'gattling'
+    const splashRadius = tower.splashRadius || 0
+    this.fireProjectile(tower.position.clone(), target, tower.damage, attackType, splashRadius)
+    tower.lastShot = now
+
+    // Visual feedback - flash turret
+    if (tower.mesh.children[2]) { // turret part
+      const originalEmissive = tower.mesh.children[2].material.emissiveIntensity
+      tower.mesh.children[2].material.emissiveIntensity = 1.0
+      setTimeout(() => {
+        if (tower.mesh.children[2]) {
+          tower.mesh.children[2].material.emissiveIntensity = originalEmissive
+        }
+      }, 100)
+    }
+  }
+
+  updateEnemy(enemy, deltaTime) {
+    if (enemy.isDead || enemy.finished) return
+
+    // Use Enemy class pathfinding if available
+    if (enemy.path && enemy.path.length > 0 && enemy.next) {
+      const targetPos = new THREE.Vector3(enemy.next.x, enemy.next.y || 0.5, enemy.next.z || 0)
+      const enemyPos = enemy.position || (enemy.mesh ? enemy.mesh.position.clone() : new THREE.Vector3())
+      
+      const direction = new THREE.Vector3().subVectors(targetPos, enemyPos)
+      const distance = direction.length()
+      
+      if (distance > 0.5) {
+        direction.normalize()
+        
+        const speed = enemy.speed || 3
+        const moveDistance = speed * deltaTime
+        
+        if (enemy.position) {
+          enemy.position.add(direction.multiplyScalar(moveDistance))
+          if (enemy.mesh) {
+            enemy.mesh.position.copy(enemy.position)
+          }
+        } else if (enemy.mesh) {
+          enemy.mesh.position.add(direction.multiplyScalar(moveDistance))
+          enemy.position = enemy.mesh.position.clone()
+        }
+
+        // Rotate enemy to face direction
+        if (enemy.mesh && distance > 0.1) {
+          enemy.mesh.lookAt(targetPos)
+        }
+      } else {
+        // Reached waypoint, advance to next
+        enemy.advance()
+        
+        if (enemy.finished) {
+          enemy.reachedEnd = true
+        }
+      }
+    } else if (this.enemyPath && enemy.pathIndex !== undefined && enemy.pathIndex < this.enemyPath.length) {
+      // Legacy path system
+      const targetPos = this.enemyPath[enemy.pathIndex]
+      const enemyPos = enemy.position || (enemy.mesh ? enemy.mesh.position.clone() : new THREE.Vector3())
+      
+      const direction = new THREE.Vector3().subVectors(targetPos, enemyPos).normalize()
+      
+      const speed = enemy.speed || 3
+      const moveDistance = speed * deltaTime
+      
+      if (enemy.position) {
+        enemy.position.add(direction.multiplyScalar(moveDistance))
+        if (enemy.mesh) {
+          enemy.mesh.position.copy(enemy.position)
+        }
+      } else if (enemy.mesh) {
+        enemy.mesh.position.add(direction.multiplyScalar(moveDistance))
+        enemy.position = enemy.mesh.position.clone()
+      }
+
+      // Check if reached waypoint
+      const currentPos = enemy.position || (enemy.mesh ? enemy.mesh.position : new THREE.Vector3())
+      if (currentPos.distanceTo(targetPos) < 1) {
+        enemy.pathIndex++
+        
+        if (enemy.pathIndex >= this.enemyPath.length) {
+          enemy.reachedEnd = true
+          enemy.finished = true
+        }
+      }
+
+      // Rotate enemy to face direction
+      if (enemy.mesh) {
+        enemy.mesh.lookAt(targetPos)
+      }
+    }
+
+    // Animation update (if using Enemy class)
+    if (enemy.updateAnimation) {
+      enemy.updateAnimation(deltaTime)
+    } else if (enemy.mesh) {
+      // Legacy bob animation
+      const baseY = enemy.position ? enemy.position.y : 0
+      enemy.mesh.position.y = baseY + Math.sin(Date.now() * 0.005 + (enemy.id || 0)) * 0.2
+    }
+    
+    // Update health bar (if using Enemy class)
+    if (enemy.updateHealthBar) {
+      enemy.updateHealthBar()
+    }
+  }
+
+  updateProjectile(proj, deltaTime) {
+    if (!proj.target || proj.target.isDead) {
+      proj.shouldRemove = true
+      return
+    }
+    
+    const targetPos = proj.target.position || (proj.target.mesh ? proj.target.mesh.position : new THREE.Vector3())
+    const direction = new THREE.Vector3().subVectors(targetPos, proj.position)
+    const distance = direction.length()
+    
+    if (distance < 0.5) {
+      // Hit target
+      const damage = proj.damage || 20
+      const splashRadius = proj.splashRadius || 0
+      
+      // Apply damage using Enemy class method if available
+      if (proj.target.damage) {
+        proj.target.damage(damage)
+      } else {
+        proj.target.health -= damage
+        if (proj.target.health <= 0) {
+          proj.target.isDead = true
+        }
+      }
+      
+      // Splash damage for missiles
+      if (splashRadius > 0) {
+        this.enemies.forEach(enemy => {
+          if (enemy.isDead || enemy === proj.target) return
+          const enemyPos = enemy.position || (enemy.mesh ? enemy.mesh.position : new THREE.Vector3())
+          const splashDist = proj.position.distanceTo(enemyPos)
+          if (splashDist <= splashRadius) {
+            const splashDamage = damage * (1 - splashDist / splashRadius) * 0.5
+            if (enemy.damage) {
+              enemy.damage(splashDamage)
+            } else {
+              enemy.health -= splashDamage
+              if (enemy.health <= 0) {
+                enemy.isDead = true
+              }
+            }
+          }
+        })
+      }
+      
+      proj.shouldRemove = true
+      
+      // Hit effect (reduced particles for performance)
+      this.createHitEffect(proj.position, splashRadius > 0)
+      
+      // Clean up trail effect
+      if (proj.trailEffect && proj.trailEffect.destroy) {
+        proj.trailEffect.destroy()
+      }
+      return
+    }
+    
+    // Move projectile
+    direction.normalize()
+    const speed = proj.speed || 30
+    const moveDistance = speed * deltaTime
+    proj.position.add(direction.multiplyScalar(moveDistance))
+    if (proj.mesh) {
+      proj.mesh.position.copy(proj.position)
+    }
+
+    // Remove if too far
+    if (proj.position.length() > 200) {
+      proj.shouldRemove = true
+      if (proj.trailEffect && proj.trailEffect.destroy) {
+        proj.trailEffect.destroy()
+      }
+    }
+  }
+
+  fireProjectile(from, target, damage, attackType = 'gattling', splashRadius = 0) {
+    // Play appropriate sound based on attack type with 3D spatial audio
+    if (attackType === 'missile') {
+      SoundManager.play3D('missile.ogg', from)
+    } else if (attackType === 'laser') {
+      SoundManager.play3D('laser.ogg', from)
+    } else if (attackType === 'sniper') {
+      SoundManager.play3D('sniper.ogg', from)
+    } else if (attackType === 'frost') {
+      SoundManager.play3D('frost.ogg', from)
+    } else if (attackType === 'fire') {
+      SoundManager.play3D('fire.ogg', from)
+    } else if (attackType === 'tesla') {
+      SoundManager.play3D('tesla.ogg', from)
+    } else {
+      SoundManager.play3D('gattling.ogg', from)
+    }
+    
+    // Larger projectile for missiles
+    const projSize = attackType === 'missile' ? 0.5 : 0.3
+    const projGeometry = new THREE.SphereGeometry(projSize, 8, 8)
+    const projMaterial = new THREE.MeshBasicMaterial({
+      color: attackType === 'frost' ? 0x88ddff : attackType === 'missile' ? 0xff6600 : 0xff0000,
+      transparent: true,
+      opacity: 0.9
+    })
+    const projMesh = new THREE.Mesh(projGeometry, projMaterial)
+    projMesh.position.copy(from)
+    projMesh.position.y += 2
+    this.scene.add(projMesh)
+
+    // Create muzzle flash
+    if (this.visualEffects) {
+      const targetPos = target.position || (target.mesh ? target.mesh.position : new THREE.Vector3())
+      const direction = new THREE.Vector3().subVectors(targetPos, from).normalize()
+      this.visualEffects.createMuzzleFlash(from.clone().add(new THREE.Vector3(0, 2, 0)), direction, {
+        color: attackType === 'frost' ? 0x88ddff : 0xff6600,
+        size: 0.8,
+        duration: 100
+      })
+    }
+
+    // Trail effect using visual effects system
+    let trailEffect = null
+    if (this.visualEffects) {
+      trailEffect = this.visualEffects.createProjectileTrail(projMesh, {
+        color: attackType === 'frost' ? 0x88ddff : 0xff3333,
+        length: 8
+      })
+    } else {
+      // Fallback trail
+      const trailGeometry = new THREE.SphereGeometry(0.15, 6, 6)
+      const trailMaterial = new THREE.MeshBasicMaterial({
+        color: 0xff3333,
+        transparent: true,
+        opacity: 0.5
+      })
+      const trail = new THREE.Mesh(trailGeometry, trailMaterial)
+      trail.position.copy(projMesh.position)
+      this.scene.add(trail)
+      setTimeout(() => this.scene.remove(trail), 300)
+    }
+
+    const projectile = {
+      mesh: projMesh,
+      position: projMesh.position.clone(),
+      target,
+      damage,
+      attackType,
+      splashRadius,
+      speed: attackType === 'missile' ? 20 : 30, // Slower missiles
+      shouldRemove: false,
+      trailEffect
+    }
+
+    this.projectiles.push(projectile)
+  }
+
+  createHitEffect(position, isSplash = false) {
+    // Use visual effects system for explosion (reduced particles for performance)
+    if (this.visualEffects) {
+      // Main explosion
+      this.visualEffects.createExplosion(position, {
+        numParticles: isSplash ? 40 : 15, // More particles for splash
+        color: isSplash ? 0xff4400 : 0xff6600,
+        maxDist: isSplash ? 12 : 6,
+        duration: 300
+      })
+
+      // Add shockwave for splash damage
+      if (isSplash) {
+        this.visualEffects.createShockwave(position, {
+          maxRadius: 15,
+          color: 0xff6600,
+          duration: 600
+        })
+
+        // Screen shake for big explosions
+        const distanceToCamera = position.distanceTo(this.camera.position)
+        if (distanceToCamera < 50) {
+          const intensity = Math.max(0.5, 2.0 - distanceToCamera / 25)
+          this.visualEffects.triggerScreenShake(intensity, 200)
+        }
+      }
+
+      // Impact sparks
+      const impactDirection = new THREE.Vector3(0, -1, 0)
+      this.visualEffects.createImpactSparks(position, impactDirection, {
+        count: isSplash ? 30 : 15,
+        color: 0xffaa00,
+        speed: isSplash ? 20 : 15
+      })
+
+      // Play explosion sound with 3D spatial audio (rate limited)
+      SoundManager.play3D('explosion.ogg', position)
+    } else {
+      // Fallback: simple explosion effect
+      const explosionGeometry = new THREE.SphereGeometry(1, 8, 8)
+      const explosionMaterial = new THREE.MeshBasicMaterial({
+        color: isSplash ? 0xff4400 : 0xff6600,
+        transparent: true,
+        opacity: 0.8
+      })
+      const explosion = new THREE.Mesh(explosionGeometry, explosionMaterial)
+      explosion.position.copy(position)
+      this.scene.add(explosion)
+
+      // Animate explosion
+      let scale = 0
+      const animate = () => {
+        scale += 0.1
+        explosion.scale.setScalar(scale)
+        explosionMaterial.opacity = 0.8 - scale * 0.4
+        
+        if (scale < 2) {
+          requestAnimationFrame(animate)
+        } else {
+          this.scene.remove(explosion)
+          explosionGeometry.dispose()
+          explosionMaterial.dispose()
+        }
+      }
+      animate()
     }
   }
   
-  startNextWave() {
-    if (this.waveActive) return
-    const nextWaveNumber = this.wave + 1
-    const wavePlan = this.waveDirector.planWave(nextWaveNumber)
-    
-    this.waveActive = true
-    this.phase = 'combat'
-    this.waveCountdown = 0
-    this.lastWaveTime = Date.now()
-    this.waveStartHealth = this.health
-    
-    this.enemyManager.startWave(wavePlan)
+  // Create laser effect for laser towers
+  createLaserEffect(source, target, duration = 500) {
+    if (this.visualEffects) {
+      this.visualEffects.createLightning(source, target, {
+        color: 0x00aaff,
+        duration,
+        segments: 15,
+        displacement: 2
+      })
+      // Laser sound already played in fireProjectile
+    }
   }
   
+  // Create frost effect for frost towers
+  createFrostEffect(position, radius) {
+    if (this.visualEffects) {
+      this.visualEffects.createFrostEffect(position, radius, {
+        color: 0x88ddff,
+        duration: 800
+      })
+    }
+  }
+
   setupEventListeners() {
     this.renderer.domElement.addEventListener('click', (e) => this.onClick(e))
     this.renderer.domElement.addEventListener('mousemove', (e) => this.onMouseMove(e))
-    this.renderer.domElement.addEventListener('contextmenu', (e) => {
-      e.preventDefault()
-      this.cancelPlacement()
-    })
     window.addEventListener('resize', () => this.onResize())
+    window.addEventListener('keydown', (e) => this.onKeyDown(e))
   }
-  
+
   onClick(event) {
-    if (this.gameOver || this.isPaused) return
-    
-    const rect = this.container.getBoundingClientRect()
-    this.mouse.x = ((event.clientX - rect.left) / rect.width) * 2 - 1
-    this.mouse.y = -((event.clientY - rect.top) / rect.height) * 2 + 1
-    
+    if (this.gameOver) return
+
+    this.mouse.x = (event.clientX / window.innerWidth) * 2 - 1
+    this.mouse.y = -(event.clientY / window.innerHeight) * 2 + 1
+
     this.raycaster.setFromCamera(this.mouse, this.camera)
-    const intersects = this.raycaster.intersectObject(this.graphicsEngine.terrain)
+    
+    const intersects = this.raycaster.intersectObject(this.ground)
     
     if (intersects.length > 0) {
-      const point = intersects[0].point.clone()
+      const point = intersects[0].point
       point.y = 0
       
       if (this.selectedStructureType) {
         this.placeStructure(this.selectedStructureType, point)
       } else {
-        // Check for tower selection
-        this.selectTowerAt(point)
+        // Legacy: place basic tower if nothing selected
+        this.placeTower(point)
       }
-    }
-  }
-  
-  selectTowerAt(point) {
-    for (const tower of this.towers) {
-      if (tower.position.distanceTo(point) < 2) {
-        // Show tower info
-        if (this.callbacks.onTowerSelected) {
-          this.callbacks.onTowerSelected(tower.getStats())
-        }
-        tower.showRange()
-        
-        // Hide other ranges
-        this.towers.forEach(t => {
-          if (t !== tower) t.hideRange()
-        })
-        return
-      }
-    }
-    
-    // Clicked empty space - deselect
-    this.towers.forEach(t => t.hideRange())
-    if (this.callbacks.onTowerSelected) {
-      this.callbacks.onTowerSelected(null)
     }
   }
   
   onMouseMove(event) {
-    if (!this.selectedStructureType) {
-      if (this.ghostPreview) {
-        this.scene.remove(this.ghostPreview)
-        this.ghostPreview = null
-      }
-      return
-    }
+    if (!this.selectedStructureType) return
     
-    const rect = this.container.getBoundingClientRect()
-    this.mouse.x = ((event.clientX - rect.left) / rect.width) * 2 - 1
-    this.mouse.y = -((event.clientY - rect.top) / rect.height) * 2 + 1
+    this.mouse.x = (event.clientX / window.innerWidth) * 2 - 1
+    this.mouse.y = -(event.clientY / window.innerHeight) * 2 + 1
     
     this.raycaster.setFromCamera(this.mouse, this.camera)
-    const intersects = this.raycaster.intersectObject(this.graphicsEngine.terrain)
+    const intersects = this.raycaster.intersectObject(this.ground)
     
     if (intersects.length > 0) {
-      const point = intersects[0].point.clone()
+      const point = intersects[0].point
       point.y = 0
       this.updateGhostPreview(point)
     }
   }
   
-  onResize() {
-    this.graphicsEngine.handleResize()
-    this.controls.update()
+  onKeyDown(event) {
+    if (event.code === 'Space' && !this.gameOver) {
+      this.startWave()
+    } else if (event.key === 'Escape') {
+      this.cancelPlacement()
+    } else if (event.key === 'r' || event.key === 'R') {
+      this.placementRotation = (this.placementRotation + Math.PI / 4) % (Math.PI * 2)
+      if (this.ghostPreview) {
+        this.ghostPreview.rotation.y = this.placementRotation
+      }
+    }
   }
   
   selectStructureType(structureId) {
+    // Map build bar IDs to structure types
     const mapping = {
+      // Towers
       'gattling': { type: 'tower', towerType: 'gattling' },
       'missile': { type: 'tower', towerType: 'missile' },
       'laser': { type: 'tower', towerType: 'laser' },
@@ -423,17 +1514,24 @@ export class EnhancedGame {
       'frost': { type: 'tower', towerType: 'frost' },
       'fire': { type: 'tower', towerType: 'fire' },
       'tesla': { type: 'tower', towerType: 'tesla' },
+      // Legacy
       'basic_tower': { type: 'tower', towerType: 'gattling' },
+      'cannon': { type: 'tower', towerType: 'missile' },
+      // Walls
       'wall': { type: 'wall', wallType: 'maze' },
-      'blocking_wall': { type: 'wall', wallType: 'blocking' }
+      'blocking_wall': { type: 'wall', wallType: 'blocking' },
+      // Spawner
+      'spawner': { type: 'spawner', spawnerType: 'barracks' }
     }
     
     const config = mapping[structureId]
     if (config) {
       this.selectedStructureType = config
-      console.log('🔨 Selected:', structureId)
+      this.placementRotation = 0
+      console.log('Selected structure:', structureId, config)
     } else {
-      this.cancelPlacement()
+      this.selectedStructureType = null
+      console.log('Cancelled placement')
     }
   }
   
@@ -445,75 +1543,97 @@ export class EnhancedGame {
     }
   }
   
-  updateGhostPreview(position) {
-    if (!this.selectedStructureType) return
+  async updateGhostPreview(position) {
+    if (!this.selectedStructureType) {
+      if (this.ghostPreview) {
+        this.scene.remove(this.ghostPreview)
+        this.ghostPreview = null
+      }
+      return
+    }
     
     const isValid = this.isValidPlacement(position)
     
     if (!this.ghostPreview) {
-      const geom = new THREE.CylinderGeometry(1.2, 1.4, 3.5, 10)
-      const mat = new THREE.MeshBasicMaterial({
-        color: isValid ? 0x00ff00 : 0xff0000,
-        transparent: true,
-        opacity: 0.4
+      // Create ghost preview
+      const modelKey = this.getModelKeyForStructure()
+      if (!modelKey) return
+      
+      const instance = modelLoader.createInstance(modelKey)
+      if (!instance) return
+      
+      this.ghostPreview = instance
+      this.ghostPreview.traverse((child) => {
+        if (child.isMesh && child.material) {
+          const materials = Array.isArray(child.material) ? child.material : [child.material]
+          materials.forEach(mat => {
+            mat.transparent = true
+            mat.opacity = 0.5
+            mat.emissive = new THREE.Color(isValid ? 0x00ff00 : 0xff0000)
+            mat.emissiveIntensity = 0.3
+          })
+        }
       })
-      this.ghostPreview = new THREE.Mesh(geom, mat)
-      this.ghostPreview.position.y = 1.75
       this.scene.add(this.ghostPreview)
-      
-      // Range indicator
-      const rangeConfig = this.selectedStructureType.towerType 
-        ? TOWER_TYPES[this.selectedStructureType.towerType]
-        : null
-      
-      if (rangeConfig && rangeConfig.range) {
-        const rangeGeom = new THREE.RingGeometry(rangeConfig.range - 0.5, rangeConfig.range, 32)
-        const rangeMat = new THREE.MeshBasicMaterial({
-          color: isValid ? 0x00ff00 : 0xff0000,
-          transparent: true,
-          opacity: 0.15,
-          side: THREE.DoubleSide
+    }
+    
+    this.ghostPreview.position.copy(position)
+    this.ghostPreview.rotation.y = this.placementRotation
+    
+    // Update color based on validity
+    this.ghostPreview.traverse((child) => {
+      if (child.isMesh && child.material) {
+        const materials = Array.isArray(child.material) ? child.material : [child.material]
+        materials.forEach(mat => {
+          mat.emissive = new THREE.Color(isValid ? 0x00ff00 : 0xff0000)
         })
-        const rangeRing = new THREE.Mesh(rangeGeom, rangeMat)
-        rangeRing.rotation.x = -Math.PI / 2
-        rangeRing.position.y = -1.7
-        this.ghostPreview.add(rangeRing)
       }
-    }
+    })
+  }
+  
+  getModelKeyForStructure() {
+    if (!this.selectedStructureType) return null
     
-    this.ghostPreview.position.x = position.x
-    this.ghostPreview.position.z = position.z
-    this.ghostPreview.material.color.setHex(isValid ? 0x00ff00 : 0xff0000)
-    
-    // Update range ring color
-    if (this.ghostPreview.children.length > 0) {
-      this.ghostPreview.children[0].material.color.setHex(isValid ? 0x00ff00 : 0xff0000)
+    if (this.selectedStructureType.type === 'tower') {
+      return TOWER_TYPES[this.selectedStructureType.towerType]?.modelKey
+    } else if (this.selectedStructureType.type === 'wall') {
+      return 'castle_walls'
+    } else if (this.selectedStructureType.type === 'spawner') {
+      return 'mortar'
     }
+    return null
   }
   
   isValidPlacement(position) {
-    // Not too close to base
-    if (position.distanceTo(this.basePosition) < 12) return false
+    // Check if on path
+    if (this.isOnPath(position)) return false
     
-    // Not on path
-    if (this.pathManager && this.pathManager.isPointNearAnyPath(position, 3.5)) {
-      return false
-    } else {
-      for (let i = 0; i < this.enemyPath.length - 1; i++) {
-        const dist = this.distanceToLineSegment(position, this.enemyPath[i], this.enemyPath[i + 1])
-        if (dist < 4) return false
+    // Check if too close to other structures
+    for (const structure of this.structures) {
+      if (structure.position.distanceTo(position) < 3) {
+        return false
       }
     }
     
-    // Not too close to other structures
-    for (const structure of this.structures) {
-      if (structure.position && structure.position.distanceTo(position) < 4) return false
+    // Check if too close to base
+    if (position.distanceTo(new THREE.Vector3(0, 0, 0)) < 8) {
+      return false
     }
     
-    // Within bounds
-    if (Math.abs(position.x) > 45 || Math.abs(position.z) > 50) return false
-    
     return true
+  }
+  
+  isOnPath(position) {
+    if (!this.enemyPath) return false
+    
+    for (let i = 0; i < this.enemyPath.length - 1; i++) {
+      const start = this.enemyPath[i]
+      const end = this.enemyPath[i + 1]
+      const distToLine = this.distanceToLineSegment(position, start, end)
+      if (distToLine < 4) return true
+    }
+    
+    return false
   }
   
   distanceToLineSegment(point, lineStart, lineEnd) {
@@ -528,37 +1648,68 @@ export class EnhancedGame {
     if (!structureConfig) return false
     
     const cost = this.getStructureCost(structureConfig)
-    if (this.gold < cost) {
-      console.log('❌ Not enough gold!')
-      if (this.callbacks.onNotification) {
-        this.callbacks.onNotification('Not enough gold!', 'error')
-      }
-      return false
-    }
+    if (this.gold < cost) return false
+    if (!this.isValidPlacement(position)) return false
     
-    if (!this.isValidPlacement(position)) {
-      console.log('❌ Invalid placement!')
-      if (this.callbacks.onNotification) {
-        this.callbacks.onNotification('Invalid placement location!', 'error')
-      }
-      return false
-    }
+    let structure = null
     
-    if (structureConfig.type === 'tower') {
-      const tower = new Tower(structureConfig.towerType, position)
-      await tower.load()
-      this.scene.add(tower.mesh)
-      this.structures.push(tower)
-      this.towers.push(tower)
+    try {
+      if (structureConfig.type === 'tower') {
+        structure = new Tower(structureConfig.towerType, position)
+      } else if (structureConfig.type === 'wall') {
+        structure = new Wall(structureConfig.wallType, position)
+      } else if (structureConfig.type === 'spawner') {
+        structure = new UnitSpawner(structureConfig.spawnerType, position)
+      }
       
-      // Build effect
-      this.visualEffects.createBuildEffect(position, {
-        glowColor: tower.getTowerColor()
-      })
+      if (!structure) return false
       
-      // Special effects for fire tower - create fire ring
-      if (structureConfig.towerType === 'fire' && tower.config?.hasFireRing) {
-        this.visualEffects.createFireRing(tower, tower.range || 18)
+      await structure.load()
+      this.scene.add(structure.mesh)
+      this.structures.push(structure)
+
+      // Create build effect
+      if (this.visualEffects && structure.mesh && structure.mesh.position) {
+        this.visualEffects.createBuildEffect(structure.mesh.position, {
+          particleCount: structureConfig.type === 'tower' ? 30 : 20,
+          glowColor: structureConfig.type === 'tower' ? 0x44ff44 : 0x4444ff
+        })
+        SoundManager.play3D('build.ogg', structure.mesh.position, { volume: 0.5 })
+      }
+
+      if (structureConfig.type === 'tower') {
+        this.towers.push(structure)
+      } else if (structureConfig.type === 'wall') {
+        this.walls.push(structure)
+      } else if (structureConfig.type === 'spawner') {
+        this.spawners.push(structure)
+      }
+      
+      // Update spatial grid
+      this.spatialGrid.insert(structure)
+      
+      // Update arena grid for pathfinding (walls block path)
+      if (structureConfig.type === 'wall' || structureConfig.type === 'tower') {
+        const gridCoord = this.arena.worldToGrid(position)
+        if (gridCoord) {
+          this.arena.placeStructure(gridCoord, structure)
+          
+          // Recompute paths for all enemies (walls change pathfinding)
+          if (structureConfig.type === 'wall') {
+            this.enemies.forEach(enemy => {
+              if (!enemy.isDead && !enemy.finished) {
+                const currentGrid = this.arena.worldToGrid(enemy.position || enemy.mesh.position)
+                if (currentGrid) {
+                  const newPath = this.arena.findPath(currentGrid, this.arena.destination)
+                  if (newPath && newPath.length > 0) {
+                    const worldPath = this.arena.getWorldPath(newPath)
+                    enemy.setPath(worldPath)
+                  }
+                }
+              }
+            })
+          }
+        }
       }
       
       // Deduct gold
@@ -567,203 +1718,98 @@ export class EnhancedGame {
         this.callbacks.onGoldChange(this.gold)
       }
       
+      // Clear selection
       this.cancelPlacement()
-      console.log(`✅ Built ${structureConfig.towerType} tower (${tower.modelLoaded ? '3D model' : 'fallback'})`)
-      return true
-    }
-    
-    if (structureConfig.type === 'wall') {
-      // Create wall structure
-      const wallConfig = WALL_TYPES[structureConfig.wallType] || WALL_TYPES.maze
-      const wall = this.createWall(structureConfig.wallType, position)
       
-      if (wall) {
-        this.scene.add(wall.mesh)
-        this.structures.push(wall)
-        
-        this.visualEffects.createBuildEffect(position, { glowColor: 0x666666 })
-        
-        this.gold -= cost
-        if (this.callbacks.onGoldChange) {
-          this.callbacks.onGoldChange(this.gold)
-        }
-        
-        this.cancelPlacement()
-        console.log(`✅ Built ${structureConfig.wallType} wall`)
-        return true
-      }
-    }
-    
-    return false
-  }
-  
-  createWall(wallType, position) {
-    const config = WALL_TYPES[wallType] || WALL_TYPES.maze
-    
-    const group = new THREE.Group()
-    
-    // Wall geometry
-    const geometry = new THREE.BoxGeometry(3, 2.5, 3)
-    const material = new THREE.MeshStandardMaterial({
-      color: 0x555566,
-      metalness: 0.4,
-      roughness: 0.6
-    })
-    const wall = new THREE.Mesh(geometry, material)
-    wall.position.y = 1.25
-    wall.castShadow = true
-    wall.receiveShadow = true
-    group.add(wall)
-    
-    // Add top detail
-    const topGeom = new THREE.BoxGeometry(3.2, 0.3, 3.2)
-    const topMat = new THREE.MeshStandardMaterial({ color: 0x444455 })
-    const top = new THREE.Mesh(topGeom, topMat)
-    top.position.y = 2.65
-    group.add(top)
-    
-    group.position.copy(position)
-    
-    return {
-      type: 'wall',
-      wallType,
-      position: position.clone(),
-      mesh: group,
-      health: config.health,
-      maxHealth: config.health,
-      destroy: () => {
-        group.traverse(child => {
-          if (child.geometry) child.geometry.dispose()
-          if (child.material) child.material.dispose()
-        })
-      }
+      return true
+    } catch (error) {
+      console.error('Error placing structure:', error)
+      return false
     }
   }
   
   getStructureCost(structureConfig) {
     if (structureConfig.type === 'tower') {
       return TOWER_TYPES[structureConfig.towerType]?.cost || 100
-    }
-    if (structureConfig.type === 'wall') {
-      return WALL_TYPES[structureConfig.wallType]?.cost || 50
+    } else if (structureConfig.type === 'wall') {
+      return structureConfig.wallType === 'maze' ? 50 : 100
+    } else if (structureConfig.type === 'spawner') {
+      return 250
     }
     return 100
   }
   
-  update(deltaTime) {
-    if (this.gameOver || this.isPaused) return
-    
-    deltaTime = Math.min(deltaTime, 0.033) // Cap at ~30 FPS minimum
+  updateStructures(deltaTime) {
     const currentTime = Date.now() / 1000
     
-    // Update controls
-    this.controls.update()
-    
-    // Update graphics engine
-    this.graphicsEngine.update(deltaTime)
-    
-    // Update visual effects
-    this.visualEffects.update(deltaTime)
-    
-    // Update path animations
-    if (this.pathManager && this.pathManager.update) {
-      this.pathManager.update(deltaTime)
-    }
-    
-    // Build/combat pacing
-    if (this.waveTimerActive && this.phase === 'build' && !this.waveActive) {
-      this.buildCountdown = Math.max(0, this.buildCountdown - deltaTime)
-      this.waveCountdown = this.buildCountdown
-      this.waveCountdownTotal = this.buildDuration
-      
-      if (this.callbacks.onWaveCountdown) {
-        this.callbacks.onWaveCountdown(Math.ceil(this.waveCountdown), this.buildDuration)
-      }
-      
-      if (this.buildCountdown <= 0) {
-        this.startNextWave()
-      }
-    }
-    
-    // Energy regeneration in ticks
-    this.energyTickAccumulator += deltaTime
-    while (this.energyTickAccumulator >= this.energyRegenTick) {
-      this.energyTickAccumulator -= this.energyRegenTick
-      this.addEnergy(this.energyRegenPerTick)
-    }
-    
-    // Update enemies
-    this.enemyManager.update(deltaTime)
-    
-    // Update towers and find targets
-    this.updateTowers(deltaTime, currentTime)
-    
-    // Update combat system (projectiles, lasers, etc.)
-    this.combatSystem.update(deltaTime)
-    
-    // Update main base
-    if (this.mainBase) {
-      this.mainBase.update(deltaTime, this.enemies, this.visualEffects)
-      this.health = this.mainBase.health
-    }
-    
-    // Update AI player if active
-    if (this.aiPlayer) {
-      this.aiPlayer.update(deltaTime, currentTime)
-    }
-    
-    // Sync gold display
-    if (this.callbacks.onGoldChange) {
-      this.callbacks.onGoldChange(this.gold)
-    }
-    
-    // Win condition
-    if (this.wave >= 20 && this.enemies.length === 0 && !this.enemyManager.isWaveActive()) {
-      this.endGame(true)
-    }
-  }
-  
-  updateTowers(deltaTime, currentTime) {
+    // Update towers
     this.towers.forEach(tower => {
-      const target = tower.findTarget(this.enemies)
-      
-      if (target) {
-        tower.aimAtTarget()
-        
-        // Use combat system for firing
-        if (tower.canFire(currentTime)) {
-          this.combatSystem.fireTower(tower, target, currentTime)
+      if (tower instanceof Tower) {
+        // Find target and aim
+        const target = tower.findTarget(this.enemies)
+        if (target) {
+          tower.aimAtTarget()
+          
+          // Fire if ready
+          if (tower.canFire(currentTime)) {
+            const attackType = tower.attackType || 'gattling'
+            const splashRadius = tower.splashRadius || 0
+            this.fireProjectile(
+              tower.position.clone(),
+              target,
+              tower.damage,
+              attackType,
+              splashRadius
+            )
+            tower.lastShot = currentTime
+          }
+        }
+      } else {
+        // Legacy tower support
+        this.updateTower(tower, deltaTime)
+      }
+    })
+    
+    // Update spawners
+    this.spawners.forEach(spawner => {
+      if (spawner.canSpawn(currentTime)) {
+        const unitData = spawner.spawnUnit(currentTime)
+        if (unitData) {
+          const unit = new DefensiveUnit(unitData.type, unitData.position, spawner)
+          unit.load().then(() => {
+            if (unit.mesh) {
+              this.scene.add(unit.mesh)
+              this.defensiveUnits.push(unit)
+              this.spatialGrid.insert(unit)
+            }
+          })
         }
       }
     })
   }
   
-  // Gold management
+  updateSpatialGrid() {
+    // Update grid with current positions
+    this.enemies.forEach(enemy => {
+      if (enemy.position) {
+        this.spatialGrid.update(enemy)
+      }
+    })
+    
+    this.defensiveUnits.forEach(unit => {
+      if (unit.position) {
+        this.spatialGrid.update(unit)
+      }
+    })
+  }
+  
   addGold(amount) {
-    this.gold += amount
+    this.gold += Math.floor(amount * (this.passiveBuffs?.enemyGoldRewardBonus || 1))
     if (this.callbacks.onGoldChange) {
       this.callbacks.onGoldChange(this.gold)
     }
   }
   
-  // Energy management
-  addEnergy(amount) {
-    this.energy = Math.min(this.maxEnergy, this.energy + amount)
-    if (this.callbacks.onEnergyChange) {
-      this.callbacks.onEnergyChange(Math.floor(this.energy), this.maxEnergy)
-    }
-  }
-  
-  consumeEnergy(amount) {
-    if (this.energy < amount) return false
-    this.energy = Math.max(0, this.energy - amount)
-    if (this.callbacks.onEnergyChange) {
-      this.callbacks.onEnergyChange(Math.floor(this.energy), this.maxEnergy)
-    }
-    return true
-  }
-  
-  // XP management
   addXP(amount) {
     this.xp += amount
     if (this.callbacks.onXPChange) {
@@ -771,296 +1817,180 @@ export class EnhancedGame {
     }
   }
   
-  // Coding problem solved - reward system
+  // Expose addEnergy for WaveTimer (arrow function to preserve 'this')
+  addEnergy(amount) {
+    this.energy = Math.min(this.maxEnergy, this.energy + amount)
+    if (this.callbacks.onEnergyChange) {
+      this.callbacks.onEnergyChange(this.energy, this.maxEnergy)
+    }
+  }
+  
+  addAbilityCharge(amount) {
+    // Store ability charge for hero abilities
+    if (this.callbacks.onAbilityCharge) {
+      this.callbacks.onAbilityCharge(amount)
+    }
+  }
+  
   onProblemSolved(problemData) {
-    const rewards = this.codingRewardSystem.onProblemSolved(
+    const rewards = this.codingRewards.onProblemSolved(
       problemData.difficulty || 'medium',
-      problemData.timeSpent || 300,
+      problemData.timeSpent || 0,
       problemData.testsPassedRatio || 1.0
     )
     
-    // Add extra build/planning time
-    if (this.phase === 'build') {
-      this.buildCountdown = Math.min(this.buildDuration + 20, this.buildCountdown + 15)
-      this.waveCountdown = this.buildCountdown
+    // Increment problems solved counter
+    this.problemsSolvedThisGame++
+    
+    // Increase passive energy generation (NO gold - coins only from problem rewards)
+    // Each problem solved increases passive energy income
+    this.passiveEnergyPerSecond += 0.05 // +0.05 energy/sec per problem
+    
+    // Update wave timer's passive generation
+    if (this.waveTimer) {
+      this.waveTimer.energyPerSecond = this.passiveEnergyPerSecond
+      this.waveTimer.onProblemSolved(problemData.difficulty || 'medium')
     }
     
-    // Notification
-    if (this.callbacks.onNotification) {
-      this.callbacks.onNotification(
-        `Problem solved! +${rewards.gold} gold, +${rewards.xp} XP`,
-        'success'
-      )
+    // Add immediate energy reward from problem solving
+    const energyReward = this.waveTimer?.energyPerProblem || 10
+    const difficultyMultiplier = problemData.difficulty === 'hard' ? 2 : 
+                                 problemData.difficulty === 'medium' ? 1.5 : 1
+    this.addEnergy(Math.floor(energyReward * difficultyMultiplier))
+    
+    // Notify UI of passive rate change
+    if (this.callbacks.onPassiveRateChange) {
+      this.callbacks.onPassiveRateChange({
+        goldPerSecond: 0, // No passive gold
+        energyPerSecond: this.passiveEnergyPerSecond
+      })
     }
     
-    return rewards
+    return {
+      ...rewards,
+      energy: Math.floor(energyReward * difficultyMultiplier),
+      passiveEnergyIncrease: 0.05
+    }
   }
   
-  // Task completed - reward system
+  // Handle task completion
   onTaskCompleted(taskType = 'daily') {
-    const rewards = {
-      energy: taskType === 'weekly' ? 25 : 15,
-      gold: taskType === 'weekly' ? 100 : 50,
-      timeBonus: taskType === 'weekly' ? 15 : 10
+    // Increment tasks completed counter
+    this.tasksCompletedThisGame++
+    
+    // Increase passive energy generation (NO gold - coins only from coding problems)
+    // Each task completed increases passive energy income
+    const energyIncrease = taskType === 'weekly' ? 0.12 : 0.08
+    
+    this.passiveEnergyPerSecond += energyIncrease
+    
+    // Update wave timer's passive generation
+    if (this.waveTimer) {
+      this.waveTimer.energyPerSecond = this.passiveEnergyPerSecond
+      this.waveTimer.onTaskCompleted(taskType)
     }
     
-    this.addEnergy(rewards.energy)
-    this.addGold(rewards.gold)
-    if (this.phase === 'build') {
-      this.buildCountdown = Math.min(this.buildDuration + 20, this.buildCountdown + rewards.timeBonus)
-      this.waveCountdown = this.buildCountdown
+    // Add immediate energy reward
+    const energyReward = this.waveTimer?.energyPerTask || 15
+    const multiplier = taskType === 'weekly' ? 1.5 : 1
+    this.addEnergy(Math.floor(energyReward * multiplier))
+    
+    // Notify UI of passive rate change
+    if (this.callbacks.onPassiveRateChange) {
+      this.callbacks.onPassiveRateChange({
+        goldPerSecond: 0, // No passive gold
+        energyPerSecond: this.passiveEnergyPerSecond
+      })
     }
     
-    if (this.callbacks.onNotification) {
-      this.callbacks.onNotification(
-        `Task completed! +${rewards.gold} gold, +${rewards.energy} energy`,
-        'success'
-      )
+    return {
+      timeBonus: this.waveTimer?.taskCompletedBonus || 10,
+      energy: Math.floor(energyReward * multiplier),
+      passiveEnergyIncrease: energyIncrease
     }
-    
-    return rewards
   }
   
-  // Upgrade tower
-  upgradeTower(towerId) {
-    const tower = this.towers.find(t => t.id === towerId)
-    if (!tower) return false
-    
-    const cost = tower.getUpgradeCost()
-    if (this.gold < cost) {
-      if (this.callbacks.onNotification) {
-        this.callbacks.onNotification('Not enough gold for upgrade!', 'error')
-      }
-      return false
+  addEnergy(amount) {
+    this.energy = Math.min(this.maxEnergy, this.energy + amount)
+    if (this.callbacks.onEnergyChange) {
+      this.callbacks.onEnergyChange(this.energy, this.maxEnergy)
     }
-    
-    if (tower.upgrade()) {
-      this.gold -= cost
-      this.visualEffects.createUpgradeEffect(tower.position, { color: 0xffdd00 })
-      
-      if (this.callbacks.onGoldChange) {
-        this.callbacks.onGoldChange(this.gold)
-      }
-      if (this.callbacks.onTowerSelected) {
-        this.callbacks.onTowerSelected(tower.getStats())
-      }
-      
-      console.log(`⬆️ Upgraded ${tower.towerType} to level ${tower.level}`)
-      return true
-    }
-    
-    return false
   }
   
-  getTowerStats(towerId) {
-    const tower = this.towers.find(t => t.id === towerId)
-    return tower ? tower.getStats() : null
-  }
-  
-  getTowerUpgradeCost(towerId) {
-    const tower = this.towers.find(t => t.id === towerId)
-    return tower ? tower.getUpgradeCost() : null
-  }
-  
-  // Upgrade main base
-  upgradeBase() {
-    if (!this.mainBase) return false
-    
-    const cost = this.mainBase.getUpgradeCost()
-    if (cost === Infinity) {
-      if (this.callbacks.onNotification) {
-        this.callbacks.onNotification('Base is already at max level!', 'warning')
-      }
-      return false
+  spendEnergy(amount) {
+    if (this.energy < amount) return false
+    this.energy -= amount
+    if (this.callbacks.onEnergyChange) {
+      this.callbacks.onEnergyChange(this.energy, this.maxEnergy)
     }
-    
-    if (this.gold < cost) {
-      if (this.callbacks.onNotification) {
-        this.callbacks.onNotification('Not enough gold for base upgrade!', 'error')
-      }
-      return false
-    }
-    
-    if (this.mainBase.upgrade()) {
-      this.gold -= cost
-      
-      // Update health values
-      this.health = this.mainBase.health
-      this.maxHealth = this.mainBase.maxHealth
-      
-      // Visual effect
-      this.visualEffects.createUpgradeEffect(this.basePosition, { color: 0xffaa00 })
-      
-      if (this.callbacks.onGoldChange) {
-        this.callbacks.onGoldChange(this.gold)
-      }
-      if (this.callbacks.onHealthChange) {
-        this.callbacks.onHealthChange(this.health, this.maxHealth)
-      }
-      if (this.callbacks.onBaseUpgrade) {
-        this.callbacks.onBaseUpgrade(this.mainBase.getStats())
-      }
-      if (this.callbacks.onNotification) {
-        this.callbacks.onNotification(
-          `Base upgraded to ${this.mainBase.config.name}!`,
-          'success'
-        )
-      }
-      
-      console.log(`⬆️ Base upgraded to Level ${this.mainBase.level}: ${this.mainBase.config.name}`)
-      return true
-    }
-    
-    return false
-  }
-  
-  // Get base stats for UI
-  getBaseStats() {
-    if (!this.mainBase) return null
-    return this.mainBase.getStats()
-  }
-  
-  // Check if base can be upgraded
-  canUpgradeBase() {
-    if (!this.mainBase) return false
-    return this.mainBase.canUpgrade(this.gold)
-  }
-  
-  // Sell tower
-  sellTower(towerId) {
-    const towerIndex = this.towers.findIndex(t => t.id === towerId)
-    if (towerIndex === -1) return false
-    
-    const tower = this.towers[towerIndex]
-    const sellValue = tower.getSellValue()
-    
-    // Remove from scene
-    this.scene.remove(tower.mesh)
-    tower.destroy()
-    
-    // Remove from arrays
-    this.towers.splice(towerIndex, 1)
-    const structIndex = this.structures.indexOf(tower)
-    if (structIndex !== -1) {
-      this.structures.splice(structIndex, 1)
-    }
-    
-    // Add gold
-    this.addGold(sellValue)
-    
-    // Effect
-    this.visualEffects.createExplosion(tower.position, {
-      numParticles: 15,
-      color: 0xffd700,
-      duration: 400
-    })
-    
-    if (this.callbacks.onTowerSelected) {
-      this.callbacks.onTowerSelected(null)
-    }
-    
-    console.log(`💰 Sold tower for ${sellValue} gold`)
     return true
   }
   
-  endGame(won) {
-    this.gameOver = true
-    this.waveTimerActive = false
-    
-    console.log(won ? '🏆 Victory!' : '💀 Game Over')
-    
-    // Get AI stats if applicable
-    const aiStats = this.aiPlayer ? this.aiPlayer.getStats() : null
-    
-    if (this.callbacks.onGameEnd) {
-      this.callbacks.onGameEnd(won, {
-        wave: this.wave,
-        score: this.score,
-        gold: this.gold,
-        towersBuilt: this.towers.length,
-        xp: this.xp,
-        problemsSolved: this.codingRewardSystem.getProblemsSolvedThisMatch(),
-        combatStats: this.combatSystem.getStats(),
-        aiStats
-      })
+  showLearningModule(problemCount) {
+    if (this.callbacks.onShowLearningModule) {
+      this.callbacks.onShowLearningModule(problemCount)
     }
   }
   
-  // Pause/Resume
-  pause() {
-    this.isPaused = true
-    console.log('⏸️ Game paused')
+  showFloatingText(text, position, options = {}) {
+    // Create floating text effect
+    if (this.callbacks.onShowFloatingText) {
+      this.callbacks.onShowFloatingText(text, position, options)
+    }
   }
-  
-  resume() {
-    this.isPaused = false
-    console.log('▶️ Game resumed')
+
+
+  onKeyDown(event) {
+    if (event.code === 'Space' && !this.gameOver) {
+      this.startWave()
+    }
   }
-  
+
+  onResize() {
+    this.camera.aspect = this.container.clientWidth / this.container.clientHeight
+    this.camera.updateProjectionMatrix()
+    this.renderer.setSize(this.container.clientWidth, this.container.clientHeight)
+    this.composer.setSize(this.container.clientWidth, this.container.clientHeight)
+  }
+
   animate() {
     if (!this.container.parentElement) return
-    
+
     requestAnimationFrame(() => this.animate())
-    
+
     const deltaTime = this.clock.getDelta()
     this.update(deltaTime)
-    this.graphicsEngine.render()
-  }
-  
-  // Get game stats
-  getStats() {
-    return {
-      gold: this.gold,
-      energy: Math.floor(this.energy),
-      health: this.health,
-      maxHealth: this.maxHealth,
-      wave: this.wave,
-      score: this.score,
-      towers: this.towers.length,
-      enemies: this.enemies.length,
-      modelsReady: this.modelsReady,
-      combatStats: this.combatSystem.getStats()
+
+    if (this.composer) {
+      this.composer.render()
+    } else {
+      this.renderer.render(this.scene, this.camera)
+    }
+
+    // Update UI callbacks
+    if (this.callbacks.onHealthChange) {
+      this.callbacks.onHealthChange(this.health, this.maxHealth)
+    }
+    if (this.callbacks.onWaveChange) {
+      this.callbacks.onWaveChange(this.wave)
     }
   }
-  
-  destroy() {
-    this.waveTimerActive = false
+
+  endGame(won) {
     this.gameOver = true
-    
-    // Clear combat system
-    if (this.combatSystem) {
-      this.combatSystem.destroy()
+    if (this.callbacks.onGameEnd) {
+      this.callbacks.onGameEnd(won)
     }
-    
-    // Clear enemies
-    if (this.enemyManager) {
-      this.enemyManager.destroy()
+  }
+
+  destroy() {
+    if (this.renderer) {
+      this.container.removeChild(this.renderer.domElement)
+      this.renderer.dispose()
     }
-    
-    // Clear structures
-    this.structures.forEach(s => {
-      if (s.mesh) this.scene.remove(s.mesh)
-      if (s.destroy) s.destroy()
-    })
-    
-    // Clear main base
-    if (this.mainBase) {
-      this.mainBase.destroy()
+    if (this.composer) {
+      this.composer.dispose()
     }
-    
-    // Clear effects
-    if (this.visualEffects) {
-      this.visualEffects.destroy()
-    }
-    
-    // Clear ghost preview
-    if (this.ghostPreview) {
-      this.scene.remove(this.ghostPreview)
-    }
-    
-    // Dispose graphics
-    this.graphicsEngine.dispose()
-    
-    console.log('🧹 Game destroyed')
   }
 }
+

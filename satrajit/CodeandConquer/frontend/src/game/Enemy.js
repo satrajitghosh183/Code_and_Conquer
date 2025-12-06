@@ -1,758 +1,357 @@
-// =============================================================================
-// ENEMY CLASS - Space Invader Ships
-// =============================================================================
+// Enemy Class - Individual enemy unit
+// Integrated from dabbott/towerdefense with enhancements
 
 import * as THREE from 'three'
 import { ENEMY_TYPES } from './EnemyTypes.js'
-import { modelLoader } from './ModelLoader.js'
+import { SoundManager } from './SoundManager.js'
 
 export class Enemy {
   constructor(type, args = {}) {
-    const config = ENEMY_TYPES[type] || ENEMY_TYPES.spider
-    
+    // Get default values from enemy type
+    const defaults = ENEMY_TYPES[type] || ENEMY_TYPES.spider
+
     this.type = type
-    this.config = config
-    this.name = config.name
-    this.tier = config.tier || 1
-    this.color = config.color || 0x00ff00
-    this.glowColor = config.glowColor || config.color
+    this.name = defaults.name
+    this.model = defaults.model
+    this.speed = defaults.speed
+    this.health = defaults.health
+    this.maxHealth = defaults.health
+    this.armor = defaults.armor || 0
+    this.lives = defaults.lives || 1
+    this.goldReward = defaults.goldReward
+    this.xpReward = defaults.xpReward
+    this.color = defaults.color
+    this.scale = defaults.scale || 1.0
+    this.description = defaults.description
+    this.isBoss = defaults.isBoss || false
+
+    // Special abilities
+    this.healRadius = defaults.healRadius
+    this.healAmount = defaults.healAmount
+    this.splitCount = defaults.splitCount
+    this.splitType = defaults.splitType
+
+    // Visual effects reference (for damage numbers, blood splatter, etc.)
+    this.visualEffects = args.visualEffects || null
+
+    // Apply wave modifiers
+    if (args.healthMultiplier) {
+      this.health *= args.healthMultiplier
+      this.maxHealth = this.health
+    }
     
-    const healthMult = args.healthMultiplier || 1
-    const speedMult = args.speedMultiplier || 1
-    
-    this.health = Math.floor((config.health || 100) * healthMult)
-    this.maxHealth = this.health
-    this.speed = (config.speed || 5) * speedMult
-    this.originalSpeed = this.speed
-    this.armor = config.armor || 0
-    this.lives = config.lives || 1
-    this.goldReward = config.goldReward || 10
-    this.xpReward = config.xpReward || 5
-    this.scale = config.scale || 1.0
-    this.isBoss = config.isBoss || false
-    
-    // Behavior & abilities
-    this.behavior = config.behavior || 'standard'
-    this.healRadius = config.healRadius || 0
-    this.healAmount = config.healAmount || 0
-    this.splitCount = config.splitCount || 0
-    this.splitType = config.splitType || null
-    this.hasAura = config.hasAura || false
-    this.hasShield = config.hasShield || false
-    this.shieldHealth = config.shieldHealth || 0
-    this.maxShieldHealth = this.shieldHealth
-    
-    // Status effects
-    this.slowAmount = 0
-    this.burnDamage = 0
-    this.burnEndTime = 0
-    this.isStunned = false
-    this.isEnraged = false
-    this.isPhasing = false
-    
+    // Apply speed multiplier for progressive difficulty
+    if (args.speedMultiplier) {
+      this.speed *= args.speedMultiplier
+    }
+
+    // Override with custom args
+    Object.assign(this, args)
+
     // State
-    this.isDead = false
-    this.finished = false
-    this.reachedEnd = false
-    
-    // Path
     this.path = []
-    this.pathId = args.pathId || null
-    this.totalPathLength = 0
-    this.pathProgress = 0
     this.next = null
-    this.position = args.position ? args.position.clone() : new THREE.Vector3(0, 0.5, 45)
-    
-    // Mesh references
-    this.mesh = null
-    this.bodyMesh = null
-    this.coreMesh = null
-    this.healthBarFill = null
-    this.shieldMesh = null
-    this.auraMesh = null
-    this.particles = []
-    
+    this.direction = [0, 0]
+    this.finished = false
+    this.isDead = false
     this.id = `enemy_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`
-    this.animationTime = Math.random() * Math.PI * 2
+
+    // 3D representation
+    this.mesh = null
+    this.healthBar = null
+
+    // Animation
+    this.animationTime = 0
   }
   
+  // Create the 3D mesh for this enemy
   createMesh() {
     const group = new THREE.Group()
     
-    // Create spaceship body
-    this.createSpaceshipBody(group)
+    // Body
+    const bodyGeometry = new THREE.SphereGeometry(0.8 * this.scale, 12, 12)
+    const bodyMaterial = new THREE.MeshStandardMaterial({
+      color: this.color,
+      metalness: 0.3,
+      roughness: 0.7,
+      emissive: this.color,
+      emissiveIntensity: 0.3
+    })
+    const body = new THREE.Mesh(bodyGeometry, bodyMaterial)
+    body.position.y = 1 * this.scale
+    body.castShadow = true
+    group.add(body)
     
-    // Add engine glow effects
-    this.createEngineGlow(group)
+    // Eyes
+    const eyeGeometry = new THREE.SphereGeometry(0.15 * this.scale, 8, 8)
+    const eyeMaterial = new THREE.MeshBasicMaterial({
+      color: 0xffffff,
+      transparent: true,
+      opacity: 0.9
+    })
     
-    // Add shield if applicable
-    if (this.hasShield && this.shieldHealth > 0) {
-      this.createShield(group)
+    const leftEye = new THREE.Mesh(eyeGeometry, eyeMaterial)
+    leftEye.position.set(-0.3 * this.scale, 1.1 * this.scale, 0.6 * this.scale)
+    group.add(leftEye)
+    
+    const rightEye = new THREE.Mesh(eyeGeometry, eyeMaterial)
+    rightEye.position.set(0.3 * this.scale, 1.1 * this.scale, 0.6 * this.scale)
+    group.add(rightEye)
+    
+    // Pupils
+    const pupilGeometry = new THREE.SphereGeometry(0.08 * this.scale, 6, 6)
+    const pupilMaterial = new THREE.MeshBasicMaterial({ color: 0x000000 })
+    
+    const leftPupil = new THREE.Mesh(pupilGeometry, pupilMaterial)
+    leftPupil.position.set(-0.3 * this.scale, 1.1 * this.scale, 0.7 * this.scale)
+    group.add(leftPupil)
+    
+    const rightPupil = new THREE.Mesh(pupilGeometry, pupilMaterial)
+    rightPupil.position.set(0.3 * this.scale, 1.1 * this.scale, 0.7 * this.scale)
+    group.add(rightPupil)
+    
+    // Boss crown
+    if (this.isBoss) {
+      const crownGeometry = new THREE.ConeGeometry(0.3 * this.scale, 0.5 * this.scale, 5)
+      const crownMaterial = new THREE.MeshStandardMaterial({
+        color: 0xffd700,
+        metalness: 0.8,
+        roughness: 0.2,
+        emissive: 0xffd700,
+        emissiveIntensity: 0.5
+      })
+      const crown = new THREE.Mesh(crownGeometry, crownMaterial)
+      crown.position.y = 1.8 * this.scale
+      group.add(crown)
     }
     
-    // Add healer aura if applicable
-    if (this.hasAura) {
-      this.createHealerAura(group)
+    // Healer glow
+    if (this.healRadius) {
+      const healRingGeometry = new THREE.TorusGeometry(this.healRadius / 2, 0.1, 8, 16)
+      const healRingMaterial = new THREE.MeshBasicMaterial({
+        color: 0x00ff88,
+        transparent: true,
+        opacity: 0.3
+      })
+      const healRing = new THREE.Mesh(healRingGeometry, healRingMaterial)
+      healRing.rotation.x = Math.PI / 2
+      healRing.position.y = 0.5
+      group.add(healRing)
     }
     
-    // Create health bar
+    // Health bar
     this.createHealthBar(group)
     
-    group.position.copy(this.position)
     this.mesh = group
-    this.mesh.userData.enemy = this
-    
     return group
   }
   
-  createSpaceshipBody(group) {
-    const s = this.scale
-    
-    // Create different spaceship designs based on tier
-    if (this.isBoss) {
-      this.createBossShip(group, s)
-    } else if (this.tier >= 3) {
-      this.createEliteShip(group, s)
-    } else if (this.tier === 2) {
-      this.createAdvancedShip(group, s)
-    } else {
-      this.createBasicShip(group, s)
-    }
-  }
-  
-  createBasicShip(group, s) {
-    // Sleek fighter ship design
-    const bodyMat = new THREE.MeshStandardMaterial({
-      color: this.color,
-      metalness: 0.7,
-      roughness: 0.2,
-      emissive: this.glowColor,
-      emissiveIntensity: 0.3
-    })
-    
-    // Main fuselage - cone shape
-    const bodyGeom = new THREE.ConeGeometry(0.6 * s, 2 * s, 6)
-    this.bodyMesh = new THREE.Mesh(bodyGeom, bodyMat)
-    this.bodyMesh.rotation.x = Math.PI / 2
-    this.bodyMesh.position.y = 1.2 * s
-    group.add(this.bodyMesh)
-    
-    // Wings - flat triangular
-    const wingGeom = new THREE.BufferGeometry()
-    const wingVertices = new Float32Array([
-      0, 0, 0,           // center
-      -1.5 * s, 0, 0.5 * s, // left back
-      -0.2 * s, 0, -0.3 * s, // left front
-    ])
-    wingGeom.setAttribute('position', new THREE.BufferAttribute(wingVertices, 3))
-    wingGeom.computeVertexNormals()
-    
-    const wingMat = new THREE.MeshStandardMaterial({
-      color: this.color,
-      metalness: 0.8,
-      roughness: 0.3,
-      emissive: this.glowColor,
-      emissiveIntensity: 0.2,
-      side: THREE.DoubleSide
-    })
-    
-    const leftWing = new THREE.Mesh(wingGeom, wingMat)
-    leftWing.position.set(0, 1.2 * s, 0)
-    group.add(leftWing)
-    
-    const rightWing = leftWing.clone()
-    rightWing.scale.x = -1
-    group.add(rightWing)
-    
-    // Cockpit (glowing)
-    const cockpitGeom = new THREE.SphereGeometry(0.3 * s, 8, 8)
-    const cockpitMat = new THREE.MeshBasicMaterial({
-      color: this.glowColor,
-      transparent: true,
-      opacity: 0.9
-    })
-    this.coreMesh = new THREE.Mesh(cockpitGeom, cockpitMat)
-    this.coreMesh.position.set(0, 1.2 * s, -0.4 * s)
-    group.add(this.coreMesh)
-  }
-  
-  createAdvancedShip(group, s) {
-    const bodyMat = new THREE.MeshStandardMaterial({
-      color: this.color,
-      metalness: 0.75,
-      roughness: 0.2,
-      emissive: this.glowColor,
-      emissiveIntensity: 0.4
-    })
-    
-    // Main hull - elongated octahedron
-    const hullGeom = new THREE.OctahedronGeometry(0.8 * s, 0)
-    this.bodyMesh = new THREE.Mesh(hullGeom, bodyMat)
-    this.bodyMesh.scale.set(1, 0.5, 2)
-    this.bodyMesh.position.y = 1.5 * s
-    group.add(this.bodyMesh)
-    
-    // Side pods
-    const podGeom = new THREE.CylinderGeometry(0.2 * s, 0.3 * s, 1.2 * s, 6)
-    const podMat = bodyMat.clone()
-    
-    const leftPod = new THREE.Mesh(podGeom, podMat)
-    leftPod.rotation.x = Math.PI / 2
-    leftPod.position.set(-0.8 * s, 1.5 * s, 0)
-    group.add(leftPod)
-    
-    const rightPod = leftPod.clone()
-    rightPod.position.x = 0.8 * s
-    group.add(rightPod)
-    
-    // Core (glowing)
-    const coreGeom = new THREE.SphereGeometry(0.35 * s, 12, 12)
-    const coreMat = new THREE.MeshBasicMaterial({
-      color: this.glowColor,
-      transparent: true,
-      opacity: 0.9
-    })
-    this.coreMesh = new THREE.Mesh(coreGeom, coreMat)
-    this.coreMesh.position.y = 1.5 * s
-    group.add(this.coreMesh)
-  }
-  
-  createEliteShip(group, s) {
-    const bodyMat = new THREE.MeshStandardMaterial({
-      color: this.color,
-      metalness: 0.85,
-      roughness: 0.15,
-      emissive: this.glowColor,
-      emissiveIntensity: 0.5
-    })
-    
-    // Main body - complex angular shape
-    const bodyGeom = new THREE.DodecahedronGeometry(0.9 * s, 0)
-    this.bodyMesh = new THREE.Mesh(bodyGeom, bodyMat)
-    this.bodyMesh.scale.set(1.2, 0.6, 1.8)
-    this.bodyMesh.position.y = 1.8 * s
-    group.add(this.bodyMesh)
-    
-    // Forward prong
-    const prongGeom = new THREE.ConeGeometry(0.3 * s, 1.5 * s, 4)
-    const prong = new THREE.Mesh(prongGeom, bodyMat)
-    prong.rotation.x = Math.PI / 2
-    prong.position.set(0, 1.8 * s, -1.2 * s)
-    group.add(prong)
-    
-    // Weapons arrays (side mounted)
-    const weaponGeom = new THREE.BoxGeometry(0.15 * s, 0.15 * s, 0.8 * s)
-    const weaponMat = new THREE.MeshStandardMaterial({
-      color: 0x333344,
-      metalness: 0.9,
-      roughness: 0.1
-    })
-    
-    for (let i = -1; i <= 1; i += 2) {
-      const weapon = new THREE.Mesh(weaponGeom, weaponMat)
-      weapon.position.set(i * 0.9 * s, 1.8 * s, -0.3 * s)
-      group.add(weapon)
-    }
-    
-    // Core
-    const coreGeom = new THREE.IcosahedronGeometry(0.4 * s, 1)
-    const coreMat = new THREE.MeshBasicMaterial({
-      color: this.glowColor,
-      transparent: true,
-      opacity: 0.95
-    })
-    this.coreMesh = new THREE.Mesh(coreGeom, coreMat)
-    this.coreMesh.position.y = 1.8 * s
-    group.add(this.coreMesh)
-  }
-  
-  createBossShip(group, s) {
-    const bodyMat = new THREE.MeshStandardMaterial({
-      color: this.color,
-      metalness: 0.9,
-      roughness: 0.1,
-      emissive: this.glowColor,
-      emissiveIntensity: 0.6
-    })
-    
-    // Main capital ship hull
-    const hullGeom = new THREE.BoxGeometry(2.5 * s, 0.8 * s, 4 * s)
-    this.bodyMesh = new THREE.Mesh(hullGeom, bodyMat)
-    this.bodyMesh.position.y = 2.5 * s
-    group.add(this.bodyMesh)
-    
-    // Bridge tower
-    const bridgeGeom = new THREE.BoxGeometry(0.8 * s, 1.2 * s, 1 * s)
-    const bridge = new THREE.Mesh(bridgeGeom, bodyMat)
-    bridge.position.set(0, 3.4 * s, 0.5 * s)
-    group.add(bridge)
-    
-    // Forward weapons platform
-    const weaponPlatformGeom = new THREE.CylinderGeometry(0.6 * s, 0.8 * s, 0.5 * s, 8)
-    const weaponPlatform = new THREE.Mesh(weaponPlatformGeom, bodyMat)
-    weaponPlatform.position.set(0, 2.5 * s, -1.8 * s)
-    group.add(weaponPlatform)
-    
-    // Engine nacelles
-    const nacelleGeom = new THREE.CylinderGeometry(0.4 * s, 0.5 * s, 2 * s, 8)
-    for (let i = -1; i <= 1; i += 2) {
-      const nacelle = new THREE.Mesh(nacelleGeom, bodyMat)
-      nacelle.rotation.x = Math.PI / 2
-      nacelle.position.set(i * 1.2 * s, 2.2 * s, 1.8 * s)
-      group.add(nacelle)
-    }
-    
-    // Crown/command spire
-    const crownGeom = new THREE.ConeGeometry(0.5 * s, 1.5 * s, 6)
-    const crownMat = new THREE.MeshStandardMaterial({
-      color: 0xffd700,
-      metalness: 0.95,
-      roughness: 0.05,
-      emissive: 0xffaa00,
-      emissiveIntensity: 0.8
-    })
-    const crown = new THREE.Mesh(crownGeom, crownMat)
-    crown.position.set(0, 4.5 * s, 0.5 * s)
-    group.add(crown)
-    
-    // Core reactor (massive glowing)
-    const coreGeom = new THREE.SphereGeometry(0.8 * s, 16, 16)
-    const coreMat = new THREE.MeshBasicMaterial({
-      color: this.glowColor,
-      transparent: true,
-      opacity: 0.9
-    })
-    this.coreMesh = new THREE.Mesh(coreGeom, coreMat)
-    this.coreMesh.position.y = 2.5 * s
-    group.add(this.coreMesh)
-  }
-  
-  createEngineGlow(group) {
-    const s = this.scale
-    const engineCount = this.isBoss ? 4 : this.tier >= 2 ? 2 : 1
-    
-    // Engine glow particles
-    const glowSize = this.isBoss ? 0.6 : this.tier >= 2 ? 0.35 : 0.25
-    const glowGeom = new THREE.SphereGeometry(glowSize * s, 8, 8)
-    const glowMat = new THREE.MeshBasicMaterial({
-      color: this.glowColor,
-      transparent: true,
-      opacity: 0.8
-    })
-    
-    // Position engines at the back of the ship
-    const engineY = this.isBoss ? 2.2 : 1.2
-    const engineZ = this.isBoss ? 2.2 : 0.8
-    
-    if (engineCount === 1) {
-      const engine = new THREE.Mesh(glowGeom, glowMat.clone())
-      engine.position.set(0, engineY * s, engineZ * s)
-      group.add(engine)
-      this.particles.push({ mesh: engine, type: 'engine', angle: 0 })
-    } else {
-      for (let i = 0; i < engineCount; i++) {
-        const xOffset = (i - (engineCount - 1) / 2) * (this.isBoss ? 1.2 : 0.6)
-        const engine = new THREE.Mesh(glowGeom.clone(), glowMat.clone())
-        engine.position.set(xOffset * s, engineY * s, engineZ * s)
-        group.add(engine)
-        this.particles.push({ mesh: engine, type: 'engine', angle: i, xOffset })
-      }
-    }
-    
-    // Engine trail effect
-    const trailGeom = new THREE.ConeGeometry(glowSize * 0.5 * s, glowSize * 3 * s, 6)
-    const trailMat = new THREE.MeshBasicMaterial({
-      color: this.glowColor,
-      transparent: true,
-      opacity: 0.4
-    })
-    
-    if (engineCount === 1) {
-      const trail = new THREE.Mesh(trailGeom, trailMat)
-      trail.rotation.x = -Math.PI / 2
-      trail.position.set(0, engineY * s, (engineZ + glowSize * 1.5) * s)
-      group.add(trail)
-    } else {
-      for (let i = 0; i < engineCount; i++) {
-        const xOffset = (i - (engineCount - 1) / 2) * (this.isBoss ? 1.2 : 0.6)
-        const trail = new THREE.Mesh(trailGeom.clone(), trailMat.clone())
-        trail.rotation.x = -Math.PI / 2
-        trail.position.set(xOffset * s, engineY * s, (engineZ + glowSize * 1.5) * s)
-        group.add(trail)
-      }
-    }
-    
-    // Point light
-    const lightIntensity = this.isBoss ? 8 : this.tier >= 2 ? 4 : 2
-    const light = new THREE.PointLight(this.glowColor, lightIntensity, 15 * s)
-    light.position.set(0, engineY * s, 0)
-    group.add(light)
-    this.enemyLight = light
-  }
-  
-  
-  createShield(group) {
-    const s = this.scale
-    const shieldSize = this.isBoss ? 3 : 1.5
-    
-    const shieldGeom = new THREE.SphereGeometry(shieldSize * s, 24, 18)
-    const shieldMat = new THREE.MeshBasicMaterial({
-      color: 0x4488ff,
-      transparent: true,
-      opacity: 0.25,
-      side: THREE.DoubleSide
-    })
-    this.shieldMesh = new THREE.Mesh(shieldGeom, shieldMat)
-    this.shieldMesh.position.y = 1.2 * s
-    group.add(this.shieldMesh)
-    
-    // Shield wireframe
-    const wireGeom = new THREE.SphereGeometry(shieldSize * s * 1.02, 12, 8)
-    const wireMat = new THREE.MeshBasicMaterial({
-      color: 0x4488ff,
-      wireframe: true,
-      transparent: true,
-      opacity: 0.4
-    })
-    const wireShield = new THREE.Mesh(wireGeom, wireMat)
-    wireShield.position.y = 1.2 * s
-    group.add(wireShield)
-    this.shieldWire = wireShield
-  }
-  
-  createHealerAura(group) {
-    const s = this.scale
-    const healRadius = this.healRadius / 2
-    
-    const auraGeom = new THREE.TorusGeometry(healRadius, 0.15, 8, 32)
-    const auraMat = new THREE.MeshBasicMaterial({
-      color: 0x00ff88,
-      transparent: true,
-      opacity: 0.4
-    })
-    this.auraMesh = new THREE.Mesh(auraGeom, auraMat)
-    this.auraMesh.rotation.x = Math.PI / 2
-    this.auraMesh.position.y = 0.2
-    group.add(this.auraMesh)
-  }
-  
-  createHealthBar(group) {
-    const s = this.scale
-    const barWidth = 1.5 * s
+  createHealthBar(parent) {
+    const barWidth = 1.5 * this.scale
     const barHeight = 0.15
-    const barY = (this.isBoss ? 4 : 2.2) * s
     
     // Background
-    const bgGeom = new THREE.PlaneGeometry(barWidth + 0.1, barHeight + 0.05)
-    const bgMat = new THREE.MeshBasicMaterial({
-      color: 0x000000,
-      transparent: true,
-      opacity: 0.8,
+    const bgGeometry = new THREE.PlaneGeometry(barWidth, barHeight)
+    const bgMaterial = new THREE.MeshBasicMaterial({ 
+      color: 0x333333,
       side: THREE.DoubleSide
     })
-    const bg = new THREE.Mesh(bgGeom, bgMat)
-    bg.position.y = barY
-    group.add(bg)
+    const bg = new THREE.Mesh(bgGeometry, bgMaterial)
+    bg.position.y = 2 * this.scale + 0.5
+    parent.add(bg)
     
     // Health fill
-    const fillGeom = new THREE.PlaneGeometry(barWidth, barHeight)
-    const fillMat = new THREE.MeshBasicMaterial({
+    const fillGeometry = new THREE.PlaneGeometry(barWidth - 0.05, barHeight - 0.05)
+    const fillMaterial = new THREE.MeshBasicMaterial({ 
       color: 0x00ff00,
       side: THREE.DoubleSide
     })
-    this.healthBarFill = new THREE.Mesh(fillGeom, fillMat)
-    this.healthBarFill.position.y = barY
-    this.healthBarFill.position.z = 0.01
-    group.add(this.healthBarFill)
-    
-    // Shield bar if applicable
-    if (this.hasShield && this.shieldHealth > 0) {
-      const shieldFillGeom = new THREE.PlaneGeometry(barWidth, barHeight * 0.5)
-      const shieldFillMat = new THREE.MeshBasicMaterial({
-        color: 0x4488ff,
-        side: THREE.DoubleSide
-      })
-      this.shieldBarFill = new THREE.Mesh(shieldFillGeom, shieldFillMat)
-      this.shieldBarFill.position.y = barY + barHeight * 0.6
-      this.shieldBarFill.position.z = 0.01
-      group.add(this.shieldBarFill)
-    }
-  }
-  
-  damage(amount, source = null, damageType = 'physical') {
-    if (this.isDead || this.isPhasing) return false
-    
-    // Shield absorbs damage first
-    if (this.shieldHealth > 0) {
-      const shieldDamage = Math.min(this.shieldHealth, amount)
-      this.shieldHealth -= shieldDamage
-      amount -= shieldDamage
-      this.updateShieldBar()
-      
-      if (this.shieldHealth <= 0 && this.shieldMesh) {
-        this.shieldMesh.visible = false
-        if (this.shieldWire) this.shieldWire.visible = false
-      }
-    }
-    
-    const effectiveDamage = amount * (1 - this.armor)
-    this.health -= effectiveDamage
-    
-    this.flashDamage()
-    this.updateHealthBar()
-    
-    if (this.health <= 0) {
-      this.health = 0
-      this.isDead = true
-      return true
-    }
-    
-    return false
-  }
-  
-  flashDamage() {
-    if (!this.bodyMesh || !this.bodyMesh.material) return
-    
-    const original = this.color
-    this.bodyMesh.material.emissive.setHex(0xffffff)
-    this.bodyMesh.material.emissiveIntensity = 1.5
-    
-    setTimeout(() => {
-      if (this.bodyMesh && this.bodyMesh.material) {
-        this.bodyMesh.material.emissive.setHex(this.glowColor)
-        this.bodyMesh.material.emissiveIntensity = this.isBoss ? 0.5 : 0.3
-      }
-    }, 100)
-  }
-  
-  heal(amount) {
-    if (this.isDead) return
-    this.health = Math.min(this.maxHealth, this.health + amount)
-    this.updateHealthBar()
+    this.healthBar = new THREE.Mesh(fillGeometry, fillMaterial)
+    this.healthBar.position.y = 2 * this.scale + 0.5
+    this.healthBar.position.z = 0.01
+    parent.add(this.healthBar)
   }
   
   updateHealthBar() {
-    if (!this.healthBarFill) return
+    if (!this.healthBar) return
     
-    const ratio = Math.max(0, this.health / this.maxHealth)
-    const barWidth = 1.5 * this.scale
+    const ratio = this.health / this.maxHealth
+    this.healthBar.scale.x = Math.max(0, ratio)
+    this.healthBar.position.x = (1 - ratio) * -0.5 * this.scale
     
-    this.healthBarFill.scale.x = ratio
-    this.healthBarFill.position.x = (1 - ratio) * -barWidth / 2
-    
+    // Color based on health
     if (ratio > 0.6) {
-      this.healthBarFill.material.color.setHex(0x00ff44)
+      this.healthBar.material.color.setHex(0x00ff00)
     } else if (ratio > 0.3) {
-      this.healthBarFill.material.color.setHex(0xffff00)
+      this.healthBar.material.color.setHex(0xffff00)
     } else {
-      this.healthBarFill.material.color.setHex(0xff2200)
+      this.healthBar.material.color.setHex(0xff0000)
     }
   }
   
-  updateShieldBar() {
-    if (!this.shieldBarFill) return
-    
-    const ratio = Math.max(0, this.shieldHealth / this.maxShieldHealth)
-    const barWidth = 1.5 * this.scale
-    
-    this.shieldBarFill.scale.x = ratio
-    this.shieldBarFill.position.x = (1 - ratio) * -barWidth / 2
-    this.shieldBarFill.visible = ratio > 0
+  // Kill this enemy
+  kill() {
+    this.health = 0
+    this.isDead = true
+
+    // Play death sound with spatial audio
+    if (this.mesh && this.mesh.position) {
+      SoundManager.play3D('enemy_death.ogg', this.mesh.position)
+    }
   }
   
-  setPath(path, pathId = null) {
+  // Deal damage to this enemy
+  damage(amount) {
+    // Apply armor reduction
+    const effectiveDamage = amount * (1 - this.armor)
+
+    // Show floating damage number
+    if (this.visualEffects && this.mesh && this.mesh.position) {
+      // Critical hit if damage is > 30% of max health
+      const isCritical = effectiveDamage > this.maxHealth * 0.3
+
+      const damageNumberPos = this.mesh.position.clone()
+      damageNumberPos.y += 1.5 * this.scale // Above enemy
+
+      this.visualEffects.createDamageNumber(damageNumberPos, Math.round(effectiveDamage), {
+        color: isCritical ? 0xffff00 : 0xff4444,
+        size: isCritical ? 1.5 : 1.0,
+        duration: isCritical ? 1200 : 1000,
+        isCritical
+      })
+    }
+
+    if (this.health > effectiveDamage) {
+      this.health -= effectiveDamage
+
+      // Play hit sound with spatial audio (only if still alive)
+      if (this.mesh && this.mesh.position) {
+        SoundManager.play3D('enemy_hit.ogg', this.mesh.position, { volume: 0.6 })
+      }
+    } else {
+      this.health = 0
+      this.isDead = true
+
+      // Play death sound with spatial audio
+      if (this.mesh && this.mesh.position) {
+        SoundManager.play3D('enemy_death.ogg', this.mesh.position)
+      }
+
+      // Create blood splatter on death
+      if (this.visualEffects && this.mesh && this.mesh.position) {
+        this.visualEffects.createBloodSplatter(this.mesh.position, {
+          count: this.isBoss ? 50 : 30,
+          color: 0x8b0000,
+          size: this.isBoss ? 0.4 : 0.3,
+          duration: this.isBoss ? 800 : 600
+        })
+      }
+    }
+
+    this.updateHealthBar()
+
+    // Visual damage feedback (flash white)
+    if (this.mesh) {
+      const body = this.mesh.children[0]
+      if (body && body.material) {
+        const originalColor = body.material.emissive.getHex()
+        body.material.emissive.setHex(0xffffff)
+        setTimeout(() => {
+          if (body.material) {
+            body.material.emissive.setHex(originalColor)
+          }
+        }, 100)
+      }
+    }
+
+    return this.isDead
+  }
+  
+  // Advance this enemy on its path
+  advance() {
+    if (this.path && this.path.length >= 1) {
+      const prev = this.next || (this.path[0] && { x: this.path[0].x || 0, y: this.path[0].y || 0.5, z: this.path[0].z || 0 })
+      const n = this.path.shift()
+      
+      // Handle both world positions and grid coordinates
+      if (n && typeof n.x === 'number') {
+        this.next = { x: n.x, y: n.y || 0.5, z: n.z || 0 }
+      } else if (Array.isArray(n)) {
+        // Grid coordinate - will be converted by game
+        this.next = { x: n[1] || 0, y: 0.5, z: n[0] || 0 }
+      } else {
+        this.finished = true
+        return false
+      }
+      
+      if (prev) {
+        this.direction = [
+          this.next.x - prev.x,
+          this.next.y - prev.y,
+          (this.next.z || 0) - (prev.z || 0)
+        ]
+      }
+      
+      return true
+    }
+    
+    this.finished = true
+    return false
+  }
+  
+  // Set a new path (accepts both world positions and grid coordinates)
+  setPath(path) {
     if (!path || path.length === 0) {
       this.finished = true
       return
     }
     
-    this.pathId = pathId || this.pathId
-    this.path = path.map(p => ({
-      x: p.x !== undefined ? p.x : 0,
-      y: p.y !== undefined ? p.y : 0.5,
-      z: p.z !== undefined ? p.z : 0
-    }))
-    
-    this.totalPathLength = this.path.length
-    this.pathProgress = 0
+    // Convert path to world positions if needed
+    if (path[0] && typeof path[0].x === 'number' && typeof path[0].y === 'number') {
+      // Already world positions
+      this.path = path.map(p => ({ x: p.x, y: p.y || 0.5, z: p.z || 0 }))
+    } else if (Array.isArray(path[0])) {
+      // Grid coordinates - convert to world (will be handled by game)
+      this.path = path
+    } else {
+      // Assume world positions
+      this.path = path.slice()
+    }
     
     this.finished = false
     this.advance()
   }
   
-  advance() {
-    if (this.path.length === 0) {
-      this.finished = true
-      this.reachedEnd = true
-      return false
-    }
+  // Get enemies that should spawn when this enemy dies (for splitter type)
+  getSpawnOnDeath() {
+    if (!this.splitCount || !this.splitType) return []
     
-    this.next = this.path.shift()
-    if (this.totalPathLength > 0) {
-      const remaining = this.path.length
-      this.pathProgress = 1 - (remaining / this.totalPathLength)
+    const spawns = []
+    for (let i = 0; i < this.splitCount; i++) {
+      spawns.push({
+        type: this.splitType,
+        position: this.mesh ? this.mesh.position.clone() : null
+      })
     }
-    return this.next !== null
+    return spawns
   }
   
-  applySlow(amount, duration) {
-    this.slowAmount = Math.max(this.slowAmount, amount)
-    this.speed = this.originalSpeed * (1 - this.slowAmount)
-    
-    if (this.slowTimer) clearTimeout(this.slowTimer)
-    
-    this.slowTimer = setTimeout(() => {
-      this.slowAmount = 0
-      this.speed = this.originalSpeed
-    }, duration)
-    
-    // Blue tint
-    if (this.bodyMesh && this.bodyMesh.material) {
-      this.bodyMesh.material.color.lerp(new THREE.Color(0x88ccff), 0.5)
-    }
-  }
-  
-  applyBurn(damagePerSecond, duration) {
-    this.burnDamage = damagePerSecond
-    this.burnEndTime = Date.now() + duration
-  }
-  
-  update(deltaTime) {
-    if (this.isDead) return
+  // Update enemy animation
+  updateAnimation(deltaTime) {
+    if (!this.mesh) return
     
     this.animationTime += deltaTime
-    const s = this.scale
     
-    // Subtle ship hover animation
-    if (this.bodyMesh) {
-      // Gentle floating motion
-      const hoverOffset = Math.sin(this.animationTime * 2) * 0.15
-      
-      // Banking effect based on movement
-      if (this.mesh) {
-        // Ships should tilt slightly forward
-        this.mesh.rotation.x = 0.1 + Math.sin(this.animationTime * 1.5) * 0.03
-      }
-      
-      // Pulse emissive intensity
-      if (this.bodyMesh.material && this.bodyMesh.material.emissiveIntensity !== undefined) {
-        const emissivePulse = 0.3 + Math.sin(this.animationTime * 3) * 0.15
-        this.bodyMesh.material.emissiveIntensity = emissivePulse
-      }
-    }
+    // Bobbing animation
+    const bobOffset = Math.sin(this.animationTime * 5 + this.id.charCodeAt(0)) * 0.2
+    this.mesh.position.y += bobOffset * deltaTime
     
-    // Animate core/cockpit glow - pulsing
-    if (this.coreMesh) {
-      const pulse = 0.8 + Math.sin(this.animationTime * 4) * 0.2
-      this.coreMesh.scale.setScalar(pulse)
-      this.coreMesh.material.opacity = 0.7 + Math.sin(this.animationTime * 3) * 0.25
-    }
-    
-    // Animate engine effects
-    if (this.enemyLight) {
-      const baseLightIntensity = this.isBoss ? 8 : this.tier >= 2 ? 4 : 2
-      this.enemyLight.intensity = baseLightIntensity + Math.sin(this.animationTime * 5) * (baseLightIntensity * 0.4)
-    }
-    
-    // Animate engine particles (flicker effect)
-    this.particles.forEach((p, i) => {
-      if (p.type === 'engine' && p.mesh) {
-        const flicker = 0.7 + Math.sin(this.animationTime * 8 + i * 2) * 0.3
-        p.mesh.scale.setScalar(flicker)
-        if (p.mesh.material) {
-          p.mesh.material.opacity = 0.6 + Math.sin(this.animationTime * 6 + i) * 0.35
-        }
-      }
-    })
-    
-    // Animate shield
-    if (this.shieldMesh && this.shieldMesh.visible) {
-      const shieldPulse = 1 + Math.sin(this.animationTime * 2) * 0.05
-      this.shieldMesh.scale.setScalar(shieldPulse)
-      this.shieldMesh.material.opacity = 0.2 + Math.sin(this.animationTime * 3) * 0.1
-    }
-    if (this.shieldWire && this.shieldWire.visible) {
-      this.shieldWire.rotation.y += deltaTime * 0.8
-    }
-    
-    // Animate healer aura
-    if (this.auraMesh) {
-      this.auraMesh.rotation.z += deltaTime * 2
-      const auraPulse = 1 + Math.sin(this.animationTime * 2.5) * 0.15
-      this.auraMesh.scale.setScalar(auraPulse)
-    }
-    
-    // Burn damage
-    if (this.burnDamage > 0 && Date.now() < this.burnEndTime) {
-      this.health -= this.burnDamage * deltaTime
-      this.updateHealthBar()
-      if (this.health <= 0) {
-        this.health = 0
-        this.isDead = true
-      }
-    } else if (Date.now() >= this.burnEndTime) {
-      this.burnDamage = 0
-    }
+    // Slight rotation wobble
+    this.mesh.rotation.y += Math.sin(this.animationTime * 3) * 0.01
   }
   
-  updateAnimation(deltaTime) {
-    this.update(deltaTime)
-  }
-  
-  getSpawnOnDeath() {
-    if (this.splitCount > 0 && this.splitType) {
-      const spawns = []
-      for (let i = 0; i < this.splitCount; i++) {
-        spawns.push({
-          type: this.splitType,
-          position: this.position.clone().add(
-            new THREE.Vector3(
-              (Math.random() - 0.5) * 2,
-              0,
-              (Math.random() - 0.5) * 2
-            )
-          )
-        })
-      }
-      return spawns
-    }
-    return null
-  }
-  
-  reset(config = {}) {
-    const healthMult = config.healthMultiplier || 1
-    const speedMult = config.speedMultiplier || 1
-    
-    const enemyConfig = ENEMY_TYPES[this.type] || ENEMY_TYPES.spider
-    
-    this.health = Math.floor((enemyConfig.health || 100) * healthMult)
-    this.maxHealth = this.health
-    this.speed = (enemyConfig.speed || 5) * speedMult
-    this.originalSpeed = this.speed
-    
-    this.shieldHealth = enemyConfig.shieldHealth || 0
-    this.maxShieldHealth = this.shieldHealth
-    
-    this.isDead = false
-    this.finished = false
-    this.reachedEnd = false
-    this.slowAmount = 0
-    this.burnDamage = 0
-    this.isEnraged = false
-    this.isPhasing = false
-    this.path = []
-    this.next = null
-    
-    this.updateHealthBar()
-    this.updateShieldBar()
-    
-    if (this.shieldMesh) this.shieldMesh.visible = this.shieldHealth > 0
-    if (this.shieldWire) this.shieldWire.visible = this.shieldHealth > 0
-  }
-  
+  // Clean up
   destroy() {
-    if (this.slowTimer) clearTimeout(this.slowTimer)
-    
     if (this.mesh) {
       this.mesh.traverse((child) => {
         if (child.geometry) child.geometry.dispose()

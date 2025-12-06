@@ -205,6 +205,20 @@ app.get('/api/ready', async (req, res) => {
   }
 });
 
+// Wave income bonus helper function
+function getWaveIncomeBonus(waveType, quantity) {
+  const bonusMap = {
+    spider: 2,
+    scout: 3,
+    swarm: 1,
+    brute: 8,
+    armored: 10,
+    healer: 7,
+    boss: 40
+  };
+  return (bonusMap[waveType] || 2) * quantity;
+}
+
 // Socket.IO connection handling
 io.on('connection', (socket) => {
   logger.info(`Client connected: ${socket.id}`);
@@ -269,6 +283,7 @@ io.on('connection', (socket) => {
       await matchmakingService.updateMatch(matchId, { state: 'briefing' });
       io.to(`match_${matchId}`).emit('match_briefing', match);
       
+      // 3 second countdown before match starts
       setTimeout(async () => {
         match.state = 'running';
         match.startTime = new Date().toISOString();
@@ -277,7 +292,8 @@ io.on('connection', (socket) => {
           startTime: match.startTime
         });
         io.to(`match_${matchId}`).emit('match_started', match);
-      }, 30000);
+        logger.info(`Match ${matchId} started`);
+      }, 3000);
     }
   });
 
@@ -396,6 +412,12 @@ io.on('connection', (socket) => {
         
         socket.emit('tower_placed', { ...gameResult, sequence: result.sequence });
         
+        // Broadcast to opponent
+        socket.to(`match_${matchId}`).emit('opponent_action', {
+          type: 'tower_placed',
+          data: { position, towerType, playerId }
+        });
+        
         // Broadcast state update
         const matchState = multiplayerService.getMatchState(matchId, playerId);
         if (matchState) {
@@ -409,15 +431,87 @@ io.on('connection', (socket) => {
       socket.emit('action_error', { error: error.message });
     }
   });
-  
-  // Player action handler (unified)
-  socket.on('player_action', async (data) => {
-    const { matchId, playerId, action } = data;
+
+  // Send wave to attack opponent
+  socket.on('send_wave', async (data) => {
+    const { matchId, playerId, waveType, quantity, cost } = data;
     
     try {
-      const result = multiplayerService.processPlayerAction(matchId, playerId, action);
+      const match = matchmakingService.getMatch(matchId);
+      if (!match || match.state !== 'running') {
+        socket.emit('action_error', { error: 'Match not active' });
+        return;
+      }
       
-      if (result.success) {
+      // Find player state
+      const playerIndex = match.players.findIndex(p => p.id === playerId);
+      if (playerIndex === -1) {
+        socket.emit('action_error', { error: 'Player not in match' });
+        return;
+      }
+      
+      const playerState = match.gameState[`player${playerIndex + 1}`];
+      if (!playerState) {
+        socket.emit('action_error', { error: 'Player state not found' });
+        return;
+      }
+      
+      // Check if player can afford the wave
+      if (playerState.gold < cost) {
+        socket.emit('action_error', { error: 'Not enough gold' });
+        return;
+      }
+      
+      // Deduct gold
+      playerState.gold -= cost;
+      
+      // Add income bonus based on wave type
+      const incomeBonus = getWaveIncomeBonus(waveType, quantity);
+      playerState.income = (playerState.income || 20) + incomeBonus;
+      
+      // Track waves sent
+      playerState.wavesSent = (playerState.wavesSent || 0) + quantity;
+      
+      // Confirm wave sent to sender
+      socket.emit('wave_sent', {
+        waveType,
+        quantity,
+        cost,
+        newGold: playerState.gold,
+        newIncome: playerState.income
+      });
+      
+      // Notify opponent about incoming wave
+      socket.to(`match_${matchId}`).emit('opponent_action', {
+        type: 'wave_sent',
+        data: { waveType, quantity, senderId: playerId }
+      });
+      
+      // Broadcast state update
+      io.to(`match_${matchId}`).emit('game_state_update', match.gameState);
+      
+      logger.info(`Wave sent: ${quantity}x ${waveType} from player ${playerId} in match ${matchId}`);
+    } catch (error) {
+      logger.error(`Error sending wave:`, error);
+      socket.emit('action_error', { error: error.message });
+    }
+  });
+  
+  // Player action handler (unified) - relays all player actions to opponent
+  socket.on('player_action', async (data) => {
+    const { matchId, playerId, type, data: actionData } = data;
+    
+    try {
+      // Relay action to opponent
+      socket.to(`match_${matchId}`).emit('opponent_action', {
+        type,
+        data: { ...actionData, playerId }
+      });
+      
+      // Process action if needed
+      const result = multiplayerService.processPlayerAction(matchId, playerId, { type, data: actionData });
+      
+      if (result && result.success) {
         socket.emit('action_confirmed', { sequence: result.sequence });
         
         // Broadcast state update to all players in match
@@ -430,6 +524,21 @@ io.on('connection', (socket) => {
       logger.error(`Error processing player action:`, error);
       socket.emit('action_error', { error: error.message });
     }
+  });
+
+  // Phase change event - sync phase transitions between players
+  socket.on('phase_change', (data) => {
+    const { matchId, phase, round, phaseTimeRemaining } = data;
+    
+    // Broadcast phase change to all players in match
+    io.to(`match_${matchId}`).emit('phase_changed', {
+      phase,
+      round,
+      phaseTimeRemaining,
+      timestamp: Date.now()
+    });
+    
+    logger.info(`Phase changed to ${phase} (round ${round}) in match ${matchId}`);
   });
   
   // State synchronization request

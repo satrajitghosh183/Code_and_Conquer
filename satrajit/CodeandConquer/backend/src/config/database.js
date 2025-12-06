@@ -34,6 +34,7 @@ class Database {
   async getAllProblems(filters = {}) {
     if (this.type === 'supabase' && supabase) {
       try {
+        // Fetch problems
         let query = supabase
           .from('problems')
           .select('*');
@@ -53,9 +54,14 @@ class Database {
 
         if (error) throw error;
         
+        // Fetch all problem tags from the junction table
+        const tagsMap = await this.getAllProblemTags();
+        
         // Map problems and load test cases from local files or Supabase test_cases table
         const mappedProblems = await Promise.all((data || []).map(async (p) => {
-          const mapped = this.mapSupabaseProblem(p);
+          // Get tags for this problem from the tags map
+          const tagsFromJunction = tagsMap.get(p.id) || [];
+          const mapped = this.mapSupabaseProblem(p, tagsFromJunction);
           let hasTestCases = mapped.testCases && mapped.testCases.length > 0;
           
           // 1. Try to load test cases from local files (fastest)
@@ -127,9 +133,75 @@ class Database {
     });
   }
 
+  // Fetch all tags from problem_tags table and return as a Map<problem_id, tag[]>
+  async getAllProblemTags() {
+    const tagsMap = new Map();
+    
+    if (!supabase) {
+      console.log('getAllProblemTags: supabase client not available');
+      return tagsMap;
+    }
+    
+    try {
+      console.log('Fetching tags from problem_tags table...');
+      // Fetch all tags - Supabase default limit is 1000, so we need to increase it
+      const { data, error } = await supabase
+        .from('problem_tags')
+        .select('problem_id, tag')
+        .limit(10000); // Increase limit to fetch all tags
+      
+      if (error) {
+        console.error('Error fetching problem tags:', error);
+        return tagsMap;
+      }
+      
+      console.log(`Fetched ${(data || []).length} tags from problem_tags table`);
+      
+      // Group tags by problem_id
+      for (const row of (data || [])) {
+        if (!tagsMap.has(row.problem_id)) {
+          tagsMap.set(row.problem_id, []);
+        }
+        if (row.tag) {
+          tagsMap.get(row.problem_id).push(row.tag);
+        }
+      }
+      
+      console.log(`Tags mapped for ${tagsMap.size} problems`);
+      
+      return tagsMap;
+    } catch (error) {
+      console.error('Error fetching problem tags:', error);
+      return tagsMap;
+    }
+  }
+  
+  // Fetch tags for a specific problem
+  async getProblemTags(problemId) {
+    if (!supabase) return [];
+    
+    try {
+      const { data, error } = await supabase
+        .from('problem_tags')
+        .select('tag')
+        .eq('problem_id', problemId);
+      
+      if (error) {
+        console.error('Error fetching tags for problem:', error);
+        return [];
+      }
+      
+      return (data || []).map(row => row.tag).filter(Boolean);
+    } catch (error) {
+      console.error('Error fetching tags for problem:', error);
+      return [];
+    }
+  }
+
   async getProblemById(id) {
     if (this.type === 'supabase' && supabase) {
       try {
+        // Fetch problem
         const { data, error } = await supabase
           .from('problems')
           .select('*')
@@ -144,7 +216,9 @@ class Database {
           throw error;
         }
         
-        const problem = this.mapSupabaseProblem(data);
+        // Fetch tags from the problem_tags table
+        const tagsFromJunction = await this.getProblemTags(id);
+        const problem = this.mapSupabaseProblem(data, tagsFromJunction);
         
         // Try to load test cases from multiple sources (in priority order):
         // 1. Local files (fastest, always up to date)
@@ -162,6 +236,7 @@ class Database {
           if (localProblem.hiddenTestCases && Array.isArray(localProblem.hiddenTestCases) && localProblem.hiddenTestCases.length > 0) {
             problem.hiddenTestCases = localProblem.hiddenTestCases;
           }
+          // Only use local tags if we don't have tags from the junction table
           if ((!problem.tags || problem.tags.length === 0) && localProblem.tags && localProblem.tags.length > 0) {
             problem.tags = localProblem.tags;
           }
@@ -427,7 +502,7 @@ class Database {
     return newProblem;
   }
 
-  mapSupabaseProblem(data) {
+  mapSupabaseProblem(data, tagsFromJunction = null) {
     // Helper function to deeply parse JSON that might be double-stringified
     const deepParseJson = (value) => {
       if (value === null || value === undefined) return value;
@@ -528,8 +603,14 @@ class Database {
       return field;
     };
 
-    // Parse tags - handle both string arrays and JSON arrays
-    let tags = parseJsonField(data.tags);
+    // Use tags from junction table if provided, otherwise try to parse from data.tags
+    let tags = [];
+    if (tagsFromJunction && Array.isArray(tagsFromJunction) && tagsFromJunction.length > 0) {
+      tags = tagsFromJunction;
+    } else {
+      // Fallback: try to parse tags from data.tags (for backward compatibility)
+      tags = parseJsonField(data.tags);
+    }
     // If tags is empty but we have category, use category as a tag
     if ((!tags || tags.length === 0) && data.category) {
       tags = [data.category];
@@ -842,3 +923,4 @@ class Database {
 }
 
 export default new Database();
+

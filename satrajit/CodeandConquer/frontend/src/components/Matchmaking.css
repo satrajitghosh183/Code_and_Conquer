@@ -215,3 +215,92 @@
   margin-top: 8px;
 }
 
+/* Connecting state */
+.matchmaking-connecting {
+  text-align: center;
+}
+
+.matchmaking-connecting h2 {
+  font-size: 24px;
+  font-weight: 500;
+  color: var(--text-primary);
+  margin-bottom: 12px;
+}
+
+.matchmaking-connecting p {
+  font-size: 15px;
+  color: var(--text-secondary);
+}
+
+.connecting-spinner {
+  width: 48px;
+  height: 48px;
+  border: 3px solid rgba(255, 255, 255, 0.2);
+  border-top-color: var(--text-primary);
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin: 0 auto 24px;
+}
+
+/* Countdown Modal */
+.countdown-modal {
+  background: linear-gradient(135deg, rgba(20, 0, 0, 0.98) 0%, rgba(40, 0, 0, 0.98) 100%);
+  border: 3px solid #ff4444;
+  text-align: center;
+  animation: countdownPulse 0.5s ease-in-out infinite;
+}
+
+@keyframes countdownPulse {
+  0%, 100% {
+    box-shadow: 0 20px 60px rgba(255, 0, 0, 0.4);
+  }
+  50% {
+    box-shadow: 0 20px 80px rgba(255, 0, 0, 0.7);
+  }
+}
+
+.countdown-display {
+  padding: 20px 0;
+}
+
+.countdown-display h2 {
+  font-size: 28px;
+  font-weight: 700;
+  color: #fff;
+  margin-bottom: 20px;
+  text-transform: uppercase;
+  letter-spacing: 3px;
+}
+
+.countdown-number {
+  font-size: 120px;
+  font-weight: 900;
+  color: #ff4444;
+  text-shadow: 
+    0 0 20px rgba(255, 68, 68, 0.8),
+    0 0 40px rgba(255, 68, 68, 0.6),
+    0 0 60px rgba(255, 68, 68, 0.4);
+  line-height: 1;
+  animation: numberPop 1s ease-out;
+}
+
+@keyframes numberPop {
+  0% {
+    transform: scale(1.5);
+    opacity: 0;
+  }
+  50% {
+    transform: scale(0.9);
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+.countdown-display p {
+  font-size: 16px;
+  color: rgba(255, 255, 255, 0.7);
+  margin-top: 20px;
+}
+
