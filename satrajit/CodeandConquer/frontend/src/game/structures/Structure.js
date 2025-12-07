@@ -30,7 +30,11 @@ export class Structure {
     }
     
     this.mesh.position.copy(this.position)
-    this.mesh.rotation.y = this.rotation // Apply stored rotation
+    // Rotation will be applied by child classes (Wall needs special handling)
+    // For non-wall structures, apply Y rotation here
+    if (this.type !== 'wall') {
+      this.mesh.rotation.y = this.rotation
+    }
     this.applyRedTheme()
     this.createHealthBar()
     this.loaded = true
@@ -77,7 +81,8 @@ export class Structure {
     
     // Position walls vertically on ground
     if (this.type === 'wall') {
-      // Ensure wall is vertical (no rotation)
+      // Fallback geometry is already vertical (BoxGeometry height is along Y)
+      // No rotation needed for fallback - it's already correct
       mesh.rotation.x = 0
       mesh.rotation.z = 0
       // Position at half height so it sits on ground

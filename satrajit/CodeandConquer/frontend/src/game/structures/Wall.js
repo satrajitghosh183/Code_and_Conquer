@@ -25,30 +25,31 @@ export class Wall extends Structure {
     await super.load()
     
     // Make walls vertical to block enemies
+    // The model is likely horizontal (flat), so rotate 90 degrees on X axis to stand it up
     if (this.mesh) {
-      // Ensure wall is vertical - rotate if needed
-      // Check if mesh is a group and rotate all children, or rotate the mesh itself
+      // Rotate the entire mesh to be vertical
+      // If model is horizontal (lying flat), rotate -90 degrees on X axis
       if (this.mesh.isGroup) {
-        this.mesh.children.forEach(child => {
-          if (child.isMesh) {
-            // Rotate to vertical if model is horizontal
-            child.rotation.x = 0 // Ensure no X rotation (vertical)
-            child.rotation.z = 0 // Ensure no Z rotation
-          }
-        })
+        // For groups, rotate the group itself
+        this.mesh.rotation.x = -Math.PI / 2 // Rotate 90 degrees to stand vertical
+        this.mesh.rotation.z = 0
       } else {
-        // Single mesh - ensure it's vertical
-        this.mesh.rotation.x = 0
+        // Single mesh - rotate to vertical
+        this.mesh.rotation.x = -Math.PI / 2 // Rotate 90 degrees to stand vertical
         this.mesh.rotation.z = 0
       }
+      
+      // Apply Y rotation from placement rotation (user rotation)
+      this.mesh.rotation.y = this.rotation
       
       // Scale walls to be smaller - reduce overall size
       const currentScale = this.mesh.scale.x || 1
       this.mesh.scale.set(currentScale * 0.8, currentScale * 0.8, currentScale * 0.8)
       
       // Position on ground - walls should stand vertically
-      // Height should be along Y axis, so position at half height
-      const wallHeight = 1.2 * currentScale * 0.8
+      // After rotating, the "height" dimension is now along Z axis, so position accordingly
+      // Estimate wall height after rotation (original depth becomes height)
+      const wallHeight = 1.5 * currentScale * 0.8 // Approximate height after rotation
       this.mesh.position.y = wallHeight / 2
     }
     
