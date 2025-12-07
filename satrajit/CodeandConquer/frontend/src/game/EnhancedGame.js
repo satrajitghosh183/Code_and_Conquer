@@ -870,8 +870,8 @@ export class EnhancedGame {
       this.scene.add(rock)
     }
 
-    // Floating particles (disabled - was creating random particles)
-    // this.createParticles()
+    // Floating particles
+    this.createParticles()
   }
 
   createParticles() {
