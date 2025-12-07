@@ -23,14 +23,16 @@ export class Wall extends Structure {
   async load() {
     await super.load()
     
-    // Scale is already applied by ModelLoader.createInstance()
-    // Walls may need additional height adjustment
+    // Make walls vertical to block enemies
     if (this.mesh) {
-      // Keep proportional scale but adjust height slightly if needed
-      // The base scale from ModelLoader should be correct, but we can fine-tune here
+      // Keep walls vertical (no rotation)
+      // Adjust position to sit on ground properly
       const currentScale = this.mesh.scale.x
-      // Make walls slightly shorter relative to their width
-      this.mesh.scale.set(currentScale, currentScale * 0.7, currentScale)
+      // Scale walls to be smaller - reduce overall size
+      this.mesh.scale.set(currentScale * 0.8, currentScale * 0.8, currentScale * 0.8)
+      
+      // Position on ground (half of scaled height)
+      this.mesh.position.y = (1.2 * currentScale * 0.8) / 2
     }
     
     return this.mesh

@@ -875,44 +875,58 @@ export class EnhancedGame {
   }
 
   createParticles() {
-    // Reduced particles for performance (200 instead of 2000)
+    // Polished particles for atmospheric effect
     const particlesGeometry = new THREE.BufferGeometry()
-    const particlesCount = 200
+    const particlesCount = 250
     const positions = new Float32Array(particlesCount * 3)
     const colors = new Float32Array(particlesCount * 3)
+    const sizes = new Float32Array(particlesCount)
 
     for (let i = 0; i < particlesCount * 3; i += 3) {
-      positions[i] = (Math.random() - 0.5) * 120
-      positions[i + 1] = Math.random() * 50 + 5
-      positions[i + 2] = (Math.random() - 0.5) * 120
+      // Better distribution - more particles near base, fewer far away
+      const distance = Math.random()
+      const angle = Math.random() * Math.PI * 2
+      const radius = distance * 80
       
-      // Red/orange/black particles
+      positions[i] = Math.cos(angle) * radius
+      positions[i + 1] = Math.random() * 40 + 5 + Math.sin(distance * Math.PI) * 10
+      positions[i + 2] = Math.sin(angle) * radius
+      
+      // Polished color gradient - bright red to orange to dark red
       const colorChoice = Math.random()
-      if (colorChoice < 0.6) {
+      if (colorChoice < 0.5) {
+        // Bright red core
         colors[i] = 1.0
-        colors[i + 1] = 0.0
+        colors[i + 1] = 0.1 + Math.random() * 0.2
         colors[i + 2] = 0.0
-      } else if (colorChoice < 0.85) {
+      } else if (colorChoice < 0.8) {
+        // Orange glow
         colors[i] = 1.0
-        colors[i + 1] = 0.3
+        colors[i + 1] = 0.4 + Math.random() * 0.3
         colors[i + 2] = 0.0
       } else {
-        colors[i] = 0.5
+        // Deep red embers
+        colors[i] = 0.6 + Math.random() * 0.3
         colors[i + 1] = 0.0
         colors[i + 2] = 0.0
       }
+      
+      // Variable sizes for depth
+      sizes[i / 3] = 0.2 + Math.random() * 0.4
     }
 
     particlesGeometry.setAttribute('position', new THREE.BufferAttribute(positions, 3))
     particlesGeometry.setAttribute('color', new THREE.BufferAttribute(colors, 3))
+    particlesGeometry.setAttribute('size', new THREE.BufferAttribute(sizes, 1))
 
     const particlesMaterial = new THREE.PointsMaterial({
-      size: 0.4,
+      size: 0.35,
       transparent: true,
-      opacity: 0.4,
+      opacity: 0.6,
       vertexColors: true,
       blending: THREE.AdditiveBlending,
-      depthWrite: false
+      depthWrite: false,
+      sizeAttenuation: true // Particles get smaller with distance
     })
 
     this.particles = new THREE.Points(particlesGeometry, particlesMaterial)
@@ -1244,14 +1258,20 @@ export class EnhancedGame {
       this.baseLight.intensity = 1.5 + pulse * 0.8
     }
 
-    // Animate particles
+    // Animate particles with polished movement
     if (this.particles) {
-      this.particles.rotation.y += deltaTime * 0.05
+      // Slow rotation for ambient effect
+      this.particles.rotation.y += deltaTime * 0.02
       
-      // Drift particles
+      // Smooth floating animation
       const positions = this.particles.geometry.attributes.position.array
+      const time = Date.now() * 0.001
       for (let i = 0; i < positions.length; i += 3) {
-        positions[i + 1] += Math.sin(Date.now() * 0.001 + i) * 0.01
+        // Gentle vertical drift with sine wave
+        positions[i + 1] += Math.sin(time * 0.5 + i * 0.01) * deltaTime * 0.3
+        // Subtle horizontal drift
+        positions[i] += Math.cos(time * 0.3 + i * 0.015) * deltaTime * 0.1
+        positions[i + 2] += Math.sin(time * 0.4 + i * 0.012) * deltaTime * 0.1
       }
       this.particles.geometry.attributes.position.needsUpdate = true
     }

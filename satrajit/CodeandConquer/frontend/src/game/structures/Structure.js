@@ -53,9 +53,16 @@ export class Structure {
       group.add(topMesh)
       return group
     } else if (this.type === 'wall') {
-      // Create a wall-like shape
-      geometry = new THREE.BoxGeometry(2, 1.5, 0.5)
-      material = new THREE.MeshStandardMaterial({ color: 0x8B0000 })
+      // Create a vertical wall to block enemies
+      // Width, Height, Depth - vertical barrier
+      geometry = new THREE.BoxGeometry(1.5, 1.2, 0.4) // Smaller vertical wall
+      material = new THREE.MeshStandardMaterial({ 
+        color: 0x8B0000,
+        metalness: 0.6,
+        roughness: 0.4,
+        emissive: 0x330000,
+        emissiveIntensity: 0.2
+      })
     } else {
       // Default structure
       geometry = new THREE.BoxGeometry(1.5, 2, 1.5)
@@ -65,6 +72,12 @@ export class Structure {
     const mesh = new THREE.Mesh(geometry, material)
     mesh.castShadow = true
     mesh.receiveShadow = true
+    
+    // Position walls vertically on ground
+    if (this.type === 'wall') {
+      mesh.position.y = 0.6 // Half of height (1.2) to sit on ground
+    }
+    
     return mesh
   }
   
