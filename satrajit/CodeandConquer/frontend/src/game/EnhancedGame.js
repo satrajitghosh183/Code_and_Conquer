@@ -807,11 +807,12 @@ export class EnhancedGame {
     this.spawnEnemyOfType('spider', 1 + this.wave * 0.1, null, 1)
   }
   
-  spawnEnemyOfType(type = 'spider', healthMultiplier = 1.0, spawnPoint = null, speedMultiplier = 1) {
+  spawnEnemyOfType(type = 'spider', healthMultiplier = 1.0, spawnPoint = null, speedMultiplier = 1, armorMultiplier = 1.0) {
     // Create enemy using the Enemy class with visual effects reference
     const enemy = new Enemy(type, {
       healthMultiplier,
       speedMultiplier,
+      armorMultiplier,
       visualEffects: this.visualEffects
     })
     const mesh = enemy.createMesh()
@@ -871,7 +872,8 @@ export class EnhancedGame {
         enemiesToSpawn.push({
           type: config.type,
           healthMultiplier: waveConfig.healthMultiplier,
-          speedMultiplier: waveConfig.speedMultiplier || 1
+          speedMultiplier: waveConfig.speedMultiplier || 1,
+          armorMultiplier: waveConfig.armorMultiplier || 1.0
         })
       }
     })
@@ -883,7 +885,13 @@ export class EnhancedGame {
     enemiesToSpawn.forEach((config, i) => {
       setTimeout(() => {
         if (!this.gameOver) {
-          this.spawnEnemyOfType(config.type, config.healthMultiplier)
+          this.spawnEnemyOfType(
+            config.type, 
+            config.healthMultiplier, 
+            null, 
+            config.speedMultiplier,
+            config.armorMultiplier
+          )
         }
       }, i * 1000) // 1 second between each spawn
     })

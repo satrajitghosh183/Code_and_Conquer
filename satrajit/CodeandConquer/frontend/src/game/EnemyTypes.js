@@ -152,62 +152,244 @@ export const WAVE_TEMPLATES = {
   ]
 }
 
+// Enemy introduction schedule - when each type first appears
+const ENEMY_INTRODUCTIONS = {
+  spider: 1,      // Always available
+  scout: 2,       // Introduced at wave 2
+  brute: 4,       // Introduced at wave 4
+  swarm: 6,       // Introduced at wave 6
+  armored: 8,     // Introduced at wave 8
+  healer: 10,     // Introduced at wave 10
+  splitter: 12,   // Introduced at wave 12
+  boss: 5         // Boss waves every 5 waves
+}
+
+// Calculate wave difficulty tier
+function getWaveTier(waveNumber) {
+  if (waveNumber <= 5) return 'early'
+  if (waveNumber <= 15) return 'mid'
+  if (waveNumber <= 30) return 'late'
+  return 'endgame'
+}
+
+// Get available enemy types for a wave
+function getAvailableEnemyTypes(waveNumber) {
+  const available = []
+  for (const [type, introWave] of Object.entries(ENEMY_INTRODUCTIONS)) {
+    if (type === 'boss') continue // Boss handled separately
+    if (waveNumber >= introWave) {
+      available.push(type)
+    }
+  }
+  return available.length > 0 ? available : ['spider'] // Fallback
+}
+
+// Calculate enemy count for a wave
+function calculateEnemyCount(waveNumber, tier) {
+  // Base count with exponential scaling that plateaus
+  let baseCount
+  switch (tier) {
+    case 'early':
+      baseCount = 5 + waveNumber * 1.5
+      break
+    case 'mid':
+      baseCount = 12 + (waveNumber - 5) * 2
+      break
+    case 'late':
+      baseCount = 32 + (waveNumber - 15) * 1.5
+      break
+    case 'endgame':
+      baseCount = 55 + (waveNumber - 30) * 1.2
+      break
+    default:
+      baseCount = 5 + waveNumber * 1.5
+  }
+  return Math.floor(baseCount)
+}
+
 // Generate a wave based on wave number
 export function generateWave(waveNumber) {
   const enemies = []
+  const tier = getWaveTier(waveNumber)
+  const availableTypes = getAvailableEnemyTypes(waveNumber)
+  const totalEnemyCount = calculateEnemyCount(waveNumber, tier)
   
-  // Base enemy count scales more aggressively with wave
-  const baseCount = Math.floor(4 + waveNumber * 2)
+  // Special wave types
+  const isBossWave = waveNumber % 5 === 0 && waveNumber >= 5
+  const isSwarmWave = waveNumber % 4 === 0 && waveNumber >= 4
+  const isEliteWave = waveNumber % 7 === 0 && waveNumber >= 7
+  const isMixedWave = waveNumber % 3 === 0 && waveNumber >= 3
   
-  // Every 5 waves is a boss wave
-  if (waveNumber % 5 === 0 && waveNumber > 0) {
-    // Boss wave - stronger and more varied
-    enemies.push({ type: 'boss', count: 1 + Math.floor(waveNumber / 10) })
-    enemies.push({ type: 'armored', count: Math.floor(waveNumber / 3) })
-    enemies.push({ type: 'brute', count: Math.floor(waveNumber / 4) })
-    enemies.push({ type: 'healer', count: Math.floor(waveNumber / 8) })
-  } else if (waveNumber % 3 === 0) {
-    // Swarm wave - lots of fast enemies
-    enemies.push({ type: 'swarm', count: baseCount * 4 })
-    enemies.push({ type: 'scout', count: baseCount })
-    enemies.push({ type: 'spider', count: Math.floor(baseCount / 2) })
-  } else if (waveNumber % 7 === 0) {
-    // Elite wave - strong enemies
-    enemies.push({ type: 'armored', count: baseCount })
-    enemies.push({ type: 'brute', count: Math.floor(baseCount / 2) })
-    enemies.push({ type: 'healer', count: Math.floor(baseCount / 3) })
-  } else {
-    // Normal wave with progressive variety
-    enemies.push({ type: 'spider', count: baseCount })
+  if (isBossWave) {
+    // Boss wave - mix of strong enemies with boss
+    const bossCount = Math.min(1 + Math.floor(waveNumber / 15), 3) // Cap at 3 bosses
+    const supportCount = Math.floor(totalEnemyCount * 0.3)
     
-    if (waveNumber >= 2) {
-      enemies.push({ type: 'scout', count: Math.floor(baseCount * 0.6) })
+    enemies.push({ type: 'boss', count: bossCount })
+    
+    // Mix of armored, brute, and healer
+    if (availableTypes.includes('armored')) {
+      enemies.push({ type: 'armored', count: Math.floor(supportCount * 0.4) })
     }
-    if (waveNumber >= 4) {
-      enemies.push({ type: 'brute', count: Math.floor(waveNumber / 3) })
+    if (availableTypes.includes('brute')) {
+      enemies.push({ type: 'brute', count: Math.floor(supportCount * 0.3) })
     }
-    if (waveNumber >= 6) {
-      enemies.push({ type: 'armored', count: Math.floor(waveNumber / 4) })
+    if (availableTypes.includes('healer')) {
+      enemies.push({ type: 'healer', count: Math.floor(supportCount * 0.2) })
     }
-    if (waveNumber >= 8) {
-      enemies.push({ type: 'healer', count: Math.floor(waveNumber / 6) })
+    if (availableTypes.includes('splitter')) {
+      enemies.push({ type: 'splitter', count: Math.floor(supportCount * 0.1) })
     }
-    if (waveNumber >= 12) {
-      enemies.push({ type: 'swarm', count: Math.floor(baseCount * 0.5) })
+    
+    // Fill remaining with mixed basic enemies
+    const remaining = totalEnemyCount - bossCount - supportCount
+    distributeEnemies(enemies, availableTypes, remaining, ['boss'])
+    
+  } else if (isSwarmWave) {
+    // Swarm wave - lots of fast, weak enemies
+    const swarmRatio = 0.5 // 50% swarm type enemies
+    const fastRatio = 0.3  // 30% fast enemies
+    
+    if (availableTypes.includes('swarm')) {
+      enemies.push({ type: 'swarm', count: Math.floor(totalEnemyCount * swarmRatio) })
+    }
+    if (availableTypes.includes('scout')) {
+      enemies.push({ type: 'scout', count: Math.floor(totalEnemyCount * fastRatio) })
+    }
+    
+    // Fill with spiders and other fast types
+    const remaining = totalEnemyCount - 
+      (enemies.find(e => e.type === 'swarm')?.count || 0) -
+      (enemies.find(e => e.type === 'scout')?.count || 0)
+    distributeEnemies(enemies, availableTypes, remaining, ['swarm', 'scout'])
+    
+  } else if (isEliteWave) {
+    // Elite wave - strong, tanky enemies
+    const eliteTypes = ['armored', 'brute', 'healer'].filter(t => availableTypes.includes(t))
+    
+    if (eliteTypes.length > 0) {
+      const eliteCount = Math.floor(totalEnemyCount * 0.7)
+      const perType = Math.floor(eliteCount / eliteTypes.length)
+      
+      eliteTypes.forEach(type => {
+        enemies.push({ type, count: perType })
+      })
+    }
+    
+    // Fill with other types
+    const remaining = totalEnemyCount - 
+      enemies.reduce((sum, e) => sum + e.count, 0)
+    distributeEnemies(enemies, availableTypes, remaining, eliteTypes)
+    
+  } else if (isMixedWave) {
+    // Mixed wave - balanced variety
+    const typeCount = Math.min(availableTypes.length, 4) // Use up to 4 different types
+    const typesToUse = availableTypes.slice(0, typeCount)
+    
+    distributeEnemies(enemies, typesToUse, totalEnemyCount, [])
+    
+  } else {
+    // Normal wave - progressive mixing
+    // Always include some spiders
+    const spiderCount = Math.floor(totalEnemyCount * 0.4)
+    enemies.push({ type: 'spider', count: spiderCount })
+    
+    // Add other types based on availability and wave number
+    const remaining = totalEnemyCount - spiderCount
+    const otherTypes = availableTypes.filter(t => t !== 'spider')
+    
+    if (otherTypes.length > 0) {
+      distributeEnemies(enemies, otherTypes, remaining, ['spider'])
     }
   }
   
-  // Scale health more aggressively with wave number
-  const healthMultiplier = 1 + (waveNumber - 1) * 0.2
+  // Remove zero-count entries
+  const filteredEnemies = enemies.filter(e => e.count > 0)
   
-  // Scale speed slightly for later waves
-  const speedMultiplier = 1 + (waveNumber - 1) * 0.05
+  // Improved difficulty scaling with diminishing returns
+  const healthMultiplier = calculateHealthMultiplier(waveNumber)
+  const speedMultiplier = calculateSpeedMultiplier(waveNumber)
+  const armorMultiplier = calculateArmorMultiplier(waveNumber)
   
   return {
-    enemies,
+    enemies: filteredEnemies,
     healthMultiplier,
     speedMultiplier,
-    waveNumber
+    armorMultiplier,
+    waveNumber,
+    tier
   }
+}
+
+// Distribute enemy count across available types
+function distributeEnemies(enemies, availableTypes, totalCount, excludeTypes = []) {
+  if (totalCount <= 0 || availableTypes.length === 0) return
+  
+  const typesToUse = availableTypes.filter(t => !excludeTypes.includes(t))
+  if (typesToUse.length === 0) return
+  
+  // Weight distribution - earlier types get more, later types get less
+  const weights = typesToUse.map((type, index) => {
+    const introWave = ENEMY_INTRODUCTIONS[type] || 1
+    return Math.max(1, 10 - introWave) // Higher weight for earlier types
+  })
+  const totalWeight = weights.reduce((sum, w) => sum + w, 0)
+  
+  let remaining = totalCount
+  typesToUse.forEach((type, index) => {
+    if (remaining <= 0) return
+    
+    const weight = weights[index]
+    const count = Math.floor((weight / totalWeight) * totalCount)
+    const actualCount = Math.min(count, remaining)
+    
+    if (actualCount > 0) {
+      const existing = enemies.find(e => e.type === type)
+      if (existing) {
+        existing.count += actualCount
+      } else {
+        enemies.push({ type, count: actualCount })
+      }
+      remaining -= actualCount
+    }
+  })
+  
+  // Distribute any remaining count
+  if (remaining > 0 && typesToUse.length > 0) {
+    const perType = Math.floor(remaining / typesToUse.length)
+    typesToUse.forEach(type => {
+      const existing = enemies.find(e => e.type === type)
+      if (existing) {
+        existing.count += perType
+      } else {
+        enemies.push({ type, count: perType })
+      }
+    })
+  }
+}
+
+// Improved health multiplier with diminishing returns
+function calculateHealthMultiplier(waveNumber) {
+  // Exponential growth that plateaus: 1 + (wave-1)^1.3 * 0.15
+  // This gives: Wave 1=1.0x, Wave 5=1.8x, Wave 10=2.9x, Wave 20=4.8x, Wave 30=6.5x
+  const base = Math.pow(waveNumber - 1, 1.3) * 0.15
+  return 1 + base
+}
+
+// Improved speed multiplier - slower growth
+function calculateSpeedMultiplier(waveNumber) {
+  // Logarithmic growth: 1 + log(wave) * 0.1
+  // This gives: Wave 1=1.0x, Wave 5=1.16x, Wave 10=1.23x, Wave 20=1.30x, Wave 30=1.35x
+  const base = Math.log(waveNumber) * 0.1
+  return 1 + base
+}
+
+// New armor multiplier for later waves
+function calculateArmorMultiplier(waveNumber) {
+  // Armor increases slightly for enemies that already have armor
+  // Only applies to armored and boss types
+  if (waveNumber < 10) return 1.0
+  // After wave 10, armor effectiveness increases slightly
+  return 1 + (waveNumber - 10) * 0.02 // +2% per wave after 10, capped in enemy creation
 }
 

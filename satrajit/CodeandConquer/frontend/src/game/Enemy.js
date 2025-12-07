@@ -44,6 +44,12 @@ export class Enemy {
     if (args.speedMultiplier) {
       this.speed *= args.speedMultiplier
     }
+    
+    // Apply armor multiplier (only affects enemies with base armor)
+    if (args.armorMultiplier && this.armor > 0) {
+      // Increase armor effectiveness, but cap at 0.75 (75% damage reduction max)
+      this.armor = Math.min(0.75, this.armor * args.armorMultiplier)
+    }
 
     // Override with custom args
     Object.assign(this, args)
