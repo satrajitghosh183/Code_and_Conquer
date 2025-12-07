@@ -65,10 +65,30 @@ export default function BasePanel({ baseStats, gold, onUpgrade }) {
           
           <div className="base-upgrade-preview">
             {!isMaxLevel && (
-              <div className="preview-text">
-                <Icon name="info" size={12} color="#88aaff" />
-                <span>Upgrading increases health, regen, range & damage</span>
-              </div>
+              <>
+                <div className="preview-header">
+                  <Icon name="info" size={12} color="#88aaff" />
+                  <span>Next Level Preview (Lv.{baseStats.level + 1})</span>
+                </div>
+                <div className="preview-stats">
+                  <div className="preview-stat">
+                    <span className="preview-label">Health:</span>
+                    <span className="preview-value">{baseStats.maxHealth} → {Math.floor(baseStats.maxHealth * 1.3)}</span>
+                  </div>
+                  <div className="preview-stat">
+                    <span className="preview-label">Regen:</span>
+                    <span className="preview-value">{baseStats.healthRegen.toFixed(1)}/s → {(baseStats.healthRegen + 0.5).toFixed(1)}/s</span>
+                  </div>
+                  <div className="preview-stat">
+                    <span className="preview-label">Range:</span>
+                    <span className="preview-value">{baseStats.range} → {baseStats.range + 2}</span>
+                  </div>
+                  <div className="preview-stat">
+                    <span className="preview-label">Damage:</span>
+                    <span className="preview-value">{baseStats.damage} → {Math.floor(baseStats.damage * 1.25)}</span>
+                  </div>
+                </div>
+              </>
             )}
           </div>
         </div>

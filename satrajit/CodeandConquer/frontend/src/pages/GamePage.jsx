@@ -64,6 +64,7 @@ export default function GamePage() {
 
     // Get user profile data for task buffs
     const userProfile = {
+      userId: user?.id || null, // Pass userId for base persistence
       tasks: {
         dailyCompleted: 0, // TODO: Get from actual task data
         weeklyCompleted: 0,

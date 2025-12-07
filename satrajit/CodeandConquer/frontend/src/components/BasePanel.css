@@ -174,10 +174,40 @@
   border-top: 1px solid rgba(255, 100, 0, 0.2);
 }
 
-.preview-text {
+.preview-header {
   display: flex;
   align-items: center;
   gap: 6px;
   color: #88aaff;
   font-size: 11px;
+  font-weight: 600;
+  margin-bottom: 8px;
+}
+
+.preview-stats {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.preview-stat {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 4px 6px;
+  background: rgba(136, 170, 255, 0.05);
+  border: 1px solid rgba(136, 170, 255, 0.2);
+  border-radius: 4px;
+  font-size: 10px;
+}
+
+.preview-label {
+  color: #88aaff;
+  font-weight: 500;
+}
+
+.preview-value {
+  color: #aaccff;
+  font-weight: 600;
+  text-shadow: 0 0 4px rgba(136, 170, 255, 0.3);
 }

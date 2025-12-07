@@ -1,4 +1,5 @@
 import * as THREE from 'three'
+import { loadBaseLevel, saveBaseLevel } from '../services/basePersistence'
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js'
 import { EffectComposer } from 'three/examples/jsm/postprocessing/EffectComposer.js'
 import { RenderPass } from 'three/examples/jsm/postprocessing/RenderPass.js'
@@ -141,9 +142,26 @@ export class EnhancedGame {
     })
 
     // Define base position (used for enemy pathfinding)
+    // Load base level from Supabase (async, will be set after load)
     this.base = {
-      position: new THREE.Vector3(0, 0, -20) // Base is at end of path
+      position: new THREE.Vector3(0, 0, -20), // Base is at end of path
+      level: 1, // Will be updated after async load
+      maxLevel: 10,
+      name: 'Main Base',
+      health: 1000,
+      maxHealth: 1000,
+      healthRegen: 1,
+      range: 15,
+      damage: 10
     }
+    
+    // Base visual components (will be set in createBase)
+    this.basePlatform = null
+    this.baseBottomTier = null
+    this.baseMiddleTier = null
+    this.baseTopTier = null
+    this.basePillars = []
+    this.energyRings = []
     
     this.initScene()
     this.initCamera()
@@ -152,11 +170,19 @@ export class EnhancedGame {
     this.initControls()
     this.createTerrain()
     this.createPath()
-    this.createBase()
+    this.createBase() // Create base with initial level, will be updated after async load
     this.createDecorations()
     this.initPostProcessing()
     
     // Initialize visual effects (after scene is created)
+    
+    // Load base level and update after initialization
+    this.loadBaseLevelAsync().then(() => {
+      // Update base stats after load
+      if (this.callbacks.onBaseUpgrade) {
+        this.callbacks.onBaseUpgrade(this.getBaseStats())
+      }
+    })
     this.visualEffects = new VisualEffects(this.scene, this.camera)
 
     // Set LOD manager camera
@@ -440,11 +466,14 @@ export class EnhancedGame {
   }
 
   createBase() {
+    // Store base level for visual creation
+    const level = this.base.level || 1
+    
     // Multi-tiered platform
-    const basePlatform = new THREE.Group()
+    this.basePlatform = new THREE.Group()
 
     // Bottom tier
-    const bottomTier = new THREE.Mesh(
+    this.baseBottomTier = new THREE.Mesh(
       new THREE.CylinderGeometry(8, 9, 2, 8),
       new THREE.MeshStandardMaterial({
         color: 0x440000,
@@ -454,13 +483,13 @@ export class EnhancedGame {
         emissiveIntensity: 0.2
       })
     )
-    bottomTier.position.y = 1
-    bottomTier.castShadow = true
-    bottomTier.receiveShadow = true
-    basePlatform.add(bottomTier)
+    this.baseBottomTier.position.y = 1
+    this.baseBottomTier.castShadow = true
+    this.baseBottomTier.receiveShadow = true
+    this.basePlatform.add(this.baseBottomTier)
 
     // Middle tier
-    const middleTier = new THREE.Mesh(
+    this.baseMiddleTier = new THREE.Mesh(
       new THREE.CylinderGeometry(6, 7, 1.5, 8),
       new THREE.MeshStandardMaterial({
         color: 0x660000,
@@ -470,18 +499,34 @@ export class EnhancedGame {
         emissiveIntensity: 0.3
       })
     )
-    middleTier.position.y = 2.75
-    middleTier.castShadow = true
-    basePlatform.add(middleTier)
+    this.baseMiddleTier.position.y = 2.75
+    this.baseMiddleTier.castShadow = true
+    this.basePlatform.add(this.baseMiddleTier)
 
-    this.scene.add(basePlatform)
+    // Top tier (added for higher levels)
+    this.baseTopTier = new THREE.Mesh(
+      new THREE.CylinderGeometry(4, 5, 1, 8),
+      new THREE.MeshStandardMaterial({
+        color: 0x880000,
+        metalness: 0.5,
+        roughness: 0.5,
+        emissive: 0x440000,
+        emissiveIntensity: 0.4
+      })
+    )
+    this.baseTopTier.position.y = 4.25
+    this.baseTopTier.castShadow = true
+    this.basePlatform.add(this.baseTopTier)
+
+    this.scene.add(this.basePlatform)
 
     // Main crystal - dramatic and glowing
-    const crystalGeometry = new THREE.OctahedronGeometry(3, 1)
+    const crystalSize = 3 * (1 + (level - 1) * 0.2)
+    const crystalGeometry = new THREE.OctahedronGeometry(crystalSize, 1)
     const crystalMaterial = new THREE.MeshPhysicalMaterial({
       color: 0xff0000,
       emissive: 0xcc0000,
-      emissiveIntensity: 1.2,
+      emissiveIntensity: 1.2 + (level - 1) * 0.1,
       metalness: 0.1,
       roughness: 0.05,
       transparent: true,
@@ -491,49 +536,57 @@ export class EnhancedGame {
       transmission: 0.3
     })
     this.crystal = new THREE.Mesh(crystalGeometry, crystalMaterial)
-    this.crystal.position.set(0, 6, 0)
+    this.crystal.position.set(0, 6 + (level - 1) * 0.5, 0)
     this.crystal.castShadow = true
     this.scene.add(this.crystal)
 
     // Energy rings orbiting the crystal
-    this.createEnergyRings()
+    this.createEnergyRings(level)
 
     // Pillars around the base
-    this.createPillars()
+    this.createPillars(level)
+    
+    // Apply level-based visual updates
+    this.updateBaseVisuals(level)
   }
 
-  createEnergyRings() {
-    const ringGeometry = new THREE.TorusGeometry(4.5, 0.15, 8, 32)
-    const ringMaterial = new THREE.MeshStandardMaterial({
-      color: 0xff0000,
-      emissive: 0xff0000,
-      emissiveIntensity: 0.8,
-      metalness: 0.8,
-      roughness: 0.2
-    })
+  createEnergyRings(level = 1) {
+    const ringCount = Math.min(3 + Math.floor((level - 1) / 2), 6) // 3-6 rings
+    const baseRadius = 4.5 * (1 + (level - 1) * 0.1)
     
     this.energyRings = []
-    for (let i = 0; i < 3; i++) {
-      const ring = new THREE.Mesh(ringGeometry, ringMaterial.clone())
-      ring.position.set(0, 5, 0)
+    for (let i = 0; i < ringCount; i++) {
+      const ringGeometry = new THREE.TorusGeometry(baseRadius, 0.15, 8, 32)
+      const ringMaterial = new THREE.MeshStandardMaterial({
+        color: 0xff0000,
+        emissive: 0xff0000,
+        emissiveIntensity: 0.8 + (level - 1) * 0.05,
+        metalness: 0.8,
+        roughness: 0.2
+      })
+      
+      const ring = new THREE.Mesh(ringGeometry, ringMaterial)
+      ring.position.set(0, 5 + (level - 1) * 0.3, 0)
       ring.rotation.x = Math.PI / 2 + (Math.random() - 0.5) * 0.3
-      ring.rotation.y = (Math.PI * 2 * i) / 3
+      ring.rotation.y = (Math.PI * 2 * i) / ringCount
       this.energyRings.push(ring)
       this.scene.add(ring)
     }
   }
 
-  createPillars() {
-    const pillarGeometry = new THREE.CylinderGeometry(0.6, 0.7, 5, 6)
+  createPillars(level = 1) {
+    const basePillarHeight = 5 * (1 + (level - 1) * 0.15)
+    const pillarGeometry = new THREE.CylinderGeometry(0.6, 0.7, basePillarHeight, 6)
     const pillarMaterial = new THREE.MeshStandardMaterial({
       color: 0x880000,
       metalness: 0.7,
       roughness: 0.3,
       emissive: 0x440000,
-      emissiveIntensity: 0.3
+      emissiveIntensity: 0.3 + (level - 1) * 0.05
     })
     
-    const pillarPositions = [
+    // More pillars at higher levels
+    const basePositions = [
       [5, 2.5, 0],
       [-5, 2.5, 0],
       [0, 2.5, 5],
@@ -544,12 +597,26 @@ export class EnhancedGame {
       [-3.5, 2.5, -3.5]
     ]
     
-    pillarPositions.forEach(pos => {
+    // Add more pillars at higher levels
+    const extraPositions = [
+      [7, 2.5, 0],
+      [-7, 2.5, 0],
+      [0, 2.5, 7],
+      [0, 2.5, -7]
+    ]
+    
+    const allPositions = level >= 5 
+      ? [...basePositions, ...extraPositions]
+      : basePositions
+    
+    this.basePillars = []
+    allPositions.forEach(pos => {
       const pillar = new THREE.Mesh(pillarGeometry, pillarMaterial.clone())
-      pillar.position.set(...pos)
+      pillar.position.set(pos[0], basePillarHeight / 2, pos[2])
       pillar.castShadow = true
       pillar.receiveShadow = true
       this.scene.add(pillar)
+      this.basePillars.push(pillar)
 
       // Glow on top of pillars
       const glowGeometry = new THREE.SphereGeometry(0.4, 8, 8)
@@ -562,6 +629,203 @@ export class EnhancedGame {
       glow.position.set(pos[0], pos[1] + 2.5, pos[2])
       this.scene.add(glow)
     })
+  }
+
+  // Load base level from Supabase (async)
+  async loadBaseLevelAsync() {
+    const userId = this.userProfile?.userId
+    if (!userId) {
+      console.log('No userId available, using default base level 1')
+      // Still update stats with default level
+      this.updateBaseStats(this.base.level)
+      return
+    }
+
+    try {
+      const level = await loadBaseLevel(userId)
+      if (level && level >= 1 && level <= 10) {
+        this.base.level = level
+        // Update base stats based on level
+        this.updateBaseStats(level)
+        // Update visuals if base is already created
+        if (this.crystal) {
+          this.updateBaseVisuals(level)
+        }
+        console.log(`Loaded base level ${level} from Supabase`)
+      } else {
+        // Invalid level, use default
+        this.updateBaseStats(this.base.level)
+      }
+    } catch (error) {
+      console.error('Error loading base level:', error)
+      // On error, still update with default level
+      this.updateBaseStats(this.base.level)
+    }
+  }
+
+  // Update base stats based on level
+  updateBaseStats(level) {
+    // Health scales: 1000 * (1 + (level-1) * 0.3)
+    this.base.maxHealth = Math.floor(1000 * (1 + (level - 1) * 0.3))
+    this.base.health = this.base.maxHealth
+    
+    // Health regen: 1 + (level-1) * 0.5
+    this.base.healthRegen = 1 + (level - 1) * 0.5
+    
+    // Range: 15 + (level-1) * 2
+    this.base.range = 15 + (level - 1) * 2
+    
+    // Damage: 10 * (1 + (level-1) * 0.25)
+    this.base.damage = Math.floor(10 * (1 + (level - 1) * 0.25))
+    
+    // Update game health if callback exists
+    if (this.callbacks.onHealthChange) {
+      this.callbacks.onHealthChange(this.base.health, this.base.maxHealth)
+    }
+  }
+
+  // Update base visuals based on level
+  updateBaseVisuals(level) {
+    if (!this.crystal || !this.basePlatform) return
+
+    const scaleFactor = 1 + (level - 1) * 0.2
+
+    // Update crystal
+    const crystalSize = 3 * scaleFactor
+    this.crystal.geometry.dispose()
+    this.crystal.geometry = new THREE.OctahedronGeometry(crystalSize, 1)
+    this.crystal.position.y = 6 + (level - 1) * 0.5
+    
+    if (this.crystal.material.emissiveIntensity !== undefined) {
+      this.crystal.material.emissiveIntensity = 1.2 + (level - 1) * 0.1
+    }
+
+    // Update platform tiers
+    if (this.baseBottomTier) {
+      const bottomScale = 1 + (level - 1) * 0.1
+      this.baseBottomTier.scale.set(bottomScale, 1, bottomScale)
+    }
+    
+    if (this.baseMiddleTier) {
+      const middleScale = 1 + (level - 1) * 0.1
+      this.baseMiddleTier.scale.set(middleScale, 1, middleScale)
+    }
+    
+    if (this.baseTopTier) {
+      const topScale = 1 + (level - 1) * 0.1
+      this.baseTopTier.scale.set(topScale, 1, topScale)
+    }
+
+    // Update energy rings
+    this.energyRings.forEach(ring => {
+      const ringScale = 1 + (level - 1) * 0.1
+      ring.scale.set(ringScale, ringScale, ringScale)
+      if (ring.material.emissiveIntensity !== undefined) {
+        ring.material.emissiveIntensity = 0.8 + (level - 1) * 0.05
+      }
+    })
+
+    // Update pillars
+    this.basePillars.forEach(pillar => {
+      const pillarScale = 1 + (level - 1) * 0.15
+      pillar.scale.y = pillarScale
+      if (pillar.material.emissiveIntensity !== undefined) {
+        pillar.material.emissiveIntensity = 0.3 + (level - 1) * 0.05
+      }
+    })
+  }
+
+  // Upgrade the base
+  upgradeBase() {
+    if (this.base.level >= this.base.maxLevel) {
+      console.log('Base is already at max level')
+      return false
+    }
+
+    const upgradeCost = this.getBaseUpgradeCost(this.base.level + 1)
+    
+    if (this.gold < upgradeCost) {
+      console.log(`Not enough gold. Need ${upgradeCost}, have ${this.gold}`)
+      return false
+    }
+
+    // Deduct gold
+    this.gold -= upgradeCost
+    if (this.callbacks.onGoldChange) {
+      this.callbacks.onGoldChange(this.gold)
+    }
+
+    // Upgrade level
+    this.base.level++
+    
+    // Update stats
+    this.updateBaseStats(this.base.level)
+    
+    // Update visuals
+    this.updateBaseVisuals(this.base.level)
+
+    // Save to Supabase
+    this.saveBaseLevelAsync()
+
+    // Play upgrade sound
+    if (window.SoundManager) {
+      window.SoundManager.play('upgrade.ogg')
+    }
+
+    // Trigger callback
+    if (this.callbacks.onBaseUpgrade) {
+      this.callbacks.onBaseUpgrade(this.getBaseStats())
+    }
+
+    console.log(`Base upgraded to level ${this.base.level}`)
+    return true
+  }
+
+  // Get base upgrade cost for a level
+  getBaseUpgradeCost(level) {
+    // Exponential cost: 500 * 2^(level-1)
+    // Level 1->2: 500, 2->3: 1000, 3->4: 2000, etc.
+    return Math.floor(500 * Math.pow(2, level - 1))
+  }
+
+  // Get base stats for UI
+  getBaseStats() {
+    const nextLevel = this.base.level + 1
+    const isMaxLevel = this.base.level >= this.base.maxLevel
+    const nextUpgradeCost = isMaxLevel ? Infinity : this.getBaseUpgradeCost(nextLevel)
+
+    return {
+      name: this.base.name,
+      level: this.base.level,
+      maxLevel: this.base.maxLevel,
+      health: this.base.health,
+      maxHealth: this.base.maxHealth,
+      healthRegen: this.base.healthRegen,
+      range: this.base.range,
+      damage: this.base.damage,
+      nextUpgradeCost,
+      isMaxLevel
+    }
+  }
+
+  // Save base level to Supabase (async)
+  async saveBaseLevelAsync() {
+    const userId = this.userProfile?.userId
+    if (!userId) {
+      console.log('No userId available, cannot save base level')
+      return false
+    }
+
+    try {
+      const success = await saveBaseLevel(userId, this.base.level)
+      if (success) {
+        console.log(`Base level ${this.base.level} saved to Supabase`)
+      }
+      return success
+    } catch (error) {
+      console.error('Error saving base level:', error)
+      return false
+    }
   }
 
   createDecorations() {
