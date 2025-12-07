@@ -14,7 +14,11 @@ const BUILDABLES = [
   // Walls
   { id: 'wall', name: 'Wall', cost: 50, hotkey: '8', iconName: 'wall', type: 'wall', wallType: 'maze', desc: 'Block' },
   // Spawner
-  { id: 'spawner', name: 'Barracks', cost: 250, hotkey: '9', iconName: 'swords', type: 'spawner', spawnerType: 'barracks', desc: 'Troops' }
+  { id: 'spawner', name: 'Barracks', cost: 250, hotkey: '9', iconName: 'swords', type: 'spawner', spawnerType: 'barracks', desc: 'Troops' },
+  // Resource Generators
+  { id: 'gold_mine', name: 'Gold Mine', cost: 200, hotkey: 'g', iconName: 'coin', type: 'resource_generator', generatorType: 'gold_mine', desc: '+2 gold/s' },
+  { id: 'energy_well', name: 'Energy Well', cost: 150, hotkey: 'e', iconName: 'energy', type: 'resource_generator', generatorType: 'energy_well', desc: '+1 energy/s' },
+  { id: 'hybrid_generator', name: 'Hybrid Gen', cost: 300, hotkey: 'h', iconName: 'power', type: 'resource_generator', generatorType: 'hybrid_generator', desc: '+1 gold/s, +0.5 energy/s' }
 ]
 
 export default function BuildBar({ gold, selectedStructure, onSelect, availableStructures = [] }) {

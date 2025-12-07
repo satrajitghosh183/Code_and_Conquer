@@ -15,6 +15,7 @@ import { LODManager } from './LODManager.js'
 import { Tower } from './structures/Tower.js'
 import { Wall } from './structures/Wall.js'
 import { UnitSpawner } from './structures/UnitSpawner.js'
+import { ResourceGenerator, RESOURCE_GENERATOR_TYPES } from './structures/ResourceGenerator.js'
 import { DefensiveUnit } from './units/DefensiveUnit.js'
 import { TOWER_TYPES } from './structures/TowerTypes.js'
 import { SoundManager } from './SoundManager.js'
@@ -40,10 +41,11 @@ export class EnhancedGame {
     this.maxHealth = 1000
     this.wave = 0
     this.enemies = []
-    this.structures = [] // All structures (towers, walls, spawners)
+    this.structures = [] // All structures (towers, walls, spawners, generators)
     this.towers = [] // Just towers for compatibility
     this.walls = []
     this.spawners = []
+    this.resourceGenerators = [] // Resource generators (mines, wells)
     this.defensiveUnits = []
     this.projectiles = []
     this.isPaused = false
@@ -55,6 +57,10 @@ export class EnhancedGame {
     this.selectedStructureType = null
     this.ghostPreview = null
     this.placementRotation = 0
+    
+    // Move system
+    this.selectedStructure = null // Structure selected for moving
+    this.isMovingStructure = false
     
     // Initialize systems
     this.performanceManager = new PerformanceManager(this)
@@ -1765,11 +1771,15 @@ export class EnhancedGame {
       const point = intersects[0].point
       point.y = 0
       
-      if (this.selectedStructureType) {
+      if (this.isMovingStructure && this.selectedStructure) {
+        // Moving a structure
+        this.moveStructure(this.selectedStructure, point)
+      } else if (this.selectedStructureType) {
+        // Placing a new structure
         this.placeStructure(this.selectedStructureType, point)
       } else {
-        // Legacy: place basic tower if nothing selected
-        this.placeTower(point)
+        // Try to select a structure for moving
+        this.selectStructureAtPoint(point)
       }
     }
   }
@@ -1795,10 +1805,21 @@ export class EnhancedGame {
       this.startWave()
     } else if (event.key === 'Escape') {
       this.cancelPlacement()
+      this.deselectStructure()
     } else if (event.key === 'r' || event.key === 'R') {
       // Rotate by 45 degrees with R key
       this.rotatePlacement(Math.PI / 4)
+    } else if (event.key === 'm' || event.key === 'M') {
+      // Enter move mode
+      this.enterMoveMode()
     }
+  }
+  
+  enterMoveMode() {
+    this.selectedStructureType = null
+    this.cancelPlacement()
+    this.isMovingStructure = true
+    console.log('Move mode activated - click on a structure to select it, then click where to move it')
   }
   
   onWheel(event) {
@@ -1873,9 +1894,16 @@ export class EnhancedGame {
     if (!this.ghostPreview) {
       // Create ghost preview
       const modelKey = this.getModelKeyForStructure()
-      if (!modelKey) return
       
-      const instance = modelLoader.createInstance(modelKey)
+      let instance = null
+      if (this.selectedStructureType.type === 'resource_generator') {
+        // Create procedural preview for resource generators - synchronous
+        const tempGenerator = new ResourceGenerator(this.selectedStructureType.generatorType, position)
+        instance = tempGenerator.createProceduralModel()
+      } else if (modelKey) {
+        instance = modelLoader.createInstance(modelKey)
+      }
+      
       if (!instance) return
       
       this.ghostPreview = instance
@@ -1976,6 +2004,8 @@ export class EnhancedGame {
         structure = new Wall(structureConfig.wallType, position, { rotation: this.placementRotation })
       } else if (structureConfig.type === 'spawner') {
         structure = new UnitSpawner(structureConfig.spawnerType, position, { rotation: this.placementRotation })
+      } else if (structureConfig.type === 'resource_generator') {
+        structure = new ResourceGenerator(structureConfig.generatorType, position, { rotation: this.placementRotation })
       }
       
       // Reset rotation after placement
@@ -2002,6 +2032,8 @@ export class EnhancedGame {
         this.walls.push(structure)
       } else if (structureConfig.type === 'spawner') {
         this.spawners.push(structure)
+      } else if (structureConfig.type === 'resource_generator') {
+        this.resourceGenerators.push(structure)
       }
       
       // Update spatial grid
@@ -2060,6 +2092,15 @@ export class EnhancedGame {
   
   updateStructures(deltaTime) {
     const currentTime = Date.now() / 1000
+    const currentTimeMs = Date.now()
+    
+    // Update resource generators - FIXED: Non-blocking, efficient
+    this.resourceGenerators.forEach(generator => {
+      if (generator instanceof ResourceGenerator && !generator.isDestroyed) {
+        generator.generateResources(currentTimeMs, this)
+        generator.updateAnimation(deltaTime)
+      }
+    })
     
     // Update towers
     this.towers.forEach(tower => {
