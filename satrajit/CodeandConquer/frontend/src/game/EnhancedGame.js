@@ -503,7 +503,7 @@ export class EnhancedGame {
     this.baseMiddleTier.castShadow = true
     this.basePlatform.add(this.baseMiddleTier)
 
-    // Top tier (added for higher levels)
+    // Top tier (only visible at level 5+)
     this.baseTopTier = new THREE.Mesh(
       new THREE.CylinderGeometry(4, 5, 1, 8),
       new THREE.MeshStandardMaterial({
@@ -516,6 +516,7 @@ export class EnhancedGame {
     )
     this.baseTopTier.position.y = 4.25
     this.baseTopTier.castShadow = true
+    this.baseTopTier.visible = level >= 5 // Only show at level 5+
     this.basePlatform.add(this.baseTopTier)
 
     this.scene.add(this.basePlatform)
@@ -546,8 +547,10 @@ export class EnhancedGame {
     // Pillars around the base
     this.createPillars(level)
     
-    // Apply level-based visual updates
-    this.updateBaseVisuals(level)
+    // Apply level-based visual updates (only if level > 1)
+    if (level > 1) {
+      this.updateBaseVisuals(level)
+    }
   }
 
   createEnergyRings(level = 1) {
@@ -712,8 +715,12 @@ export class EnhancedGame {
     }
     
     if (this.baseTopTier) {
-      const topScale = 1 + (level - 1) * 0.1
-      this.baseTopTier.scale.set(topScale, 1, topScale)
+      // Show top tier at level 5+
+      this.baseTopTier.visible = level >= 5
+      if (this.baseTopTier.visible) {
+        const topScale = 1 + (level - 1) * 0.1
+        this.baseTopTier.scale.set(topScale, 1, topScale)
+      }
     }
 
     // Update energy rings
