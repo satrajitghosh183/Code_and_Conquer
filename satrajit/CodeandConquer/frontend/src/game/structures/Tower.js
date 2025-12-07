@@ -3,7 +3,7 @@ import { TOWER_TYPES } from './TowerTypes.js'
 import * as THREE from 'three'
 
 export class Tower extends Structure {
-  constructor(towerType, position) {
+  constructor(towerType, position, options = {}) {
     const config = TOWER_TYPES[towerType]
     if (!config) {
       throw new Error(`Unknown tower type: ${towerType}`)
@@ -12,7 +12,8 @@ export class Tower extends Structure {
     super('tower', position, config.modelKey, {
       health: config.health,
       maxHealth: config.health,
-      cost: config.cost
+      cost: config.cost,
+      rotation: options.rotation || 0
     })
     
     this.towerType = towerType

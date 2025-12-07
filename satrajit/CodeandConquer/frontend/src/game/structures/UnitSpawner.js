@@ -2,7 +2,7 @@ import { Structure } from './Structure.js'
 import { SPAWNER_TYPES } from './TowerTypes.js'
 
 export class UnitSpawner extends Structure {
-  constructor(spawnerType, position) {
+  constructor(spawnerType, position, options = {}) {
     const config = SPAWNER_TYPES[spawnerType]
     if (!config) {
       throw new Error(`Unknown spawner type: ${spawnerType}`)
@@ -11,7 +11,8 @@ export class UnitSpawner extends Structure {
     super('spawner', position, config.modelKey, {
       health: config.health,
       maxHealth: config.health,
-      cost: config.cost
+      cost: config.cost,
+      rotation: options.rotation || 0
     })
     
     this.spawnerType = spawnerType

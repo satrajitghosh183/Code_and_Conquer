@@ -2,7 +2,7 @@ import { Structure } from './Structure.js'
 import { WALL_TYPES } from './TowerTypes.js'
 
 export class Wall extends Structure {
-  constructor(wallType, position) {
+  constructor(wallType, position, options = {}) {
     const config = WALL_TYPES[wallType]
     if (!config) {
       throw new Error(`Unknown wall type: ${wallType}`)
@@ -11,7 +11,8 @@ export class Wall extends Structure {
     super('wall', position, config.modelKey, {
       health: config.health,
       maxHealth: config.health === Infinity ? 1000 : config.health,
-      cost: config.cost
+      cost: config.cost,
+      rotation: options.rotation || 0
     })
     
     this.wallType = wallType

@@ -14,6 +14,7 @@ export class Structure {
     this.isDestroyed = false
     this.healthBar = null
     this.loaded = false
+    this.rotation = options.rotation || 0 // Store rotation
   }
   
   async load() {
@@ -29,6 +30,7 @@ export class Structure {
     }
     
     this.mesh.position.copy(this.position)
+    this.mesh.rotation.y = this.rotation // Apply stored rotation
     this.applyRedTheme()
     this.createHealthBar()
     this.loaded = true

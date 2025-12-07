@@ -1746,6 +1746,7 @@ export class EnhancedGame {
   setupEventListeners() {
     this.renderer.domElement.addEventListener('click', (e) => this.onClick(e))
     this.renderer.domElement.addEventListener('mousemove', (e) => this.onMouseMove(e))
+    this.renderer.domElement.addEventListener('wheel', (e) => this.onWheel(e), { passive: false })
     window.addEventListener('resize', () => this.onResize())
     window.addEventListener('keydown', (e) => this.onKeyDown(e))
   }
@@ -1795,10 +1796,26 @@ export class EnhancedGame {
     } else if (event.key === 'Escape') {
       this.cancelPlacement()
     } else if (event.key === 'r' || event.key === 'R') {
-      this.placementRotation = (this.placementRotation + Math.PI / 4) % (Math.PI * 2)
-      if (this.ghostPreview) {
-        this.ghostPreview.rotation.y = this.placementRotation
-      }
+      // Rotate by 45 degrees with R key
+      this.rotatePlacement(Math.PI / 4)
+    }
+  }
+  
+  onWheel(event) {
+    // Rotate structure with mouse wheel when placing
+    if (this.selectedStructureType && this.ghostPreview) {
+      event.preventDefault()
+      const delta = event.deltaY > 0 ? -Math.PI / 12 : Math.PI / 12 // 15 degree increments
+      this.rotatePlacement(delta)
+    }
+  }
+  
+  rotatePlacement(delta) {
+    if (!this.selectedStructureType) return
+    
+    this.placementRotation = (this.placementRotation + delta) % (Math.PI * 2)
+    if (this.ghostPreview) {
+      this.ghostPreview.rotation.y = this.placementRotation
     }
   }
   
@@ -1954,12 +1971,15 @@ export class EnhancedGame {
     
     try {
       if (structureConfig.type === 'tower') {
-        structure = new Tower(structureConfig.towerType, position)
+        structure = new Tower(structureConfig.towerType, position, { rotation: this.placementRotation })
       } else if (structureConfig.type === 'wall') {
-        structure = new Wall(structureConfig.wallType, position)
+        structure = new Wall(structureConfig.wallType, position, { rotation: this.placementRotation })
       } else if (structureConfig.type === 'spawner') {
-        structure = new UnitSpawner(structureConfig.spawnerType, position)
+        structure = new UnitSpawner(structureConfig.spawnerType, position, { rotation: this.placementRotation })
       }
+      
+      // Reset rotation after placement
+      this.placementRotation = 0
       
       if (!structure) return false
       
