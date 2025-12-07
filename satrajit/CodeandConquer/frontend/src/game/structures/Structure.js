@@ -75,6 +75,10 @@ export class Structure {
     
     // Position walls vertically on ground
     if (this.type === 'wall') {
+      // Ensure wall is vertical (no rotation)
+      mesh.rotation.x = 0
+      mesh.rotation.z = 0
+      // Position at half height so it sits on ground
       mesh.position.y = 0.6 // Half of height (1.2) to sit on ground
     }
     
