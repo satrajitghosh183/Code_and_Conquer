@@ -98,22 +98,25 @@ export class EnhancedGame {
     this.problemsSolvedThisGame = 0
     this.tasksCompletedThisGame = 0
     
-    // Calculate passive energy generation rates based on lifetime progress
-    // Gold is ONLY awarded when solving coding problems (no passive gold)
-    // Each problem solved = +0.05 energy/sec
-    // Each task completed = +0.08 energy/sec
+    // Calculate passive generation rates based on lifetime progress
+    // Each problem solved = +0.05 energy/sec and +0.1 gold/sec
+    // Each task completed = +0.08 energy/sec and +0.15 gold/sec
     const lifetimeProblems = userProfile.totalProblemsSolved || 0
     const lifetimeTasks = (userProfile.tasks?.allTimeCompleted || 0) + 
                           (userProfile.tasks?.dailyCompleted || 0) * 0.1 + 
                           (userProfile.tasks?.weeklyCompleted || 0) * 0.2
     
     const baseEnergyPerSecond = 0.2 // Base passive energy
+    const baseGoldPerSecond = 0.1 // Base passive gold
     
     const passiveEnergyPerSecond = baseEnergyPerSecond + 
                                    (lifetimeProblems * 0.05) + 
                                    (lifetimeTasks * 0.08)
     
-    this.passiveGoldPerSecond = 0 // NO passive gold - only from coding problems
+    // Passive gold generation from problems solved and tasks completed
+    this.passiveGoldPerSecond = baseGoldPerSecond + 
+                                (lifetimeProblems * 0.1) + 
+                                (lifetimeTasks * 0.15)
     this.passiveEnergyPerSecond = passiveEnergyPerSecond
     this.lastPassiveTick = Date.now()
     
@@ -1363,10 +1366,20 @@ export class EnhancedGame {
       // Gold rate multiplier applied when enemies die
     }
     
-    // Update passive energy generation only (NO passive gold - coins only from coding problems)
+    // Update passive gold and energy generation
     const now = Date.now()
     if (now - this.lastPassiveTick >= 1000) {
+      const deltaSeconds = (now - this.lastPassiveTick) / 1000
       this.lastPassiveTick = now
+      
+      // Generate passive gold
+      if (this.passiveGoldPerSecond > 0) {
+        const goldGenerated = this.passiveGoldPerSecond * deltaSeconds
+        if (goldGenerated >= 1) {
+          this.addGold(Math.floor(goldGenerated), 'passive')
+        }
+      }
+      
       // Energy generation is handled by WaveTimer
     }
     
@@ -2502,10 +2515,15 @@ export class EnhancedGame {
                                  problemData.difficulty === 'medium' ? 1.5 : 1
     this.addEnergy(Math.floor(energyReward * difficultyMultiplier))
     
+    // Increase passive gold generation from problems solved
+    // Each problem solved increases passive gold income
+    const goldIncrease = 0.1
+    this.passiveGoldPerSecond += goldIncrease
+    
     // Notify UI of passive rate change
     if (this.callbacks.onPassiveRateChange) {
       this.callbacks.onPassiveRateChange({
-        goldPerSecond: 0, // No passive gold
+        goldPerSecond: this.passiveGoldPerSecond,
         energyPerSecond: this.passiveEnergyPerSecond
       })
     }
@@ -2513,7 +2531,8 @@ export class EnhancedGame {
     return {
       ...rewards,
       energy: Math.floor(energyReward * difficultyMultiplier),
-      passiveEnergyIncrease: 0.05
+      passiveEnergyIncrease: 0.05,
+      passiveGoldIncrease: goldIncrease
     }
   }
   
@@ -2522,11 +2541,13 @@ export class EnhancedGame {
     // Increment tasks completed counter
     this.tasksCompletedThisGame++
     
-    // Increase passive energy generation (NO gold - coins only from coding problems)
-    // Each task completed increases passive energy income
+    // Increase passive energy and gold generation from tasks completed
+    // Each task completed increases passive income
     const energyIncrease = taskType === 'weekly' ? 0.12 : 0.08
+    const goldIncrease = taskType === 'weekly' ? 0.2 : 0.15
     
     this.passiveEnergyPerSecond += energyIncrease
+    this.passiveGoldPerSecond += goldIncrease
     
     // Update wave timer's passive generation
     if (this.waveTimer) {
@@ -2542,9 +2563,15 @@ export class EnhancedGame {
     // Notify UI of passive rate change
     if (this.callbacks.onPassiveRateChange) {
       this.callbacks.onPassiveRateChange({
-        goldPerSecond: 0, // No passive gold
+        goldPerSecond: this.passiveGoldPerSecond,
         energyPerSecond: this.passiveEnergyPerSecond
       })
+    }
+    
+    return {
+      energy: Math.floor(energyReward * multiplier),
+      passiveEnergyIncrease: energyIncrease,
+      passiveGoldIncrease: goldIncrease
     }
     
     return {
