@@ -156,7 +156,10 @@ export default function Dashboard() {
           
           if (!supabaseError && supabaseData) {
             console.log('[Dashboard] User stats from Supabase:', supabaseData)
+            console.log('[Dashboard] Supabase coins:', supabaseData.coins, 'Type:', typeof supabaseData.coins)
             userStatsData = { data: supabaseData }
+          } else {
+            console.error('[Dashboard] Supabase error:', supabaseError)
           }
         } catch (err) {
           console.error('[Dashboard] Supabase fallback error:', err)
