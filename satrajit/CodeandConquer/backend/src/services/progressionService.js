@@ -531,7 +531,7 @@ class ProgressionService {
     }
   }
 
-  // Upgrade tech tree node
+  // Upgrade tech tree node (now uses gold instead of tech points)
   async upgradeTech(userId, techId) {
     try {
       const tech = TECH_TREE[techId]
@@ -551,77 +551,85 @@ class ProgressionService {
         }
       }
 
-      const cost = tech.costs[currentLevel]
-      const availableTechPoints = progression.available_tech_points || 0
-      if (availableTechPoints < cost) {
-        throw new Error('Not enough tech points')
+      const cost = tech.costs[currentLevel] || 0
+      
+      // Get user's gold from user_stats table
+      let userGold = 0
+      if (this.supabase) {
+        try {
+          const { data: statsData, error: statsError } = await this.supabase
+            .from('user_stats')
+            .select('coins')
+            .eq('id', userId)
+            .single()
+          
+          if (!statsError && statsData) {
+            userGold = parseInt(statsData.coins) || 0
+          }
+        } catch (err) {
+          console.warn('Could not fetch user gold, defaulting to 0:', err.message)
+        }
+      }
+      
+      if (userGold < cost) {
+        throw new Error(`Not enough gold. Need ${cost}, have ${userGold}`)
       }
 
       // Apply upgrade
       const newTechTree = { ...(progression.tech_tree || {}), [techId]: currentLevel + 1 }
-      const newTechPoints = availableTechPoints - cost
+      const newGold = userGold - cost
 
-      // Always update local extended data (tech_tree and available_tech_points are extended)
+      // Always update local extended data (tech_tree)
       this.updateLocalExtendedData(userId, {
-        tech_tree: newTechTree,
-        available_tech_points: newTechPoints
+        tech_tree: newTechTree
       })
+
+      // Update gold in user_stats table
+      if (this.supabase) {
+        try {
+          const { error: goldUpdateError } = await this.supabase
+            .from('user_stats')
+            .update({ coins: newGold })
+            .eq('id', userId)
+          
+          if (goldUpdateError) {
+            console.warn('Could not update user gold:', goldUpdateError.message)
+          } else {
+            console.log(`Tech upgrade: Deducted ${cost} gold, new balance: ${newGold}`)
+          }
+        } catch (err) {
+          console.warn('Error updating user gold:', err.message)
+        }
+      }
 
       // If no Supabase, just return local data
       if (!this.supabase) {
         const data = this.updateLocalProgression(userId, {
-          tech_tree: newTechTree,
-          available_tech_points: newTechPoints
+          tech_tree: newTechTree
         })
-        return data
+        return { ...data, coins: newGold }
       }
 
-      // Try to save to Supabase (tech_tree column in user_progress table)
+      // Try to save tech_tree to Supabase
       try {
-        // Try to update tech_tree and available_tech_points columns
         const { data: updatedData, error: updateError } = await this.supabase
           .from('user_progress')
           .update({
-            tech_tree: newTechTree,
-            available_tech_points: newTechPoints
+            tech_tree: newTechTree
           })
           .eq('user_id', userId)
           .select()
           .single()
 
         if (!updateError && updatedData) {
-          // Successfully saved to Supabase
           console.log(`Tech tree saved to Supabase for user ${userId}`)
           return {
             ...this.mergeWithExtendedData(userId, updatedData),
             tech_tree: newTechTree,
-            available_tech_points: newTechPoints
+            coins: newGold
           }
         }
 
-        // If update failed, try with just tech_tree (available_tech_points might not exist)
-        if (updateError && (updateError.code === 'PGRST204' || updateError.message?.includes('column'))) {
-          console.warn('available_tech_points column may not exist, trying with just tech_tree')
-          const { data: updatedData2, error: updateError2 } = await this.supabase
-            .from('user_progress')
-            .update({
-              tech_tree: newTechTree
-            })
-            .eq('user_id', userId)
-            .select()
-            .single()
-
-          if (!updateError2 && updatedData2) {
-            console.log(`Tech tree saved to Supabase (without tech points) for user ${userId}`)
-            return {
-              ...this.mergeWithExtendedData(userId, updatedData2),
-              tech_tree: newTechTree,
-              available_tech_points: newTechPoints
-            }
-          }
-        }
-
-        // If both attempts failed, log warning but continue with local data
         console.warn('Could not save tech tree to Supabase, using local storage:', updateError?.message)
       } catch (saveError) {
         console.warn('Error saving tech tree to Supabase, using local storage:', saveError.message)
@@ -632,7 +640,7 @@ class ProgressionService {
       return {
         ...currentData,
         tech_tree: newTechTree,
-        available_tech_points: newTechPoints
+        coins: newGold
       }
     } catch (error) {
       console.error('Error upgrading tech, using local:', error)
@@ -805,17 +813,34 @@ class ProgressionService {
     }
   }
 
-  // Get tech tree with status
+  // Get tech tree with status (now uses gold instead of tech points)
   async getTechTreeWithStatus(userId) {
     try {
       const progression = await this.getUserProgression(userId)
       const techTree = progression.tech_tree || {}
-      const availableTechPoints = progression.available_tech_points || 0
+      
+      // Get user's gold from user_stats table
+      let userGold = 0
+      if (this.supabase) {
+        try {
+          const { data: statsData, error: statsError } = await this.supabase
+            .from('user_stats')
+            .select('coins')
+            .eq('id', userId)
+            .single()
+          
+          if (!statsError && statsData) {
+            userGold = parseInt(statsData.coins) || 0
+          }
+        } catch (err) {
+          console.warn('Could not fetch user gold for tech tree:', err.message)
+        }
+      }
 
       return Object.values(TECH_TREE).map(tech => {
         const currentLevel = techTree[tech.id] || 0
-        const canUpgrade = currentLevel < tech.maxLevel && 
-                          availableTechPoints >= (tech.costs[currentLevel] || 0)
+        const cost = tech.costs[currentLevel] || 0
+        const canUpgrade = currentLevel < tech.maxLevel && userGold >= cost
 
         // Check requirements
         let requirementsMet = true
@@ -832,7 +857,8 @@ class ProgressionService {
           canUpgrade: canUpgrade && requirementsMet,
           requirementsMet,
           nextCost: tech.costs[currentLevel] || null,
-          nextEffect: tech.effects[currentLevel] || null
+          nextEffect: tech.effects[currentLevel] || null,
+          userGold: userGold // Include user's gold in response
         }
       })
     } catch (error) {
