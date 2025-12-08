@@ -1,10 +1,9 @@
 .structure-selection-panel {
   position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 500px;
-  max-height: 80vh;
+  top: 80px;
+  right: 20px;
+  width: 320px;
+  max-height: calc(100vh - 120px);
   background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
   border: 2px solid #00ffff;
   border-radius: 12px;
@@ -14,20 +13,21 @@
   flex-direction: column;
   color: #fff;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  pointer-events: auto;
 }
 
 .panel-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 16px 20px;
+  padding: 10px 14px;
   border-bottom: 2px solid #00ffff;
   background: rgba(0, 255, 255, 0.1);
 }
 
 .panel-header h3 {
   margin: 0;
-  font-size: 20px;
+  font-size: 16px;
   color: #00ffff;
   text-shadow: 0 0 10px rgba(0, 255, 255, 0.5);
 }
@@ -36,16 +36,17 @@
   background: transparent;
   border: 2px solid #ff4444;
   color: #ff4444;
-  width: 32px;
-  height: 32px;
+  width: 26px;
+  height: 26px;
   border-radius: 50%;
   cursor: pointer;
-  font-size: 24px;
+  font-size: 18px;
   line-height: 1;
   display: flex;
   align-items: center;
   justify-content: center;
   transition: all 0.2s;
+  padding: 0;
 }
 
 .close-btn:hover {
@@ -57,33 +58,33 @@
 .panel-content {
   display: flex;
   flex-direction: column;
-  padding: 20px;
-  gap: 20px;
+  padding: 12px;
+  gap: 12px;
   overflow-y: auto;
-  max-height: calc(80vh - 80px);
+  max-height: calc(100vh - 180px);
 }
 
 .structures-list h4 {
-  margin: 0 0 12px 0;
+  margin: 0 0 8px 0;
   color: #00ffff;
-  font-size: 16px;
+  font-size: 14px;
 }
 
 .structures-scroll {
-  max-height: 300px;
+  max-height: 200px;
   overflow-y: auto;
   border: 1px solid rgba(0, 255, 255, 0.3);
-  border-radius: 8px;
-  padding: 8px;
+  border-radius: 6px;
+  padding: 6px;
   background: rgba(0, 0, 0, 0.3);
 }
 
 .structure-item {
-  padding: 12px;
-  margin-bottom: 8px;
+  padding: 8px;
+  margin-bottom: 6px;
   background: rgba(255, 255, 255, 0.05);
   border: 2px solid transparent;
-  border-radius: 6px;
+  border-radius: 4px;
   cursor: pointer;
   transition: all 0.2s;
 }
@@ -102,14 +103,14 @@
 .structure-name {
   font-weight: bold;
   color: #fff;
-  margin-bottom: 4px;
-  font-size: 14px;
+  margin-bottom: 2px;
+  font-size: 12px;
 }
 
 .structure-info {
   display: flex;
-  gap: 12px;
-  font-size: 12px;
+  gap: 8px;
+  font-size: 10px;
   color: #aaa;
 }
 
@@ -122,44 +123,44 @@
 
 .structure-controls {
   border-top: 2px solid rgba(0, 255, 255, 0.3);
-  padding-top: 20px;
+  padding-top: 12px;
 }
 
 .structure-controls h4 {
-  margin: 0 0 16px 0;
+  margin: 0 0 10px 0;
   color: #00ffff;
-  font-size: 16px;
+  font-size: 14px;
 }
 
 .control-section {
-  margin-bottom: 20px;
+  margin-bottom: 12px;
 }
 
 .control-section label {
   display: block;
-  margin-bottom: 8px;
+  margin-bottom: 6px;
   color: #aaa;
-  font-size: 14px;
+  font-size: 12px;
 }
 
 .axis-buttons,
 .rotation-amount {
   display: flex;
-  gap: 8px;
-  margin-bottom: 12px;
+  gap: 6px;
+  margin-bottom: 8px;
 }
 
 .axis-buttons button,
 .rotation-amount button {
   flex: 1;
-  padding: 10px;
+  padding: 6px 8px;
   background: rgba(255, 255, 255, 0.1);
   border: 2px solid rgba(0, 255, 255, 0.3);
-  border-radius: 6px;
+  border-radius: 4px;
   color: #fff;
   cursor: pointer;
   transition: all 0.2s;
-  font-size: 14px;
+  font-size: 12px;
   font-weight: bold;
 }
 
@@ -178,19 +179,19 @@
 
 .rotate-buttons {
   display: flex;
-  gap: 8px;
+  gap: 6px;
 }
 
 .rotate-buttons button {
   flex: 1;
-  padding: 12px;
+  padding: 8px;
   background: rgba(0, 255, 255, 0.2);
   border: 2px solid #00ffff;
-  border-radius: 6px;
+  border-radius: 4px;
   color: #00ffff;
   cursor: pointer;
   transition: all 0.2s;
-  font-size: 14px;
+  font-size: 12px;
   font-weight: bold;
 }
 
@@ -202,16 +203,16 @@
 
 .move-btn {
   width: 100%;
-  padding: 14px;
+  padding: 10px;
   background: linear-gradient(135deg, #00ffff 0%, #0088ff 100%);
   border: none;
-  border-radius: 6px;
+  border-radius: 4px;
   color: #000;
   cursor: pointer;
-  font-size: 16px;
+  font-size: 13px;
   font-weight: bold;
   transition: all 0.2s;
-  margin-bottom: 8px;
+  margin-bottom: 6px;
 }
 
 .move-btn:hover {
@@ -221,7 +222,7 @@
 
 .help-text {
   margin: 0;
-  font-size: 12px;
+  font-size: 10px;
   color: #888;
   text-align: center;
   font-style: italic;
