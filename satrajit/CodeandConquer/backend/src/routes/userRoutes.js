@@ -18,13 +18,6 @@ if (supabaseServiceKey) {
     ? `${supabaseServiceKey.substring(0, 20)}...` 
     : supabaseServiceKey;
   console.log(`[userRoutes] SUPABASE_SERVICE_ROLE_KEY configured (length: ${supabaseServiceKey.length}): ${keyPreview}`);
-  
-  // Service role keys are typically 200+ characters - warn if too short
-  if (supabaseServiceKey.length < 100) {
-    console.warn('[userRoutes] ⚠️ WARNING: Service role key seems too short!');
-    console.warn('[userRoutes] Service role keys are usually 200+ characters long.');
-    console.warn('[userRoutes] Make sure you copied the ENTIRE key from Supabase dashboard.');
-  }
 } else {
   console.error('[userRoutes] ❌ SUPABASE_SERVICE_ROLE_KEY is missing!');
 }
