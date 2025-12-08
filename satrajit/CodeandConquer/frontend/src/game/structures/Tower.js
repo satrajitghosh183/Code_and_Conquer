@@ -31,6 +31,11 @@ export class Tower extends Structure {
   async load() {
     await super.load()
     
+    // Special handling for frost tower - add ice visual effects
+    if (this.towerType === 'frost' && this.mesh) {
+      this.createFrostVisuals()
+    }
+    
     // Find turret part for rotation
     if (this.mesh) {
       this.mesh.traverse((child) => {
@@ -47,6 +52,84 @@ export class Tower extends Structure {
     }
     
     return this.mesh
+  }
+  
+  createFrostVisuals() {
+    if (!this.mesh) return
+    
+    const group = this.mesh
+    const s = 1.0
+    
+    // Add ice crystal particles around the tower
+    for (let i = 0; i < 12; i++) {
+      const angle = (i / 12) * Math.PI * 2
+      const radius = 1.5 * s
+      
+      const iceGeometry = new THREE.OctahedronGeometry(0.15 * s, 0)
+      const iceMaterial = new THREE.MeshPhysicalMaterial({
+        color: 0x88ddff,
+        emissive: 0x44aaff,
+        emissiveIntensity: 0.8,
+        metalness: 0.1,
+        roughness: 0.05,
+        transparent: true,
+        opacity: 0.7,
+        clearcoat: 1.0,
+        transmission: 0.6
+      })
+      
+      const iceCrystal = new THREE.Mesh(iceGeometry, iceMaterial)
+      iceCrystal.position.set(
+        Math.cos(angle) * radius,
+        2 * s + Math.sin(i * 2) * 0.3 * s,
+        Math.sin(angle) * radius
+      )
+      iceCrystal.userData.isIceParticle = true
+      iceCrystal.userData.particleIndex = i
+      group.add(iceCrystal)
+    }
+    
+    // Add frost aura ring at base
+    const ringGeometry = new THREE.TorusGeometry(1.2 * s, 0.1 * s, 8, 16)
+    const ringMaterial = new THREE.MeshStandardMaterial({
+      color: 0x88ddff,
+      emissive: 0x44aaff,
+      emissiveIntensity: 0.6,
+      transparent: true,
+      opacity: 0.5
+    })
+    const frostRing = new THREE.Mesh(ringGeometry, ringMaterial)
+    frostRing.rotation.x = Math.PI / 2
+    frostRing.position.y = 0.1 * s
+    frostRing.userData.isFrostRing = true
+    group.add(frostRing)
+  }
+  
+  updateFrostAnimation(deltaTime) {
+    if (this.towerType !== 'frost' || !this.mesh) return
+    
+    const time = Date.now() * 0.001
+    
+    this.mesh.traverse((child) => {
+      if (child.userData.isIceParticle) {
+        // Rotate and pulse ice particles
+        child.rotation.y += deltaTime * 2
+        child.rotation.x += deltaTime * 1.5
+        const pulse = Math.sin(time * 2 + child.userData.particleIndex) * 0.3 + 0.7
+        if (child.material) {
+          child.material.opacity = pulse * 0.7
+          child.material.emissiveIntensity = pulse * 0.8
+        }
+      } else if (child.userData.isFrostRing) {
+        // Rotate frost ring
+        child.rotation.z += deltaTime * 0.5
+        const pulse = Math.sin(time * 1.5) * 0.2 + 0.8
+        if (child.material) {
+          child.material.opacity = pulse * 0.5
+          child.material.emissiveIntensity = pulse * 0.6
+        }
+      }
+    })
   }
   
   canFire(currentTime) {

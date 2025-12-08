@@ -169,6 +169,13 @@ export class EnhancedGame {
     this.basePillars = []
     this.energyRings = []
     
+    // Fire ring system
+    this.fireRing = null
+    this.fireRingActive = false
+    this.fireRingDuration = 10000 // 10 seconds
+    this.fireRingStartTime = 0
+    this.fireRingCost = 150
+    
     this.initScene()
     this.initCamera()
     this.initRenderer()
@@ -553,10 +560,145 @@ export class EnhancedGame {
     // Pillars around the base
     this.createPillars(level)
     
+    // Create fire ring (inactive by default)
+    this.createFireRing()
+    
     // Apply level-based visual updates (only if level > 1)
     if (level > 1) {
       this.updateBaseVisuals(level)
     }
+  }
+  
+  createFireRing() {
+    // Create a ring of fire particles around the base
+    const ringRadius = 10
+    const particleCount = 24
+    
+    this.fireRing = new THREE.Group()
+    
+    for (let i = 0; i < particleCount; i++) {
+      const angle = (i / particleCount) * Math.PI * 2
+      
+      // Flame particle
+      const flameGeometry = new THREE.ConeGeometry(0.3, 1.5, 6)
+      const flameMaterial = new THREE.MeshStandardMaterial({
+        color: 0xff6600,
+        emissive: 0xff3300,
+        emissiveIntensity: 1.0,
+        transparent: true,
+        opacity: 0.0, // Start invisible
+        metalness: 0.1,
+        roughness: 0.9
+      })
+      
+      const flame = new THREE.Mesh(flameGeometry, flameMaterial)
+      flame.position.set(
+        Math.cos(angle) * ringRadius,
+        0.5,
+        Math.sin(angle) * ringRadius
+      )
+      flame.rotation.z = Math.PI
+      flame.userData.isFlame = true
+      flame.userData.particleIndex = i
+      this.fireRing.add(flame)
+    }
+    
+    this.fireRing.position.copy(this.base.position)
+    this.fireRing.visible = false
+    this.scene.add(this.fireRing)
+  }
+  
+  activateFireRing() {
+    if (this.gold < this.fireRingCost) {
+      console.log('Not enough gold to activate fire ring')
+      return false
+    }
+    
+    if (this.fireRingActive) {
+      console.log('Fire ring already active')
+      return false
+    }
+    
+    this.gold -= this.fireRingCost
+    if (this.callbacks.onGoldChange) {
+      this.callbacks.onGoldChange(this.gold)
+    }
+    
+    this.fireRingActive = true
+    this.fireRingStartTime = Date.now()
+    this.fireRing.visible = true
+    
+    // Activate all flames
+    this.fireRing.traverse((child) => {
+      if (child.userData.isFlame && child.material) {
+        child.material.opacity = 1.0
+      }
+    })
+    
+    console.log('Fire ring activated!')
+    return true
+  }
+  
+  updateFireRing(deltaTime) {
+    if (!this.fireRing || !this.fireRingActive) return
+    
+    const elapsed = Date.now() - this.fireRingStartTime
+    
+    // Deactivate after duration
+    if (elapsed >= this.fireRingDuration) {
+      this.fireRingActive = false
+      this.fireRing.visible = false
+      this.fireRing.traverse((child) => {
+        if (child.userData.isFlame && child.material) {
+          child.material.opacity = 0.0
+        }
+      })
+      return
+    }
+    
+    // Animate flames
+    const time = Date.now() * 0.001
+    this.fireRing.traverse((child) => {
+      if (child.userData.isFlame) {
+        const i = child.userData.particleIndex
+        // Flickering animation
+        const flicker = Math.sin(time * 5 + i * 0.5) * 0.3 + 0.7
+        if (child.material) {
+          child.material.opacity = flicker
+          child.material.emissiveIntensity = flicker * 1.2
+        }
+        // Sway animation
+        const sway = Math.sin(time * 2 + i * 0.3) * 0.2
+        child.rotation.z = Math.PI + sway
+        // Height variation
+        child.position.y = 0.5 + Math.sin(time * 3 + i * 0.4) * 0.3
+      }
+    })
+    
+    // Damage enemies in range
+    const ringRadius = 10
+    this.enemies.forEach(enemy => {
+      if (!enemy || enemy.isDead || !enemy.position) return
+      
+      const distance = this.base.position.distanceTo(enemy.position)
+      if (distance <= ringRadius) {
+        // Apply burn damage
+        const burnDamage = 10 * deltaTime // 10 DPS
+        if (enemy.damage) {
+          enemy.damage(burnDamage)
+        } else if (enemy.health !== undefined) {
+          enemy.health -= burnDamage
+          if (enemy.health <= 0) {
+            enemy.isDead = true
+          }
+        }
+        
+        // Visual fire effect
+        if (this.visualEffects && Math.random() < 0.1) {
+          this.visualEffects.createFireEffect(enemy, 500)
+        }
+      }
+    })
   }
 
   createEnergyRings(level = 1) {
@@ -1775,8 +1917,14 @@ export class EnhancedGame {
         // Moving a structure
         this.moveStructure(this.selectedStructure, point)
       } else if (this.selectedStructureType) {
-        // Placing a new structure
-        this.placeStructure(this.selectedStructureType, point)
+        // Handle fire ring activation
+        if (this.selectedStructureType.type === 'fire_ring') {
+          this.activateFireRing()
+          this.cancelPlacement()
+        } else {
+          // Placing a new structure
+          this.placeStructure(this.selectedStructureType, point)
+        }
       } else {
         // Try to select a structure for moving
         this.selectStructureAtPoint(point)
@@ -2105,6 +2253,11 @@ export class EnhancedGame {
     // Update towers
     this.towers.forEach(tower => {
       if (tower instanceof Tower) {
+        // Update frost tower animations
+        if (tower.towerType === 'frost' && tower.updateFrostAnimation) {
+          tower.updateFrostAnimation(deltaTime)
+        }
+        
         // Find target and aim
         const target = tower.findTarget(this.enemies)
         if (target) {

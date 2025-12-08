@@ -8,8 +8,8 @@ const BUILDABLES = [
   { id: 'missile', name: 'Missile', cost: 150, hotkey: '2', iconName: 'cannon', type: 'tower', towerType: 'missile', desc: 'Splash' },
   { id: 'laser', name: 'Laser', cost: 200, hotkey: '3', iconName: 'lightning', type: 'tower', towerType: 'laser', desc: 'Beam' },
   { id: 'sniper', name: 'Sniper', cost: 120, hotkey: '4', iconName: 'target', type: 'tower', towerType: 'sniper', desc: 'Range' },
-  { id: 'frost', name: 'Frost', cost: 100, hotkey: '5', iconName: 'ice', type: 'tower', towerType: 'frost', desc: 'Slow' },
-  { id: 'fire', name: 'Fire', cost: 100, hotkey: '6', iconName: 'fire', type: 'tower', towerType: 'fire', desc: 'Burn' },
+  { id: 'frost', name: 'Frost', cost: 100, hotkey: '5', iconName: 'ice', type: 'tower', towerType: 'frost', desc: 'Freeze' },
+  { id: 'fire_ring', name: 'Fire Ring', cost: 150, hotkey: '6', iconName: 'fire', type: 'fire_ring', desc: 'Activate' },
   { id: 'tesla', name: 'Tesla', cost: 180, hotkey: '7', iconName: 'bolt', type: 'tower', towerType: 'tesla', desc: 'Chain' },
   // Walls
   { id: 'wall', name: 'Wall', cost: 50, hotkey: '8', iconName: 'wall', type: 'wall', wallType: 'maze', desc: 'Block' },
