@@ -72,7 +72,49 @@ CREATE POLICY "Users can update own base upgrades"
   USING (auth.uid() = user_id)
   WITH CHECK (auth.uid() = user_id);
 
--- 5. Summary query
+-- 5. Create subscriptions table if it doesn't exist
+CREATE TABLE IF NOT EXISTS subscriptions (
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  user_id UUID NOT NULL REFERENCES auth.users(id) ON DELETE CASCADE,
+  stripe_subscription_id VARCHAR(255),
+  status VARCHAR(50) DEFAULT 'inactive',
+  plan VARCHAR(50) DEFAULT 'free',
+  current_period_start TIMESTAMP WITH TIME ZONE,
+  current_period_end TIMESTAMP WITH TIME ZONE,
+  cancel_at_period_end BOOLEAN DEFAULT false,
+  created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
+  updated_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
+);
+
+-- Create index for subscriptions
+CREATE INDEX IF NOT EXISTS idx_subscriptions_user_id ON subscriptions(user_id);
+
+-- Enable RLS for subscriptions
+ALTER TABLE subscriptions ENABLE ROW LEVEL SECURITY;
+
+-- Drop existing policies
+DROP POLICY IF EXISTS "Users can view own subscriptions" ON subscriptions;
+DROP POLICY IF EXISTS "Users can insert own subscriptions" ON subscriptions;
+DROP POLICY IF EXISTS "Users can update own subscriptions" ON subscriptions;
+
+-- Create RLS policies for subscriptions
+CREATE POLICY "Users can view own subscriptions"
+  ON subscriptions
+  FOR SELECT
+  USING (auth.uid() = user_id);
+
+CREATE POLICY "Users can insert own subscriptions"
+  ON subscriptions
+  FOR INSERT
+  WITH CHECK (auth.uid() = user_id);
+
+CREATE POLICY "Users can update own subscriptions"
+  ON subscriptions
+  FOR UPDATE
+  USING (auth.uid() = user_id)
+  WITH CHECK (auth.uid() = user_id);
+
+-- 6. Summary query
 SELECT 
   'user_stats' as table_name,
   COUNT(*) as record_count,
@@ -83,5 +125,11 @@ SELECT
   'base_upgrades' as table_name,
   COUNT(*) as record_count,
   SUM(CASE WHEN user_id = 'd14f3b48-b889-450f-a792-eef12ed36476' THEN 1 ELSE 0 END) as target_user_exists
-FROM base_upgrades;
+FROM base_upgrades
+UNION ALL
+SELECT 
+  'subscriptions' as table_name,
+  COUNT(*) as record_count,
+  SUM(CASE WHEN user_id = 'd14f3b48-b889-450f-a792-eef12ed36476' THEN 1 ELSE 0 END) as target_user_exists
+FROM subscriptions;
 

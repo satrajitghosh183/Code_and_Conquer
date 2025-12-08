@@ -2626,6 +2626,43 @@ export class EnhancedGame {
     }
   }
   
+  // Deselect structure (clear selection)
+  deselectStructure() {
+    // Remove visual highlight from previously selected structure
+    if (this.selectedStructure) {
+      if (this.selectedStructure.type === 'base') {
+        if (this.basePlatform) {
+          this.basePlatform.traverse((child) => {
+            if (child && child.isMesh && child.material) {
+              const materials = Array.isArray(child.material) ? child.material : [child.material]
+              materials.forEach(mat => {
+                if (mat) {
+                  mat.emissive = new THREE.Color(0x000000)
+                  mat.emissiveIntensity = 0
+                }
+              })
+            }
+          })
+        }
+      } else if (this.selectedStructure.mesh) {
+        this.selectedStructure.mesh.traverse((child) => {
+          if (child && child.isMesh && child.material) {
+            const materials = Array.isArray(child.material) ? child.material : [child.material]
+            materials.forEach(mat => {
+              if (mat) {
+                mat.emissive = new THREE.Color(0x000000)
+                mat.emissiveIntensity = 0
+              }
+            })
+          }
+        })
+      }
+    }
+    
+    this.selectedStructure = null
+    this.isMovingStructure = false
+  }
+  
   // Deselect structure for editing
   deselectStructureForEdit() {
     this.deselectStructure()
