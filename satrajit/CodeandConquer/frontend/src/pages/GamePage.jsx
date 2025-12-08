@@ -80,9 +80,29 @@ export default function GamePage() {
     
     // Initialize game
     const game = new EnhancedGame(containerRef.current, {
-      onGameEnd: (won) => {
+      onGameEnd: async (won) => {
         setGameState(won ? 'victory' : 'gameover')
         setShowGameOver(true)
+        
+        // Save final gold to user stats
+        if (user && gameRef.current) {
+          const finalGold = gameRef.current.gold || gold
+          try {
+            const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000/api'
+            await fetch(`${API_URL}/users/${user.id}/stats/update`, {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({ coins: finalGold })
+            })
+            // Refresh stats after saving
+            if (refreshStats) {
+              refreshStats()
+            }
+          } catch (error) {
+            console.error('Error saving gold:', error)
+          }
+        }
+        
         if (won) {
           addGameResult(true)
         } else {
