@@ -137,9 +137,24 @@ class ProgressionService {
   // Merge Supabase data with local extended data
   mergeWithExtendedData(userId, supabaseData) {
     const extended = this.getLocalExtendedData(userId)
+    
+    // If Supabase has tech_tree data, update local storage to match
+    if (supabaseData.tech_tree && typeof supabaseData.tech_tree === 'object') {
+      this.updateLocalExtendedData(userId, {
+        tech_tree: supabaseData.tech_tree
+      })
+    }
+    
+    // If Supabase has available_tech_points, update local storage
+    if (supabaseData.available_tech_points !== undefined && supabaseData.available_tech_points !== null) {
+      this.updateLocalExtendedData(userId, {
+        available_tech_points: supabaseData.available_tech_points
+      })
+    }
+    
     return {
       ...supabaseData,
-      // Add extended fields from local storage
+      // Use Supabase data if available, otherwise fall back to local storage
       selected_hero: supabaseData.selected_hero || extended.selected_hero,
       unlocked_heroes: supabaseData.unlocked_heroes || extended.unlocked_heroes,
       tech_tree: supabaseData.tech_tree || extended.tech_tree,
@@ -561,7 +576,58 @@ class ProgressionService {
         return data
       }
 
-      // Supabase may not have these columns, so just return merged data
+      // Try to save to Supabase (tech_tree column in user_progress table)
+      try {
+        // Try to update tech_tree and available_tech_points columns
+        const { data: updatedData, error: updateError } = await this.supabase
+          .from('user_progress')
+          .update({
+            tech_tree: newTechTree,
+            available_tech_points: newTechPoints
+          })
+          .eq('user_id', userId)
+          .select()
+          .single()
+
+        if (!updateError && updatedData) {
+          // Successfully saved to Supabase
+          console.log(`Tech tree saved to Supabase for user ${userId}`)
+          return {
+            ...this.mergeWithExtendedData(userId, updatedData),
+            tech_tree: newTechTree,
+            available_tech_points: newTechPoints
+          }
+        }
+
+        // If update failed, try with just tech_tree (available_tech_points might not exist)
+        if (updateError && (updateError.code === 'PGRST204' || updateError.message?.includes('column'))) {
+          console.warn('available_tech_points column may not exist, trying with just tech_tree')
+          const { data: updatedData2, error: updateError2 } = await this.supabase
+            .from('user_progress')
+            .update({
+              tech_tree: newTechTree
+            })
+            .eq('user_id', userId)
+            .select()
+            .single()
+
+          if (!updateError2 && updatedData2) {
+            console.log(`Tech tree saved to Supabase (without tech points) for user ${userId}`)
+            return {
+              ...this.mergeWithExtendedData(userId, updatedData2),
+              tech_tree: newTechTree,
+              available_tech_points: newTechPoints
+            }
+          }
+        }
+
+        // If both attempts failed, log warning but continue with local data
+        console.warn('Could not save tech tree to Supabase, using local storage:', updateError?.message)
+      } catch (saveError) {
+        console.warn('Error saving tech tree to Supabase, using local storage:', saveError.message)
+      }
+
+      // Fallback: return merged data with local updates
       const currentData = await this.getUserProgression(userId)
       return {
         ...currentData,
