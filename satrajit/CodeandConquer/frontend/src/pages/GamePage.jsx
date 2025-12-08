@@ -64,6 +64,19 @@ export default function GamePage() {
   const resourceChangeIdCounter = useRef(0)
   const [showWaveWarning, setShowWaveWarning] = useState(false)
 
+  // Initialize gold from stats when stats are loaded
+  useEffect(() => {
+    if (stats && stats.coins !== undefined && stats.coins !== null) {
+      const coins = parseInt(stats.coins) || 500
+      setGold(coins)
+      setLastGold(coins)
+      // Also update game's gold if it's already initialized
+      if (gameRef.current) {
+        gameRef.current.gold = coins
+      }
+    }
+  }, [stats?.coins])
+
   useEffect(() => {
     if (!containerRef.current) return
 
@@ -241,6 +254,11 @@ export default function GamePage() {
       },
       initialGold: stats.coins || 500
     }, userProfile)
+    
+    // Sync React gold state with game's initial gold
+    const initialGoldValue = stats.coins ? parseInt(stats.coins) : 500
+    setGold(initialGoldValue)
+    setLastGold(initialGoldValue)
     
     // Store available towers from game
     if (game.availableTowers) {
