@@ -2,10 +2,10 @@
 -- This table stores user progression data (loadouts, tech tree, etc.)
 
 -- Create user_progress table if it doesn't exist
+-- Note: If table already exists with different structure, you may need to alter it
 CREATE TABLE IF NOT EXISTS user_progress (
   id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   user_id UUID NOT NULL REFERENCES auth.users(id) ON DELETE CASCADE,
-  hero VARCHAR(50) DEFAULT 'default',
   loadout JSONB DEFAULT '{}'::jsonb,
   tech_tree_progress JSONB DEFAULT '{}'::jsonb,
   unlocked_items JSONB DEFAULT '[]'::jsonb,
@@ -13,6 +13,17 @@ CREATE TABLE IF NOT EXISTS user_progress (
   updated_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
   UNIQUE(user_id)
 );
+
+-- Add hero column if it doesn't exist (for backward compatibility)
+DO $$
+BEGIN
+  IF NOT EXISTS (
+    SELECT 1 FROM information_schema.columns 
+    WHERE table_name = 'user_progress' AND column_name = 'hero'
+  ) THEN
+    ALTER TABLE user_progress ADD COLUMN hero VARCHAR(50) DEFAULT 'default';
+  END IF;
+END $$;
 
 -- Create index for faster lookups
 CREATE INDEX IF NOT EXISTS idx_user_progress_user_id ON user_progress(user_id);
@@ -56,15 +67,30 @@ CREATE POLICY "System can insert user progress"
 CREATE OR REPLACE FUNCTION public.handle_new_user_progress()
 RETURNS TRIGGER AS $$
 BEGIN
-  INSERT INTO public.user_progress (user_id, hero, loadout, tech_tree_progress, unlocked_items)
-  VALUES (
-    NEW.id,
-    'default',
-    '{}'::jsonb,
-    '{}'::jsonb,
-    '[]'::jsonb
-  )
-  ON CONFLICT (user_id) DO NOTHING;
+  -- Check if hero column exists before inserting
+  IF EXISTS (
+    SELECT 1 FROM information_schema.columns 
+    WHERE table_name = 'user_progress' AND column_name = 'hero'
+  ) THEN
+    INSERT INTO public.user_progress (user_id, hero, loadout, tech_tree_progress, unlocked_items)
+    VALUES (
+      NEW.id,
+      'default',
+      '{}'::jsonb,
+      '{}'::jsonb,
+      '[]'::jsonb
+    )
+    ON CONFLICT (user_id) DO NOTHING;
+  ELSE
+    INSERT INTO public.user_progress (user_id, loadout, tech_tree_progress, unlocked_items)
+    VALUES (
+      NEW.id,
+      '{}'::jsonb,
+      '{}'::jsonb,
+      '[]'::jsonb
+    )
+    ON CONFLICT (user_id) DO NOTHING;
+  END IF;
   RETURN NEW;
 END;
 $$ LANGUAGE plpgsql SECURITY DEFINER;

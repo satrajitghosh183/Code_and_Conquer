@@ -2008,7 +2008,10 @@ export class EnhancedGame {
         }
       } else {
         // Try to select a structure for moving
-        this.selectStructureAtPoint(point)
+        const structure = this.findStructureAtPoint(point)
+        if (structure) {
+          this.selectStructureForEdit(structure)
+        }
       }
     }
   }
@@ -2400,6 +2403,33 @@ export class EnhancedGame {
         }
       }
     })
+  }
+  
+  // Find structure at a given point (for clicking to select)
+  findStructureAtPoint(point, radius = 2) {
+    let closestStructure = null
+    let closestDistance = Infinity
+    
+    // Check all structures
+    for (const structure of this.structures) {
+      if (!structure.mesh || !structure.position) continue
+      
+      const distance = point.distanceTo(structure.position)
+      if (distance < radius && distance < closestDistance) {
+        closestDistance = distance
+        closestStructure = structure
+      }
+    }
+    
+    // Also check base
+    if (this.base && this.base.position) {
+      const baseDistance = point.distanceTo(this.base.position)
+      if (baseDistance < radius && baseDistance < closestDistance) {
+        return this.base // Return base object for selection
+      }
+    }
+    
+    return closestStructure
   }
   
   updateSpatialGrid() {

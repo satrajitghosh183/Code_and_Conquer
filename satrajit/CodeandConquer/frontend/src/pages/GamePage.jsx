@@ -61,6 +61,7 @@ export default function GamePage() {
   const [goldAnimClass, setGoldAnimClass] = useState('')
   const [lastGold, setLastGold] = useState(500)
   const [resourceChanges, setResourceChanges] = useState([])
+  const resourceChangeIdCounter = useRef(0)
   const [showWaveWarning, setShowWaveWarning] = useState(false)
 
   useEffect(() => {
@@ -126,7 +127,7 @@ export default function GamePage() {
             
             // Show floating text for significant changes
             if (Math.abs(diff) >= 10) {
-              const id = Date.now()
+              const id = `gold-${++resourceChangeIdCounter.current}`
               setResourceChanges(prev => [...prev, {
                 id,
                 value: diff,
@@ -213,7 +214,7 @@ export default function GamePage() {
       },
       onInterestEarned: (interest, totalGold) => {
         // Show floating interest earned text
-        const id = Date.now()
+        const id = `interest-${++resourceChangeIdCounter.current}`
         setResourceChanges(prev => [...prev, {
           id,
           value: interest,
@@ -226,7 +227,7 @@ export default function GamePage() {
         }, 1500)
       },
       onEarlyWaveBonus: (bonus, timeRemaining) => {
-        const id = Date.now()
+        const id = `bonus-${++resourceChangeIdCounter.current}`
         setResourceChanges(prev => [...prev, {
           id,
           value: bonus,
