@@ -9,7 +9,7 @@
       "destination": "https://code-and-conquer.onrender.com/api/:path*"
     },
     {
-      "source": "/((?!assets|models|sounds|images).*)",
+      "source": "/((?!api|assets|models|sounds|images|favicon|_next|index.html).*)",
       "destination": "/index.html"
     }
   ],

@@ -35,20 +35,19 @@ class ErrorBoundary extends Component {
 
   logErrorToService = async (error, errorInfo) => {
     try {
-      // Example: Send to your backend for logging
-      const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:5000/api'
-      await fetch(`${apiUrl}/errors/log`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          message: error.message,
-          stack: error.stack,
-          componentStack: errorInfo.componentStack,
-          timestamp: new Date().toISOString(),
-          userAgent: navigator.userAgent,
-          url: window.location.href
-        })
-      }).catch(() => {}) // Silently fail if error logging fails
+      // Log to console in production (backend endpoint doesn't exist yet)
+      console.error('ErrorBoundary - Error details:', {
+        message: error.message,
+        stack: error.stack,
+        componentStack: errorInfo.componentStack,
+        timestamp: new Date().toISOString(),
+        url: window.location.href
+      })
+      
+      // TODO: Add error logging endpoint to backend if needed
+      // For now, just log to console to avoid 404 errors
+      // const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:5000/api'
+      // await fetch(`${apiUrl}/errors/log`, { ... }).catch(() => {})
     } catch (e) {
       // Silently fail
     }
