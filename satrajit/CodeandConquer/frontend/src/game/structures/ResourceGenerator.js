@@ -60,7 +60,8 @@ export class ResourceGenerator extends Structure {
     this.mesh = this.createProceduralModel()
     this.mesh.position.copy(this.position)
     this.mesh.rotation.y = this.rotation
-    this.applyRedTheme()
+    // Don't apply red theme - resource generators have their own distinct colors
+    // this.applyRedTheme()
     this.createHealthBar()
     this.loaded = true
     
