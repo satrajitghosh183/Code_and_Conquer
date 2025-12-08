@@ -276,6 +276,28 @@ io.on('connection', (socket) => {
     }
   });
 
+  // Handle match state request (for recovery/timeout scenarios)
+  socket.on('get_match_state', (matchId) => {
+    const match = matchmakingService.getMatch(matchId);
+    if (match) {
+      // Ensure match has all required fields
+      const matchData = {
+        id: matchId,
+        matchId: matchId,
+        ...match,
+        players: match.players || [],
+        gameState: match.gameState || {},
+        state: match.state || match.status || 'waiting'
+      };
+      
+      socket.emit('match_state', matchData);
+      logger.info(`Sent match state for ${matchId} to ${socket.id}`);
+    } else {
+      socket.emit('match_error', { error: 'Match not found', matchId });
+      logger.warn(`Match ${matchId} not found for ${socket.id}`);
+    }
+  });
+
   socket.on('start_match', async (matchId) => {
     const match = matchmakingService.getMatch(matchId);
     if (match) {
