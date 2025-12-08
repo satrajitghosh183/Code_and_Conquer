@@ -4,6 +4,7 @@ import { useGame } from '../contexts/GameContext'
 import { Icon } from './Icons'
 import './TechTree.css'
 
+// Tech Tree component - displays upgradable technologies using gold currency
 const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000/api'
 
 const CATEGORY_COLORS = {
