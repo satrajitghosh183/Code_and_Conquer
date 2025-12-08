@@ -22,6 +22,7 @@ export default function MatchPage() {
   const [gameInitialized, setGameInitialized] = useState(false)
   const [countdown, setCountdown] = useState(null)
   const [error, setError] = useState(null)
+  const [errorDetails, setErrorDetails] = useState(null)
   const [selectedStructure, setSelectedStructure] = useState(null)
   const [currentPhase, setCurrentPhase] = useState('build') // 'build' or 'combat'
   const [phaseTimeRemaining, setPhaseTimeRemaining] = useState(30)
@@ -152,7 +153,14 @@ export default function MatchPage() {
       return true
     } catch (err) {
       console.error('MatchPage: Error initializing game:', err)
-      setError('Failed to initialize game: ' + (err.message || err.toString()))
+      const errorMessage = 'Failed to initialize game: ' + (err.message || err.toString())
+      setError(errorMessage)
+      setErrorDetails({
+        message: err.message,
+        stack: err.stack,
+        name: err.name,
+        fullError: err.toString()
+      })
       return false
     }
   }, [playerId, matchId, socket])
@@ -196,18 +204,21 @@ export default function MatchPage() {
       if (!match) {
         console.error('MatchPage: Match data is null or undefined')
         setError('Invalid match data received')
+        setErrorDetails({ message: 'Match data is null or undefined', match })
         return
       }
       
       if (!match.id && !match.matchId) {
         console.error('MatchPage: Match missing id and matchId')
         setError('Match missing ID field')
+        setErrorDetails({ message: 'Match missing ID field', match })
         return
       }
       
       if (!match.players || !Array.isArray(match.players) || match.players.length === 0) {
         console.error('MatchPage: Match missing or invalid players array:', match.players)
         setError('Match missing players data')
+        setErrorDetails({ message: 'Match missing players data', players: match.players, match })
         return
       }
       
@@ -281,6 +292,26 @@ export default function MatchPage() {
     socket.on('opponent_action', handleOpponentAction)
     socket.on('coding_error', (error) => {
       console.error('Coding error:', error)
+      setError('Coding error: ' + (error?.message || error))
+      setErrorDetails({ type: 'coding_error', error })
+    })
+
+    socket.on('match_error', (errorData) => {
+      console.error('Match error:', errorData)
+      setError(errorData?.error || errorData?.message || 'Match error occurred')
+      setErrorDetails({ type: 'match_error', ...errorData })
+    })
+
+    socket.on('error', (error) => {
+      console.error('Socket error:', error)
+      setError('Connection error: ' + (error?.message || error))
+      setErrorDetails({ type: 'socket_error', error })
+    })
+
+    socket.on('connect_error', (error) => {
+      console.error('Socket connection error:', error)
+      setError('Failed to connect to server: ' + (error?.message || error))
+      setErrorDetails({ type: 'connect_error', error })
     })
 
     return () => {
@@ -292,6 +323,9 @@ export default function MatchPage() {
       socket.off('phase_changed', handlePhaseChange)
       socket.off('opponent_action', handleOpponentAction)
       socket.off('coding_error')
+      socket.off('match_error')
+      socket.off('error')
+      socket.off('connect_error')
     }
   }, [socket, playerId, matchId, clearMatchData, navigate, initializeGame])
 
@@ -374,6 +408,13 @@ export default function MatchPage() {
         if (!gameInitialized) {
           console.error('MatchPage: Match start timeout - no match_started event received')
           setError('Match failed to start. Please try again.')
+          setErrorDetails({
+            message: 'Match start timeout',
+            timeout: '20 seconds',
+            matchId,
+            playerId,
+            socketConnected: connected
+          })
         }
       }, 20000)
       
@@ -441,12 +482,146 @@ export default function MatchPage() {
 
   // Error state
   if (error) {
+    const copyErrorDetails = () => {
+      const errorText = JSON.stringify({
+        error,
+        errorDetails,
+        matchId,
+        playerId,
+        timestamp: new Date().toISOString(),
+        url: window.location.href,
+        userAgent: navigator.userAgent
+      }, null, 2)
+      
+      navigator.clipboard.writeText(errorText).then(() => {
+        alert('Error details copied to clipboard!')
+      }).catch(() => {
+        // Fallback: show in alert
+        prompt('Copy this error information:', errorText)
+      })
+    }
+
+    const openConsole = () => {
+      alert('To view console errors:\n\n1. Press F12 or Right-click → Inspect\n2. Go to the "Console" tab\n3. Look for red error messages\n\nOr check Vercel logs:\n1. Go to vercel.com\n2. Select your project\n3. Go to "Deployments"\n4. Click on the latest deployment\n5. Click "Functions" or "Logs" tab')
+    }
+
     return (
       <div className="match-page">
-        <div className="match-error">
-          <h2>Error</h2>
-          <p>{error}</p>
-          <button onClick={() => navigate('/dashboard')}>Return to Dashboard</button>
+        <div className="match-error" style={{
+          padding: '40px',
+          maxWidth: '800px',
+          margin: '0 auto',
+          backgroundColor: '#1a1a2e',
+          borderRadius: '16px',
+          border: '1px solid #ff4757',
+          color: '#ffffff'
+        }}>
+          <h2 style={{ color: '#ff4757', marginBottom: '16px' }}>⚠️ Error</h2>
+          <p style={{ fontSize: '18px', marginBottom: '24px', color: '#ffffff' }}>{error}</p>
+          
+          {errorDetails && (
+            <details style={{
+              marginBottom: '24px',
+              backgroundColor: '#12121f',
+              borderRadius: '8px',
+              padding: '16px',
+              border: '1px solid #2a2a4a'
+            }}>
+              <summary style={{
+                cursor: 'pointer',
+                color: '#ff9f43',
+                fontWeight: '500',
+                marginBottom: '12px',
+                userSelect: 'none'
+              }}>
+                Error Details (Click to expand)
+              </summary>
+              <pre style={{
+                color: '#ff6b6b',
+                fontSize: '12px',
+                overflow: 'auto',
+                maxHeight: '300px',
+                whiteSpace: 'pre-wrap',
+                margin: 0,
+                padding: '12px',
+                backgroundColor: '#0f0f1a',
+                borderRadius: '4px'
+              }}>
+                {JSON.stringify(errorDetails, null, 2)}
+              </pre>
+            </details>
+          )}
+
+          <div style={{
+            display: 'flex',
+            gap: '12px',
+            flexWrap: 'wrap',
+            marginBottom: '16px'
+          }}>
+            <button 
+              onClick={copyErrorDetails}
+              style={{
+                padding: '10px 20px',
+                backgroundColor: '#ff9f43',
+                color: 'white',
+                border: 'none',
+                borderRadius: '8px',
+                cursor: 'pointer',
+                fontSize: '14px',
+                fontWeight: '600'
+              }}
+            >
+              📋 Copy Error Details
+            </button>
+            <button 
+              onClick={openConsole}
+              style={{
+                padding: '10px 20px',
+                backgroundColor: '#5352ed',
+                color: 'white',
+                border: 'none',
+                borderRadius: '8px',
+                cursor: 'pointer',
+                fontSize: '14px',
+                fontWeight: '600'
+              }}
+            >
+              🔍 How to View Logs
+            </button>
+          </div>
+
+          <div style={{
+            backgroundColor: '#12121f',
+            padding: '16px',
+            borderRadius: '8px',
+            marginBottom: '24px',
+            fontSize: '14px',
+            color: '#8892b0'
+          }}>
+            <strong style={{ color: '#ff9f43' }}>To see errors in production:</strong>
+            <ol style={{ margin: '8px 0 0 0', paddingLeft: '20px' }}>
+              <li>Open browser console (F12 → Console tab)</li>
+              <li>Check Vercel Dashboard → Deployments → Latest → Functions/Logs</li>
+              <li>Use the "Copy Error Details" button above</li>
+            </ol>
+          </div>
+
+          <button 
+            onClick={() => navigate('/dashboard')}
+            style={{
+              padding: '12px 24px',
+              backgroundColor: '#ff4757',
+              color: 'white',
+              border: 'none',
+              borderRadius: '8px',
+              cursor: 'pointer',
+              fontSize: '16px',
+              fontWeight: '600',
+              width: '100%'
+            }}
+          >
+            Return to Dashboard
+          </button>
         </div>
       </div>
     )
