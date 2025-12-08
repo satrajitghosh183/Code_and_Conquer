@@ -87,12 +87,12 @@ export const TOWER_TYPES = {
     fireRate: 0.33, // Decreased from 0.66
     health: 250,
     slowAmount: 0.3,
-    slowDuration: 2000,
+    slowDuration: 3000, // Increased freeze duration
     description: 'Freezes enemies',
     attackType: 'frost',
     upgrades: [
-      { damage: 15, range: 22, cooldown: 2500, slowAmount: 0.4, aoeRadius: 5, cost: 75 },
-      { damage: 25, range: 25, cooldown: 2000, slowAmount: 0.5, aoeRadius: 8, cost: 100 }
+      { damage: 15, range: 22, cooldown: 2500, slowAmount: 0.4, slowDuration: 3500, aoeRadius: 5, cost: 75 },
+      { damage: 25, range: 25, cooldown: 2000, slowAmount: 0.5, slowDuration: 4000, aoeRadius: 8, cost: 100 }
     ]
   },
   

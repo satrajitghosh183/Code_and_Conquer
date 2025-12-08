@@ -1573,8 +1573,21 @@ export class EnhancedGame {
       if (distance > 0.5) {
         direction.normalize()
         
-        const speed = enemy.speed || 3
-        const moveDistance = speed * deltaTime
+        // Apply freeze/slow effects
+        let effectiveSpeed = enemy.speed || 3
+        
+        // Check for freeze (complete stop)
+        if (enemy.frozen && enemy.frozen.endTime > Date.now()) {
+          effectiveSpeed = effectiveSpeed * (1 - enemy.frozen.amount) // 90% reduction = almost stopped
+        } else if (enemy.slow && enemy.slow.endTime > Date.now()) {
+          effectiveSpeed = effectiveSpeed * (1 - enemy.slow.amount)
+        } else {
+          // Clear expired effects
+          if (enemy.frozen) delete enemy.frozen
+          if (enemy.slow) delete enemy.slow
+        }
+        
+        const moveDistance = effectiveSpeed * deltaTime
         
         if (enemy.position) {
           enemy.position.add(direction.multiplyScalar(moveDistance))
@@ -1735,6 +1748,8 @@ export class EnhancedGame {
       SoundManager.play3D('sniper.ogg', from)
     } else if (attackType === 'frost') {
       SoundManager.play3D('frost.ogg', from)
+      // Get frost tower config for freeze effect
+      const frostConfig = TOWER_TYPES.frost
     } else if (attackType === 'fire') {
       SoundManager.play3D('fire.ogg', from)
     } else if (attackType === 'tesla') {
@@ -1788,6 +1803,9 @@ export class EnhancedGame {
       setTimeout(() => this.scene.remove(trail), 300)
     }
 
+    // Get frost config for freeze effect
+    const frostConfig = attackType === 'frost' ? TOWER_TYPES.frost : null
+    
     const projectile = {
       mesh: projMesh,
       position: projMesh.position.clone(),
@@ -1797,7 +1815,10 @@ export class EnhancedGame {
       splashRadius,
       speed: attackType === 'missile' ? 20 : 30, // Slower missiles
       shouldRemove: false,
-      trailEffect
+      trailEffect,
+      // Frost-specific properties
+      slowAmount: frostConfig ? frostConfig.slowAmount : 0,
+      slowDuration: frostConfig ? frostConfig.slowDuration : 0
     }
 
     this.projectiles.push(projectile)
