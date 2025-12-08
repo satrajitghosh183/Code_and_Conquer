@@ -19,7 +19,7 @@ export default function GamePage() {
   const containerRef = useRef(null)
   const gameRef = useRef(null)
   const navigate = useNavigate()
-  const { stats, spendCoins, addGameResult } = useGame()
+  const { stats, spendCoins, addGameResult, refreshStats } = useGame()
   const { user, profile } = useAuth()
   const [gameStarted, setGameStarted] = useState(false)
   const [gold, setGold] = useState(500)
