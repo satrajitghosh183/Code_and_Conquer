@@ -1,0 +1,248 @@
+.structure-selection-panel {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 500px;
+  max-height: 80vh;
+  background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+  border: 2px solid #00ffff;
+  border-radius: 12px;
+  box-shadow: 0 8px 32px rgba(0, 255, 255, 0.3);
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+  color: #fff;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.panel-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px 20px;
+  border-bottom: 2px solid #00ffff;
+  background: rgba(0, 255, 255, 0.1);
+}
+
+.panel-header h3 {
+  margin: 0;
+  font-size: 20px;
+  color: #00ffff;
+  text-shadow: 0 0 10px rgba(0, 255, 255, 0.5);
+}
+
+.close-btn {
+  background: transparent;
+  border: 2px solid #ff4444;
+  color: #ff4444;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  cursor: pointer;
+  font-size: 24px;
+  line-height: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s;
+}
+
+.close-btn:hover {
+  background: #ff4444;
+  color: #fff;
+  box-shadow: 0 0 15px rgba(255, 68, 68, 0.5);
+}
+
+.panel-content {
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+  gap: 20px;
+  overflow-y: auto;
+  max-height: calc(80vh - 80px);
+}
+
+.structures-list h4 {
+  margin: 0 0 12px 0;
+  color: #00ffff;
+  font-size: 16px;
+}
+
+.structures-scroll {
+  max-height: 300px;
+  overflow-y: auto;
+  border: 1px solid rgba(0, 255, 255, 0.3);
+  border-radius: 8px;
+  padding: 8px;
+  background: rgba(0, 0, 0, 0.3);
+}
+
+.structure-item {
+  padding: 12px;
+  margin-bottom: 8px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 2px solid transparent;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.structure-item:hover {
+  background: rgba(0, 255, 255, 0.1);
+  border-color: rgba(0, 255, 255, 0.5);
+}
+
+.structure-item.selected {
+  background: rgba(0, 255, 255, 0.2);
+  border-color: #00ffff;
+  box-shadow: 0 0 15px rgba(0, 255, 255, 0.3);
+}
+
+.structure-name {
+  font-weight: bold;
+  color: #fff;
+  margin-bottom: 4px;
+  font-size: 14px;
+}
+
+.structure-info {
+  display: flex;
+  gap: 12px;
+  font-size: 12px;
+  color: #aaa;
+}
+
+.no-structures {
+  padding: 20px;
+  text-align: center;
+  color: #888;
+  font-style: italic;
+}
+
+.structure-controls {
+  border-top: 2px solid rgba(0, 255, 255, 0.3);
+  padding-top: 20px;
+}
+
+.structure-controls h4 {
+  margin: 0 0 16px 0;
+  color: #00ffff;
+  font-size: 16px;
+}
+
+.control-section {
+  margin-bottom: 20px;
+}
+
+.control-section label {
+  display: block;
+  margin-bottom: 8px;
+  color: #aaa;
+  font-size: 14px;
+}
+
+.axis-buttons,
+.rotation-amount {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
+.axis-buttons button,
+.rotation-amount button {
+  flex: 1;
+  padding: 10px;
+  background: rgba(255, 255, 255, 0.1);
+  border: 2px solid rgba(0, 255, 255, 0.3);
+  border-radius: 6px;
+  color: #fff;
+  cursor: pointer;
+  transition: all 0.2s;
+  font-size: 14px;
+  font-weight: bold;
+}
+
+.axis-buttons button:hover,
+.rotation-amount button:hover {
+  background: rgba(0, 255, 255, 0.2);
+  border-color: #00ffff;
+}
+
+.axis-buttons button.active,
+.rotation-amount button.active {
+  background: #00ffff;
+  color: #000;
+  box-shadow: 0 0 15px rgba(0, 255, 255, 0.5);
+}
+
+.rotate-buttons {
+  display: flex;
+  gap: 8px;
+}
+
+.rotate-buttons button {
+  flex: 1;
+  padding: 12px;
+  background: rgba(0, 255, 255, 0.2);
+  border: 2px solid #00ffff;
+  border-radius: 6px;
+  color: #00ffff;
+  cursor: pointer;
+  transition: all 0.2s;
+  font-size: 14px;
+  font-weight: bold;
+}
+
+.rotate-buttons button:hover {
+  background: #00ffff;
+  color: #000;
+  box-shadow: 0 0 20px rgba(0, 255, 255, 0.6);
+}
+
+.move-btn {
+  width: 100%;
+  padding: 14px;
+  background: linear-gradient(135deg, #00ffff 0%, #0088ff 100%);
+  border: none;
+  border-radius: 6px;
+  color: #000;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: bold;
+  transition: all 0.2s;
+  margin-bottom: 8px;
+}
+
+.move-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 20px rgba(0, 255, 255, 0.4);
+}
+
+.help-text {
+  margin: 0;
+  font-size: 12px;
+  color: #888;
+  text-align: center;
+  font-style: italic;
+}
+
+/* Scrollbar styling */
+.structures-scroll::-webkit-scrollbar {
+  width: 8px;
+}
+
+.structures-scroll::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, 0.3);
+  border-radius: 4px;
+}
+
+.structures-scroll::-webkit-scrollbar-thumb {
+  background: rgba(0, 255, 255, 0.5);
+  border-radius: 4px;
+}
+
+.structures-scroll::-webkit-scrollbar-thumb:hover {
+  background: rgba(0, 255, 255, 0.7);
+}
+

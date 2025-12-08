@@ -11,6 +11,7 @@ import TaskPanel from '../components/TaskPanel'
 import ModelScaleSettings from '../components/ModelScaleSettings'
 import TowerPanel from '../components/TowerPanel'
 import BasePanel from '../components/BasePanel'
+import StructureSelectionPanel from '../components/StructureSelectionPanel'
 import { Icon } from '../components/Icons'
 import './GamePage.css'
 
@@ -241,9 +242,16 @@ export default function GamePage() {
         setShowHeader(prev => !prev)
       }
 
-      // Mute (M)
-      if (e.key === 'm' || e.key === 'M') {
-        SoundManager.toggleMute()
+      // Structure Selection Panel (M or R)
+      if (e.key === 'm' || e.key === 'M' || e.key === 'r' || e.key === 'R') {
+        if (!showStructurePanel) {
+          setShowStructurePanel(true)
+          // Get structures list from game
+          if (gameRef.current && gameRef.current.getStructuresList) {
+            const structures = gameRef.current.getStructuresList()
+            setStructuresList(structures)
+          }
+        }
       }
 
       // Start Wave (Space or W)
@@ -562,6 +570,36 @@ export default function GamePage() {
         baseStats={baseStats}
         gold={gold}
         onUpgrade={handleBaseUpgrade}
+      />
+      
+      <StructureSelectionPanel
+        structures={structuresList}
+        base={gameRef.current?.base || null}
+        isVisible={showStructurePanel}
+        onSelect={(structure) => {
+          setSelectedStructureForEdit(structure)
+          if (gameRef.current && gameRef.current.selectStructureForEdit) {
+            gameRef.current.selectStructureForEdit(structure)
+          }
+        }}
+        onClose={() => {
+          setShowStructurePanel(false)
+          setSelectedStructureForEdit(null)
+          if (gameRef.current && gameRef.current.deselectStructureForEdit) {
+            gameRef.current.deselectStructureForEdit()
+          }
+        }}
+        selectedStructure={selectedStructureForEdit}
+        onRotate={(structure, axis, amount) => {
+          if (gameRef.current && gameRef.current.rotateStructure) {
+            gameRef.current.rotateStructure(structure, axis, amount)
+          }
+        }}
+        onMove={(structure) => {
+          if (gameRef.current && gameRef.current.enableMoveMode) {
+            gameRef.current.enableMoveMode(structure)
+          }
+        }}
       />
       
       <div className="game-ui-overlay">
