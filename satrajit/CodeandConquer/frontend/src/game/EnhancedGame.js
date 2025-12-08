@@ -2088,6 +2088,10 @@ export class EnhancedGame {
       'blocking_wall': { type: 'wall', wallType: 'blocking' },
       // Spawner
       'spawner': { type: 'spawner', spawnerType: 'barracks' },
+      // Resource Generators
+      'gold_mine': { type: 'resource_generator', generatorType: 'gold_mine' },
+      'energy_well': { type: 'resource_generator', generatorType: 'energy_well' },
+      'hybrid_generator': { type: 'resource_generator', generatorType: 'hybrid_generator' },
       // Fire Ring (special ability)
       'fire_ring': { type: 'fire_ring' }
     }
