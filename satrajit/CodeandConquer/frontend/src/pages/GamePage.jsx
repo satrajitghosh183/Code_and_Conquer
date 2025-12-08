@@ -84,22 +84,28 @@ export default function GamePage() {
         setGameState(won ? 'victory' : 'gameover')
         setShowGameOver(true)
         
-        // Save final gold to user stats
+        // Save final gold to user stats (calculate difference from initial)
         if (user && gameRef.current) {
           const finalGold = gameRef.current.gold || gold
-          try {
-            const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000/api'
-            await fetch(`${API_URL}/users/${user.id}/stats/update`, {
-              method: 'POST',
-              headers: { 'Content-Type': 'application/json' },
-              body: JSON.stringify({ coins: finalGold })
-            })
-            // Refresh stats after saving
-            if (refreshStats) {
-              refreshStats()
+          const initialGold = stats.coins || 500
+          const goldChange = finalGold - initialGold
+          
+          // Only update if there's a change
+          if (goldChange !== 0) {
+            try {
+              const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000/api'
+              await fetch(`${API_URL}/users/${user.id}/stats/update`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ coins: goldChange }) // Relative change
+              })
+              // Refresh stats after saving
+              if (refreshStats) {
+                setTimeout(() => refreshStats(), 500)
+              }
+            } catch (error) {
+              console.error('Error saving gold:', error)
             }
-          } catch (error) {
-            console.error('Error saving gold:', error)
           }
         }
         
