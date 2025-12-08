@@ -260,7 +260,10 @@ export default function Dashboard() {
             <Zap size={16} />
             <span>{stats?.xp || dashboardStats?.xp || 0} XP</span>
           </div>
-          <div className="stat-badge" title="Coins">
+          <div className="stat-badge" title="Coins (Click to refresh)" onClick={() => {
+            if (refreshStats) refreshStats()
+            loadDashboardStats()
+          }} style={{ cursor: 'pointer' }}>
             <Coins size={16} />
             <span>{stats?.coins || dashboardStats?.coins || 0} 🪙</span>
           </div>

@@ -220,6 +220,13 @@ export const GameProvider = ({ children }) => {
     }
   }
 
+  // Force refresh stats (useful for debugging)
+  const forceRefreshStats = async () => {
+    console.log('[GameContext] Force refreshing stats...')
+    setLoading(true)
+    await loadStats()
+  }
+
   const value = {
     stats,
     powerUps,
@@ -227,7 +234,8 @@ export const GameProvider = ({ children }) => {
     addRewards,
     spendCoins,
     addGameResult,
-    refreshStats: loadStats
+    refreshStats: loadStats,
+    forceRefreshStats
   }
 
   return (
