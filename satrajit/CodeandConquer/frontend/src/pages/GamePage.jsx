@@ -50,6 +50,9 @@ export default function GamePage() {
   const [vignetteIntensity, setVignetteIntensity] = useState(0)
   const [selectedTower, setSelectedTower] = useState(null)
   const [baseStats, setBaseStats] = useState(null)
+  const [showStructurePanel, setShowStructurePanel] = useState(false)
+  const [selectedStructureForEdit, setSelectedStructureForEdit] = useState(null)
+  const [structuresList, setStructuresList] = useState([])
   
   // Economy system state (NEW)
   const [comboKills, setComboKills] = useState(0)
