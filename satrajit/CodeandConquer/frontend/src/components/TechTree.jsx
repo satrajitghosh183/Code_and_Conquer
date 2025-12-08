@@ -34,10 +34,27 @@ export default function TechTree({ onClose }) {
   const [error, setError] = useState(null)
   const [userGold, setUserGold] = useState(0) // Gold from backend or stats
 
+  // Fetch gold directly from API as fallback
+  const fetchUserGold = async () => {
+    if (!user) return
+    try {
+      const response = await fetch(`${API_URL}/users/${user.id}/stats`)
+      if (response.ok) {
+        const data = await response.json()
+        const gold = parseInt(data.coins) || 0
+        setUserGold(gold)
+        console.log('[TechTree] Fetched gold from API:', gold)
+      }
+    } catch (error) {
+      console.warn('[TechTree] Could not fetch gold from API:', error)
+    }
+  }
+
   useEffect(() => {
     if (user) {
       loadTechTree()
       loadProgression()
+      fetchUserGold() // Fetch gold directly
       // Refresh stats to ensure gold is loaded
       if (refreshStats) {
         refreshStats()
@@ -135,12 +152,17 @@ export default function TechTree({ onClose }) {
               <span className="points-icon">🪙</span>
               <span className="points-value">
                 {(() => {
-                  // Try to get gold from multiple sources
-                  const goldFromStats = stats && stats.coins !== undefined && stats.coins !== null 
-                    ? parseInt(stats.coins) 
-                    : null
-                  const goldFromBackend = userGold || null
-                  const finalGold = goldFromStats || goldFromBackend || 0
+                  // Try to get gold from multiple sources (prioritize stats, then backend, then API fetch)
+                  let finalGold = 0
+                  
+                  if (stats && stats.coins !== undefined && stats.coins !== null) {
+                    finalGold = parseInt(stats.coins) || 0
+                  } else if (userGold > 0) {
+                    finalGold = userGold
+                  } else if (techTree && techTree.length > 0 && techTree[0].userGold !== undefined) {
+                    finalGold = techTree[0].userGold
+                  }
+                  
                   return finalGold
                 })()}
               </span>
