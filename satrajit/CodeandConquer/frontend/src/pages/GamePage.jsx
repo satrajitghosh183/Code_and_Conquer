@@ -367,6 +367,18 @@ export default function GamePage() {
     }
   }, [])
 
+  // Separate cleanup effect that runs on component unmount (navigation away)
+  useEffect(() => {
+    return () => {
+      console.log('[GamePage] Component unmounting - stopping all sounds')
+      // Aggressively stop all sounds when component unmounts
+      SoundManager.stopAll()
+      
+      // Suspend audio context to prevent any lingering sounds
+      SoundManager.suspend()
+    }
+  }, [])
+
   // Poll vignette intensity from game visual effects
   useEffect(() => {
     const updateVignette = () => {

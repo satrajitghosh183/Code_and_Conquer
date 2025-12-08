@@ -529,22 +529,81 @@ class SoundManagerClass {
 
   // Stop all sounds
   stopAll() {
-    this.activeSources.forEach(({ source }) => {
+    console.log('[SoundManager] Stopping all sounds and music')
+    
+    // Stop all active sound sources
+    this.activeSources.forEach(({ source, gain, panner }) => {
       try {
-        source.stop()
+        // Disconnect nodes to stop immediately
+        if (gain) {
+          gain.gain.setValueAtTime(0, this.audioContext?.currentTime || 0)
+        }
+        if (source) {
+          source.stop()
+        }
+        if (panner) {
+          panner.disconnect()
+        }
+        if (gain) {
+          gain.disconnect()
+        }
+        if (source) {
+          source.disconnect()
+        }
       } catch (e) {
-        // Already stopped
+        // Already stopped or disconnected
+        console.warn('[SoundManager] Error stopping source:', e)
       }
     })
     this.activeSources = []
-    this.stopMusic(0)
+    
+    // Stop music immediately (no fade)
+    if (this.musicSource) {
+      try {
+        const { source, gain } = this.musicSource
+        if (gain) {
+          gain.gain.setValueAtTime(0, this.audioContext?.currentTime || 0)
+          gain.disconnect()
+        }
+        if (source) {
+          source.stop()
+          source.disconnect()
+        }
+      } catch (e) {
+        console.warn('[SoundManager] Error stopping music:', e)
+      }
+      this.musicSource = null
+      this.currentMusic = null
+    }
+    
+    // Clear any pending transitions
+    this.musicTransitioning = false
+    
+    console.log('[SoundManager] All sounds stopped')
+  }
+
+  // Suspend audio context (pause all audio)
+  suspend() {
+    if (this.audioContext && this.audioContext.state !== 'closed') {
+      try {
+        this.audioContext.suspend()
+        console.log('[SoundManager] Audio context suspended')
+      } catch (e) {
+        console.warn('[SoundManager] Error suspending audio context:', e)
+      }
+    }
   }
 
   // Clean up
   destroy() {
     this.stopAll()
     if (this.audioContext) {
-      this.audioContext.close()
+      try {
+        this.audioContext.close()
+        console.log('[SoundManager] Audio context closed')
+      } catch (e) {
+        console.warn('[SoundManager] Error closing audio context:', e)
+      }
     }
   }
 }

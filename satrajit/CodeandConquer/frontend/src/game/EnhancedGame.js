@@ -2805,8 +2805,13 @@ export class EnhancedGame {
   }
 
   destroy() {
-    // Stop all sounds and music
+    console.log('[EnhancedGame] Destroying game instance')
+    
+    // Stop all sounds and music immediately
     SoundManager.stopAll()
+    
+    // Suspend audio context to prevent any lingering sounds
+    SoundManager.suspend()
     
     // Cancel animation frame
     if (this.animationFrameId) {
@@ -2821,13 +2826,21 @@ export class EnhancedGame {
     
     // Dispose renderer
     if (this.renderer) {
-      this.container.removeChild(this.renderer.domElement)
-      this.renderer.dispose()
+      try {
+        this.container.removeChild(this.renderer.domElement)
+        this.renderer.dispose()
+      } catch (e) {
+        console.warn('[EnhancedGame] Error disposing renderer:', e)
+      }
     }
     
     // Dispose composer
     if (this.composer) {
-      this.composer.dispose()
+      try {
+        this.composer.dispose()
+      } catch (e) {
+        console.warn('[EnhancedGame] Error disposing composer:', e)
+      }
     }
     
     // Clear scene
