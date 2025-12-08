@@ -78,12 +78,13 @@ export const getLeaderboard = async (req, res) => {
       allUsers.map(async (user) => {
         try {
           // Get user stats (may not exist for new users)
+          // Note: user_stats table uses 'id' column, not 'user_id'
           let userStats = null;
           try {
             const { data, error } = await supabase
               .from('user_stats')
               .select('*')
-              .eq('user_id', user.id)
+              .eq('id', user.id)
               .single();
             if (!error) {
               userStats = data;
@@ -267,10 +268,11 @@ export const getUserLeaderboardPosition = async (req, res) => {
       });
     }
 
+    // Note: user_stats uses 'id' column, not 'user_id'
     const { data: userStats } = await supabase
       .from('user_stats')
       .select('*')
-      .eq('user_id', userId)
+      .eq('id', userId)
       .single();
 
     const { data: profile } = await supabase

@@ -402,10 +402,11 @@ async function updateLeaderboard(userId, rewards) {
     const supabase = database.getSupabaseClient();
     if (!supabase) return;
 
+    // Note: user_stats table uses 'id' column, not 'user_id'
     const { data: userStats } = await supabase
       .from('user_stats')
       .select('*')
-      .eq('user_id', userId)
+      .eq('id', userId)
       .single();
 
     if (!userStats) return;
@@ -416,8 +417,13 @@ async function updateLeaderboard(userId, rewards) {
     // Update global leaderboard
     await publicDatabaseService.updateLeaderboard(userId, 'global', score);
 
-    // Update weekly leaderboard (if we want to track it)
-    // For now, just update global
+    // Update weekly leaderboard
+    await publicDatabaseService.updateLeaderboard(userId, 'weekly', score);
+    
+    // Update monthly leaderboard
+    await publicDatabaseService.updateLeaderboard(userId, 'monthly', score);
+    
+    console.log(`[Submission] Updated leaderboard for user ${userId} with score ${score}`);
   } catch (error) {
     // Silently handle missing table/column errors
     if (error.code === 'PGRST204' || error.code === 'PGRST205' || error.code === '42P01') {

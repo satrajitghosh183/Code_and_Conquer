@@ -31,13 +31,13 @@ export const getDashboardStats = async (req, res) => {
       });
     }
 
-    // Get user stats
+    // Get user stats (note: user_stats uses 'id' column, not 'user_id')
     let userStats = null;
     try {
       const { data, error } = await supabase
         .from('user_stats')
         .select('*')
-        .eq('user_id', userId)
+        .eq('id', userId)
         .single();
       
       if (!error && data) {
@@ -101,13 +101,14 @@ export const getDashboardStats = async (req, res) => {
       
       if (profiles && profiles.length > 0) {
         // Get stats for all users to calculate rank
+        // Note: user_stats uses 'id' column, not 'user_id'
         const allUsersStats = await Promise.all(
           profiles.map(async (profile) => {
             try {
               const { data: stats } = await supabase
                 .from('user_stats')
                 .select('xp, problems_solved')
-                .eq('user_id', profile.id)
+                .eq('id', profile.id)
                 .single();
               
               if (stats) {
