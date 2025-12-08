@@ -1424,6 +1424,9 @@ export class EnhancedGame {
       this.particles.geometry.attributes.position.needsUpdate = true
     }
 
+    // Update fire ring
+    this.updateFireRing(deltaTime)
+    
     // Update structures
     this.updateStructures(deltaTime)
     
@@ -2006,7 +2009,9 @@ export class EnhancedGame {
       'wall': { type: 'wall', wallType: 'maze' },
       'blocking_wall': { type: 'wall', wallType: 'blocking' },
       // Spawner
-      'spawner': { type: 'spawner', spawnerType: 'barracks' }
+      'spawner': { type: 'spawner', spawnerType: 'barracks' },
+      // Fire Ring (special ability)
+      'fire_ring': { type: 'fire_ring' }
     }
     
     const config = mapping[structureId]
