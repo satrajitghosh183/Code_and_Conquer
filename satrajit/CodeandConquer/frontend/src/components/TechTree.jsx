@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react'
 import { useAuth } from '../contexts/AuthContext'
+import { useGame } from '../contexts/GameContext'
 import { Icon } from './Icons'
 import './TechTree.css'
 
@@ -25,6 +26,7 @@ const CATEGORY_ICON_NAMES = {
 
 export default function TechTree({ onClose }) {
   const { user } = useAuth()
+  const { stats, refreshStats } = useGame()
   const [techTree, setTechTree] = useState([])
   const [progression, setProgression] = useState(null)
   const [selectedTech, setSelectedTech] = useState(null)
@@ -73,6 +75,10 @@ export default function TechTree({ onClose }) {
       if (response.ok) {
         await loadTechTree()
         await loadProgression()
+        // Refresh stats to update gold display
+        if (refreshStats) {
+          await refreshStats()
+        }
         setError(null)
       } else {
         const data = await response.json()
@@ -108,13 +114,11 @@ export default function TechTree({ onClose }) {
         <div className="tech-tree-header">
           <div>
             <h2>Tech Tree</h2>
-            {progression && (
-              <div className="tech-points-display">
-                <span className="points-icon">⭐</span>
-                <span className="points-value">{progression.available_tech_points}</span>
-                <span className="points-label">Available Points</span>
-              </div>
-            )}
+            <div className="tech-points-display">
+              <span className="points-icon">🪙</span>
+              <span className="points-value">{stats?.coins || 0}</span>
+              <span className="points-label">Gold</span>
+            </div>
           </div>
           <button className="close-btn" onClick={onClose}>×</button>
         </div>
@@ -185,9 +189,9 @@ export default function TechTree({ onClose }) {
                           {!tech.requirementsMet ? (
                             <><Icon name="lock" size={14} color="#ffffff" /> Locked</>
                           ) : !tech.canUpgrade ? (
-                            <><Icon name="diamond" size={14} color="#ffd700" /> {tech.nextCost}</>
+                            <><Icon name="gold" size={14} color="#ffd700" /> {tech.nextCost} gold</>
                           ) : (
-                            <>Upgrade ({tech.nextCost} pts)</>
+                            <>Upgrade ({tech.nextCost} gold)</>
                           )}
                         </button>
                       ) : (
