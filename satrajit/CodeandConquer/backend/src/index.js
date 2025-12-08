@@ -281,7 +281,16 @@ io.on('connection', (socket) => {
     if (match) {
       match.state = 'briefing';
       await matchmakingService.updateMatch(matchId, { state: 'briefing' });
-      io.to(`match_${matchId}`).emit('match_briefing', match);
+      // Ensure match has all required data before emitting
+      const matchData = {
+        id: matchId,
+        matchId: matchId,
+        ...match,
+        players: match.players || [],
+        gameState: match.gameState || {}
+      };
+
+      io.to(`match_${matchId}`).emit('match_briefing', matchData);
       
       // 3 second countdown before match starts
       setTimeout(async () => {
@@ -291,8 +300,71 @@ io.on('connection', (socket) => {
           state: 'running',
           startTime: match.startTime
         });
-        io.to(`match_${matchId}`).emit('match_started', match);
-        logger.info(`Match ${matchId} started`);
+        
+        // Get fresh match data and ensure all required fields are present
+        const updatedMatch = matchmakingService.getMatch(matchId);
+        
+        // Ensure players array is properly structured with id fields
+        let players = [];
+        if (updatedMatch?.players && Array.isArray(updatedMatch.players) && updatedMatch.players.length > 0) {
+          // Use updated match players if they exist and have id fields
+          players = updatedMatch.players.map(p => ({
+            id: p.id || p.userId || p.playerId,
+            ...p
+          }));
+        } else if (match?.players && Array.isArray(match.players) && match.players.length > 0) {
+          // Fallback to original match players
+          players = match.players.map(p => ({
+            id: p.id || p.userId || p.playerId,
+            ...p
+          }));
+        } else {
+          // Last resort: reconstruct from match data if available
+          if (updatedMatch?.player1_id && updatedMatch?.player2_id) {
+            players = [
+              { id: updatedMatch.player1_id },
+              { id: updatedMatch.player2_id }
+            ];
+          } else if (match?.player1_id && match?.player2_id) {
+            players = [
+              { id: match.player1_id },
+              { id: match.player2_id }
+            ];
+          }
+        }
+        
+        // Ensure gameState exists
+        const gameState = updatedMatch?.gameState || match?.gameState || {};
+        
+        // Construct the match data with all required fields
+        const startedMatchData = {
+          id: matchId,
+          matchId: matchId,
+          ...updatedMatch,
+          ...match, // Include original match data as fallback
+          players: players, // Always use properly structured players array
+          gameState: gameState,
+          state: 'running',
+          startTime: match.startTime
+        };
+
+        // Validate that required fields are present
+        if (!startedMatchData.id || !startedMatchData.matchId) {
+          logger.error(`Match ${matchId} missing id or matchId field`);
+        }
+        if (!startedMatchData.players || startedMatchData.players.length === 0) {
+          logger.error(`Match ${matchId} missing players array`);
+        }
+        if (!startedMatchData.players || !startedMatchData.players.every(p => p.id)) {
+          logger.error(`Match ${matchId} players missing id fields`);
+        }
+
+        io.to(`match_${matchId}`).emit('match_started', startedMatchData);
+        logger.info(`Match ${matchId} started with ${startedMatchData.players.length} players`, {
+          matchId: startedMatchData.id,
+          playersCount: startedMatchData.players.length,
+          playerIds: startedMatchData.players.map(p => p.id)
+        });
       }, 3000);
     }
   });
