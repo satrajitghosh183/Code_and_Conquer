@@ -299,23 +299,40 @@ io.on('connection', (socket) => {
   });
 
   socket.on('start_match', async (matchId) => {
+    logger.info(`start_match received for ${matchId} from ${socket.id}`);
     const match = matchmakingService.getMatch(matchId);
-    if (match) {
-      match.state = 'briefing';
-      await matchmakingService.updateMatch(matchId, { state: 'briefing' });
-      // Ensure match has all required data before emitting
-      const matchData = {
-        id: matchId,
-        matchId: matchId,
-        ...match,
-        players: match.players || [],
-        gameState: match.gameState || {}
-      };
+    
+    if (!match) {
+      logger.error(`Match ${matchId} not found when trying to start`);
+      socket.emit('match_error', { error: 'Match not found', matchId });
+      return;
+    }
+    
+    // Ensure socket is in the match room
+    socket.join(`match_${matchId}`);
+    logger.info(`Socket ${socket.id} joined match room match_${matchId}`);
+    
+    match.state = 'briefing';
+    await matchmakingService.updateMatch(matchId, { state: 'briefing' });
+    // Ensure match has all required data before emitting
+    const matchData = {
+      id: matchId,
+      matchId: matchId,
+      ...match,
+      players: match.players || [],
+      gameState: match.gameState || {}
+    };
 
-      io.to(`match_${matchId}`).emit('match_briefing', matchData);
-      
-      // 3 second countdown before match starts
-      setTimeout(async () => {
+    // Emit to room AND directly to this socket (in case room join was delayed)
+    io.to(`match_${matchId}`).emit('match_briefing', matchData);
+    socket.emit('match_briefing', matchData);
+    logger.info(`Emitted match_briefing for ${matchId} to room and socket ${socket.id}`);
+    
+    // Store socket reference for later use in setTimeout
+    const initiatingSocket = socket;
+    
+    // 3 second countdown before match starts
+    setTimeout(async () => {
         match.state = 'running';
         match.startTime = new Date().toISOString();
         await matchmakingService.updateMatch(matchId, { 
@@ -381,13 +398,32 @@ io.on('connection', (socket) => {
           logger.error(`Match ${matchId} players missing id fields`);
         }
 
+        // Emit to room AND directly to initiating socket (ensure delivery)
         io.to(`match_${matchId}`).emit('match_started', startedMatchData);
+        
+        // Also emit directly to the socket that initiated the start (fallback)
+        if (initiatingSocket && initiatingSocket.connected) {
+          initiatingSocket.emit('match_started', startedMatchData);
+          logger.info(`Emitted match_started directly to initiating socket ${initiatingSocket.id}`);
+        }
+        
+        // Get all sockets in the room and log for debugging
+        const room = io.sockets.adapter.rooms.get(`match_${matchId}`);
+        if (room) {
+          logger.info(`Room match_${matchId} has ${room.size} sockets`);
+        } else {
+          logger.warn(`Room match_${matchId} is empty after emitting match_started`);
+        }
+        
         logger.info(`Match ${matchId} started with ${startedMatchData.players.length} players`, {
           matchId: startedMatchData.id,
           playersCount: startedMatchData.players.length,
           playerIds: startedMatchData.players.map(p => p.id)
         });
       }, 3000);
+    } else {
+      logger.error(`Match ${matchId} not found when trying to start`);
+      socket.emit('match_error', { error: 'Match not found', matchId });
     }
   });
 
