@@ -1618,8 +1618,21 @@ export class EnhancedGame {
       
       const direction = new THREE.Vector3().subVectors(targetPos, enemyPos).normalize()
       
-      const speed = enemy.speed || 3
-      const moveDistance = speed * deltaTime
+      // Apply freeze/slow effects
+      let effectiveSpeed = enemy.speed || 3
+      
+      // Check for freeze (complete stop - 90% reduction)
+      if (enemy.frozen && enemy.frozen.endTime > Date.now()) {
+        effectiveSpeed = effectiveSpeed * (1 - enemy.frozen.amount) // 90% reduction = almost stopped
+      } else if (enemy.slow && enemy.slow.endTime > Date.now()) {
+        effectiveSpeed = effectiveSpeed * (1 - enemy.slow.amount)
+      } else {
+        // Clear expired effects
+        if (enemy.frozen) delete enemy.frozen
+        if (enemy.slow) delete enemy.slow
+      }
+      
+      const moveDistance = effectiveSpeed * deltaTime
       
       if (enemy.position) {
         enemy.position.add(direction.multiplyScalar(moveDistance))
