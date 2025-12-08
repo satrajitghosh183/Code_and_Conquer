@@ -358,6 +358,10 @@ export default function GamePage() {
 
     return () => {
       window.removeEventListener('keydown', handleKeyDown)
+      
+      // Stop all sounds when leaving the game page
+      SoundManager.stopAll()
+      
       if (gameRef.current) {
         if (gameRef.current.destroy) {
           gameRef.current.destroy()

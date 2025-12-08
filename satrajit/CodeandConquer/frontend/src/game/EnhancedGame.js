@@ -2787,13 +2787,48 @@ export class EnhancedGame {
   }
 
   destroy() {
+    // Stop all sounds and music
+    SoundManager.stopAll()
+    
+    // Cancel animation frame
+    if (this.animationFrameId) {
+      cancelAnimationFrame(this.animationFrameId)
+      this.animationFrameId = null
+    }
+    
+    // Stop wave timer
+    if (this.waveTimer) {
+      this.waveTimer.stop()
+    }
+    
+    // Dispose renderer
     if (this.renderer) {
       this.container.removeChild(this.renderer.domElement)
       this.renderer.dispose()
     }
+    
+    // Dispose composer
     if (this.composer) {
       this.composer.dispose()
     }
+    
+    // Clear scene
+    if (this.scene) {
+      this.scene.traverse((object) => {
+        if (object.geometry) {
+          object.geometry.dispose()
+        }
+        if (object.material) {
+          if (Array.isArray(object.material)) {
+            object.material.forEach(material => material.dispose())
+          } else {
+            object.material.dispose()
+          }
+        }
+      })
+    }
+    
+    console.log('[EnhancedGame] Destroyed and cleaned up')
   }
 }
 
