@@ -170,17 +170,27 @@ export default function Dashboard() {
         dashboardData = await response.json()
       }
       
+      // Extract coins and xp with proper parsing
+      const rawCoins = userStatsData?.data?.coins || userStatsData?.coins || dashboardData?.coins
+      const rawXp = userStatsData?.data?.xp || userStatsData?.xp || dashboardData?.xp
+      
+      const coins = parseInt(rawCoins) || parseInt(stats?.coins) || 0
+      const xp = parseInt(rawXp) || parseInt(stats?.xp) || 0
+      
+      console.log('[Dashboard] Raw coins from API:', rawCoins, 'Parsed:', coins)
+      console.log('[Dashboard] Raw XP from API:', rawXp, 'Parsed:', xp)
+      
       // Merge both sources, prioritizing user_stats for coins/xp/problemsSolved
       setDashboardStats({
-        problemsSolved: userStatsData?.data?.problems_solved || userStatsData?.data?.problemsSolved || dashboardData?.problemsSolved || stats?.problemsSolved || 0,
-        dayStreak: dashboardData?.dayStreak || 0,
-        towersUnlocked: dashboardData?.towersUnlocked || 0,
+        problemsSolved: parseInt(userStatsData?.data?.problems_solved) || parseInt(userStatsData?.data?.problemsSolved) || parseInt(dashboardData?.problemsSolved) || parseInt(stats?.problemsSolved) || 0,
+        dayStreak: parseInt(dashboardData?.dayStreak) || 0,
+        towersUnlocked: parseInt(dashboardData?.towersUnlocked) || 0,
         globalRank: dashboardData?.globalRank || null,
-        rankScore: dashboardData?.rankScore || 0,
+        rankScore: parseInt(dashboardData?.rankScore) || 0,
         // Also include coins and xp from user_stats
-        coins: userStatsData?.data?.coins || stats?.coins || 0,
-        xp: userStatsData?.data?.xp || stats?.xp || 0,
-        level: userStatsData?.data?.level || stats?.level || 1
+        coins: coins,
+        xp: xp,
+        level: parseInt(userStatsData?.data?.level) || parseInt(stats?.level) || 1
       })
     } catch (error) {
       console.error('Failed to load dashboard stats:', error)

@@ -44,15 +44,23 @@ export const GameProvider = ({ children }) => {
       // Handle both direct data and nested data structure
       const statsData = data.data || data
       
-      console.log('[GameContext] Loaded stats from API:', statsData)
+      console.log('[GameContext] Full API response:', response)
+      console.log('[GameContext] Response data:', data)
+      console.log('[GameContext] Parsed statsData:', statsData)
+      console.log('[GameContext] Coins value:', statsData?.coins, 'Type:', typeof statsData?.coins)
+      
+      const coins = parseInt(statsData?.coins) || parseInt(data?.coins) || 0
+      const xp = parseInt(statsData?.xp) || parseInt(data?.xp) || 0
+      
+      console.log('[GameContext] Final parsed values - Coins:', coins, 'XP:', xp)
       
       setStats({
-        coins: statsData.coins || 0,
-        xp: statsData.xp || 0,
-        level: statsData.level || Math.floor((statsData.xp || 0) / 100) + 1,
-        problemsSolved: statsData.problems_solved || statsData.problemsSolved || 0,
-        gamesPlayed: statsData.games_played || statsData.gamesPlayed || 0,
-        wins: statsData.wins || 0
+        coins: coins,
+        xp: xp,
+        level: parseInt(statsData?.level) || Math.floor(xp / 100) + 1,
+        problemsSolved: parseInt(statsData?.problems_solved) || parseInt(statsData?.problemsSolved) || 0,
+        gamesPlayed: parseInt(statsData?.games_played) || parseInt(statsData?.gamesPlayed) || 0,
+        wins: parseInt(statsData?.wins) || 0
       })
     } catch (error) {
       console.error('Error loading stats from API:', error)
@@ -108,13 +116,20 @@ export const GameProvider = ({ children }) => {
           }
         } else if (supabaseData) {
           console.log('[GameContext] Loaded stats from Supabase:', supabaseData)
+          console.log('[GameContext] Supabase coins:', supabaseData.coins, 'Type:', typeof supabaseData.coins)
+          
+          const coins = parseInt(supabaseData.coins) || 0
+          const xp = parseInt(supabaseData.xp) || 0
+          
+          console.log('[GameContext] Parsed Supabase values - Coins:', coins, 'XP:', xp)
+          
           setStats({
-            coins: supabaseData.coins || 0,
-            xp: supabaseData.xp || 0,
-            level: supabaseData.level || 1,
-            problemsSolved: supabaseData.problems_solved || 0,
-            gamesPlayed: supabaseData.games_played || 0,
-            wins: supabaseData.wins || 0
+            coins: coins,
+            xp: xp,
+            level: parseInt(supabaseData.level) || 1,
+            problemsSolved: parseInt(supabaseData.problems_solved) || 0,
+            gamesPlayed: parseInt(supabaseData.games_played) || 0,
+            wins: parseInt(supabaseData.wins) || 0
           })
           return
         }
