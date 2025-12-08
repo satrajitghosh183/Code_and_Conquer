@@ -1,26 +1,39 @@
 -- Comprehensive Fix Script for All Issues
 -- Run this in Supabase SQL Editor
+-- This script fixes issues for ALL users, not just one
 
--- 1. Ensure user_stats exists for the specific user and give them 10k coins
+-- 1. Create user_stats for ALL users who don't have it yet
 INSERT INTO user_stats (id, coins, xp, level, problems_solved, games_played, wins)
-VALUES (
-  'd14f3b48-b889-450f-a792-eef12ed36476',
-  10000,
-  0,
-  1,
-  0,
-  0,
-  0
-)
-ON CONFLICT (id) DO UPDATE
-SET 
-  coins = GREATEST(user_stats.coins, 10000),
-  updated_at = NOW();
+SELECT 
+  u.id,
+  COALESCE((SELECT coins FROM user_stats WHERE id = u.id), 10000) AS coins, -- Give 10k if new, keep existing if exists
+  0 AS xp,
+  1 AS level,
+  0 AS problems_solved,
+  0 AS games_played,
+  0 AS wins
+FROM auth.users u
+LEFT JOIN user_stats us ON u.id = us.id
+WHERE us.id IS NULL
+ON CONFLICT (id) DO NOTHING;
 
--- 2. Verify user_stats was created/updated
-SELECT id, coins, xp, level, updated_at 
-FROM user_stats 
-WHERE id = 'd14f3b48-b889-450f-a792-eef12ed36476';
+-- 2. Give 10k coins to all existing users who have less than 10k
+UPDATE user_stats
+SET 
+  coins = GREATEST(coins, 10000),
+  updated_at = NOW()
+WHERE coins < 10000;
+
+-- 3. Summary: Show how many users have stats now
+SELECT 
+  COUNT(DISTINCT u.id) as total_users,
+  COUNT(DISTINCT us.id) as users_with_stats,
+  COUNT(DISTINCT u.id) - COUNT(DISTINCT us.id) as users_without_stats,
+  AVG(us.coins) as avg_coins,
+  MIN(us.coins) as min_coins,
+  MAX(us.coins) as max_coins
+FROM auth.users u
+LEFT JOIN user_stats us ON u.id = us.id;
 
 -- 3. Fix user_progress RLS to allow service role inserts
 -- Drop existing policies
@@ -114,22 +127,28 @@ CREATE POLICY "Users can update own subscriptions"
   USING (auth.uid() = user_id)
   WITH CHECK (auth.uid() = user_id);
 
--- 6. Summary query
+-- 6. Final summary of all tables
 SELECT 
   'user_stats' as table_name,
-  COUNT(*) as record_count,
-  SUM(CASE WHEN id = 'd14f3b48-b889-450f-a792-eef12ed36476' THEN 1 ELSE 0 END) as target_user_exists
+  COUNT(*) as total_records,
+  COUNT(DISTINCT id) as unique_users
 FROM user_stats
 UNION ALL
 SELECT 
   'base_upgrades' as table_name,
-  COUNT(*) as record_count,
-  SUM(CASE WHEN user_id = 'd14f3b48-b889-450f-a792-eef12ed36476' THEN 1 ELSE 0 END) as target_user_exists
+  COUNT(*) as total_records,
+  COUNT(DISTINCT user_id) as unique_users
 FROM base_upgrades
 UNION ALL
 SELECT 
   'subscriptions' as table_name,
-  COUNT(*) as record_count,
-  SUM(CASE WHEN user_id = 'd14f3b48-b889-450f-a792-eef12ed36476' THEN 1 ELSE 0 END) as target_user_exists
-FROM subscriptions;
+  COUNT(*) as total_records,
+  COUNT(DISTINCT user_id) as unique_users
+FROM subscriptions
+UNION ALL
+SELECT 
+  'user_progress' as table_name,
+  COUNT(*) as total_records,
+  COUNT(DISTINCT user_id) as unique_users
+FROM user_progress;
 
