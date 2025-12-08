@@ -2292,6 +2292,90 @@ export class EnhancedGame {
     }
   }
   
+  // Get list of all structures for the selection panel
+  getStructuresList() {
+    return this.structures.filter(s => s && !s.isDestroyed)
+  }
+  
+  // Select a structure for editing (from panel)
+  selectStructureForEdit(structure) {
+    this.deselectStructureForEdit() // Clear previous selection
+    
+    if (structure && structure.type === 'base') {
+      this.selectedStructure = { type: 'base', position: this.base.position, mesh: this.basePlatform || this.base }
+    } else if (structure) {
+      this.selectedStructure = structure
+    } else {
+      return
+    }
+    
+    // Visual feedback - highlight selected structure
+    if (this.selectedStructure.type === 'base') {
+      if (this.basePlatform) {
+        this.basePlatform.traverse((child) => {
+          if (child.isMesh && child.material) {
+            const materials = Array.isArray(child.material) ? child.material : [child.material]
+            materials.forEach(mat => {
+              mat.emissive = new THREE.Color(0x00ffff)
+              mat.emissiveIntensity = 0.5
+            })
+          }
+        })
+      }
+    } else if (this.selectedStructure.mesh) {
+      this.selectedStructure.mesh.traverse((child) => {
+        if (child.isMesh && child.material) {
+          const materials = Array.isArray(child.material) ? child.material : [child.material]
+          materials.forEach(mat => {
+            mat.emissive = new THREE.Color(0x00ffff)
+            mat.emissiveIntensity = 0.5
+          })
+        }
+      })
+    }
+  }
+  
+  // Deselect structure for editing
+  deselectStructureForEdit() {
+    this.deselectStructure()
+  }
+  
+  // Rotate structure on any axis
+  rotateStructure(structure, axis, amountDegrees) {
+    if (!structure) return
+    
+    const amountRadians = (amountDegrees * Math.PI) / 180
+    
+    if (structure.type === 'base') {
+      // Rotate base platform
+      if (this.basePlatform) {
+        if (axis === 'x') this.basePlatform.rotation.x += amountRadians
+        else if (axis === 'y') this.basePlatform.rotation.y += amountRadians
+        else if (axis === 'z') this.basePlatform.rotation.z += amountRadians
+      }
+    } else if (structure.mesh) {
+      // Rotate structure mesh
+      if (axis === 'x') structure.mesh.rotation.x += amountRadians
+      else if (axis === 'y') structure.mesh.rotation.y += amountRadians
+      else if (axis === 'z') structure.mesh.rotation.z += amountRadians
+      
+      // Update stored rotation
+      if (axis === 'y') {
+        structure.rotation = structure.mesh.rotation.y
+      }
+    }
+    
+    console.log(`Rotated structure ${axis}-axis by ${amountDegrees}°`)
+  }
+  
+  // Enable move mode for a specific structure
+  enableMoveMode(structure) {
+    this.selectStructureForEdit(structure)
+    this.isMovingStructure = true
+    this.selectedStructureType = null // Clear placement mode
+    console.log('Move mode enabled for structure')
+  }
+  
   showFloatingText(text, position, options = {}) {
     // Create floating text effect
     if (this.callbacks.onShowFloatingText) {
