@@ -36,12 +36,15 @@ export const GameProvider = ({ children }) => {
   const loadStats = async () => {
     if (!user) return
     try {
+      // Try API first
       const response = await getUserStats(user.id)
       const data = response.data
       
       // Map backend field names to frontend field names
       // Handle both direct data and nested data structure
       const statsData = data.data || data
+      
+      console.log('[GameContext] Loaded stats from API:', statsData)
       
       setStats({
         coins: statsData.coins || 0,
@@ -52,10 +55,71 @@ export const GameProvider = ({ children }) => {
         wins: statsData.wins || 0
       })
     } catch (error) {
-      console.error('Error loading stats:', error)
-      // If user_stats doesn't exist, try to create it
-      if (error.response?.status === 404) {
-        console.log('User stats not found, they should be auto-created by database trigger')
+      console.error('Error loading stats from API:', error)
+      
+      // Fallback: Try direct Supabase query
+      try {
+        const { supabase } = await import('../config/supabaseClient')
+        const { data: supabaseData, error: supabaseError } = await supabase
+          .from('user_stats')
+          .select('*')
+          .eq('id', user.id)
+          .single()
+        
+        if (supabaseError) {
+          console.error('Error loading stats from Supabase:', supabaseError)
+          // If user_stats doesn't exist, try to create it
+          if (supabaseError.code === 'PGRST116') {
+            console.log('User stats not found, creating...')
+            const { error: insertError } = await supabase
+              .from('user_stats')
+              .insert({
+                id: user.id,
+                coins: 0,
+                xp: 0,
+                level: 1,
+                problems_solved: 0,
+                games_played: 0,
+                wins: 0
+              })
+            
+            if (insertError) {
+              console.error('Error creating user_stats:', insertError)
+            } else {
+              // Retry loading
+              const { data: newData } = await supabase
+                .from('user_stats')
+                .select('*')
+                .eq('id', user.id)
+                .single()
+              
+              if (newData) {
+                setStats({
+                  coins: newData.coins || 0,
+                  xp: newData.xp || 0,
+                  level: newData.level || 1,
+                  problemsSolved: newData.problems_solved || 0,
+                  gamesPlayed: newData.games_played || 0,
+                  wins: newData.wins || 0
+                })
+                return
+              }
+            }
+          }
+        } else if (supabaseData) {
+          console.log('[GameContext] Loaded stats from Supabase:', supabaseData)
+          setStats({
+            coins: supabaseData.coins || 0,
+            xp: supabaseData.xp || 0,
+            level: supabaseData.level || 1,
+            problemsSolved: supabaseData.problems_solved || 0,
+            gamesPlayed: supabaseData.games_played || 0,
+            wins: supabaseData.wins || 0
+          })
+          return
+        }
+      } catch (supabaseError) {
+        console.error('Error in Supabase fallback:', supabaseError)
       }
     } finally {
       setLoading(false)

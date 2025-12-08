@@ -6,7 +6,7 @@
 INSERT INTO user_stats (id, coins, xp, level, problems_solved, games_played, wins)
 SELECT 
   u.id,
-  0 AS coins,
+  COALESCE((SELECT coins FROM user_stats WHERE id = u.id), 0) AS coins,
   0 AS xp,
   1 AS level,
   0 AS problems_solved,
@@ -18,8 +18,10 @@ WHERE us.id IS NULL
 ON CONFLICT (id) DO NOTHING;
 
 -- Update all user_stats records to add 10,000 gold
+-- This ensures everyone gets at least 10,000 (adds to existing)
 UPDATE user_stats 
-SET coins = COALESCE(coins, 0) + 10000;
+SET coins = COALESCE(coins, 0) + 10000
+WHERE coins < 10000 OR coins IS NULL OR coins = 0;
 
 -- Verify the update
 SELECT 
