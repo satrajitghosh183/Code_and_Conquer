@@ -421,10 +421,6 @@ io.on('connection', (socket) => {
           playerIds: startedMatchData.players.map(p => p.id)
         });
       }, 3000);
-    } else {
-      logger.error(`Match ${matchId} not found when trying to start`);
-      socket.emit('match_error', { error: 'Match not found', matchId });
-    }
   });
 
   socket.on('task_completed', async (data) => {
