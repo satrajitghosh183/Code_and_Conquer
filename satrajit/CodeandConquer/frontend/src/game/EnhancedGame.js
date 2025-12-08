@@ -1701,6 +1701,25 @@ export class EnhancedGame {
         }
       }
       
+      // Apply freeze effect for frost attacks (main target)
+      if (proj.attackType === 'frost' && proj.slowAmount > 0 && proj.slowDuration > 0) {
+        // Freeze = 90% slow (almost complete stop)
+        const freezeAmount = 0.9
+        proj.target.frozen = {
+          amount: freezeAmount,
+          duration: proj.slowDuration,
+          endTime: Date.now() + proj.slowDuration
+        }
+        
+        // Visual freeze effect
+        if (this.visualEffects && proj.target.mesh) {
+          this.visualEffects.createFrostEffect(proj.target.mesh.position, 2, {
+            color: 0x88ddff,
+            duration: 500
+          })
+        }
+      }
+      
       // Splash damage for missiles
       if (splashRadius > 0) {
         this.enemies.forEach(enemy => {
