@@ -272,11 +272,11 @@ async function updateUserStats(userId, rewards, difficulty) {
     const supabase = database.getSupabaseClient();
     if (!supabase) return;
 
-    // Try to get from user_stats table first
-    const { data: userStats } = await supabase
+    // Try to get from user_stats table first (use 'id' column, not 'user_id')
+    const { data: userStats, error: statsError } = await supabase
       .from('user_stats')
       .select('*')
-      .eq('user_id', userId)
+      .eq('id', userId)
       .single();
 
     if (userStats) {
@@ -292,22 +292,24 @@ async function updateUserStats(userId, rewards, difficulty) {
       await supabase
         .from('user_stats')
         .update(updates)
-        .eq('user_id', userId);
-    } else {
-      // Create new stats entry
+        .eq('id', userId);
+      
+      console.log(`[Submission] Updated user stats: +${rewards.coins} coins, +${rewards.xp} XP for user ${userId}`)
+    } else if (statsError && statsError.code === 'PGRST116') {
+      // Create new stats entry (use 'id' column, not 'user_id')
       await supabase
         .from('user_stats')
-        .insert([{
-          user_id: userId,
+        .insert({
+          id: userId,
           coins: rewards.coins || 0,
           xp: rewards.xp || 0,
           level: Math.floor((rewards.xp || 0) / 100) + 1,
           problems_solved: 1,
           games_played: 0,
-          wins: 0,
-          created_at: new Date().toISOString(),
-          updated_at: new Date().toISOString()
-        }]);
+          wins: 0
+        });
+      
+      console.log(`[Submission] Created user stats with ${rewards.coins} coins, ${rewards.xp} XP for user ${userId}`)
     }
 
     // Also update user_progress table if it exists (for day streak tracking)

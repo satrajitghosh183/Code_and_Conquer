@@ -340,6 +340,23 @@ class TaskService {
     const integrations = this.integrations.get(playerId) || {}
     const completedAt = new Date().toISOString()
     
+    // Calculate gold reward for task completion
+    const calculateGoldReward = (task) => {
+      let gold = 50 // Base reward
+      
+      // Category bonus
+      if (task.category === 'STUDY' || task.category === 'PROJECT') {
+        gold += 25
+      }
+      
+      // Early completion bonus
+      if (task.dueAt && new Date(completedAt) < new Date(task.dueAt)) {
+        gold += 15
+      }
+      
+      return gold
+    }
+    
     // First, try to find the task in database
     if (publicDatabaseService.isAvailable()) {
       try {
@@ -351,7 +368,7 @@ class TaskService {
           const task = tasks[0]
           
           if (task.status === 'DONE') {
-            // Already completed
+            // Already completed - don't give rewards again
             return {
               id: task.id,
               playerId: task.user_id,
@@ -366,6 +383,9 @@ class TaskService {
               externalId: task.external_id || null
             }
           }
+          
+          // Calculate gold reward
+          const goldReward = calculateGoldReward(task)
           
           // If it's from an external source, complete it there too
           if (task.source === 'todoist' && task.external_id) {
@@ -386,6 +406,50 @@ class TaskService {
               updated_at: completedAt
             })
             
+            // Save gold reward to user_stats
+            if (goldReward > 0) {
+              try {
+                const supabase = database.getSupabaseClient()
+                if (supabase) {
+                  // Get current gold
+                  const { data: statsData, error: statsError } = await supabase
+                    .from('user_stats')
+                    .select('coins')
+                    .eq('id', playerId)
+                    .single()
+                  
+                  if (!statsError && statsData) {
+                    const currentGold = parseInt(statsData.coins) || 0
+                    const newGold = currentGold + goldReward
+                    
+                    // Update gold
+                    await supabase
+                      .from('user_stats')
+                      .update({ coins: newGold })
+                      .eq('id', playerId)
+                    
+                    console.log(`[TaskService] Task completed: +${goldReward} gold for user ${playerId} (new total: ${newGold})`)
+                  } else if (statsError && statsError.code === 'PGRST116') {
+                    // User stats doesn't exist, create it
+                    await supabase
+                      .from('user_stats')
+                      .insert({
+                        id: playerId,
+                        coins: goldReward,
+                        xp: 0,
+                        level: 1,
+                        problems_solved: 0,
+                        games_played: 0,
+                        wins: 0
+                      })
+                    console.log(`[TaskService] Created user_stats and added ${goldReward} gold for user ${playerId}`)
+                  }
+                }
+              } catch (goldError) {
+                console.warn('Could not save gold reward for task completion:', goldError.message)
+              }
+            }
+            
             if (updatedTask) {
               return {
                 id: updatedTask.id,
@@ -398,7 +462,8 @@ class TaskService {
                 dueAt: updatedTask.due_at || null,
                 completedAt: updatedTask.completed_at || null,
                 source: updatedTask.source || 'internal',
-                externalId: updatedTask.external_id || null
+                externalId: updatedTask.external_id || null,
+                goldReward: goldReward
               }
             }
           } catch (updateError) {
@@ -422,6 +487,47 @@ class TaskService {
       try {
         const success = await todoistService.completeTask(integrations.todoistToken, taskId)
         if (success) {
+          // Give base gold reward for Todoist tasks
+          const goldReward = 50
+          
+          // Save gold reward to user_stats
+          try {
+            const supabase = database.getSupabaseClient()
+            if (supabase) {
+              const { data: statsData, error: statsError } = await supabase
+                .from('user_stats')
+                .select('coins')
+                .eq('id', playerId)
+                .single()
+              
+              if (!statsError && statsData) {
+                const currentGold = parseInt(statsData.coins) || 0
+                const newGold = currentGold + goldReward
+                
+                await supabase
+                  .from('user_stats')
+                  .update({ coins: newGold })
+                  .eq('id', playerId)
+                
+                console.log(`[TaskService] Todoist task completed: +${goldReward} gold for user ${playerId}`)
+              } else if (statsError && statsError.code === 'PGRST116') {
+                await supabase
+                  .from('user_stats')
+                  .insert({
+                    id: playerId,
+                    coins: goldReward,
+                    xp: 0,
+                    level: 1,
+                    problems_solved: 0,
+                    games_played: 0,
+                    wins: 0
+                  })
+              }
+            }
+          } catch (goldError) {
+            console.warn('Could not save gold for Todoist task:', goldError.message)
+          }
+          
           return {
             id: taskId,
             playerId: playerId,
@@ -433,7 +539,8 @@ class TaskService {
             dueAt: null,
             completedAt: completedAt,
             source: 'todoist',
-            externalId: taskId
+            externalId: taskId,
+            goldReward: goldReward
           }
         }
       } catch (error) {
