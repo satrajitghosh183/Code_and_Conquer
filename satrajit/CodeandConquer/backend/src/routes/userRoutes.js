@@ -6,11 +6,34 @@ const router = express.Router();
 const supabaseUrl = process.env.SUPABASE_URL;
 const supabaseServiceKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
 
+// Debug logging (only show first few chars of key for security)
+if (supabaseUrl) {
+  console.log(`[userRoutes] SUPABASE_URL configured: ${supabaseUrl.substring(0, 30)}...`);
+} else {
+  console.error('[userRoutes] ❌ SUPABASE_URL is missing!');
+}
+
+if (supabaseServiceKey) {
+  const keyPreview = supabaseServiceKey.length > 20 
+    ? `${supabaseServiceKey.substring(0, 20)}...` 
+    : supabaseServiceKey;
+  console.log(`[userRoutes] SUPABASE_SERVICE_ROLE_KEY configured (length: ${supabaseServiceKey.length}): ${keyPreview}`);
+  
+  // Service role keys are typically 200+ characters - warn if too short
+  if (supabaseServiceKey.length < 100) {
+    console.warn('[userRoutes] ⚠️ WARNING: Service role key seems too short!');
+    console.warn('[userRoutes] Service role keys are usually 200+ characters long.');
+    console.warn('[userRoutes] Make sure you copied the ENTIRE key from Supabase dashboard.');
+  }
+} else {
+  console.error('[userRoutes] ❌ SUPABASE_SERVICE_ROLE_KEY is missing!');
+}
+
 if (!supabaseUrl || !supabaseServiceKey) {
-  console.error('❌ CRITICAL: Supabase credentials not configured!');
-  console.error('   Missing SUPABASE_URL or SUPABASE_SERVICE_ROLE_KEY environment variables');
-  console.error('   Please set these in your Render dashboard Environment settings');
-  console.error('   User routes will return default/empty data');
+  console.error('[userRoutes] ❌ CRITICAL: Supabase credentials not configured!');
+  console.error('[userRoutes] Missing SUPABASE_URL or SUPABASE_SERVICE_ROLE_KEY environment variables');
+  console.error('[userRoutes] Please set these in your Render dashboard Environment settings');
+  console.error('[userRoutes] User routes will return default/empty data');
 }
 
 const supabase = supabaseUrl && supabaseServiceKey 
