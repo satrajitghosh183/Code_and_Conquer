@@ -31,7 +31,7 @@ router.get('/:userId/stats', async (req, res) => {
     const { data, error } = await supabase
       .from('user_stats')
       .select('*')
-      .eq('user_id', req.params.userId)
+      .eq('id', req.params.userId)
       .single();
 
     if (error && error.code !== 'PGRST116') {
@@ -159,7 +159,7 @@ router.post('/:userId/stats/update', async (req, res) => {
     const { data: existing, error: fetchError } = await supabase
       .from('user_stats')
       .select('*')
-      .eq('user_id', req.params.userId)
+      .eq('id', req.params.userId)
       .single();
 
     // Ignore "row not found" errors - that just means new user
@@ -168,7 +168,7 @@ router.post('/:userId/stats/update', async (req, res) => {
     }
 
     const updates = {
-      user_id: req.params.userId,
+      id: req.params.userId,
       coins: Math.max(0, (existing?.coins || 0) + (coins || 0)),
       xp: Math.max(0, (existing?.xp || 0) + (xp || 0)),
       problems_solved: Math.max(0, (existing?.problems_solved || 0) + problemsSolvedDelta),
@@ -185,7 +185,7 @@ router.post('/:userId/stats/update', async (req, res) => {
       const { data, error } = await supabase
         .from('user_stats')
         .update(updates)
-        .eq('user_id', req.params.userId)
+        .eq('id', req.params.userId)
         .select()
         .single();
       
