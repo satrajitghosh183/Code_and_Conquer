@@ -35,15 +35,14 @@ SELECT
 FROM auth.users u
 LEFT JOIN user_stats us ON u.id = us.id;
 
--- 3. Fix user_progress RLS to allow service role inserts
--- Drop existing policies
-DROP POLICY IF EXISTS "System can insert user progress" ON user_progress;
+-- 3. Disable RLS on user_progress (remove all security policies)
+ALTER TABLE user_progress DISABLE ROW LEVEL SECURITY;
 
--- Create policy that allows service role (backend) to insert
-CREATE POLICY "System can insert user progress"
-  ON user_progress
-  FOR INSERT
-  WITH CHECK (true);
+-- Drop all existing policies on user_progress
+DROP POLICY IF EXISTS "Users can view own progress" ON user_progress;
+DROP POLICY IF EXISTS "Users can insert own progress" ON user_progress;
+DROP POLICY IF EXISTS "Users can update own progress" ON user_progress;
+DROP POLICY IF EXISTS "System can insert user progress" ON user_progress;
 
 -- 4. Create base_upgrades table if it doesn't exist (from base_upgrades_schema.sql)
 CREATE TABLE IF NOT EXISTS base_upgrades (
@@ -60,30 +59,13 @@ CREATE TABLE IF NOT EXISTS base_upgrades (
 -- Create index
 CREATE INDEX IF NOT EXISTS idx_base_upgrades_user_id ON base_upgrades(user_id);
 
--- Enable RLS
-ALTER TABLE base_upgrades ENABLE ROW LEVEL SECURITY;
+-- Disable RLS on base_upgrades (remove all security policies)
+ALTER TABLE base_upgrades DISABLE ROW LEVEL SECURITY;
 
--- Drop existing policies
+-- Drop all existing policies on base_upgrades
 DROP POLICY IF EXISTS "Users can view own base upgrades" ON base_upgrades;
 DROP POLICY IF EXISTS "Users can insert own base upgrades" ON base_upgrades;
 DROP POLICY IF EXISTS "Users can update own base upgrades" ON base_upgrades;
-
--- Create RLS policies
-CREATE POLICY "Users can view own base upgrades"
-  ON base_upgrades
-  FOR SELECT
-  USING (auth.uid() = user_id);
-
-CREATE POLICY "Users can insert own base upgrades"
-  ON base_upgrades
-  FOR INSERT
-  WITH CHECK (auth.uid() = user_id);
-
-CREATE POLICY "Users can update own base upgrades"
-  ON base_upgrades
-  FOR UPDATE
-  USING (auth.uid() = user_id)
-  WITH CHECK (auth.uid() = user_id);
 
 -- 5. Create subscriptions table if it doesn't exist
 CREATE TABLE IF NOT EXISTS subscriptions (
@@ -102,32 +84,37 @@ CREATE TABLE IF NOT EXISTS subscriptions (
 -- Create index for subscriptions
 CREATE INDEX IF NOT EXISTS idx_subscriptions_user_id ON subscriptions(user_id);
 
--- Enable RLS for subscriptions
-ALTER TABLE subscriptions ENABLE ROW LEVEL SECURITY;
+-- Disable RLS on subscriptions (remove all security policies)
+ALTER TABLE subscriptions DISABLE ROW LEVEL SECURITY;
 
--- Drop existing policies
+-- Drop all existing policies on subscriptions
 DROP POLICY IF EXISTS "Users can view own subscriptions" ON subscriptions;
 DROP POLICY IF EXISTS "Users can insert own subscriptions" ON subscriptions;
 DROP POLICY IF EXISTS "Users can update own subscriptions" ON subscriptions;
 
--- Create RLS policies for subscriptions
-CREATE POLICY "Users can view own subscriptions"
-  ON subscriptions
-  FOR SELECT
-  USING (auth.uid() = user_id);
+-- 6. Disable RLS on user_stats (remove all security policies)
+ALTER TABLE user_stats DISABLE ROW LEVEL SECURITY;
 
-CREATE POLICY "Users can insert own subscriptions"
-  ON subscriptions
-  FOR INSERT
-  WITH CHECK (auth.uid() = user_id);
+-- Drop all existing policies on user_stats
+DROP POLICY IF EXISTS "Users can view own stats" ON user_stats;
+DROP POLICY IF EXISTS "Users can update own stats" ON user_stats;
+DROP POLICY IF EXISTS "System can insert user stats" ON user_stats;
 
-CREATE POLICY "Users can update own subscriptions"
-  ON subscriptions
-  FOR UPDATE
-  USING (auth.uid() = user_id)
-  WITH CHECK (auth.uid() = user_id);
+-- 7. Disable RLS on any other common tables (if they exist)
+-- profiles table
+DO $$
+BEGIN
+  IF EXISTS (SELECT 1 FROM information_schema.tables WHERE table_name = 'profiles') THEN
+    ALTER TABLE profiles DISABLE ROW LEVEL SECURITY;
+    -- Drop all policies (they vary, so we'll drop common ones)
+    DROP POLICY IF EXISTS "Users can view own profile" ON profiles;
+    DROP POLICY IF EXISTS "Users can update own profile" ON profiles;
+    DROP POLICY IF EXISTS "Users can insert own profile" ON profiles;
+    DROP POLICY IF EXISTS "Public profiles are viewable by everyone" ON profiles;
+  END IF;
+END $$;
 
--- 6. Final summary of all tables
+-- 8. Final summary of all tables
 SELECT 
   'user_stats' as table_name,
   COUNT(*) as total_records,
