@@ -40,16 +40,23 @@ export const GameProvider = ({ children }) => {
       const data = response.data
       
       // Map backend field names to frontend field names
+      // Handle both direct data and nested data structure
+      const statsData = data.data || data
+      
       setStats({
-        coins: data.coins || 0,
-        xp: data.xp || 0,
-        level: data.level || Math.floor((data.xp || 0) / 100) + 1,
-        problemsSolved: data.problems_solved || data.problemsSolved || 0,
-        gamesPlayed: data.games_played || data.gamesPlayed || 0,
-        wins: data.wins || 0
+        coins: statsData.coins || 0,
+        xp: statsData.xp || 0,
+        level: statsData.level || Math.floor((statsData.xp || 0) / 100) + 1,
+        problemsSolved: statsData.problems_solved || statsData.problemsSolved || 0,
+        gamesPlayed: statsData.games_played || statsData.gamesPlayed || 0,
+        wins: statsData.wins || 0
       })
     } catch (error) {
       console.error('Error loading stats:', error)
+      // If user_stats doesn't exist, try to create it
+      if (error.response?.status === 404) {
+        console.log('User stats not found, they should be auto-created by database trigger')
+      }
     } finally {
       setLoading(false)
     }

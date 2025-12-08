@@ -136,21 +136,45 @@ export default function Dashboard() {
     if (!user?.id) return
     try {
       setLoadingStats(true)
-      const response = await fetch(`${API_URL}/dashboard/stats/${user.id}`)
-      if (!response.ok) {
-        throw new Error(`Failed to load dashboard stats: ${response.statusText}`)
+      // First try to get stats from user_stats table (same as GameContext)
+      const statsResponse = await fetch(`${API_URL}/users/${user.id}/stats`)
+      let userStatsData = null
+      if (statsResponse.ok) {
+        userStatsData = await statsResponse.json()
       }
-      const data = await response.json()
-      setDashboardStats(data || {
-        problemsSolved: 0,
-        dayStreak: 0,
-        towersUnlocked: 0,
-        globalRank: null,
-        rankScore: 0
+      
+      // Then get dashboard-specific stats (rank, streak, etc.)
+      const response = await fetch(`${API_URL}/dashboard/stats/${user.id}`)
+      let dashboardData = null
+      if (response.ok) {
+        dashboardData = await response.json()
+      }
+      
+      // Merge both sources, prioritizing user_stats for coins/xp/problemsSolved
+      setDashboardStats({
+        problemsSolved: userStatsData?.data?.problems_solved || userStatsData?.data?.problemsSolved || dashboardData?.problemsSolved || stats?.problemsSolved || 0,
+        dayStreak: dashboardData?.dayStreak || 0,
+        towersUnlocked: dashboardData?.towersUnlocked || 0,
+        globalRank: dashboardData?.globalRank || null,
+        rankScore: dashboardData?.rankScore || 0,
+        // Also include coins and xp from user_stats
+        coins: userStatsData?.data?.coins || stats?.coins || 0,
+        xp: userStatsData?.data?.xp || stats?.xp || 0,
+        level: userStatsData?.data?.level || stats?.level || 1
       })
     } catch (error) {
       console.error('Failed to load dashboard stats:', error)
-      // Keep default stats on error
+      // Fallback to GameContext stats if available
+      setDashboardStats({
+        problemsSolved: stats?.problemsSolved || 0,
+        dayStreak: 0,
+        towersUnlocked: 0,
+        globalRank: null,
+        rankScore: 0,
+        coins: stats?.coins || 0,
+        xp: stats?.xp || 0,
+        level: stats?.level || 1
+      })
     } finally {
       setLoadingStats(false)
     }
@@ -238,7 +262,7 @@ export default function Dashboard() {
           </div>
           <div className="stat-badge" title="Coins">
             <Coins size={16} />
-            <span>{stats?.coins || dashboardStats?.coins || 0}</span>
+            <span>{stats?.coins || dashboardStats?.coins || 0} 🪙</span>
           </div>
           <div className="notification-wrapper">
             <button 
