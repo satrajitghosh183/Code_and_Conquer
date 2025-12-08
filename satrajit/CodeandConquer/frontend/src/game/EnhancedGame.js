@@ -1314,7 +1314,7 @@ export class EnhancedGame {
     // Shuffle for variety
     enemiesToSpawn.sort(() => Math.random() - 0.5)
     
-    // Spawn enemies with delay
+    // Spawn enemies with delay (slower spawn rate for more time to solve problems)
     enemiesToSpawn.forEach((config, i) => {
       setTimeout(() => {
         if (!this.gameOver) {
@@ -1326,7 +1326,7 @@ export class EnhancedGame {
             config.armorMultiplier
           )
         }
-      }, i * 1000) // 1 second between each spawn
+      }, i * 2500) // 2.5 seconds between each spawn (increased from 1 second)
     })
     
     if (this.callbacks.onWaveChange) {
