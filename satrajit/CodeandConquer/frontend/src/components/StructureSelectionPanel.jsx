@@ -19,7 +19,7 @@ export default function StructureSelectionPanel({
   // Combine structures and base for display
   const allItems = []
   
-  if (base) {
+  if (base && base.position) {
     allItems.push({
       id: 'base',
       name: 'Base Tower',
@@ -29,8 +29,9 @@ export default function StructureSelectionPanel({
     })
   }
 
-  structures.forEach((structure, index) => {
-    if (!structure || structure.isDestroyed) return
+  if (structures && Array.isArray(structures)) {
+    structures.forEach((structure, index) => {
+      if (!structure || structure.isDestroyed) return
     
     let name = 'Unknown'
     if (structure.type === 'tower') {

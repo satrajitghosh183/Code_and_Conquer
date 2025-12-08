@@ -609,6 +609,11 @@ export class EnhancedGame {
   }
   
   activateFireRing() {
+    if (!this.fireRing) {
+      console.warn('Fire ring not initialized')
+      return false
+    }
+    
     if (this.gold < this.fireRingCost) {
       console.log('Not enough gold to activate fire ring')
       return false
@@ -626,21 +631,23 @@ export class EnhancedGame {
     
     this.fireRingActive = true
     this.fireRingStartTime = Date.now()
-    this.fireRing.visible = true
-    
-    // Activate all flames
-    this.fireRing.traverse((child) => {
-      if (child.userData.isFlame && child.material) {
-        child.material.opacity = 1.0
-      }
-    })
+    if (this.fireRing) {
+      this.fireRing.visible = true
+      
+      // Activate all flames
+      this.fireRing.traverse((child) => {
+        if (child.userData && child.userData.isFlame && child.material) {
+          child.material.opacity = 1.0
+        }
+      })
+    }
     
     console.log('Fire ring activated!')
     return true
   }
   
   updateFireRing(deltaTime) {
-    if (!this.fireRing || !this.fireRingActive) return
+    if (!this.fireRing || !this.fireRingActive || !this.base) return
     
     const elapsed = Date.now() - this.fireRingStartTime
     
@@ -2528,36 +2535,43 @@ export class EnhancedGame {
   
   // Select a structure for editing (from panel)
   selectStructureForEdit(structure) {
+    if (!structure) return
+    
     this.deselectStructureForEdit() // Clear previous selection
     
-    if (structure && structure.type === 'base') {
+    if (structure.type === 'base') {
+      if (!this.base || !this.base.position) return
       this.selectedStructure = { type: 'base', position: this.base.position, mesh: this.basePlatform || this.base }
-    } else if (structure) {
-      this.selectedStructure = structure
     } else {
-      return
+      this.selectedStructure = structure
     }
+    
+    if (!this.selectedStructure) return
     
     // Visual feedback - highlight selected structure
     if (this.selectedStructure.type === 'base') {
       if (this.basePlatform) {
         this.basePlatform.traverse((child) => {
-          if (child.isMesh && child.material) {
+          if (child && child.isMesh && child.material) {
             const materials = Array.isArray(child.material) ? child.material : [child.material]
             materials.forEach(mat => {
-              mat.emissive = new THREE.Color(0x00ffff)
-              mat.emissiveIntensity = 0.5
+              if (mat) {
+                mat.emissive = new THREE.Color(0x00ffff)
+                mat.emissiveIntensity = 0.5
+              }
             })
           }
         })
       }
     } else if (this.selectedStructure.mesh) {
       this.selectedStructure.mesh.traverse((child) => {
-        if (child.isMesh && child.material) {
+        if (child && child.isMesh && child.material) {
           const materials = Array.isArray(child.material) ? child.material : [child.material]
           materials.forEach(mat => {
-            mat.emissive = new THREE.Color(0x00ffff)
-            mat.emissiveIntensity = 0.5
+            if (mat) {
+              mat.emissive = new THREE.Color(0x00ffff)
+              mat.emissiveIntensity = 0.5
+            }
           })
         }
       })
@@ -2599,6 +2613,10 @@ export class EnhancedGame {
   
   // Enable move mode for a specific structure
   enableMoveMode(structure) {
+    if (!structure) {
+      console.warn('Cannot enable move mode: structure is null')
+      return
+    }
     this.selectStructureForEdit(structure)
     this.isMovingStructure = true
     this.selectedStructureType = null // Clear placement mode
