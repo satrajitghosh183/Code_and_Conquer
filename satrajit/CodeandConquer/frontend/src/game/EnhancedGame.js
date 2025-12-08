@@ -2129,8 +2129,13 @@ export class EnhancedGame {
       let instance = null
       if (this.selectedStructureType.type === 'resource_generator') {
         // Create procedural preview for resource generators - synchronous
-        const tempGenerator = new ResourceGenerator(this.selectedStructureType.generatorType, position)
-        instance = tempGenerator.createProceduralModel()
+        try {
+          const tempGenerator = new ResourceGenerator(this.selectedStructureType.generatorType, position)
+          instance = tempGenerator.createProceduralModel()
+        } catch (error) {
+          console.error('Error creating procedural model:', error)
+          return
+        }
       } else if (modelKey) {
         instance = modelLoader.createInstance(modelKey)
       }

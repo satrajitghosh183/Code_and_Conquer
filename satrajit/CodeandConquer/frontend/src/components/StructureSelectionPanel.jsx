@@ -32,33 +32,34 @@ export default function StructureSelectionPanel({
   if (structures && Array.isArray(structures)) {
     structures.forEach((structure, index) => {
       if (!structure || structure.isDestroyed) return
-    
-    let name = 'Unknown'
-    if (structure.type === 'tower') {
-      name = `${structure.towerType || 'Tower'} (Level ${structure.level || 1})`
-    } else if (structure.type === 'wall') {
-      name = `Wall (${structure.wallType || 'maze'})`
-    } else if (structure.type === 'spawner') {
-      name = `Barracks (${structure.spawnerType || 'barracks'})`
-    } else if (structure.type === 'resource_generator') {
-      const genType = structure.generatorType || 'generator'
-      const genNames = {
-        'gold_mine': 'Gold Mine',
-        'energy_well': 'Energy Well',
-        'hybrid_generator': 'Hybrid Generator'
+      
+      let name = 'Unknown'
+      if (structure.type === 'tower') {
+        name = `${structure.towerType || 'Tower'} (Level ${structure.level || 1})`
+      } else if (structure.type === 'wall') {
+        name = `Wall (${structure.wallType || 'maze'})`
+      } else if (structure.type === 'spawner') {
+        name = `Barracks (${structure.spawnerType || 'barracks'})`
+      } else if (structure.type === 'resource_generator') {
+        const genType = structure.generatorType || 'generator'
+        const genNames = {
+          'gold_mine': 'Gold Mine',
+          'energy_well': 'Energy Well',
+          'hybrid_generator': 'Hybrid Generator'
+        }
+        name = genNames[genType] || 'Generator'
       }
-      name = genNames[genType] || 'Generator'
-    }
-    
-    allItems.push({
-      id: `structure-${index}`,
-      structure: structure,
-      name: name,
-      type: structure.type,
-      position: structure.position || { x: 0, y: 0, z: 0 },
-      rotation: structure.rotation || 0
+      
+      allItems.push({
+        id: `structure-${index}`,
+        structure: structure,
+        name: name,
+        type: structure.type || 'unknown',
+        position: structure.position || { x: 0, y: 0, z: 0 },
+        rotation: structure.rotation || 0
+      })
     })
-  })
+  }
 
   const handleRotate = (axis, amount) => {
     if (selectedStructure && onRotate) {
