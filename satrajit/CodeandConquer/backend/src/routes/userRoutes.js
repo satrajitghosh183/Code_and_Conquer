@@ -7,7 +7,10 @@ const supabaseUrl = process.env.SUPABASE_URL;
 const supabaseServiceKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
 
 if (!supabaseUrl || !supabaseServiceKey) {
-  console.warn('Supabase credentials not configured. User routes will be limited.');
+  console.error('❌ CRITICAL: Supabase credentials not configured!');
+  console.error('   Missing SUPABASE_URL or SUPABASE_SERVICE_ROLE_KEY environment variables');
+  console.error('   Please set these in your Render dashboard Environment settings');
+  console.error('   User routes will return default/empty data');
 }
 
 const supabase = supabaseUrl && supabaseServiceKey 
