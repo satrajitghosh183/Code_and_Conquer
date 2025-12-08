@@ -38,21 +38,67 @@ router.get('/:userId/stats', async (req, res) => {
 
     if (error) {
       if (error.code === 'PGRST116') {
-        // Row not found - return defaults for new users
-        console.log(`[GET /users/${req.params.userId}/stats] No stats found, returning defaults`);
-        return res.json({
-          coins: 0,
-          xp: 0,
-          level: 1,
-          problems_solved: 0,
-          games_played: 0,
-          wins: 0,
-          problemsSolved: 0,
-          gamesPlayed: 0
-        });
+        // Row not found - try to create it
+        console.log(`[GET /users/${req.params.userId}/stats] No stats found, creating new record...`);
+        try {
+          const { data: newData, error: insertError } = await supabase
+            .from('user_stats')
+            .insert({
+              id: req.params.userId,
+              coins: 0,
+              xp: 0,
+              level: 1,
+              problems_solved: 0,
+              games_played: 0,
+              wins: 0
+            })
+            .select()
+            .single();
+          
+          if (insertError) {
+            console.error(`[GET /users/${req.params.userId}/stats] Error creating stats:`, insertError);
+            // Return defaults if creation fails
+            return res.json({
+              coins: 0,
+              xp: 0,
+              level: 1,
+              problems_solved: 0,
+              games_played: 0,
+              wins: 0,
+              problemsSolved: 0,
+              gamesPlayed: 0
+            });
+          }
+          
+          console.log(`[GET /users/${req.params.userId}/stats] Created new stats record`);
+          // Return the newly created stats
+          return res.json({
+            coins: newData.coins || 0,
+            xp: newData.xp || 0,
+            level: newData.level || 1,
+            problems_solved: newData.problems_solved || 0,
+            games_played: newData.games_played || 0,
+            wins: newData.wins || 0,
+            problemsSolved: newData.problems_solved || 0,
+            gamesPlayed: newData.games_played || 0
+          });
+        } catch (createError) {
+          console.error(`[GET /users/${req.params.userId}/stats] Error in create attempt:`, createError);
+          return res.json({
+            coins: 0,
+            xp: 0,
+            level: 1,
+            problems_solved: 0,
+            games_played: 0,
+            wins: 0,
+            problemsSolved: 0,
+            gamesPlayed: 0
+          });
+        }
       }
       // Other errors
       console.error(`[GET /users/${req.params.userId}/stats] Error fetching user stats:`, error);
+      console.error(`[GET /users/${req.params.userId}/stats] Error details:`, JSON.stringify(error, null, 2));
       throw error;
     }
 
