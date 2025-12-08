@@ -46,6 +46,117 @@ export default function MatchPage() {
     joinMatch(matchId)
   }, [socket, connected, matchId, joinMatch])
 
+  // Game initialization function (reusable)
+  const initializeGame = useCallback(async (match) => {
+    if (!match) {
+      console.error('MatchPage: Cannot initialize - match is null')
+      return false
+    }
+    
+    if (!containerRef.current) {
+      console.error('MatchPage: Cannot initialize - container not ready')
+      return false
+    }
+    
+    if (gameRef.current) {
+      console.warn('MatchPage: Game already initialized')
+      return true
+    }
+    
+    try {
+      const { Game1v1 } = await import('../game/Game1v1.js')
+      
+      // Find player index with multiple fallbacks
+      let playerIndex = -1
+      if (match.players && Array.isArray(match.players)) {
+        // Try exact match first
+        playerIndex = match.players.findIndex(p => p.id === playerId)
+        
+        // Fallback: try userId or playerId fields
+        if (playerIndex === -1) {
+          playerIndex = match.players.findIndex(p => 
+            p.userId === playerId || 
+            p.playerId === playerId ||
+            p.id === playerId
+          )
+        }
+        
+        // Last resort: use first player if we're player1, second if we're player2
+        if (playerIndex === -1 && match.players.length >= 2) {
+          // Check if we're in the match by comparing with known player IDs
+          const player1Id = match.players[0]?.id || match.players[0]?.userId || match.players[0]?.playerId
+          const player2Id = match.players[1]?.id || match.players[1]?.userId || match.players[1]?.playerId
+          
+          if (player1Id === playerId) {
+            playerIndex = 0
+          } else if (player2Id === playerId) {
+            playerIndex = 1
+          }
+        }
+      }
+      
+      // Validate playerIndex
+      if (playerIndex === -1) {
+        console.error('MatchPage: Could not determine player index', {
+          playerId,
+          players: match.players,
+          matchId: match.id || match.matchId
+        })
+        // Default to 0 as fallback
+        playerIndex = 0
+        console.warn('MatchPage: Using default playerIndex 0')
+      }
+      
+      console.log('MatchPage: Initializing game with:', {
+        playerId,
+        playerIndex,
+        matchId: match.id || match.matchId,
+        playersCount: match.players?.length || 0
+      })
+      
+      gameRef.current = new Game1v1(containerRef.current, {
+        playerId,
+        playerIndex,
+        matchId: match.id || match.matchId || matchId,
+        socket,
+        gameState: match.gameState || {},
+        callbacks: {
+          onStateUpdate: setGameState,
+          onGoldChange: (gold) => {
+            setGameState(prev => ({
+              ...prev,
+              [`player${playerIndex + 1}`]: {
+                ...prev?.[`player${playerIndex + 1}`],
+                gold
+              }
+            }))
+          },
+          onHealthChange: (health, maxHealth) => {
+            setGameState(prev => ({
+              ...prev,
+              [`player${playerIndex + 1}`]: {
+                ...prev?.[`player${playerIndex + 1}`],
+                health,
+                maxHealth
+              }
+            }))
+          },
+          onGameEnd: (won, stats) => {
+            console.log('Game ended:', won ? 'Victory!' : 'Defeat')
+          }
+        }
+      })
+      
+      setGameInitialized(true)
+      console.log('MatchPage: Game initialized successfully')
+      return true
+    } catch (err) {
+      console.error('MatchPage: Error initializing game:', err)
+      setError('Failed to initialize game: ' + (err.message || err.toString()))
+      return false
+    }
+  }, [playerId, matchId, socket])
+
   // Listen for match events
   useEffect(() => {
     if (!socket) return
@@ -72,55 +183,38 @@ export default function MatchPage() {
 
     // Match started - initialize game
     const handleStarted = async (match) => {
-      console.log('MatchPage: Match started:', match)
-      setGameState(match.gameState)
+      console.log('MatchPage: Match started event received:', match)
+      console.log('MatchPage: Match data:', {
+        id: match?.id,
+        matchId: match?.matchId,
+        players: match?.players,
+        playersLength: match?.players?.length,
+        gameState: match?.gameState
+      })
       
-      // Initialize the 3D game
-      if (containerRef.current && !gameRef.current) {
-        try {
-          const { Game1v1 } = await import('../game/Game1v1.js')
-          const playerIndex = match.players.findIndex(p => p.id === playerId)
-          
-          gameRef.current = new Game1v1(containerRef.current, {
-            playerId,
-            playerIndex,
-            matchId: match.id,
-            socket,
-            gameState: match.gameState,
-            callbacks: {
-              onStateUpdate: setGameState,
-              onGoldChange: (gold) => {
-                setGameState(prev => ({
-                  ...prev,
-                  [`player${playerIndex + 1}`]: {
-                    ...prev?.[`player${playerIndex + 1}`],
-                    gold
-                  }
-                }))
-              },
-              onHealthChange: (health, maxHealth) => {
-                setGameState(prev => ({
-                  ...prev,
-                  [`player${playerIndex + 1}`]: {
-                    ...prev?.[`player${playerIndex + 1}`],
-                    health,
-                    maxHealth
-                  }
-                }))
-              },
-              onGameEnd: (won, stats) => {
-                console.log('Game ended:', won ? 'Victory!' : 'Defeat')
-              }
-            }
-          })
-          
-          setGameInitialized(true)
-          console.log('MatchPage: Game initialized')
-        } catch (err) {
-          console.error('MatchPage: Error initializing game:', err)
-          setError('Failed to initialize game: ' + err.message)
-        }
+      // Validate match data
+      if (!match) {
+        console.error('MatchPage: Match data is null or undefined')
+        setError('Invalid match data received')
+        return
       }
+      
+      if (!match.id && !match.matchId) {
+        console.error('MatchPage: Match missing id and matchId')
+        setError('Match missing ID field')
+        return
+      }
+      
+      if (!match.players || !Array.isArray(match.players) || match.players.length === 0) {
+        console.error('MatchPage: Match missing or invalid players array:', match.players)
+        setError('Match missing players data')
+        return
+      }
+      
+      setGameState(match.gameState || {})
+      
+      // Initialize the game using the reusable function
+      await initializeGame(match)
     }
 
     // Game state updates
@@ -199,7 +293,7 @@ export default function MatchPage() {
       socket.off('opponent_action', handleOpponentAction)
       socket.off('coding_error')
     }
-  }, [socket, playerId, matchId, clearMatchData, navigate])
+  }, [socket, playerId, matchId, clearMatchData, navigate, initializeGame])
 
   // Cleanup on unmount
   useEffect(() => {
@@ -264,6 +358,66 @@ export default function MatchPage() {
     )
   }
 
+  // Timeout mechanism - request match state if stuck
+  useEffect(() => {
+    if (!gameInitialized && !error && socket && connected && matchId) {
+      // After 10 seconds, request match state
+      const timeout = setTimeout(() => {
+        console.log('MatchPage: Timeout - requesting match state')
+        if (socket && connected) {
+          socket.emit('get_match_state', matchId)
+        }
+      }, 10000)
+      
+      // After 20 seconds, show error
+      const errorTimeout = setTimeout(() => {
+        if (!gameInitialized) {
+          console.error('MatchPage: Match start timeout - no match_started event received')
+          setError('Match failed to start. Please try again.')
+        }
+      }, 20000)
+      
+      return () => {
+        clearTimeout(timeout)
+        clearTimeout(errorTimeout)
+      }
+    }
+  }, [gameInitialized, error, socket, connected, matchId])
+
+  // Listen for match_state response (for recovery/timeout scenarios)
+  useEffect(() => {
+    if (!socket) return
+    
+    const handleMatchState = async (match) => {
+      console.log('MatchPage: Received match state:', match)
+      // If match is already running but game not initialized, initialize it
+      if (match && (match.state === 'running' || match.status === 'running') && !gameInitialized) {
+        console.log('MatchPage: Match is already running, initializing game from state')
+        setGameState(match.gameState || {})
+        await initializeGame(match)
+      } else if (match && match.state === 'briefing' && !countdown) {
+        // If match is in briefing but we missed the briefing event, show countdown
+        console.log('MatchPage: Match in briefing, showing countdown')
+        let count = 3
+        setCountdown(count)
+        const countdownInterval = setInterval(() => {
+          count--
+          setCountdown(count)
+          if (count <= 0) {
+            clearInterval(countdownInterval)
+            setCountdown(null)
+          }
+        }, 1000)
+      }
+    }
+    
+    socket.on('match_state', handleMatchState)
+    
+    return () => {
+      socket.off('match_state', handleMatchState)
+    }
+  }, [socket, gameInitialized, initializeGame, countdown])
+
   // Waiting for match to start
   if (!gameInitialized && !error) {
     return (
@@ -275,6 +429,11 @@ export default function MatchPage() {
           <div className="opponent-preview">
             <span>vs {opponent?.username || 'Opponent'}</span>
           </div>
+          {countdown !== null && (
+            <div className="countdown-display">
+              <span className="countdown-number">{countdown}</span>
+            </div>
+          )}
         </div>
       </div>
     )
