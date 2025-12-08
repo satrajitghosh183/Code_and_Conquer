@@ -465,28 +465,92 @@ const JobRecommendationsPage = () => {
     fetchData();
   }, [user?.id]);
 
-  // Fetch filtered jobs
+  // Fetch filtered jobs with debouncing
   useEffect(() => {
+    let timer = null;
+
+    const fetchAllJobs = async () => {
+      try {
+        const params = {
+          limit: 50,
+          ...(filters.search && { search: filters.search }),
+          ...(filters.experienceLevel && { experienceLevel: filters.experienceLevel }),
+          ...(filters.location && { location: filters.location }),
+          ...(filters.remoteOnly && { remoteOnly: 'true' })
+        };
+
+        const response = await getAllJobs(params);
+        setJobs(response.data?.jobs || []);
+      } catch (err) {
+        console.error('Error fetching all jobs:', err);
+        setError('Failed to search jobs. Please try again.');
+      }
+    };
+
+    // Only fetch from API for 'all' tab
     if (activeTab === 'all' && !loading) {
-      fetchAllJobs();
+      // Debounce search - wait 500ms after user stops typing
+      timer = setTimeout(() => {
+        fetchAllJobs();
+      }, filters.search ? 500 : 0); // Immediate if no search, debounced if searching
     }
-  }, [filters]);
 
-  const fetchAllJobs = async () => {
-    try {
-      const params = {
-        limit: 50,
-        ...(filters.search && { search: filters.search }),
-        ...(filters.experienceLevel && { experienceLevel: filters.experienceLevel }),
-        ...(filters.location && { location: filters.location }),
-        ...(filters.remoteOnly && { remoteOnly: 'true' })
-      };
+    return () => {
+      if (timer) {
+        clearTimeout(timer);
+      }
+    };
+  }, [filters, activeTab, loading]);
 
-      const response = await getAllJobs(params);
-      setJobs(response.data?.jobs || []);
-    } catch (err) {
-      console.error('Error fetching all jobs:', err);
+  // Client-side filtering function
+  const filterJobs = (jobList) => {
+    if (!jobList || jobList.length === 0) return [];
+
+    let filtered = [...jobList];
+
+    // Search filter (works on title, company name, description, skills)
+    if (filters.search) {
+      const searchLower = filters.search.toLowerCase();
+      filtered = filtered.filter(job => {
+        const title = (job.title || '').toLowerCase();
+        const companyName = (job.company?.name || '').toLowerCase();
+        const description = (job.description || '').toLowerCase();
+        const skills = (job.skills || []).join(' ').toLowerCase();
+        const location = (job.location || '').toLowerCase();
+        
+        return title.includes(searchLower) ||
+               companyName.includes(searchLower) ||
+               description.includes(searchLower) ||
+               skills.includes(searchLower) ||
+               location.includes(searchLower);
+      });
     }
+
+    // Experience level filter
+    if (filters.experienceLevel) {
+      filtered = filtered.filter(job => {
+        const jobLevel = (job.experience_level || job.experienceLevel || '').toLowerCase();
+        return jobLevel === filters.experienceLevel.toLowerCase();
+      });
+    }
+
+    // Location filter
+    if (filters.location) {
+      const locationLower = filters.location.toLowerCase();
+      filtered = filtered.filter(job => {
+        const jobLocation = (job.location || '').toLowerCase();
+        return jobLocation.includes(locationLower);
+      });
+    }
+
+    // Remote only filter
+    if (filters.remoteOnly) {
+      filtered = filtered.filter(job => {
+        return job.remote_allowed || job.remoteAllowed;
+      });
+    }
+
+    return filtered;
   };
 
   const handleSaveJob = useCallback(async (jobId) => {
@@ -532,19 +596,27 @@ const JobRecommendationsPage = () => {
   };
 
   const getDisplayJobs = () => {
+    let jobList = [];
+    
     switch (activeTab) {
       case 'recommended':
-        return recommendations.map(rec => ({
+        jobList = recommendations.map(rec => ({
           ...rec.job,
           matchScore: rec.matchScore,
           recommendation_reason: rec.recommendationReason
         }));
+        break;
       case 'trending':
-        return trendingJobs;
+        jobList = trendingJobs;
+        break;
       case 'all':
       default:
-        return jobs;
+        jobList = jobs;
+        break;
     }
+
+    // Apply client-side filtering to all tabs
+    return filterJobs(jobList);
   };
 
   const displayJobs = getDisplayJobs();
