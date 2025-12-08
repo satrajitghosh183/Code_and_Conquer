@@ -32,13 +32,25 @@ export default function TechTree({ onClose }) {
   const [selectedTech, setSelectedTech] = useState(null)
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(null)
+  const [userGold, setUserGold] = useState(0) // Gold from backend or stats
 
   useEffect(() => {
     if (user) {
       loadTechTree()
       loadProgression()
+      // Refresh stats to ensure gold is loaded
+      if (refreshStats) {
+        refreshStats()
+      }
     }
   }, [user])
+
+  // Debug: Log stats and gold when they change
+  useEffect(() => {
+    console.log('[TechTree] Stats updated:', stats)
+    console.log('[TechTree] Gold from stats:', stats?.coins, 'Type:', typeof stats?.coins)
+    console.log('[TechTree] Gold from backend:', userGold)
+  }, [stats, userGold])
 
   const loadTechTree = async () => {
     try {
@@ -46,6 +58,11 @@ export default function TechTree({ onClose }) {
       const response = await fetch(`${API_URL}/progression/tech-tree/${user.id}`)
       const data = await response.json()
       setTechTree(data)
+      
+      // Get gold from first tech item (backend includes userGold in response)
+      if (data && data.length > 0 && data[0].userGold !== undefined) {
+        setUserGold(data[0].userGold)
+      }
     } catch (error) {
       console.error('Error loading tech tree:', error)
       setError('Failed to load tech tree')
@@ -73,12 +90,12 @@ export default function TechTree({ onClose }) {
       })
 
       if (response.ok) {
-        await loadTechTree()
-        await loadProgression()
-        // Refresh stats to update gold display
+        // Refresh stats first to get updated gold
         if (refreshStats) {
           await refreshStats()
         }
+        await loadTechTree()
+        await loadProgression()
         setError(null)
       } else {
         const data = await response.json()
@@ -116,7 +133,17 @@ export default function TechTree({ onClose }) {
             <h2>Tech Tree</h2>
             <div className="tech-points-display">
               <span className="points-icon">🪙</span>
-              <span className="points-value">{stats?.coins || 0}</span>
+              <span className="points-value">
+                {(() => {
+                  // Try to get gold from multiple sources
+                  const goldFromStats = stats && stats.coins !== undefined && stats.coins !== null 
+                    ? parseInt(stats.coins) 
+                    : null
+                  const goldFromBackend = userGold || null
+                  const finalGold = goldFromStats || goldFromBackend || 0
+                  return finalGold
+                })()}
+              </span>
               <span className="points-label">Gold</span>
             </div>
           </div>
