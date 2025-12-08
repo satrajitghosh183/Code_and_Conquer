@@ -30,7 +30,7 @@ const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000/api'
 
 export default function Dashboard() {
   const { user, profile } = useAuth()
-  const { stats } = useGame()
+  const { stats, refreshStats } = useGame()
   const { isPremium } = usePayment()
   const { unreadCount } = useNotifications()
   const navigate = useNavigate()
@@ -141,6 +141,26 @@ export default function Dashboard() {
       let userStatsData = null
       if (statsResponse.ok) {
         userStatsData = await statsResponse.json()
+        console.log('[Dashboard] User stats from API:', userStatsData)
+      } else {
+        console.warn('[Dashboard] Failed to load stats from API:', statsResponse.status, statsResponse.statusText)
+        
+        // Fallback: Direct Supabase query
+        try {
+          const { supabase } = await import('../config/supabaseClient')
+          const { data: supabaseData, error: supabaseError } = await supabase
+            .from('user_stats')
+            .select('*')
+            .eq('id', user.id)
+            .single()
+          
+          if (!supabaseError && supabaseData) {
+            console.log('[Dashboard] User stats from Supabase:', supabaseData)
+            userStatsData = { data: supabaseData }
+          }
+        } catch (err) {
+          console.error('[Dashboard] Supabase fallback error:', err)
+        }
       }
       
       // Then get dashboard-specific stats (rank, streak, etc.)
