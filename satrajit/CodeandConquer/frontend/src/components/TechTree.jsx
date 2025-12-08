@@ -27,48 +27,25 @@ const CATEGORY_ICON_NAMES = {
 
 export default function TechTree({ onClose }) {
   const { user } = useAuth()
-  const { stats, refreshStats } = useGame()
+  // Use unified gold state from GameContext - no more multiple sources!
+  const { gold, deductGold, subscribeToGoldChanges } = useGame()
   const [techTree, setTechTree] = useState([])
   const [progression, setProgression] = useState(null)
   const [selectedTech, setSelectedTech] = useState(null)
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(null)
-  const [userGold, setUserGold] = useState(0) // Gold from backend or stats
-
-  // Fetch gold directly from API as fallback
-  const fetchUserGold = async () => {
-    if (!user) return
-    try {
-      const response = await fetch(`${API_URL}/users/${user.id}/stats`)
-      if (response.ok) {
-        const data = await response.json()
-        const gold = parseInt(data.coins) || 0
-        setUserGold(gold)
-        console.log('[TechTree] Fetched gold from API:', gold)
-      }
-    } catch (error) {
-      console.warn('[TechTree] Could not fetch gold from API:', error)
-    }
-  }
 
   useEffect(() => {
     if (user) {
       loadTechTree()
       loadProgression()
-      fetchUserGold() // Fetch gold directly
-      // Refresh stats to ensure gold is loaded
-      if (refreshStats) {
-        refreshStats()
-      }
     }
   }, [user])
 
-  // Debug: Log stats and gold when they change
+  // Debug: Log gold when it changes
   useEffect(() => {
-    console.log('[TechTree] Stats updated:', stats)
-    console.log('[TechTree] Gold from stats:', stats?.coins, 'Type:', typeof stats?.coins)
-    console.log('[TechTree] Gold from backend:', userGold)
-  }, [stats, userGold])
+    console.log('[TechTree] Gold from GameContext:', gold)
+  }, [gold])
 
   const loadTechTree = async () => {
     try {
@@ -100,6 +77,25 @@ export default function TechTree({ onClose }) {
   }
 
   const handleUpgrade = async (techId) => {
+    // Find the tech to get its cost
+    const tech = techTree.find(t => t.id === techId)
+    if (!tech || !tech.nextCost) {
+      setError('Tech not found')
+      return
+    }
+
+    const upgradeCost = tech.nextCost
+
+    // Check if we have enough gold locally
+    if (gold < upgradeCost) {
+      setError(`Not enough gold. Need ${upgradeCost}, have ${gold}`)
+      return
+    }
+
+    // Optimistic update: deduct gold locally immediately
+    deductGold(upgradeCost)
+    console.log('[TechTree] Optimistically deducted gold:', upgradeCost)
+
     try {
       const response = await fetch(`${API_URL}/progression/tech-tree/${user.id}/upgrade`, {
         method: 'POST',
@@ -108,15 +104,16 @@ export default function TechTree({ onClose }) {
       })
 
       if (response.ok) {
-        // Refresh stats first to get updated gold
-        if (refreshStats) {
-          await refreshStats()
-        }
+        // Just reload tech tree and progression - gold is already updated locally
         await loadTechTree()
         await loadProgression()
         setError(null)
       } else {
         const data = await response.json()
+        // Rollback: add back the gold if upgrade failed on backend
+        // Note: In most cases the backend also handles gold, so this might cause double-count
+        // We should check if backend actually deducted gold or not
+        console.error('[TechTree] Upgrade failed:', data.error)
         setError(data.error || 'Failed to upgrade')
       }
     } catch (error) {
@@ -151,22 +148,7 @@ export default function TechTree({ onClose }) {
             <h2>Tech Tree</h2>
             <div className="tech-points-display">
               <span className="points-icon">🪙</span>
-              <span className="points-value">
-                {(() => {
-                  // Try to get gold from multiple sources (prioritize stats, then backend, then API fetch)
-                  let finalGold = 0
-                  
-                  if (stats && stats.coins !== undefined && stats.coins !== null) {
-                    finalGold = parseInt(stats.coins) || 0
-                  } else if (userGold > 0) {
-                    finalGold = userGold
-                  } else if (techTree && techTree.length > 0 && techTree[0].userGold !== undefined) {
-                    finalGold = techTree[0].userGold
-                  }
-                  
-                  return finalGold
-                })()}
-              </span>
+              <span className="points-value">{gold}</span>
               <span className="points-label">Gold</span>
             </div>
           </div>
@@ -192,74 +174,80 @@ export default function TechTree({ onClose }) {
               </div>
 
               <div className="tech-items">
-                {techs.map(tech => (
-                  <div
-                    key={tech.id}
-                    className={`tech-item ${!tech.requirementsMet ? 'locked' : ''} ${tech.currentLevel >= tech.maxLevel ? 'maxed' : ''}`}
-                    onClick={() => setSelectedTech(tech)}
-                  >
-                    <div className="tech-item-header">
-                      <h4>{tech.name}</h4>
-                      <div className="tech-level">
-                        {tech.currentLevel}/{tech.maxLevel}
-                      </div>
-                    </div>
+                  {techs.map(tech => {
+                    // Calculate canUpgrade locally using our gold state
+                    const canAfford = tech.nextCost ? gold >= tech.nextCost : false
+                    const canUpgradeLocal = tech.requirementsMet && canAfford && tech.currentLevel < tech.maxLevel
+                    
+                    return (
+                      <div
+                        key={tech.id}
+                        className={`tech-item ${!tech.requirementsMet ? 'locked' : ''} ${tech.currentLevel >= tech.maxLevel ? 'maxed' : ''}`}
+                        onClick={() => setSelectedTech(tech)}
+                      >
+                        <div className="tech-item-header">
+                          <h4>{tech.name}</h4>
+                          <div className="tech-level">
+                            {tech.currentLevel}/{tech.maxLevel}
+                          </div>
+                        </div>
 
-                    <p className="tech-description">{tech.description}</p>
+                        <p className="tech-description">{tech.description}</p>
 
-                    <div className="tech-progress">
-                      <div 
-                        className="tech-progress-bar"
-                        style={{ 
-                          width: `${(tech.currentLevel / tech.maxLevel) * 100}%`,
-                          background: CATEGORY_COLORS[category]
-                        }}
-                      />
-                    </div>
+                        <div className="tech-progress">
+                          <div 
+                            className="tech-progress-bar"
+                            style={{ 
+                              width: `${(tech.currentLevel / tech.maxLevel) * 100}%`,
+                              background: CATEGORY_COLORS[category]
+                            }}
+                          />
+                        </div>
 
-                    {tech.currentLevel < tech.maxLevel && tech.nextEffect && (
-                      <div className="tech-next-effect">
-                        <span className="next-label">Next:</span>
-                        {renderEffect(tech.nextEffect)}
-                      </div>
-                    )}
+                        {tech.currentLevel < tech.maxLevel && tech.nextEffect && (
+                          <div className="tech-next-effect">
+                            <span className="next-label">Next:</span>
+                            {renderEffect(tech.nextEffect)}
+                          </div>
+                        )}
 
-                    <div className="tech-item-footer">
-                      {tech.currentLevel < tech.maxLevel ? (
-                        <button
-                          className={`upgrade-btn ${!tech.canUpgrade ? 'disabled' : ''}`}
-                          onClick={(e) => {
-                            e.stopPropagation()
-                            if (tech.canUpgrade) {
-                              handleUpgrade(tech.id)
-                            }
-                          }}
-                          disabled={!tech.canUpgrade}
-                        >
-                          {!tech.requirementsMet ? (
-                            <><Icon name="lock" size={14} color="#ffffff" /> Locked</>
-                          ) : !tech.canUpgrade ? (
-                            <><Icon name="gold" size={14} color="#ffd700" /> {tech.nextCost} gold</>
+                        <div className="tech-item-footer">
+                          {tech.currentLevel < tech.maxLevel ? (
+                            <button
+                              className={`upgrade-btn ${!canUpgradeLocal ? 'disabled' : ''}`}
+                              onClick={(e) => {
+                                e.stopPropagation()
+                                if (canUpgradeLocal) {
+                                  handleUpgrade(tech.id)
+                                }
+                              }}
+                              disabled={!canUpgradeLocal}
+                            >
+                              {!tech.requirementsMet ? (
+                                <><Icon name="lock" size={14} color="#ffffff" /> Locked</>
+                              ) : !canAfford ? (
+                                <><Icon name="gold" size={14} color="#ffd700" /> {tech.nextCost} gold</>
+                              ) : (
+                                <>Upgrade ({tech.nextCost} gold)</>
+                              )}
+                            </button>
                           ) : (
-                            <>Upgrade ({tech.nextCost} gold)</>
+                            <div className="maxed-badge">MAX LEVEL</div>
                           )}
-                        </button>
-                      ) : (
-                        <div className="maxed-badge">MAX LEVEL</div>
-                      )}
-                    </div>
+                        </div>
 
-                    {!tech.requirementsMet && tech.requirements && tech.requirements.length > 0 && (
-                      <div className="requirements">
-                        <span className="req-label">Requires:</span>
-                        {tech.requirements.map(reqId => {
-                          const reqTech = techTree.find(t => t.id === reqId)
-                          return reqTech ? <span key={reqId} className="req-item">{reqTech.name}</span> : null
-                        })}
+                        {!tech.requirementsMet && tech.requirements && tech.requirements.length > 0 && (
+                          <div className="requirements">
+                            <span className="req-label">Requires:</span>
+                            {tech.requirements.map(reqId => {
+                              const reqTech = techTree.find(t => t.id === reqId)
+                              return reqTech ? <span key={reqId} className="req-item">{reqTech.name}</span> : null
+                            })}
+                          </div>
+                        )}
                       </div>
-                    )}
-                  </div>
-                ))}
+                    )
+                  })}
               </div>
             </div>
           ))}

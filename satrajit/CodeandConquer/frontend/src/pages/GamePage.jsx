@@ -19,10 +19,12 @@ export default function GamePage() {
   const containerRef = useRef(null)
   const gameRef = useRef(null)
   const navigate = useNavigate()
-  const { stats, spendCoins, addGameResult, refreshStats } = useGame()
+  // Use unified gold from GameContext - this is the source of truth
+  const { stats, spendCoins, addGameResult, refreshStats, gold: contextGold, updateGoldLocal, subscribeToGoldChanges, syncGoldToBackend } = useGame()
   const { user, profile } = useAuth()
   const [gameStarted, setGameStarted] = useState(false)
-  const [gold, setGold] = useState(500)
+  // Local gold state for UI - synced with contextGold
+  const [gold, setGold] = useState(contextGold || 500)
   const [energy, setEnergy] = useState(50)
   const [maxEnergy, setMaxEnergy] = useState(100)
   const [health, setHealth] = useState(1000)
@@ -64,10 +66,10 @@ export default function GamePage() {
   const resourceChangeIdCounter = useRef(0)
   const [showWaveWarning, setShowWaveWarning] = useState(false)
 
-  // Initialize gold from stats when stats are loaded
+  // Sync local gold with context gold
   useEffect(() => {
-    if (stats && stats.coins !== undefined && stats.coins !== null) {
-      const coins = parseInt(stats.coins) || 500
+    if (contextGold !== undefined && contextGold !== null) {
+      const coins = parseInt(contextGold) || 500
       setGold(coins)
       setLastGold(coins)
       // Also update game's gold if it's already initialized
@@ -75,7 +77,24 @@ export default function GamePage() {
         gameRef.current.gold = coins
       }
     }
-  }, [stats?.coins])
+  }, [contextGold])
+
+  // Subscribe to gold changes from other components (like TechTree)
+  useEffect(() => {
+    if (!subscribeToGoldChanges) return
+    
+    const unsubscribe = subscribeToGoldChanges((newGold) => {
+      console.log('[GamePage] Received gold change from context:', newGold)
+      setGold(newGold)
+      setLastGold(newGold)
+      // Sync with game engine
+      if (gameRef.current) {
+        gameRef.current.gold = newGold
+      }
+    })
+    
+    return unsubscribe
+  }, [subscribeToGoldChanges])
 
   useEffect(() => {
     if (!containerRef.current) return
@@ -98,29 +117,17 @@ export default function GamePage() {
         setGameState(won ? 'victory' : 'gameover')
         setShowGameOver(true)
         
-        // Save final gold to user stats (calculate difference from initial)
-        if (user && gameRef.current) {
+        // Update context gold with final game gold
+        if (gameRef.current) {
           const finalGold = gameRef.current.gold || gold
-          const initialGold = stats.coins || 500
-          const goldChange = finalGold - initialGold
-          
-          // Only update if there's a change
-          if (goldChange !== 0) {
-            try {
-              const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000/api'
-              await fetch(`${API_URL}/users/${user.id}/stats/update`, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ coins: goldChange }) // Relative change
-              })
-              // Refresh stats after saving
-              if (refreshStats) {
-                setTimeout(() => refreshStats(), 500)
-              }
-            } catch (error) {
-              console.error('Error saving gold:', error)
-            }
+          if (updateGoldLocal) {
+            updateGoldLocal(finalGold)
           }
+        }
+        
+        // Sync gold to backend
+        if (syncGoldToBackend) {
+          await syncGoldToBackend()
         }
         
         if (won) {
@@ -156,6 +163,11 @@ export default function GamePage() {
             // Update projected interest
             if (gameRef.current && gameRef.current.getProjectedInterest) {
               setProjectedInterest(gameRef.current.getProjectedInterest())
+            }
+            
+            // Sync to GameContext (unified gold state)
+            if (updateGoldLocal) {
+              updateGoldLocal(newGold)
             }
           }
           return newGold
@@ -252,11 +264,11 @@ export default function GamePage() {
           setResourceChanges(prev => prev.filter(r => r.id !== id))
         }, 1200)
       },
-      initialGold: stats.coins || 500
+      initialGold: contextGold || stats.coins || 500
     }, userProfile)
     
     // Sync React gold state with game's initial gold
-    const initialGoldValue = stats.coins ? parseInt(stats.coins) : 500
+    const initialGoldValue = contextGold || (stats.coins ? parseInt(stats.coins) : 500)
     setGold(initialGoldValue)
     setLastGold(initialGoldValue)
     

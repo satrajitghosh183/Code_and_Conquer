@@ -1,4 +1,4 @@
-import { createContext, useContext, useState, useEffect } from 'react'
+import { createContext, useContext, useState, useEffect, useCallback, useRef } from 'react'
 import { getUserStats } from '../services/api'
 import { useAuth } from './AuthContext'
 
@@ -14,6 +14,8 @@ export const useGame = () => {
 
 export const GameProvider = ({ children }) => {
   const { user } = useAuth()
+  // Unified gold state - this is the single source of truth for gold
+  const [gold, setGold] = useState(0)
   const [stats, setStats] = useState({
     coins: 0,
     xp: 0,
@@ -24,6 +26,11 @@ export const GameProvider = ({ children }) => {
   })
   const [loading, setLoading] = useState(true)
   const [powerUps, setPowerUps] = useState([])
+  
+  // Track pending gold changes to sync to backend periodically
+  const pendingGoldSync = useRef(null)
+  const lastSyncedGold = useRef(0)
+  const goldChangeListeners = useRef(new Set())
 
   useEffect(() => {
     if (user) {
@@ -55,6 +62,10 @@ export const GameProvider = ({ children }) => {
       const xp = parseInt(statsData?.xp) || 0
       
       console.log('[GameContext] Final parsed values - Coins:', coins, 'XP:', xp)
+      
+      // Update both stats and unified gold state
+      setGold(coins)
+      lastSyncedGold.current = coins
       
       setStats({
         coins: coins,
@@ -104,8 +115,11 @@ export const GameProvider = ({ children }) => {
                 .single()
               
               if (newData) {
+                const newCoins = newData.coins || 0
+                setGold(newCoins)
+                lastSyncedGold.current = newCoins
                 setStats({
-                  coins: newData.coins || 0,
+                  coins: newCoins,
                   xp: newData.xp || 0,
                   level: newData.level || 1,
                   problemsSolved: newData.problems_solved || 0,
@@ -125,6 +139,10 @@ export const GameProvider = ({ children }) => {
           
           console.log('[GameContext] Parsed Supabase values - Coins:', coins, 'XP:', xp)
           
+          // Update both stats and unified gold state
+          setGold(coins)
+          lastSyncedGold.current = coins
+          
           setStats({
             coins: coins,
             xp: xp,
@@ -142,6 +160,71 @@ export const GameProvider = ({ children }) => {
       setLoading(false)
     }
   }
+
+  // Update gold locally (instant, no API call)
+  const updateGoldLocal = useCallback((newGold) => {
+    console.log('[GameContext] Updating gold locally:', newGold)
+    setGold(newGold)
+    // Also update stats.coins to keep them in sync
+    setStats(prev => ({ ...prev, coins: newGold }))
+    // Notify all listeners
+    goldChangeListeners.current.forEach(listener => listener(newGold))
+  }, [])
+
+  // Add gold (relative change, instant)
+  const addGold = useCallback((amount) => {
+    console.log('[GameContext] Adding gold:', amount)
+    setGold(prev => {
+      const newGold = prev + amount
+      // Also update stats.coins
+      setStats(s => ({ ...s, coins: newGold }))
+      // Notify listeners
+      goldChangeListeners.current.forEach(listener => listener(newGold))
+      return newGold
+    })
+  }, [])
+
+  // Deduct gold (relative change, instant)
+  const deductGold = useCallback((amount) => {
+    console.log('[GameContext] Deducting gold:', amount)
+    setGold(prev => {
+      const newGold = Math.max(0, prev - amount)
+      // Also update stats.coins
+      setStats(s => ({ ...s, coins: newGold }))
+      // Notify listeners
+      goldChangeListeners.current.forEach(listener => listener(newGold))
+      return newGold
+    })
+  }, [])
+
+  // Subscribe to gold changes (for components that need to react to gold updates)
+  const subscribeToGoldChanges = useCallback((listener) => {
+    goldChangeListeners.current.add(listener)
+    return () => goldChangeListeners.current.delete(listener)
+  }, [])
+
+  // Sync gold to backend (call this periodically or on important events)
+  const syncGoldToBackend = useCallback(async () => {
+    if (!user) return
+    const currentGold = gold
+    if (currentGold === lastSyncedGold.current) return // No change
+    
+    const goldDiff = currentGold - lastSyncedGold.current
+    console.log('[GameContext] Syncing gold to backend. Diff:', goldDiff)
+    
+    try {
+      const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000/api'
+      await fetch(`${API_URL}/users/${user.id}/stats/update`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ coins: goldDiff })
+      })
+      lastSyncedGold.current = currentGold
+      console.log('[GameContext] Gold synced successfully')
+    } catch (error) {
+      console.error('[GameContext] Error syncing gold:', error)
+    }
+  }, [user, gold])
 
   /**
    * Add rewards after successful submission
@@ -244,15 +327,51 @@ export const GameProvider = ({ children }) => {
     await loadStats()
   }
 
+  // Sync gold to backend periodically (every 30 seconds if there are changes)
+  useEffect(() => {
+    const syncInterval = setInterval(() => {
+      if (user && gold !== lastSyncedGold.current) {
+        syncGoldToBackend()
+      }
+    }, 30000)
+    
+    // Also sync on page unload
+    const handleUnload = () => {
+      if (user && gold !== lastSyncedGold.current) {
+        // Use sendBeacon for reliable unload sync
+        const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000/api'
+        const goldDiff = gold - lastSyncedGold.current
+        navigator.sendBeacon(
+          `${API_URL}/users/${user.id}/stats/update`,
+          JSON.stringify({ coins: goldDiff })
+        )
+      }
+    }
+    window.addEventListener('beforeunload', handleUnload)
+    
+    return () => {
+      clearInterval(syncInterval)
+      window.removeEventListener('beforeunload', handleUnload)
+    }
+  }, [user, gold, syncGoldToBackend])
+
   const value = {
     stats,
+    // Unified gold state - use this instead of stats.coins
+    gold,
     powerUps,
     loading,
     addRewards,
     spendCoins,
     addGameResult,
     refreshStats: loadStats,
-    forceRefreshStats
+    forceRefreshStats,
+    // New gold management functions
+    updateGoldLocal,
+    addGold,
+    deductGold,
+    subscribeToGoldChanges,
+    syncGoldToBackend
   }
 
   return (
