@@ -15,17 +15,21 @@ import StructureSelectionPanel from '../components/StructureSelectionPanel'
 import { Icon } from '../components/Icons'
 import './GamePage.css'
 
+const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000/api'
+
 export default function GamePage() {
   const containerRef = useRef(null)
   const gameRef = useRef(null)
   const navigate = useNavigate()
-  // Use unified gold from GameContext - this is the source of truth
-  const { stats, spendCoins, addGameResult, refreshStats, gold: contextGold, updateGoldLocal, subscribeToGoldChanges, syncGoldToBackend } = useGame()
+  // GameContext is for user's wallet (persistent coins), NOT in-game gold
+  const { stats, addGameResult } = useGame()
   const { user, profile } = useAuth()
   const [gameStarted, setGameStarted] = useState(false)
-  // Local gold state for UI - synced with contextGold
-  const [gold, setGold] = useState(contextGold || 500)
+  // In-game gold (starts from loadout, NOT wallet)
+  const [gold, setGold] = useState(500)
   const [energy, setEnergy] = useState(50)
+  // Match loadout from backend (contains tech tree bonuses)
+  const [matchLoadout, setMatchLoadout] = useState(null)
   const [maxEnergy, setMaxEnergy] = useState(100)
   const [health, setHealth] = useState(1000)
   const [maxHealth, setMaxHealth] = useState(1000)
@@ -66,35 +70,35 @@ export default function GamePage() {
   const resourceChangeIdCounter = useRef(0)
   const [showWaveWarning, setShowWaveWarning] = useState(false)
 
-  // Sync local gold with context gold
+  // Fetch match loadout from backend (contains tech tree bonuses for starting gold)
   useEffect(() => {
-    if (contextGold !== undefined && contextGold !== null) {
-      const coins = parseInt(contextGold) || 500
-      setGold(coins)
-      setLastGold(coins)
-      // Also update game's gold if it's already initialized
-      if (gameRef.current) {
-        gameRef.current.gold = coins
+    const fetchLoadout = async () => {
+      if (!user?.id) return
+      
+      try {
+        const response = await fetch(`${API_URL}/progression/loadout/${user.id}`)
+        if (response.ok) {
+          const loadout = await response.json()
+          console.log('[GamePage] Fetched match loadout:', loadout)
+          setMatchLoadout(loadout)
+          
+          // Set starting gold from loadout (includes tech tree bonuses)
+          if (loadout?.bonuses?.startingGold) {
+            const startingGold = loadout.bonuses.startingGold
+            console.log('[GamePage] Starting gold from tech tree:', startingGold)
+            setGold(startingGold)
+            setLastGold(startingGold)
+          }
+        } else {
+          console.warn('[GamePage] Could not fetch loadout, using default')
+        }
+      } catch (error) {
+        console.error('[GamePage] Error fetching loadout:', error)
       }
     }
-  }, [contextGold])
-
-  // Subscribe to gold changes from other components (like TechTree)
-  useEffect(() => {
-    if (!subscribeToGoldChanges) return
     
-    const unsubscribe = subscribeToGoldChanges((newGold) => {
-      console.log('[GamePage] Received gold change from context:', newGold)
-      setGold(newGold)
-      setLastGold(newGold)
-      // Sync with game engine
-      if (gameRef.current) {
-        gameRef.current.gold = newGold
-      }
-    })
-    
-    return unsubscribe
-  }, [subscribeToGoldChanges])
+    fetchLoadout()
+  }, [user?.id])
 
   useEffect(() => {
     if (!containerRef.current) return
@@ -117,19 +121,8 @@ export default function GamePage() {
         setGameState(won ? 'victory' : 'gameover')
         setShowGameOver(true)
         
-        // Update context gold with final game gold
-        if (gameRef.current) {
-          const finalGold = gameRef.current.gold || gold
-          if (updateGoldLocal) {
-            updateGoldLocal(finalGold)
-          }
-        }
-        
-        // Sync gold to backend
-        if (syncGoldToBackend) {
-          await syncGoldToBackend()
-        }
-        
+        // In-game gold is separate from wallet - no need to sync
+        // Just record game result
         if (won) {
           addGameResult(true)
         } else {
@@ -137,7 +130,7 @@ export default function GamePage() {
         }
       },
       onGoldChange: (newGold) => {
-        // Animate gold changes
+        // Animate gold changes - this is IN-GAME gold, not wallet gold
         setGold(prevGold => {
           const diff = newGold - prevGold
           if (diff !== 0) {
@@ -165,10 +158,8 @@ export default function GamePage() {
               setProjectedInterest(gameRef.current.getProjectedInterest())
             }
             
-            // Sync to GameContext (unified gold state)
-            if (updateGoldLocal) {
-              updateGoldLocal(newGold)
-            }
+            // NOTE: In-game gold is separate from wallet (stats.coins)
+            // No syncing to GameContext - game gold resets each game
           }
           return newGold
         })
@@ -264,11 +255,14 @@ export default function GamePage() {
           setResourceChanges(prev => prev.filter(r => r.id !== id))
         }, 1200)
       },
-      initialGold: contextGold || stats.coins || 500
+      // Use loadout's starting gold (with tech tree bonuses), not wallet coins
+      initialGold: matchLoadout?.bonuses?.startingGold || 500,
+      // Pass the full loadout bonuses to the game
+      loadoutBonuses: matchLoadout?.bonuses || null
     }, userProfile)
     
-    // Sync React gold state with game's initial gold
-    const initialGoldValue = contextGold || (stats.coins ? parseInt(stats.coins) : 500)
+    // Use loadout's starting gold (with tech tree bonuses)
+    const initialGoldValue = matchLoadout?.bonuses?.startingGold || 500
     setGold(initialGoldValue)
     setLastGold(initialGoldValue)
     

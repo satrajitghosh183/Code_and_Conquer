@@ -33,8 +33,11 @@ export class EnhancedGame {
     this.userProfile = userProfile
     this.gameMode = gameMode // 'single' or 'multiplayer'
     
-    // Game state
-    this.gold = callbacks.initialGold || 500
+    // Game state - use loadout bonuses if provided (includes tech tree upgrades)
+    const loadoutBonuses = callbacks.loadoutBonuses || {}
+    
+    // Starting gold comes from loadout (tech tree bonuses applied), NOT from wallet
+    this.gold = callbacks.initialGold || loadoutBonuses.startingGold || 500
     this.energy = callbacks.initialEnergy || 50
     this.maxEnergy = 100
     this.health = 1000
@@ -83,13 +86,24 @@ export class EnhancedGame {
       100
     )
     
-    // Apply task buffs
+    // Apply task buffs for additional bonuses (health, tower types, etc.)
+    // But DO NOT override starting gold - that comes from tech tree via loadout
     const preGameBuffs = this.taskBuffs.calculatePreGameBuffs(userProfile.tasks || {})
-    this.gold = preGameBuffs.startingGold
-    this.maxHealth = 1000 * preGameBuffs.baseHealthMultiplier
+    
+    // Apply loadout bonuses from tech tree (if provided)
+    if (loadoutBonuses.baseHpMultiplier) {
+      this.maxHealth = 1000 * loadoutBonuses.baseHpMultiplier
+    } else {
+      this.maxHealth = 1000 * preGameBuffs.baseHealthMultiplier
+    }
     this.health = this.maxHealth
     this.availableTowers = preGameBuffs.availableTowerTypes || ['basic']
     this.passiveBuffs = this.taskBuffs.calculateInGamePassiveBuffs(userProfile.tasks || {})
+    
+    // Store loadout bonuses for use during gameplay
+    this.loadoutBonuses = loadoutBonuses
+    
+    console.log('[EnhancedGame] Initialized with starting gold:', this.gold, 'from loadout:', !!loadoutBonuses.startingGold)
     
     // Initialize coding rewards
     this.codingRewards.initialize(userProfile.totalProblemsSolved || 0)
@@ -98,7 +112,7 @@ export class EnhancedGame {
     this.problemsSolvedThisGame = 0
     this.tasksCompletedThisGame = 0
     
-    // Calculate passive generation rates based on lifetime progress
+    // Calculate passive generation rates based on lifetime progress and tech tree
     // Each problem solved = +0.05 energy/sec and +0.1 gold/sec
     // Each task completed = +0.08 energy/sec and +0.15 gold/sec
     const lifetimeProblems = userProfile.totalProblemsSolved || 0
@@ -113,12 +127,16 @@ export class EnhancedGame {
                                    (lifetimeProblems * 0.05) + 
                                    (lifetimeTasks * 0.08)
     
-    // Passive gold generation from problems solved and tasks completed
+    // Passive gold generation from problems solved, tasks, AND tech tree bonuses
+    const techTreeGoldPerSecond = loadoutBonuses.goldPerSecond || 0
     this.passiveGoldPerSecond = baseGoldPerSecond + 
                                 (lifetimeProblems * 0.1) + 
-                                (lifetimeTasks * 0.15)
+                                (lifetimeTasks * 0.15) +
+                                techTreeGoldPerSecond
     this.passiveEnergyPerSecond = passiveEnergyPerSecond
     this.lastPassiveTick = Date.now()
+    
+    console.log('[EnhancedGame] Passive gold/sec:', this.passiveGoldPerSecond, '(tech tree bonus:', techTreeGoldPerSecond, ')')
     
     // Initialize wave timer for automatic attacks
     this.waveTimer = new WaveTimer(this, {
