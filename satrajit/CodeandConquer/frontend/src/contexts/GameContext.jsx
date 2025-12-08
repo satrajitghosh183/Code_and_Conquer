@@ -37,20 +37,22 @@ export const GameProvider = ({ children }) => {
     if (!user) return
     try {
       // Try API first
+      console.log(`[GameContext] Loading stats for user: ${user.id}`)
       const response = await getUserStats(user.id)
+      console.log('[GameContext] Raw axios response:', response)
+      
+      // Axios wraps the response in .data
       const data = response.data
+      console.log('[GameContext] Response.data:', data)
       
-      // Map backend field names to frontend field names
-      // Handle both direct data and nested data structure
-      const statsData = data.data || data
+      // The backend returns the stats directly, not nested
+      const statsData = data
       
-      console.log('[GameContext] Full API response:', response)
-      console.log('[GameContext] Response data:', data)
       console.log('[GameContext] Parsed statsData:', statsData)
       console.log('[GameContext] Coins value:', statsData?.coins, 'Type:', typeof statsData?.coins)
       
-      const coins = parseInt(statsData?.coins) || parseInt(data?.coins) || 0
-      const xp = parseInt(statsData?.xp) || parseInt(data?.xp) || 0
+      const coins = parseInt(statsData?.coins) || 0
+      const xp = parseInt(statsData?.xp) || 0
       
       console.log('[GameContext] Final parsed values - Coins:', coins, 'XP:', xp)
       

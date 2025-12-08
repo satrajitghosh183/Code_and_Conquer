@@ -28,21 +28,45 @@ router.get('/:userId/stats', async (req, res) => {
       });
     }
 
+    console.log(`[GET /users/${req.params.userId}/stats] Fetching user stats from Supabase...`);
+    
     const { data, error } = await supabase
       .from('user_stats')
       .select('*')
       .eq('id', req.params.userId)
       .single();
 
-    if (error && error.code !== 'PGRST116') {
-      // PGRST116 = row not found, which is OK for new users
-      console.error('Error fetching user stats:', error);
+    if (error) {
+      if (error.code === 'PGRST116') {
+        // Row not found - return defaults for new users
+        console.log(`[GET /users/${req.params.userId}/stats] No stats found, returning defaults`);
+        return res.json({
+          coins: 0,
+          xp: 0,
+          level: 1,
+          problems_solved: 0,
+          games_played: 0,
+          wins: 0,
+          problemsSolved: 0,
+          gamesPlayed: 0
+        });
+      }
+      // Other errors
+      console.error(`[GET /users/${req.params.userId}/stats] Error fetching user stats:`, error);
       throw error;
     }
 
+    // Log what we found
+    console.log(`[GET /users/${req.params.userId}/stats] Found stats:`, {
+      coins: data?.coins,
+      xp: data?.xp,
+      level: data?.level,
+      problems_solved: data?.problems_solved
+    });
+
     // Return stats with both snake_case and camelCase for compatibility
     const stats = data || {};
-    res.json({
+    const response = {
       // Original snake_case from database
       coins: stats.coins || 0,
       xp: stats.xp || 0,
@@ -53,7 +77,10 @@ router.get('/:userId/stats', async (req, res) => {
       // Also include camelCase for frontend compatibility
       problemsSolved: stats.problems_solved || 0,
       gamesPlayed: stats.games_played || 0
-    });
+    };
+    
+    console.log(`[GET /users/${req.params.userId}/stats] Returning:`, response);
+    res.json(response);
   } catch (error) {
     console.error('Error in GET user stats:', error);
     res.status(500).json({ error: error.message });
