@@ -1704,6 +1704,24 @@ export class EnhancedGame {
                 enemy.isDead = true
               }
             }
+            
+            // Apply freeze to splash targets if frost attack
+            if (proj.attackType === 'frost' && proj.slowAmount > 0 && proj.slowDuration > 0) {
+              const freezeAmount = 0.9
+              enemy.frozen = {
+                amount: freezeAmount,
+                duration: proj.slowDuration,
+                endTime: Date.now() + proj.slowDuration
+              }
+              
+              // Visual freeze effect
+              if (this.visualEffects && enemy.mesh) {
+                this.visualEffects.createFrostEffect(enemy.mesh.position, 1.5, {
+                  color: 0x88ddff,
+                  duration: 400
+                })
+              }
+            }
           }
         })
       }
