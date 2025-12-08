@@ -2250,8 +2250,15 @@ export class EnhancedGame {
       if (!structure) return false
       
       await structure.load()
-      this.scene.add(structure.mesh)
-      this.structures.push(structure)
+      if (structure.mesh) {
+        // Ensure mesh is visible
+        structure.mesh.visible = true
+        this.scene.add(structure.mesh)
+        this.structures.push(structure)
+      } else {
+        console.error('Failed to create structure mesh:', structureConfig)
+        return false
+      }
 
       // Create build effect
       if (this.visualEffects && structure.mesh && structure.mesh.position) {
@@ -2322,6 +2329,8 @@ export class EnhancedGame {
       return structureConfig.wallType === 'maze' ? 50 : 100
     } else if (structureConfig.type === 'spawner') {
       return 250
+    } else if (structureConfig.type === 'resource_generator') {
+      return RESOURCE_GENERATOR_TYPES[structureConfig.generatorType]?.cost || 200
     }
     return 100
   }
