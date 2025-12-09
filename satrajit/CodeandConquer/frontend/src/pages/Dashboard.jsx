@@ -425,7 +425,8 @@ export default function Dashboard() {
                 )
               })}
             </div>
-            <div className="xp-chart-summary">
+            {/* Commented out summary statistics - Total XP, Avg/Day, Active Days */}
+            {/* <div className="xp-chart-summary">
               <div className="xp-summary-item">
                 <span className="xp-summary-value">{xpHistory.summary.totalXP}</span>
                 <span className="xp-summary-label">Total XP</span>
@@ -438,7 +439,7 @@ export default function Dashboard() {
                 <span className="xp-summary-value">{xpHistory.summary.activeDays}</span>
                 <span className="xp-summary-label">Active Days</span>
               </div>
-            </div>
+            </div> */}
           </div>
         ) : (
           <div className="xp-chart-placeholder">
