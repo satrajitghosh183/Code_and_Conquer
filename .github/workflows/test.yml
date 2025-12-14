@@ -19,6 +19,20 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v4
 
+    - name: List directory structure
+      run: |
+        echo "Repository root contents:"
+        ls -la
+        echo ""
+        echo "Checking for satrajit folder:"
+        ls -la satrajit/ || echo "satrajit folder not found"
+        echo ""
+        echo "Checking for CodeandConquer folder:"
+        ls -la satrajit/CodeandConquer/ || echo "CodeandConquer folder not found"
+        echo ""
+        echo "Checking for backend folder:"
+        ls -la satrajit/CodeandConquer/backend/ || echo "backend folder not found"
+
     - name: Setup Node.js ${{ matrix.node-version }}
       uses: actions/setup-node@v4
       with:
