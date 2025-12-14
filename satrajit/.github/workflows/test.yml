@@ -23,8 +23,6 @@ jobs:
       uses: actions/setup-node@v4
       with:
         node-version: ${{ matrix.node-version }}
-        cache: 'npm'
-        cache-dependency-path: CodeandConquer/backend/package-lock.json
 
     - name: Install dependencies
       working-directory: ./CodeandConquer/backend
@@ -35,9 +33,6 @@ jobs:
       run: npm run test:unit
       env:
         NODE_ENV: test
-        SUPABASE_URL: ${{ secrets.SUPABASE_URL || 'https://placeholder.supabase.co' }}
-        SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY || 'placeholder-key' }}
-        SUPABASE_ANON_KEY: ${{ secrets.SUPABASE_ANON_KEY || 'placeholder-key' }}
 
     - name: Upload test results
       if: always()
@@ -46,3 +41,4 @@ jobs:
         name: test-results-${{ matrix.node-version }}
         path: CodeandConquer/backend/test-results.json
         retention-days: 7
+        if-no-files-found: ignore
