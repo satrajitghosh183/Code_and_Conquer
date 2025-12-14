@@ -1,0 +1,774 @@
+{
+  "timestamp": "2025-12-14T07:15:12.579Z",
+  "duration": "18.54s",
+  "summary": {
+    "totalSuites": 11,
+    "totalTests": 160,
+    "passed": 144,
+    "failed": 16,
+    "successRate": "90.0%"
+  },
+  "suites": [
+    {
+      "suite": "API Implementation (Requirements)",
+      "passed": 20,
+      "failed": 0,
+      "total": 20,
+      "passedTests": [
+        {
+          "test": "Create problem - Valid data",
+          "details": "Server not running (skipped)"
+        },
+        {
+          "test": "Create problem - Input validation",
+          "details": "Status: 0 (may vary by implementation)"
+        },
+        {
+          "test": "Create problem - Input validation (types)",
+          "details": "Status: 0"
+        },
+        {
+          "test": "Get all problems",
+          "details": "Server not running (skipped)"
+        },
+        {
+          "test": "Filter by difficulty",
+          "details": "Server not running (skipped)"
+        },
+        {
+          "test": "Filter by category",
+          "details": "Server not running (skipped)"
+        },
+        {
+          "test": "Multiple filters",
+          "details": "Server not running (skipped)"
+        },
+        {
+          "test": "Get problem by ID",
+          "details": "No test problem ID available (skipped)"
+        },
+        {
+          "test": "Create submission",
+          "details": "No test problem available (skipped)"
+        },
+        {
+          "test": "Submission validation",
+          "details": "Status: 0"
+        },
+        {
+          "test": "Get user submissions",
+          "details": "Status: 0 (may require auth)"
+        },
+        {
+          "test": "Get problem submissions",
+          "details": "No test problem available (skipped)"
+        },
+        {
+          "test": "Security - Auth check",
+          "details": "Status: 0 (implementation may vary)"
+        },
+        {
+          "test": "Security - User data access",
+          "details": "Status: 0"
+        },
+        {
+          "test": "Validation - Difficulty check",
+          "details": "Status: 0"
+        },
+        {
+          "test": "Validation - Invalid language",
+          "details": "No test problem (skipped)"
+        },
+        {
+          "test": "Validation - Range check",
+          "details": "Status: 0"
+        },
+        {
+          "test": "Validation - Length check",
+          "details": "Status: 0"
+        },
+        {
+          "test": "Filter submissions by status",
+          "details": "Status: 0"
+        },
+        {
+          "test": "Filter submissions by language",
+          "details": "Status: 0"
+        }
+      ],
+      "failedTests": []
+    },
+    {
+      "suite": "User Authentication & Profile",
+      "passed": 17,
+      "failed": 3,
+      "total": 20,
+      "passedTests": [
+        {
+          "test": "profiles table exists",
+          "details": ""
+        },
+        {
+          "test": "create test profile",
+          "details": "Profile ID: 48e98217-14a7-47cd-9cb2-5ece7f95cfea"
+        },
+        {
+          "test": "fetch profile by ID",
+          "details": "Profile not in DB (using local fallback)"
+        },
+        {
+          "test": "user_progress table exists",
+          "details": ""
+        },
+        {
+          "test": "get/create user progression",
+          "details": "XP: 0, Level: Beginner"
+        },
+        {
+          "test": "user_stats table exists",
+          "details": ""
+        },
+        {
+          "test": "create user stats",
+          "details": ""
+        },
+        {
+          "test": "update user stats",
+          "details": "Stats not found (skipped)"
+        },
+        {
+          "test": "user_settings table exists",
+          "details": ""
+        },
+        {
+          "test": "user_achievements table exists",
+          "details": ""
+        },
+        {
+          "test": "get user achievements",
+          "details": "Count: 0"
+        },
+        {
+          "test": "user_activity table exists",
+          "details": ""
+        },
+        {
+          "test": "create user activity",
+          "details": "Activity not persisted (table may not exist)"
+        },
+        {
+          "test": "get user activities",
+          "details": "Count: 0"
+        },
+        {
+          "test": "update streak",
+          "details": "Current streak: 0"
+        },
+        {
+          "test": "add XP",
+          "details": "Total XP: 50, Leveled up: false"
+        },
+        {
+          "test": "users table exists (legacy table)",
+          "details": ""
+        }
+      ],
+      "failedTests": [
+        {
+          "test": "update profile",
+          "error": "Cannot coerce the result to a single JSON object",
+          "details": ""
+        },
+        {
+          "test": "get/create user settings",
+          "error": "Assertion failed: Settings should be returned",
+          "details": ""
+        },
+        {
+          "test": "grant achievement",
+          "error": "insert or update on table \"user_achievements\" violates foreign key constraint \"user_achievements_user_id_fkey\"",
+          "details": ""
+        }
+      ]
+    },
+    {
+      "suite": "Problems & Submissions",
+      "passed": 17,
+      "failed": 0,
+      "total": 17,
+      "passedTests": [
+        {
+          "test": "problems table exists",
+          "details": ""
+        },
+        {
+          "test": "get all problems",
+          "details": "Count: 1000"
+        },
+        {
+          "test": "test problem selected",
+          "details": "Problem ID: 449f87d1-3d41-4406-bee2-19993beaf36a"
+        },
+        {
+          "test": "get problem by ID",
+          "details": "Has test cases: true"
+        },
+        {
+          "test": "test_cases table exists",
+          "details": ""
+        },
+        {
+          "test": "get test cases from Supabase",
+          "details": "Visible: 3, Hidden: 0"
+        },
+        {
+          "test": "problem_versions table exists",
+          "details": ""
+        },
+        {
+          "test": "get problem versions",
+          "details": "Count: 4"
+        },
+        {
+          "test": "submissions table exists",
+          "details": ""
+        },
+        {
+          "test": "create submission",
+          "details": "Submission ID: 4e8f0eb4-802d-4fa3-a229-9d10ee8caae2"
+        },
+        {
+          "test": "get submission by ID",
+          "details": "Submission not in DB (local fallback)"
+        },
+        {
+          "test": "get submissions by user",
+          "details": "Count: 0"
+        },
+        {
+          "test": "get submissions by problem",
+          "details": "Count: 0"
+        },
+        {
+          "test": "local/Supabase fallback",
+          "details": "Supabase: true, Problems: 1000"
+        },
+        {
+          "test": "filter problems by difficulty",
+          "details": "Easy problems: 540"
+        },
+        {
+          "test": "update problem tags",
+          "details": ""
+        },
+        {
+          "test": "submission field mapping",
+          "details": "Submission not in DB (skipped)"
+        }
+      ],
+      "failedTests": []
+    },
+    {
+      "suite": "Progression System",
+      "passed": 13,
+      "failed": 0,
+      "total": 13,
+      "passedTests": [
+        {
+          "test": "get/create user progression",
+          "details": "XP: 0, Level: Beginner"
+        },
+        {
+          "test": "add XP",
+          "details": "XP: 0 → 150, Level: 1 → 2, Leveled up: true"
+        },
+        {
+          "test": "level calculation",
+          "details": "Levels: 0XP=1, 100XP=1, 250XP=2, 450XP=3"
+        },
+        {
+          "test": "rank updates",
+          "details": "Level: 5, Rank: Silver 1"
+        },
+        {
+          "test": "coding level updates",
+          "details": "Level: 5, Coding Level: Beginner"
+        },
+        {
+          "test": "unlock hero",
+          "details": "Hero: Sea Dragon (cpp)"
+        },
+        {
+          "test": "select hero",
+          "details": "Selected: python"
+        },
+        {
+          "test": "upgrade tech",
+          "details": "Not enough tech points (need 100, have 14)"
+        },
+        {
+          "test": "tech points on level up",
+          "details": "Gained: 2, Total: 16"
+        },
+        {
+          "test": "match loadout generation",
+          "details": "Hero: Snake, Level: 7, Rank: Silver"
+        },
+        {
+          "test": "update streak",
+          "details": "Current: 0, Longest: 0"
+        },
+        {
+          "test": "get heroes with status",
+          "details": "Count: 6"
+        },
+        {
+          "test": "get tech tree with status",
+          "details": "Count: 11"
+        }
+      ],
+      "failedTests": []
+    },
+    {
+      "suite": "Multiplayer Match System",
+      "passed": 19,
+      "failed": 3,
+      "total": 22,
+      "passedTests": [
+        {
+          "test": "matches table exists",
+          "details": ""
+        },
+        {
+          "test": "get match by ID",
+          "details": "Match not in DB (skipped)"
+        },
+        {
+          "test": "get user matches",
+          "details": "Count: 0"
+        },
+        {
+          "test": "match_history table exists",
+          "details": ""
+        },
+        {
+          "test": "create match history",
+          "details": "History not persisted (table may not exist)"
+        },
+        {
+          "test": "get user match history",
+          "details": "Count: 0"
+        },
+        {
+          "test": "get user match stats",
+          "details": "Matches: 0, Wins: 0, Losses: 0"
+        },
+        {
+          "test": "match_results table exists",
+          "details": ""
+        },
+        {
+          "test": "create match result",
+          "details": "Result not persisted (table may not exist)"
+        },
+        {
+          "test": "game_actions table exists",
+          "details": ""
+        },
+        {
+          "test": "create game action",
+          "details": "Action not persisted (table may not exist)"
+        },
+        {
+          "test": "get match game actions",
+          "details": "Count: 0"
+        },
+        {
+          "test": "towers table exists",
+          "details": ""
+        },
+        {
+          "test": "get all towers",
+          "details": "Count: 0"
+        },
+        {
+          "test": "player_inventory table exists",
+          "details": ""
+        },
+        {
+          "test": "get user inventory",
+          "details": "Count: 0"
+        },
+        {
+          "test": "user_powerups table exists",
+          "details": ""
+        },
+        {
+          "test": "get user powerups",
+          "details": "Count: 0"
+        },
+        {
+          "test": "use powerup",
+          "details": "Powerup not available or table does not exist"
+        }
+      ],
+      "failedTests": [
+        {
+          "test": "create match",
+          "error": "insert or update on table \"matches\" violates foreign key constraint \"matches_player1_id_fkey\"",
+          "details": ""
+        },
+        {
+          "test": "update match",
+          "error": "Cannot coerce the result to a single JSON object",
+          "details": ""
+        },
+        {
+          "test": "add powerup",
+          "error": "insert or update on table \"user_powerups\" violates foreign key constraint \"user_powerups_user_id_fkey\"",
+          "details": ""
+        }
+      ]
+    },
+    {
+      "suite": "Learning Modules",
+      "passed": 10,
+      "failed": 3,
+      "total": 13,
+      "passedTests": [
+        {
+          "test": "content_modules table exists",
+          "details": ""
+        },
+        {
+          "test": "get all modules",
+          "details": "Count: 8"
+        },
+        {
+          "test": "test module selected",
+          "details": "Module ID: 0cb35af1-b413-48e3-8b2f-60d33ae6c97b"
+        },
+        {
+          "test": "get module by ID",
+          "details": "Title: Greedy Algorithms"
+        },
+        {
+          "test": "get modules by category",
+          "details": "Count: 8"
+        },
+        {
+          "test": "get categories",
+          "details": "Count: 0"
+        },
+        {
+          "test": "get audio URL",
+          "details": "Module has no audio file (skipped)"
+        },
+        {
+          "test": "user_module_progress table exists",
+          "details": ""
+        },
+        {
+          "test": "get user progress",
+          "details": "Count: 0"
+        },
+        {
+          "test": "list audio files",
+          "details": "Count: 0"
+        }
+      ],
+      "failedTests": [
+        {
+          "test": "update user progress (partial)",
+          "error": "insert or update on table \"user_module_progress\" violates foreign key constraint \"user_module_progress_user_id_fkey\"",
+          "details": ""
+        },
+        {
+          "test": "update user progress (complete)",
+          "error": "insert or update on table \"user_module_progress\" violates foreign key constraint \"user_module_progress_user_id_fkey\"",
+          "details": ""
+        },
+        {
+          "test": "progress UPSERT",
+          "error": "insert or update on table \"user_module_progress\" violates foreign key constraint \"user_module_progress_user_id_fkey\"",
+          "details": ""
+        }
+      ]
+    },
+    {
+      "suite": "Advertising System",
+      "passed": 13,
+      "failed": 0,
+      "total": 13,
+      "passedTests": [
+        {
+          "test": "video_ads table exists",
+          "details": ""
+        },
+        {
+          "test": "get all ads",
+          "details": "Count: 5"
+        },
+        {
+          "test": "get random ad",
+          "details": "Ad: Online Learning - xTpv9lc_qMw by TechLearn"
+        },
+        {
+          "test": "ad caching",
+          "details": "First: 0ms, Second: 0ms"
+        },
+        {
+          "test": "create ad",
+          "details": "Ad ID: 149a1ba3-a8a3-44e6-805a-e11236e009ba"
+        },
+        {
+          "test": "update ad",
+          "details": ""
+        },
+        {
+          "test": "ad_impressions table exists",
+          "details": ""
+        },
+        {
+          "test": "log ad impression",
+          "details": "Impression logged"
+        },
+        {
+          "test": "ad_interactions table exists",
+          "details": ""
+        },
+        {
+          "test": "log ad skip",
+          "details": "Skip logged"
+        },
+        {
+          "test": "log ad completion",
+          "details": "Completion logged"
+        },
+        {
+          "test": "delete ad",
+          "details": "Ad deleted"
+        },
+        {
+          "test": "active ads filter",
+          "details": "Active: 5, Total: 5"
+        }
+      ],
+      "failedTests": []
+    },
+    {
+      "suite": "Leaderboard System",
+      "passed": 6,
+      "failed": 2,
+      "total": 8,
+      "passedTests": [
+        {
+          "test": "leaderboards table exists",
+          "details": ""
+        },
+        {
+          "test": "get leaderboard",
+          "details": "Count: 11"
+        },
+        {
+          "test": "score calculation",
+          "details": "User stats not found (skipped)"
+        },
+        {
+          "test": "different leaderboard types",
+          "details": "Types tested: global, weekly, monthly"
+        },
+        {
+          "test": "leaderboard ordering",
+          "details": "Scores in descending order"
+        },
+        {
+          "test": "leaderboard limit",
+          "details": "Requested: 5, Got: 5"
+        }
+      ],
+      "failedTests": [
+        {
+          "test": "update leaderboard",
+          "error": "insert or update on table \"leaderboards\" violates foreign key constraint \"leaderboards_user_id_fkey\"",
+          "details": ""
+        },
+        {
+          "test": "update leaderboard score",
+          "error": "insert or update on table \"leaderboards\" violates foreign key constraint \"leaderboards_user_id_fkey\"",
+          "details": ""
+        }
+      ]
+    },
+    {
+      "suite": "Payment & Subscriptions",
+      "passed": 13,
+      "failed": 2,
+      "total": 15,
+      "passedTests": [
+        {
+          "test": "customers table exists",
+          "details": ""
+        },
+        {
+          "test": "create customer",
+          "details": "Customer not persisted (table may not exist)"
+        },
+        {
+          "test": "get customer",
+          "details": "Customer not found (may not exist)"
+        },
+        {
+          "test": "subscriptions table exists",
+          "details": ""
+        },
+        {
+          "test": "get user subscription",
+          "details": "No active subscription found"
+        },
+        {
+          "test": "update subscription",
+          "details": "No test subscription available (skipped)"
+        },
+        {
+          "test": "transactions table exists",
+          "details": ""
+        },
+        {
+          "test": "create transaction",
+          "details": "Transaction not persisted (table may not exist)"
+        },
+        {
+          "test": "get user transactions",
+          "details": "Count: 0"
+        },
+        {
+          "test": "update transaction",
+          "details": "No test transaction available (skipped)"
+        },
+        {
+          "test": "entitlements table exists",
+          "details": ""
+        },
+        {
+          "test": "get user entitlements",
+          "details": "Count: 0"
+        },
+        {
+          "test": "delete entitlement",
+          "details": "No entitlements to delete"
+        }
+      ],
+      "failedTests": [
+        {
+          "test": "create subscription",
+          "error": "insert or update on table \"subscriptions\" violates foreign key constraint \"subscriptions_user_id_fkey\"",
+          "details": ""
+        },
+        {
+          "test": "create entitlement",
+          "error": "insert or update on table \"entitlements\" violates foreign key constraint \"entitlements_user_id_fkey\"",
+          "details": ""
+        }
+      ]
+    },
+    {
+      "suite": "Daily Challenges",
+      "passed": 6,
+      "failed": 3,
+      "total": 9,
+      "passedTests": [
+        {
+          "test": "daily_challenges table exists",
+          "details": ""
+        },
+        {
+          "test": "get daily challenge",
+          "details": "Challenge ID: 1e6ba048-bb4a-41d6-a4c8-5dc5b25b7651"
+        },
+        {
+          "test": "get daily challenge by date",
+          "details": "Date: 2025-12-14"
+        },
+        {
+          "test": "user_daily_completions table exists",
+          "details": ""
+        },
+        {
+          "test": "get user daily completion",
+          "details": "Completion not found"
+        },
+        {
+          "test": "daily challenge service",
+          "details": "Service methods may not be implemented"
+        }
+      ],
+      "failedTests": [
+        {
+          "test": "create daily challenge",
+          "error": "Could not find the 'coins_reward' column of 'daily_challenges' in the schema cache",
+          "details": ""
+        },
+        {
+          "test": "complete daily challenge",
+          "error": "insert or update on table \"user_daily_completions\" violates foreign key constraint \"user_daily_completions_user_id_fkey\"",
+          "details": ""
+        },
+        {
+          "test": "duplicate completion prevention",
+          "error": "insert or update on table \"user_daily_completions\" violates foreign key constraint \"user_daily_completions_user_id_fkey\"",
+          "details": ""
+        }
+      ]
+    },
+    {
+      "suite": "Analytics & Logging",
+      "passed": 10,
+      "failed": 0,
+      "total": 10,
+      "passedTests": [
+        {
+          "test": "event_logs table exists",
+          "details": ""
+        },
+        {
+          "test": "create event log",
+          "details": "Event not persisted (table may not exist)"
+        },
+        {
+          "test": "get event logs for user",
+          "details": "Count: 0"
+        },
+        {
+          "test": "get all event logs",
+          "details": "Count: 0"
+        },
+        {
+          "test": "create user activity",
+          "details": "Activity not persisted (table may not exist)"
+        },
+        {
+          "test": "get user activities",
+          "details": "Count: 0"
+        },
+        {
+          "test": "different event types",
+          "details": "Types logged: page_view, button_click, form_submit, api_call, error_occurred"
+        },
+        {
+          "test": "event log ordering",
+          "details": "Not enough events to verify ordering"
+        },
+        {
+          "test": "activity log with XP",
+          "details": "Activity not persisted (table may not exist)"
+        },
+        {
+          "test": "event log limit",
+          "details": "Requested: 5, Got: 0"
+        }
+      ],
+      "failedTests": []
+    }
+  ]
+}

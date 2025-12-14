@@ -1,0 +1,9 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(perl -i.bak2 -pe:*)"
+    ],
+    "deny": [],
+    "ask": []
+  }
+}

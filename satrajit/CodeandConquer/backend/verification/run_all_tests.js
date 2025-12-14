@@ -13,8 +13,10 @@ import { testLeaderboard } from './automated/07_leaderboard_test.js';
 import { testPaymentSubscription } from './automated/08_payment_subscription_test.js';
 import { testDailyChallenges } from './automated/09_daily_challenges_test.js';
 import { testAnalyticsLogging } from './automated/10_analytics_logging_test.js';
+import { testAPIImplementation } from './automated/api_implementation_test.js';
 
 const TEST_SUITES = [
+  { name: 'API Implementation (Requirements)', fn: testAPIImplementation },
   { name: 'User Authentication & Profile', fn: testUserAuthentication },
   { name: 'Problems & Submissions', fn: testProblemSubmission },
   { name: 'Progression System', fn: testProgressionSystem },
