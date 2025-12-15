@@ -120,7 +120,7 @@ A competitive coding platform that combines LeetCode-style programming challenge
 - **Input Validation** - Minimum 2 characters, stop-word filtering
 - **Safe Highlighting** - XSS-safe match highlighting in results
 
-**User Story:** As a user, I want fast, accurate search across problems, jobs, leaderboards, and policies so I can find what I need without hammering the system.
+
 
 ### 📝 REQ-10: Admin Problem Curation with Version Control
 **Owner: Tariq H Fahumy**
@@ -133,7 +133,6 @@ A competitive coding platform that combines LeetCode-style programming challenge
 - **Search Re-indexing** - Published problems appear in search within 60 seconds
 - **Test Case Management** - Visible and hidden test cases support
 
-**User Story:** As an admin, I want to create, edit, and version coding problems through a review process, so that I can ensure content quality and track all historical changes.
 
 ### 🔄 REQ-11: Reliability with Idempotent APIs and Battle State Checkpoints
 **Owner: Satrajit Ghosh**
@@ -146,7 +145,6 @@ A competitive coding platform that combines LeetCode-style programming challenge
 - **Judge Timeout Handling** - 10-second timeout, system error verdict, resubmission allowed
 - **Data Integrity** - No duplicate actions, no data loss during failures
 
-**User Story:** As a user, I want active battles to handle network or server issues gracefully, so that I don't lose progress or face unfair penalties.
 
 ### 🎮 REQ-12: WebGL2 Game Client with Server-Authoritative Real-Time Protocol
 **Owner: Satrajit Ghosh**
@@ -160,7 +158,6 @@ A competitive coding platform that combines LeetCode-style programming challenge
 - **Reconnection Sync** - Full state sync within 500ms on reconnect
 - **Visual Feedback** - Buffs/debuffs update visuals within 200ms
 
-**User Story:** As a user, I want smooth, responsive graphics that accurately reflect the server state, so that I can have a fair and enjoyable competitive experience.
 
 ### 🧩 Additional Features
 
