@@ -107,7 +107,7 @@ A competitive coding platform that combines LeetCode-style programming challenge
 - **Transparency** - Breakdown of problem areas and skill matches shown
 - **Generic Fallback** - Generic job listings if consent disabled
 
-**User Story:** As a user, I want to receive job recommendations based on my coding performance, with clear explanations, so that I can understand my career readiness and make informed decisions.
+
 
 ### 🔍 REQ-09: Full-Text Search with Rate Limiting and Filtering
 **Owner: Tanushree Debbarma**
@@ -120,7 +120,7 @@ A competitive coding platform that combines LeetCode-style programming challenge
 - **Input Validation** - Minimum 2 characters, stop-word filtering
 - **Safe Highlighting** - XSS-safe match highlighting in results
 
-
+**User Story:** As a user, I want fast, accurate search across problems, jobs, leaderboards, and policies so I can find what I need without hammering the system.
 
 ### 📝 REQ-10: Admin Problem Curation with Version Control
 **Owner: Tariq H Fahumy**
@@ -400,7 +400,24 @@ Runs comprehensive test suite including database verification.
 
 ## 🤝 Contributing
 
-### Team Members & Contributions
+### Requirements & Contributions Table
+
+| Req ID | Requirement | Owner | Key Operations | Business Rules | User Story |
+|--------|------------|-------|----------------|----------------|------------|
+| **REQ-01** | OAuth Authentication & Session Management | Kevin Dang | `POST /auth/oauth/start`, `POST /auth/oauth/callback`, `GET /session/refresh`, Role enforcement middleware | OAuth 2.0 with state params (CSRF protection); Access token TTL = 60 min; Refresh token TTL = 7 days; Idle timeout = 30 min; Role-based access control | As a user, I want to securely sign in with Google or GitHub OAuth so that I can access my dashboard and maintain session continuity. |
+| **REQ-02** | ELO-Based Matchmaking with Queue Management | Doug Lavin | `POST /match/join`, `POST /match/leave`, `matchmakingJob()` | Fair match if \|Δ ELO\| ≤ 200 (95% cases); Queue widens ±400 after 30s; Timeout at 60s; Premium priority = 20% faster | As a competitive user, I want to be matched with opponents of similar skill quickly so that I can have fair and challenging battles. |
+| **REQ-03** | Sandboxed Code Execution with Resource Limits | Tariq H Fahumy | `POST /submit`, Judge workers, Resource monitor | Time limit = 2s/test; Memory limit = 256MB; FS/network access denied; Verdicts mapped to buffs/debuffs | As a user, I want to submit code that runs safely in isolation and receive clear feedback on correctness and performance so that I can learn effectively and earn game rewards. |
+| **REQ-04** | Calendar/Todoist Task Synchronization with Deduplication | Clementine Vander Vliet | `syncTasks()`, `resolveConflict()`, `deduplicateTasks()` | Import window = 30 days; Dedup key = sourceId\|\|time\|\|title; Edits prompt user if conflicting | As a user, I want my real-world tasks from Google Calendar and Todoist to sync automatically so that I can earn rewards without manual entry. |
+| **REQ-05** | Task Completion Rewards with Cap Enforcement | Clementine Vander Vliet | `markTaskComplete()`, Reward calculation service | Full reward = 50 units within 24h; Daily cap = 5 full tasks; Streak bonus = 1.5x after 7 days | As a user, I want to earn in-game rewards for completing real-world tasks so that I stay motivated and improve my tower defense performance. |
+| **REQ-06** | Privacy-Safe Leaderboard Computation with Season Management | Doug Lavin | `updateRank()`, `resetSeason()`, `getLeaderboard()` | Quarterly reset; Baseline ELO = 1200; Private profiles → "Anonymous Player"; Consistency within 2 minutes | As a user, I want to see my ranking compared to others while respecting privacy settings, so that I can track my progress and compete fairly. |
+| **REQ-07** | Payment Processing with Idempotent Webhook Handling | Kevin Dang | Stripe checkout API, `processWebhook(eventId)` | Idempotency key = transactionId; Retry every 24h; Grace period = 3 days; Declined payments do not upgrade tier | As a user upgrading to premium, I want secure payments and immediate access to my entitlements, so that I can enjoy premium features without delays or being charged twice. |
+| **REQ-08** | Explainable Job Recommendations with Consent Management | Tanushree Debbarma | `generateRecommendations(userId)`, `explainRecommendation(jobId)` | Personalized recs only if consent=on; Analysis = last 50 solves; Top 5 jobs; Refresh on new problem solve | As a user, I want to receive job recommendations based on my coding performance, with clear explanations, so that I can understand my career readiness and make informed decisions. |
+| **REQ-09** | Full-Text Search with Rate Limiting and Filtering | Tanushree Debbarma | `GET /search`, `GET /search/cursor`, Rate-limit middleware | minQueryLen=2; Stop-word queries invalid; pageSize=20 (max 50); Rate limits: auth=120/min, anon=30/min; ACL filtering | As a user, I want fast, accurate search across problems, jobs, leaderboards, and policies so I can find what I need without hammering the system. |
+| **REQ-10** | Admin Problem Curation with Version Control | Tariq H Fahumy | `createProblem()`, `editProblem()`, `revertProblem()`, `publishProblem()` | Version bumps on edit; Only curator-approved problems publish; Reindex within 60s | As an admin, I want to create, edit, and version coding problems through a review process, so that I can ensure content quality and track all historical changes. |
+| **REQ-11** | Reliability with Idempotent APIs and Battle State Checkpoints | Satrajit Ghosh | `submitAction(requestId)`, `checkpointBattle()`, `resumeBattle()` | Checkpoint interval = 10s; Reconnection grace = 90s; Disconnect >2min → neutral outcome; requestId ensures idempotency | As a user, I want active battles to handle network or server issues gracefully, so that I don't lose progress or face unfair penalties. |
+| **REQ-12** | WebGL2 Game Client with Server-Authoritative Real-Time Protocol | Satrajit Ghosh | `renderLoop()`, `applySnapshot()`, `predictInput()` | FPS target = 60; Snapshot interval = 100ms; Corrections ≤1 frame; Reconnect resync ≤500ms; Visual feedback ≤200ms | As a user, I want smooth, responsive graphics that accurately reflect the server state, so that I can have a fair and enjoyable competitive experience. |
+
+### Team Members & Detailed Contributions
 
 #### **Kevin Dang** - Authentication & Payments
 - **REQ-01: OAuth Authentication & Session Management**
