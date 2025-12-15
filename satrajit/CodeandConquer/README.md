@@ -133,6 +133,7 @@ A competitive coding platform that combines LeetCode-style programming challenge
 - **Search Re-indexing** - Published problems appear in search within 60 seconds
 - **Test Case Management** - Visible and hidden test cases support
 
+**User Story:** As an admin, I want to create, edit, and version coding problems through a review process, so that I can ensure content quality and track all historical changes.
 
 ### 🔄 REQ-11: Reliability with Idempotent APIs and Battle State Checkpoints
 **Owner: Satrajit Ghosh**
@@ -158,6 +159,7 @@ A competitive coding platform that combines LeetCode-style programming challenge
 - **Reconnection Sync** - Full state sync within 500ms on reconnect
 - **Visual Feedback** - Buffs/debuffs update visuals within 200ms
 
+**User Story:** As a user, I want smooth, responsive graphics that accurately reflect the server state, so that I can have a fair and enjoyable competitive experience.
 
 ### 🧩 Additional Features
 
