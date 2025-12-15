@@ -19,26 +19,25 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v4
 
-    - name: Find backend directory
-      id: find-backend
+    - name: Verify directory structure
       run: |
-        echo "=== Searching for backend directory ==="
-        # Try different possible paths
-        if [ -d "satrajit/CodeandConquer/backend" ]; then
-          echo "Found: satrajit/CodeandConquer/backend"
-          echo "backend_path=satrajit/CodeandConquer/backend" >> $GITHUB_OUTPUT
-        elif [ -d "CodeandConquer/backend" ]; then
-          echo "Found: CodeandConquer/backend"
-          echo "backend_path=CodeandConquer/backend" >> $GITHUB_OUTPUT
-        elif [ -d "satrajit/CodeandConquer/satrajit/CodeandConquer/backend" ]; then
-          echo "Found: satrajit/CodeandConquer/satrajit/CodeandConquer/backend"
-          echo "backend_path=satrajit/CodeandConquer/satrajit/CodeandConquer/backend" >> $GITHUB_OUTPUT
-        else
-          echo "=== Directory structure ==="
-          find . -type d -name "backend" -path "*/CodeandConquer/*" 2>/dev/null | head -5
-          echo "Backend directory not found in expected locations"
-          exit 1
-        fi
+        echo "Current directory:"
+        pwd
+        echo ""
+        echo "Listing root:"
+        ls -la
+        echo ""
+        echo "Checking satrajit folder:"
+        ls -la satrajit/ || echo "satrajit not found"
+        echo ""
+        echo "Checking satrajit/CodeandConquer:"
+        ls -la satrajit/CodeandConquer/ || echo "satrajit/CodeandConquer not found"
+        echo ""
+        echo "Checking satrajit/CodeandConquer/backend:"
+        ls -la satrajit/CodeandConquer/backend/ || echo "satrajit/CodeandConquer/backend not found"
+        echo ""
+        echo "Checking if package.json exists:"
+        ls -la satrajit/CodeandConquer/backend/package.json || echo "package.json not found"
 
     - name: Setup Node.js ${{ matrix.node-version }}
       uses: actions/setup-node@v4
@@ -46,11 +45,11 @@ jobs:
         node-version: ${{ matrix.node-version }}
 
     - name: Install dependencies
-      working-directory: ./${{ steps.find-backend.outputs.backend_path }}
+      working-directory: satrajit/CodeandConquer/backend
       run: npm ci
 
     - name: Run unit tests
-      working-directory: ./${{ steps.find-backend.outputs.backend_path }}
+      working-directory: satrajit/CodeandConquer/backend
       run: npm run test:unit
       env:
         NODE_ENV: test
@@ -60,6 +59,6 @@ jobs:
       uses: actions/upload-artifact@v4
       with:
         name: test-results-${{ matrix.node-version }}
-        path: ${{ steps.find-backend.outputs.backend_path }}/test-results.json
+        path: satrajit/CodeandConquer/backend/test-results.json
         retention-days: 7
         if-no-files-found: ignore
